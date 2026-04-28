@@ -3,7 +3,7 @@
  *
  * Generates AM2-style practice questions covering safe isolation, continuity,
  * insulation resistance, Zs, RCD testing, polarity, and fault diagnosis.
- * Model: gpt-5-mini-2025-08-07 via tool calling for structured JSON output.
+ * Model: gpt-5.4-mini-2026-03-17 via tool calling for structured JSON output.
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
@@ -225,7 +225,7 @@ ${practicalContext}`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5.4-mini-2026-03-17',
         max_completion_tokens: 8000,
         messages: [
           { role: 'system', content: systemPrompt },

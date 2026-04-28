@@ -4,7 +4,7 @@
  * Analyses uploaded portfolio evidence (photos, documents) and matches
  * against real assessment criteria from the user's qualification via RAG.
  *
- * Model: gpt-5-mini-2025-08-07 via tool calling for structured JSON output.
+ * Model: gpt-5.4-mini-2026-03-17 via tool calling for structured JSON output.
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
@@ -395,7 +395,7 @@ ${ragContext}`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5.4-mini-2026-03-17',
         max_completion_tokens: 5000,
         messages: [
           { role: 'system', content: systemPrompt },

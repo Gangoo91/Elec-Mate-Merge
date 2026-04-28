@@ -580,7 +580,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'gpt-5-mini', // Upgraded for better structured output
+            model: 'gpt-5.4-mini-2026-03-17', // Upgraded for better structured output
             messages: [
               { role: 'system', content: MAINTENANCE_SYSTEM_PROMPT },
               { role: 'user', content: userMessage },

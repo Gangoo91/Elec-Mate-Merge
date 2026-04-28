@@ -20,6 +20,17 @@
 // →  { quiz_id, questions_count, citations_count, quiz, questions }
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import {
+  loadLearnerContext,
+  loadQualificationKit,
+  lookupBs7671Facets,
+  lookupQualificationAcs,
+  bs7671SeedQueries,
+  raggedAcLines,
+  qualificationAcLines,
+  GROUNDING_RULES,
+  type LearnerContext,
+} from '../_shared/learner-context.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,12 +38,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// ELE-879 — gpt-5-mini-2025-08-07 is not yet available on OpenAI's API;
-// requests with that model name return 200 OK with no tool_calls, which the
-// parser below interprets as `no_tool_call` and surfaces as a 500.
-// gpt-4o-mini is the closest production-ready equivalent that supports
-// tool calling with reliable function-call output.
-const CHAT_MODEL = 'gpt-4o-mini';
+const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
 // Each authored question runs ~600-900 tokens once you account for citations
 // + explanation + marking_guidance. 14k headroom covers ~15 questions before
 // the model truncates mid-tool-call (the cause of the "timeout on >5
@@ -456,14 +462,21 @@ function systemPrompt(): string {
 Hard rules:
 - UK English (analyse, behaviour, programme, organisation).
 - Each question must have ONE unambiguously correct answer. Distractors must be plausible but clearly wrong to a tutor.
-- Every question maps to ONE ac_ref using "<unit_code>:<ac_code>" format from the AC targets you've been given. If targets are empty, use general topic categorisation.
+- Every question maps to ONE ac_ref using "<unit_code>:<ac_code>" format from the AC catalogue you've been given. If targets are empty, use general topic categorisation.
 - BS 7671 citations: only use refs from the facet list provided. Quote a short snippet (≤180 chars) per citation. Don't fabricate regulation numbers.
 - Explanation must be educational — say WHY, link to the reg, and ideally a quick rule-of-thumb.
 - Difficulty: spread across the requested difficulty level — at "medium" mix easy/medium/hard 30/50/20.
 - Avoid dangerous misinformation: if you're unsure of an exact value (e.g. Zs limits), reference "the relevant table" rather than invent a number.
 - No multi-correct, no "all of the above", no trick wording.
 
-Tone: neutral, precise, exam-style. The learner is on an Installation Electrician apprenticeship.
+Quiz-history awareness (CRITICAL — added 2026-04-27):
+- The learner context lists every recent quiz attempt with its score and the ACs touched. If the learner ALREADY PASSED an AC at ≥80% in the last 60 days, do NOT issue another question against that exact AC unless the tutor's request specifically targets it. Pick a different weak AC instead.
+- If the learner FAILED an AC last week (<60%), favour that AC — but rephrase the question; don't reuse the wording the learner already saw.
+- If the learner has a "Sent — not yet started" quiz on the same AC, mention it in the rationale: "you already have an unstarted quiz on this — consider waiting for them to take it before adding another."
+
+Tone: neutral, precise, exam-style. Calibrate to the learner's qualification (Level 2 vs Level 3, T Level vs Apprenticeship Standard).
+
+${GROUNDING_RULES}
 
 Call submit_quiz EXACTLY ONCE.`;
 }
@@ -556,6 +569,111 @@ function userPrompt(ctx: AuthorContext, facets: Array<{ ref: string; reg_part: s
   return lines.join('\n');
 }
 
+/* ────────────────────────────────────────────────────────
+   Quiz-history-aware rich context block. Surfaces the
+   learner's recent quiz performance + ILP + EPA verdict +
+   the RAG'd AC catalogue so the author doesn't reissue
+   ACs the learner has already mastered.
+   ──────────────────────────────────────────────────────── */
+function buildRichBlock(ctx: LearnerContext, acsBlock: string[]): string {
+  const lines: string[] = [];
+  lines.push('');
+  lines.push('## Recent quiz attempts (DO NOT reissue ACs the learner has aced)');
+
+  const completedAttempts = ctx.quizzes.attempts.filter((a) => a.completed_at);
+  if (completedAttempts.length === 0) {
+    lines.push('No completed tutor-quiz attempts yet — fresh slate.');
+  } else {
+    // Aggregate per-AC: best percentage seen, count of attempts.
+    const acPerf = new Map<string, { best: number; attempts: number; lastAt: string | null }>();
+    for (const a of completedAttempts) {
+      if (a.percentage == null || a.ac_refs.length === 0) continue;
+      for (const ac of a.ac_refs) {
+        const cur = acPerf.get(ac) ?? { best: 0, attempts: 0, lastAt: null };
+        cur.best = Math.max(cur.best, a.percentage);
+        cur.attempts += 1;
+        if (!cur.lastAt || (a.completed_at && a.completed_at > cur.lastAt)) {
+          cur.lastAt = a.completed_at;
+        }
+        acPerf.set(ac, cur);
+      }
+    }
+    const aced: string[] = [];
+    const failed: string[] = [];
+    const struggled: string[] = [];
+    for (const [ac, p] of acPerf.entries()) {
+      if (p.best >= 80) aced.push(`${ac} (${p.best}% best)`);
+      else if (p.best < 60) failed.push(`${ac} (${p.best}% best)`);
+      else struggled.push(`${ac} (${p.best}% best)`);
+    }
+    if (aced.length > 0) {
+      lines.push(`AVOID — already aced (≥80%): ${aced.slice(0, 12).join(', ')}`);
+    }
+    if (failed.length > 0) {
+      lines.push(`FAVOUR — failed (<60%): ${failed.slice(0, 12).join(', ')}`);
+    }
+    if (struggled.length > 0) {
+      lines.push(`PARTIAL — 60-79%, worth reinforcing: ${struggled.slice(0, 8).join(', ')}`);
+    }
+    // Most recent 4 attempts as a rolling window
+    lines.push('Most recent 4:');
+    for (const a of completedAttempts.slice(0, 4)) {
+      const verdict = a.passed === true ? 'pass' : a.passed === false ? 'fail' : 'submitted';
+      lines.push(
+        `  - ${a.title} [${a.kind}]: ${a.percentage ?? '?'}% (${verdict})${a.ac_refs.length ? ` · ACs ${a.ac_refs.slice(0, 4).join(',')}` : ''}`
+      );
+    }
+  }
+  if (ctx.quizzes.sent_not_started > 0) {
+    lines.push(
+      `${ctx.quizzes.sent_not_started} quiz(es) already SENT but NOT STARTED — avoid duplicating those topics.`
+    );
+  }
+  if (ctx.quizzes.weak_categories.length > 0) {
+    lines.push(`Weak categories from quiz history: ${ctx.quizzes.weak_categories.join(', ')}`);
+  }
+
+  // Active ILP focus — questions should ideally support these goals
+  if (ctx.ilp.headline_focus || ctx.ilp.goals.length > 0) {
+    lines.push('');
+    lines.push('## Active ILP focus (questions should support these where they fit)');
+    if (ctx.ilp.headline_focus) lines.push(`Focus: ${ctx.ilp.headline_focus}`);
+    const openGoals = ctx.ilp.goals.filter((g) => g.status !== 'completed' && g.status !== 'cancelled');
+    for (const g of openGoals.slice(0, 4)) {
+      lines.push(`  - [${g.status}] ${g.title}`);
+    }
+  }
+
+  // EPA verdicts so the AI can calibrate to risk
+  if (ctx.judgements.tutor || ctx.judgements.ai) {
+    const v = ctx.judgements.tutor ?? ctx.judgements.ai!;
+    lines.push('');
+    lines.push(
+      `## Latest EPA verdict: ${v.verdict}${v.predicted_grade ? ` (predicted ${v.predicted_grade})` : ''}`
+    );
+    if (v.verdict === 'not_yet' || v.verdict === 'refer') {
+      lines.push('Calibrate harder than usual — this learner is behind and questions should stretch.');
+    }
+  }
+
+  // KSBs in progress
+  if (ctx.ksbs.length > 0) {
+    const inProg = ctx.ksbs.filter((k) => k.status === 'in_progress' || k.status === 'evidence_submitted');
+    if (inProg.length > 0) {
+      lines.push('');
+      lines.push(`## KSBs in progress (${inProg.length}) — questions can probe these`);
+      for (const k of inProg.slice(0, 8)) lines.push(`  - ${k.ksb_code}`);
+    }
+  }
+
+  // RAG'd AC catalogue — the AI MUST cite from this list
+  if (acsBlock.length > 0) {
+    for (const l of acsBlock) lines.push(l);
+  }
+
+  return lines.join('\n');
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST')
@@ -605,9 +723,33 @@ Deno.serve(async (req) => {
     }
     const facets = await lookupFacets(sb, ctx, body);
 
+    // NEW (2026-04-27): pull the shared rich context so the AI sees recent
+    // quiz attempts (which ACs the learner has just passed/failed), full
+    // judgements, ILP focus, KSBs, attendance pattern, etc. Plus RAG'd ACs
+    // from the qualification catalogue so questions cite real codes.
+    let richCtx: LearnerContext | null = null;
+    let raggedAcsBlock: string[] = [];
+    if (body.college_student_id) {
+      richCtx = await loadLearnerContext(sb, body.college_student_id);
+      if (richCtx) {
+        const seeds: string[] = [];
+        if (body.topic) seeds.push(body.topic);
+        if (body.ac_codes && body.ac_codes.length > 0) seeds.push(...body.ac_codes);
+        seeds.push(...bs7671SeedQueries(richCtx));
+        const [qualKit, raggedAcs] = await Promise.all([
+          loadQualificationKit(sb, richCtx.course?.code ?? null),
+          lookupQualificationAcs(sb, seeds, richCtx.course?.code ?? null, 8, 4),
+        ]);
+        raggedAcsBlock = raggedAcs.length > 0
+          ? raggedAcLines(raggedAcs, 14)
+          : qualificationAcLines(qualKit, 60);
+      }
+    }
+    const richBlock = richCtx ? buildRichBlock(richCtx, raggedAcsBlock) : '';
+
     const messages = [
       { role: 'system', content: systemPrompt() },
-      { role: 'user', content: userPrompt(ctx, facets, body) },
+      { role: 'user', content: userPrompt(ctx, facets, body) + richBlock },
     ];
     const completion = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

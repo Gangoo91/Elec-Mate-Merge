@@ -16,13 +16,26 @@ export async function lookupRegulation(args: Record<string, unknown>, user: User
     throw new Error('Search query is required');
   }
 
+  // Allow agent to scope by document type: bs7671 (regs), gn3 (Guidance Note 3), osg (On-Site Guide)
+  const allowedTypes = new Set(['bs7671', 'gn3', 'osg']);
+  let documentTypes: string[] | undefined;
+  const rawTypes = args.document_types ?? args.document_type;
+  if (Array.isArray(rawTypes)) {
+    documentTypes = rawTypes.filter(
+      (t): t is string => typeof t === 'string' && allowedTypes.has(t)
+    );
+    if (documentTypes.length === 0) documentTypes = undefined;
+  } else if (typeof rawTypes === 'string' && allowedTypes.has(rawTypes)) {
+    documentTypes = [rawTypes];
+  }
+
   const result = await callEdgeFunction('bs7671-rag-search', user.jwt, {
     query: args.query.trim(),
-    match_threshold: typeof args.match_threshold === 'number' ? args.match_threshold : 0.7,
     match_count:
       typeof args.match_count === 'number' && args.match_count > 0
         ? Math.min(args.match_count, 20)
         : 5,
+    document_types: documentTypes,
   });
 
   if (result.error) throw new Error(result.error);

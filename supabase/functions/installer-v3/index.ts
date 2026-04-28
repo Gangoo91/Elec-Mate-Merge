@@ -356,7 +356,7 @@ ${circuitContext}
               { role: 'system', content: systemPrompt },
               { role: 'user', content: query },
             ],
-            model: 'gpt-5-mini',
+            model: 'gpt-5.4-mini-2026-03-17',
             max_tokens: 24000,
             tools: [installerV3ToolSchema],
             tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } },

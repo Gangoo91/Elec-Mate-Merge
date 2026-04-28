@@ -27,7 +27,7 @@ if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders }
 
 ## OpenAI calls MUST use:
 
-- Model: `gpt-5-mini-2025-08-07`
+- Model: `gpt-5.4-mini-2026-03-17` (snapshot — pin to avoid drift)
 - `max_completion_tokens` (NOT `max_tokens`)
 - Do NOT send `temperature`
 - Use tool calling for structured JSON output

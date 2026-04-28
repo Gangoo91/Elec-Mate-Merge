@@ -1,18 +1,30 @@
-// Level 3 Module 1: Health and Safety at Work - Question Bank
-// 200 advanced questions covering all Module 1 content for Level 3 Electrical Course
-// Topics: HASAWA, EAWR, RIDDOR, COSHH, Risk Assessment, Method Statements, PPE, Safe Isolation
+// Level 3 Module 1: Health and Safety in Building Services Engineering — Question Bank
+// 250 supervisor-grade questions covering C&G 2365-03 Unit 201 (Health & Safety refresher),
+// layered with C&G 2357 Unit 601 (ELTK01) supervisor depth.
+// Coverage: HASAWA s.2/s.3/s.7/s.37, EAWR 1989, RIDDOR 2013 (Schedule 1, F2508), COSHH 2002,
+// CDM 2015 (Reg 9/13/15, F10, PCI, H&S file), CAR 2012 (R&D survey, NNLW, duty holder),
+// Building Safety Act 2022 (HRRB, golden thread), MHSWR 1999, PUWER 1998, WAHR 2005,
+// MHOR 1992, CNWR 2005, CVAWR 2005, Sentencing Council Definitive Guideline 2016,
+// FFI fee structure, improvement/prohibition notices, Corporate Manslaughter Act 2007.
+// Difficulty mix: ~40% basic, ~45% intermediate, ~15% advanced.
+// Updated 2026-04-27: Schema upgraded to QuestionBank with topic field + supervisor-grade extension (Sections 1.9, 1.10).
 
-export interface Question {
+export interface QuestionBank {
   id: number;
   question: string;
   options: string[];
   correctAnswer: number;
   explanation: string;
-  section?: string;
-  difficulty?: 'basic' | 'intermediate' | 'advanced';
+  section: string;
+  difficulty: 'basic' | 'intermediate' | 'advanced';
+  topic: string;
+  module?: string;
 }
 
-export const module1Questions: Question[] = [
+// Backwards-compatible alias for legacy imports (mixed/questionBank.ts uses Question)
+export type Question = QuestionBank;
+
+export const module1Questions: QuestionBank[] = [
   // ============================================
   // Section 1.1: HASAWA 1974 (Questions 1-30)
   // ============================================
@@ -29,6 +41,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Section 2 of HASAWA 1974 places a general duty on employers to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -44,6 +57,7 @@ export const module1Questions: Question[] = [
     explanation:
       "Reasonably practicable means weighing the degree of risk against the cost (in money, time, and trouble) needed to avert it. If disproportion exists, it's not reasonably practicable.",
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -59,6 +73,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Section 3 requires employers to conduct their undertaking in such a way as to ensure, so far as is reasonably practicable, that non-employees are not exposed to risks to their health or safety.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -69,6 +84,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Section 7 of HASAWA 1974 sets out the duties of employees - to take reasonable care and to cooperate with their employer on health and safety matters.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -84,6 +100,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Section 8 makes it an offence to intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -99,6 +116,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Employers with 5 or more employees must prepare and revise a written statement of their general health and safety policy and bring it to the attention of employees.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -114,6 +132,7 @@ export const module1Questions: Question[] = [
     explanation:
       'HSE inspectors can issue improvement notices (requiring improvements within a timeframe), prohibition notices (stopping activities immediately), and prosecute for breaches.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -129,6 +148,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Improvement notices require contraventions to be remedied within a specified time. Prohibition notices stop dangerous activities immediately until the risk is removed.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'advanced',
   },
   {
@@ -139,6 +159,7 @@ export const module1Questions: Question[] = [
     explanation:
       'For offences heard in the Crown Court, there is no limit on the fine that can be imposed. Imprisonment is also possible for certain offences.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -154,6 +175,7 @@ export const module1Questions: Question[] = [
     explanation:
       "Section 37 allows prosecution of directors, managers, secretaries or similar officers where the body corporate's offence is attributable to their consent, connivance or neglect.",
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'advanced',
   },
   {
@@ -169,6 +191,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Section 2(2)(c) requires employers to provide information, instruction, training and supervision necessary to ensure health and safety of employees.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -184,6 +207,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Section 4 places duties on those in control of premises to ensure the premises and plant/substances are safe for non-employees using them.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -199,6 +223,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The HSE enforces health and safety law in most industrial and construction workplaces, including electrical contracting sites.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -214,6 +239,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A competent person has sufficient training, experience, knowledge and other qualities to enable them to assist with health and safety measures.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -229,6 +255,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Employers must consult employees or their representatives on health and safety matters, including measures affecting them and arrangements for competent health and safety assistance.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -245,6 +272,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Section 6 requires manufacturers/suppliers to ensure articles and substances are safe, properly tested, and accompanied by adequate information for safe use.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -260,6 +288,7 @@ export const module1Questions: Question[] = [
     explanation:
       "The health and safety policy statement sets out the employer's general approach, commitment and arrangements for managing health and safety in the organisation.",
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -275,6 +304,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A health and safety policy should contain: (1) Statement of intent - general policy, (2) Organisation - responsibilities, and (3) Arrangements - practical implementation.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -290,6 +320,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The policy should be reviewed regularly (at least annually) and whenever there are significant changes to the business, processes, or legislation.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -305,6 +336,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Vicarious liability means employers can be held liable for the negligent acts or omissions of their employees when performed in the course of their employment.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'advanced',
   },
   {
@@ -320,6 +352,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Section 9 of HASAWA states that no employer shall charge any employee for anything done or provided to comply with health and safety requirements.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -335,6 +368,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The hierarchy of control prioritises: elimination of hazard, substitution with less hazardous, engineering controls, administrative controls, and PPE as a last resort.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -350,6 +384,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Due diligence means taking all reasonable precautions to avoid committing an offence and being able to demonstrate this through records and actions.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'advanced',
   },
   {
@@ -365,6 +400,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A Safety Representative is appointed by a recognised trade union to represent employees in consultations with the employer on health and safety matters.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -380,6 +416,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Safety Representatives can investigate hazards, complaints, and accidents; inspect the workplace; represent employees in consultations; and receive information from inspectors.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -395,6 +432,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A Health and Safety Committee is a joint body where employers and employee representatives meet to discuss, review, and improve health and safety measures.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -410,6 +448,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Under the Safety Representatives Regulations 1977, employers must establish a Health and Safety Committee if requested in writing by two or more Safety Representatives.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'advanced',
   },
   {
@@ -425,6 +464,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A statutory duty is a legal requirement imposed by law (Acts of Parliament or Regulations). Failure to comply can result in prosecution.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'basic',
   },
   {
@@ -440,6 +480,7 @@ export const module1Questions: Question[] = [
     explanation:
       'An ACoP provides practical guidance on how to comply with the law. While not legally binding, failure to follow an ACoP can be used as evidence of non-compliance.',
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'intermediate',
   },
   {
@@ -455,6 +496,7 @@ export const module1Questions: Question[] = [
     explanation:
       "Absolute duties (using 'shall' or 'must') must be complied with regardless of cost. Qualified duties require compliance 'so far as is reasonably practicable'.",
     section: '1.1',
+    topic: 'HASAWA 1974',
     difficulty: 'advanced',
   },
 
@@ -474,6 +516,7 @@ export const module1Questions: Question[] = [
     explanation:
       'EAWR 1989 is the Electricity at Work Regulations 1989, which specifically addresses electrical safety in the workplace.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
   {
@@ -489,6 +532,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 3 imposes duties on employers, employees, and self-employed to comply with the regulations to prevent danger and injury from electricity.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -504,6 +548,7 @@ export const module1Questions: Question[] = [
     explanation:
       "Under EAWR, 'danger' means risk of injury from electric shock, electrical burns, fires of electrical origin, or electric arcing and explosion.",
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -519,6 +564,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 4 requires that all electrical systems shall be constructed and maintained so as to prevent danger, so far as is reasonably practicable.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
   {
@@ -534,6 +580,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 12 requires that suitable means (including, where appropriate, methods of identifying circuits) are provided for cutting off supply and for isolation.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -549,6 +596,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 13 requires that adequate precautions shall be taken to prevent electrical equipment from being electrically charged during work where this could cause danger.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -564,6 +612,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 14 prohibits live working unless: (a) unreasonable to make dead, (b) reasonable to work live, and (c) suitable precautions taken to prevent injury.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'advanced',
   },
   {
@@ -579,6 +628,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 16 requires that no person shall engage in work activity where technical knowledge or experience is necessary unless they possess it or are appropriately supervised.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
   {
@@ -595,6 +645,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 5 requires that electrical equipment shall be of such construction as to be suitable for its intended use and conditions, with sufficient strength and capability.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
   {
@@ -610,6 +661,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 6 requires electrical equipment exposed to adverse or hazardous environments to be constructed or protected to prevent danger from such exposure.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -625,6 +677,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 7 requires all conductors to be either suitably insulated and protected, or placed to prevent danger, or both.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -640,6 +693,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 8 requires precautions including earthing or other suitable means to prevent danger arising from a conductor (other than a circuit conductor) becoming charged.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -655,6 +709,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 9 requires that all joints and connections in a system shall be mechanically and electrically suitable for use.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
   {
@@ -670,6 +725,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 10 requires that every part of a system shall be protected from excess current as may be necessary to prevent danger.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
   {
@@ -685,6 +741,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 11 requires suitable means readily accessible for protecting from excess current and for cutting off supply in an emergency.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -700,6 +757,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Dead working means working on electrical equipment or systems that have been properly isolated from all sources of electrical supply and proven dead.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
   {
@@ -715,6 +773,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Before starting work: identify the circuit, isolate from supply, secure the isolation, prove the circuit dead with a voltage indicator, and apply necessary safeguards.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -730,6 +789,7 @@ export const module1Questions: Question[] = [
     explanation:
       "Under EAWR, a 'system' means an electrical system in which all the electrical equipment is, or may be, electrically connected to a common source of electrical energy.",
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -745,6 +805,7 @@ export const module1Questions: Question[] = [
     explanation:
       'EAWR applies to employers, employees, and self-employed persons in relation to matters within their control regarding work activities where danger may arise from electricity.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
   {
@@ -760,6 +821,7 @@ export const module1Questions: Question[] = [
     explanation:
       "For regulations qualified by 'reasonably practicable', it is a defence to prove all reasonable steps were taken and all due diligence exercised.",
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'advanced',
   },
   {
@@ -775,6 +837,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Low voltage means exceeding 50V AC or 120V DC ripple-free but not exceeding 1000V AC or 1500V DC between conductors, or 600V AC or 900V DC to earth.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -790,6 +853,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Test equipment must be suitable for the purpose, properly constructed and maintained, and used by persons with adequate knowledge and experience.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -805,6 +869,7 @@ export const module1Questions: Question[] = [
     explanation:
       'GS38 provides guidance on the selection, use, and maintenance of electrical test equipment to protect against electric shock.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
   {
@@ -820,6 +885,7 @@ export const module1Questions: Question[] = [
     explanation:
       'GS38 specifies probes must have finger barriers, insulated tips with maximum 4mm exposed metal, spring-loaded retractable sheaths, and HRC fused leads.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'intermediate',
   },
   {
@@ -835,6 +901,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Regulation 15 requires adequate working space, means of access, and lighting for all electrical work to be carried out safely.',
     section: '1.2',
+    topic: 'EAWR 1989',
     difficulty: 'basic',
   },
 
@@ -854,6 +921,7 @@ export const module1Questions: Question[] = [
     explanation:
       'RIDDOR stands for the Reporting of Injuries, Diseases and Dangerous Occurrences Regulations, which requires reporting of work-related accidents and incidents.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
   {
@@ -869,6 +937,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Deaths and specified injuries must be reported without delay - by quickest practicable means, typically by phone, and followed up with a written report within 10 days.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -884,6 +953,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Specified injuries include fractures (except fingers/thumbs/toes), amputation, permanent loss of sight, crush injuries, burns, and scalping requiring hospital treatment.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
   {
@@ -899,6 +969,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Over-7-day incapacitation occurs when an employee is away from work or unable to perform their normal duties for more than 7 consecutive days, not counting the day of the accident.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -914,6 +985,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Over-7-day incapacitation injuries must be reported within 15 days of the accident.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -929,6 +1001,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Dangerous occurrences include collapse of lifting equipment, electrical short circuits causing fire, failure of pressure vessels, and similar serious incidents with potential for major harm.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -944,6 +1017,7 @@ export const module1Questions: Question[] = [
     explanation:
       'RIDDOR enables enforcing authorities to identify where and how risks arise, investigate serious accidents, and target their efforts to prevent future incidents.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
   {
@@ -959,6 +1033,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The responsible person is usually the employer, but can be the person in control of the premises (e.g., landlord) or self-employed person in control of their work.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -974,6 +1049,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Reports should be made online at the HSE website. For fatal and specified injuries, telephone reporting is available for immediate notification.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
   {
@@ -989,6 +1065,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Reportable occupational diseases include carpal tunnel syndrome, certain skin diseases, lung diseases, and hand-arm vibration syndrome when linked to specific work activities.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -1004,6 +1081,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Records of reportable injuries, diseases, and dangerous occurrences must be kept for at least 3 years from the date on which they were made.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
   {
@@ -1019,6 +1097,7 @@ export const module1Questions: Question[] = [
     explanation:
       'All work-related accidents and injuries should be recorded in the accident book, regardless of severity. This provides a record and can help identify patterns.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
   {
@@ -1034,6 +1113,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Failing to report under RIDDOR is a criminal offence that can result in an unlimited fine and imprisonment for up to 2 years.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -1049,6 +1129,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Injuries to non-workers (including members of the public) must be reported if they arise out of work activity and the person is taken directly to hospital for treatment.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -1064,6 +1145,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Gas incidents that result in death or injury, or where there was potential for such harm due to accidental leakage, are reportable under RIDDOR.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -1079,6 +1161,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Electrical short circuits or overloads causing fire or explosion are reportable dangerous occurrences under RIDDOR.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
   {
@@ -1094,6 +1177,7 @@ export const module1Questions: Question[] = [
     explanation:
       "Reports must include: injured person's details, where and when it happened, a brief description of what happened, and the nature of the injury.",
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -1109,6 +1193,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Amputation of an arm, hand, finger, thumb, leg, foot, or toe is a specified injury that must be reported under RIDDOR.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
   {
@@ -1124,6 +1209,7 @@ export const module1Questions: Question[] = [
     explanation:
       'If an injury is not immediately identifiable as over-7-day, report within 15 days of becoming aware that the absence or incapacity has exceeded 7 days.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -1139,6 +1225,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Road accidents are generally not reportable unless they occur on a private road forming part of the workplace, or as part of construction/maintenance work on public roads.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'advanced',
   },
   {
@@ -1154,6 +1241,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Incapacitated for normal work means the person cannot perform the full range of their normal work duties, even if they attend work or can do restricted duties.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -1169,6 +1257,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Burns or scalds covering more than 10% of the body surface, or causing significant damage to eyes, respiratory system, or vital organs, are specified injuries.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
   },
   {
@@ -1184,6 +1273,7 @@ export const module1Questions: Question[] = [
     explanation:
       'An incident is reportable if it arises from work activity, from the way work is carried out, or from conditions created by the work or premises.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'advanced',
   },
   {
@@ -1199,6 +1289,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The HSE Incident Contact Centre receives RIDDOR reports and can provide advice on reporting requirements.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
   {
@@ -1214,6 +1305,7 @@ export const module1Questions: Question[] = [
     explanation:
       'After a serious accident: ensure safety of others, provide first aid, preserve the accident scene as evidence, notify the responsible person, and report under RIDDOR.',
     section: '1.3',
+    topic: 'RIDDOR 2013',
     difficulty: 'basic',
   },
 
@@ -1233,6 +1325,7 @@ export const module1Questions: Question[] = [
     explanation:
       'COSHH stands for the Control of Substances Hazardous to Health Regulations 2002, which requires employers to control exposure to hazardous substances.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1248,6 +1341,7 @@ export const module1Questions: Question[] = [
     explanation:
       'COSHH covers substances hazardous to health including chemicals, products containing chemicals, fumes, dusts, vapours, mists, and biological agents.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1263,6 +1357,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Employers must assess the risks to health from hazardous substances and decide what precautions are needed before work with those substances begins.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1278,6 +1373,7 @@ export const module1Questions: Question[] = [
     explanation:
       'An SDS provides comprehensive information about a substance including its hazards, safe handling procedures, storage requirements, and emergency measures.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1293,6 +1389,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A WEL is the maximum concentration of an airborne substance averaged over a reference period (typically 8 hours or 15 minutes) that workers should be exposed to.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1308,6 +1405,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The corrosive symbol shows a hand and surface being attacked by a liquid, indicating the substance can cause severe burns to skin and eyes.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1323,6 +1421,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The flame symbol indicates the substance is flammable, meaning it can catch fire easily when exposed to ignition sources.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1338,6 +1437,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Under the hierarchy of control, elimination (not using the substance) or substitution (using a less hazardous alternative) should be considered first.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1353,6 +1453,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Health surveillance is required when exposure to a substance listed in Schedule 6 cannot be adequately controlled and there is a reasonable likelihood of disease or adverse effects.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'advanced',
   },
   {
@@ -1368,6 +1469,7 @@ export const module1Questions: Question[] = [
     explanation:
       'LEV is an engineering control system that captures airborne contaminants (dust, fumes, vapours) at or near the source before they can spread into the workplace.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1383,6 +1485,7 @@ export const module1Questions: Question[] = [
     explanation:
       'LEV systems must be thoroughly examined and tested at least every 14 months, or more frequently as specified for specific processes in COSHH Schedule 4.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1398,6 +1501,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Working with solvents may require chemical-resistant gloves, safety glasses or goggles, and respiratory protection if adequate ventilation cannot be achieved.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1413,6 +1517,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A COSHH assessment identifies what hazardous substances are used, who might be exposed, the routes of exposure, evaluates risks, and determines necessary control measures.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1428,6 +1533,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Hazardous substances can enter the body through inhalation (breathing), skin absorption, ingestion (swallowing), and injection (through cuts or punctures).',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1443,6 +1549,7 @@ export const module1Questions: Question[] = [
     explanation:
       'COSHH assessments must record significant findings including hazards identified, who might be affected, existing controls, additional measures needed, and review dates.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1458,6 +1565,7 @@ export const module1Questions: Question[] = [
     explanation:
       "COSHH assessments should be reviewed regularly and whenever there's reason to believe they're no longer valid, such as after incidents or changes to work processes.",
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1473,6 +1581,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Hazard pictograms are symbols that quickly convey the type of hazard a substance poses, such as flammable, toxic, corrosive, or environmental hazard.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1488,6 +1597,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The skull and crossbones indicates acute toxicity - the substance can cause death or serious harm even with short or one-time exposure.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1503,6 +1613,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The exclamation mark indicates lower-level hazards such as skin irritation, eye irritation, skin sensitisation, or substances harmful if swallowed.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1518,6 +1629,7 @@ export const module1Questions: Question[] = [
     explanation:
       "Signal words are 'Danger' (for more severe hazards) or 'Warning' (for less severe hazards) that indicate the relative severity of the hazard.",
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1533,6 +1645,7 @@ export const module1Questions: Question[] = [
     explanation:
       "H-statements (Hazard statements) are standardised phrases describing the nature of the hazard, such as 'H225: Highly flammable liquid and vapour'.",
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1548,6 +1661,7 @@ export const module1Questions: Question[] = [
     explanation:
       "P-statements (Precautionary statements) provide advice on safe handling, storage, disposal, and emergency measures, such as 'P210: Keep away from heat, sparks, open flame'.",
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1563,6 +1677,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Chemicals should be stored in original or appropriate containers, in designated well-ventilated areas, with incompatible substances segregated, and away from ignition sources.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
   {
@@ -1578,6 +1693,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Employers must provide employees with information about the risks, necessary precautions, control measures in place, and results of any exposure monitoring.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'intermediate',
   },
   {
@@ -1593,6 +1709,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Employees must be trained on hazards of substances they work with, how to use control measures, proper use of PPE, emergency procedures, and storage requirements.',
     section: '1.4',
+    topic: 'COSHH 2002',
     difficulty: 'basic',
   },
 
@@ -1612,6 +1729,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The Management of Health and Safety at Work Regulations 1999 require all employers to make suitable and sufficient assessments of risks to employees and others.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1627,6 +1745,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The five steps are: (1) Identify hazards, (2) Decide who might be harmed and how, (3) Evaluate risks and decide on precautions, (4) Record findings, (5) Review regularly.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1642,6 +1761,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A hazard is anything with potential to cause harm. Risk is the chance (high, medium, low) that somebody could be harmed by the hazard, along with the severity.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1657,6 +1777,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Employers with 5 or more employees must record the significant findings of their risk assessments in writing.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1672,6 +1793,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A suitable and sufficient assessment identifies significant risks, is appropriate to the nature and scale of the work, and remains valid for a reasonable time.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1687,6 +1809,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Risk assessments should be carried out by competent people with knowledge of the work. Involving workers who do the task provides valuable practical insight.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1702,6 +1825,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Risk evaluation considers both the likelihood of harm occurring and the potential severity of that harm. Controls should reduce risk to as low as reasonably practicable.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1717,6 +1841,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A dynamic risk assessment is the continuous process of identifying hazards and assessing risks as work progresses, particularly when conditions change unexpectedly.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1732,6 +1857,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A generic risk assessment covers common activities that remain consistent across different sites or situations, requiring site-specific additions when used.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1747,6 +1873,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Electrical work risk assessments should consider electric shock, burns, fire, explosion, falls from height, manual handling, confined spaces, and other relevant hazards.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1762,6 +1889,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Risk assessments must consider vulnerable workers such as young people, new or expectant mothers, and those with disabilities who may need additional protective measures.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1777,6 +1905,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A risk matrix helps evaluate and prioritise risks by plotting the likelihood of occurrence against the severity of consequences to give a risk rating.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1792,6 +1921,7 @@ export const module1Questions: Question[] = [
     explanation:
       "ALARP stands for 'As Low As Reasonably Practicable' - the principle that risks should be reduced to the lowest level that is reasonably practicable.",
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1807,6 +1937,7 @@ export const module1Questions: Question[] = [
     explanation:
       "Risk assessments should be reviewed when there are significant changes to work, after accidents or near misses, or when there's reason to believe they're no longer valid.",
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1822,6 +1953,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Residual risk is the level of risk that remains after control measures have been implemented. It should be as low as reasonably practicable.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1837,6 +1969,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The control measures section specifies the actions taken or needed to eliminate hazards or reduce risks to an acceptable level.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1852,6 +1985,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Identifying who might be harmed ensures control measures adequately protect everyone who could be affected, including employees, contractors, visitors, and the public.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1867,6 +2001,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A point of work risk assessment is a brief check done at the actual location immediately before starting work to identify any site-specific hazards.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1882,6 +2017,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Hazard identification can use manufacturer instructions, SDSs, accident records, near-miss reports, industry guidance, HSE publications, and input from workers.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1897,6 +2033,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A reasonably foreseeable hazard is one that a competent person could predict might occur given the nature of the work and circumstances.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1912,6 +2049,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Control measures should follow the hierarchy: eliminate the hazard, substitute with less hazardous, engineering controls, administrative controls, then PPE as last resort.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1927,6 +2065,7 @@ export const module1Questions: Question[] = [
     explanation:
       'An action plan should specify what actions are needed, who is responsible for implementing them, target completion dates, and actual completion dates.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1943,6 +2082,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Reviewing accident and near-miss data helps identify recurring hazards, patterns of incidents, and potential risks that may not have been previously recognised.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1958,6 +2098,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Employers must consult workers or their representatives on health and safety matters. Workers often have valuable insight into hazards and practical control measures.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -1973,6 +2114,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A task-specific risk assessment focuses on the particular hazards and risks associated with a specific activity or operation being carried out.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -1988,6 +2130,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Environmental factors include weather conditions, lighting levels, temperature extremes, noise, ventilation, working at height access, confined spaces, and similar conditions.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -2003,6 +2146,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A safe system of work is a formal procedure based on systematic examination to identify hazards and define methods to eliminate or minimise risks.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -2018,6 +2162,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Lone working requires specific assessment of communication means, emergency procedures, supervision arrangements, and any additional controls needed for isolated work.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
   {
@@ -2033,6 +2178,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Workers must be trained to understand the risks they face, the control measures in place, how to use them correctly, and their responsibilities.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'basic',
   },
   {
@@ -2048,6 +2194,7 @@ export const module1Questions: Question[] = [
     explanation:
       'If new hazards are identified, work should stop for reassessment. Additional controls should be implemented if needed and the risk assessment updated.',
     section: '1.5',
+    topic: 'Risk Assessment',
     difficulty: 'intermediate',
   },
 
@@ -2067,6 +2214,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A method statement (also called safe system of work document) describes in detail how work will be done safely, including the sequence of operations and controls.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2082,6 +2230,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A method statement describes how to implement the control measures identified in the risk assessment, providing step-by-step safe working procedures.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2097,6 +2246,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Method statements should include work description, sequence of operations, equipment and materials, control measures, responsibilities, and emergency procedures.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2112,6 +2262,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Method statements are typically required for complex or high-risk activities, permit-controlled work, or when specified by clients or principal contractors.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2127,6 +2278,7 @@ export const module1Questions: Question[] = [
     explanation:
       'RAMS stands for Risk Assessment and Method Statement - the combined documentation of hazards, risks, and safe working procedures for a task.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2142,6 +2294,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Method statements should be prepared by competent persons with relevant knowledge and experience, ideally involving the workers who will carry out the task.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2157,6 +2310,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Method statements should be communicated through briefings or toolbox talks before work starts and be available at the work location for reference.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2172,6 +2326,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A toolbox talk is a short, focused briefing (typically 5-15 minutes) on a specific health and safety topic relevant to the work being undertaken.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2187,6 +2342,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A permit to work is a formal documented system that ensures high-risk work is properly planned, all hazards identified, and appropriate controls in place before work starts.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2202,6 +2358,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Permits to work are typically required for hot work, confined space entry, electrical isolation work, excavations, and work on fragile roofs or at significant height.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2217,6 +2374,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Key elements include work description, identified hazards, required precautions, isolation/lockout details, time validity, authorisation signatures, and completion sign-off.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2232,6 +2390,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The work sequence describes the step-by-step order of operations, ensuring hazards are controlled at each stage and work proceeds safely and logically.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2247,6 +2406,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Method statements should specify the PPE required for each stage of the work, ensuring workers are properly protected throughout the task.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2262,6 +2422,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Method statements should include specific emergency procedures for the task, including emergency actions, evacuation routes, emergency contacts, and first aid arrangements.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2277,6 +2438,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Method statements should specify the level of supervision required, identify the supervisor, and define their responsibilities for overseeing safe work.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2292,6 +2454,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A point of work briefing is a short verbal review of the method statement and risk assessment at the work location immediately before starting the task.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2307,6 +2470,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Changes should trigger a stop to reassess risks. The method statement should be amended if needed and workers briefed on any changes before proceeding.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2322,6 +2486,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The competent person ensures work is properly planned, appropriately supervised, and carried out by people with the necessary skills, knowledge, and experience.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2337,6 +2502,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Method statements should specify equipment needed, pre-use inspection requirements, safe operating procedures, weight/load limits, and maintenance requirements.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2352,6 +2518,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Method statements should identify where work interfaces with other trades or activities and specify coordination measures to prevent conflicts and maintain safety.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2367,6 +2534,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Records should include the method statement, evidence of worker briefings, associated permits, completion/handback records, and documentation of any amendments.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2382,6 +2550,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A task brief is a summary of key safety points from the method statement communicated to workers to ensure they understand the safe system of work.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2397,6 +2566,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Good housekeeping prevents accidents. Method statements should specify requirements for maintaining a tidy workspace, material storage, and waste disposal.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'basic',
   },
   {
@@ -2412,6 +2582,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Sign-off confirms work is complete, the area is left in a safe condition, and any isolation or barriers can be removed, allowing normal operations to resume.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
   {
@@ -2427,6 +2598,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Environmental controls might include dust suppression methods, noise barriers, waste segregation and disposal, and measures to prevent water or soil pollution.',
     section: '1.6',
+    topic: 'Method Statements',
     difficulty: 'intermediate',
   },
 
@@ -2446,6 +2618,7 @@ export const module1Questions: Question[] = [
     explanation:
       'PPE stands for Personal Protective Equipment - equipment worn or held to protect against risks to health and safety.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2461,6 +2634,7 @@ export const module1Questions: Question[] = [
     explanation:
       'PPE should only be used as a last resort when risks cannot be adequately controlled by other means such as elimination, substitution, or engineering controls.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2476,6 +2650,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Employers must provide suitable PPE free of charge, maintain it properly, provide storage, train workers in its use, and ensure it is worn.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2491,6 +2666,7 @@ export const module1Questions: Question[] = [
     explanation:
       'CE (or UKCA for UK) marking indicates the PPE meets essential health and safety requirements of relevant regulations and standards.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2506,6 +2682,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Electrical work typically requires safety footwear, insulating gloves for live working, eye protection, non-flammable clothing, and sometimes arc flash protection.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2521,6 +2698,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Employees must use PPE properly in accordance with training, report defects or loss, store it correctly, and not intentionally misuse it.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2536,6 +2714,7 @@ export const module1Questions: Question[] = [
     explanation:
       'PPE selection should consider the hazard type and level, required protection level, proper fit for the wearer, compatibility with other PPE, and wearer comfort.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2551,6 +2730,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Class 00 (up to 500V) or Class 0 (up to 1000V) insulating gloves are typically used for low voltage electrical work, tested to relevant standards.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2566,6 +2746,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Insulating gloves must be tested regularly as specified by the manufacturer (typically every 6 months) and inspected before each use.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2581,6 +2762,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Arc flash protection is specialised PPE (clothing, face shields, gloves) designed to protect against the intense heat and light from electrical arc flash incidents.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2596,6 +2778,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Arc flash risk assessment calculates the potential incident energy (cal/cm²) to determine the appropriate arc-rated PPE category for worker protection.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'advanced',
   },
   {
@@ -2611,6 +2794,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Safety glasses or goggles rated for impact protection are required, with arc-rated protection for work where arc flash is a risk.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2626,6 +2810,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Synthetic materials can melt in an arc flash and adhere to skin, significantly worsening burn injuries. Natural fibres or arc-rated materials are preferred.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2641,6 +2826,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Safety footwear provides protection against falling objects, puncture hazards, and may include electrical hazard (EH) rating for protection against electrical contact.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2656,6 +2842,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Safe isolation is a systematic procedure to safely disconnect electrical equipment from all sources of supply and verify it is dead before work begins.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2671,6 +2858,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Steps: identify the circuit, switch off and isolate, secure the isolation (lock-off), prove dead with a tested voltage indicator, then apply lock-off/warning notices.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2686,6 +2874,7 @@ export const module1Questions: Question[] = [
     explanation:
       "Testing the voltage indicator on a known live source before and after use confirms it is working correctly, giving confidence that a 'dead' reading is accurate.",
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2701,6 +2890,7 @@ export const module1Questions: Question[] = [
     explanation:
       'A proving unit provides a known voltage to verify a voltage indicator is working correctly before testing a circuit and confirming it after proving dead.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2716,6 +2906,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Lock-off devices physically prevent an isolator or circuit breaker being switched back on while work is in progress, maintaining safe isolation.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2732,6 +2923,7 @@ export const module1Questions: Question[] = [
     explanation:
       'When multiple people work on an isolated circuit, each person should apply their own padlock using a multi-lock hasp, keeping their own key until their work is complete.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2747,6 +2939,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Clear warning signs should be displayed at the isolation point indicating work is in progress and that the circuit must not be re-energised.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'basic',
   },
   {
@@ -2762,6 +2955,7 @@ export const module1Questions: Question[] = [
     explanation:
       'An electrical permit to work is a formal document authorising specific work, detailing isolation points, precautions, and requiring sign-off before and after work.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2777,6 +2971,7 @@ export const module1Questions: Question[] = [
     explanation:
       "If isolation isn't possible and live working is justified under EAWR Regulation 14, strict live working procedures with appropriate controls must be followed.",
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'advanced',
   },
   {
@@ -2792,6 +2987,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The three-point test: verify the indicator works on a known live source, test the isolated circuit, then verify the indicator still works on the known live source.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'intermediate',
   },
   {
@@ -2807,6 +3003,7 @@ export const module1Questions: Question[] = [
     explanation:
       'HV work requires specially trained authorised persons, formal switching programmes, application of circuit main earths, and HV-rated testing equipment.',
     section: '1.7',
+    topic: 'PPE and Safe Systems',
     difficulty: 'advanced',
   },
 
@@ -2826,6 +3023,7 @@ export const module1Questions: Question[] = [
     explanation:
       'On discovering an electrical fire: raise the alarm immediately, isolate the power supply if it is safe to do so, then evacuate and call the fire service.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'basic',
   },
   {
@@ -2836,6 +3034,7 @@ export const module1Questions: Question[] = [
     explanation:
       'CO2 and dry powder extinguishers are safe for electrical fires. Water and foam must not be used as they conduct electricity. CO2 is preferred as it leaves no residue.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'basic',
   },
   {
@@ -2851,6 +3050,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Ensure the power source is isolated, check if the casualty is responsive, call for help (999), and begin CPR if they are not breathing normally.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'basic',
   },
   {
@@ -2866,6 +3066,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Touching someone receiving a shock can make you part of the electrical circuit, giving you a shock too. Isolate the power first or use a dry non-conductive material.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'basic',
   },
   {
@@ -2881,6 +3082,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Electric shock can cause burns at entry and exit points, plus internal tissue damage along the path the current takes through the body.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'intermediate',
   },
   {
@@ -2896,6 +3098,7 @@ export const module1Questions: Question[] = [
     explanation:
       'For arc flash: extinguish burning clothing, cool burns with clean water, cover loosely with non-adhesive dressing, treat for shock, and seek emergency medical help.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'intermediate',
   },
   {
@@ -2911,6 +3114,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Emergency plans should include escape routes, assembly points, roll call procedures, emergency service contacts, and arrangements for those needing assistance to evacuate.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'intermediate',
   },
   {
@@ -2926,6 +3130,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Emergency procedures should be practised regularly. Fire drills should occur at least annually, with more frequent briefings for new starters and when procedures change.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'basic',
   },
   {
@@ -2941,6 +3146,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Workplaces must display fire action notices, indicate evacuation routes and fire exits, show assembly points, and provide emergency contact information.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'basic',
   },
   {
@@ -2956,6 +3162,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Fire wardens assist with evacuation, check their designated areas are clear, direct people to exits, help those needing assistance, and report status at the assembly point.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'basic',
   },
   {
@@ -2971,6 +3178,7 @@ export const module1Questions: Question[] = [
     explanation:
       'Only attempt to fight a fire if trained, you have a safe escape route, the right type of extinguisher, and the fire is small enough to tackle safely.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'intermediate',
   },
   {
@@ -2986,6 +3194,7 @@ export const module1Questions: Question[] = [
     explanation:
       'The assembly point is a predetermined safe location away from the building where evacuated personnel gather to be accounted for and receive further instructions.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'basic',
   },
   {
@@ -3001,6 +3210,7 @@ export const module1Questions: Question[] = [
     explanation:
       'PASS: Pull the pin, Aim the nozzle at the base of the fire, Squeeze the handle, and Sweep from side to side at the base of the flames.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'basic',
   },
   {
@@ -3016,6 +3226,7 @@ export const module1Questions: Question[] = [
     explanation:
       'All emergency incidents should be reported with details of what happened, actions taken, any injuries, damage, near misses, and lessons learned for improvement.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'intermediate',
   },
   {
@@ -3031,26 +3242,904 @@ export const module1Questions: Question[] = [
     explanation:
       'Shock symptoms include pale grey skin, cold and clammy feel, rapid weak pulse, rapid shallow breathing, nausea, thirst, and mental confusion or anxiety.',
     section: '1.8',
+    topic: 'Emergency Procedures',
     difficulty: 'intermediate',
+  },
+
+  // ============================================
+  // Section 1.9: Asbestos and CDM 2015 (Questions 201-225)
+  // ============================================
+  {
+    id: 201,
+    question: 'Under CDM 2015 Regulation 9, what is the principal designer\'s duty when planning the pre-construction phase?',
+    options: [
+      'Only to design the building structure',
+      'To plan, manage, monitor and coordinate health and safety in the pre-construction phase, including identifying and eliminating foreseeable risks',
+      'To draft the contract only',
+      'To handle billing for design work',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CDM 2015 Reg 9 places the principal designer in charge of health and safety during pre-construction. They must plan, manage, monitor and coordinate work to identify, eliminate or control foreseeable risks for those building, using and maintaining the structure.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 202,
+    question: 'Under CDM 2015 Reg 13, when does a contractor become a principal contractor?',
+    options: [
+      'Always, on every job',
+      'When more than one contractor is, or is reasonably foreseeable to be, working on the project at the same time — the client must appoint one in writing',
+      'Only on domestic jobs',
+      'Only if the project lasts over 12 months',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CDM 2015 Reg 5 requires the client to appoint a principal contractor in writing whenever more than one contractor is involved (or foreseeably will be). The principal contractor then takes on Reg 13 duties — planning, managing, monitoring and coordinating the construction phase.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 203,
+    question: 'Under CDM 2015 Reg 15, what must a contractor do before starting work on site?',
+    options: [
+      'Just turn up and start',
+      'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
+      'Only check the postcode',
+      'Email a quote',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CDM 2015 Reg 15 says every contractor must plan, manage and monitor their own work and ensure workers under their control receive a site-specific induction, suitable training and information before starting.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 204,
+    question: 'Under CAR 2012 (Control of Asbestos Regulations), what is a refurbishment and demolition (R&D) survey for?',
+    options: [
+      'Only to value the building',
+      'To locate and describe all asbestos-containing materials before refurbishment or demolition, so they can be removed before work starts',
+      'To photograph the property',
+      'To assess parking',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CAR 2012 Reg 5 requires an R&D survey before any refurbishment or demolition. It is fully intrusive and is designed to find all ACMs so they can be safely removed before the work begins, protecting workers from disturbance.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 205,
+    question: 'Under CAR 2012, who can carry out licensed asbestos work such as removing sprayed coatings or asbestos insulating board (AIB) in poor condition?',
+    options: [
+      'Any electrician',
+      'Only HSE-licensed contractors holding a current asbestos licence',
+      'A general builder',
+      'The client themselves',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Higher-risk asbestos work (sprayed coatings, lagging, most AIB work) is licensable under CAR 2012. Only contractors holding a current HSE asbestos licence may do it. Electricians who suspect ACMs must stop work and report — never proceed.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 206,
+    question: 'You\'re a supervisor on a 1970s commercial refurb. An apprentice drills into a ceiling tile and a grey fibrous dust falls out. What do you do first?',
+    options: [
+      'Tell them to keep going',
+      'Stop work immediately, prevent access to the area, isolate the suspect material from disturbance, and report it to the client and duty holder',
+      'Hoover it up',
+      'Go to lunch',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CAR 2012 Reg 16 requires immediate cessation if asbestos is suspected. Stop work, prevent further disturbance, restrict access, and notify the duty holder. Do not attempt to clean up — sampling and any removal must be done by a competent or licensed contractor.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 207,
+    question: 'Under CDM 2015, when does the client need to notify HSE using an F10?',
+    options: [
+      'Every job',
+      'When construction work is scheduled to last longer than 30 working days with more than 20 workers on site simultaneously, or exceed 500 person-days',
+      'Never',
+      'Only on domestic projects',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CDM 2015 Reg 6 requires F10 notification when work is scheduled to last more than 30 working days with more than 20 workers on site at the same time, OR exceeds 500 person-days in total. The client is responsible for the notification.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 208,
+    question: 'Under CDM 2015, what is the construction phase plan and who prepares it?',
+    options: [
+      'A shopping list, prepared by the client',
+      'A document setting out how health and safety will be managed during construction, prepared by the principal contractor (or sole contractor)',
+      'A bill of quantities',
+      'A calendar',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The construction phase plan is required under CDM 2015 Reg 12. The principal contractor (or sole contractor on smaller jobs) prepares it before the construction phase begins. It covers the arrangements for managing significant health and safety risks during the build.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 209,
+    question: 'What is the health and safety file under CDM 2015 and who keeps it?',
+    options: [
+      'A diary kept by the apprentice',
+      'A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure',
+      'An invoice file',
+      'A staff handbook',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CDM 2015 Reg 12(5) requires the principal designer (or principal contractor) to compile the health and safety file. It contains residual hazard information for future works and is handed to the client at handover. The client must keep it for the lifetime of the structure.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 210,
+    question: 'Under the Building Safety Act 2022, what is a higher-risk residential building (HRRB)?',
+    options: [
+      'Any house',
+      'A building at least 18 metres high or with at least 7 storeys, containing at least two residential units',
+      'Any flat',
+      'A garage',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Building Safety Act 2022 defines HRRBs as buildings of at least 18m or 7 storeys containing two or more residential units. They are subject to enhanced duty-holder regimes, the golden thread of information, and Building Safety Regulator oversight.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 211,
+    question: 'What is the "golden thread" required by the Building Safety Act 2022?',
+    options: [
+      'A type of cable',
+      'A digital, accurate, accessible record of building information that supports safe design, construction and ongoing management of HRRBs',
+      'A piece of jewellery',
+      'A health and safety poster',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The golden thread is a structured digital information record required by the BSA 2022 for HRRBs. It must be accurate, up-to-date, accessible to dutyholders, and supports safe design, construction, occupation and remediation throughout the building\'s life.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 212,
+    question: 'The asbestos duty holder under CAR 2012 Reg 4 is responsible for what?',
+    options: [
+      'Removing all asbestos immediately',
+      'Managing the risk from ACMs in non-domestic premises — finding them, recording them, assessing risk, planning management, and providing the information to anyone liable to disturb them',
+      'Only the HSE',
+      'Painting the building',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CAR 2012 Reg 4 places a duty on the person in control of non-domestic premises (typically the owner or occupier) to manage asbestos. They must locate, record, assess, plan, and share the information — including with contractors before work starts.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 213,
+    question: 'You arrive on a domestic CU change in a 1960s flat. The client has no R&D survey. What\'s your supervisor-grade response?',
+    options: [
+      'Crack on',
+      'Refuse to start until the client confirms in writing whether ACMs are present in the area you\'ll disturb, or commissions an appropriate survey',
+      'Drill anyway and see',
+      'Send the apprentice in alone',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Pre-2000 buildings can contain ACMs. CAR 2012 Reg 5 requires you to identify ACMs before disturbing them. As supervisor you must refuse to start without that information — proceeding regardless exposes both you and your worker to enforcement and prosecution.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 214,
+    question: 'What is the difference between licensable, notifiable non-licensed (NNLW) and non-licensed asbestos work?',
+    options: [
+      'No difference',
+      'Licensable = highest risk, requires HSE licence; NNLW = sporadic/low intensity but still requires notification, training, medicals, records; Non-licensed = lowest risk asbestos work with limited controls',
+      'They\'re all the same',
+      'Only labels',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CAR 2012 sets a three-tier system. Licensable work (sprayed coatings, lagging, most AIB) needs an HSE licence. NNLW (sporadic disturbance of higher-risk material) requires HSE notification, medical surveillance and records. Non-licensed covers low-risk work like undamaged cement products.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 215,
+    question: 'Under CAR 2012, what training must any worker who may disturb asbestos receive?',
+    options: [
+      'None',
+      'Asbestos awareness training, refreshed regularly, before starting work — covering risks, types of ACMs, and what to do if they are encountered',
+      'A leaflet',
+      'A YouTube video',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CAR 2012 Reg 10 requires anyone whose work may foreseeably expose them to asbestos to receive suitable asbestos awareness training. This includes electricians and apprentices working in pre-2000 buildings. Refresher training is required and records must be kept.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 216,
+    question: 'Under CDM 2015 Reg 4, what is a domestic client and how do their duties pass to the contractor?',
+    options: [
+      'Same as a commercial client',
+      'A client having work done in their own home not connected to a business — most CDM duties pass automatically to the contractor (or principal contractor where there are several)',
+      'There\'s no such thing',
+      'They have no duties at all',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A domestic client under CDM 2015 has work done on their own home unconnected with any business. The Regulations transfer most client duties to the contractor (or principal contractor on multi-contractor jobs), so the contractor effectively assumes the client role.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 217,
+    question: 'A client tells you "we don\'t have an asbestos register, just get on with it" before a commercial rewire. What do you, as supervisor, do?',
+    options: [
+      'Get on with it',
+      'Refuse to start. Inform the client in writing that under CAR 2012 Reg 4 they have a duty to manage asbestos and provide the information; without it the work cannot proceed safely or lawfully',
+      'Quietly sub it out',
+      'Take pictures and post on social media',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Without the duty holder\'s asbestos information you cannot plan safe work in a non-domestic premises. As supervisor you must refuse to start and put it in writing. Proceeding without the survey/register is a CAR 2012 breach for both client and contractor.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 218,
+    question: 'Under CDM 2015 Reg 8, what general duty does every dutyholder have around competence?',
+    options: [
+      'No duty',
+      'They must have, or organisations must ensure they have, the skills, knowledge, training and experience appropriate to their role — and behavioural capability',
+      'Only the apprentice needs competence',
+      'Just qualifications on paper',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CDM 2015 Reg 8 (general duties) requires every dutyholder — designers, contractors, principal contractors, principal designers — to have appropriate skills, knowledge, training, experience and (for organisations) the capability to discharge their role.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 219,
+    question: 'You discover ACM dust spread through a corridor after an unrelated trade has drilled a wall. As supervisor, what is your sequence of actions?',
+    options: [
+      'Sweep up and continue',
+      'Evacuate and seal the area, stop all work, notify the duty holder and HSE if appropriate, arrange licensed clean-up, retain workers\' clothing for assessment, log near miss and review',
+      'Finish your job first',
+      'Leave it for cleaners',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A spread of suspected asbestos dust is a serious uncontrolled exposure. Evacuate and seal the area, stop work, escalate to the duty holder, secure clothing/PPE, arrange licensed decontamination, and report to HSE. Document as RIDDOR-relevant if exposure is confirmed.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 220,
+    question: 'What is a management asbestos survey and how does it differ from an R&D survey?',
+    options: [
+      'They are the same',
+      'Management survey identifies ACMs likely to be disturbed in normal use; R&D survey is fully intrusive and locates all ACMs prior to refurbishment or demolition',
+      'Management is for offices only',
+      'R&D surveys are optional',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A management survey supports the day-to-day management of ACMs and is non- or minimally intrusive. An R&D survey is fully intrusive (in HSG264 terms) and is mandatory before refurbishment or demolition to ensure no ACMs are missed.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 221,
+    question: 'Under CDM 2015, what is the principal designer\'s duty regarding designers under their control?',
+    options: [
+      'No duty',
+      'To coordinate matters relating to health and safety and ensure designers cooperate, share information and apply the general principles of prevention',
+      'Only to pay them',
+      'Only to chase invoices',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Under CDM 2015 Reg 11, the principal designer must plan, manage, monitor and coordinate the pre-construction phase, ensure designers cooperate and share information, and apply the general principles of prevention from MHSWR Sch 1.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 222,
+    question: 'A subcontractor\'s RAMS does not address asbestos at all on a 1980s commercial site. As principal contractor what do you do?',
+    options: [
+      'Approve it anyway',
+      'Reject the RAMS, require it to be revised to address ACMs based on the duty holder\'s register/survey, and verify it before allowing the subcontractor on site',
+      'Tear it up',
+      'Tell them to make it up',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Approving deficient RAMS is a principal contractor failing under CDM 2015 Reg 13. Reject it, share the duty holder\'s asbestos register, and require revision. Don\'t allow the subcontractor on site until the RAMS adequately addresses identified ACMs.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 223,
+    question: 'Under CDM 2015, what is "pre-construction information" (PCI) and who provides it?',
+    options: [
+      'A site map',
+      'Information about the project, including known hazards, that the client must provide to designers and contractors as soon as practicable',
+      'Just a postcode',
+      'A weather forecast',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CDM 2015 Reg 4(4) requires the client to provide pre-construction information — site details, known hazards (including asbestos register), existing drawings and any health and safety file — as early as practicable to inform design and planning.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 224,
+    question: 'Under CAR 2012, what records must be kept after non-licensed but notifiable asbestos work (NNLW)?',
+    options: [
+      'No records',
+      'Personal exposure records for at least 40 years and health surveillance records, with workers having access to their own records',
+      'For one week',
+      'Only photos',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CAR 2012 Regs 19 and 22 require employers to keep personal exposure records for at least 40 years (because of the long latency of asbestos disease) and health surveillance records. Workers can access their own records.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+  {
+    id: 225,
+    question: 'You are the appointed supervisor on a small commercial refurb under CDM 2015. The client has not appointed a principal designer. What do you do?',
+    options: [
+      'Ignore it',
+      'Inform the client in writing that they must appoint a principal designer (Reg 5) where more than one contractor is involved, and that without it the project cannot lawfully proceed',
+      'Appoint yourself silently',
+      'Work without one',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CDM 2015 Reg 5 makes appointment of a principal designer (and principal contractor) a client duty whenever there is more than one contractor. Failure is a client breach. As supervisor you must escalate it in writing — the project should not start until appointments are made.',
+    section: '1.9',
+    topic: 'Asbestos and CDM 2015',
+    difficulty: 'advanced',
+  },
+
+  // ============================================
+  // Section 1.10: Supervisor Responsibilities (Questions 226-250)
+  // ============================================
+  {
+    id: 226,
+    question: 'Under HASAWA Section 7, what duty does an employee owe to themselves and others while at work?',
+    options: [
+      'No duty',
+      'To take reasonable care of their own health and safety and that of others affected by their acts or omissions, and cooperate with the employer',
+      'Only to look after themselves',
+      'Only to report sick',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Section 7 places personal criminal duties on every employee: take reasonable care of own and others\' health and safety, and cooperate with the employer. Breach can lead to individual prosecution — supervisors and apprentices alike are liable.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 227,
+    question: 'Under HASAWA Section 37, when can a director or senior manager be personally prosecuted alongside the company?',
+    options: [
+      'Never',
+      'Where an offence by the company is committed with their consent, connivance or attributable to their neglect — they may be charged personally as well',
+      'Only on construction sites',
+      'Only above £10m turnover',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Section 37 HASAWA exposes directors and senior managers personally where the company\'s offence was committed with their consent, connivance, or due to their neglect. This is the basis for many personal H&S prosecutions and disqualifications.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 228,
+    question: 'Under the Sentencing Council Definitive Guideline 2016 (Health and Safety Offences), what factors determine the level of fine?',
+    options: [
+      'Just the offence',
+      'Culpability (very high to low), seriousness of harm risked, likelihood of harm, plus the offender\'s turnover and aggravating/mitigating factors',
+      'Random',
+      'Only company size',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The 2016 Definitive Guideline produces fines linked to culpability, harm category and turnover band. Large organisations can face fines into the millions. The structured approach has driven a step-change in penalty levels since 2016.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 229,
+    question: 'What is the Fee For Intervention (FFI) and when does HSE charge it?',
+    options: [
+      'A consultancy fee',
+      'A statutory cost recovery scheme charging a hourly fee for HSE inspector time spent identifying and helping to address material breaches of H&S law',
+      'A tax',
+      'A grant',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'FFI lets HSE recover its costs for time spent dealing with material breaches at an hourly rate set by Parliament. The bill goes to the dutyholder and is payable even if no formal enforcement action follows.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 230,
+    question: 'What is the difference between an improvement notice and a prohibition notice?',
+    options: [
+      'Same thing',
+      'Improvement notice gives time to remedy a breach; prohibition notice immediately stops an activity that involves a risk of serious personal injury',
+      'Improvement notice always requires court approval',
+      'Prohibition notices are voluntary',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Improvement notices (HSWA s.21) require a breach to be remedied within a stated period. Prohibition notices (s.22) take immediate effect to stop activity involving risk of serious personal injury and remain in force until conditions are met.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 231,
+    question: 'Under RIDDOR 2013, what is a "specified injury" listed in Schedule 1?',
+    options: [
+      'Any cut',
+      'Defined serious injuries including fractures (other than fingers, thumbs, toes), amputations, loss of sight, crush injury to head/torso, serious burns, scalpings, loss of consciousness from head injury or asphyxia, and any injury requiring resuscitation',
+      'Only fatalities',
+      'Only paper cuts',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'RIDDOR Schedule 1 lists specified injuries that must be reported regardless of whether the worker is off work. They include serious fractures, amputations, sight loss, crushing of head/torso, serious burns, scalpings, loss of consciousness and injuries requiring resuscitation.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 232,
+    question: 'Under RIDDOR 2013, who has the duty to report and what form is used for an over-7-day injury to an employee?',
+    options: [
+      'No one',
+      'The "responsible person" (typically the employer) must report — online via HSE\'s reporting portal, equivalent to F2508',
+      'The injured worker',
+      'The HSE',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'RIDDOR places the reporting duty on the "responsible person" — usually the employer or person in control. Reports of over-7-day absence injuries are submitted online to HSE via the F2508 system within 15 days of the incident.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 233,
+    question: 'A near-miss happens on your site — a live conductor is touched but no shock occurs because of insulated tools. As supervisor, what do you do?',
+    options: [
+      'Ignore it',
+      'Investigate, record it in the accident book / near-miss log, review the safe-isolation procedure, brief the team, and use it as a positive learning event',
+      'Sack the worker',
+      'Pretend it didn\'t happen',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A strong near-miss culture catches risks before they become incidents. As supervisor you must investigate root cause, log it, share learning with the team, and review controls. Even if not RIDDOR-reportable, it\'s the best free data you\'ll get.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 234,
+    question: 'A new RAMS arrives from a designer that you, as supervisor, can see is generic and doesn\'t reflect site conditions. What\'s the correct action?',
+    options: [
+      'Sign it and crack on',
+      'Reject it, require a site-specific RAMS, brief the team only after it\'s been revised, and document the rejection',
+      'Lose it',
+      'Read it out loud',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A generic RAMS doesn\'t discharge anyone\'s MHSWR Reg 3 duty. As supervisor you must reject it, request a site-specific version, and only brief once it reflects actual hazards. Document the rejection — it protects you and forces good practice upstream.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 235,
+    question: 'How does the Corporate Manslaughter and Corporate Homicide Act 2007 differ from HASAWA prosecution?',
+    options: [
+      'Same thing',
+      'It targets the organisation as a whole where a gross breach of duty causes death and substantially involves senior management — focuses on culture, not individuals',
+      'Only individuals',
+      'Only fines',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The 2007 Act allows prosecution of an organisation where its activities causing death amount to a gross breach and senior management failure was a substantial element. It targets corporate culture, not individuals — and carries unlimited fines plus publicity orders.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 236,
+    question: 'Under MHSWR 1999 Reg 3, what is the employer\'s risk assessment duty?',
+    options: [
+      'A vague suggestion',
+      'A suitable and sufficient assessment of risks to employees and others affected by their work, recorded if 5+ employees, reviewed when significant changes occur',
+      'Only on Mondays',
+      'Only annual',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Management of Health and Safety at Work Regulations 1999 Reg 3 requires a "suitable and sufficient" risk assessment. Significant findings must be recorded by employers with 5 or more workers, and the assessment reviewed when there is reason to suspect it\'s no longer valid.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 237,
+    question: 'Under MHSWR Reg 5, what arrangements must employers have in place?',
+    options: [
+      'None',
+      'Effective arrangements for the planning, organisation, control, monitoring and review of preventive and protective measures — recorded by employers with 5+ employees',
+      'Only training',
+      'Only insurance',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'MHSWR Reg 5 requires employers to have effective arrangements for the planning, organisation, control, monitoring and review of their preventive and protective measures (the "POCMR" wheel). Like Reg 3, they must be recorded if 5+ workers.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 238,
+    question: 'Under MHSWR Schedule 1, what are the general principles of prevention?',
+    options: [
+      'Just wear PPE',
+      'Avoid risks; evaluate unavoidable risks; combat at source; adapt work to the individual; adapt to technical progress; replace dangerous with less dangerous; develop coherent prevention policy; collective over individual measures; instruct workers',
+      'Random list',
+      'PPE first',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'MHSWR Schedule 1 lists 9 principles in order — avoid, evaluate, combat at source, adapt to individual, follow technical progress, replace, prevention policy, collective measures over individual (PPE), instructions. PPE is the LAST resort, not the first.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 239,
+    question: 'A worker refuses to wear safety glasses during drilling overhead. As supervisor what is your response?',
+    options: [
+      'Let them off',
+      'Stop the activity, formally re-brief the requirement and consequences (employee duty under HASAWA s.7 and PUWER), document refusal, and apply the company disciplinary procedure if continued',
+      'Shrug',
+      'Buy them a coffee',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'PPE refusal is an employee breach of HASAWA s.7. As supervisor you must stop the work, re-brief, document and (if persistent) escalate disciplinary action. Continuing while a worker refuses leaves both you and the company exposed to enforcement.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 240,
+    question: 'Under PUWER 1998 Reg 4, what duty does an employer have for work equipment?',
+    options: [
+      'Just buy it',
+      'Ensure equipment is suitable for purpose, used only by trained and competent persons, maintained, inspected, with controls, isolation, stability and lighting',
+      'Only check the price',
+      'Only read the label',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'PUWER 1998 covers all work equipment from drills to plant. Reg 4 (suitability) plus the regs covering training, maintenance, inspection, controls, isolation and protection apply. Supervisors must verify all are in place — paperwork alone is not enough.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 241,
+    question: 'Under Working at Height Regulations 2005, what is the order of priority for managing falls?',
+    options: [
+      'PPE first',
+      'Avoid the work at height; if unavoidable, use work equipment that prevents falls; if not possible, use work equipment that minimises distance and consequences of falls — fall arrest is last',
+      'Always use a ladder',
+      'Always use a harness',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'WAHR 2005 follows the prevention hierarchy. First avoid; then prevent (e.g. scaffold, MEWP with edge protection); then minimise (collective measures like nets); only then personal fall arrest. PPE/harness is last — not the default.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 242,
+    question: 'A scaffold tag is missing on a tower delivered to your site this morning. As supervisor what do you do?',
+    options: [
+      'Use it anyway',
+      'Quarantine the tower and refuse use until a competent person inspects and tags it under WAHR 2005 / PASMA — log the incident',
+      'Let the apprentice climb it first',
+      'Ignore it',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Working at height equipment must be inspected before use. A missing tag means it cannot be verified as safe — quarantine it, get a competent inspection (PASMA-trained where applicable), and log the failure for follow-up with the supplier.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 243,
+    question: 'Under the Manual Handling Operations Regulations 1992, what is the order of duties on the employer?',
+    options: [
+      'Just lift it',
+      'Avoid hazardous manual handling so far as is reasonably practicable; assess what cannot be avoided; reduce risk to lowest level reasonably practicable',
+      'Wear gloves',
+      'Use a hoist',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'MHOR 1992 follows a three-step hierarchy — Avoid, Assess, Reduce. Reduction can include mechanical aids, redesign, splitting loads, team handling, and training. Assessment must consider task, individual, load and environment (TILE).',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 244,
+    question: 'Under the Control of Noise at Work Regulations 2005, what are the lower and upper exposure action values?',
+    options: [
+      'No values',
+      'Lower 80 dB(A) daily/weekly exposure with peak 135 dB(C); upper 85 dB(A) with peak 137 dB(C); exposure limit 87 dB(A) with peak 140 dB(C)',
+      '70 dB',
+      '100 dB',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CNWR 2005 sets a lower action value of 80 dB(A), upper of 85 dB(A) (where hearing protection becomes mandatory and zones must be marked), and a personal exposure limit of 87 dB(A) at the ear (factoring in hearing protection).',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 245,
+    question: 'Under the Control of Vibration at Work Regulations 2005, what are the daily exposure action and limit values for hand-arm vibration?',
+    options: [
+      'No limits',
+      'Action value 2.5 m/s² A(8); limit value 5 m/s² A(8) — over which exposure is prohibited',
+      '10 m/s²',
+      '0.5 m/s²',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CVAWR 2005 sets a daily exposure action value of 2.5 m/s² A(8), at which controls must start, and a daily exposure limit value of 5 m/s² A(8) above which exposure must not occur. Risk assessment must consider trigger time and tool emission data.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 246,
+    question: 'What is the dynamic risk assessment that supervisors are expected to do continuously on site?',
+    options: [
+      'A fixed paper assessment',
+      'Continuous mental reassessment of changing site conditions — new hazards, changing weather, fatigue, time pressure — adapting controls in real time and stopping work if needed',
+      'Only at start of shift',
+      'Once a year',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Written RAMS sets the baseline; dynamic risk assessment is the supervisor\'s continuous duty to monitor changing conditions and adjust. New trades arriving, weather change, equipment failure, fatigue — any of these can trigger a stop or revision.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 247,
+    question: 'You are tasked with toolbox-talking a brand new safe-isolation procedure. What makes the briefing effective?',
+    options: [
+      'Just read it out',
+      'Cover purpose, scope, step-by-step procedure, equipment required, hazards if not followed, individual responsibilities, allow questions, get signed acknowledgement, and check understanding',
+      'Hand out leaflets',
+      'Send it on email',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Effective toolbox talks are interactive — purpose, scope, steps, equipment, consequences, responsibilities. Allow questions, check understanding (don\'t just ask "any questions?"), and get acknowledgement signatures. Briefing without comprehension is not training.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 248,
+    question: 'Under Section 3 of HASAWA, what duty does an employer owe to people who are NOT their employees?',
+    options: [
+      'No duty',
+      'To conduct their undertaking so as to ensure, so far as is reasonably practicable, that persons not in their employment are not exposed to risks to their health or safety',
+      'Only to neighbours',
+      'Only on weekends',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HASAWA s.3 extends the employer\'s duty to anyone affected by the work — clients, the public, other contractors, visitors. It is the basis for many prosecutions where work harms a non-employee. Self-employed have an equivalent s.3(2) duty.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 249,
+    question: 'A serious incident has just happened on your site — an electrician suffers a flash burn during fault-finding on live equipment. As supervisor, what is your immediate sequence of actions?',
+    options: [
+      'Carry on and clean up later',
+      'Make safe (isolate hazard), administer first aid / call emergency services, preserve the scene, notify employer and client, secure witnesses, report under RIDDOR if applicable, start investigation',
+      'Call the press',
+      'Send everyone home and lock up',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'After casualty care comes scene preservation. As supervisor you must isolate the hazard, get medical help, preserve evidence (HSE may attend), notify upwards, secure witness statements before memories fade, RIDDOR-report if specified-injury or 7-day absence, and trigger investigation.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
+  },
+  {
+    id: 250,
+    question: 'Looking at HSE prosecution data, what is consistently the most common cause of electrical fatalities in the workplace?',
+    options: [
+      'Random failures',
+      'Working on or near live equipment without adequate isolation or precautions — a failure to apply EAWR Reg 14 and proven safe-isolation procedure',
+      'Lightning',
+      'Foreign equipment',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSE data and the IET Wiring Regulations consistently show working live or with inadequate isolation as the dominant cause of workplace electrical fatalities. EAWR Reg 14 effectively presumes work shall be dead unless live work is justified, planned, and supervised.',
+    section: '1.10',
+    topic: 'Supervisor Responsibilities',
+    difficulty: 'advanced',
   },
 ];
 
-// Helper function to get random questions for mock exams
-export const getRandomQuestions = (count: number): Question[] => {
-  const shuffled = [...module1Questions].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+// ============================================================================
+// Helper functions
+// ============================================================================
+
+const DEFAULT_WEIGHTS = { basic: 0.4, intermediate: 0.45, advanced: 0.15 };
+
+/**
+ * Get random questions weighted by difficulty.
+ * Default weights: 40% basic, 45% intermediate, 15% advanced.
+ */
+export const getRandomQuestions = (
+  count: number = 60,
+  weights: { basic: number; intermediate: number; advanced: number } = DEFAULT_WEIGHTS
+): QuestionBank[] => {
+  const basic = module1Questions.filter((q) => q.difficulty === 'basic');
+  const intermediate = module1Questions.filter((q) => q.difficulty === 'intermediate');
+  const advanced = module1Questions.filter((q) => q.difficulty === 'advanced');
+
+  const targetBasic = Math.round(count * weights.basic);
+  const targetInter = Math.round(count * weights.intermediate);
+  const targetAdvanced = count - targetBasic - targetInter;
+
+  const pickFrom = (pool: QuestionBank[], n: number): QuestionBank[] => {
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(n, shuffled.length));
+  };
+
+  const selected = [
+    ...pickFrom(basic, targetBasic),
+    ...pickFrom(intermediate, targetInter),
+    ...pickFrom(advanced, targetAdvanced),
+  ];
+
+  // If we couldn't fill (e.g. pool too small), top up from any difficulty
+  if (selected.length < count) {
+    const remaining = module1Questions.filter((q) => !selected.includes(q));
+    const topUp = pickFrom(remaining, count - selected.length);
+    selected.push(...topUp);
+  }
+
+  // Final shuffle so difficulty isn't grouped
+  return selected.sort(() => Math.random() - 0.5);
 };
 
-// Helper function to get questions by section
-export const getQuestionsBySection = (section: string): Question[] => {
+/** Filter questions by section code (e.g. '1.1', '2.3'). */
+export const getQuestionsBySection = (section: string): QuestionBank[] => {
   return module1Questions.filter((q) => q.section === section);
 };
 
-// Helper function to get questions by difficulty
+/** Filter questions by difficulty band. */
 export const getQuestionsByDifficulty = (
   difficulty: 'basic' | 'intermediate' | 'advanced'
-): Question[] => {
+): QuestionBank[] => {
   return module1Questions.filter((q) => q.difficulty === difficulty);
+};
+
+/** Filter questions by topic name. */
+export const getQuestionsByTopic = (topic: string): QuestionBank[] => {
+  return module1Questions.filter((q) => q.topic === topic);
+};
+
+/**
+ * Validate the question bank for structural integrity.
+ * Returns { isValid, errors[] } — used by tests/spot-checks.
+ */
+export const validateQuestionBank = (): { isValid: boolean; errors: string[] } => {
+  const errors: string[] = [];
+  const seenIds = new Set<number>();
+
+  module1Questions.forEach((q, idx) => {
+    if (typeof q.id !== 'number') errors.push(`Q[${idx}]: id must be a number`);
+    if (seenIds.has(q.id)) errors.push(`Q[${idx}]: duplicate id ${q.id}`);
+    seenIds.add(q.id);
+    if (!q.question || typeof q.question !== 'string') errors.push(`Q${q.id}: question text missing`);
+    if (!Array.isArray(q.options) || q.options.length < 2) errors.push(`Q${q.id}: options must have at least 2 entries`);
+    if (typeof q.correctAnswer !== 'number' || q.correctAnswer < 0 || q.correctAnswer >= (q.options?.length || 0))
+      errors.push(`Q${q.id}: correctAnswer index out of range`);
+    if (!q.explanation || typeof q.explanation !== 'string') errors.push(`Q${q.id}: explanation missing`);
+    if (!q.section || typeof q.section !== 'string') errors.push(`Q${q.id}: section missing`);
+    if (!q.topic || typeof q.topic !== 'string') errors.push(`Q${q.id}: topic missing`);
+    if (!['basic', 'intermediate', 'advanced'].includes(q.difficulty as string))
+      errors.push(`Q${q.id}: difficulty invalid`);
+  });
+
+  return { isValid: errors.length === 0, errors };
 };
 
 export default module1Questions;

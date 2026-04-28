@@ -220,7 +220,7 @@ export async function callOpenAI(
 ): Promise<AIResponse> {
   const {
     messages,
-    model = 'gpt-5-mini-2025-08-07',
+    model = 'gpt-5.4-mini-2026-03-17',
     temperature = 0.7,
     max_tokens = 16000, // Reduced from 30000 to stay within model limits (max 16384)
     response_format,

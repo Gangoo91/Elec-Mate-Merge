@@ -14,7 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Install Playwright system deps + Chromium browser for Crawl4AI
 # playwright install-deps handles all OS-specific packages automatically
-RUN playwright install-deps chromium && playwright install chromium
+# --force ensures a clean browser binary on every rebuild (avoids corrupted-driver hangs)
+RUN playwright install-deps chromium && playwright install --force chromium
 
 COPY src/ src/
 

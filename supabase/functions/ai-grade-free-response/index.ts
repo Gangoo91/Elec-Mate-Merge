@@ -16,7 +16,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const CHAT_MODEL = 'gpt-5-mini-2025-08-07';
+const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
 const MAX_COMPLETION_TOKENS = 4_000;
 
 interface ReqBody {

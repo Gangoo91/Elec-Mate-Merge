@@ -216,21 +216,25 @@ export default function StudyCentreIndex() {
                 label: 'Total XP',
                 value: totalXP.toLocaleString(),
                 sub: `Level ${level} · ${Math.round(xpProgress)}%`,
+                tone: 'purple',
               },
               {
                 label: 'Streak',
                 value: currentStreak,
                 sub: currentStreak > 0 ? 'days running' : 'Start today',
+                tone: 'orange',
               },
               {
                 label: 'Quizzes',
                 value: totalQuizzes,
                 sub: totalQuizzes > 0 ? `Avg ${avgScore}%` : 'Take your first',
+                tone: 'emerald',
               },
               {
                 label: 'Completed',
                 value: `${totalCompleted}/${totalCourses}`,
                 sub: 'courses',
+                tone: 'cyan',
               },
             ]}
           />

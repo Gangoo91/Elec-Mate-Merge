@@ -50,6 +50,13 @@ const SETTINGS_SECTIONS: SettingsNavSection[] = [
     title: 'Business',
     items: [
       {
+        id: 'mate',
+        label: 'Mate (WhatsApp)',
+        description: 'Your AI assistant — number, save to contacts, prompts',
+        badge: '⚡',
+        badgeTone: 'yellow',
+      },
+      {
         id: 'business',
         label: 'Business Settings',
         description: 'Company, rates, instruments, branding',

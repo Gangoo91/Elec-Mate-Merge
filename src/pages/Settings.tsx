@@ -19,6 +19,7 @@ import {
 import AccountTab from '@/components/settings/AccountTab';
 import ElecIdTab from '@/components/settings/ElecIdTab';
 import BusinessTab from '@/components/settings/BusinessTab';
+import MateTab from '@/components/settings/MateTab';
 import PreferencesTab from '@/components/settings/PreferencesTab';
 import PrivacyTab from '@/components/settings/PrivacyTab';
 import BillingTab from '@/components/settings/BillingTab';
@@ -27,6 +28,7 @@ import SettingsNavGrid from '@/components/settings/SettingsNavGrid';
 
 const SETTINGS_TABS = [
   { id: 'account', label: 'Account', component: AccountTab },
+  { id: 'mate', label: 'Mate', component: MateTab },
   { id: 'elec-id', label: 'Elec-ID', component: ElecIdTab },
   { id: 'business', label: 'Business', component: BusinessTab },
   { id: 'preferences', label: 'Preferences', component: PreferencesTab },

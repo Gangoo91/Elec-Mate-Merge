@@ -936,7 +936,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       const { callAI } = await import('../_shared/ai-wrapper.ts');
 
       const aiResult = await callAI(OPENAI_API_KEY!, {
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5.4-mini-2026-03-17',
         systemPrompt,
         userPrompt,
         maxTokens: 16000, // Increased for more comprehensive outputs
@@ -2431,7 +2431,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
           content: userMessageContent,
         });
 
-        const modelToUse = imageUrl ? 'gpt-4o-mini' : 'gpt-5-mini';
+        const modelToUse = imageUrl ? 'gpt-5.4-mini-2026-03-17' : 'gpt-5.4-mini-2026-03-17';
         logger.info(
           `🤖 Using model: ${modelToUse}${imageUrl ? ' (vision structured diagnosis)' : ''}`
         );
@@ -2550,7 +2550,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
         content: userMessageContent,
       });
 
-      const modelToUse = imageUrl ? 'gpt-4o-mini' : 'gpt-5-mini';
+      const modelToUse = imageUrl ? 'gpt-5.4-mini-2026-03-17' : 'gpt-5.4-mini-2026-03-17';
       logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision Q&A)' : ''}`);
 
       const aiResponse = await callOpenAI(

@@ -5,7 +5,12 @@ import { Wrench, ArrowRight } from 'lucide-react';
 import { useBusinessAIProfile } from './useBusinessAIProfile';
 
 export function BusinessAICard() {
-  const { isAgentActive, profile } = useBusinessAIProfile();
+  const { isAgentActive, businessAiEnabled } = useBusinessAIProfile();
+  // Three states:
+  //   isAgentActive       → "Mate Online" (full operation)
+  //   businessAiEnabled   → "Finish setting up Mate" (paid but not yet linked)
+  //   neither             → sales pitch
+  const subscribedButPending = businessAiEnabled && !isAgentActive;
 
   return (
     <Link
@@ -38,6 +43,21 @@ export function BusinessAICard() {
               </p>
               <div className="inline-flex items-center gap-2 text-amber-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
                 <span>Open Dashboard</span>
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
+              </div>
+            </>
+          ) : subscribedButPending ? (
+            <>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <div className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+                <span className="text-xs font-medium text-amber-300">Setup needed</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Finish setting up Mate</h3>
+              <p className="text-sm text-white max-w-md mx-auto mb-4">
+                You're subscribed — one tap on WhatsApp and Mate is live
+              </p>
+              <div className="inline-flex items-center gap-2 text-amber-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
+                <span>Activate now</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
               </div>
             </>

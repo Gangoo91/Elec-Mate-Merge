@@ -1,103 +1,141 @@
-import { ClipboardCheck, Timer, Zap, FileSearch, Shuffle, Clock, Trophy } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { FileText, Layers } from 'lucide-react';
+import { ModuleCard } from '@/components/upskilling/cards';
 import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
-const subsections = [
+const mockExams = [
   {
-    number: '1.1',
-    title: 'Topic-based mock exams',
-    description: 'Individual exams for each module — H&S, Science, Testing, Design and more',
-    icon: ClipboardCheck,
-    href: '../level3-module8-section1-1',
-  },
-  {
-    number: '1.2',
-    title: 'Timed module tests',
-    description: 'Focused tests on specific modules with realistic time constraints',
-    icon: Timer,
-    href: '../level3-module8-section1-2',
-  },
-  {
-    number: '1.3',
-    title: 'Quick fire questions',
-    description: 'Rapid-response questions to test instant recall and knowledge retention',
-    icon: Zap,
-    href: '../level3-module8-section1-3',
-  },
-  {
-    number: '1.4',
-    title: 'Past paper analysis',
+    number: 'Mock 1',
+    title: 'Health and safety in building services engineering (Unit 201 refresher)',
     description:
-      'Review and analysis of past exam papers to identify common themes and question styles',
-    icon: FileSearch,
-    href: '../level3-module8-section1-4',
+      'Refresher paper carried over from Level 2 — HASAWA, EAWR, PPE, safe isolation, working at height and incident response, sat under L3 closed-book conditions.',
+    icon: FileText,
+    href: '../level3-module8-mock-exam1',
+  },
+  {
+    number: 'Mock 2',
+    title: 'Environmental technology systems (Unit 301)',
+    description:
+      'Renewable and energy-efficient technologies — solar PV, heat pumps, micro-hydro, micro-CHP, MVHR, rainwater and grey-water systems and their interaction with the electrical installation.',
+    icon: FileText,
+    href: '../level3-module8-mock-exam2',
+  },
+  {
+    number: 'Mock 3',
+    title: 'Principles of electrical science (Unit 302)',
+    description:
+      'AC theory, three-phase systems, motor and transformer principles, power factor, energy efficiency and the maths underneath every L3 design calculation.',
+    icon: FileText,
+    href: '../level3-module8-mock-exam3',
+  },
+  {
+    number: 'Mock 4',
+    title: 'Fault diagnosis and rectification (Unit 303)',
+    description:
+      'Logical fault-finding on installations and equipment — symptoms to causes, test instruments, safe isolation under fault conditions and rectification recording.',
+    icon: FileText,
+    href: '../level3-module8-mock-exam4',
+  },
+  {
+    number: 'Mock 5',
+    title: 'Inspection, testing and commissioning (Unit 304)',
+    description:
+      'Initial verification and periodic inspection to BS 7671 — test sequence, instrument selection, EICR coding (C1, C2, C3, FI), certification and limitations.',
+    icon: FileText,
+    href: '../level3-module8-mock-exam5',
+  },
+  {
+    number: 'Mock 6',
+    title: 'Electrical systems design (Unit 305)',
+    description:
+      'Design of single-phase and three-phase installations — load assessment, cable sizing (CCC, voltage drop, Zs), protective device coordination, earthing and bonding.',
+    icon: FileText,
+    href: '../level3-module8-mock-exam6',
+  },
+  {
+    number: 'Mock 7',
+    title: 'Career awareness and professional development (Unit 308)',
+    description:
+      'Industry structure, qualification pathways, JIB grading, AM2 and AM2E, professional registration, CPD and the routes from L3 apprentice to approved electrician.',
+    icon: FileText,
+    href: '../level3-module8-mock-exam7',
+  },
+  {
+    number: 'Mock 8 — Mixed',
+    title: 'Mixed mock — full Level 3 paper',
+    description:
+      'Comprehensive mixed paper drawing on all seven Level 3 units — sat under exam conditions to simulate the spread of the live qualification before the AM2 end-point assessment.',
+    icon: Layers,
+    href: '../level3-module8-mock-exam8',
   },
 ];
 
 const Level3Module8Section1 = () => {
-  useSEO(
-    'Section 1: Mock Exams - Level 3 Module 8',
-    'Practice exams and tests to prepare you for the real Level 3 assessments'
-  );
+  useSEO({
+    title:
+      'Mock examinations — Level 3 Section 1 | Mock Examinations and Assessment | Elec-Mate',
+    description:
+      'Eight full Level 3 mock papers — one per unit (201 refresher, 301, 302, 303, 304, 305, 308) plus a mixed paper — sat under realistic closed-book conditions to build pace, accuracy and confidence.',
+  });
 
   return (
     <SectionShell
-      backTo="/study-centre/apprentice/level3-module8"
-      backLabel="Module 8"
+      backTo=".."
+      backLabel="Mock Examinations and Assessment"
       moduleNumber={8}
       sectionNumber={1}
-      title="Mock exams"
-      description="Practice exams and timed tests to prepare for real assessments."
+      title="Mock examinations"
+      description="Eight full mock papers covering Level 3 Units 201 (refresher), 301, 302, 303, 304, 305 and 308 plus a mixed paper — sat under closed-book conditions to build pace, accuracy and confidence."
       tone="blue"
-      subsectionsCount={subsections.length}
-      nextSectionHref="../level3-module8-section2"
-      nextSectionLabel="Practical help"
-    >
-      {/* Featured: Comprehensive Mock Exam — preserved from previous design */}
-      <Link
-        to="../level3-module8-mock-exam8"
-        className="sm:col-span-2 block touch-manipulation active:scale-[0.99]"
-      >
-        <div className="relative p-5 rounded-2xl bg-gradient-to-br from-elec-yellow/10 to-amber-600/5 border-2 border-elec-yellow/30 hover:border-elec-yellow/50 transition-all">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-              <Shuffle className="h-7 w-7 text-elec-yellow" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/20 px-2 py-0.5 rounded">
-                  COMPREHENSIVE
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-1">Full practice exam</h3>
-              <p className="text-sm text-white mb-3">
-                40 questions from all 7 modules • 90 minutes • 60% pass mark
-              </p>
-              <div className="flex items-center gap-4 text-xs text-white">
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5" />
-                  90 mins
-                </span>
-                <span className="flex items-center gap-1">
-                  <Trophy className="h-3.5 w-3.5" />
-                  60% to pass
-                </span>
-              </div>
-            </div>
-          </div>
+      subsectionsCount={mockExams.length}
+      nextSectionHref="../section2"
+      nextSectionLabel="How to pass exams — tips and techniques"
+      aboveGrid={
+        <div className="max-w-3xl space-y-3 pt-2">
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Section 1 is the practice-paper bank for the Level 3 Diploma (2365-03). Each unit
+            sits its own closed-book multiple-choice assessment — there is no single combined
+            written paper at L3. Mocks 1 to 7 mirror that one-paper-per-unit structure so you
+            can pressure-test each unit on its own and spot the topics that need another
+            revision pass.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            The unit assessments are mostly{' '}
+            <span className="text-white font-medium">60 questions in 90 minutes</span>{' '}
+            (Units 201, 301, 302, 303, 304 and 305) with{' '}
+            <span className="text-white font-medium">Unit 308 shorter at 40 questions in 60 minutes</span>.
+            All are closed-book — BS 7671, the IET On-Site Guide and your notes are not
+            permitted in the exam room. The mocks here match those timings.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Once the per-unit mocks feel comfortable, the{' '}
+            <span className="text-white font-medium">mixed mock</span> draws questions from all
+            seven units in random order — the closest thing to back-to-back unit sittings. Sit
+            it timed, no notes, in one go. The L3 practical element is workplace and
+            portfolio-based (NVQ-style observed assignments and assessor evidence) — it is
+            evidenced over the apprenticeship, not as a separate timed exam. The end-point
+            assessment is{' '}
+            <span className="text-white font-medium">AM2 (or AM2E)</span>, sat after the
+            qualification is complete.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Each paper auto-marks at the end with a per-question explanation and a flag and
+            review tool. Aim for{' '}
+            <span className="text-white font-medium">70%+ on every paper</span> before booking
+            the live unit assessment.
+          </p>
         </div>
-      </Link>
-
-      {subsections.map((s, i) => (
+      }
+    >
+      {mockExams.map((exam) => (
         <ModuleCard
-          key={i}
-          number={s.number}
-          title={s.title}
-          description={s.description}
-          icon={s.icon}
-          href={s.href}
+          key={exam.href}
+          to={exam.href}
+          moduleNumber={exam.number}
+          title={exam.title}
+          description={exam.description}
+          icon={exam.icon}
+          isExam
         />
       ))}
     </SectionShell>

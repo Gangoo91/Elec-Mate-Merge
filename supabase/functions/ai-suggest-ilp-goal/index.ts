@@ -13,6 +13,18 @@
 // → { proposals: Array<IlpGoalDraft> }
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import {
+  loadLearnerContext,
+  loadQualificationKit,
+  lookupBs7671Facets,
+  lookupQualificationAcs,
+  bs7671SeedQueries,
+  contextSummaryLines,
+  qualificationAcLines,
+  raggedAcLines,
+  bs7671FacetLines,
+  GROUNDING_RULES,
+} from '../_shared/learner-context.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -20,7 +32,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const CHAT_MODEL = 'gpt-5-mini-2025-08-07';
+const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
 const MAX_COMPLETION_TOKENS = 4_000;
 
 type Mode = 'fresh' | 'refine' | 'from_ac';
@@ -314,6 +326,9 @@ OUTPUT RULES:
 - target_date: ISO format YYYY-MM-DD. Pick something realistic based on priority (high = 2-3 weeks, medium = 4-6 weeks, low = 8-12 weeks). Empty if not appropriate.
 - Don't repeat goals already on the learner's plan.
 - Match the inclusion flags: if EHCP / EAL / SEND, frame goals with reasonable adjustments and avoid jargon.
+- If recent quiz attempts show a fail at a specific AC, prioritise a goal that targets that AC and reference the quiz score in the description.
+
+${GROUNDING_RULES}
 
 Call submit_ilp_goal_proposals exactly once.`;
 }
@@ -449,9 +464,46 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Augment the legacy ctx with the shared rich context (quizzes, KSBs,
+    // mocks, ILP goal status, judgements, attendance pattern, risk) +
+    // the qualification AC catalogue + BS 7671 facets seeded from
+    // weak areas. This is the change that makes the AI genuinely
+    // grounded in everything the learner has done.
+    const richCtx = await loadLearnerContext(sb, body.college_student_id);
+    // Build seeds for RAG: BS 7671 + AC. If we're in 'from_ac' mode, anchor
+    // seeds to the specific AC text so the RAG returns siblings of that AC.
+    const seedQueries: string[] = richCtx ? bs7671SeedQueries(richCtx) : [];
+    if (body.mode === 'from_ac' && ctx.ac?.description) {
+      seedQueries.unshift(ctx.ac.description);
+    }
+    if (body.mode === 'refine' && body.draft) {
+      seedQueries.unshift(body.draft);
+    }
+    const [qualKit, raggedAcs, facets] = await Promise.all([
+      loadQualificationKit(sb, ctx.course?.code ?? null),
+      lookupQualificationAcs(sb, seedQueries, ctx.course?.code ?? null, 8, 4),
+      richCtx ? lookupBs7671Facets(sb, seedQueries) : Promise.resolve([]),
+    ]);
+    const acBlock = raggedAcs.length > 0
+      ? raggedAcLines(raggedAcs, 14)
+      : qualificationAcLines(qualKit, 50);
+
+    const richBlock = richCtx
+      ? [
+          '',
+          '## Full learner context',
+          ...contextSummaryLines(richCtx),
+          ...acBlock,
+          ...bs7671FacetLines(facets, 14),
+        ].join('\n')
+      : '';
+
     const messages = [
       { role: 'system', content: systemPrompt(auth.role ?? 'tutor', body.mode) },
-      { role: 'user', content: userPrompt(ctx, body.mode, body.draft, body.count) },
+      {
+        role: 'user',
+        content: userPrompt(ctx, body.mode, body.draft, body.count) + richBlock,
+      },
     ];
 
     const completion = await fetch('https://api.openai.com/v1/chat/completions', {

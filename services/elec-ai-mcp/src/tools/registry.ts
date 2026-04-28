@@ -1231,11 +1231,20 @@ function registerExpenseTools(server: McpServer, user: UserContext): void {
 function registerKnowledgeTools(server: McpServer, user: UserContext): void {
   server.tool(
     'lookup_regulation',
-    'Search BS 7671 regulations and amendments. Uses verified RAG data, not AI knowledge.',
+    'Search BS 7671:2018+A4:2026 regulations, GN3 (9th Ed A4) Inspection & Testing, and the On-Site Guide (9th Ed A4). MANDATORY for any electrical question — never quote regs from training data. Returns regulation_number, content, edition_code, document_type. Cite reg_number and quote the content text in your reply.',
     {
-      query: z.string().describe('Search query (e.g. "RCD protection bathrooms" or "Reg 411.3.3")'),
-      match_threshold: z.number().optional().describe('Similarity threshold 0-1 (default 0.7)'),
-      match_count: z.number().optional().describe('Max results (default 5)'),
+      query: z
+        .string()
+        .describe(
+          'Search query (e.g. "AFDD requirement for socket circuits in HMOs" or "Reg 411.3.3" or "max Zs B32 TN-S")'
+        ),
+      document_types: z
+        .array(z.enum(['bs7671', 'gn3', 'osg']))
+        .optional()
+        .describe(
+          'Optional filter: ["bs7671"] for regulations only; ["gn3","bs7671"] for inspection & testing; ["osg","gn3"] for practical install. Omit to search all three.'
+        ),
+      match_count: z.number().optional().describe('Max results (default 5, max 20)'),
     },
     callTool('lookup_regulation', user)
   );

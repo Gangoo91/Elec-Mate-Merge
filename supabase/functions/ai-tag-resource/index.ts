@@ -24,7 +24,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, content-type, apikey',
 };
 
-const CHAT_MODEL = 'gpt-5-mini-2025-08-07';
+const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
 const MAX_TOKENS = 4_000;
 const MAX_ACS_PER_CONTEXT = 600;
 const REQUEST_TIMEOUT_MS = 90_000;

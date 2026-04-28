@@ -37,6 +37,8 @@ import { handleProvisionAgent, handleRepairWorkspaces } from './api/provision-ag
 import { handleDeprovisionAgent } from './api/deprovision-agent.js';
 import { handleHtmlToPdf } from './api/html-to-pdf.js';
 import { handleAppleWalletPass } from './api/apple-wallet-pass.js';
+import { handleWaOnboarding } from './api/wa-onboarding.js';
+import { handleWaInbound } from './api/wa-inbound.js';
 import { getHandler } from './tools/router.js';
 import { logToolCall } from './middleware/audit-logger.js';
 import { sanitiseError } from './lib/error-sanitiser.js';
@@ -236,6 +238,12 @@ function startHttp(): void {
   app.post('/api/html-to-pdf', handleHtmlToPdf);
   app.post('/api/apple-wallet-pass', handleAppleWalletPass);
 
+  // ── WhatsApp deep-link onboarding (called inline by /api/wa-inbound) ──
+  app.post('/api/wa-onboarding', handleWaOnboarding);
+
+  // ── WhatsApp inbound router (called by the OpenClaw mate-router plugin) ──
+  app.post('/api/wa-inbound', handleWaInbound);
+
   // ── REST tool-call endpoint (bypasses mcporter) ─────────────────
   app.post('/api/tool-call', async (req, res) => {
     if (isShuttingDown) {
@@ -259,13 +267,15 @@ function startHttp(): void {
       return;
     }
 
+    const startTime = Date.now();
+    let userContext: Awaited<ReturnType<typeof authenticateUser>> | null = null;
     try {
       const hmacHeaders = {
         signature: req.headers['x-request-signature'] as string | undefined,
         timestamp: req.headers['x-request-timestamp'] as string | undefined,
         nonce: req.headers['x-request-nonce'] as string | undefined,
       };
-      const userContext = await authenticateUser(undefined, apiKey, senderPhone, hmacHeaders);
+      userContext = await authenticateUser(undefined, apiKey, senderPhone, hmacHeaders);
 
       const handler = getHandler(tool);
       if (!handler) {
@@ -275,7 +285,6 @@ function startHttp(): void {
 
       enforceRateLimits(userContext.userId, tool);
 
-      const startTime = Date.now();
       const result = await handler(toolArgs || {}, userContext);
       const durationMs = Date.now() - startTime;
 
@@ -283,6 +292,18 @@ function startHttp(): void {
 
       res.json({ success: true, result });
     } catch (err) {
+      const durationMs = Date.now() - startTime;
+      const rawMessage = err instanceof Error ? err.message : String(err);
+
+      // Record failure in agent_action_log for observability (only when authenticated)
+      if (userContext) {
+        logToolCall(userContext, tool, toolArgs || {}, {
+          success: false,
+          durationMs,
+          error: rawMessage,
+        });
+      }
+
       if (err instanceof AuthError) {
         res.status(401).json({ error: err.message, code: err.code });
         return;
@@ -291,7 +312,6 @@ function startHttp(): void {
         res.status(429).json({ error: err.message, retry_after_ms: err.retryAfterMs });
         return;
       }
-      const rawMessage = err instanceof Error ? err.message : String(err);
       console.error(`[tool-call] ${tool} error:`, rawMessage);
       res.status(500).json({ error: sanitiseError(rawMessage) });
     }

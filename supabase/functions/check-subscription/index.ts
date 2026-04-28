@@ -144,9 +144,11 @@ serve(async (req) => {
       price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician', // £9.99/month (legacy)
       price_1TKlKL2RKw5t5RAmpD8FH7qp: 'electrician_yearly', // £129.99/year (current — Apr 2026)
       price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (legacy)
-      // Business AI - £29.99/month, £299.99/year
-      price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai',
-      price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly',
+      // Business AI - £39.99/month, £399.99/year (current — Apr 2026)
+      price_1TRGZo2RKw5t5RAmRl2hc0ru: 'business_ai',
+      price_1TRGZo2RKw5t5RAmzY50EzaE: 'business_ai_yearly',
+      price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai', // £29.99/month (legacy — existing subs)
+      price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly', // £299.99/year (legacy — existing subs)
       // Employer
       price_1SlyAT2RKw5t5RAmUmTRGimH: 'employer',
       price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly',

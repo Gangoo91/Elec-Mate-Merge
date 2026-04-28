@@ -5,7 +5,7 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger } from '../_shared/logger.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-5-mini';
+const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-5.4-mini-2026-03-17';
 
 // ==================== CONTENT FILTER ====================
 function shouldEnrichChunk(item: any): boolean {

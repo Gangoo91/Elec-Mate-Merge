@@ -944,7 +944,7 @@ Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,
         Authorization: `Bearer ${openaiApiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-5.4-mini-2026-03-17',
         max_tokens: 2400,
         temperature: 0.2,
         messages: [

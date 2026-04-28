@@ -1,18 +1,31 @@
-// Level 3 Module 2: Environmental Technologies - Question Bank
-// 200 advanced questions covering all Module 2 content for Level 3 Electrical Course
-// Topics: Building Regs Part L, Energy Efficiency, Renewables, Smart Systems, EPCs, Sustainability
+// Level 3 Module 2: Environmental Technologies — Question Bank
+// 250 supervisor-grade questions covering C&G 2365-03 Unit 301 (Environmental Tech),
+// layered with C&G 2357 Unit 312 + Unit 602 (24 effective ACs).
+// Coverage: BS 7671 Section 712 (Solar PV — verbatim regs), Section 722 (EV — Reg 722.411.4 PEN-fault detection,
+// Reg 722.531.3.101 Type B RCD), Section 753 (heating systems), heat pumps + COP/SCOP + F-Gas certification boundary,
+// ENA G98/G99 connection rules, MCS standards (MIS 3005 heat pump, MIS 3002 PV), Building Regs Part L 2021 / Part S
+// EV-charging requirements, Future Homes Standard 2025, A4:2026 currency throughout (TN-C-S/PNB terminology, AFDD,
+// new schedule columns), Climate Change Act Net Zero, GHG Protocol Scope 1/2/3, F-Gas Reg, WEEE, ISO 14001,
+// Smart Charge Point Regulations 2021, ISO 15118 (V2G), Smart Export Guarantee, IET Code of Practice for EESS.
+// Difficulty mix: ~40% basic, ~45% intermediate, ~15% advanced.
+// Updated 2026-04-27: Schema upgraded to QuestionBank with topic field + L3 special-locations + sustainability extension (Sections 2.8, 2.9).
 
-export interface Question {
+export interface QuestionBank {
   id: number;
   question: string;
   options: string[];
   correctAnswer: number;
   explanation: string;
-  section?: string;
-  difficulty?: 'basic' | 'intermediate' | 'advanced';
+  section: string;
+  difficulty: 'basic' | 'intermediate' | 'advanced';
+  topic: string;
+  module?: string;
 }
 
-export const module2Questions: Question[] = [
+// Backwards-compatible alias for legacy imports (mixed/questionBank.ts uses Question)
+export type Question = QuestionBank;
+
+export const module2Questions: QuestionBank[] = [
   // ============================================
   // Section 2.1: Building Regulations Part L (Questions 1-30)
   // ============================================
@@ -29,6 +42,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part L of the Building Regulations deals with the conservation of fuel and power, setting standards for energy efficiency in buildings.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'basic',
   },
   {
@@ -44,6 +58,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The 2021 Part L amendments aim to achieve approximately 31% reduction in CO2 emissions for new homes as a step towards Future Homes Standard 2025.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -54,6 +69,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The Future Homes Standard is planned for 2025, requiring new homes to produce 75-80% less carbon emissions than current standards.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'basic',
   },
   {
@@ -69,6 +85,7 @@ export const module2Questions: Question[] = [
     explanation:
       'U-value measures the rate of heat transfer through a building element. Lower U-values indicate better thermal insulation.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'basic',
   },
   {
@@ -80,6 +97,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part L 2021 requires walls in new dwellings to achieve U-values of around 0.26 W/m²K or better to meet energy efficiency targets.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -95,6 +113,7 @@ export const module2Questions: Question[] = [
     explanation:
       "An Energy Performance Certificate (EPC) rates a building's energy efficiency from A (most efficient) to G (least efficient).",
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'basic',
   },
   {
@@ -105,6 +124,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Band A is the most energy efficient rating on an EPC, with Band G being the least efficient.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'basic',
   },
   {
@@ -115,6 +135,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Since April 2020, rental properties must have a minimum EPC rating of E. Future regulations may increase this to C.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -130,6 +151,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Thermal bridging occurs where insulation is bridged by materials with higher thermal conductivity, creating cold spots and heat loss.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -145,6 +167,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Air permeability measures uncontrolled air leakage through the building fabric, typically expressed as m³/(h·m²) at 50 Pa pressure difference.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -160,6 +183,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part L typically requires air permeability of 8 m³/(h·m²) @ 50 Pa or better for new dwellings to reduce uncontrolled heat loss.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -175,6 +199,7 @@ export const module2Questions: Question[] = [
     explanation:
       "SAP (Standard Assessment Procedure) is the Government's methodology for calculating the energy performance of dwellings.",
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'basic',
   },
   {
@@ -190,6 +215,7 @@ export const module2Questions: Question[] = [
     explanation:
       'SBEM (Simplified Building Energy Model) is used to calculate energy performance for non-domestic buildings under Part L.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -200,6 +226,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Approximately 25% of heat can be lost through an uninsulated roof, making loft insulation one of the most cost-effective energy efficiency measures.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'basic',
   },
   {
@@ -215,6 +242,7 @@ export const module2Questions: Question[] = [
     explanation:
       'CO2 emission factors (kg CO2/kWh) are used to calculate the carbon dioxide emissions from different fuel types in Part L assessments.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -230,6 +258,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Fabric first means prioritising high levels of insulation and airtightness in the building envelope before relying on renewables or technology.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -245,6 +274,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A notional dwelling is a reference building with the same geometry as the actual dwelling but using minimum Part L specifications for comparison.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'advanced',
   },
   {
@@ -260,6 +290,7 @@ export const module2Questions: Question[] = [
     explanation:
       'TER is the target CO2 emission rate calculated from the notional dwelling that the actual dwelling must achieve or better.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'advanced',
   },
   {
@@ -275,6 +306,7 @@ export const module2Questions: Question[] = [
     explanation:
       'DER is the calculated annual CO2 emission rate (kg CO2/m²/year) for the actual dwelling design, which must be lower than the TER.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'advanced',
   },
   {
@@ -290,6 +322,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part L typically requires double glazing with low-emissivity coating achieving U-values of around 1.4 W/m²K or better for windows.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -305,6 +338,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Controlled fittings include windows, doors, boilers, and other building services that must meet minimum efficiency standards when installed or replaced.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -320,6 +354,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part L requires building owners to receive information about efficient operation of fixed building services, including heating and hot water systems.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'basic',
   },
   {
@@ -335,6 +370,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Primary Energy targets account for total energy consumption including losses in generation and distribution, promoting efficient fuel choices.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'advanced',
   },
   {
@@ -350,6 +386,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Commissioning ensures that fixed building services are properly installed, set up, and adjusted to operate efficiently as designed.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -365,6 +402,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part L compliance requires SAP/SBEM calculations, an EPC, commissioning certificates for building services, and information for building users.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -380,6 +418,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Air pressure testing measures the air leakage rate through the building envelope, usually conducted at 50 Pascals pressure difference.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'basic',
   },
   {
@@ -395,6 +434,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Air pressure testing is typically required for all new dwellings to demonstrate compliance with Part L airtightness standards.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -410,6 +450,7 @@ export const module2Questions: Question[] = [
     explanation:
       'G-value (solar factor) indicates what proportion of solar energy passes through glazing. Lower g-values reduce solar heat gain.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
   {
@@ -425,6 +466,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Consequential improvements are additional energy efficiency upgrades required when extending or renovating buildings over a certain size.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'advanced',
   },
   {
@@ -440,6 +482,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part L typically requires at least 75% of fixed lighting outlets to have efficient fittings with efficacy of 45 lumens per watt or better.',
     section: '2.1',
+    topic: 'Building Regulations Part L',
     difficulty: 'intermediate',
   },
 
@@ -459,6 +502,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Modern LED lamps typically achieve 80-150+ lumens per watt, compared to around 10-15 for incandescent lamps.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -474,6 +518,7 @@ export const module2Questions: Question[] = [
     explanation:
       'COP (Coefficient of Performance) is the ratio of heat output to electrical energy input. A COP of 3 means 3kW heat output for 1kW electrical input.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -484,6 +529,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Air source heat pumps typically achieve COP values of 2.5-4.0, meaning they produce 2.5-4 times more heat energy than the electrical energy consumed.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -499,6 +545,7 @@ export const module2Questions: Question[] = [
     explanation:
       "Heat pumps extract renewable heat energy from the environment and 'pump' it to a higher temperature, using only a fraction of that energy as electricity.",
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -514,6 +561,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Demand-side response involves shifting or reducing energy consumption in response to grid conditions, prices, or signals to help balance supply and demand.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -529,6 +577,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A smart meter digitally records energy consumption and communicates readings remotely to suppliers, enabling accurate billing and consumption insights.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -544,6 +593,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Time-of-use tariffs offer lower rates during off-peak periods, encouraging consumers to shift flexible loads and helping balance grid demand.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -559,6 +609,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Power Factor is the ratio of real power (kW) to apparent power (kVA). A PF of 1 indicates all power is used productively; lower values mean wasted capacity.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -574,6 +625,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Inductive loads (motors, transformers, fluorescent ballasts) draw reactive power which causes current to lag voltage, reducing power factor.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -589,6 +641,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Power factor correction typically uses capacitors to supply reactive power locally, counteracting inductive loads and improving the power factor.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -604,6 +657,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The EU/UK energy efficiency label rates appliances from A (most efficient) to G (least efficient), with A+++, A++, A+ phased out.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -619,6 +673,7 @@ export const module2Questions: Question[] = [
     explanation:
       'BEMS (Building Energy Management System) monitors and controls building services to optimise energy use, comfort, and efficiency.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -634,6 +689,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Occupancy sensing automatically controls lighting based on detecting whether spaces are occupied, reducing energy waste in unoccupied areas.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -649,6 +705,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Daylight harvesting uses sensors to measure natural light levels and automatically dim artificial lighting to maintain required illuminance while saving energy.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -664,6 +721,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A VSD (Variable Speed Drive/Frequency Drive) controls AC motor speed by varying the supply frequency, enabling significant energy savings on fans and pumps.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -679,6 +737,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The Affinity Laws show that power consumption varies with the cube of speed. Reducing fan/pump speed by 20% can reduce power consumption by about 50%.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'advanced',
   },
   {
@@ -694,6 +753,7 @@ export const module2Questions: Question[] = [
     explanation:
       'MVHR (Mechanical Ventilation with Heat Recovery) extracts stale air and recovers up to 90% of its heat to warm incoming fresh air.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -704,6 +764,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Modern MVHR systems can recover up to 90% or more of the heat from extracted air, significantly reducing heating demand in well-sealed buildings.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -714,6 +775,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Modern condensing gas boilers achieve seasonal efficiencies of 90-94% by recovering latent heat from flue gases.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -729,6 +791,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Condensing boilers have a larger heat exchanger that cools flue gases enough to condense water vapour, recovering additional latent heat.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -745,6 +808,7 @@ export const module2Questions: Question[] = [
     explanation:
       'For efficient condensing, return water temperature should be below the dew point (about 54°C for natural gas), often achieved with flow temperatures below 55°C.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'advanced',
   },
   {
@@ -760,6 +824,7 @@ export const module2Questions: Question[] = [
     explanation:
       'SCOP measures average heat pump efficiency across a typical heating season, accounting for varying outdoor temperatures and part-load operation.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -775,6 +840,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Phantom or standby power is electricity consumed by devices in standby mode or when switched off but still connected. It can account for 5-10% of household consumption.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -790,6 +856,7 @@ export const module2Questions: Question[] = [
     explanation:
       'An energy audit systematically examines energy consumption patterns to identify waste, inefficiencies, and opportunities for cost-effective improvements.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -805,6 +872,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Sub-metering measures energy consumption of specific circuits, areas, or equipment, enabling detailed analysis and allocation of energy costs.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -820,6 +888,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A kilowatt-hour (kWh) is a unit of energy equal to using power at a rate of 1 kilowatt (1000 watts) for one hour.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -835,6 +904,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Power (measured in watts/kW) is the rate at which energy is used. Energy (kWh) is power multiplied by time - the total consumption.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'basic',
   },
   {
@@ -850,6 +920,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Load shedding deliberately switches off non-essential electrical loads during peak demand periods to reduce maximum demand charges or grid strain.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -865,6 +936,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Maximum demand charges are based on the highest power demand (kW or kVA) recorded during a billing period, typically using half-hourly metering.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
   {
@@ -880,6 +952,7 @@ export const module2Questions: Question[] = [
     explanation:
       'UK grid electricity carbon intensity has fallen significantly to around 150-200g CO2/kWh and continues to decrease as renewable generation increases.',
     section: '2.2',
+    topic: 'Energy Efficiency',
     difficulty: 'intermediate',
   },
 
@@ -899,6 +972,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Solar PV (photovoltaic) converts sunlight directly into electricity using semiconductor cells. Solar thermal uses sunlight to heat water or air.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -909,6 +983,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Modern solar PV panels typically achieve 18-22% efficiency, with high-end panels reaching 25% or more under standard test conditions.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -924,6 +999,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A grid-tied system is connected to the mains electricity grid, allowing export of excess generation and import when solar production is insufficient.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -939,6 +1015,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Solar inverters convert the DC (direct current) electricity produced by PV panels into AC (alternating current) suitable for use in buildings and grid export.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -954,6 +1031,7 @@ export const module2Questions: Question[] = [
     explanation:
       'MPPT (Maximum Power Point Tracking) continuously adjusts the operating point to extract maximum available power from the panels under varying conditions.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -969,6 +1047,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The SEG requires licensed electricity suppliers to offer payment for electricity exported to the grid from small-scale renewable generators like solar PV.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -979,6 +1058,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Solar PV panels typically last 25-30 years, though output degrades slowly over time (typically 0.5-1% per year).',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -994,6 +1074,7 @@ export const module2Questions: Question[] = [
     explanation:
       "An ASHP extracts heat energy from outside air (even in cold weather) and 'pumps' it to a higher temperature for space heating or hot water.",
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -1009,6 +1090,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A GSHP extracts heat from the ground using horizontal loops or vertical boreholes, benefiting from stable ground temperatures year-round.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -1024,6 +1106,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Underfloor heating operates at lower flow temperatures (35-45°C) than radiators, allowing heat pumps to operate more efficiently with higher COP values.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1039,6 +1122,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The Boiler Upgrade Scheme provides grants (currently £7,500 for ASHPs) to help property owners in England and Wales install low carbon heating systems.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1054,6 +1138,7 @@ export const module2Questions: Question[] = [
     explanation:
       "Battery storage allows excess solar generation to be stored during the day for use in the evening or overnight when panels aren't producing.",
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -1064,6 +1149,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Lithium-ion batteries are most common for home energy storage due to their high energy density, efficiency, long cycle life, and falling costs.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -1074,6 +1160,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Lithium-ion batteries typically achieve 85-95% round-trip efficiency, meaning 85-95% of stored energy is recovered when discharged.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1089,6 +1176,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Micro wind turbines are small-scale (typically under 6kW) wind generators suitable for homes or small businesses in suitable windy locations.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -1104,6 +1192,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Micro wind viability depends on average wind speed, turbulence from buildings/trees, planning restrictions, and practical grid connection requirements.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1119,6 +1208,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Micro-CHP (Combined Heat and Power) generates electricity while capturing waste heat for space heating or hot water, achieving high overall efficiency.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1134,6 +1224,7 @@ export const module2Questions: Question[] = [
     explanation:
       "Biomass heating burns organic materials (wood pellets, chips, logs) to provide heat. It's considered low carbon as the CO2 released equals that absorbed during growth.",
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -1149,6 +1240,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The Renewable Heat Incentive (RHI) closed to new applicants and has been replaced by the Boiler Upgrade Scheme offering upfront grants.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1164,6 +1256,7 @@ export const module2Questions: Question[] = [
     explanation:
       'An EV charge point is dedicated equipment that safely supplies electricity to charge electric vehicle batteries, ranging from 3kW to 350kW+.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -1174,6 +1267,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Home EV chargers are typically 7kW for single-phase supplies (adding about 30 miles range per hour) or up to 22kW for three-phase installations.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1189,6 +1283,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part S requires EV charging infrastructure in new buildings and major renovations. Part P covers the electrical installation safety requirements.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1204,6 +1299,7 @@ export const module2Questions: Question[] = [
     explanation:
       'V2G (Vehicle to Grid) enables bi-directional charging, allowing EV batteries to supply power back to the grid or building during peak demand periods.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'advanced',
   },
   {
@@ -1219,6 +1315,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Solar thermal in the UK is most commonly used for domestic hot water pre-heating, typically providing 50-70% of annual hot water requirements.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -1234,6 +1331,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Monocrystalline panels use single-crystal silicon, achieving higher efficiency (20%+) with uniform black appearance. Polycrystalline uses multiple crystals, slightly lower efficiency.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1249,6 +1347,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A hybrid inverter combines solar PV inverter and battery charger/inverter functions, managing solar generation, battery storage, grid connection, and loads.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1264,6 +1363,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Islanding occurs when a PV system energises a circuit disconnected from the grid - dangerous for utility workers. Anti-islanding protection is mandatory.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'advanced',
   },
   {
@@ -1279,6 +1379,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A generation meter records total electricity produced by the PV system, required for SEG payments and monitoring system performance.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'basic',
   },
   {
@@ -1294,6 +1395,7 @@ export const module2Questions: Question[] = [
     explanation:
       'MCS (Microgeneration Certification Scheme) certifies installers and products, required for eligibility for government schemes like SEG and BUS.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1309,6 +1411,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Heat pump cylinders are typically larger (200-300L) and better insulated than standard cylinders, designed for efficient operation at lower temperatures.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1324,6 +1427,7 @@ export const module2Questions: Question[] = [
     explanation:
       'In cold weather, ice can form on the ASHP outdoor unit. The defrost cycle temporarily reverses operation to melt ice and maintain efficiency.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1339,6 +1443,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The bivalent point is the outdoor temperature below which the heat pump alone cannot meet heating demand and supplementary heating (e.g., immersion) is needed.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'advanced',
   },
   {
@@ -1354,6 +1459,7 @@ export const module2Questions: Question[] = [
     explanation:
       'EV charger installation must comply with Part P (BS 7671), Part S requirements for new buildings, and equipment standards like BS EN 61851.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1369,6 +1475,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Smart charging optimises EV charging based on electricity tariffs, grid demand, solar generation availability, and user requirements.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -1384,6 +1491,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Peak shaving uses battery storage to reduce maximum demand charges by discharging batteries during peak consumption periods instead of drawing from the grid.',
     section: '2.3',
+    topic: 'Renewable Technologies',
     difficulty: 'advanced',
   },
 
@@ -1403,6 +1511,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Building automation uses control systems to automatically manage building services including heating, ventilation, air conditioning, lighting, and security.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'basic',
   },
   {
@@ -1418,6 +1527,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A BMS is a computer-based control system that monitors and manages building services from a central location, optimising energy use and comfort.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'basic',
   },
   {
@@ -1428,6 +1538,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Common building automation protocols include BACnet (widely used for HVAC), Modbus, KNX (European standard), and DALI specifically for lighting control.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1443,6 +1554,7 @@ export const module2Questions: Question[] = [
     explanation:
       'DALI (Digital Addressable Lighting Interface) is a standardised protocol for digital lighting control, allowing individual addressing and dimming of luminaires.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1458,6 +1570,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Addressable control allows individual luminaires to be controlled independently, enabling flexible scene setting, occupancy-based control, and fine-tuned energy management.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1473,6 +1586,7 @@ export const module2Questions: Question[] = [
     explanation:
       'KNX is a worldwide standard (ISO 14543) for home and building automation, supporting lighting, HVAC, blinds, security, and energy management.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1488,6 +1602,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Smart thermostats connect to WiFi for remote control, learn user preferences, and can integrate with other smart home devices for optimised heating control.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'basic',
   },
   {
@@ -1503,6 +1618,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Geofencing uses smartphone GPS to detect when occupants leave or approach home, automatically adjusting heating to save energy when away and ensuring comfort on return.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1518,6 +1634,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A smart plug connects to WiFi, allowing remote on/off control, scheduling, and often energy monitoring of plugged-in devices via smartphone app.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'basic',
   },
   {
@@ -1533,6 +1650,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Z-Wave is a wireless mesh networking protocol specifically designed for smart home devices, operating at sub-1GHz frequencies with low power consumption.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1548,6 +1666,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Zigbee is a low-power wireless mesh networking protocol widely used in smart home devices, operating at 2.4GHz and supporting thousands of nodes.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1563,6 +1682,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Matter is a new interoperability standard allowing smart home devices from different manufacturers to work together seamlessly across ecosystems.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'advanced',
   },
   {
@@ -1578,6 +1698,7 @@ export const module2Questions: Question[] = [
     explanation:
       'PoE (Power over Ethernet) delivers DC power alongside data over standard Ethernet cables, eliminating separate power supplies for devices like cameras and access points.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1588,6 +1709,7 @@ export const module2Questions: Question[] = [
     explanation:
       'PoE standards range from 15.4W (802.3af) through 30W (802.3at/PoE+) to 90W+ (802.3bt/PoE++) for high-power devices like PTZ cameras or displays.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1603,6 +1725,7 @@ export const module2Questions: Question[] = [
     explanation:
       'PoE lighting uses Ethernet cables to deliver both power and control data to LED luminaires, enabling individual fixture control and data collection.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1618,6 +1741,7 @@ export const module2Questions: Question[] = [
     explanation:
       'PoE lighting enables individual fixture control, real-time energy monitoring, occupancy data collection, and easy integration with BMS and IT systems.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1633,6 +1757,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A lighting scene is a preset combination of individual light settings (levels, colours, zones) that can be recalled with a single command for different activities.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'basic',
   },
   {
@@ -1648,6 +1773,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Human-centric lighting adjusts colour temperature and intensity throughout the day to support natural circadian rhythms and improve wellbeing and productivity.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1663,6 +1789,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Tuneable white lighting uses multiple LED types to adjust colour temperature, typically from warm white (2700K) to cool daylight (6500K).',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1678,6 +1805,7 @@ export const module2Questions: Question[] = [
     explanation:
       'IoT sensors are internet-connected devices that monitor building conditions (temperature, occupancy, air quality, etc.) and transmit data for analysis and control.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'basic',
   },
   {
@@ -1693,6 +1821,7 @@ export const module2Questions: Question[] = [
     explanation:
       'IAQ monitoring uses sensors to measure CO2 levels, humidity, VOCs, and particulates, enabling ventilation control to maintain healthy indoor environments.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1708,6 +1837,7 @@ export const module2Questions: Question[] = [
     explanation:
       'CO2 levels above 800-1000ppm typically trigger increased ventilation in demand-controlled systems. Outdoor air is around 400ppm; levels above 1500ppm indicate poor ventilation.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1723,6 +1853,7 @@ export const module2Questions: Question[] = [
     explanation:
       'DCV automatically adjusts ventilation rates based on actual occupancy (CO2 sensors) or air quality, saving energy compared to fixed ventilation rates.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1738,6 +1869,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A digital twin is a virtual model of a building that integrates real-time sensor data, enabling monitoring, analysis, simulation, and optimisation of building performance.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'advanced',
   },
   {
@@ -1753,6 +1885,7 @@ export const module2Questions: Question[] = [
     explanation:
       'BIM (Building Information Modelling) creates intelligent 3D models containing data about building elements, used throughout design, construction, and operation.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1768,6 +1901,7 @@ export const module2Questions: Question[] = [
     explanation:
       'An IHD is a portable display unit that shows real-time gas and electricity consumption and costs from the smart meter, helping users understand usage.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'basic',
   },
   {
@@ -1783,6 +1917,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Load balancing (or load management) distributes available electrical capacity across multiple EV chargers, preventing main supply overload while maximising charging.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1798,6 +1933,7 @@ export const module2Questions: Question[] = [
     explanation:
       'An energy dashboard visualises real-time and historical energy data, showing consumption patterns, costs, and comparisons to help identify savings opportunities.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'basic',
   },
   {
@@ -1813,6 +1949,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Predictive maintenance uses sensor data and analytics to predict when equipment is likely to fail, enabling maintenance before breakdown occurs.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'intermediate',
   },
   {
@@ -1828,6 +1965,7 @@ export const module2Questions: Question[] = [
     explanation:
       'FDD systems automatically analyse building data to detect operational faults, inefficiencies, and their probable causes, enabling faster resolution.',
     section: '2.4',
+    topic: 'Smart Building Systems',
     difficulty: 'advanced',
   },
 
@@ -1842,6 +1980,7 @@ export const module2Questions: Question[] = [
     explanation:
       'An EPC is valid for 10 years from the date of issue, unless significant changes are made to the property that affect its energy performance.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'basic',
   },
   {
@@ -1857,6 +1996,7 @@ export const module2Questions: Question[] = [
     explanation:
       'An EPC must be provided when a building is constructed, sold, or let. It must be made available to prospective buyers or tenants.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'basic',
   },
   {
@@ -1872,6 +2012,7 @@ export const module2Questions: Question[] = [
     explanation:
       'EPCs must be produced by accredited energy assessors registered with an approved accreditation scheme.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'basic',
   },
   {
@@ -1887,6 +2028,7 @@ export const module2Questions: Question[] = [
     explanation:
       "The EPC recommendations report suggests cost-effective improvements that could increase the property's energy rating, with estimated costs and potential savings.",
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'basic',
   },
   {
@@ -1902,6 +2044,7 @@ export const module2Questions: Question[] = [
     explanation:
       'MEES regulations set minimum EPC ratings that rental properties must achieve. Currently Band E, with proposals to increase to C for some properties.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -1917,6 +2060,7 @@ export const module2Questions: Question[] = [
     explanation:
       'MEES exemptions include improvements not being cost-effective (7-year payback test), wall insulation causing damage, third-party consent not being obtainable, or recent property acquisition.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -1932,6 +2076,7 @@ export const module2Questions: Question[] = [
     explanation:
       'MEES non-compliance can result in civil penalties. Non-domestic property penalties can reach £150,000, with domestic penalties typically up to £5,000.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -1947,6 +2092,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A DEC shows the actual energy performance of a public building based on metered consumption, required for buildings over 250m² frequently visited by the public.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -1962,6 +2108,7 @@ export const module2Questions: Question[] = [
     explanation:
       'EPCs are based on calculated/designed energy performance. DECs show actual operational energy use based on metered consumption over the past year.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -1977,6 +2124,7 @@ export const module2Questions: Question[] = [
     explanation:
       'ESOS requires large UK organisations (250+ employees or >€50M turnover) to conduct energy audits every 4 years, identifying energy saving opportunities.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -1992,6 +2140,7 @@ export const module2Questions: Question[] = [
     explanation:
       'SECR requires qualifying large UK companies to report energy use and carbon emissions in their annual reports, including intensity ratios and efficiency actions.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -2007,6 +2156,7 @@ export const module2Questions: Question[] = [
     explanation:
       'AC systems over 12kW must be inspected by an accredited assessor every 5 years, assessing efficiency and providing recommendations for improvement.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -2017,6 +2167,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part F of the Building Regulations covers ventilation requirements in buildings to maintain indoor air quality and prevent condensation.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'basic',
   },
   {
@@ -2032,6 +2183,7 @@ export const module2Questions: Question[] = [
     explanation:
       "CIBSE TM54 provides methodology for predicting operational energy use in buildings, addressing the 'performance gap' between design and actual performance.",
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'advanced',
   },
   {
@@ -2047,6 +2199,7 @@ export const module2Questions: Question[] = [
     explanation:
       "The performance gap is the common discrepancy between a building's designed/predicted energy performance and its actual operational energy consumption.",
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -2062,6 +2215,7 @@ export const module2Questions: Question[] = [
     explanation:
       "Net zero carbon means a building's operations result in zero net carbon emissions annually, through high efficiency, on-site renewables, and/or carbon offsetting.",
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -2077,6 +2231,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Embodied carbon includes emissions from extracting materials, manufacturing, transporting, constructing, maintaining, and eventually demolishing a building.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -2092,6 +2247,7 @@ export const module2Questions: Question[] = [
     explanation:
       'NABERS UK rates commercial buildings based on actual operational energy use, providing a star rating from 1-6 stars for transparency about real performance.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'advanced',
   },
   {
@@ -2107,6 +2263,7 @@ export const module2Questions: Question[] = [
     explanation:
       'BREEAM is a widely used sustainability assessment method for buildings, rating performance across categories including energy, water, materials, and ecology.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -2122,6 +2279,7 @@ export const module2Questions: Question[] = [
     explanation:
       'BREEAM ratings are: Unclassified, Pass, Good, Very Good, Excellent, and Outstanding, based on percentage score across various sustainability categories.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -2137,6 +2295,7 @@ export const module2Questions: Question[] = [
     explanation:
       'LEED (Leadership in Energy and Environmental Design) is an internationally recognised green building certification system with levels from Certified to Platinum.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -2152,6 +2311,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Passivhaus is a rigorous building standard achieving very low energy consumption through excellent insulation, airtightness, heat recovery, and solar gain management.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
   {
@@ -2162,6 +2322,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Passivhaus certification requires maximum heating/cooling demand of 15 kWh/m²/year, achieved through exceptional building fabric and heat recovery ventilation.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'advanced',
   },
   {
@@ -2177,6 +2338,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The UK Green Building Council is an industry network promoting sustainability in the built environment through policy influence, best practice guidance, and member collaboration.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'basic',
   },
   {
@@ -2192,6 +2354,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Part O (introduced 2022) sets requirements to mitigate overheating risk in new residential buildings, addressing concerns about climate change and summer comfort.',
     section: '2.5',
+    topic: 'EPCs and Compliance',
     difficulty: 'intermediate',
   },
 
@@ -2206,6 +2369,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The UK has a legally binding target to achieve net zero greenhouse gas emissions by 2050 under the Climate Change Act 2008 (as amended).',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2221,6 +2385,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The circular economy aims to eliminate waste by designing for durability, reuse, and recycling, keeping materials in use rather than disposing of them.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2236,6 +2401,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A carbon footprint measures total greenhouse gas emissions (expressed as CO2 equivalent) associated with an activity, product, organisation, or individual.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2251,6 +2417,7 @@ export const module2Questions: Question[] = [
     explanation:
       "LCA evaluates environmental impacts throughout a product or building's entire lifecycle, from raw material extraction through use to end-of-life disposal or recycling.",
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2266,6 +2433,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Scope 1: direct emissions from owned/controlled sources. Scope 2: indirect from purchased energy. Scope 3: all other indirect emissions in the value chain.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2281,6 +2449,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Carbon offsetting compensates for emissions by investing in projects that reduce, avoid, or remove equivalent CO2 emissions elsewhere, such as reforestation.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2296,6 +2465,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Science Based Targets are corporate emissions reduction targets consistent with climate science requirements to limit global warming to 1.5°C or well below 2°C.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2311,6 +2481,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The Climate Change Committee is an independent statutory body advising UK governments on emissions targets and reporting on progress towards them.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2326,6 +2497,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Greenwashing is making false or misleading claims about environmental credentials to create an impression of sustainability without substantive action.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2341,6 +2513,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The SDGs are 17 interconnected global goals adopted by UN member states addressing poverty, inequality, climate, environmental degradation, peace, and justice by 2030.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2356,6 +2529,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The Paris Agreement is a legally binding international treaty on climate change, aiming to limit global warming to well below 2°C, preferably 1.5°C, above pre-industrial levels.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2371,6 +2545,7 @@ export const module2Questions: Question[] = [
     explanation:
       'ESG (Environmental, Social, Governance) criteria are used by investors and stakeholders to evaluate corporate behaviour and sustainability performance.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2386,6 +2561,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A green lease includes clauses committing both landlord and tenant to sustainable practices, energy efficiency measures, and data sharing.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2401,6 +2577,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Electrification of heat involves replacing gas boilers and other fossil fuel heating with efficient electric systems, primarily heat pumps, to decarbonise buildings.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2416,6 +2593,7 @@ export const module2Questions: Question[] = [
     explanation:
       'As the electricity grid decarbonises (more renewables, less fossil fuel), electric heating produces fewer emissions, eventually making heat pumps significantly cleaner than gas.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2431,6 +2609,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Hydrogen heating proposes using hydrogen (blended or pure) in modified boilers for building heat, though its viability compared to heat pumps is debated.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2446,6 +2625,7 @@ export const module2Questions: Question[] = [
     explanation:
       'District heating distributes heat from a central plant (using various sources) through insulated pipes to multiple buildings, potentially achieving economies of scale.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2461,6 +2641,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Heat networks (district heating) distribute heat generated centrally to residential and commercial buildings through a network of insulated pipes.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2476,6 +2657,7 @@ export const module2Questions: Question[] = [
     explanation:
       'MMC includes off-site manufacturing, modular construction, and other innovations that can improve quality, reduce waste, speed construction, and enhance sustainability.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2491,6 +2673,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Retrofit means upgrading existing buildings with improved insulation, efficient heating, renewables, and smart controls to reduce energy consumption and carbon emissions.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2506,6 +2689,7 @@ export const module2Questions: Question[] = [
     explanation:
       'PAS 2035 is the overarching framework for domestic retrofit, requiring holistic assessment, appropriate measures, and coordination to ensure quality and avoid unintended consequences.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2521,6 +2705,7 @@ export const module2Questions: Question[] = [
     explanation:
       "Fuel poverty occurs when a household's fuel costs are above average and spending that amount would leave them below the poverty line.",
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2536,6 +2721,7 @@ export const module2Questions: Question[] = [
     explanation:
       'ECO (Energy Company Obligation) requires large energy suppliers to fund energy efficiency improvements in qualifying households, particularly those in fuel poverty.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
   {
@@ -2551,6 +2737,7 @@ export const module2Questions: Question[] = [
     explanation:
       'The Great British Insulation Scheme helps households improve insulation through grants, targeting properties in lower EPC bands and fuel poor households.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'basic',
   },
   {
@@ -2566,6 +2753,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Stranded asset risk means buildings with poor energy performance may become unmarketable, unlettable, or significantly devalued as standards tighten.',
     section: '2.6',
+    topic: 'Sustainability and Sustainable Working',
     difficulty: 'intermediate',
   },
 
@@ -2585,6 +2773,7 @@ export const module2Questions: Question[] = [
     explanation:
       'V2H allows electric vehicles to discharge power to supply a home, using the EV battery as energy storage for backup power or time-of-use optimization.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2600,6 +2789,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Wireless EV charging uses electromagnetic induction to transfer power from a pad in the ground to the vehicle without requiring a physical cable connection.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2615,6 +2805,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Solid-state batteries replace liquid electrolyte with solid material, potentially offering higher energy density, faster charging, longer life, and improved safety.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'advanced',
   },
   {
@@ -2630,6 +2821,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Green hydrogen is produced by electrolysis of water using renewable electricity, producing hydrogen with zero carbon emissions in the production process.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2645,6 +2837,7 @@ export const module2Questions: Question[] = [
     explanation:
       'An electrolyser uses electricity to split water (H2O) into hydrogen and oxygen through electrolysis. When powered by renewables, it produces green hydrogen.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2660,6 +2853,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A fuel cell generates electricity through chemical reaction between hydrogen and oxygen, producing only water as a byproduct. Used in vehicles and buildings.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2675,6 +2869,7 @@ export const module2Questions: Question[] = [
     explanation:
       'CCS captures CO2 from industrial processes or power generation and stores it permanently underground in geological formations to prevent atmospheric release.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2690,6 +2885,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Direct air capture extracts CO2 directly from ambient air using chemical processes, which can then be stored permanently or used in various applications.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'advanced',
   },
   {
@@ -2705,6 +2901,7 @@ export const module2Questions: Question[] = [
     explanation:
       'BIPV integrates photovoltaic materials into building components like roof tiles, facades, or glazing, generating electricity while serving as construction material.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2720,6 +2917,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A smart grid uses digital communication and control technology to manage electricity flow, integrate renewables, enable demand response, and improve efficiency.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2735,6 +2933,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Grid-scale battery storage involves large installations (often tens of MW) that store electricity to balance supply and demand, support renewables, and provide grid services.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2750,6 +2949,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Pumped hydro stores energy by pumping water to an upper reservoir when electricity is cheap/plentiful, then releasing it through turbines to generate power when needed.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2765,6 +2965,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A VPP aggregates multiple distributed energy resources (batteries, EVs, solar, flexible loads) to function together as a single dispatchable resource for grid services.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'advanced',
   },
   {
@@ -2780,6 +2981,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Peer-to-peer energy trading allows prosumers (producer-consumers) to sell excess energy directly to neighbours or other consumers, often enabled by blockchain.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'advanced',
   },
   {
@@ -2795,6 +2997,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Blockchain in energy enables transparent, secure recording of energy transactions, supporting peer-to-peer trading, renewable certificates, and grid management.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'advanced',
   },
   {
@@ -2810,6 +3013,7 @@ export const module2Questions: Question[] = [
     explanation:
       'AI in buildings uses machine learning to analyse data, predict energy consumption, optimise HVAC operation, detect faults, and continuously improve efficiency.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2825,6 +3029,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Predictive energy management uses AI to forecast energy demand, weather impacts, and occupancy to proactively optimise building systems for efficiency and comfort.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2840,6 +3045,7 @@ export const module2Questions: Question[] = [
     explanation:
       'TES stores energy in the form of heat (hot water tanks, ice storage, phase change materials) for later use, enabling load shifting and renewable integration.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2855,6 +3061,7 @@ export const module2Questions: Question[] = [
     explanation:
       'PCMs store and release thermal energy during phase transitions (typically solid-liquid), used for temperature regulation and thermal storage in buildings.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'advanced',
   },
   {
@@ -2870,6 +3077,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Dynamic (smart) glazing can change its transparency, solar heat gain, or tint in response to electrical signals, light levels, or temperature to optimise comfort and energy.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2885,6 +3093,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Electrochromic glass can be electrically switched between transparent and tinted states, enabling dynamic control of daylight, glare, and solar heat gain.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'advanced',
   },
   {
@@ -2900,6 +3109,7 @@ export const module2Questions: Question[] = [
     explanation:
       'A positive energy building produces more energy than it consumes annually, typically through high efficiency and extensive on-site renewable generation.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
   },
   {
@@ -2915,6 +3125,7 @@ export const module2Questions: Question[] = [
     explanation:
       'IoT in buildings connects sensors, meters, and devices to networks, enabling data collection, analysis, and automated control for optimised building performance.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'basic',
   },
   {
@@ -2930,6 +3141,7 @@ export const module2Questions: Question[] = [
     explanation:
       'Energy disaggregation (NILM) uses machine learning to analyse total electricity consumption and identify individual appliance usage without sub-metering.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'advanced',
   },
   {
@@ -2945,26 +3157,904 @@ export const module2Questions: Question[] = [
     explanation:
       'Building digital twins integrate real-time data for monitoring, enable simulation of changes, optimise operations, and support predictive maintenance and lifecycle management.',
     section: '2.7',
+    topic: 'Future Technologies',
     difficulty: 'intermediate',
+  },
+
+  // ============================================
+  // Section 2.8: BS 7671 Special Locations (Questions 201-225)
+  // ============================================
+  {
+    id: 201,
+    question: 'Under BS 7671 Section 712, what is the maximum DC string voltage permitted for domestic PV systems?',
+    options: [
+      '1500 V DC',
+      '1000 V DC',
+      '600 V DC',
+      '230 V DC',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 7671 Section 712 (Solar PV) limits DC voltage to 1000 V DC for residential applications. Higher voltage strings (up to 1500 V) are permitted only in commercial installations subject to additional protective measures.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 202,
+    question: 'Under BS 7671 Reg 712.411.3.2.1.2, where the inverter does not provide simple separation, what additional protective measure is required?',
+    options: [
+      'No additional measure',
+      'A transformer providing simple separation between the AC and DC sides, OR an RCD type B on the AC side',
+      'A larger fuse',
+      'More cable',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Section 712 requires that PV inverters either provide simple separation themselves or have a transformer or Type B RCD on the AC side, because non-isolated (transformerless) inverters can produce smooth DC fault current that defeats Type AC and A RCDs.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 203,
+    question: 'Under BS 7671 Section 722 (EV charging), what does Reg 722.411.4 require for a PEN-conductor fault detection on a TN-C-S supply?',
+    options: [
+      'Nothing special',
+      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
+      'A larger fuse',
+      'A bigger battery',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Section 722 addresses the risk of an open PEN making the vehicle\'s exposed-conductive-parts live. Reg 722.411.4 requires an earth electrode, a 5-second disconnection device, or integrated O-PEN protection (as offered by most modern EVCPs).',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 204,
+    question: 'Under BS 7671 Reg 722.531.3.101, what RCD type is required for an EV charging point unless the equipment provides equivalent protection?',
+    options: [
+      'Type AC',
+      'Type B (or Type A combined with appropriate residual DC monitoring)',
+      'Type F',
+      'No RCD',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Reg 722.531.3.101 requires Type B RCD protection for EV charging because EV inverters can produce smooth DC residual currents that blind Type A and AC RCDs. A Type A RCD with separate DC residual monitoring (≥ 6 mA) in the EVSE is the common alternative.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 205,
+    question: 'BS 7671 Section 753 covers heating cables and embedded heating systems. What is the maximum permitted touch temperature for accessible surfaces of an underfloor heating system?',
+    options: [
+      '70°C',
+      '35°C generally for floors regularly walked on barefoot (warmer permitted in border zones)',
+      '100°C',
+      '15°C',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 7671 Section 753 with EN 60335-2-96 limits accessible floor surface temperature to about 35°C in occupied zones to prevent burns and discomfort. Border zones near walls may exceed this. RCD protection 30 mA is also required.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 206,
+    question: 'For a TN-C-S (PNB) supply supplying a heat pump with an outdoor unit, what specific concern must your design address per BS 7671?',
+    options: [
+      'Only cable size',
+      'PEN-conductor open-circuit risk to outdoor metalwork — apply Section 722-style measures: earth electrode, residual current detection, or use of a dedicated supplier-issued separate earth (TT outdoor)',
+      'Just paint it',
+      'Add a longer flex',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Outdoor heat pump units share the EV concern: an open PEN can place the casing at supply voltage. Designs typically include an earth electrode of suitable Ra, a 5-second residual disconnection device, or treat the outdoor section as TT — same logic as Reg 722.411.4.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 207,
+    question: 'BS 7671 Reg 712.521.1 requires PV DC cables to be sized considering what additional factor compared with normal AC cables?',
+    options: [
+      'No difference',
+      '125% of the module short-circuit current Isc at STC, plus voltage drop over potentially long DC runs, with cable type rated for outdoor UV exposure',
+      'Just colour code',
+      'Half the rating',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 7671 Section 712 requires DC cables to be rated for at least 1.25 × Isc to allow for irradiance overshoot and ageing, sized for voltage drop over often long DC runs, and use UV-stable, outdoor-rated double-insulated cable suitable for the environment.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 208,
+    question: 'For a battery storage system (Section 8 of BS 7671), what disconnection means must be provided?',
+    options: [
+      'None',
+      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
+      'Just one switch',
+      'No isolators',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Battery installations require a DC isolator at the battery, an AC isolator at the inverter and an accessible emergency means of disconnection. BS 7671 reinforces clear labelling and locations so first responders and electricians can isolate quickly and safely.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 209,
+    question: 'Under BS 7671 A4:2026, what is the new requirement around AFDDs for solar PV / battery storage circuits?',
+    options: [
+      'Removed entirely',
+      'Recommended for final circuits supplying or fed from PV/battery installations to mitigate arc-fault risk on long DC and AC runs',
+      'Banned',
+      'Only on commercial',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A4:2026 strengthens AFDD use across higher-risk locations (HRRBs, care homes, HMOs) and recommends them on circuits associated with PV and battery storage where arc-fault risk on extended cabling exists. Designers should justify any decision not to fit AFDDs.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 210,
+    question: 'Under BS 7671 Reg 712.411.4, what is the requirement around equipotential bonding of metallic PV mounting structures?',
+    options: [
+      'No bonding',
+      'Where metallic mounting frames are connected to exposed-conductive-parts of Class I PV equipment, they form part of that equipment\'s earthing arrangement; otherwise, fault-loop impedance and lightning protection requirements apply',
+      'Bond to gas',
+      'Bond to water only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Reg 712.411.4 and IET Solar PV Code of Practice cover earthing/bonding. Metallic frames connected to Class I equipment form part of the earthing system. Where lightning protection (BS EN 62305) is in place, equipotential bonding requirements expand.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 211,
+    question: 'Under MCS MIS 3002 (PV), what minimum competence is required for the installer of a domestic solar PV system?',
+    options: [
+      'No requirement',
+      'The installation business must hold MCS PV certification, with at least one Suitably Qualified Person trained to MIS 3002 and the underpinning electrical qualifications',
+      'Just a Part P card',
+      'YouTube training',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'MCS MIS 3002 sets installer requirements for PV. The business must be MCS-certified for PV, employ a Suitably Qualified Person with appropriate training (typically C&G 2399 PV plus underpinning electrical qualifications), and follow the MCS installation standards.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 212,
+    question: 'Under MCS MIS 3005 (heat pumps), what design output calculation must installers follow?',
+    options: [
+      'Guess',
+      'A heat loss calculation to BS EN 12831 (or equivalent) for the property, sized to meet the design heat load at the design external temperature, with emitter sizing for low flow temperatures',
+      'Just match the old boiler',
+      'Always 12 kW',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'MIS 3005 requires a property-specific heat loss calculation to BS EN 12831, sizing the heat pump for the design heat load at the design external temperature. Emitters (radiators, UFH) are sized for low flow temperatures (typically 35-45°C) to maintain SCOP.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 213,
+    question: 'F-Gas Regulation (EU/UK 517/2014 retained) restricts who can do what work on heat pump refrigerant circuits?',
+    options: [
+      'Anyone',
+      'Only F-Gas-certified personnel may install, maintain, decommission or do leak checks on equipment containing fluorinated greenhouse gas refrigerants — electricians without F-Gas certification can only do the electrical work',
+      'Only plumbers',
+      'Anyone with PPE',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The F-Gas Regulation restricts work on systems containing fluorinated refrigerants to F-Gas-certified personnel and companies. Electricians can do the electrical interconnection but must NOT break into refrigerant pipework — that requires F-Gas certification and a registered company.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 214,
+    question: 'Under ENA EREC G98, what is the maximum capacity for a single-phase generator (e.g. small PV) connected to the public network without prior approval?',
+    options: [
+      '500 W',
+      '16 A per phase (≈3.68 kW single-phase, ≈11 kW three-phase) — installer notifies the DNO after commissioning',
+      '100 kW',
+      'No limit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'G98 covers "fit and inform" — small generators up to 16 A per phase (around 3.68 kW single-phase, 11 kW three-phase) using EREC G98-listed equipment can be installed and the DNO notified within 28 days. Above this, EREC G99 prior approval is required.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 215,
+    question: 'Under ENA EREC G99, what process must be followed for connecting a generator above the G98 thresholds?',
+    options: [
+      'Just connect it',
+      'Submit a G99 application to the DNO BEFORE installation, providing system details and protection settings — DNO assesses network impact, may require modifications, and approval must be received before energisation',
+      'Tell them later',
+      'Email a photo',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'G99 is "apply and connect" — for generators above G98 limits the installer must apply to the DNO before installation. The DNO assesses network impact, defines protection settings, and may require reinforcement. The installation must not energise until approval is received.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 216,
+    question: 'For a heat pump system, what is the difference between COP and SCOP and which should the customer focus on?',
+    options: [
+      'No difference',
+      'COP = instant ratio of heat output to electrical input at a single test point; SCOP = seasonal average across realistic operating conditions in a defined climate — SCOP is what determines real-world running cost',
+      'Both are the same',
+      'COP is bigger',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'COP measures performance at a single point. SCOP (Seasonal COP) per EN 14825 averages performance across a heating season in a defined climate, and is the realistic indicator of running cost. A unit with high COP but low SCOP (e.g. due to defrost cycles) will disappoint.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 217,
+    question: 'Under Building Regulations Part L 2021 (England), what is the maximum permitted flow temperature for new domestic heating systems to ensure they\'re heat-pump-ready?',
+    options: [
+      '90°C',
+      '55°C maximum design flow temperature for new wet space heating systems — encouraging emitter sizing that suits low-temperature heat pumps',
+      'No limit',
+      '100°C',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Part L 2021 caps the maximum design flow temperature for new domestic wet heating systems at 55°C, ensuring oversized emitters or UFH so the system works efficiently with a heat pump now or in future. Existing systems can keep higher temperatures.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 218,
+    question: 'Under BS 7671 Section 712, what specific consideration applies to PV DC isolators after A4:2026 update?',
+    options: [
+      'No update',
+      'A DC isolator must be provided at each PV array adjacent to the inverter, suitable for switching DC under load and clearly identified for rapid emergency disconnection',
+      'Banned',
+      'Only on commercial',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A4:2026 reinforces requirements around PV DC isolation — a load-rated DC isolator at the array side adjacent to the inverter, clearly identified, suitable for emergency disconnection. Modern systems may also include rapid-shutdown devices at module level.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 219,
+    question: 'For a domestic battery storage installation, where in the property should the battery NOT be located per IET Code of Practice for Electrical Energy Storage Systems?',
+    options: [
+      'Anywhere',
+      'Within escape routes, under stairs in a single-staircase building, in habitable rooms (where avoidable), in roof spaces (where heat/cold extremes apply) or close to gas meters',
+      'Only outside',
+      'Only in the loft',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The IET Code of Practice for EESS lists location restrictions to manage thermal-runaway risk. Avoid escape routes, under stairs in single-staircase dwellings, habitable rooms where practicable, lofts (extreme temps) and proximity to gas meters or other risks.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 220,
+    question: 'For an EV charging point on a domestic supply, what cable rating consideration must the designer apply?',
+    options: [
+      'No special consideration',
+      'EVCP loads are continuous and high-utilisation — apply appropriate Cg and Ca correction factors, consider cumulative diversity for multiple chargers, and ensure final-circuit protective device rating coordinates with both EVCP rating and DNO supply capacity',
+      'Use thinner cable',
+      'No fuse needed',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'EV charging is continuous high-utilisation. Designers must apply correction factors for grouping and ambient temperature, account for cumulative diversity if multiple chargers, and check the supply capacity. Many domestic supplies need DNO upgrade for 7 kW chargers.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 221,
+    question: 'Under BS 7671 A4:2026, what does the introduction of TN-C-S (PNB) terminology mean?',
+    options: [
+      'A new system',
+      'TN-C-S (PNB) is the British term for what was loosely called "PME" — combined Protective Earth and Neutral conductor in the supply, separated at the cut-out — A4:2026 standardises the terminology and reinforces design rules',
+      'Old wiring',
+      'Two earths',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A4:2026 consolidates terminology around TN-C-S (PNB) — Protective Neutral Bonding — replacing loose use of "PME". The PEN conductor is the combined neutral/earth in the supply, separated at the cut-out. Design considerations particularly affect EV/HP outdoor metalwork (open-PEN risk).',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 222,
+    question: 'Under MCS, what is the role of the SAP (Standard Assessment Procedure) calculation in heat pump design?',
+    options: [
+      'Not used',
+      'SAP is the statutory methodology for assessing dwelling energy performance and underpins EPC ratings, but heat pump SIZING uses BS EN 12831 heat-loss calculations — not SAP',
+      'Used for sizing',
+      'Replaces emitter sizing',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'SAP is the energy-performance assessment methodology behind EPCs and Building Regs Part L compliance. It informs the DESIGN STAGE (e.g. whether a heat pump is appropriate) but actual SIZING for a heat pump must use a room-by-room heat-loss calc to BS EN 12831.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 223,
+    question: 'For an EV charger, what does ISO 15118 (plug-and-charge) standard cover?',
+    options: [
+      'Mechanical only',
+      'Vehicle-to-grid communication standard enabling automatic billing, smart charging, V2G/V2H bi-directional power flow, and secure identification — going beyond simple Mode 3 charging',
+      'A type of plug',
+      'A cable colour',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'ISO 15118 is the international standard for vehicle-to-grid communication. It supports plug-and-charge identification, smart-charging schedules, V2G/V2H bi-directional power, and is foundational to the future grid-services role of EVs.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 224,
+    question: 'Under the Smart Charge Point Regulations 2021, what features must domestic and workplace EV charging points sold in GB include by default?',
+    options: [
+      'No features',
+      'Smart functionality (default off-peak charging schedules), randomised delay function, demand-side response capability, security and data protection, and a privacy-respecting connection',
+      'Only Wi-Fi',
+      'No regulation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Smart Charge Point Regulations 2021 (SCPR) require domestic/workplace EVCPs sold in GB to include smart functionality, default off-peak schedules, randomised delay (to prevent grid-shock at off-peak start), DSR capability and cyber-security minima.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+  {
+    id: 225,
+    question: 'Under BS 7671 A4:2026, what new requirement applies to certificate schedules for EV charging circuits?',
+    options: [
+      'No change',
+      'New schedule columns capture EV-specific data including PEN-fault detection method, RCD type, charge-point rating and special-location considerations — supporting accurate dutyholder records',
+      'Removed',
+      'Hidden',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A4:2026 introduces additional certificate schedule columns to capture EV-specific design and protection data — PEN-fault detection method, RCD type fitted, EVCP rated current and applicable special-location data. These support competent ongoing management.',
+    section: '2.8',
+    topic: 'BS 7671 Special Locations',
+    difficulty: 'advanced',
+  },
+
+  // ============================================
+  // Section 2.9: F-Gas, WEEE and Sustainable Working (Questions 226-250)
+  // ============================================
+  {
+    id: 226,
+    question: 'Under the WEEE Regulations 2013 (UK retained), what duties does an electrical contractor have when removing old electrical equipment?',
+    options: [
+      'Skip it',
+      'Segregate WEEE from general waste, store in suitable conditions, transfer only to authorised facilities under a Waste Transfer Note, and keep records for at least 2 years',
+      'Burn it',
+      'Bury it',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'WEEE Regulations 2013 require segregation, suitable storage, transfer only to authorised treatment facilities, completion of Waste Transfer Notes (or Hazardous Waste Consignment Notes for hazardous WEEE), and record-keeping for 2 years (3 for hazardous).',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 227,
+    question: 'Under the Hazardous Waste Regulations 2005, what is required when removing fluorescent tubes containing mercury?',
+    options: [
+      'Bin them',
+      'Treat as hazardous waste, store in suitable rigid containers protected from breakage, transfer to a permitted facility under a Hazardous Waste Consignment Note, retain records for 3 years',
+      'Smash them',
+      'Compost',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Fluorescent tubes are hazardous waste due to mercury content. They must be stored intact in rigid containers, transferred to a permitted facility under a Hazardous Waste Consignment Note (HWCN), and records retained for 3 years.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 228,
+    question: 'Under the F-Gas Regulation, what leak-checking frequency applies to a heat pump containing 5 tonnes CO₂-equivalent of refrigerant?',
+    options: [
+      'Never',
+      'Annual leak check by F-Gas-certified personnel where charge ≥ 5 tonnes CO₂e, or every 2 years where charge < 5 tonnes; frequencies double if a leak detection system is installed and operational',
+      'Every 10 years',
+      'Monthly',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'F-Gas leak-check frequencies are tied to CO₂-equivalent charge size. ≥ 5 tCO₂e: annual; ≥ 50 tCO₂e: 6-monthly; ≥ 500 tCO₂e: 3-monthly. Frequencies double where a fixed leak detection system is in place. All checks must be done by F-Gas-certified personnel.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 229,
+    question: 'Under the GHG Protocol, what are Scope 1, 2 and 3 emissions for an electrical contractor?',
+    options: [
+      'Random categories',
+      'Scope 1 = direct emissions (vans, gas heating); Scope 2 = indirect from purchased electricity; Scope 3 = value-chain (materials, subcontractors, waste, business travel) — usually the largest',
+      'All the same',
+      'Only Scope 1 matters',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The GHG Protocol classifies emissions: Scope 1 (direct from owned assets), Scope 2 (purchased electricity/heat/steam), Scope 3 (everything else in the value chain — materials, subcontractors, transport, waste, business travel). Scope 3 is usually the largest and the hardest to measure.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 230,
+    question: 'For an installer aiming to reduce Scope 3 emissions on a project, what is the most effective practice?',
+    options: [
+      'Drive faster',
+      'Specify lower-embodied-carbon materials, prefab where possible, optimise van routes to cut transport, source materials from local merchants, and segregate waste for recycling not landfill',
+      'Use more PPE',
+      'Print everything',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Scope 3 reductions come from materials and logistics choices: specify lower embodied-carbon products, design for prefabrication, optimise transport routes, source locally, segregate waste for recycling and reuse. These also typically reduce cost.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 231,
+    question: 'Under the Environment Act 2021, what new producer responsibility applies to packaging waste?',
+    options: [
+      'No change',
+      'Extended Producer Responsibility (EPR) for packaging — producers and brand-owners pay the full net cost of managing the household packaging they place on the market, with reporting from 2024',
+      'Free disposal',
+      'Lower fees',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Environment Act 2021 introduces Extended Producer Responsibility for packaging. Producers and brand-owners pay full net cost of managing household packaging via Defra-defined fees, with reporting from 2024 and full cost recovery rolling in over subsequent years.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 232,
+    question: 'Under ISO 14001 (environmental management systems), what is the first step a contractor must take?',
+    options: [
+      'Buy more bins',
+      'Identify environmental aspects and impacts of their activities, products and services, and determine which are significant under defined criteria',
+      'Plant a tree',
+      'Print a poster',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'ISO 14001 starts with identifying environmental aspects (how the organisation interacts with the environment) and impacts (the resulting changes — positive or negative). The organisation then determines which are "significant" using defined criteria, and plans controls.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 233,
+    question: 'Under the Climate Change Act 2008 (as amended 2019), what is the UK\'s legally binding emissions target?',
+    options: [
+      'No target',
+      'Net Zero greenhouse gas emissions by 2050 (compared with 1990 baseline), with interim five-yearly carbon budgets monitored by the Climate Change Committee',
+      '2010',
+      '2100',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Climate Change Act 2008 was amended in 2019 to commit the UK to Net Zero greenhouse gas emissions by 2050. The Climate Change Committee sets and reports against five-yearly carbon budgets — currently CB6 covers 2033-2037.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 234,
+    question: 'Under the Pollution Prevention and Control regime, what is a permit and when does an electrical contractor need one?',
+    options: [
+      'Always',
+      'Permits are required for installations carrying out specified activities like waste treatment or large combustion plant; most electrical contractors don\'t need one but must comply with permit conditions when working at a permitted site',
+      'Never',
+      'Only on weekends',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Environmental Permitting Regulations require permits for specified industrial activities (waste treatment, large combustion plant, intensive farming). Electrical contractors working at permitted sites must comply with the permit\'s emission and operating conditions during their work.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 235,
+    question: 'Under the Control of Pollution (Oil Storage) Regulations, what containment is required for diesel storage on site?',
+    options: [
+      'None',
+      'Secondary containment (bund) sized for 110% of the largest container or 25% of total stored, whichever is greater, with no drainage outlet — preventing spills reaching watercourses or soakaways',
+      'A bucket',
+      'Sand',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'COPR (Oil Storage) Regulations 2001 require secondary containment for any oil store over 200 litres on industrial premises. The bund must hold at least 110% of the largest container or 25% of the total, with no drainage outlet that bypasses containment.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 236,
+    question: 'When a heat pump containing R32 refrigerant reaches end of life, what disposal route is mandatory?',
+    options: [
+      'Skip it',
+      'Refrigerant must be recovered by an F-Gas-certified person and sent for recycling/destruction; the equipment is then dealt with under WEEE Regulations through an authorised treatment facility',
+      'Vent to atmosphere',
+      'Bury it',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Both F-Gas and WEEE apply at end of life. The refrigerant MUST be recovered by an F-Gas-certified technician (venting is a criminal offence). The equipment then enters the WEEE chain — taken to an authorised treatment facility for materials recovery.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 237,
+    question: 'Under the Waste (England and Wales) Regulations 2011, what is the waste hierarchy you must apply?',
+    options: [
+      'Random',
+      'Prevention → Preparing for re-use → Recycling → Other recovery (including energy recovery) → Disposal as last resort',
+      'Disposal first',
+      'Burn it',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The waste hierarchy under the 2011 Regulations is mandatory: prevent waste first, then prepare for re-use, then recycle, then recover (e.g. energy from waste), with disposal (landfill) only as last resort. Documented justification is required to skip down.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 238,
+    question: 'On a project to retrofit LED lighting, what is the right approach to the existing fluorescent tubes and ballasts?',
+    options: [
+      'Bin them',
+      'Tubes are hazardous WEEE (mercury) — segregate, store carefully, transfer under HWCN to permitted facility; ballasts are also WEEE — separate ferrous metals where possible to maximise material recovery',
+      'Recycle as paper',
+      'Compost',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The retrofit creates significant WEEE/hazardous waste. Fluorescent tubes go via Hazardous Waste route (HWCN, permitted facility, 3-year records). Ballasts and luminaires are WEEE — separate ferrous and non-ferrous to maximise recovery via authorised facilities.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 239,
+    question: 'Under the Climate Change Act, what is a Carbon Budget and why does it matter to a contractor bidding for public work?',
+    options: [
+      'A grant',
+      'A statutory five-year cap on UK emissions; public sector procurement increasingly demands suppliers report their carbon and demonstrate reduction plans aligned to Net Zero',
+      'A discount',
+      'A tax break',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Carbon Budgets (CB1 through CB6) are statutory five-year caps on UK emissions set under the Climate Change Act. Public-sector procurement (PPN 06/21 in central government) increasingly requires suppliers to report carbon and have credible reduction plans.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 240,
+    question: 'For an EV charging installation in a public car park, what specific Building Regulations Part S requirement applies?',
+    options: [
+      'No requirement',
+      'Part S (Infrastructure for charging electric vehicles) requires new non-residential buildings with 10+ parking spaces to provide 1 EV charge point and cable routes for 1 in 5 spaces',
+      'No EVs',
+      'Always 100%',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Part S (introduced June 2022) requires new non-residential buildings with more than 10 parking spaces to provide at least one EV charge point and cable routes ("ducting") for one in five spaces. Major renovations have similar requirements scaled to project size.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 241,
+    question: 'Under Building Regulations Part L 2021 (England), what is the Future Homes Standard target for new homes from 2025?',
+    options: [
+      'No change',
+      'Around 75-80% lower CO₂ emissions than 2013 Part L, achieved through low-carbon heating (typically heat pumps) and high fabric efficiency — no fossil-fuel heating in new homes',
+      '0% reduction',
+      'Plus 50%',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Future Homes Standard (from 2025) targets approximately 75-80% lower CO₂ emissions than 2013 Part L, primarily through low-carbon heating (heat pumps), high fabric efficiency, and zero direct fossil-fuel heating in new homes. The 2021 amendment is the interim step.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 242,
+    question: 'Under MCS, what is the MCS Installation Database (MID) and why does it matter to the consumer?',
+    options: [
+      'A spam list',
+      'The official register of MCS-certified installations, generating the MCS Certificate that consumers need to claim Smart Export Guarantee, Boiler Upgrade Scheme grants and other incentives',
+      'A blog',
+      'A leaflet rack',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The MCS Installation Database (MID) is the official register. The MCS Certificate it generates is the gateway to incentives — Smart Export Guarantee for PV, Boiler Upgrade Scheme for heat pumps, ECO funding etc. Without MID registration the consumer can\'t claim.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 243,
+    question: 'Under the Smart Export Guarantee (SEG), what obligation does a licensed electricity supplier have?',
+    options: [
+      'No obligation',
+      'Suppliers with 150,000+ domestic customers must offer at least one tariff paying small generators (PV, wind, micro-CHP, hydro, AD) for exported electricity, with a positive (>0p) per-kWh rate',
+      'Free electricity',
+      'Subsidised tariff',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Smart Export Guarantee (introduced 2020) requires licensed suppliers with 150,000+ domestic customers to offer at least one SEG tariff to small generators (≤5MW). The rate must be positive per kWh — replacing the old Feed-in Tariff for new installations.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 244,
+    question: 'Under MCS MIS 3005, what handover documentation must the customer receive after a heat pump installation?',
+    options: [
+      'A receipt',
+      'MCS Certificate, manufacturer\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
+      'A USB stick',
+      'A hat',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'MIS 3005 handover includes: MCS Certificate, commissioning records (refrigerant charge, flow temperatures, performance), heat-loss calculation, system schematic, controls programming, maintenance instructions, and Building Regs notification (e.g. via competent person scheme).',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 245,
+    question: 'The HSE prosecution statistics consistently show what root cause behind environmental enforcement against electrical contractors?',
+    options: [
+      'Random',
+      'Failure to manage WEEE (mercury-containing tubes, refrigerants, batteries) — driving most environmental enforcement; followed by uncontrolled site discharges',
+      'Forgotten paperwork',
+      'Bad weather',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Environmental enforcement against electrical contractors typically arises from WEEE failures — mixed waste at landfills, mercury contamination, vented refrigerant. Site discharges (cement, oils) into drains are the next most common cause.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 246,
+    question: 'Under the Packaging (Essential Requirements) Regulations 2015, what duty applies to packaging used in the supply chain?',
+    options: [
+      'No duty',
+      'Packaging must be minimised to satisfy required function, designed for recovery (reuse, recycling, energy or composting), and contain only restricted levels of heavy metals',
+      'Use more packaging',
+      'Use only plastic',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Packaging Regulations 2015 require packaging be minimised to needed function, designed for recovery (reuse, recycling, energy recovery, composting), and respect heavy metals limits. Producers above thresholds also fall under producer responsibility for recovery and recycling.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 247,
+    question: 'For a contractor installing a battery storage system, what end-of-life consideration must be discussed at design stage?',
+    options: [
+      'None',
+      'Lithium batteries are hazardous waste (and class 9 dangerous goods); the design should consider take-back arrangements with the manufacturer/supplier, ease of safe removal, and clear labelling for first responders and end-of-life handlers',
+      'Bury them',
+      'Reuse forever',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Lithium batteries are hazardous waste and Class 9 dangerous goods for transport. Design-stage planning includes manufacturer take-back arrangements (under WEEE), accessibility for safe removal, clear labelling (chemistry, capacity, isolation procedure) for first responders and waste handlers.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 248,
+    question: 'Under the Carbon Trust\'s Net Zero Standard, what is "Science-Based Targets" alignment?',
+    options: [
+      'Random',
+      'A target to reduce emissions consistent with limiting global warming to 1.5°C, set in line with the latest climate science, validated by the Science Based Targets initiative (SBTi)',
+      'A guess',
+      'A formality',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Science-Based Targets are emission-reduction targets aligned to the latest climate science — typically a 1.5°C trajectory. Validation by the SBTi gives credibility. Public-sector and large-business buyers increasingly require SBTi-validated targets from suppliers.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 249,
+    question: 'For PV/battery installations, what cyber-security consideration is now expected per the IET Code of Practice?',
+    options: [
+      'None',
+      'Default credentials must be changed, firmware kept up to date, internet-facing components segregated where possible, and data shared with third-party platforms reviewed for privacy and security implications',
+      'Just connect to Wi-Fi',
+      'Ignore it',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The IET Code of Practice for EESS and Smart CP Regulations both expect cyber-security minima: change default credentials, keep firmware updated, segregate internet-facing components, and review data sharing with cloud platforms for privacy and security risk.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
+  },
+  {
+    id: 250,
+    question: 'Looking ahead, what is the main commercial driver for a small electrical contractor to invest in environmental and sustainability competence?',
+    options: [
+      'Marketing fluff',
+      'Public-sector procurement, larger commercial clients and lenders increasingly require credible carbon reporting, MCS competence and waste-hierarchy compliance — without these you\'re locked out of growing markets like heat pumps, EV, PV and battery',
+      'Tax break',
+      'A grant',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The commercial reality: low-carbon retrofit is the fastest-growing electrical market. Public-sector procurement, large clients and lenders demand credible carbon reporting, MCS competence and waste compliance. Contractors without these are increasingly locked out of heat pump, PV, EV and battery work.',
+    section: '2.9',
+    topic: 'F-Gas, WEEE and Sustainable Working',
+    difficulty: 'advanced',
   },
 ];
 
-// Helper function to get random questions for mock exams
-export const getRandomQuestions = (count: number): Question[] => {
-  const shuffled = [...module2Questions].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+// ============================================================================
+// Helper functions
+// ============================================================================
+
+const DEFAULT_WEIGHTS = { basic: 0.4, intermediate: 0.45, advanced: 0.15 };
+
+/**
+ * Get random questions weighted by difficulty.
+ * Default weights: 40% basic, 45% intermediate, 15% advanced.
+ */
+export const getRandomQuestions = (
+  count: number = 60,
+  weights: { basic: number; intermediate: number; advanced: number } = DEFAULT_WEIGHTS
+): QuestionBank[] => {
+  const basic = module2Questions.filter((q) => q.difficulty === 'basic');
+  const intermediate = module2Questions.filter((q) => q.difficulty === 'intermediate');
+  const advanced = module2Questions.filter((q) => q.difficulty === 'advanced');
+
+  const targetBasic = Math.round(count * weights.basic);
+  const targetInter = Math.round(count * weights.intermediate);
+  const targetAdvanced = count - targetBasic - targetInter;
+
+  const pickFrom = (pool: QuestionBank[], n: number): QuestionBank[] => {
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(n, shuffled.length));
+  };
+
+  const selected = [
+    ...pickFrom(basic, targetBasic),
+    ...pickFrom(intermediate, targetInter),
+    ...pickFrom(advanced, targetAdvanced),
+  ];
+
+  // If we couldn't fill (e.g. pool too small), top up from any difficulty
+  if (selected.length < count) {
+    const remaining = module2Questions.filter((q) => !selected.includes(q));
+    const topUp = pickFrom(remaining, count - selected.length);
+    selected.push(...topUp);
+  }
+
+  // Final shuffle so difficulty isn't grouped
+  return selected.sort(() => Math.random() - 0.5);
 };
 
-// Helper function to get questions by section
-export const getQuestionsBySection = (section: string): Question[] => {
+/** Filter questions by section code (e.g. '1.1', '2.3'). */
+export const getQuestionsBySection = (section: string): QuestionBank[] => {
   return module2Questions.filter((q) => q.section === section);
 };
 
-// Helper function to get questions by difficulty
+/** Filter questions by difficulty band. */
 export const getQuestionsByDifficulty = (
   difficulty: 'basic' | 'intermediate' | 'advanced'
-): Question[] => {
+): QuestionBank[] => {
   return module2Questions.filter((q) => q.difficulty === difficulty);
+};
+
+/** Filter questions by topic name. */
+export const getQuestionsByTopic = (topic: string): QuestionBank[] => {
+  return module2Questions.filter((q) => q.topic === topic);
+};
+
+/**
+ * Validate the question bank for structural integrity.
+ * Returns { isValid, errors[] } — used by tests/spot-checks.
+ */
+export const validateQuestionBank = (): { isValid: boolean; errors: string[] } => {
+  const errors: string[] = [];
+  const seenIds = new Set<number>();
+
+  module2Questions.forEach((q, idx) => {
+    if (typeof q.id !== 'number') errors.push(`Q[${idx}]: id must be a number`);
+    if (seenIds.has(q.id)) errors.push(`Q[${idx}]: duplicate id ${q.id}`);
+    seenIds.add(q.id);
+    if (!q.question || typeof q.question !== 'string') errors.push(`Q${q.id}: question text missing`);
+    if (!Array.isArray(q.options) || q.options.length < 2) errors.push(`Q${q.id}: options must have at least 2 entries`);
+    if (typeof q.correctAnswer !== 'number' || q.correctAnswer < 0 || q.correctAnswer >= (q.options?.length || 0))
+      errors.push(`Q${q.id}: correctAnswer index out of range`);
+    if (!q.explanation || typeof q.explanation !== 'string') errors.push(`Q${q.id}: explanation missing`);
+    if (!q.section || typeof q.section !== 'string') errors.push(`Q${q.id}: section missing`);
+    if (!q.topic || typeof q.topic !== 'string') errors.push(`Q${q.id}: topic missing`);
+    if (!['basic', 'intermediate', 'advanced'].includes(q.difficulty as string))
+      errors.push(`Q${q.id}: difficulty invalid`);
+  });
+
+  return { isValid: errors.length === 0, errors };
 };
 
 export default module2Questions;

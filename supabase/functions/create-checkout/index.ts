@@ -33,6 +33,13 @@ serve(async (req) => {
     const planBase = planId ? planId.replace(/-(monthly|yearly|annual)$/, '') : '';
     const isNoTrialPlan = NO_TRIAL_PLANS.includes(planBase);
 
+    // Founder pricing: first 100 Mate subscribers get the "mate_founder"
+    // Stripe coupon (25% off forever — £39.99→£29.99, £399.99→£299.99).
+    // Cap is enforced here at checkout-creation time — the existing 9 active
+    // beta users are already flagged is_founder=true, so they count.
+    const FOUNDER_COUPON_ID = Deno.env.get('MATE_FOUNDER_COUPON_ID') || '6fuVPsKN';
+    const MATE_FOUNDER_CAP = 100;
+
     logger.info('Request body received', {
       priceId,
       mode,
@@ -186,6 +193,36 @@ serve(async (req) => {
       }
     }
 
+    // ── Founder auto-apply ────────────────────────────────────────────
+    // For Mate (business-ai) plans, if no other discount is locked in,
+    // check founder slots and apply the founder coupon if available.
+    let isFounderCheckout = false;
+    if (planBase === 'business-ai' && !discounts) {
+      const supabaseServiceKeyFounder = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+      if (supabaseServiceKeyFounder) {
+        const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKeyFounder);
+        const { count: founderCount } = await supabaseAdmin
+          .from('profiles')
+          .select('*', { count: 'exact', head: true })
+          .eq('is_founder', true);
+
+        if ((founderCount ?? 0) < MATE_FOUNDER_CAP) {
+          discounts = [{ coupon: FOUNDER_COUPON_ID }];
+          isFounderCheckout = true;
+          logger.info('Applying Mate founder coupon', {
+            currentFounderCount: founderCount ?? 0,
+            cap: MATE_FOUNDER_CAP,
+            slot: (founderCount ?? 0) + 1,
+          });
+        } else {
+          logger.info('Founder slots full — no founder discount applied', {
+            currentFounderCount: founderCount,
+            cap: MATE_FOUNDER_CAP,
+          });
+        }
+      }
+    }
+
     // Handle referral code — create a one-time 100% off first month coupon
     if (referralCode && !discounts) {
       logger.info('Processing referral code', { referralCode });
@@ -246,6 +283,13 @@ serve(async (req) => {
     // Create checkout options based on mode
     const origin = req.headers.get('origin') || 'https://elec-mate.com';
 
+    // Business AI buyers go straight into the WhatsApp activation wizard;
+    // everyone else lands on the generic payment-success page.
+    const isBusinessAi = planBase === 'business-ai';
+    const successUrl = isBusinessAi
+      ? `${origin}/electrician/business-ai?session_id={CHECKOUT_SESSION_ID}&newly_subscribed=1`
+      : `${origin}/payment-success?plan=${planId}&trial=${isNoTrialPlan ? 'false' : 'true'}`;
+
     const checkoutOptions: Record<string, unknown> = {
       customer: customerId,
       line_items: [
@@ -256,13 +300,14 @@ serve(async (req) => {
       ],
       mode: mode,
       payment_method_collection: 'always',
-      success_url: `${origin}/payment-success?plan=${planId}&trial=${isNoTrialPlan ? 'false' : 'true'}`,
+      success_url: successUrl,
       cancel_url: `${origin}/subscriptions?cancelled=1`,
       client_reference_id: user.id,
       metadata: {
         userId: user.id,
         planId: planId,
         ...(referralCode ? { referralCode } : {}),
+        ...(isFounderCheckout ? { mate_founder: 'true' } : {}),
       },
       payment_method_types: ['card'],
       billing_address_collection: 'auto',
@@ -276,6 +321,7 @@ serve(async (req) => {
               metadata: {
                 userId: user.id,
                 planId: planId,
+                ...(isFounderCheckout ? { mate_founder: 'true' } : {}),
               },
             },
           }

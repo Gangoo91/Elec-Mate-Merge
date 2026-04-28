@@ -172,7 +172,7 @@ Keep descriptions practical and specific to electrical work.`;
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-4.1-2025-04-14',
+      model: 'gpt-5.4-mini-2026-03-17',
       messages: [{ role: 'user', content: prompt }],
       max_tokens: 1500,
       temperature: 0.7,

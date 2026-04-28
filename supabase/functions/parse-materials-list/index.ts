@@ -207,7 +207,7 @@ serve(async (req: Request) => {
 
 /**
  * Use OpenAI tool calling to extract structured product data from ambiguous lines.
- * Model: gpt-5-mini-2025-08-07, no temperature, max_completion_tokens.
+ * Model: gpt-5.4-mini-2026-03-17, no temperature, max_completion_tokens.
  */
 async function enhanceWithOpenAI(
   apiKey: string,
@@ -220,7 +220,7 @@ async function enhanceWithOpenAI(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-5-mini-2025-08-07',
+      model: 'gpt-5.4-mini-2026-03-17',
       max_completion_tokens: 1024,
       messages: [
         {

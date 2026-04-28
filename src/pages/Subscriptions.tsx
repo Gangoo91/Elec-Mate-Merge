@@ -199,12 +199,57 @@ const Subscriptions = () => {
     });
   };
 
-  // ── Stripe checkout ───────────────────────────────────────────────────────
+  // ── Stripe checkout / change-subscription ────────────────────────────────
+  // If the user already has an active Stripe subscription we MUST swap the
+  // price on the existing sub (with proration) — otherwise create-checkout
+  // would create a second subscription and double-bill them.
   const handleSubscribe = async (planId: string, priceId: string) => {
     try {
       setIsLoading((prev) => ({ ...prev, [planId]: true }));
       addBreadcrumb('Checkout started', 'payment', { planId, priceId });
       const offerCode = storageGetSync('elec-mate-offer-code');
+
+      // Path A: user is already paying for something — try to swap the price
+      // on the existing subscription so they don't end up with two.
+      if (isSubscribed && user) {
+        const { data: changeData, error: changeError } = await supabase.functions.invoke(
+          'change-subscription',
+          {
+            body: { priceId, planId },
+          }
+        );
+        if (changeError) {
+          // Network / 5xx — surface and stop. Don't silently fall back to
+          // create-checkout because we'd risk double-billing the user.
+          throw new Error(changeError.message);
+        }
+        if (changeData?.ok) {
+          if (changeData.no_change) {
+            toast({
+              title: "You're already on this plan",
+              description: 'No change made.',
+            });
+          } else {
+            trackMilestone('Subscription Tier Changed', { planId, priceId });
+            toast({
+              title: 'Plan updated',
+              description:
+                changeData.message ??
+                "We've prorated the difference — you won't pay for both plans.",
+            });
+            // Refetch profile so the UI reflects the new tier immediately.
+            window.location.reload();
+          }
+          return;
+        }
+        // Edge function says there's no live sub to swap — fall through to
+        // the normal create-checkout flow below.
+        if (!changeData?.fallback_to_checkout) {
+          throw new Error('Could not change subscription. Please contact support.');
+        }
+      }
+
+      // Path B: brand new subscriber → standard Stripe checkout.
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: { priceId, mode: 'subscription', planId, offerCode },
       });

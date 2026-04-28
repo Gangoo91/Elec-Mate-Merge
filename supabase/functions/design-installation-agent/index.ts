@@ -1663,7 +1663,7 @@ ${
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5.4-mini-2026-03-17',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },

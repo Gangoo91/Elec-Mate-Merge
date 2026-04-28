@@ -7,6 +7,18 @@
 // Streams via SSE — same pattern as ai-assessor.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import {
+  loadLearnerContext,
+  loadQualificationKit,
+  lookupBs7671Facets,
+  lookupQualificationAcs,
+  bs7671SeedQueries,
+  contextSummaryLines,
+  qualificationAcLines,
+  raggedAcLines,
+  bs7671FacetLines,
+  GROUNDING_RULES,
+} from '../_shared/learner-context.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,7 +26,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const CHAT_MODEL = 'gpt-5-mini-2025-08-07';
+const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
 const MAX_COMPLETION_TOKENS = 4_000;
 const STREAM_TIMEOUT_MS = 90_000;
 
@@ -463,28 +475,49 @@ const TOOL_SCHEMA = {
                 type: 'string',
                 description: 'Optional — extra context the tutor should know (max 40 words).',
               },
+              ac_refs: {
+                type: 'array',
+                description:
+                  'AC codes from the supplied catalogue that this action targets (e.g. ["303.1.4", "303.2.1"]). REQUIRED — empty array only if action is purely pastoral with no AC link.',
+                items: { type: 'string' },
+              },
+              bs7671_refs: {
+                type: 'array',
+                description:
+                  'BS 7671 regulation refs from the supplied facet list — only include those that genuinely apply (e.g. ["411.3.2.1"]).',
+                items: { type: 'string' },
+              },
+              evidence_signal: {
+                type: 'string',
+                description:
+                  'One short clause naming the specific signal that prompted this action (e.g. "failed Initial Verification quiz at 40% on 2026-04-26", "5 unauthorised absences in 28 days"). Cite real data.',
+              },
             },
           },
         },
       },
     },
+    required: ['summary', 'actions'],
   },
 };
 
 function buildSystemPrompt(): string {
   return `You are an experienced UK FE college Head of Apprenticeships. \
-A tutor has just opened a learner's profile. Your job is to tell them the 3-5 highest-leverage things to do TODAY for this learner, in priority order.
+A tutor has just opened a learner's profile. Tell them the 3-5 highest-leverage things to do TODAY for this learner, in priority order.
 
-Rules:
-- Be specific to the data you have. Reference real numbers ("11h OTJ short this week"), real overdue items, real risk factors. Never invent.
-- Cover a mix: cross-hub OTJ, portfolio, observations, pastoral, ILP, attendance, safeguarding. Don't recommend the same kind of action twice unless a strong reason.
+Behaviour:
+- Be specific to the supplied data. Reference real numbers ("attendance 67% over 28 days", "failed AC 303.1.4 quiz at 40%"), real overdue items, real risk factors. Never invent numbers.
+- Cover a mix: AC progress, OTJ, portfolio, observations, pastoral, ILP, attendance, safeguarding, recent quiz failures. Don't recommend the same kind of action twice unless evidence demands.
 - Tone: short, decisive, professional. UK English.
-- High priority = needs action this week. Medium = next 2 weeks. Low = nice to have.
-- If risk is high or critical, lead with safeguarding/pastoral.
-- If learner has SEND/EAL/EHCP flags, factor that into actions.
-- If genuinely nothing urgent, default to mid-effort developmental actions (log observation, schedule 1-2-1, praise).
+- Priority: high = needs action this week. Medium = next 2 weeks. Low = developmental.
+- If risk is high or critical, lead with safeguarding / pastoral.
+- If learner has SEND / EAL / EHCP flags, factor those into action design.
+- If recent quiz attempts show a fail, the next-best-action is usually a follow-up quiz on the same AC OR a 1-2-1 to unblock the misconception — your call based on the evidence.
+- If genuinely nothing urgent, default to mid-effort developmental actions (log observation, schedule 1-2-1, send praise).
 
-Return via the submit_next_actions tool. Each action's "kind" must match a known kind so the UI can deep-link.`;
+${GROUNDING_RULES}
+
+Return via the submit_next_actions tool. Each action's "kind" must match a known kind so the UI can deep-link. Each action's "ac_refs" must list every AC code from the supplied catalogue that this action targets.`;
 }
 
 Deno.serve(async (req) => {
@@ -529,13 +562,30 @@ Deno.serve(async (req) => {
     });
   }
 
-  const snap = await loadSnapshot(sb, body.student_id);
-  if (!snap) {
+  // New: shared learner-context loader. Pulls every signal an AI surface
+  // could need including tutor_quiz_attempts, KSBs, mocks, judgements,
+  // ILP goals, attendance pattern, risk, observations, portfolio, OTJ.
+  const ctx = await loadLearnerContext(sb, body.student_id);
+  if (!ctx) {
     return new Response(JSON.stringify({ error: 'student_not_found' }), {
       status: 404,
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     });
   }
+  // Grounding kit — RAG'd ACs (most relevant 12) + BS 7671 facets seeded from
+  // the learner's weak areas. Full AC catalogue is loaded as a fallback when
+  // RAG returns nothing (catalogue not embedded yet).
+  const acSeeds = bs7671SeedQueries(ctx); // same seeds work for both
+  const [qualKit, raggedAcs, facets] = await Promise.all([
+    loadQualificationKit(sb, ctx.course?.code ?? null),
+    lookupQualificationAcs(sb, acSeeds, ctx.course?.code ?? null, 8, 4),
+    lookupBs7671Facets(sb, acSeeds),
+  ]);
+  // If RAG returned nothing (embeddings not backfilled yet for this qual),
+  // fall back to the inline catalogue capped at 50 lines.
+  const acBlock = raggedAcs.length > 0
+    ? raggedAcLines(raggedAcs, 12)
+    : qualificationAcLines(qualKit, 50);
 
   const openAiKey = Deno.env.get('OPENAI_API_KEY');
   if (!openAiKey) {
@@ -545,7 +595,13 @@ Deno.serve(async (req) => {
     });
   }
 
-  const userPrompt = compactSnapshot(snap);
+  const userPrompt = [
+    ...contextSummaryLines(ctx),
+    ...acBlock,
+    ...bs7671FacetLines(facets, 14),
+    '',
+    'Now produce 3-5 next best actions for the tutor via the submit_next_actions tool. Cite ACs by code. Cite BS 7671 by ref where relevant.',
+  ].join('\n');
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -561,8 +617,14 @@ Deno.serve(async (req) => {
         controller.enqueue(
           sseEvent('open', {
             student_id: body.student_id,
-            student_name: snap.student.name,
-            risk_level: snap.riskLevel,
+            student_name: ctx.student.name,
+            risk_level: ctx.risk.level,
+            qualification: qualKit.qualification_code,
+            ac_catalogue_size: qualKit.acs.length,
+            ragged_acs_loaded: raggedAcs.length,
+            bs7671_facets_loaded: facets.length,
+            recent_quiz_avg: ctx.quizzes.avg_recent_percent,
+            data_loaded_at: ctx.loaded_at,
           })
         );
 

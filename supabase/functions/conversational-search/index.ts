@@ -44,7 +44,7 @@ const corsHeaders = {
 // Using the explicit physical model IDs the spec asked for.
 const HAIKU_MODEL = 'claude-haiku-4-5-20251001';
 const SONNET_MODEL = 'claude-sonnet-4-6';
-const VISION_MODEL = 'gpt-4o';
+const VISION_MODEL = 'gpt-5.4-mini-2026-03-17';
 
 // Per-call budgets (spec).
 // +20% headroom (per Andrew). Haiku 4000 → 4800, Sonnet 6000 → 7200.

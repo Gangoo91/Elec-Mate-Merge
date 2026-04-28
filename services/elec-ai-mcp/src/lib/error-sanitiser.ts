@@ -73,6 +73,14 @@ const FRIENDLY_MESSAGES: Array<{ test: RegExp; message: string }> = [
 export function sanitiseError(rawMessage: string): string {
   if (!rawMessage) return 'An unexpected error occurred';
 
+  // Coaching errors (NEEDS_USER_INPUT:, NEEDS_QUOTE_ID:, etc.) are intentional
+  // agent-facing instructions thrown by tool handlers. They contain no internal
+  // infrastructure details — pass through verbatim so the agent receives the
+  // exact coaching the handler wrote.
+  if (/^NEEDS_[A-Z_]+:/.test(rawMessage)) {
+    return rawMessage;
+  }
+
   // Check for known friendly message mappings first
   for (const { test, message } of FRIENDLY_MESSAGES) {
     if (test.test(rawMessage)) {

@@ -408,7 +408,7 @@ export default function AdminRevenue() {
                 const tierDefs: Array<{ key: string; name: string; price: string; tone: Tone }> = [
                   { key: 'apprentice', name: 'Apprentice', price: '£6.99/mo', tone: 'cyan' },
                   { key: 'electrician', name: 'Electrician', price: '£14.99/mo', tone: 'blue' },
-                  { key: 'business_ai', name: 'Mate', price: '£29.99/mo', tone: 'yellow' },
+                  { key: 'business_ai', name: 'Mate', price: '£39.99/mo', tone: 'yellow' },
                   { key: 'employer', name: 'Employer', price: '£49.99/mo', tone: 'purple' },
                 ];
                 return tierDefs.map((t) => {

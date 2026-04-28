@@ -2537,6 +2537,617 @@ export const module3Questions: Question[] = [
     section: '3.7',
     difficulty: 'basic',
   },
+
+  // ============================================
+  // Section 3.8: ELTK08 Layered Depth — Electron theory, resistivity,
+  // magnetism, generation, transmission, electronic components, lighting
+  // and heating maths (Questions 201-250)
+  // ============================================
+  {
+    id: 201,
+    question:
+      "A copper conductor is 50 m long with a cross-sectional area of 2.5 mm². Using ρ = 1.72 × 10⁻⁸ Ωm, what is its resistance?",
+    options: ['0.172 Ω', '0.344 Ω', '0.86 Ω', '8.6 Ω'],
+    correctAnswer: 1,
+    explanation:
+      "R = ρL/A = (1.72e-8 × 50) / (2.5e-6) = 8.6e-7 / 2.5e-6 = 0.344 Ω. Watch the unit conversion: 2.5 mm² = 2.5 × 10⁻⁶ m².",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 202,
+    question:
+      "Aluminium has a resistivity of 2.83 × 10⁻⁸ Ωm. A 100 m length with 16 mm² CSA has what resistance?",
+    options: ['0.0177 Ω', '0.177 Ω', '1.77 Ω', '17.7 Ω'],
+    correctAnswer: 1,
+    explanation:
+      "R = ρL/A = (2.83e-8 × 100) / (16e-6) = 2.83e-6 / 16e-6 = 0.177 Ω. Aluminium has roughly 1.6× the resistivity of copper, which is why aluminium conductors need a larger CSA for the same current rating.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 203,
+    question:
+      "What current flows through a 100 m, 1.5 mm² copper conductor (ρ = 1.72 × 10⁻⁸ Ωm) when 12 V is applied across its ends?",
+    options: ['5.2 A', '10.5 A', '52 A', '105 A'],
+    correctAnswer: 1,
+    explanation:
+      "R = (1.72e-8 × 100) / (1.5e-6) = 1.147 Ω. I = V/R = 12 / 1.147 = 10.46 A. Note this calculation ignores temperature rise.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 204,
+    question:
+      "Resistivity of a metal increases with temperature. If copper has α = 0.004/°C and R₂₀ = 1 Ω, what is its resistance at 70°C?",
+    options: ['0.8 Ω', '1.0 Ω', '1.2 Ω', '1.4 Ω'],
+    correctAnswer: 2,
+    explanation:
+      "R(t) = R₂₀ × [1 + α(t - 20)] = 1 × [1 + 0.004 × (70 - 20)] = 1 × [1 + 0.2] = 1.2 Ω. This is why cable manufacturers quote ratings at specific reference temperatures.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 205,
+    question:
+      "Three resistors of 6 Ω, 3 Ω and 2 Ω are connected in parallel. What is the equivalent resistance?",
+    options: ['0.5 Ω', '1 Ω', '5.5 Ω', '11 Ω'],
+    correctAnswer: 1,
+    explanation:
+      "1/R = 1/6 + 1/3 + 1/2 = 1/6 + 2/6 + 3/6 = 6/6 = 1, so R = 1 Ω. The total is always less than the smallest individual resistor in a parallel network.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 206,
+    question:
+      "A 230 V supply feeds two parallel resistive loads of 46 Ω and 23 Ω. What is the total current drawn from the supply?",
+    options: ['5 A', '10 A', '15 A', '20 A'],
+    correctAnswer: 2,
+    explanation:
+      "I₁ = 230 / 46 = 5 A; I₂ = 230 / 23 = 10 A. Total I = 5 + 10 = 15 A. In a parallel circuit, branch currents add together.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 207,
+    question:
+      "A capacitor is charged via a 10 kΩ resistor from a 100 V supply. The capacitance is 100 µF. What is the time constant?",
+    options: ['0.001 s', '0.1 s', '1 s', '10 s'],
+    correctAnswer: 2,
+    explanation:
+      "τ = R × C = 10,000 × 100 × 10⁻⁶ = 1 s. After one time constant, the capacitor reaches roughly 63% of its final voltage.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 208,
+    question:
+      "After how many time constants is a charging capacitor considered fully charged for engineering purposes?",
+    options: ['1', '2', '5', '10'],
+    correctAnswer: 2,
+    explanation:
+      "After 5 time constants, the capacitor reaches roughly 99.3% of the supply voltage and is treated as fully charged. After 1τ it is at 63%, after 3τ at 95%, after 5τ at 99.3%.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 209,
+    question:
+      "A 470 µF capacitor is charged to 50 V. What is the charge stored?",
+    options: ['9.4 mC', '23.5 mC', '50 mC', '94 mC'],
+    correctAnswer: 1,
+    explanation:
+      "Q = C × V = 470 × 10⁻⁶ × 50 = 0.0235 C = 23.5 mC. The charge stored on a capacitor is directly proportional to both capacitance and applied voltage.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 210,
+    question:
+      "An inductor of 2 H is connected in series with a 50 Ω resistor. What is the L/R time constant?",
+    options: ['0.04 s', '0.1 s', '25 s', '100 s'],
+    correctAnswer: 0,
+    explanation:
+      "τ = L / R = 2 / 50 = 0.04 s. After 5 time constants (0.2 s) the current is regarded as having reached its steady-state value.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 211,
+    question:
+      "A current-carrying conductor is placed in a magnetic field of 0.5 T. The conductor is 0.4 m long and carries 10 A perpendicular to the field. What force acts on it?",
+    options: ['0.5 N', '2 N', '5 N', '20 N'],
+    correctAnswer: 1,
+    explanation:
+      "F = B × I × L = 0.5 × 10 × 0.4 = 2 N. This is the principle behind motor torque production — Fleming's left-hand rule predicts the direction.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 212,
+    question:
+      "A magnetic flux of 0.2 Wb passes through a coil of 200 turns. If the flux falls to zero in 0.1 s, what EMF is induced?",
+    options: ['40 V', '200 V', '400 V', '4,000 V'],
+    correctAnswer: 2,
+    explanation:
+      "E = N × dΦ/dt = 200 × (0.2 / 0.1) = 200 × 2 = 400 V. This is Faraday's Law and is the basic principle of generator and transformer action.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 213,
+    question:
+      "Magnetic flux density B is related to magnetic field strength H by which expression?",
+    options: ['B = µ × H', 'B = H / µ', 'B = µ + H', 'B = µ - H'],
+    correctAnswer: 0,
+    explanation:
+      "B = µH where µ is permeability of the medium (µ = µ₀ × µᵣ). For a vacuum, µ₀ = 4π × 10⁻⁷ H/m. Iron has a relative permeability hundreds to thousands of times higher.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 214,
+    question:
+      "A single-loop generator rotates in a magnetic field at 50 revolutions per second. What is the frequency of the EMF produced?",
+    options: ['25 Hz', '50 Hz', '100 Hz', '3,000 Hz'],
+    correctAnswer: 1,
+    explanation:
+      "For a 2-pole single-loop generator, f = revolutions per second = 50 Hz. This is the basis of UK mains frequency. f = (poles × rpm) / 120 for multi-pole machines.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 215,
+    question:
+      "What is the peak value of a 230 V RMS sine wave?",
+    options: ['163 V', '230 V', '325 V', '400 V'],
+    correctAnswer: 2,
+    explanation:
+      "Vpeak = VRMS × √2 = 230 × 1.414 = 325 V. Equipment insulation must withstand the peak value, not the RMS value.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 216,
+    question:
+      "What is the average value of a 400 V peak full sine wave?",
+    options: ['255 V', '283 V', '400 V', '566 V'],
+    correctAnswer: 0,
+    explanation:
+      "Vavg = Vpeak × (2/π) = 400 × 0.637 = 254.8 V. The average value is used for half-wave rectifier output calculations.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 217,
+    question:
+      "What is the form factor of a sinusoidal AC waveform?",
+    options: ['0.637', '0.707', '1.11', '1.414'],
+    correctAnswer: 2,
+    explanation:
+      "Form factor = RMS / Average = 0.707 / 0.637 = 1.11. The crest factor (peak / RMS) is 1.414 for a sine wave.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 218,
+    question:
+      "Total harmonic distortion (THD) measures what?",
+    options: [
+      'The fundamental frequency',
+      'The ratio of the sum of harmonic powers to the fundamental power',
+      'The peak voltage of a waveform',
+      'The reactive power in a system',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "THD expresses the contribution of harmonic frequencies relative to the fundamental, usually as a percentage. High THD overheats neutrals and transformers, particularly from third-order triplen harmonics generated by switch-mode power supplies and LED drivers.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 219,
+    question:
+      "Which harmonic is most problematic for the neutral conductor in a three-phase four-wire system?",
+    options: ['Second harmonic', 'Third harmonic', 'Fifth harmonic', 'Seventh harmonic'],
+    correctAnswer: 1,
+    explanation:
+      "Third harmonics (and other triplens) from each phase add arithmetically in the neutral instead of cancelling. BS 7671 requires the neutral to be treated as a current-carrying conductor when triplen harmonics exceed 15% of fundamental.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 220,
+    question:
+      "A balanced three-phase star-connected load has a phase voltage of 230 V. What is the line voltage?",
+    options: ['133 V', '230 V', '400 V', '460 V'],
+    correctAnswer: 2,
+    explanation:
+      "For star (Y) connection: Vline = √3 × Vphase = 1.732 × 230 = 398.4 V (rounded to 400 V). Line current equals phase current in star.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 221,
+    question:
+      "A delta-connected load has a phase current of 20 A. What is the line current?",
+    options: ['11.5 A', '20 A', '34.6 A', '60 A'],
+    correctAnswer: 2,
+    explanation:
+      "For delta connection: Iline = √3 × Iphase = 1.732 × 20 = 34.64 A. Line voltage equals phase voltage in delta.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 222,
+    question:
+      "A balanced three-phase load draws 30 A line current at 400 V line voltage and 0.85 power factor lagging. What is the active power consumed?",
+    options: ['10.2 kW', '17.7 kW', '20.4 kW', '35.4 kW'],
+    correctAnswer: 1,
+    explanation:
+      "P = √3 × VL × IL × cos φ = 1.732 × 400 × 30 × 0.85 = 17,663 W = 17.7 kW.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 223,
+    question:
+      "An installation has 50 kW of load at 0.7 lagging power factor. What is the kVA demand?",
+    options: ['35 kVA', '50 kVA', '71.4 kVA', '100 kVA'],
+    correctAnswer: 2,
+    explanation:
+      "kVA = kW / cos φ = 50 / 0.7 = 71.4 kVA. Reactive power (kVAr) = √(kVA² - kW²) = √(5,098 - 2,500) = 50.99 kVAr.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 224,
+    question:
+      "To correct a 100 kW load from 0.7 to 0.95 power factor, how much capacitive reactive power is required? (tan(45.6°) = 1.02, tan(18.2°) = 0.329)",
+    options: ['33 kVAr', '69 kVAr', '102 kVAr', '135 kVAr'],
+    correctAnswer: 1,
+    explanation:
+      "Qc = P × (tan φ₁ - tan φ₂) = 100 × (1.02 - 0.329) = 100 × 0.691 = 69.1 kVAr. Capacitor banks reduce supply current and avoid kVA penalty charges.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 225,
+    question:
+      "Three single-phase loads of 30 A, 25 A and 20 A are connected to a balanced three-phase four-wire supply (each on a separate phase). What is the approximate neutral current?",
+    options: ['0 A', '8.7 A', '25 A', '75 A'],
+    correctAnswer: 1,
+    explanation:
+      "For unbalanced resistive loads on three phases displaced by 120°, the neutral current is found by phasor sum. With currents 30, 25, 20: IN ≈ √[(30² + 25² + 20²) − (30·25 + 25·20 + 20·30)] = √[(900+625+400) − (750+500+600)] = √(1925 − 1850) = √75 ≈ 8.66 A.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 226,
+    question:
+      "Why should three-phase loads be balanced as far as practicable?",
+    options: [
+      'It increases the total power available',
+      'It reduces neutral current, voltage imbalance and supply losses',
+      'It eliminates the need for protective devices',
+      'It removes harmonic distortion',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Balanced loading minimises neutral current (ideally zero for a perfectly balanced linear load), reduces I²R losses in the neutral, and keeps phase voltages within DNO limits. ESQCR requires DNOs to maintain voltage at the supply terminals between 230 V −6% / +10%.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 227,
+    question:
+      "A 11 kV / 400 V three-phase distribution transformer has a turns ratio of which approximate value (line-to-line)?",
+    options: ['11:1', '15.9:1', '27.5:1', '47.7:1'],
+    correctAnswer: 2,
+    explanation:
+      "Turns ratio N₁/N₂ = V₁/V₂ = 11,000 / 400 = 27.5:1. This is the most common UK secondary distribution transformer ratio.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 228,
+    question:
+      "A 500 kVA transformer has copper losses of 6 kW at full load and iron losses of 2 kW. What is its efficiency at full load operating at unity power factor?",
+    options: ['96.0%', '98.4%', '98.8%', '99.2%'],
+    correctAnswer: 1,
+    explanation:
+      "η = Pout / (Pout + losses) × 100 = 500 / (500 + 6 + 2) × 100 = 500 / 508 × 100 = 98.4%. Iron losses are constant; copper losses vary with the square of load current.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 229,
+    question:
+      "At what load does a transformer reach maximum efficiency?",
+    options: [
+      'At full load only',
+      'When copper losses equal iron losses',
+      'At no load',
+      'When iron losses are double copper losses',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Maximum efficiency occurs when variable copper losses equal fixed iron losses. Distribution transformers are typically designed so this point falls at around 50-75% of rated load to suit average daily loading.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 230,
+    question:
+      "A 4-pole, 50 Hz three-phase induction motor has what synchronous speed?",
+    options: ['750 rpm', '1,000 rpm', '1,500 rpm', '3,000 rpm'],
+    correctAnswer: 2,
+    explanation:
+      "Ns = 120 × f / P = 120 × 50 / 4 = 1,500 rpm. A 2-pole machine runs at 3,000 rpm, a 6-pole at 1,000 rpm, an 8-pole at 750 rpm.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 231,
+    question:
+      "A 4-pole, 50 Hz induction motor has a full-load speed of 1,440 rpm. What is the slip?",
+    options: ['2%', '4%', '6%', '10%'],
+    correctAnswer: 1,
+    explanation:
+      "Synchronous speed Ns = 1,500 rpm. Slip s = (Ns − Nr) / Ns × 100 = (1,500 − 1,440) / 1,500 × 100 = 4%. Typical slip is 2-6% at full load and rises with mechanical load.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 232,
+    question:
+      "An induction motor with full-load slip of 3% running on a 50 Hz supply has rotor frequency of:",
+    options: ['1.5 Hz', '3 Hz', '47 Hz', '50 Hz'],
+    correctAnswer: 0,
+    explanation:
+      "Rotor frequency f₂ = s × f = 0.03 × 50 = 1.5 Hz. At standstill (s = 1) rotor frequency equals supply frequency; at synchronous speed (s = 0) rotor frequency is zero.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 233,
+    question:
+      "A variable frequency drive (VFD) controls motor speed by:",
+    options: [
+      'Changing the number of poles',
+      'Varying both the supply frequency and the voltage proportionally (V/f control)',
+      'Inserting resistance into the rotor circuit',
+      'Reversing rotation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "VFDs use V/f control to keep magnetic flux constant. Reducing voltage with frequency prevents core saturation. VFDs deliver smooth speed control, soft start, regenerative braking and energy savings on variable-torque loads (pumps, fans).",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 234,
+    question:
+      "An LED luminaire produces 4,000 lm at a height of 4 m above a workbench (point directly below). What is the illuminance at the bench?",
+    options: ['62.5 lx', '125 lx', '250 lx', '1,000 lx'],
+    correctAnswer: 2,
+    explanation:
+      "Inverse square law: E = I / d². Treating the luminaire as a point source where I (cd) = lumens / (4π) for omnidirectional, or use E = lumens / area for downlight: 4,000 / (4×4×π) ≈ 80 lx for omnidirectional. For a downlit beam: E = I/d² with I = 4,000 cd gives 4,000/16 = 250 lx for a directional fitting. The lumen method (Φ = E × A / (UF × MF)) gives more accurate results for room lighting design.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 235,
+    question:
+      "A room measures 8 m × 6 m and requires 500 lx average illuminance. With UF = 0.6 and MF = 0.8, total lumens required from the lamps are:",
+    options: ['24,000 lm', '36,000 lm', '50,000 lm', '120,000 lm'],
+    correctAnswer: 2,
+    explanation:
+      "Lumen method: Φ = (E × A) / (UF × MF) = (500 × 48) / (0.6 × 0.8) = 24,000 / 0.48 = 50,000 lm. This is the total lamp output required to maintain the design illuminance over the lifetime of the installation.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 236,
+    question:
+      "When applying the cosine law for illuminance from an angled source, the equation is:",
+    options: ['E = I / d', 'E = I × cos θ / d²', 'E = I × sin θ / d', 'E = I × d × cos θ'],
+    correctAnswer: 1,
+    explanation:
+      "Cosine law: E = (I × cos θ) / d² where θ is the angle between the light direction and the surface normal. This corrects the inverse square law when the surface is not perpendicular to the light source.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 237,
+    question:
+      "What is the luminous efficacy (lm/W) of a typical LED downlight compared to a tungsten GLS lamp?",
+    options: [
+      'LED ≈ 12 lm/W, GLS ≈ 100 lm/W',
+      'LED ≈ 100 lm/W, GLS ≈ 12 lm/W',
+      'Both ≈ 60 lm/W',
+      'LED ≈ 50 lm/W, GLS ≈ 50 lm/W',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Modern LEDs achieve 80-150 lm/W (good quality 100 lm/W typical). Tungsten GLS achieves only 10-15 lm/W, with most energy radiated as heat. This is why tungsten lamps were banned for general lighting in the EU/UK.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 238,
+    question:
+      "A 3 kW immersion heater raises the temperature of 100 litres of water from 15°C to 65°C. Using c = 4,186 J/kg·K, how long does this take (ignoring losses)?",
+    options: ['Approximately 19 minutes', 'Approximately 58 minutes', 'Approximately 1.9 hours', 'Approximately 5.8 hours'],
+    correctAnswer: 2,
+    explanation:
+      "Energy required Q = m × c × ΔT = 100 × 4,186 × 50 = 20,930,000 J = 5.81 kWh. Time = energy / power = 5.81 / 3 = 1.94 hours (about 116 minutes). In reality cylinder losses extend this by 10-20%.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 239,
+    question:
+      "An air-source heat pump rated 9 kW thermal output with a SCOP of 3.5 consumes how much electrical energy per heating hour?",
+    options: ['2.57 kW', '3.0 kW', '5.5 kW', '12.5 kW'],
+    correctAnswer: 0,
+    explanation:
+      "SCOP = thermal output / electrical input, so input = output / SCOP = 9 / 3.5 = 2.57 kW. SCOP is the seasonal average; instantaneous COP varies with outdoor temperature and is typically 4-5 in mild conditions, falling to 2-2.5 below 0°C.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 240,
+    question:
+      "A semiconductor diode allows current to flow in:",
+    options: [
+      'Both directions equally',
+      'One direction only (forward bias)',
+      'No directions (it is an insulator)',
+      'Only at high frequencies',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A diode conducts when forward biased (anode positive relative to cathode, above the forward voltage of about 0.7 V for silicon) and blocks current when reverse biased. This is the basis of rectification.",
+    section: '3.8',
+    difficulty: 'basic',
+  },
+  {
+    id: 241,
+    question:
+      "A full-wave bridge rectifier converts AC to DC by:",
+    options: [
+      'Using one diode',
+      'Using two diodes for the positive half cycle only',
+      'Using four diodes that conduct in pairs on each half cycle',
+      'Switching at very high frequency',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "A bridge rectifier has four diodes arranged in a diamond. Two diagonally opposite diodes conduct on the positive half cycle, the other two on the negative half cycle, producing a pulsating DC output that is then smoothed by a reservoir capacitor.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 242,
+    question:
+      "A transistor in a switching application is typically operated in which two regions?",
+    options: ['Active and linear', 'Cut-off and saturation', 'Forward and reverse', 'Star and delta'],
+    correctAnswer: 1,
+    explanation:
+      "When used as a switch, a transistor is driven hard between cut-off (off, very low collector current) and saturation (fully on, very low collector-emitter voltage). This minimises power dissipation, unlike linear operation used for amplification.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 243,
+    question:
+      "In a UK transmission system, electricity is typically transmitted at which voltages?",
+    options: [
+      '230 V and 400 V',
+      '11 kV and 33 kV',
+      '132 kV, 275 kV and 400 kV',
+      '500 V and 1,000 V',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "The UK National Grid transmits at 400 kV and 275 kV (super-grid). Sub-transmission is at 132 kV. Distribution drops to 33 kV, 11 kV and finally 400/230 V for consumers. Higher voltage allows the same power to be transmitted at lower current, reducing I²R losses.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 244,
+    question:
+      "Why is electricity transmitted at high voltages over long distances?",
+    options: [
+      'To reduce conductor cost only',
+      'Because higher voltage gives more power',
+      'To reduce I²R transmission losses by reducing current for the same power',
+      'To prevent harmonics',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "P = V × I, so for a fixed power, increasing V allows a proportionally lower I. Conductor losses are I²R, so halving the current reduces losses by a factor of four for the same conductor.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 245,
+    question:
+      "A photovoltaic (PV) cell generates DC electricity directly from sunlight using which physical effect?",
+    options: ['Thermionic emission', 'Photoelectric effect', 'Photovoltaic effect in a semiconductor p-n junction', 'Magnetic induction'],
+    correctAnswer: 2,
+    explanation:
+      "PV cells use the photovoltaic effect: photons absorbed in a doped silicon p-n junction free electrons that flow as DC current. Inverters then convert this DC to AC for grid synchronisation under G98/G99 ENA agreements.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 246,
+    question:
+      "A 100 kVA single-phase transformer with 11 kV primary has what full-load primary current?",
+    options: ['0.91 A', '9.1 A', '91 A', '910 A'],
+    correctAnswer: 1,
+    explanation:
+      "I = kVA × 1000 / V = 100,000 / 11,000 = 9.09 A on the primary. Secondary current at 230 V would be 100,000 / 230 = 434.8 A.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 247,
+    question:
+      "A relay differs from a contactor in that:",
+    options: [
+      'A relay handles three-phase loads only',
+      'A contactor is generally larger and rated for higher current loads, often with auxiliary contacts',
+      'A relay is mechanical, contactors are electronic only',
+      'There is no difference',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Both are electromagnetically operated switches. Relays are typically used for low-current control circuits (signals to a PLC, panel indicators), whereas contactors are larger, rated for motor-grade switching (AC-3 duty), and incorporate arc chutes and auxiliary blocks.",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 248,
+    question:
+      "An RCBO combines the functions of which two devices?",
+    options: ['Fuse and switch', 'MCB and RCD', 'Contactor and overload', 'Isolator and timer'],
+    correctAnswer: 1,
+    explanation:
+      "An RCBO (Residual Current Breaker with Overcurrent protection) provides both overcurrent protection (like an MCB — short circuit and overload) and residual current detection (like an RCD — earth fault and additional protection). Tripping one circuit does not affect others, unlike an upstream RCD.",
+    section: '3.8',
+    difficulty: 'basic',
+  },
+  {
+    id: 249,
+    question:
+      "Where two cables of different CSA carry the same current, which experiences greater voltage drop per metre?",
+    options: [
+      'The smaller CSA cable',
+      'The larger CSA cable',
+      'They are the same',
+      'It depends on the colour of the insulation',
+    ],
+    correctAnswer: 0,
+    explanation:
+      "Smaller CSA means higher resistance per metre (R = ρL/A; R is inversely proportional to A). For the same current, voltage drop V = IR is therefore greater. BS 7671 limits voltage drop to 3% for lighting and 5% for other circuits (Appendix 4).",
+    section: '3.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 250,
+    question:
+      "A 230 V, 3 kW kettle is supplied via 1.5 mm² twin and CPC, length 12 m. Approximate voltage drop using mV/A/m of 29 (BS 7671 Table 4D2B): expected drop is closest to:",
+    options: ['1.5 V', '4.5 V', '9 V', '18 V'],
+    correctAnswer: 1,
+    explanation:
+      "Current I = 3,000 / 230 = 13 A. Voltage drop = (mV/A/m × I × L) / 1000 = (29 × 13 × 12) / 1000 = 4.52 V. Equivalent to 1.97% — within the 3% limit for non-lighting circuits.",
+    section: '3.8',
+    difficulty: 'advanced',
+  },
 ];
 
 // Helper function to get random questions for mock exams
@@ -2556,5 +3167,67 @@ export const getQuestionsByDifficulty = (
 ): Question[] => {
   return module3Questions.filter((q) => q.difficulty === difficulty);
 };
+
+/**
+ * Validate the question bank structure and distribution.
+ * Returns isValid: true when total questions, section coverage and difficulty
+ * spread all sit within the configured ranges.
+ */
+export function validateQuestionBank(): {
+  isValid: boolean;
+  totalQuestions: number;
+  sectionDistribution: Record<string, number>;
+  difficultyDistribution: Record<string, number>;
+  issues: string[];
+} {
+  const issues: string[] = [];
+  const sectionDistribution: Record<string, number> = {};
+  const difficultyDistribution: Record<string, number> = {};
+
+  module3Questions.forEach((q) => {
+    const section = q.section ?? 'unknown';
+    const difficulty = q.difficulty ?? 'unknown';
+    sectionDistribution[section] = (sectionDistribution[section] || 0) + 1;
+    difficultyDistribution[difficulty] = (difficultyDistribution[difficulty] || 0) + 1;
+  });
+
+  if (module3Questions.length < 240) {
+    issues.push(
+      `Insufficient questions: ${module3Questions.length} (target: 250)`
+    );
+  }
+
+  const expectedSections = ['3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '3.8'];
+  expectedSections.forEach((section) => {
+    if (!sectionDistribution[section] || sectionDistribution[section] < 15) {
+      issues.push(
+        `Section ${section} has ${sectionDistribution[section] || 0} questions (target: 15+)`
+      );
+    }
+  });
+
+  const total = module3Questions.length;
+  const basicPct = ((difficultyDistribution.basic || 0) / total) * 100;
+  const intermediatePct = ((difficultyDistribution.intermediate || 0) / total) * 100;
+  const advancedPct = ((difficultyDistribution.advanced || 0) / total) * 100;
+
+  if (basicPct < 20 || basicPct > 50) {
+    issues.push(`Basic out of range: ${basicPct.toFixed(1)}% (target: 20-50%)`);
+  }
+  if (intermediatePct < 30 || intermediatePct > 55) {
+    issues.push(`Intermediate out of range: ${intermediatePct.toFixed(1)}% (target: 30-55%)`);
+  }
+  if (advancedPct < 10 || advancedPct > 35) {
+    issues.push(`Advanced out of range: ${advancedPct.toFixed(1)}% (target: 10-35%)`);
+  }
+
+  return {
+    isValid: issues.length === 0,
+    totalQuestions: total,
+    sectionDistribution,
+    difficultyDistribution,
+    issues,
+  };
+}
 
 export default module3Questions;

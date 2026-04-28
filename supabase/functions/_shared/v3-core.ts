@@ -167,7 +167,7 @@ export async function callLovableAI(
   } = {}
 ): Promise<string> {
   const {
-    model = 'gpt-5-mini-2025-08-07', // GPT-5 Mini for superior reasoning and RAMS quality
+    model = 'gpt-5.4-mini-2026-03-17', // GPT-5 Mini for superior reasoning and RAMS quality
     temperature = 0.3,
     maxTokens = 24000, // Increased to 24000 for highly detailed RAMS with extensive hazard coverage
     responseFormat = 'text',

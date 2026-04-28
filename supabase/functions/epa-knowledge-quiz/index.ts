@@ -7,7 +7,7 @@
  * Dynamically driven by the qualification's Learning Outcomes and Assessment
  * Criteria from the RAG database — works for all 9 courses.
  *
- * Model: gpt-5-mini-2025-08-07 via tool calling for structured JSON output.
+ * Model: gpt-5.4-mini-2026-03-17 via tool calling for structured JSON output.
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
@@ -236,7 +236,7 @@ ${regContext}`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5.4-mini-2026-03-17',
         max_completion_tokens: 8000,
         messages: [
           { role: 'system', content: systemPrompt },

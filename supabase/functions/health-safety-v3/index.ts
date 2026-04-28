@@ -1152,7 +1152,7 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
 
         console.log('✅ [DIAGNOSTIC] OPENAI_API_KEY found');
         console.log('📤 [DIAGNOSTIC] Calling OpenAI GPT-5-mini with:', {
-          model: 'gpt-5-mini-2025-08-07',
+          model: 'gpt-5.4-mini-2026-03-17',
           max_tokens: 6000,
           systemPromptLength: systemPrompt.length,
           userPromptLength: userPrompt.length,
@@ -1181,7 +1181,7 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
               { role: 'system', content: systemPrompt },
               { role: 'user', content: userPrompt },
             ],
-            model: 'gpt-5-mini-2025-08-07',
+            model: 'gpt-5.4-mini-2026-03-17',
             max_tokens: 12000, // ✅ CRITICAL FIX: Increased to prevent truncated JSON responses
             tools: [
               {
@@ -1549,7 +1549,7 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
           hazardCount: extractedHazards.length,
           ppeCount: ppeArray.length,
           ragSourceCount: hsKnowledge?.healthSafetyDocs?.length || 0,
-          aiModel: 'gpt-5-mini-2025-08-07',
+          aiModel: 'gpt-5.4-mini-2026-03-17',
           tokensUsed: aiResult.usage?.total_tokens,
         },
       };
@@ -1730,7 +1730,7 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
             hazardCount,
             ppeCount,
             ragSourceCount: hsKnowledge?.healthSafetyDocs?.length || 0,
-            aiModel: 'gpt-5-mini-2025-08-07',
+            aiModel: 'gpt-5.4-mini-2026-03-17',
             tokensUsed: safetyResult.tokensUsed,
             timingBreakdown: {
               queryEnhancement: performanceMetrics.queryEnhancement,
@@ -1820,7 +1820,7 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
             hazardCount: 0,
             ppeCount: 0,
             ragSourceCount: 0,
-            aiModel: 'gpt-5-mini-2025-08-07',
+            aiModel: 'gpt-5.4-mini-2026-03-17',
             timedOut: isTimeout,
           },
         }),
@@ -1852,7 +1852,7 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
           hazardCount: 0,
           ppeCount: 0,
           ragSourceCount: 0,
-          aiModel: 'gpt-5-mini-2025-08-07',
+          aiModel: 'gpt-5.4-mini-2026-03-17',
           timedOut: true,
         },
       }),

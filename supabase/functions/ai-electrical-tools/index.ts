@@ -367,7 +367,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4.1-2025-04-14',
+        model: 'gpt-5.4-mini-2026-03-17',
         max_completion_tokens: 3000,
         messages: [
           {

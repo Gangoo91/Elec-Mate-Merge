@@ -24,17 +24,18 @@ const sections = [
   },
   {
     id: 4,
-    title: 'Amendment 3 highlights',
+    title: 'Amendment 4 (2026) highlights',
     icon: Lightbulb,
-    description: 'Key changes including bidirectional protective devices and consumer unit requirements.',
+    description:
+      'Cross-cutting overview of every substantive A4:2026 change — luminaire RCD (411.3.4), Chapter 57 batteries, Chapter 81 energy efficiency, Section 716 PoE, Reg 419, model-form additions.',
   },
 ];
 
 export default function BS7671Module1() {
   useSEO({
-    title: 'Module 1: Scope, Object & Fundamental Principles | BS 7671 | Elec-Mate',
+    title: 'Module 1: Scope, Object & Fundamental Principles | BS 7671:2018+A4:2026 | Elec-Mate',
     description:
-      'Foundational principles, scope and the legal framework of BS 7671 plus Amendment 3 highlights.',
+      'Foundational principles, scope and the legal framework of BS 7671:2018+A4:2026 plus the cross-cutting Amendment 4 (2026) highlights.',
   });
 
   return (
@@ -43,7 +44,7 @@ export default function BS7671Module1() {
       backLabel="18th edition (BS 7671)"
       moduleNumber={1}
       title="Scope, object and fundamental principles"
-      description="Foundational principles and the legal framework that underpins BS 7671."
+      description="Foundational principles and the legal framework that underpins BS 7671:2018+A4:2026."
       tone="yellow"
       sectionsCount={sections.length}
       duration="45 mins"

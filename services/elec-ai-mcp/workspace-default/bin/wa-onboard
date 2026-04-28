@@ -1,0 +1,54 @@
+#!/bin/bash
+# wa-onboard — used ONLY by the OpenClaw default-onboarding agent.
+# Signs (CODE|PHONE) with the MCP HMAC secret and POSTs to
+# http://127.0.0.1:3100/api/wa-onboarding so the MCP server can verify
+# the activation code and provision the user.
+#
+# Usage: wa-onboard <6-digit-code> <+44XXXXXXXXX>
+# Output: prints the JSON response from /api/wa-onboarding to stdout.
+
+set -euo pipefail
+
+# Load secrets from sibling .env (owned by openclaw, mode 600).
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+if [ -f "${SCRIPT_DIR}/.env" ]; then
+  # shellcheck disable=SC1091
+  set -a; . "${SCRIPT_DIR}/.env"; set +a
+fi
+
+CODE="${1:?Usage: wa-onboard <code> <+44phone>}"
+PHONE="${2:?Usage: wa-onboard <code> <+44phone>}"
+
+# Sanity-check args (cheap defence-in-depth — server validates again).
+if ! [[ "$CODE" =~ ^[0-9]{6}$ ]]; then
+  echo '{"success":false,"reply":"Invalid code format. Codes are 6 digits."}'
+  exit 0
+fi
+if ! [[ "$PHONE" =~ ^\+[0-9]{10,15}$ ]]; then
+  echo '{"success":false,"reply":"Internal: bad phone format."}'
+  exit 1
+fi
+
+: "${MCP_API_KEY:?MCP_API_KEY not set}"
+: "${MCP_HMAC_SECRET:?MCP_HMAC_SECRET not set}"
+
+TIMESTAMP=$(date +%s%3N)
+NONCE=$(openssl rand -hex 16)
+# Canonical signed payload: matches the verifier in
+# services/elec-ai-mcp/src/api/wa-onboarding.ts which calls
+# verifySignedRequest("${code}|${sender_phone}", ts, nonce, sig).
+CANONICAL="${CODE}|${PHONE}"
+PAYLOAD="${CANONICAL}:${TIMESTAMP}:${NONCE}"
+SIGNATURE=$(printf '%s' "$PAYLOAD" \
+  | openssl dgst -sha256 -hmac "$MCP_HMAC_SECRET" -hex 2>/dev/null \
+  | sed 's/^.* //')
+
+BODY=$(jq -c -n --arg c "$CODE" --arg p "$PHONE" '{code:$c, sender_phone:$p}')
+
+curl -s -X POST http://127.0.0.1:3100/api/wa-onboarding \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: ${MCP_API_KEY}" \
+  -H "X-Request-Signature: ${SIGNATURE}" \
+  -H "X-Request-Timestamp: ${TIMESTAMP}" \
+  -H "X-Request-Nonce: ${NONCE}" \
+  -d "$BODY"

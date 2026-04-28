@@ -2,9 +2,9 @@
  * Level 3 Full Practice Exam (AM2-Style)
  *
  * Comprehensive mock exam covering all 7 Level 3 modules
- * - 40 questions balanced across modules
+ * - 60 questions balanced across all 7 L3 modules per C&G 2365-03 weighting
  * - 90 minute time limit
- * - 60% pass mark (24/40)
+ * - 60% pass mark (36/60)
  * - ExamMobileLayout for mobile-first experience
  * - Category breakdown in results
  */
@@ -35,14 +35,16 @@ import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
 import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
+import { MockExamQuestionPanel } from '@/components/apprentice-courses/MockExamQuestionPanel';
 import {
-  getBalancedRandomQuestions,
+  getRandomQuestions,
   getCategoryBreakdown,
-  Question,
+  validateQuestionBank,
+  type Question,
 } from '@/data/apprentice-courses/level3/mixed/questionBank';
 
 const EXAM_CONFIG = {
-  totalQuestions: 40,
+  totalQuestions: 60,
   timeInSeconds: 90 * 60, // 90 minutes
   passPercentage: 60,
   exitPath: '/study-centre/apprentice/level3-module8',
@@ -50,8 +52,8 @@ const EXAM_CONFIG = {
 
 const Level3Module8MockExam8 = () => {
   useSEO(
-    'Level 3 Full Practice Exam | Comprehensive Mock Assessment',
-    'Complete 40-question practice exam covering all Level 3 modules. Balanced difficulty, 90-minute timed conditions, category breakdown.'
+    'Mock Exam 8 — Mixed (all 7 L3 units) | Level 3 | Elec-Mate',
+    'Comprehensive 60-question mixed mock examination covering all 7 Level 3 modules — health & safety, environmental tech, electrical science, fault diagnosis, inspection & testing, systems design and career awareness.'
   );
 
   const [examQuestions, setExamQuestions] = useState<Question[]>([]);
@@ -68,7 +70,7 @@ const Level3Module8MockExam8 = () => {
 
   // Start exam
   const startExam = () => {
-    const questions = getBalancedRandomQuestions(EXAM_CONFIG.totalQuestions);
+    const questions = getRandomQuestions(EXAM_CONFIG.totalQuestions);
     setExamQuestions(questions);
     setSelectedAnswers(new Array(EXAM_CONFIG.totalQuestions).fill(-1));
     setCurrentQuestion(0);
@@ -77,6 +79,9 @@ const Level3Module8MockExam8 = () => {
     setShowReview(false);
     setTimeRemaining(EXAM_CONFIG.timeInSeconds);
     setFlaggedQuestions(new Set());
+    if (import.meta.env.DEV) {
+      validateQuestionBank(); // Dev-only: log mixed-bank composition
+    }
   };
 
   // Timer
@@ -204,7 +209,7 @@ const Level3Module8MockExam8 = () => {
               <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                  <span>40 questions from 1,400+ question bank</span>
+                  <span>60 questions drawn from all 7 L3 module banks</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
@@ -212,7 +217,7 @@ const Level3Module8MockExam8 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                  <span>60% pass mark (24/40 correct)</span>
+                  <span>60% pass mark (36/60 correct)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
@@ -223,7 +228,7 @@ const Level3Module8MockExam8 = () => {
 
             <div className="grid grid-cols-2 gap-3 text-center">
               <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10">
-                <div className="text-lg font-bold text-elec-yellow">40</div>
+                <div className="text-lg font-bold text-elec-yellow">60</div>
                 <div className="text-xs text-white">Questions</div>
               </div>
               <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10">
@@ -576,43 +581,50 @@ const Level3Module8MockExam8 = () => {
 
   // ========== ACTIVE EXAM SCREEN ==========
   const questionContent = (
-    <div className="space-y-4">
-      {/* Module badge */}
-      <div className="flex items-center gap-2">
-        <Badge variant="outline" className="text-xs text-white border-white/20">
-          {examQuestions[currentQuestion]?.module || 'Level 3'}
-        </Badge>
+    <div>
+      <div className="text-[10.5px] font-medium uppercase tracking-[0.2em] text-elec-yellow">
+        Question {currentQuestion + 1} <span className="text-white/40">of {examQuestions.length}</span>
+      </div>
+      <div className="mt-1 text-[12px] text-white/60">
+        {examQuestions[currentQuestion]?.module ? `Module ${examQuestions[currentQuestion]?.module}` : 'Mixed · all 7 L3 units'}
       </div>
 
-      {/* Question */}
-      <p className="text-white text-base leading-relaxed">
+      <h2 className="mt-5 text-[19px] font-semibold text-white leading-snug tracking-tight">
         {examQuestions[currentQuestion]?.question}
-      </p>
+      </h2>
 
-      {/* Options */}
-      <div className="space-y-2">
-        {examQuestions[currentQuestion]?.options.map((option, index) => (
-          <button
-            key={index}
-            onClick={() => handleAnswerSelect(index)}
-            className={`w-full min-h-[48px] p-3 flex items-center gap-3 rounded-xl border-2 transition-all touch-manipulation active:scale-[0.98] ${
-              selectedAnswers[currentQuestion] === index
-                ? 'bg-elec-yellow/20 border-elec-yellow'
-                : 'bg-white/[0.02] border-white/15 active:border-white/25'
-            }`}
-          >
-            <div
-              className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                selectedAnswers[currentQuestion] === index
-                  ? 'bg-elec-yellow text-black'
-                  : 'bg-white/10 text-white'
+      <div className="mt-7 space-y-2.5">
+        {examQuestions[currentQuestion]?.options.map((option, index) => {
+          const isSelected = selectedAnswers[currentQuestion] === index;
+          const letter = String.fromCharCode(65 + index);
+          return (
+            <button
+              key={index}
+              type="button"
+              onClick={() => handleAnswerSelect(index)}
+              className={`group relative w-full text-left rounded-xl px-4 py-4 flex items-start gap-4 touch-manipulation transition-colors min-h-[60px] ${
+                isSelected
+                  ? 'bg-elec-yellow/10 ring-1 ring-elec-yellow/40'
+                  : 'bg-white/[0.025] hover:bg-white/[0.05]'
               }`}
+              aria-pressed={isSelected}
             >
-              <span className="text-xs font-bold">{String.fromCharCode(65 + index)}</span>
-            </div>
-            <span className="text-sm text-white leading-snug text-left">{option}</span>
-          </button>
-        ))}
+              {isSelected && (
+                <span aria-hidden className="absolute left-0 top-3 bottom-3 w-[3px] rounded-r-full bg-elec-yellow" />
+              )}
+              <span
+                className={`shrink-0 mt-0.5 inline-flex items-center justify-center h-7 w-7 rounded-full text-[12px] font-semibold tabular-nums transition-colors ${
+                  isSelected ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] text-white/70 group-hover:text-white'
+                }`}
+              >
+                {letter}
+              </span>
+              <span className={`flex-1 text-[15px] leading-snug ${isSelected ? 'text-white' : 'text-white/85'}`}>
+                {option}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -645,84 +657,22 @@ const Level3Module8MockExam8 = () => {
           <div className="grid grid-cols-4 gap-6">
             {/* Main Question Area */}
             <div className="col-span-3">
-              <Card className="border-white/10 bg-transparent">
-                <CardHeader className="pb-4 border-b border-white/10">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="text-lg text-white">
-                        Question {currentQuestion + 1} of {examQuestions.length}
-                      </CardTitle>
-                      <p className="text-sm text-white mt-1">
-                        {examQuestions[currentQuestion]?.module}
-                      </p>
-                    </div>
-                    <Button
-                      onClick={toggleFlag}
-                      variant="outline"
-                      size="sm"
-                      className={`border-elec-yellow/30 ${flaggedQuestions.has(currentQuestion) ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white hover:text-white'}`}
-                    >
-                      <Flag
-                        className={`h-4 w-4 mr-2 ${flaggedQuestions.has(currentQuestion) ? 'fill-current' : ''}`}
-                      />
-                      {flaggedQuestions.has(currentQuestion) ? 'Flagged' : 'Flag'}
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <p className="text-white text-lg leading-relaxed mb-6">
-                    {examQuestions[currentQuestion]?.question}
-                  </p>
-                  <div className="space-y-3">
-                    {examQuestions[currentQuestion]?.options.map((option, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleAnswerSelect(index)}
-                        className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
-                          selectedAnswers[currentQuestion] === index
-                            ? 'bg-elec-yellow/20 border-elec-yellow text-white'
-                            : 'bg-white/[0.02] border-white/10 text-white hover:border-white/20'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="font-semibold">{String.fromCharCode(65 + index)}.</span>
-                          <span>{option}</span>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Navigation */}
-                  <div className="flex justify-between items-center pt-6 mt-6 border-t border-white/10">
-                    <Button
-                      onClick={handlePrevious}
-                      disabled={currentQuestion === 0}
-                      variant="outline"
-                      className="border-white/20 text-white hover:text-white disabled:opacity-30"
-                    >
-                      <ArrowLeft className="h-4 w-4 mr-2" />
-                      Previous
-                    </Button>
-                    {currentQuestion === examQuestions.length - 1 ? (
-                      <Button
-                        onClick={handleSubmit}
-                        className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6"
-                      >
-                        Submit Exam
-                        <CheckCircle className="h-4 w-4 ml-2" />
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={handleNext}
-                        className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold px-6"
-                      >
-                        Next
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+              <MockExamQuestionPanel
+                questionIndex={currentQuestion}
+                totalQuestions={examQuestions.length}
+                question={examQuestions[currentQuestion]}
+                selectedAnswer={selectedAnswers[currentQuestion]}
+                isFlagged={flaggedQuestions.has(currentQuestion)}
+                topicLabel="Mixed · All 7 L3 Units · C&G 2365-03"
+                onSelectAnswer={handleAnswerSelect}
+                onToggleFlag={toggleFlag}
+                onPrevious={handlePrevious}
+                onNext={handleNext}
+                onSubmit={handleSubmit}
+                isFirst={currentQuestion === 0}
+                isLast={currentQuestion === examQuestions.length - 1}
+                canSubmit={answeredQuestions > 0}
+              />
             </div>
 
             {/* Desktop Sidebar */}

@@ -1,0 +1,29 @@
+{
+  "id": "mate-router",
+  "name": "Mate Router",
+  "description": "Routes WhatsApp inbound to either a per-user agent (if sender is in phone_number_routing) or to the onboarding flow (if sender is unbound). Replaces OpenClaw's default-agent routing for WhatsApp messages.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "mcpUrl": {
+        "type": "string",
+        "description": "Base URL of the Elec-AI MCP server (e.g. http://127.0.0.1:3100)."
+      },
+      "apiKey": {
+        "type": "string",
+        "description": "VPS API key for authenticating to MCP."
+      },
+      "hmacSecret": {
+        "type": "string",
+        "description": "HMAC secret used to sign requests to MCP."
+      },
+      "timeoutMs": {
+        "type": "number",
+        "description": "Request timeout when calling MCP /api/wa-inbound. Default 4000.",
+        "default": 4000
+      }
+    },
+    "required": ["mcpUrl", "apiKey", "hmacSecret"]
+  }
+}

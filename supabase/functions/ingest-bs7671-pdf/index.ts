@@ -41,8 +41,8 @@ const MAX_CHUNK_TOKENS = 2000;
 const MIN_PARAGRAPH_CHUNK_TOKENS = 120;
 
 // Vision model for page captioning. Matches the project convention
-// (see /.claude/rules/edge-functions.md — "Model: gpt-5-mini-2025-08-07").
-const VISION_MODEL = 'gpt-5-mini-2025-08-07';
+// (see /.claude/rules/edge-functions.md — "Model: gpt-5.4-mini-2026-03-17").
+const VISION_MODEL = 'gpt-5.4-mini-2026-03-17';
 const PAGE_IMAGES_BUCKET = 'iet-docs';
 
 // Facet extraction — intelligence layer. GPT-5-mini with rigorous prompts +
@@ -50,7 +50,7 @@ const PAGE_IMAGES_BUCKET = 'iet-docs';
 // wall-time for 2k chunks, which is impractical. Mini at ~4s/call runs the
 // whole corpus in ~1 hour with quality driven primarily by the prompt (which
 // is comprehensive) + strict schema validation.
-const FACET_MODEL = 'gpt-5-mini-2025-08-07';
+const FACET_MODEL = 'gpt-5.4-mini-2026-03-17';
 // Edge-fn timeout is 150s. To stay safe: fire N chunks in parallel,
 // each OpenAI call takes ~15-25s, one wave = ~30s total. Plus embeddings +
 // DB writes ≈ 10s. Total budget ~40s per edge-fn call.

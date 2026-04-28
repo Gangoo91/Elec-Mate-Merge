@@ -7,6 +7,17 @@
 // POST { college_student_id }
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import {
+  loadLearnerContext,
+  loadQualificationKit,
+  lookupQualificationAcs,
+  bs7671SeedQueries,
+  contextSummaryLines,
+  qualificationAcLines,
+  raggedAcLines,
+  GROUNDING_RULES,
+  type LearnerContext,
+} from '../_shared/learner-context.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,7 +25,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const CHAT_MODEL = 'gpt-5-mini-2025-08-07';
+const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
 const MAX_COMPLETION_TOKENS = 5_000;
 const FACET_TOP_K = 4;
 
@@ -296,14 +307,123 @@ function buildSystemPrompt(): string {
 Tone: warm, direct, second person ("you should…", "your portfolio shows…"). UK English (analyse, behaviour, programme).
 
 Rules:
-- Ground every recommendation in the learner's actual data — weak units, partial observations, mock scores. Don't write generic study tips.
-- BS 7671 references: only use refs that appear in the provided facet list.
-- "weak_ac_revision" entries should reference real unit_codes from the data, not made-up.
+- Ground every recommendation in the learner's actual data — weak units, partial observations, mock scores, recent quiz attempts (failed quizzes are STRONG revision signals), tutor judgements, ILP focus. Don't write generic study tips.
+- "weak_ac_revision" entries should reference real unit_codes from the data, not made-up. Cite ACs from the supplied catalogue.
 - "common_pitfalls" should be concrete pitfalls relevant to their qualification (e.g. "Watch out for confusing R1+R2 with R2 alone — examiners specifically test this.").
 - "day_of_advice" should include practical things (sleep, what to bring, how to handle a tough question), not platitudes.
 - "confidence_message" must be honest. If they're behind, say "you've got ground to make up — focus on X" rather than empty pep talk.
+- If recent quiz attempts show weak categories (avg < 60%), make those the headline revision priority in viva_topics — name the actual quiz title.
+
+${GROUNDING_RULES}
 
 Output via the submit_pre_epa_brief tool exactly once.`;
+}
+
+// Builds the "rich" block appended to the user prompt, drawing on the shared
+// LearnerContext. Tailored for an EPA brief: revision-focused, weights failed
+// quizzes / weak categories highest, then ILP focus, then EPA verdicts and KSBs.
+function buildBriefRichBlock(ctx: LearnerContext, acsBlock: string[]): string {
+  const lines: string[] = [];
+  lines.push('');
+  lines.push('## Quiz attempts — REVISION priorities (failed/partial first)');
+
+  const completedAttempts = ctx.quizzes.attempts.filter((a) => a.completed_at);
+  if (completedAttempts.length === 0) {
+    lines.push('No completed quiz attempts yet.');
+  } else {
+    // Same per-AC aggregation as ai-author-quiz, but presented from the
+    // brief's perspective: failed ACs are the headline revision targets.
+    const acPerf = new Map<string, { best: number; attempts: number }>();
+    for (const a of completedAttempts) {
+      if (a.percentage == null || a.ac_refs.length === 0) continue;
+      for (const ac of a.ac_refs) {
+        const cur = acPerf.get(ac) ?? { best: 0, attempts: 0 };
+        cur.best = Math.max(cur.best, a.percentage);
+        cur.attempts += 1;
+        acPerf.set(ac, cur);
+      }
+    }
+    const failed: string[] = [];
+    const partial: string[] = [];
+    for (const [ac, p] of acPerf.entries()) {
+      if (p.best < 60) failed.push(`${ac} (${p.best}% best)`);
+      else if (p.best < 80) partial.push(`${ac} (${p.best}% best)`);
+    }
+    if (failed.length > 0) {
+      lines.push(`HEADLINE REVISION — failed ACs (<60%): ${failed.slice(0, 12).join(', ')}`);
+    }
+    if (partial.length > 0) {
+      lines.push(`Reinforce — partial ACs (60-79%): ${partial.slice(0, 8).join(', ')}`);
+    }
+
+    // Show failed quizzes by name so the brief can reference them
+    const failedQuizzes = completedAttempts.filter((a) => a.passed === false).slice(0, 4);
+    if (failedQuizzes.length > 0) {
+      lines.push('Failed quizzes (mention by name in viva_topics if relevant):');
+      for (const a of failedQuizzes) {
+        lines.push(
+          `  - "${a.title}" [${a.kind}]: ${a.percentage ?? '?'}%${a.ac_refs.length ? ` · ACs ${a.ac_refs.slice(0, 4).join(',')}` : ''}`
+        );
+      }
+    }
+  }
+
+  if (ctx.quizzes.weak_categories.length > 0) {
+    lines.push(`Weak categories from quiz history: ${ctx.quizzes.weak_categories.join(', ')}`);
+  }
+  if (ctx.quizzes.avg_recent_percent != null) {
+    lines.push(`Recent quiz average (last 5): ${ctx.quizzes.avg_recent_percent}%`);
+  }
+
+  // Active ILP focus — brief should fold this into revision priorities
+  if (ctx.ilp.headline_focus || ctx.ilp.goals.length > 0) {
+    lines.push('');
+    lines.push('## Active ILP focus');
+    if (ctx.ilp.headline_focus) lines.push(`Focus: ${ctx.ilp.headline_focus}`);
+    const openGoals = ctx.ilp.goals.filter(
+      (g) => g.status !== 'completed' && g.status !== 'cancelled'
+    );
+    for (const g of openGoals.slice(0, 4)) lines.push(`  - [${g.status}] ${g.title}`);
+  }
+
+  // EPA verdicts — sets the tone of confidence_message and difficulty calibration
+  if (ctx.judgements.tutor || ctx.judgements.ai) {
+    const v = ctx.judgements.tutor ?? ctx.judgements.ai!;
+    lines.push('');
+    lines.push(
+      `## Latest EPA verdict: ${v.verdict}${v.predicted_grade ? ` (predicted ${v.predicted_grade})` : ''}`
+    );
+    if (v.verdict === 'not_yet' || v.verdict === 'refer') {
+      lines.push(
+        'Confidence message must be honest — name the gap, set a clear focus, no empty pep talk.'
+      );
+    }
+  }
+
+  // KSBs in progress — likely viva probing ground
+  if (ctx.ksbs.length > 0) {
+    const inProg = ctx.ksbs.filter(
+      (k) => k.status === 'in_progress' || k.status === 'evidence_submitted'
+    );
+    if (inProg.length > 0) {
+      lines.push('');
+      lines.push(`## KSBs in progress (${inProg.length}) — viva is likely to probe these`);
+      for (const k of inProg.slice(0, 8)) lines.push(`  - ${k.ksb_code}`);
+    }
+  }
+
+  // Risk reasons add to the urgency framing in confidence_message
+  if (ctx.risk.level === 'high' && ctx.risk.reasons.length > 0) {
+    lines.push('');
+    lines.push(`## Risk: HIGH — ${ctx.risk.reasons.slice(0, 3).join('; ')}`);
+  }
+
+  // RAG'd AC catalogue — the AI MUST cite from this list in weak_ac_revision
+  if (acsBlock.length > 0) {
+    for (const l of acsBlock) lines.push(l);
+  }
+
+  return lines.join('\n');
 }
 
 function buildUserPrompt(ctx: BriefContext, facets: Array<{ ref: string; topic: string; content: string; reg_part: string | null }>): string {
@@ -409,9 +529,26 @@ Deno.serve(async (req) => {
     }
     const facets = await lookupFacets(sb, ctx);
 
+    // Shared learner context — adds quiz attempts, ILP focus, full
+    // judgements, KSBs, attendance pattern, risk. Plus RAG'd ACs from the
+    // qualification catalogue so revision priorities cite real codes.
+    const richCtx = await loadLearnerContext(sb, body.college_student_id);
+    let acsBlock: string[] = [];
+    if (richCtx) {
+      const seeds = bs7671SeedQueries(richCtx);
+      const [qualKit, raggedAcs] = await Promise.all([
+        loadQualificationKit(sb, richCtx.course?.code ?? null),
+        lookupQualificationAcs(sb, seeds, richCtx.course?.code ?? null, 8, 4),
+      ]);
+      acsBlock = raggedAcs.length > 0
+        ? raggedAcLines(raggedAcs, 14)
+        : qualificationAcLines(qualKit, 50);
+    }
+    const richBlock = richCtx ? buildBriefRichBlock(richCtx, acsBlock) : '';
+
     const messages = [
       { role: 'system', content: buildSystemPrompt() },
-      { role: 'user', content: buildUserPrompt(ctx, facets) },
+      { role: 'user', content: buildUserPrompt(ctx, facets) + richBlock },
     ];
 
     const completion = await fetch('https://api.openai.com/v1/chat/completions', {

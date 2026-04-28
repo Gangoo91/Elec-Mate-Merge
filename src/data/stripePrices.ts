@@ -29,13 +29,13 @@ export const stripePrices = {
   monthly: {
     apprentice: 'price_1TKlA22RKw5t5RAmpvhojy0b',
     electrician: 'price_1TKlA12RKw5t5RAmdhZyhX1I',
-    business_ai: 'price_1T6DUx2RKw5t5RAmpb177NJV',
+    business_ai: 'price_1TRGZo2RKw5t5RAmRl2hc0ru',
     employer: 'price_1SlyAT2RKw5t5RAmUmTRGimH',
   },
   yearly: {
     apprentice: 'price_1TKlKK2RKw5t5RAmGVR5EcF9',
     electrician: 'price_1TKlKL2RKw5t5RAmpD8FH7qp',
-    business_ai: 'price_1T6DUy2RKw5t5RAmo9HgAukW',
+    business_ai: 'price_1TRGZo2RKw5t5RAmzY50EzaE',
     employer: 'price_1SlyB82RKw5t5RAmN447YJUW',
   },
 };
@@ -470,7 +470,7 @@ export const stripePriceData = {
     {
       id: 'business-ai-monthly',
       name: 'Mate',
-      price: '£29.99',
+      price: '£39.99',
       period: '/month',
       description: 'Your AI assistant on WhatsApp — handles admin while you work',
       featureGroups: MATE_GROUPS,
@@ -548,7 +548,7 @@ export const stripePriceData = {
     {
       id: 'business-ai-yearly',
       name: 'Mate',
-      price: '£299.99',
+      price: '£399.99',
       period: '/year',
       description: 'Your AI assistant on WhatsApp — handles admin while you work',
       featureGroups: MATE_GROUPS,
@@ -556,7 +556,7 @@ export const stripePriceData = {
       notIncluded: [],
       popular: false,
       color: '',
-      savings: 'Save £59.89 vs monthly',
+      savings: 'Save £79.89 vs monthly',
       priceId: stripePrices.yearly.business_ai,
       earlyAccess: true,
       inheritsFrom: 'Electrician',

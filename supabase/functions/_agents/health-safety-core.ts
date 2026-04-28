@@ -183,7 +183,7 @@ ${regulations.map((r) => `- ${r.regulation_number || r.id}: ${r.content || r.pri
   let response: any;
   try {
     response = await callOpenAI({
-      model: 'gpt-5-mini-2025-08-07',
+      model: 'gpt-5.4-mini-2026-03-17',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         {

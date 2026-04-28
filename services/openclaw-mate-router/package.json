@@ -1,0 +1,11 @@
+{
+  "name": "@elec-mate/openclaw-mate-router",
+  "version": "1.0.0",
+  "description": "OpenClaw plugin: routes WhatsApp inbound to per-user agent or onboarding handler.",
+  "type": "module",
+  "main": "index.js",
+  "private": true,
+  "openclaw": {
+    "extensions": ["./index.js"]
+  }
+}

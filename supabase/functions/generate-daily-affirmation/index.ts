@@ -132,7 +132,7 @@ serve(async (req: Request) => {
         ];
 
         const result = await callOpenAI(
-          { messages, model: 'gpt-5-mini-2025-08-07', max_tokens: 120 },
+          { messages, model: 'gpt-5.4-mini-2026-03-17', max_tokens: 120 },
           OPENAI_API_KEY,
           15_000
         );

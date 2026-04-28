@@ -214,8 +214,8 @@ export class AIDesigner {
     const tool_choice = { type: 'function', function: { name: 'design_single_circuit' } };
 
     // Primary model configuration
-    const PRIMARY_MODEL = 'gpt-5-mini-2025-08-07';
-    const FALLBACK_MODEL = 'gpt-4o-mini'; // Faster fallback for timeout scenarios
+    const PRIMARY_MODEL = 'gpt-5.4-mini-2026-03-17';
+    const FALLBACK_MODEL = 'gpt-5.4-mini-2026-03-17'; // Faster fallback for timeout scenarios
     const PRIMARY_TIMEOUT = 120000; // 120 seconds for primary (reduced from 180)
     const FALLBACK_TIMEOUT = 90000; // 90 seconds for fallback
 
@@ -1294,7 +1294,7 @@ CRITICAL: In diversityApplied justification, cite specific table item (e.g., "pe
           { role: 'system', content: systemPrompt },
           { role: 'user', content: JSON.stringify(structuredInput, null, 2) },
         ],
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5.4-mini-2026-03-17',
         max_completion_tokens: 4000, // REDUCED from 8000
         tools,
         tool_choice: { type: 'function', function: { name: 'design_circuits_fast' } },
@@ -1420,7 +1420,7 @@ CRITICAL: In diversityApplied justification, cite specific table item (e.g., "pe
           { role: 'system', content: correctionPrompt },
           { role: 'user', content: JSON.stringify(structuredInput, null, 2) },
         ],
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5.4-mini-2026-03-17',
         max_completion_tokens: 8000, // OPTIMIZATION: 50% reduction
         tools,
         tool_choice,

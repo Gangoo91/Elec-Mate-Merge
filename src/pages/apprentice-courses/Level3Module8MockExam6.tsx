@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
+import { MockExamQuestionPanel } from '@/components/apprentice-courses/MockExamQuestionPanel';
 import { getRandomQuestions } from '@/data/apprentice-courses/level3/module6/questionBank';
 
 const Level3Module8MockExam6 = () => {
@@ -519,86 +520,24 @@ const Level3Module8MockExam6 = () => {
 
       <div className="max-w-7xl mx-auto p-4">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <Card className="lg:col-span-3 bg-transparent border border-elec-yellow/30">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-lg font-semibold text-white">
-                    Question {currentQuestion + 1} of {examQuestions.length}
-                  </h2>
-                  <div className="text-sm text-white mt-1">
-                    Level 3 Module 6 • Systems Design
-                  </div>
-                </div>
-                <Button
-                  onClick={toggleFlag}
-                  variant="outline"
-                  size="sm"
-                  className={`border-elec-yellow/30 ${flaggedQuestions.has(currentQuestion) ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white hover:bg-elec-yellow/10'}`}
-                >
-                  <Flag className="h-4 w-4 mr-2" />
-                  {flaggedQuestions.has(currentQuestion) ? 'Flagged' : 'Flag'}
-                </Button>
-              </div>
-
-              <div className="mb-8">
-                <p className="text-white text-lg leading-relaxed mb-6">
-                  {examQuestions[currentQuestion]?.question}
-                </p>
-                <div className="space-y-3">
-                  {examQuestions[currentQuestion]?.options.map((option: string, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => handleAnswerSelect(index)}
-                      className={`w-full p-4 text-left rounded-lg border transition-colors ${selectedAnswers[currentQuestion] === index ? 'bg-elec-yellow/20 border-elec-yellow text-white' : 'bg-[#1a1a1a]/30 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-semibold min-w-[20px]">
-                          {String.fromCharCode(65 + index)}.
-                        </span>
-                        <span>{option}</span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center pt-6 border-t border-elec-yellow/30">
-                <Button
-                  onClick={handlePrevious}
-                  disabled={currentQuestion === 0}
-                  variant="outline"
-                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 disabled:opacity-50"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Previous
-                </Button>
-                <div className="flex gap-2">
-                  {currentQuestion === examQuestions.length - 1 ? (
-                    <Button
-                      onClick={handleSubmit}
-                      disabled={answeredQuestions === 0}
-                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:opacity-50 text-sm sm:text-sm px-6 py-3 sm:py-3 min-h-[52px] touch-manipulation font-semibold rounded-xl flex-shrink-0"
-                      size="sm"
-                    >
-                      <span className="hidden xs:inline">Submit Exam</span>
-                      <span className="xs:hidden">Submit</span>
-                      <CheckCircle className="h-4 w-4 ml-2" />
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={handleNext}
-                      className="flex-1 sm:flex-initial sm:px-8 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg"
-                      size="lg"
-                    >
-                      Next
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="lg:col-span-3">
+            <MockExamQuestionPanel
+              questionIndex={currentQuestion}
+              totalQuestions={examQuestions.length}
+              question={examQuestions[currentQuestion]}
+              selectedAnswer={selectedAnswers[currentQuestion]}
+              isFlagged={flaggedQuestions.has(currentQuestion)}
+              topicLabel="Module 6 · Systems Design · C&G 2365-03 Unit 305"
+              onSelectAnswer={handleAnswerSelect}
+              onToggleFlag={toggleFlag}
+              onPrevious={handlePrevious}
+              onNext={handleNext}
+              onSubmit={handleSubmit}
+              isFirst={currentQuestion === 0}
+              isLast={currentQuestion === examQuestions.length - 1}
+              canSubmit={answeredQuestions > 0}
+            />
+          </div>
 
           <Card className="bg-transparent border border-elec-yellow/30 shadow-lg hidden lg:block">
             <CardContent className="p-4">

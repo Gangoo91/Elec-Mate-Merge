@@ -511,7 +511,7 @@ Include phases, resources, compliance requirements, and risk management.`;
     const { callAI } = await import('../_shared/ai-wrapper.ts');
 
     const aiResult = await callAI(OPENAI_API_KEY!, {
-      model: 'gpt-5-mini-2025-08-07',
+      model: 'gpt-5.4-mini-2026-03-17',
       systemPrompt,
       userPrompt,
       maxTokens: 24000, // Increased for highly detailed PM plans with examples, contingencies, and real-world scenarios

@@ -23,6 +23,7 @@ import {
   Settings,
   AlertTriangle,
   BarChart3,
+  ContactRound,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useBusinessAIProfile } from './useBusinessAIProfile';
@@ -32,6 +33,8 @@ import { useSparkTasks } from '@/hooks/useSparkTasks';
 import { formatDistanceToNow, parseISO, isAfter, subDays } from 'date-fns';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { MATE_PHONE_DISPLAY, MATE_WHATSAPP_LINK } from '@/constants/mate';
+import { downloadMateVCard } from '@/utils/mate-vcard';
+import { FounderBadge } from './FounderBanner';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -243,11 +246,12 @@ export function BusinessAIDashboardView() {
             <div className="relative p-5 sm:p-6">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
                     <span className="text-xs font-medium text-green-400">
                       {healthStatus === 'healthy' ? 'Online' : healthStatus}
                     </span>
+                    <FounderBadge isFounder={profile?.is_founder} />
                   </div>
                   <h1 className="text-xl sm:text-2xl font-bold text-white">Hey {firstName}</h1>
                   <p className="text-sm text-white mt-1">Mate's got your back today</p>
@@ -287,6 +291,16 @@ export function BusinessAIDashboardView() {
                     {whatsappNumber ? maskPhone(whatsappNumber) : 'Not connected'}
                   </span>
                 </div>
+
+                {/* Save Mate to phone contacts */}
+                <button
+                  type="button"
+                  onClick={downloadMateVCard}
+                  className="flex items-center justify-center gap-2 w-full px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] active:scale-[0.99] text-xs text-white touch-manipulation transition-all"
+                >
+                  <ContactRound className="h-3.5 w-3.5 text-elec-yellow" />
+                  Save Mate to phone contacts
+                </button>
               </div>
             </div>
           </div>
@@ -472,7 +486,7 @@ export function BusinessAIDashboardView() {
         {/* ── 5. Manage Subscription ── */}
         <motion.div variants={itemVariants} className="px-4 pt-2">
           <Link
-            to="/electrician/subscriptions"
+            to="/subscriptions"
             className="flex items-center justify-center gap-2 py-3 text-sm text-white touch-manipulation h-11"
           >
             <Settings style={{ height: 14, width: 14 }} />

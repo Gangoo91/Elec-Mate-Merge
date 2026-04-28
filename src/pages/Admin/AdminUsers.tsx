@@ -1010,11 +1010,20 @@ export default function AdminUsers() {
                             className="flex items-center gap-3"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <button
-                              className="min-h-[44px] min-w-[28px] flex items-center justify-center touch-manipulation"
+                            <span
+                              role="button"
+                              tabIndex={0}
+                              className="min-h-[44px] min-w-[28px] flex items-center justify-center touch-manipulation cursor-pointer"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 toggleSelection(user.id);
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleSelection(user.id);
+                                }
                               }}
                               aria-label={isSelected ? 'Deselect' : 'Select'}
                             >
@@ -1022,7 +1031,7 @@ export default function AdminUsers() {
                                 checked={isSelected}
                                 className="h-4 w-4 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black pointer-events-none"
                               />
-                            </button>
+                            </span>
                             <Avatar
                               initials={getInitials(user.full_name) || '—'}
                               online={user.isOnline ? true : undefined}

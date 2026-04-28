@@ -2955,4 +2955,42 @@ export const getQuestionsByDifficulty = (
   return module7Questions.filter((q) => q.difficulty === difficulty);
 };
 
+// Map section codes to broader topic labels (used by getQuestionsByTopic).
+const M7_SECTION_TOPIC: Record<string, string> = {
+  '7.1': 'Industry & Career',
+  '7.2': 'Industry & Career',
+  '7.3': 'Standards & Responsibilities',
+  '7.4': 'Standards & Responsibilities',
+  '7.5': 'Communication & Teamwork',
+  '7.6': 'CPD',
+  '7.7': 'Employment & Business',
+};
+
+// Filter questions by topic, mapped from section.
+export const getQuestionsByTopic = (topic: string): Question[] => {
+  return module7Questions.filter((q) => M7_SECTION_TOPIC[q.section || ''] === topic);
+};
+
+// Structural validation — used by tests / spot-checks.
+export const validateQuestionBank = (): { isValid: boolean; errors: string[] } => {
+  const errors: string[] = [];
+  const seenIds = new Set<number>();
+  module7Questions.forEach((q, idx) => {
+    if (typeof q.id !== 'number') errors.push(`Q[${idx}]: id must be a number`);
+    if (seenIds.has(q.id)) errors.push(`Q[${idx}]: duplicate id ${q.id}`);
+    seenIds.add(q.id);
+    if (!q.question) errors.push(`Q${q.id}: question text missing`);
+    if (!Array.isArray(q.options) || q.options.length < 2)
+      errors.push(`Q${q.id}: options must have at least 2 entries`);
+    if (
+      typeof q.correctAnswer !== 'number' ||
+      q.correctAnswer < 0 ||
+      q.correctAnswer >= (q.options?.length || 0)
+    )
+      errors.push(`Q${q.id}: correctAnswer index out of range`);
+    if (!q.explanation) errors.push(`Q${q.id}: explanation missing`);
+  });
+  return { isValid: errors.length === 0, errors };
+};
+
 export default module7Questions;

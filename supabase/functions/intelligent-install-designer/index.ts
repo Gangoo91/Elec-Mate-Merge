@@ -316,7 +316,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-5.4-mini-2026-03-17',
         messages: [{ role: 'system', content: SYSTEM_PROMPT + contextMessage }, ...messages],
         tools: TOOLS,
         temperature: 0.7,

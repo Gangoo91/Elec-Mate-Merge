@@ -30,6 +30,10 @@ export type ProfileType = {
   agent_last_active?: string | null;
   agent_health_status?: string | null;
 
+  // Mate Founder programme — first 100 customers, locked-in £29.99 forever
+  is_founder?: boolean;
+  founder_at?: string | null;
+
   // College-specific fields
   college_id?: string | null;
   college_role?: 'admin' | 'head_of_department' | 'tutor' | 'assessor' | 'iqa' | 'support' | null;

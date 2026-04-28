@@ -140,7 +140,7 @@ Return valid JSON only.`;
           enriched = await callOpenAIWithRetry(
             enrichmentPrompt,
             openaiApiKey,
-            'gpt-5-mini-2025-08-07',
+            'gpt-5.4-mini-2026-03-17',
             doc.id,
             1000
           );

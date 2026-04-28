@@ -5,7 +5,7 @@
  * coaching insight using RAG-backed knowledge (practical work intelligence,
  * regulations, KSB progress).
  *
- * Model: gpt-5-mini-2025-08-07 via tool calling for structured JSON output.
+ * Model: gpt-5.4-mini-2026-03-17 via tool calling for structured JSON output.
  */
 
 import { serve } from '../_shared/deps.ts';
@@ -468,7 +468,7 @@ ${ragContext}`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5.4-mini-2026-03-17',
         max_completion_tokens: 6000,
         messages: [
           { role: 'system', content: systemPrompt },

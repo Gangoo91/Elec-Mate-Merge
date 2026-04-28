@@ -3000,6 +3000,802 @@ export const module4Questions: Question[] = [
     section: '4.7',
     difficulty: 'basic',
   },
+
+  // ============================================
+  // Section 4.8: ELTK07 Layered Depth — Realistic scenarios, branded
+  // instruments, A4:2026 alignment, GS38, lone working, special precautions
+  // and fault signatures (Questions 201-250)
+  // ============================================
+  {
+    id: 201,
+    question:
+      "A customer says the lights flicker every time the fridge starts. The most likely cause is:",
+    options: [
+      'A faulty bulb',
+      'Voltage drop on a shared circuit due to high inrush current of the fridge motor',
+      'A failed RCD',
+      'Harmonic distortion in the supply',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Inductive motors have an inrush current of 5-7× full-load current for a few cycles at start. If lights and fridge share a final circuit, the resulting transient voltage drop dims the lights. Solution: separate the lighting circuit or check for high-resistance joints reducing the available fault loop impedance margin.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 202,
+    question:
+      "A 30 mA RCD trips intermittently every Tuesday morning. What is the most likely cause?",
+    options: [
+      'Component failure in the RCD',
+      'A scheduled time-controlled load (such as a frost stat or boiler) with cumulative leakage current pushing the circuit over the trip threshold',
+      'Lightning strike',
+      'Cosmic rays',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "RCDs respond to total earth leakage on protected circuits. Time-controlled loads (heating, immersion, EV charge schedule) energising together can sum standing leakage above 50% of IΔn (the trip-recommended ceiling per BS 7671). A clamp meter (e.g. Fluke 369 FC) at the incoming MET measures live leakage; consider RCBO splitting.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 203,
+    question:
+      "When using a Megger MFT1741+ for an insulation resistance test on a 230 V final circuit, the test voltage and minimum acceptable value (BS 7671 Table 64) are:",
+    options: [
+      '250 V test, 0.25 MΩ minimum',
+      '500 V test, 1 MΩ minimum',
+      '1,000 V test, 1 MΩ minimum',
+      '500 V test, 100 MΩ minimum',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "BS 7671 Table 64 (A4:2026) requires LV circuits up to 500 V to be tested at 500 V DC with a minimum insulation resistance of 1 MΩ. SELV/PELV is tested at 250 V with 0.5 MΩ minimum. Always disconnect electronic equipment before applying test voltage.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 204,
+    question:
+      "A Fluke 1664FC measures earth fault loop impedance Zs of 1.45 Ω on a circuit protected by a 32 A type B MCB. Reference Zs (Table 41.3) is 1.37 Ω. The result is:",
+    options: [
+      'Acceptable, well within tolerance',
+      'Marginal — must be rule-of-thumb corrected to 80% (1.10 Ω) for design purposes',
+      'A clear fail because the measured value exceeds the published value',
+      'Not relevant when an RCD is present',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "Measured Zs of 1.45 Ω exceeds the BS 7671 Table 41.3 maximum of 1.37 Ω for a 32 A type B MCB at 230 V — this is a fail. The 80% rule applies when comparing measured Zs to published values to allow for conductor temperature rise: measured ≤ 0.8 × tabulated value. Here the measured value is above tabulated, so disconnection time is not assured.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 205,
+    question:
+      "Under HSE GS38, voltage indicators and test probes used by electricians must:",
+    options: [
+      'Be colour coded only',
+      'Have a maximum of 4 mm exposed metal tip, finger guards, fused leads where appropriate, and be CAT III/IV rated for the system voltage',
+      'Be rated for 1,000 V regardless of application',
+      'Be the cheapest available',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "GS38 requires test probes to have finger barriers, no more than 4 mm of exposed conductor at the tip, leads with insulation rated for the supply, fused/current-limited leads where required, and instruments with appropriate CAT rating. CAT III is for fixed installations beyond the meter, CAT IV is at the supply origin.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 206,
+    question:
+      "A Kewtech KT64+ MFT shows a continuity reading of 0.45 Ω on an R1+R2 test for a 30 m radial circuit. The cable is 2.5/1.5 mm² T+E. Approximate expected R1+R2 (using 19.51 mΩ/m at 20°C) is:",
+    options: ['0.21 Ω', '0.45 Ω', '0.59 Ω', '1.17 Ω'],
+    correctAnswer: 2,
+    explanation:
+      "From OSG Table I1: 2.5/1.5 mm² T+E gives R1+R2 = 19.51 mΩ/m at 20°C. For 30 m: 19.51 × 30 / 1000 = 0.585 Ω. Measured 0.45 Ω is below expected, suggesting either the run is shorter than thought, or the test was zeroed correctly and the circuit is sound. Always null the leads before testing.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 207,
+    question:
+      "An AFDD trips intermittently on a domestic ring final circuit. The most likely cause to investigate first is:",
+    options: [
+      'Lightning damage',
+      'A loose connection or arcing fault at a socket outlet, junction box or accessory creating high-frequency arcing signatures the AFDD is designed to detect',
+      'A fault in the consumer unit busbar',
+      'Solar PV interference',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "AFDDs (BS EN 62606) detect series and parallel arcing signatures that overcurrent devices and RCDs miss. Loose terminations, damaged cable insulation, broken conductor strands and degraded accessories produce the signatures the AFDD looks for. BS 7671 A4:2026 requires AFDDs in higher-risk locations such as HMOs and care homes (Reg 421.1.7).",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 208,
+    question:
+      "A new TN-C-S (PME / PNB) installation has Ze = 0.21 Ω at the origin. The DNO declared maximum is 0.35 Ω. This Ze:",
+    options: [
+      'Fails because it must be below 0.10 Ω',
+      'Is acceptable as it is below the DNO declared maximum',
+      'Must be ignored — only Zs matters',
+      'Indicates a faulty meter tail',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Ze (external earth fault loop impedance) must be measured at the origin with main switch open and main bonding disconnected. A4:2026 references PNB (protective neutral bonding) for TN-C-S supplies. The measured Ze must not exceed the DNO declared value, and the resulting Zs (Ze + R1+R2) must satisfy Table 41.3.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 209,
+    question:
+      "The preferred sequence of dead testing per BS 7671 Reg 643 is:",
+    options: [
+      'Polarity, IR, continuity, Ze',
+      'Continuity of protective conductors, continuity of ring, IR, polarity, earth electrode resistance (where applicable)',
+      'IR, then continuity',
+      'There is no recommended sequence',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Regulation 643 sequences dead tests starting with continuity of protective conductors (R2 or R1+R2), then continuity of ring final, insulation resistance, polarity, earth electrode resistance (TT only), then live tests (Ze, PFC, Zs, RCD, functional). This sequence prevents charging electronic equipment via test voltage.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 210,
+    question:
+      "When carrying out fault diagnosis on a single-phase 230 V circuit, the operator finds 230 V live-to-earth but only 110 V live-to-neutral at the load. The most likely cause is:",
+    options: [
+      'A missing or broken neutral conductor before the load (broken or floating neutral)',
+      'A short circuit between live and neutral',
+      'A failed lamp',
+      'An open earth',
+    ],
+    correctAnswer: 0,
+    explanation:
+      "A broken neutral causes the load to find a return path through whatever residual leakage or capacitive coupling is available, producing erratic voltages between live, neutral and earth. Class I appliances may show floating neutral voltage. Reseat all neutral terminations and inspect for hidden joints.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 211,
+    question:
+      "A client reports the immersion heater does not heat. The MFT shows continuity of the element of 18 Ω, IR to earth of 200 MΩ, and supply voltage at the cylinder switch. The most likely cause is:",
+    options: [
+      'A failed thermostat or stuck linkage preventing the element circuit from closing',
+      'The element has open-circuited',
+      'The cable has shorted out',
+      'The cylinder is incorrectly bonded',
+    ],
+    correctAnswer: 0,
+    explanation:
+      "Element resistance of 18 Ω implies a working 3 kW element (V²/R = 230²/18 ≈ 2,940 W). IR is fine. Supply is present. The thermostat or thermal cut-out (high limit) is the next link in the chain — these are the most common immersion failure points and should be checked next.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 212,
+    question:
+      "A Hager type AFDD/RCBO consumer unit trips on a kitchen circuit when the toaster is used. The trip indicator shows neither overload nor earth leakage. What test should you do first?",
+    options: [
+      'Replace the device',
+      'Check the toaster for a series arc fault (loose terminal, broken element strand) using IR test on the appliance lead and visual inspection',
+      'Increase the rating',
+      'Bypass the AFDD',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "AFDD trips with no over-current or earth-leakage indication suggest detected arcing. PAT-test the toaster (Class I appliance: earth bond ≤0.1 Ω, IR ≥1 MΩ at 500 V), inspect plug, lead and internal element terminations. Replace toaster if degraded.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 213,
+    question:
+      "Phase sequence on a three-phase 400 V supply must be confirmed to be:",
+    options: [
+      'Random — order does not matter',
+      'L1-L2-L3 (anti-clockwise rotation when viewed from drive end) for correct motor direction',
+      'Always RYB',
+      'L3-L2-L1',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Standard UK rotation is L1, L2, L3 (brown, black, grey under BS 7671 colour scheme). Phase rotation testers (e.g. Martindale PSI300, Megger PSI) confirm sequence before energising motors. Reversing two phases reverses motor rotation.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 214,
+    question:
+      "When working on fibre-optic cabling, the special precautions you must observe include:",
+    options: [
+      'None — fibre is electrically inert',
+      'Never look into a fibre or coupler — laser radiation can damage the retina; use a fibre detector card or scope; dispose of glass shards safely',
+      'Wear chemical PPE only',
+      'Test with a multimeter',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Fibre carries Class 1M or higher laser radiation invisible to the eye but capable of permanent retinal damage. Always cap unused connectors, use viewing scopes (not direct line of sight), wear safety glasses when cleaving fibre, and dispose of broken fibre as sharps.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 215,
+    question:
+      "Electro-static discharge (ESD) precautions when servicing electronic control panels include:",
+    options: [
+      'Holding boards by the components',
+      'Using a wrist strap connected to the panel earth, keeping boards in anti-static bags, working on an ESD-rated mat',
+      'Wearing rubber gloves',
+      'Spraying boards with water',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Modern CMOS and FET devices can be destroyed by static potentials below the human perception threshold. ESD control includes wrist straps bonded to earth, anti-static bags, conductive workmats and avoiding synthetic clothing. Damage may not be immediate, leading to latent failures.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 216,
+    question:
+      "A clamp meter reading of 4.8 A is taken around live, neutral and CPC of a single circuit simultaneously. This indicates:",
+    options: [
+      'The load is 4.8 A',
+      'There is 4.8 A of unbalance current — likely earth leakage; investigate insulation faults',
+      'The supply is at 4.8 V',
+      'Nothing useful',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Clamping all three conductors together cancels the load current vectors. Any residual reading represents the imbalance — typically leakage to earth via insulation breakdown or filter capacitors. Anything above 30% of upstream RCD trip threshold should be investigated.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 217,
+    question:
+      "You arrive at a small commercial site for fault diagnosis. The first thing you should do per the IET Code of Practice 5th ed. is:",
+    options: [
+      'Disconnect the supply immediately',
+      'Conduct a risk assessment, agree the scope of work with the duty holder, gather any prior records and confirm safe access and isolation points',
+      'Start replacing parts',
+      'Photograph the consumer unit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "CoP for In-service Inspection (and IET GN3) requires a documented risk assessment, scope agreement with the duty holder, review of relevant documentation (EICR, prior reports, drawings), and identification of isolation points before work begins. This protects both the operator and the client.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 218,
+    question:
+      "Using the 5-Why technique, you trace a tripping RCBO to: (1) earth fault, (2) damaged cable, (3) cable in stud wall, (4) chased by joiner, (5) safe zones not marked. The corrective action under root cause is:",
+    options: [
+      'Replace the cable only',
+      'Repair the cable AND mark safe zones (BS 7671 Reg 522.6) AND brief site team to prevent recurrence',
+      'Increase RCBO rating',
+      'Bypass the RCBO',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Root cause analysis distinguishes the immediate fix (repair cable) from preventing recurrence (mark safe zones, brief other trades). BS 7671 Reg 522.6.201 specifies cables in safe zones (within 150 mm of corners or obscured behind earthed metal containment). Without addressing the root, the fault returns.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 219,
+    question:
+      "An IR camera shows a 75°C hot-spot on one phase of an MK three-phase distribution board, while the other two phases sit at 35°C. The most likely fault is:",
+    options: [
+      'Normal load imbalance',
+      'A loose or high-resistance termination on that phase causing localised heating (P = I²R), often combined with thermal degradation of the busbar or termination plating',
+      'Faulty thermal imager',
+      'A blown fuse',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A localised hotspot of 40°C above the surrounding terminations is a classic signature of a high-resistance joint (loose lug, oxidised connection). Re-torque per the manufacturer's data sheet (typically 2.5-3 Nm for terminal blocks), inspect for arcing damage, replace if pitted. ITHIM/IIEC thermography categorises >40°C delta as urgent.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 220,
+    question:
+      "Lone working on a fault diagnosis call should include:",
+    options: [
+      'No special precautions',
+      'A lone worker policy, periodic check-ins, GPS-tracked safety device or app, dynamic risk assessment, agreed escalation contact and avoidance of live working unless unavoidable and risk-assessed',
+      'Just keep your phone on',
+      'Always wear hi-vis only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "HSE INDG73 covers lone working. Controls include periodic check-in calls or app-based monitoring (StaySafe, Reliance Protect), dynamic risk assessments at each location, prohibition on live working without authorisation and risk assessment, and an escalation contact. EAW Reg 14 does not permit work on live equipment unless reasonable in all the circumstances.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 221,
+    question:
+      "When testing high-frequency or capacitive circuits for fault diagnosis, you should:",
+    options: [
+      'Use the same procedure as 50 Hz',
+      'Allow capacitors to discharge through a bleed resistor before contact, treat large capacitor banks as energised even after isolation, and use instruments rated for the frequency present',
+      'Discharge with a screwdriver',
+      'Wear cotton gloves',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Capacitor banks (PFC, DC link capacitors in VFDs) can hold dangerous charge for minutes to hours after isolation. Always wait the manufacturer's recommended discharge time (often 5-15 minutes), then discharge through a rated bleed resistor or shorting bar before touching terminals. Treat as live until proven dead.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 222,
+    question:
+      "A Wylex NHXSP+ split-load consumer unit has a 30 mA RCD covering all sockets. A new EV charger is added to the right-hand RCD-protected bank. The likely problem is:",
+    options: [
+      'The charger will not work at all',
+      'Cumulative DC residual current from the EV charger and other loads could exceed the AC-only RCD threshold, plus DC residual currents may blind a Type AC RCD; a Type A or Type B RCD is required (BS 7671 722.531.3.101 / Section 722)',
+      'The CU is faulty',
+      'No problem',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "EV chargers can produce DC residual currents that blind a standard Type AC RCD. BS 7671 Section 722 requires either a Type A RCD with manufacturer-declared 6 mA DC detection in the EVSE, or a Type B RCD upstream. Adding without checking is dangerous and non-compliant.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 223,
+    question:
+      "After completing a fault correction, the relevant certificate to issue under BS 7671 / IET model forms is:",
+    options: [
+      'A Visual Condition Report',
+      'A Minor Electrical Installation Works Certificate (MEIWC) for additions/alterations to a single circuit, or an Electrical Installation Certificate (EIC) for new circuits/installations',
+      'A purchase order',
+      'No certificate needed for fault repair',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "BS 7671 A4:2026 retained MEIWC for single-circuit minor work that does not involve a new circuit. New circuits and major works require an EIC. Periodic verification uses an EICR. A4:2026 added new schedule columns and updated form layouts.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 224,
+    question:
+      "A Schneider Acti9 RCBO trips on test with the test button but a Fluke 1664FC measures actual trip current at 38 mA. The acceptable IΔn range for a 30 mA RCD per BS 7671 643.7 is:",
+    options: [
+      'Trip between 15 mA (½IΔn) within 1 s and trip below 30 mA (1×IΔn) within 300 ms; full performance is 5×IΔn within 40 ms (Type AC)',
+      'Anywhere between 0 and 100 mA',
+      '50% lower than rated',
+      'Exactly 30 mA',
+    ],
+    correctAnswer: 0,
+    explanation:
+      "BS 7671 Reg 643.7 (A4:2026 retains the test regime): RCDs must not trip at 50% IΔn within 1 s, must trip at 100% IΔn within 300 ms (or 200 ms for additional protection in BS EN 61008/61009), and at 5× IΔn within 40 ms (Type AC at additional protection). 38 mA exceeds 100% so a fail.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 225,
+    question:
+      "When attending a domestic call for 'half the lights are off', your initial logical hypothesis tree should include:",
+    options: [
+      'Just one cause — broken bulb',
+      'Loss of one phase (in TPN supply), tripped MCB/RCBO, loose connection at a feeder, line conductor break in a junction box or pendant, and accidental switching off',
+      'Always assume it is the DNO',
+      'Always replace the consumer unit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A logical decision tree starts with the broadest categories (supply, distribution, circuit) and narrows down. Half-circuit symptoms in single-phase commonly indicate a loose neutral, broken switch wire, or specific MCB. In three-phase environments, single phase loss could affect a whole bank.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 226,
+    question:
+      "A Martindale VI-13800 voltage indicator must be proved before and after use against:",
+    options: [
+      'A car battery',
+      'A known live source (proving unit such as a PD440 or a confirmed live circuit) — the proving sequence is prove-test-prove',
+      'A continuity tester',
+      'Earth only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "GS38 'prove-dead' sequence: prove the indicator on a known live source (proving unit), test the circuit to be worked on, then re-prove the indicator on a known live source to confirm it did not fail open during the test. The Martindale VI-13800 is paired with a PD440 proving unit.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 227,
+    question:
+      "On a TT supply with a Megger MFT measured Ra of 180 Ω and a 30 mA RCD, the calculated touch voltage Ut would be:",
+    options: ['1.5 V', '5.4 V', '50 V', '180 V'],
+    correctAnswer: 1,
+    explanation:
+      "Ut = Ra × IΔn = 180 × 0.030 = 5.4 V. BS 7671 limits touch voltage to 50 V AC (UL) for normal locations. The product Ra × IΔn must remain ≤50 V. Ra ≤ 200 Ω with a 30 mA RCD is the rule of thumb (gives 6 V touch voltage).",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 228,
+    question:
+      "BS 7671 A4:2026 introduced changes to the EIC Schedule of Inspections. Which is now a required new column?",
+    options: [
+      'AFDD presence/justification for each circuit',
+      'Customer signature column',
+      'Material cost column',
+      'Manufacturer warranty period',
+    ],
+    correctAnswer: 0,
+    explanation:
+      "A4:2026 expanded the schedule columns to include AFDD provision (to align with Reg 421.1.7) and clarified surge protection device (SPD) recording. Inspectors must now record whether AFDDs are fitted and a justification where they are not provided in higher-risk locations.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 229,
+    question:
+      "Customer complains: 'the freezer compressor short-cycles'. Diagnostic tests should include:",
+    options: [
+      'Replace the freezer',
+      'Verify supply voltage, check start/run capacitor capacitance with multimeter capacitance range, measure motor winding resistances, inspect overload relay and check refrigerant pressure',
+      'Increase the MCB rating',
+      'Add an RCD',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Compressor short-cycling indicates either electrical (failing start capacitor, faulty overload, low supply voltage causing stall) or refrigeration (low refrigerant tripping LP cut-out, dirty condenser). Capacitance test on the start/run capacitor (e.g. with Fluke 117 capacitance range) catches the most common electrical cause.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 230,
+    question:
+      "When recording fault diagnosis findings for the customer, IET CoP and good practice require:",
+    options: [
+      'Verbal summary only',
+      "Written report including symptoms found, tests performed, results (with numerical values), root cause, repair carried out, retest results and recommendations — all dated and signed",
+      'A photograph only',
+      'A handshake',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Documented evidence is essential for liability, insurance and future reference. The report should be auditable, dated, signed, with named operative, customer details, instrument calibration date, test values and clear recommendations. Many insurers require this for indemnity cover.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 231,
+    question:
+      "A variation order is appropriate when:",
+    options: [
+      'You add stickers to the consumer unit',
+      'During fault diagnosis you discover the agreed scope must change (additional cabling required, asbestos found, hidden defects) — written variation captures cost, time and consent before extra work proceeds',
+      'You take a tea break',
+      'The customer changes wallpaper colour',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "JCT Minor Works and most contracts require written variation orders signed by the customer/main contractor before extra work proceeds. Without one, you risk non-payment for additional time and materials. Variation captures scope change, cost impact, time impact and any consequential design changes.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 232,
+    question:
+      "On a borescope inspection of a damp basement Wylex DB, you find green oxide on the busbar. The correct response is:",
+    options: [
+      'Spray with WD-40',
+      'Code C2 (potentially dangerous) on EICR, isolate, plan replacement of affected components, investigate water ingress and moisture source as the root cause',
+      'Ignore — cosmetic only',
+      'Paint over',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Green corrosion on copper busbars indicates moisture exposure and sustained electrolytic activity, leading to high-resistance joints and eventual arcing. Code C2 reflects potentially dangerous condition requiring urgent remedial action. Address the moisture source (leaking pipe, condensation) as part of the rectification.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 233,
+    question:
+      "A residential socket measures with a Fluke 1664FC at PFC of 1.65 kA. The installed RCBO is a 32 A type B with breaking capacity of 6 kA. This:",
+    options: [
+      'Fails — RCBO too low',
+      "Passes — installed device's 6 kA breaking capacity exceeds the prospective fault current",
+      'Requires re-testing',
+      'Has nothing to do with the device',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "BS 7671 Reg 434.5.1 requires Icn (rated short-circuit capacity) ≥ prospective fault current at the device. 6 kA > 1.65 kA — pass. Domestic boards typically have 6 kA devices; commercial boards often need 10 kA or higher.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 234,
+    question:
+      "When IT equipment fails and dies during a fault investigation, the most likely cause to investigate is:",
+    options: [
+      'Cosmic rays',
+      'A common-mode transient (lightning, switching surge) reaching the equipment via mains, data cable or earth — investigate SPDs, data isolation, surge events',
+      'Wrong colour cable',
+      'No cause',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "BS 7671 Section 443 requires surge protection devices in many installations. Common-mode transients enter via the supply, data cabling and earth. SPD coordination (Type 1 at origin, Type 2 at distribution boards, Type 3 at sensitive loads) is essential for IT equipment protection.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 235,
+    question:
+      "When working in a hazardous area (DSEAR / ATEX zone 1), the special precautions include:",
+    options: [
+      'Standard isolation only',
+      "Use intrinsically safe (Ex i) test equipment, obtain a permit-to-work, gas-test the area, wear anti-static PPE, and only use methods compliant with the area's zone classification",
+      'Use only the smallest tools',
+      'No special procedure required',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "DSEAR 2002 and the EX framework require all equipment used in hazardous areas to be certified for the zone (Zone 0, 1, 2 for gas; 20, 21, 22 for dust). Test instruments must be Ex i intrinsically safe. Permit-to-work and gas-test before any electrical work; never break a circuit live in a flammable atmosphere.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 236,
+    question:
+      "After repairing a fault that involved chasing brick to bury new cable, the building fabric must be:",
+    options: [
+      'Left as-is',
+      'Reinstated to at least the original condition using suitable mortar/plaster, with cable in safe zones or in earthed metal containment, and any made-good areas redecorated as agreed',
+      'Painted any colour',
+      'Filled with foam',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Reinstating building fabric is a contractual responsibility (often by the electrician unless excluded). Cables must remain in safe zones (BS 7671 522.6) or be mechanically protected. Made-good areas should be flush, level and ready for redecoration as agreed in the variation.",
+    section: '4.8',
+    difficulty: 'basic',
+  },
+  {
+    id: 237,
+    question:
+      "A schedule of test results for fault diagnosis should record:",
+    options: [
+      'Only failed values',
+      'Circuit reference, conductor sizes, R1+R2, R2 (where applicable), IR live-live and live-earth, polarity, Zs, RCD trip times at 1× and 5×, AFDD test, all with limits and pass/fail',
+      'Just a tick or cross',
+      'Nothing — verbal handover is enough',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "BS 7671 A4:2026 schedule of test results requires comprehensive recording for each circuit. Inspectors and future contractors rely on these values to assess condition and establish baselines. Many MFTs (MFT1741+, Fluke 1664FC) export results directly to PDF/CSV for inclusion in reports.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 238,
+    question:
+      "An IET GN3 (Inspection & Testing) recommended approach to selecting a sample size for periodic inspection is:",
+    options: [
+      'Always 100%',
+      'Risk-based — sample to a level that gives confidence in the conclusions, with sampling agreed with the duty holder, and 100% of accessible parts visually inspected',
+      'Always 10%',
+      'Whatever is quickest',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "GN3 (and BS 7671 Part 6) require sampling to be agreed before testing, justified by risk assessment, and clearly documented. Higher-risk locations and safety-critical circuits demand higher sampling. Visual inspection should aim for 100% of accessible parts.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 239,
+    question:
+      "On the Megger MFT1741+ Z low-current test (no-trip loop test), the instrument injects a low current to measure Zs without tripping a 30 mA RCD. The expected accuracy versus the high-current test is:",
+    options: [
+      'Identical',
+      'Slightly lower accuracy than the high-current test (factor of 2-3 in resolution) but adequate for verifying compliance with Table 41.3',
+      'Always wrong',
+      'Higher accuracy',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Low-current Z tests (sometimes called 'no-trip Zs') let you measure live loop impedance without nuisance-tripping protection. They are slightly less accurate than high-current tests but accurate enough for compliance. A re-test on a circuit with the RCD bypassed (where allowed) gives the most accurate result.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 240,
+    question:
+      "An oscilloscope captured on a VFD output shows a high dV/dt waveform with bearing currents on the motor shaft. The mitigation is:",
+    options: [
+      'Replace the motor only',
+      "Fit a sine-wave or dV/dt filter at the VFD output, install shaft grounding rings, use VFD-rated motor cables (low-capacitance, screened) and bond the cable screen 360° at both ends",
+      'Reduce supply voltage',
+      'Change phase rotation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "VFD switching causes high dV/dt that capacitively couples to motor shafts via stray capacitance, eroding bearings (electrical discharge machining). Mitigation: dV/dt filter, sine-wave filter, shaft grounding (Aegis SGR), VFD-rated motor cable (e.g. ÖLFLEX VFD), 360° EMC glands at both ends.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 241,
+    question:
+      "A fault in a lead-acid battery bank reveals that two of eight cells are at 1.8 V (others 2.1 V). Action:",
+    options: [
+      'Recharge fully and ignore',
+      'Identify the discharged cells as defective (sulphation or open internal connection), test specific gravity, and replace as a matched set; never mix new and old cells in a series string',
+      'Add water',
+      'Disconnect them',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Cells in a series string must be matched in age, capacity and state of health. Two cells at 1.8 V with others at 2.1 V indicate either sulphation, plate damage or internal short. Replacing the whole string is generally required; mixed strings cause overcharging of healthy cells and undercharging of weak ones.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 242,
+    question:
+      "When informing a domestic customer of fault findings, BS 7671 / consumer protection good practice requires:",
+    options: [
+      'Use only technical jargon',
+      "Plain English explanation of what was found, the risk it presents, the proposed remedy, the cost and time impact, and the customer's decision recorded in writing before proceeding",
+      "Only tell what's good news",
+      'Speak only to the spouse',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Consumer Rights Act 2015 and IET CoP require clear communication. The customer must understand the issue and consent to remedial work. Written records protect both parties. Avoid jargon, explain in terms of safety and risk, and confirm consent in writing before commencing.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 243,
+    question:
+      "Functional testing after fault correction must verify:",
+    options: [
+      'Only that the circuit is energised',
+      'All protective devices operate (RCD test, RCBO test, AFDD self-test), correct switching/control sequences, interlocks, emergency stops, automatic devices and that the system performs as intended without re-introducing the original fault',
+      'Just check no smoke',
+      'No testing needed after repair',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "BS 7671 Reg 643.10 (functional testing) requires verification that protective devices, switchgear, controls and interlocks operate as intended. Many faults stem from controls and interlocks rather than fixed wiring; functional testing confirms the whole system works after repair.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 244,
+    question:
+      "For safe disposal of waste from a fault repair (broken accessories, off-cuts, packaging), you should:",
+    options: [
+      'Take it home and burn it',
+      'Segregate at source — recyclable cable scrap, WEEE for accessories with electronics, mixed waste, and asbestos suspect material handled separately under CAR 2012 / HSG264',
+      'Leave on site',
+      'Throw in domestic bin',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Waste must be segregated under the Environmental Protection (Duty of Care) Regulations. Cable scrap is recyclable (high copper value). WEEE Regulations cover electrical waste. Asbestos suspect material requires a licensed contractor under CAR 2012; never disturb without testing.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 245,
+    question:
+      "A complaint: 'the EV charger sometimes stops mid-charge then restarts'. Diagnostic considerations include:",
+    options: [
+      'Replace the EV',
+      'Check supply voltage stability under load (DNO voltage drop), CT clamp position and orientation if load-shedding is enabled, communications/firmware logs, RCD trip/auto-reset behaviour, and weather/temperature effects on the charger',
+      'Always blame the car',
+      'Increase the breaker rating',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "EV chargers are complex systems with supply, comms, CTs and protective monitoring. A clamp meter at the origin captures voltage stability under EV load; CT misorientation causes incorrect load-shedding; firmware logs reveal communication faults. Many manufacturers provide cloud telemetry (Ohme, Wallbox, EO) to diagnose remotely.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 246,
+    question:
+      "Following A4:2026, TN-C-S supplies are now formally referenced as which alternative term in BS 7671?",
+    options: [
+      'PEN',
+      'PNB (Protective Neutral Bonding) — recognising the LV practice of bonding to the combined neutral/earth at the consumer cut-out',
+      'TT',
+      'IT',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A4:2026 introduced PNB (Protective Neutral Bonding) terminology alongside TN-C-S/PME to better describe UK distribution practice where the PEN is bonded to earth at the supply origin. Practical implications include open-PEN risk, requiring approved PEN-fault devices for EV charging supplies in many cases.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 247,
+    question:
+      "A flickering LED downlight controlled by a remote dimmer is reported. Diagnostic logic should consider:",
+    options: [
+      'Replace lamp only',
+      'Compatibility of the LED driver with the dimmer (leading-edge vs trailing-edge, minimum load), neutral connection at the switch (for smart dimmers), driver minimum-load issue, and harmonic/DC supply asymmetry causing 100 Hz flicker',
+      'Always replace dimmer',
+      'Add more lamps',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "LED flicker stems from dimmer/driver mismatch (most common), insufficient minimum load on a leading-edge dimmer, lack of neutral at smart dimmers, or supply DC offset. Match dimmer type to driver datasheet (trailing edge usually preferred for LED), and check minimum load. Some installs need a 'min-load' resistor pack.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 248,
+    question:
+      "When a Hager Design 30 RCBO trips on a kitchen radial, the operator opens the device and finds black soot inside. The action is:",
+    options: [
+      'Reset and continue',
+      'Replace the device — internal arcing has occurred and the contact set integrity cannot be guaranteed; investigate cause of severe fault that produced the arcing',
+      'Spray with cleaner',
+      'Increase rating',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Black carbon deposits inside a protective device indicate internal arcing — likely a high prospective fault current event approaching the device's breaking capacity. Replace the device, log the fault event, and investigate the originating fault to ensure it has been corrected. Many manufacturers void warranty on devices showing arcing.",
+    section: '4.8',
+    difficulty: 'advanced',
+  },
+  {
+    id: 249,
+    question:
+      "A test result schedule shows IR L-N = 0.2 MΩ on a final circuit. Per BS 7671 Table 64, this is:",
+    options: [
+      'Pass',
+      'Fail (minimum 1 MΩ for LV) — investigate insulation degradation, moisture ingress, damaged cables or connected equipment that should have been disconnected',
+      'Borderline pass',
+      'Acceptable for outdoor circuits',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "0.2 MΩ is well below the 1 MΩ minimum for LV circuits up to 500 V. Investigate damp ingress, cable damage, or connected equipment leakage. Often 0.2 MΩ values clear when surge-suppression devices, electronic loads or filter capacitors are disconnected; otherwise, fault-find by progressive disconnection of circuit sections.",
+    section: '4.8',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 250,
+    question:
+      "After fault correction is complete, the leave-clean checklist includes:",
+    options: [
+      'Just leave',
+      "Power restored, all covers refitted, labels updated, customer briefed, work area swept and waste removed, certificate left with customer or emailed, and instruments returned to vehicle",
+      "Take customer's keys",
+      'Leave tools for next visit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Professional close-out includes power restoration, all enclosures refitted with correct fixings, updated labels (circuit charts, safety signage), customer brief and certificate handover, clean and clear work area, and ensuring no instruments left behind. This protects the customer and the contractor's reputation.",
+    section: '4.8',
+    difficulty: 'basic',
+  },
 ];
 
 // Helper function to get random questions for mock exams
@@ -3019,5 +3815,67 @@ export const getQuestionsByDifficulty = (
 ): Question[] => {
   return module4Questions.filter((q) => q.difficulty === difficulty);
 };
+
+/**
+ * Validate the question bank structure and distribution.
+ * Returns isValid: true when total questions, section coverage and difficulty
+ * spread all sit within the configured ranges.
+ */
+export function validateQuestionBank(): {
+  isValid: boolean;
+  totalQuestions: number;
+  sectionDistribution: Record<string, number>;
+  difficultyDistribution: Record<string, number>;
+  issues: string[];
+} {
+  const issues: string[] = [];
+  const sectionDistribution: Record<string, number> = {};
+  const difficultyDistribution: Record<string, number> = {};
+
+  module4Questions.forEach((q) => {
+    const section = q.section ?? 'unknown';
+    const difficulty = q.difficulty ?? 'unknown';
+    sectionDistribution[section] = (sectionDistribution[section] || 0) + 1;
+    difficultyDistribution[difficulty] = (difficultyDistribution[difficulty] || 0) + 1;
+  });
+
+  if (module4Questions.length < 240) {
+    issues.push(
+      `Insufficient questions: ${module4Questions.length} (target: 250)`
+    );
+  }
+
+  const expectedSections = ['4.1', '4.2', '4.3', '4.4', '4.5', '4.6', '4.7', '4.8'];
+  expectedSections.forEach((section) => {
+    if (!sectionDistribution[section] || sectionDistribution[section] < 15) {
+      issues.push(
+        `Section ${section} has ${sectionDistribution[section] || 0} questions (target: 15+)`
+      );
+    }
+  });
+
+  const total = module4Questions.length;
+  const basicPct = ((difficultyDistribution.basic || 0) / total) * 100;
+  const intermediatePct = ((difficultyDistribution.intermediate || 0) / total) * 100;
+  const advancedPct = ((difficultyDistribution.advanced || 0) / total) * 100;
+
+  if (basicPct < 20 || basicPct > 50) {
+    issues.push(`Basic out of range: ${basicPct.toFixed(1)}% (target: 20-50%)`);
+  }
+  if (intermediatePct < 30 || intermediatePct > 55) {
+    issues.push(`Intermediate out of range: ${intermediatePct.toFixed(1)}% (target: 30-55%)`);
+  }
+  if (advancedPct < 10 || advancedPct > 35) {
+    issues.push(`Advanced out of range: ${advancedPct.toFixed(1)}% (target: 10-35%)`);
+  }
+
+  return {
+    isValid: issues.length === 0,
+    totalQuestions: total,
+    sectionDistribution,
+    difficultyDistribution,
+    issues,
+  };
+}
 
 export default module4Questions;

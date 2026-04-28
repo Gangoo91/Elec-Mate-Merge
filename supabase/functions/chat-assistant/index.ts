@@ -482,7 +482,7 @@ Current topic context: ${context || 'general electrical apprenticeship support'}
     }
 
     // Use gpt-4o for vision, gpt-5-mini for text-only
-    const modelToUse = imageUrl ? 'gpt-4o' : 'gpt-5-mini-2025-08-07';
+    const modelToUse = imageUrl ? 'gpt-5.4-mini-2026-03-17' : 'gpt-5.4-mini-2026-03-17';
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

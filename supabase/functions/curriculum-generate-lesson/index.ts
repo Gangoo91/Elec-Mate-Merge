@@ -22,7 +22,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, content-type, apikey',
 };
 
-const CHAT_MODEL = 'gpt-5-mini-2025-08-07';
+const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
 const EMBED_MODEL = 'text-embedding-3-large';
 const EMBED_DIMS = 3072;
 const MAX_FACETS_PER_DOC = 8;

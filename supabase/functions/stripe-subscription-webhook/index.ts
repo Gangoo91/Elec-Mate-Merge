@@ -14,6 +14,7 @@ import { captureException, captureMessage } from '../_shared/sentry.ts';
 import { fireCapiEvent } from '../_shared/meta-capi.ts';
 import { capturePostHogEvent } from '../_shared/posthog-server.ts';
 import { getSubscriptionPeriodEnd } from '../_shared/stripe-helpers.ts';
+import { generateWaCodeForUser } from '../_shared/wa-onboarding.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -508,9 +509,11 @@ const PRICE_TO_TIER: Record<string, string> = {
   price_1TKlKL2RKw5t5RAmpD8FH7qp: 'electrician_yearly', // £129.99/year (current — Apr 2026)
   price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (legacy — keep for existing subs)
 
-  // Business AI - £29.99/month, £299.99/year (Electrician + AI Agent)
-  price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai', // £29.99/month
-  price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly', // £299.99/year
+  // Business AI - £39.99/month, £399.99/year (current — Apr 2026)
+  price_1TRGZo2RKw5t5RAmRl2hc0ru: 'business_ai', // £39.99/month (current)
+  price_1TRGZo2RKw5t5RAmzY50EzaE: 'business_ai_yearly', // £399.99/year (current)
+  price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai', // £29.99/month (legacy — keep for existing subs)
+  price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly', // £299.99/year (legacy — keep for existing subs)
 
   // Employer - £49.99/month, £499.99/year (Business AI + Team features)
   price_1SlyAT2RKw5t5RAmUmTRGimH: 'employer', // £29.99/month (current — will become £49.99)
@@ -677,7 +680,12 @@ serve(async (req) => {
       customerId: string,
       tier: string | null,
       periodEnd: Date | null,
-      setOnboardingCompleted: boolean = false
+      setOnboardingCompleted: boolean = false,
+      founderHints?: {
+        subscriptionMeta?: Record<string, string> | null;
+        checkoutMeta?: Record<string, string> | null;
+        subscriptionDiscounts?: Array<{ coupon?: { id?: string } | null }>;
+      }
     ) {
       const updateData: Record<string, unknown> = {
         subscribed,
@@ -722,6 +730,56 @@ serve(async (req) => {
         tier,
         businessAiEnabled: updateData.business_ai_enabled,
       });
+
+      // ── Mate Founder grant ────────────────────────────────────────
+      // If this subscription was created with the Mate founder coupon
+      // (auto-applied by create-checkout for the first 100 buyers), set
+      // is_founder=true and stamp founder_at. Idempotent — never downgrades
+      // someone who is already a founder.
+      const founderCouponId = Deno.env.get('MATE_FOUNDER_COUPON_ID') || '6fuVPsKN';
+      const subMeta = founderHints?.subscriptionMeta ?? null;
+      const coMeta = founderHints?.checkoutMeta ?? null;
+      const discountsList = founderHints?.subscriptionDiscounts ?? [];
+      const isFounderEvent =
+        subMeta?.mate_founder === 'true' ||
+        coMeta?.mate_founder === 'true' ||
+        discountsList.some((d) => d?.coupon?.id === founderCouponId);
+      if (updateData.business_ai_enabled === true && isFounderEvent) {
+        const { data: existing } = await supabase
+          .from('profiles')
+          .select('is_founder')
+          .eq('id', userId)
+          .single();
+        if (!existing?.is_founder) {
+          await supabase
+            .from('profiles')
+            .update({ is_founder: true, founder_at: new Date().toISOString() })
+            .eq('id', userId);
+          logger.info('Mate founder granted', { userId });
+        }
+      }
+
+      // If Business AI just became enabled, pre-generate a WhatsApp activation
+      // code so the user lands on the welcome page with a ready-to-tap deeplink.
+      // Idempotent: helper returns the existing code if one is still valid, so
+      // Stripe webhook retries don't churn codes.
+      if (updateData.business_ai_enabled === true) {
+        try {
+          const result = await generateWaCodeForUser(supabase, userId);
+          logger.info('WA activation code ready for user', {
+            userId,
+            expiresAt: result.expires_at,
+            reused: false, // helper doesn't expose this distinction; always log as ready
+          });
+        } catch (waErr) {
+          // Non-fatal: user can still hit the welcome page and the frontend
+          // will fall back to calling generate-wa-code directly.
+          logger.warn('Failed to pre-generate WA activation code (non-fatal)', {
+            userId,
+            error: waErr instanceof Error ? waErr.message : String(waErr),
+          });
+        }
+      }
     }
 
     // Handle different event types
@@ -815,13 +873,24 @@ serve(async (req) => {
 
         // Pass setOnboardingCompleted=true for new subscriptions to mark signup flow as done
         const isNewSubscription = event.type === 'customer.subscription.created';
+
+        // Founder hints — pulled off the subscription itself; no extra Stripe call
+        const subscriptionDiscounts = (subscription.discounts ?? subscription.discount
+          ? [subscription.discount as { coupon?: { id?: string } | null }].filter(Boolean)
+          : []) as Array<{ coupon?: { id?: string } | null }>;
+        const founderHints = {
+          subscriptionMeta: (subscription.metadata ?? null) as Record<string, string> | null,
+          subscriptionDiscounts,
+        };
+
         await updateSubscriptionStatus(
           userId,
           isActive,
           customerId,
           tier,
           periodEnd,
-          isNewSubscription && isActive
+          isNewSubscription && isActive,
+          founderHints
         );
 
         // Cancel any previous subscriptions for this customer (upgrade scenario)
@@ -1601,13 +1670,23 @@ serve(async (req) => {
             eventType: 'checkout.session.completed',
           });
 
+          // Founder hints from the checkout session metadata
+          const checkoutFounderHints = {
+            checkoutMeta: (session.metadata ?? null) as Record<string, string> | null,
+            subscriptionMeta: (sub.metadata ?? null) as Record<string, string> | null,
+            subscriptionDiscounts: (sub.discount
+              ? [sub.discount as { coupon?: { id?: string } | null }]
+              : []) as Array<{ coupon?: { id?: string } | null }>,
+          };
+
           await updateSubscriptionStatus(
             linkedUserId,
             true,
             sessionCustomerId,
             tier,
             periodEnd,
-            true
+            true,
+            checkoutFounderHints
           );
 
           logger.info('Subscription activated via checkout.session.completed', {

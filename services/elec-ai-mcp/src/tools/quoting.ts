@@ -65,7 +65,7 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
       ];
     } else {
       throw new Error(
-        'items array is required. Example: items: [{ description: "Consumer unit upgrade", quantity: 1, unitPrice: 450 }]'
+        'NEEDS_USER_INPUT: items missing. Do NOT call create_quote again until you have collected items + prices from the user. Reply to the user with: "I need the line items and prices before I can create this quote — what should I include?" Then wait for their reply. If you have a job description but no prices, call lookup_pricing_guidance first and propose a draft itemised list back to the user for confirmation.'
       );
     }
   }
@@ -140,7 +140,9 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
   const total = Math.round((subtotal + vatAmount) * 100) / 100;
 
   if (total <= 0) {
-    throw new Error('Quote total must be greater than £0');
+    throw new Error(
+      'NEEDS_USER_INPUT: Quote total is £0 — every line item needs a real unit price. Ask the user for the prices of each item (or call lookup_pricing_guidance) and propose them back for confirmation. Do NOT call create_quote again with zero prices.'
+    );
   }
 
   // Expiry date (default 30 days)
@@ -195,7 +197,9 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
 
 export async function updateQuote(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.quote_id !== 'string') {
-    throw new Error('quote_id is required');
+    throw new Error(
+      'NEEDS_QUOTE_ID: update_quote requires a quote_id from a prior read_quotes or create_quote call. Call read_quotes first (e.g. for the latest draft) and use the id from there. Never invent a quote_id.'
+    );
   }
 
   const supabase = user.supabase;
@@ -316,7 +320,7 @@ export async function updateQuote(args: Record<string, unknown>, user: UserConte
 
   if (Object.keys(updates).length === 0) {
     throw new Error(
-      'No fields to update — provide at least one of: client_data, job_details, items, notes, expiry_date, status'
+      'NEEDS_USER_INPUT: No fields to update. Ask the user what they want to change on the quote (e.g. add an item, change a price, mark as sent), then call update_quote with the specific field — one of: client_data, job_details, items, notes, expiry_date, status.'
     );
   }
 

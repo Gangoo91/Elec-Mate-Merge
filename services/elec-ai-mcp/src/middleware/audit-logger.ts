@@ -44,6 +44,11 @@ function sanitiseArgs(args: Record<string, unknown>): Record<string, unknown> {
 /**
  * Log a tool call to the audit trail.
  * Non-blocking — errors in logging don't affect tool execution.
+ *
+ * agent_action_log columns: id, user_id, action_type, description, customer_name,
+ * detail (jsonb), outcome, undoable, undo_payload, created_at.
+ * Tool-specific fields (tool_name, args, success, error, duration_ms, client_id)
+ * live inside `detail` rather than as top-level columns.
  */
 export async function logToolCall(
   user: UserContext,
@@ -54,23 +59,29 @@ export async function logToolCall(
   try {
     const supabase = user.supabase;
 
-    await supabase.from('agent_action_log').insert({
+    const { error } = await supabase.from('agent_action_log').insert({
       user_id: user.userId,
       action_type: 'tool_call',
+      description: `${toolName}${result.success ? '' : ' (failed)'}`,
+      outcome: result.success ? 'success' : 'failure',
       detail: {
+        tool_name: toolName,
         args: sanitiseArgs(args),
         success: result.success,
         error: result.error || null,
         duration_ms: result.durationMs,
+        client_id: (args.client_id as string) || null,
       },
-      tool_name: toolName,
-      client_id: (args.client_id as string) || null,
-      approved: null, // Set by agent layer, not MCP server
     });
-  } catch {
+
+    if (error) {
+      console.error(`[audit] insert failed: ${toolName} for user ${user.userId}: ${error.message}`);
+    }
+  } catch (e) {
     // Audit logging failure must never break tool execution.
-    // In production, send to error monitoring (Sentry, etc.)
-    console.error(`[audit] Failed to log tool call: ${toolName} for user ${user.userId}`);
+    console.error(
+      `[audit] Failed to log tool call: ${toolName} for user ${user.userId}: ${e instanceof Error ? e.message : String(e)}`
+    );
   }
 }
 
@@ -85,15 +96,19 @@ export async function logSecurityEvent(
   try {
     const supabase = user.supabase;
 
-    await supabase.from('agent_action_log').insert({
+    const { error } = await supabase.from('agent_action_log').insert({
       user_id: user.userId,
       action_type: 'security_flag',
+      description: `security: ${eventType}`,
+      outcome: 'flagged',
       detail: { event_type: eventType, ...detail },
-      tool_name: null,
-      client_id: null,
-      approved: null,
     });
-  } catch {
-    console.error(`[audit] Failed to log security event: ${eventType} for user ${user.userId}`);
+    if (error) {
+      console.error(`[audit] security insert failed: ${eventType} for user ${user.userId}: ${error.message}`);
+    }
+  } catch (e) {
+    console.error(
+      `[audit] Failed to log security event: ${eventType} for user ${user.userId}: ${e instanceof Error ? e.message : String(e)}`
+    );
   }
 }

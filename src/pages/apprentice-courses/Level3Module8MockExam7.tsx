@@ -18,32 +18,36 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
+import { MockExamQuestionPanel } from '@/components/apprentice-courses/MockExamQuestionPanel';
 import { getRandomQuestions } from '@/data/apprentice-courses/level3/module7/questionBank';
 
 const Level3Module8MockExam7 = () => {
   useSEO(
-    'Mock Exam 7: Career Development | Level 3 Electrical Course',
-    'Test your knowledge of Module 7 career development with this comprehensive 30-question mock exam.'
+    'Mock Exam 7 — Career Awareness (Unit 308) | Level 3 | Elec-Mate',
+    'Test your knowledge of Unit 308 career awareness with this 40-question mock exam covering JIB grading, scheme membership, post-AM2 routes, business setup and CPD.'
   );
+
+  const TOTAL_QUESTIONS = 40;
+  const TIME_LIMIT_SECONDS = 60 * 60; // 60 minutes
 
   const [examQuestions, setExamQuestions] = useState<any[]>([]);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(60 * 45);
+  const [timeRemaining, setTimeRemaining] = useState(TIME_LIMIT_SECONDS);
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set<number>());
   const [reviewMode, setReviewMode] = useState(false);
   const [reviewFilter, setReviewFilter] = useState('all');
 
   const startExam = () => {
-    const selectedQuestions = getRandomQuestions(30);
+    const selectedQuestions = getRandomQuestions(TOTAL_QUESTIONS);
     setExamQuestions(selectedQuestions);
-    setSelectedAnswers(new Array(30).fill(-1));
+    setSelectedAnswers(new Array(TOTAL_QUESTIONS).fill(-1));
     setCurrentQuestion(0);
     setExamStarted(true);
     setShowResults(false);
-    setTimeRemaining(60 * 45);
+    setTimeRemaining(TIME_LIMIT_SECONDS);
     setFlaggedQuestions(new Set());
   };
 
@@ -189,20 +193,20 @@ const Level3Module8MockExam7 = () => {
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <p className="text-sm sm:text-sm text-white leading-relaxed">
-                      30 questions randomly selected from 200 Module 7 questions
+                      40 questions randomly selected from the Unit 308 question bank
                     </p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <p className="text-sm sm:text-sm text-white leading-relaxed">
-                      45 minutes time limit
+                      60 minutes time limit
                     </p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <p className="text-sm sm:text-sm text-white leading-relaxed">
-                      Topics: Industry Roles, JIB Grading, Qualifications, CPD, Professional Bodies,
-                      Business Skills
+                      Topics: industry roles, JIB grading, scheme membership, post-AM2 routes,
+                      MCS, business setup, insurance, CPD
                     </p>
                   </div>
                 </div>
@@ -468,7 +472,7 @@ const Level3Module8MockExam7 = () => {
                       setSelectedAnswers([]);
                       setShowResults(false);
                       setExamStarted(false);
-                      setTimeRemaining(60 * 45);
+                      setTimeRemaining(TIME_LIMIT_SECONDS);
                       setReviewMode(false);
                       setReviewFilter('all');
                     }}
@@ -519,86 +523,24 @@ const Level3Module8MockExam7 = () => {
 
       <div className="max-w-7xl mx-auto p-4">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <Card className="lg:col-span-3 bg-transparent border border-elec-yellow/30">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-lg font-semibold text-white">
-                    Question {currentQuestion + 1} of {examQuestions.length}
-                  </h2>
-                  <div className="text-sm text-white mt-1">
-                    Level 3 Module 7 • Career Development
-                  </div>
-                </div>
-                <Button
-                  onClick={toggleFlag}
-                  variant="outline"
-                  size="sm"
-                  className={`border-elec-yellow/30 ${flaggedQuestions.has(currentQuestion) ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white hover:bg-elec-yellow/10'}`}
-                >
-                  <Flag className="h-4 w-4 mr-2" />
-                  {flaggedQuestions.has(currentQuestion) ? 'Flagged' : 'Flag'}
-                </Button>
-              </div>
-
-              <div className="mb-8">
-                <p className="text-white text-lg leading-relaxed mb-6">
-                  {examQuestions[currentQuestion]?.question}
-                </p>
-                <div className="space-y-3">
-                  {examQuestions[currentQuestion]?.options.map((option: string, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => handleAnswerSelect(index)}
-                      className={`w-full p-4 text-left rounded-lg border transition-colors ${selectedAnswers[currentQuestion] === index ? 'bg-elec-yellow/20 border-elec-yellow text-white' : 'bg-[#1a1a1a]/30 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-semibold min-w-[20px]">
-                          {String.fromCharCode(65 + index)}.
-                        </span>
-                        <span>{option}</span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center pt-6 border-t border-elec-yellow/30">
-                <Button
-                  onClick={handlePrevious}
-                  disabled={currentQuestion === 0}
-                  variant="outline"
-                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 disabled:opacity-50"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Previous
-                </Button>
-                <div className="flex gap-2">
-                  {currentQuestion === examQuestions.length - 1 ? (
-                    <Button
-                      onClick={handleSubmit}
-                      disabled={answeredQuestions === 0}
-                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:opacity-50 text-sm sm:text-sm px-6 py-3 sm:py-3 min-h-[52px] touch-manipulation font-semibold rounded-xl flex-shrink-0"
-                      size="sm"
-                    >
-                      <span className="hidden xs:inline">Submit Exam</span>
-                      <span className="xs:hidden">Submit</span>
-                      <CheckCircle className="h-4 w-4 ml-2" />
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={handleNext}
-                      className="flex-1 sm:flex-initial sm:px-8 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg"
-                      size="lg"
-                    >
-                      Next
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="lg:col-span-3">
+            <MockExamQuestionPanel
+              questionIndex={currentQuestion}
+              totalQuestions={examQuestions.length}
+              question={examQuestions[currentQuestion]}
+              selectedAnswer={selectedAnswers[currentQuestion]}
+              isFlagged={flaggedQuestions.has(currentQuestion)}
+              topicLabel="Module 7 · Career Awareness · C&G 2365-03 Unit 308"
+              onSelectAnswer={handleAnswerSelect}
+              onToggleFlag={toggleFlag}
+              onPrevious={handlePrevious}
+              onNext={handleNext}
+              onSubmit={handleSubmit}
+              isFirst={currentQuestion === 0}
+              isLast={currentQuestion === examQuestions.length - 1}
+              canSubmit={answeredQuestions > 0}
+            />
+          </div>
 
           <Card className="bg-transparent border border-elec-yellow/30 shadow-lg hidden lg:block">
             <CardContent className="p-4">

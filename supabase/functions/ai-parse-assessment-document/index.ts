@@ -32,8 +32,10 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const CHAT_MODEL = 'gpt-5-mini-2025-08-07';
-const MAX_COMPLETION_TOKENS = 8_000;
+const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
+// Same headroom logic as ai-author-quiz — assessments + mock exams typically
+// want 10-20 questions, each ~700 tokens. 14k covers the typical case.
+const MAX_COMPLETION_TOKENS = 14_000;
 const FACET_TOP_K = 5;
 const MAX_DOC_CHARS = 18_000; // Cap doc text fed to model
 
