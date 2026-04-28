@@ -196,7 +196,9 @@ export default function AdminRevenue() {
   const rcMrr = rcStats?.revenuecat?.mrr || 0;
   const mrr = stripeMrr + rcMrr;
   const arr = mrr * 12;
-  const rcActiveTrials = ((rcStats as any)?.trialUsers || []).filter((t: any) => !t.is_cancelled).length;
+  const rcActiveTrials = (
+    (rcStats as { trialUsers?: Array<{ is_cancelled?: boolean }> })?.trialUsers || []
+  ).filter((t) => !t.is_cancelled).length;
   const appStoreSubs = rcStats?.subscribersBySource?.app_store || 0;
   const playStoreSubs = rcStats?.subscribersBySource?.play_store || 0;
   const totalSubs = (stripeStats?.stripe.activeSubscriptions || 0) + appStoreSubs + playStoreSubs;
@@ -259,9 +261,7 @@ export default function AdminRevenue() {
             columns={[
               {
                 label: 'ARR',
-                value: (
-                  <AnimatedCounter value={arr} prefix="£" decimals={0} formatAsCurrency />
-                ),
+                value: <AnimatedCounter value={arr} prefix="£" decimals={0} formatAsCurrency />,
               },
               {
                 label: 'Paying',
@@ -328,9 +328,7 @@ export default function AdminRevenue() {
           <ListCardHeader
             tone="yellow"
             title="Last 14 Days"
-            meta={
-              <Pill tone="emerald">+£{totalLast14Days.toFixed(0)} new MRR</Pill>
-            }
+            meta={<Pill tone="emerald">+£{totalLast14Days.toFixed(0)} new MRR</Pill>}
           />
           <div className="p-4 sm:p-5">
             <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden mb-5">
@@ -397,11 +395,7 @@ export default function AdminRevenue() {
             <ListCardHeader
               tone="blue"
               title="Mobile App (RevenueCat)"
-              meta={
-                rcMrr > 0 ? (
-                  <Pill tone="blue">£{rcMrr.toFixed(2)} MRR</Pill>
-                ) : undefined
-              }
+              meta={rcMrr > 0 ? <Pill tone="blue">£{rcMrr.toFixed(2)} MRR</Pill> : undefined}
             />
             <ListBody>
               {(() => {
@@ -527,9 +521,7 @@ export default function AdminRevenue() {
             <div className="mx-4 sm:mx-5 mb-4 sm:mb-5 rounded-xl border border-amber-500/20 bg-amber-500/5 px-4 py-3 flex items-start gap-3">
               <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
               <div className="flex-1 min-w-0">
-                <div className="text-[13px] font-semibold text-amber-400">
-                  Discrepancy detected
-                </div>
+                <div className="text-[13px] font-semibold text-amber-400">Discrepancy detected</div>
                 <div className="mt-0.5 text-[12px] text-white">
                   {stripeStats?.discrepancies.inStripeNotSupabase ?? 0} in Stripe not yet synced to
                   Supabase · {stripeStats?.discrepancies.inSupabaseNotStripe ?? 0} in Supabase
