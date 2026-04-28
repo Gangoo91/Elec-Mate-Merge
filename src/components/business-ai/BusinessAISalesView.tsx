@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Check, Loader2 } from 'lucide-react';
@@ -43,8 +43,8 @@ const CAPABILITIES: Capability[] = [
     title: 'Actually talk to Mate',
     body: (
       <>
-        <Y>Two-way voice</Y> conversations — speak hands-free, hear the reply. Perfect for the
-        van, the ladder, or when your hands are covered in dust.
+        <Y>Two-way voice</Y> conversations — speak hands-free, hear the reply. Perfect for the van,
+        the ladder, or when your hands are covered in dust.
       </>
     ),
   },
@@ -97,8 +97,8 @@ const CAPABILITIES: Capability[] = [
     title: 'Invoices with Stripe links',
     body: (
       <>
-        <Y>One-tap pay links</Y>. Safety checks block £0 errors and flag duplicates within 7
-        days — before they leave your hand.
+        <Y>One-tap pay links</Y>. Safety checks block £0 errors and flag duplicates within 7 days —
+        before they leave your hand.
       </>
     ),
   },
@@ -124,8 +124,8 @@ const CAPABILITIES: Capability[] = [
     title: 'Live prices, on demand',
     body: (
       <>
-        Ask for the cost of a Hager CU, a 100m reel of 2.5mm T&amp;E, or a specific RCD — Mate
-        pulls <Y>live pricing from UK wholesalers</Y> and brings back options to compare.
+        Ask for the cost of a Hager CU, a 100m reel of 2.5mm T&amp;E, or a specific RCD — Mate pulls{' '}
+        <Y>live pricing from UK wholesalers</Y> and brings back options to compare.
       </>
     ),
   },
@@ -142,8 +142,8 @@ const CAPABILITIES: Capability[] = [
     title: 'Business intelligence',
     body: (
       <>
-        Revenue forecast, cash flow, top clients, inactive clients, seasonal trends, at-risk
-        alerts. <Y>Answers in seconds</Y>.
+        Revenue forecast, cash flow, top clients, inactive clients, seasonal trends, at-risk alerts.{' '}
+        <Y>Answers in seconds</Y>.
       </>
     ),
   },
@@ -151,8 +151,8 @@ const CAPABILITIES: Capability[] = [
     title: 'Email assistant',
     body: (
       <>
-        Forward a customer email. Mate classifies, drafts your reply <Y>in your tone</Y>, waits
-        for your OK before sending.
+        Forward a customer email. Mate classifies, drafts your reply <Y>in your tone</Y>, waits for
+        your OK before sending.
       </>
     ),
   },
@@ -270,7 +270,6 @@ export function BusinessAISalesView() {
 
   return (
     <div className="min-h-screen bg-background text-white pb-[calc(env(safe-area-inset-bottom)+72px)] lg:pb-0">
-
       {/* Top nav */}
       <div className="px-4 sm:px-6 pt-3 pb-1 max-w-6xl mx-auto">
         <Link to="/electrician">
@@ -316,14 +315,14 @@ export function BusinessAISalesView() {
             variants={fadeUp}
             className="mt-7 sm:mt-8 text-lg sm:text-2xl text-white max-w-2xl mx-auto leading-[1.4]"
           >
-            Your AI business partner on <Y>WhatsApp</Y>. Send photos, voice notes, forward
-            emails — Mate handles the admin while you <Y>stay on the tools</Y>.
+            Your AI business partner on <Y>WhatsApp</Y>. Send photos, voice notes, forward emails —
+            Mate handles the admin while you <Y>stay on the tools</Y>.
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-9 sm:mt-12 space-y-4">
             <p className="text-sm sm:text-base text-white font-medium">
-              <Y>3 days free</Y>, then <span className="font-bold">£39.99/month</span> —
-              cancel anytime.
+              <Y>3 days free</Y>, then <span className="font-bold">£39.99/month</span> — cancel
+              anytime.
             </p>
             <PrimaryCta size="lg" />
           </motion.div>
@@ -402,8 +401,8 @@ export function BusinessAISalesView() {
               <span className="text-elec-yellow">Mate</span> does the rest.
             </h2>
             <p className="text-base sm:text-lg text-white leading-relaxed max-w-md">
-              No new app. No extra login. Mate lives inside the chat app you already use — and
-              it understands voice notes, photos and plain English.
+              No new app. No extra login. Mate lives inside the chat app you already use — and it
+              understands voice notes, photos and plain English.
             </p>
           </motion.div>
 
@@ -487,8 +486,8 @@ export function BusinessAISalesView() {
               admin <span className="text-elec-yellow">disappear.</span>
             </h2>
             <p className="mt-5 text-base sm:text-lg text-white leading-relaxed">
-              Every capability below is live inside Mate today — being tested by real
-              electricians in active beta.
+              Every capability below is live inside Mate today — being tested by real electricians
+              in active beta.
             </p>
           </motion.div>
 
@@ -497,9 +496,7 @@ export function BusinessAISalesView() {
               <motion.div key={cap.title} variants={fadeUp} className="group space-y-2">
                 <div className="flex items-center gap-2.5">
                   <span className="h-1 w-5 rounded-full bg-elec-yellow/80 shrink-0" />
-                  <h3 className="text-[17px] font-bold text-white tracking-tight">
-                    {cap.title}
-                  </h3>
+                  <h3 className="text-[17px] font-bold text-white tracking-tight">{cap.title}</h3>
                 </div>
                 <p className="text-[14px] leading-relaxed text-white pl-[30px]">{cap.body}</p>
               </motion.div>
@@ -511,8 +508,8 @@ export function BusinessAISalesView() {
               Plus
             </span>
             <span className="mx-2 text-white">·</span>
-            snagging lists · client portal links · project templates · smart pricing
-            suggestions · completion checklists · audit trail of every action.
+            snagging lists · client portal links · project templates · smart pricing suggestions ·
+            completion checklists · audit trail of every action.
           </motion.p>
         </motion.div>
       </section>
@@ -534,10 +531,7 @@ export function BusinessAISalesView() {
             </h3>
           </motion.div>
 
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap items-center gap-x-9 gap-y-5"
-          >
+          <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-x-9 gap-y-5">
             {['WhatsApp', 'Stripe', 'Xero', 'QuickBooks', 'Gmail', 'Outlook', 'Google Maps'].map(
               (name) => (
                 <span
@@ -587,8 +581,8 @@ export function BusinessAISalesView() {
                 title: 'Get your invite',
                 body: (
                   <>
-                    We&apos;ll email you the moment beta opens up a slot. <Y>First in, first
-                    invited.</Y>
+                    We&apos;ll email you the moment beta opens up a slot.{' '}
+                    <Y>First in, first invited.</Y>
                   </>
                 ),
               },
@@ -597,8 +591,8 @@ export function BusinessAISalesView() {
                 title: 'Connect and start your trial',
                 body: (
                   <>
-                    Link WhatsApp in thirty seconds. Your <Y>3-day free trial</Y> starts the
-                    moment you say hello.
+                    Link WhatsApp in thirty seconds. Your <Y>3-day free trial</Y> starts the moment
+                    you say hello.
                   </>
                 ),
               },
@@ -642,8 +636,8 @@ export function BusinessAISalesView() {
                 <span className="text-elec-yellow">Your call.</span>
               </h2>
               <p className="text-base text-white leading-relaxed max-w-md">
-                Mate drafts. You approve. Nothing goes out — no email, no message, no
-                invoice — without your green light.
+                Mate drafts. You approve. Nothing goes out — no email, no message, no invoice —
+                without your green light.
               </p>
             </div>
             <motion.ul variants={stagger} className="space-y-5 self-center">
@@ -671,18 +665,16 @@ export function BusinessAISalesView() {
               From the beta
             </p>
             <blockquote className="text-2xl sm:text-4xl font-semibold tracking-[-0.015em] leading-[1.2] text-white">
-              <span className="text-elec-yellow">&ldquo;</span>I used to spend an hour every
-              night on admin — invoices, chasing, replying. Now I just message Mate. It does
-              it, then tells me what it did. First tool that&apos;s actually given me time back.
+              <span className="text-elec-yellow">&ldquo;</span>I used to spend an hour every night
+              on admin — invoices, chasing, replying. Now I just message Mate. It does it, then
+              tells me what it did. First tool that&apos;s actually given me time back.
               <span className="text-elec-yellow">&rdquo;</span>
             </blockquote>
             <div className="mt-8 flex items-start gap-3">
               <span className="mt-2.5 h-1 w-6 rounded-full bg-elec-yellow shrink-0" />
               <div>
                 <div className="text-sm font-semibold text-white">Beta tester</div>
-                <div className="text-[13px] text-white">
-                  Working electrician · Active beta
-                </div>
+                <div className="text-[13px] text-white">Working electrician · Active beta</div>
               </div>
             </div>
           </motion.div>
@@ -789,9 +781,7 @@ export function BusinessAISalesView() {
             <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
               3 days free
             </div>
-            <div className="text-[13px] text-white font-semibold truncate">
-              then £39.99/month
-            </div>
+            <div className="text-[13px] text-white font-semibold truncate">then £39.99/month</div>
           </div>
           <Button
             onClick={handleJoinWaitlist}
@@ -838,8 +828,8 @@ export function BusinessAISalesView() {
             className="mt-7 sm:mt-8 text-lg sm:text-xl text-white max-w-xl mx-auto leading-relaxed"
           >
             Active beta. Priority invite on the waitlist.{' '}
-            <span className="font-bold text-elec-yellow">3 days free</span> the moment a slot
-            opens for you.
+            <span className="font-bold text-elec-yellow">3 days free</span> the moment a slot opens
+            for you.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-9 sm:mt-10 flex flex-col items-center gap-4">
             <PrimaryCta size="lg" />
@@ -852,4 +842,3 @@ export function BusinessAISalesView() {
     </div>
   );
 }
-

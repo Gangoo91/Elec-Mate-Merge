@@ -283,12 +283,10 @@ serve(async (req) => {
     // Create checkout options based on mode
     const origin = req.headers.get('origin') || 'https://elec-mate.com';
 
-    // Business AI buyers go straight into the WhatsApp activation wizard;
-    // everyone else lands on the generic payment-success page.
-    const isBusinessAi = planBase === 'business-ai';
-    const successUrl = isBusinessAi
-      ? `${origin}/electrician/business-ai?session_id={CHECKOUT_SESSION_ID}&newly_subscribed=1`
-      : `${origin}/payment-success?plan=${planId}&trial=${isNoTrialPlan ? 'false' : 'true'}`;
+    // All buyers (including Mate) land on the generic payment-success page
+    // for now. Once Mate goes live publicly, swap the Mate branch back to
+    // /electrician/business-ai so paying users reach the activation wizard.
+    const successUrl = `${origin}/payment-success?plan=${planId}&trial=${isNoTrialPlan ? 'false' : 'true'}`;
 
     const checkoutOptions: Record<string, unknown> = {
       customer: customerId,
