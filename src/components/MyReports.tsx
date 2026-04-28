@@ -149,7 +149,9 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     isLoading: isLoadingReports,
     refetch: refetchReports,
   } = useQuery<ReportsResponse>({
-    queryKey: ['my-reports', user?.id, currentPage],
+    // ELE-NEW — page key includes type + status so changing tab fetches fresh
+    // server-filtered results instead of using a stale paginated subset.
+    queryKey: ['my-reports', user?.id, currentPage, typeFilter, statusFilter],
     queryFn: async () => {
       if (!user) {
         return { reports: [], totalCount: 0, hasMore: false };
@@ -157,8 +159,22 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       const result = await reportCloud.getUserReports(user.id, {
         page: currentPage,
         pageSize: 20,
+        reportType: typeFilter,
+        status: statusFilter,
       });
       return result;
+    },
+    enabled: !!user,
+  });
+
+  // ELE-NEW — per-type counts across the WHOLE library (not just the current
+  // page) so tabs always show real numbers like "EIC (12)" even when the
+  // user has 100+ certs and EICs only appear on page 3.
+  const { data: countsData, refetch: refetchCounts } = useQuery({
+    queryKey: ['my-reports-counts', user?.id],
+    queryFn: async () => {
+      if (!user) return { total: 0, byType: {}, byStatus: {} };
+      return await reportCloud.getReportCounts(user.id);
     },
     enabled: !!user,
   });
@@ -172,6 +188,13 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       }
     }
   }, [reportsData, currentPage]);
+
+  // ELE-NEW — when filter changes, reset to page 1 so the new server query
+  // starts from the beginning of the filtered set.
+  useEffect(() => {
+    setCurrentPage(1);
+    setAllReports([]);
+  }, [typeFilter, statusFilter]);
 
   // Realtime subscription — show toast + refetch when agent creates/updates certs
   useEffect(() => {
@@ -196,53 +219,53 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           }
           setCurrentPage(1);
           refetchReports();
+          refetchCounts();
         }
       )
       .subscribe();
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [user, refetchReports, toast]);
+  }, [user, refetchReports, refetchCounts, toast]);
 
   const reports = allReports;
   const hasMore = reportsData?.hasMore || false;
   const totalCount = reportsData?.totalCount || 0;
 
-  // Calculate status counts for segmented control
+  // ELE-NEW — counts come from the WHOLE library, not just loaded pages.
+  // Falls back to loaded reports while counts query is still pending.
   const statusCounts = useMemo(() => {
+    if (countsData) {
+      return {
+        all: countsData.total,
+        draft: countsData.byStatus.draft || 0,
+        'in-progress': countsData.byStatus['in-progress'] || 0,
+        completed: countsData.byStatus.completed || 0,
+      };
+    }
     return {
       all: reports.length,
       draft: reports.filter((r) => r.status === 'draft').length,
       'in-progress': reports.filter((r) => r.status === 'in-progress').length,
       completed: reports.filter((r) => r.status === 'completed').length,
     };
-  }, [reports]);
+  }, [reports, countsData]);
 
-  // Filter chip options defined inline in the JSX
-
+  // ELE-NEW — type/status filtering now happens server-side (see queryKey
+  // above), so the loaded `reports` array is already pre-filtered. Only
+  // search is still client-side because Supabase ilike on JSON would be
+  // slow without an index — and search is typically used to narrow down
+  // the visible page rather than the full library.
   const filteredReports = useMemo(() => {
-    let filtered = reports;
-
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (report) =>
-          report.report_id.toLowerCase().includes(query) ||
-          report.client_name?.toLowerCase().includes(query) ||
-          report.installation_address?.toLowerCase().includes(query)
-      );
-    }
-
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter((report) => report.status === statusFilter);
-    }
-
-    if (typeFilter !== 'all') {
-      filtered = filtered.filter((report) => report.report_type === typeFilter);
-    }
-
-    return filtered;
-  }, [reports, searchQuery, statusFilter, typeFilter]);
+    if (!searchQuery) return reports;
+    const query = searchQuery.toLowerCase();
+    return reports.filter(
+      (report) =>
+        report.report_id.toLowerCase().includes(query) ||
+        report.client_name?.toLowerCase().includes(query) ||
+        report.installation_address?.toLowerCase().includes(query)
+    );
+  }, [reports, searchQuery]);
 
   const sortedReports = useMemo(() => {
     const sorted = [...filteredReports];
@@ -594,13 +617,43 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     } catch (error: unknown) {
       const description =
         error instanceof Error ? error.message : 'Could not generate PDF. Please try again.';
-      // Detect "Please complete: …" so we can show a more actionable title
       const isMissingFields = description.toLowerCase().includes('please complete');
+      // ELE-NEW — diagnostic bundle the user can copy + paste to support if
+      // they're stuck. Includes everything we need for triage without asking
+      // for screenshots: cert id, type, user id, full error message, app
+      // version + UA so we can spot client-specific bugs.
+      const diagnostic = JSON.stringify(
+        {
+          when: new Date().toISOString(),
+          reportId,
+          userId: user?.id || null,
+          error: description,
+          ua: typeof navigator !== 'undefined' ? navigator.userAgent : null,
+          url: typeof window !== 'undefined' ? window.location.href : null,
+        },
+        null,
+        2
+      );
       toast({
         title: isMissingFields ? 'Missing required fields' : 'Download failed',
         description,
         variant: 'destructive',
-        duration: 8000,
+        duration: 12000,
+        action: !isMissingFields ? (
+          <button
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(diagnostic);
+                toast({ title: 'Copied diagnostic', description: 'Paste it to support.' });
+              } catch {
+                /* clipboard blocked — fall back silently */
+              }
+            }}
+            className="h-8 px-3 text-xs font-semibold rounded-md border border-white/20 hover:bg-white/10 touch-manipulation"
+          >
+            Copy diagnostic
+          </button>
+        ) : undefined,
       });
     }
   };
@@ -974,23 +1027,44 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               { value: 'danger-notice', label: 'Danger' },
               { value: 'isolation-cert', label: 'Isolation' },
               { value: 'permit-to-work', label: 'Permit' },
-            ].map(({ value, label }) => (
-              <button
-                key={value}
-                onClick={() => {
-                  navigator.vibrate?.(10);
-                  setTypeFilter(value);
-                }}
-                className={cn(
-                  'flex-shrink-0 h-7 px-2.5 rounded-md text-[11px] font-medium transition-all touch-manipulation active:scale-[0.98]',
-                  typeFilter === value
-                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
-                    : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.06]'
-                )}
-              >
-                {label}
-              </button>
-            ))}
+            ].map(({ value, label }) => {
+              // ELE-NEW — show full-library count next to each chip so the user
+              // can see at a glance how many of each type they have, regardless
+              // of which page is currently loaded.
+              const count =
+                value === 'all'
+                  ? countsData?.total ?? 0
+                  : countsData?.byType[value] ?? 0;
+              return (
+                <button
+                  key={value}
+                  onClick={() => {
+                    navigator.vibrate?.(10);
+                    setTypeFilter(value);
+                  }}
+                  className={cn(
+                    'flex-shrink-0 h-7 px-2.5 rounded-md text-[11px] font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center gap-1.5',
+                    typeFilter === value
+                      ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                      : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.06]'
+                  )}
+                >
+                  <span>{label}</span>
+                  {count > 0 && (
+                    <span
+                      className={cn(
+                        'text-[9px] px-1 py-0.5 rounded-sm tabular-nums leading-none',
+                        typeFilter === value
+                          ? 'bg-elec-yellow/20 text-elec-yellow'
+                          : 'bg-white/[0.06] text-white/60'
+                      )}
+                    >
+                      {count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
@@ -1062,16 +1136,26 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   />
                 ))}
 
-                {/* Load More */}
-                {hasMore && (
-                  <div className="py-4 flex justify-center">
-                    <Button
-                      variant="outline"
-                      onClick={() => setCurrentPage((p) => p + 1)}
-                      className="h-11 touch-manipulation"
-                    >
-                      Load More
-                    </Button>
+                {/* ELE-NEW — Load More with X-of-Y context. totalCount comes
+                    from the server for the current filtered set, so the user
+                    sees how much is left to load within their selected tab. */}
+                {(hasMore || totalCount > 0) && (
+                  <div className="py-4 flex flex-col items-center gap-2">
+                    <span className="text-[11px] text-white/50 tabular-nums">
+                      Showing {filteredReports.length} of {totalCount}
+                      {typeFilter !== 'all' && ` ${typeFilter.replace(/-/g, ' ')}`}
+                      {statusFilter !== 'all' && ` · ${statusFilter}`}
+                    </span>
+                    {hasMore && (
+                      <Button
+                        variant="outline"
+                        onClick={() => setCurrentPage((p) => p + 1)}
+                        disabled={isLoadingReports}
+                        className="h-11 touch-manipulation"
+                      >
+                        {isLoadingReports ? 'Loading…' : 'Load more'}
+                      </Button>
+                    )}
                   </div>
                 )}
               </div>

@@ -268,6 +268,26 @@ export const generateBulkPDFs = async (
           `[bulkPdfExport] Validation failed for ${reportId}:`,
           validation.missingFields
         );
+        // ELE-NEW — log to Sentry so we can see WHY a specific user's PDF
+        // failed without needing them to report it. Includes user id + cert
+        // id + missing fields + cert metadata so we can triage from the
+        // dashboard.
+        try {
+          const { captureError } = await import('@/lib/sentry');
+          captureError(new Error('PDF validation failed'), {
+            stage: 'pdf-validation',
+            reportId,
+            reportType: report.report_type,
+            userId,
+            missingFields: validation.missingFields,
+            hasClientName: !!report.client_name,
+            hasInstallationAddress: !!report.installation_address,
+            hasInspectorName: !!report.inspector_name,
+            status: report.status,
+          });
+        } catch {
+          /* sentry optional — never block PDF flow on logging */
+        }
         throw new Error(`Please complete: ${fieldsStr}. Open the certificate and fill in the missing fields before downloading.`);
       }
 
@@ -402,11 +422,42 @@ export const generateBulkPDFs = async (
       );
 
       if (pdfError) {
+        // ELE-NEW — Sentry log: edge function returned an error.
+        try {
+          const { captureError } = await import('@/lib/sentry');
+          captureError(new Error(`Edge function error: ${pdfError.message || 'Unknown'}`), {
+            stage: 'pdf-edge-function',
+            reportId,
+            reportType: report.report_type,
+            userId,
+            edgeFunction: edgeFunctionName,
+            payloadSizeMB: optimizationResult.optimizedSizeMB,
+            errorName: pdfError.name,
+            errorMessage: pdfError.message,
+          });
+        } catch {
+          /* logging optional */
+        }
         throw new Error(`Edge function error: ${pdfError.message || 'Unknown error'}`);
       }
 
       if (!pdfResult?.success || !pdfResult?.pdfUrl) {
         const errorMsg = pdfResult?.error || 'No PDF URL returned';
+        // ELE-NEW — Sentry log: PDFMonkey/template-side failure.
+        try {
+          const { captureError } = await import('@/lib/sentry');
+          captureError(new Error(`PDF gen failure: ${errorMsg}`), {
+            stage: 'pdf-monkey-render',
+            reportId,
+            reportType: report.report_type,
+            userId,
+            edgeFunction: edgeFunctionName,
+            payloadSizeMB: optimizationResult.optimizedSizeMB,
+            pdfResult,
+          });
+        } catch {
+          /* logging optional */
+        }
         throw new Error(errorMsg);
       }
 

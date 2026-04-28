@@ -68,13 +68,27 @@ export const reportCloud = {
    */
   getUserReports: async (
     userId: string,
-    options?: { page?: number; pageSize?: number; limit?: number; includeAutoDrafts?: boolean }
+    options?: {
+      page?: number;
+      pageSize?: number;
+      limit?: number;
+      includeAutoDrafts?: boolean;
+      // ELE-NEW — server-side filters so the active tab paginates over its
+      // own subset of the user's library, not just whatever happened to be
+      // in the first 20 rows. Pass `'all'` (or omit) to disable a filter.
+      reportType?: string;
+      status?: string;
+    }
   ): Promise<ReportsResponse> => {
     try {
       const page = options?.page || 1;
       const pageSize = options?.pageSize || 20;
       const offset = (page - 1) * pageSize;
       const includeAutoDrafts = options?.includeAutoDrafts ?? false;
+      const reportTypeFilter =
+        options?.reportType && options.reportType !== 'all' ? options.reportType : null;
+      const statusFilter =
+        options?.status && options.status !== 'all' ? options.status : null;
 
       // Get total count (excluding auto-drafts by default)
       let countQuery = supabase
@@ -86,6 +100,8 @@ export const reportCloud = {
       if (!includeAutoDrafts) {
         countQuery = countQuery.neq('status', 'auto-draft');
       }
+      if (reportTypeFilter) countQuery = countQuery.eq('report_type', reportTypeFilter);
+      if (statusFilter) countQuery = countQuery.eq('status', statusFilter);
 
       const { count, error: countError } = await countQuery;
 
@@ -102,6 +118,8 @@ export const reportCloud = {
       if (!includeAutoDrafts) {
         query = query.neq('status', 'auto-draft');
       }
+      if (reportTypeFilter) query = query.eq('report_type', reportTypeFilter);
+      if (statusFilter) query = query.eq('status', statusFilter);
 
       // Apply pagination or limit
       if (options?.limit) {
@@ -122,6 +140,51 @@ export const reportCloud = {
     } catch (error) {
       console.error('[reportCloud] Failed to fetch user reports:', error);
       return { reports: [], totalCount: 0, hasMore: false };
+    }
+  },
+
+  /**
+   * Get per-type and per-status counts across the user's ENTIRE library.
+   * Used by the certificates list to show accurate tab counts (e.g. "EIC (12)")
+   * regardless of pagination. Without this, tab counts only reflect whatever
+   * was in the first paginated page — which is misleading for users with
+   * 100+ certs.
+   */
+  getReportCounts: async (
+    userId: string,
+    options?: { includeAutoDrafts?: boolean }
+  ): Promise<{
+    total: number;
+    byType: Record<string, number>;
+    byStatus: Record<string, number>;
+  }> => {
+    try {
+      const includeAutoDrafts = options?.includeAutoDrafts ?? false;
+      let query = supabase
+        .from('reports')
+        .select('report_type, status')
+        .eq('user_id', userId)
+        .is('deleted_at', null);
+
+      if (!includeAutoDrafts) {
+        query = query.neq('status', 'auto-draft');
+      }
+
+      const { data, error } = await query;
+      if (error) throw error;
+
+      const byType: Record<string, number> = {};
+      const byStatus: Record<string, number> = {};
+      (data || []).forEach((row) => {
+        const t = (row as { report_type?: string }).report_type || 'unknown';
+        const s = (row as { status?: string }).status || 'unknown';
+        byType[t] = (byType[t] || 0) + 1;
+        byStatus[s] = (byStatus[s] || 0) + 1;
+      });
+      return { total: (data || []).length, byType, byStatus };
+    } catch (error) {
+      console.error('[reportCloud] Failed to fetch report counts:', error);
+      return { total: 0, byType: {}, byStatus: {} };
     }
   },
 
