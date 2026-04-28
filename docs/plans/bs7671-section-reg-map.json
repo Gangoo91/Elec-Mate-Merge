@@ -1,0 +1,499 @@
+{
+  "_meta": {
+    "status": "DRAFT — pending RAG verification",
+    "edition": "BS 7671:2018+A4:2026",
+    "edition_id_lookup": "SELECT id FROM bs7671_editions WHERE edition_code = '2018+A4:2026'",
+    "voice": "qualified-spark CPD; court/insurer-aware; UK spelling; A4 publication date 15 April 2026",
+    "word_target_per_section": 800,
+    "components_per_section": "TLDR, LearningOutcomes, 6×ContentEyebrow, 8-10×ConceptBlock, 2×RegsCallout, 3×InlineCheck, 2×CommonMistake, 1×Scenario, 1×FAQ(6), KeyTakeaways(4), Quiz(8)",
+    "verify_query": "SELECT reg_number, title, page_number FROM bs7671_regulations WHERE reg_number = ANY($1)",
+    "facet_query_template": "SELECT primary_topic, facet_type, document_type, content FROM bs7671_facets WHERE regulation_id IN (SELECT id FROM bs7671_regulations WHERE reg_number = ANY($1)) AND facet_type = ANY(ARRAY['requirement','procedure','acceptance_criterion','definition','example','note']) ORDER BY confidence_score DESC NULLS LAST LIMIT 40"
+  },
+
+  "M1": {
+    "title": "Scope, object & fundamental principles (Part 1)",
+    "sections": {
+      "1": {
+        "file": "src/pages/upskilling/BS7671Module1Section1.tsx",
+        "title": "Purpose and legal status of BS 7671",
+        "regs": ["110.1.1", "110.1.3", "110.2", "110.3", "120.1", "120.3", "120.4", "133.1.3"],
+        "external_anchors": ["EAWR 1989 Reg 4", "HSWA 1974 s.2/3", "Building Regs Part P"],
+        "tables_figures": [],
+        "a4_notes": [
+          "Reg 133.1.3 amended in A4 — equipment-usage decisions now recorded on Part 6 cert"
+        ],
+        "salvage_existing": true
+      },
+      "2": {
+        "file": "src/pages/upskilling/BS7671Module1Section2.tsx",
+        "title": "Scope and application of the regulations",
+        "regs": ["110.1.1", "110.1.2", "110.1.3", "110.2"],
+        "external_anchors": [
+          "BS EN 60204-1 (machinery)",
+          "BS EN 81-20 (lifts)",
+          "BS EN 61851 (EV)",
+          "BS EN 60079 (Ex)",
+          "BS EN 62305 (lightning)",
+          "MCS"
+        ],
+        "tables_figures": [],
+        "a4_notes": [
+          "New Section 716 (PoE)",
+          "New Chapter 57 (stationary batteries)",
+          "New Chapter 81 (energy efficiency)"
+        ],
+        "salvage_existing": true
+      },
+      "3": {
+        "file": "src/pages/upskilling/BS7671Module1Section3.tsx",
+        "title": "Structure of BS 7671 (parts, chapters, appendices)",
+        "regs": [],
+        "topic_queries": ["regulation numbering", "appendix navigation", "part chapter section"],
+        "tables_figures": ["App 4", "App 6", "App 3", "App 14"],
+        "a4_notes": [
+          "App 17 deleted in A4",
+          "Annex B443 deleted in A4",
+          "Margin sidebar markings show A4 changes"
+        ],
+        "salvage_existing": true
+      },
+      "4": {
+        "file": "src/pages/upskilling/BS7671Module1Section4.tsx",
+        "title": "Amendment 4 (2026) highlights",
+        "regs": ["411.3.4", "411.3.2.2", "411.3.3", "411.4.3", "419", "545", "551.7.1"],
+        "topic_queries": ["A4 changes", "amendment 4 introduction"],
+        "tables_figures": ["Table 51 (conductor identification)"],
+        "a4_notes": [
+          "A4 published 15 April 2026",
+          "A3 withdrawn 15 October 2026",
+          "All cert form changes per A4"
+        ],
+        "salvage_existing": true
+      }
+    }
+  },
+
+  "M2": {
+    "title": "Definitions & key terminology (Part 2)",
+    "sections": {
+      "1": {
+        "file": "src/pages/upskilling/BS7671Module2Section1.tsx",
+        "title": "Navigating Part 2 — how definitions shape application",
+        "regs": [],
+        "topic_queries": ["Part 2 definitions structure", "term ordering", "cross-reference"],
+        "facet_filter": "facet_type='definition' AND document_type='bs7671'",
+        "salvage_existing": false
+      },
+      "2": {
+        "file": "src/pages/upskilling/BS7671Module2Section2.tsx",
+        "title": "Key terms: CPC, ADS, SELV, PELV and protective devices",
+        "regs": ["411.1", "414.1", "414.4"],
+        "topic_queries": ["CPC", "ADS", "SELV", "PELV", "FELV", "circuit protective conductor"],
+        "facet_filter": "facet_type='definition'",
+        "salvage_existing": false
+      },
+      "3": {
+        "file": "src/pages/upskilling/BS7671Module2Section3.tsx",
+        "title": "New definitions in A2/A3/A4 (AFDD, PEI, bidirectional, prosumer)",
+        "regs": ["421.1.7", "551.7.1"],
+        "topic_queries": ["AFDD definition", "PEI", "bidirectional", "prosumer", "PEN", "PNB"],
+        "facet_filter": "facet_type='definition' AND keywords && ARRAY['amendment']",
+        "a4_notes": ["A4 introduces TN-C-S (PNB) terminology for cert forms"],
+        "salvage_existing": false
+      },
+      "4": {
+        "file": "src/pages/upskilling/BS7671Module2Section4.tsx",
+        "title": "Amendment 4 highlights (rebrand from A3)",
+        "regs": ["411.3.4", "419", "545", "716"],
+        "topic_queries": ["amendment 4 changes summary"],
+        "salvage_existing": false,
+        "rename_required": "Section 4 currently titled 'Amendment 3 Highlights' — needs A4 rebrand"
+      }
+    }
+  },
+
+  "M3": {
+    "title": "Assessment of general characteristics (Part 3)",
+    "sections": {
+      "1": {
+        "file": "src/pages/upskilling/BS7671Module3Section1.tsx",
+        "title": "Supply systems — TN-S, TN-C-S, TT, IT (and PNB)",
+        "regs": ["312.1", "312.2", "312.3", "411.4", "411.5", "411.6"],
+        "topic_queries": ["TN-S", "TN-C-S", "TT", "IT", "PNB", "earthing arrangement"],
+        "tables_figures": ["Fig 312.1", "Fig 312.2", "Fig 312.3"],
+        "a4_notes": ["TN-C-S (PNB) earthing arrangement explicitly recognised on cert forms in A4"]
+      },
+      "2": {
+        "file": "src/pages/upskilling/BS7671Module3Section2.tsx",
+        "title": "Maximum demand, diversity and load profiles",
+        "regs": ["311.1", "311.2"],
+        "topic_queries": ["maximum demand", "diversity", "load assessment"],
+        "tables_figures": ["OSG App A diversity", "GN3 max demand"]
+      },
+      "3": {
+        "file": "src/pages/upskilling/BS7671Module3Section3.tsx",
+        "title": "External influences and installation conditions",
+        "regs": ["320.x", "522.x"],
+        "topic_queries": [
+          "external influences",
+          "AA AB AC",
+          "BC",
+          "AD water",
+          "ambient temperature"
+        ],
+        "tables_figures": ["Table 51A external influences"]
+      },
+      "4": {
+        "file": "src/pages/upskilling/BS7671Module3Section4.tsx",
+        "title": "Voltage drop and system design limits",
+        "regs": ["525.1", "525.100"],
+        "topic_queries": ["voltage drop", "voltage drop calculation", "App 4 voltage drop"],
+        "tables_figures": ["App 4 voltage drop tables"]
+      },
+      "5": {
+        "file": "src/pages/upskilling/BS7671Module3Section5.tsx",
+        "title": "Earthing arrangements and protective measures selection",
+        "regs": ["411.3.1", "411.3.2", "411.4", "411.5", "411.6", "542.x", "543.x"],
+        "topic_queries": [
+          "earthing system selection",
+          "protective measure choice",
+          "main earthing terminal"
+        ],
+        "tables_figures": ["Table 54.7 CPC sizing", "Table 54.8"]
+      }
+    }
+  },
+
+  "M4": {
+    "title": "Protection for safety (Part 4)",
+    "sections": {
+      "1": {
+        "file": "src/pages/upskilling/BS7671Module4Section1.tsx",
+        "title": "Electric shock protection methods (SELV, PELV, ADS, etc.)",
+        "regs": [
+          "410.3",
+          "411.1",
+          "411.2",
+          "411.3",
+          "411.3.1",
+          "411.3.2",
+          "411.3.4",
+          "411.4",
+          "411.5",
+          "411.6",
+          "412",
+          "414"
+        ],
+        "topic_queries": [
+          "protection against electric shock",
+          "basic protection",
+          "fault protection",
+          "ADS",
+          "SELV",
+          "PELV",
+          "double insulation"
+        ],
+        "tables_figures": ["Table 41.1 disconnection times"],
+        "a4_notes": [
+          "411.3.4 — luminaire RCD protection is the headline A4 change",
+          "411.4 PEN conductor wording revised"
+        ],
+        "salvage_existing": true,
+        "is_pilot": true
+      },
+      "2": {
+        "file": "src/pages/upskilling/BS7671Module4Section2.tsx",
+        "title": "Overcurrent protection and protective device selection",
+        "regs": ["432.x", "433.1", "434.1", "434.5", "536.x"],
+        "topic_queries": [
+          "overload",
+          "short circuit",
+          "MCB selection",
+          "fuse selection",
+          "let-through energy I²t"
+        ],
+        "tables_figures": ["App 3 device curves"]
+      },
+      "3": {
+        "file": "src/pages/upskilling/BS7671Module4Section3.tsx",
+        "title": "Disconnection times and fault path integrity",
+        "regs": ["411.3.2.1", "411.3.2.2", "411.3.2.3", "411.4.4"],
+        "topic_queries": [
+          "disconnection time",
+          "Zs maximum",
+          "earth fault loop impedance",
+          "distribution circuit time"
+        ],
+        "tables_figures": ["Table 41.1", "Table 41.2", "Table 41.3", "Table 41.4", "Table 41.5"],
+        "a4_notes": ["A4 revisions to 411.3.2.2 / 411.3.3 disconnection times"]
+      },
+      "4": {
+        "file": "src/pages/upskilling/BS7671Module4Section4.tsx",
+        "title": "Residual current devices (RCDs) — use and placement",
+        "regs": ["411.3.3", "411.3.4", "415.1", "531.3.x"],
+        "topic_queries": [
+          "RCD types A, AC, B, F",
+          "30mA additional protection",
+          "300mA fire",
+          "Type A 6mA DC"
+        ],
+        "a4_notes": [
+          "411.3.4 luminaire RCD — domestic premises",
+          "Type A + 6mA DC for EV charging EVCP"
+        ]
+      },
+      "5": {
+        "file": "src/pages/upskilling/BS7671Module4Section5.tsx",
+        "title": "Surge protection devices (SPDs) — when and why",
+        "regs": ["443.4", "443.5", "534.x"],
+        "topic_queries": [
+          "SPD type 1 type 2 type 3",
+          "lightning surge",
+          "transient overvoltage",
+          "risk assessment 443"
+        ],
+        "a4_notes": ["A4 deleted Annex B443 — risk assessment moved into 443 body"]
+      },
+      "6": {
+        "file": "src/pages/upskilling/BS7671Module4Section6.tsx",
+        "title": "Arc fault detection devices (AFDDs) — new requirements",
+        "regs": ["421.1.7"],
+        "topic_queries": ["AFDD", "arc fault", "series arc", "parallel arc", "BS EN 62606"],
+        "a4_notes": ["AFDD inspection item 4.23 + test column 30 in A4 EIC schedule"]
+      },
+      "7": {
+        "file": "src/pages/upskilling/BS7671Module4Section7.tsx",
+        "title": "Bidirectional protection (Part 8 prosumer)",
+        "regs": ["826.x", "419.x", "551.7.1"],
+        "topic_queries": [
+          "bidirectional",
+          "prosumer",
+          "anti-islanding",
+          "energy storage",
+          "G98 G99"
+        ],
+        "a4_notes": [
+          "A4 introduces Reg 419 group — ADS not feasible alternatives",
+          "551.7.1 bidirectional energy"
+        ]
+      }
+    }
+  },
+
+  "M5": {
+    "title": "Selection & erection of equipment (Part 5)",
+    "sections": {
+      "1": {
+        "file": "src/pages/upskilling/BS7671Module5Section1.tsx",
+        "title": "Equipment ratings and suitability for purpose",
+        "regs": ["511.1", "512.1.1", "512.1.5", "513.1"],
+        "topic_queries": [
+          "equipment selection",
+          "rated voltage",
+          "fault current rating",
+          "compliance with standards"
+        ]
+      },
+      "2": {
+        "file": "src/pages/upskilling/BS7671Module5Section2.tsx",
+        "title": "Cable types, sizing, grouping and routing",
+        "regs": ["521.x", "522.x", "523.x", "524.x", "525.x"],
+        "topic_queries": [
+          "cable sizing",
+          "current carrying capacity",
+          "grouping factor Cg",
+          "ambient temperature factor Ca",
+          "buried cable methods"
+        ],
+        "tables_figures": ["App 4 — all CCC tables", "App 4 reference methods"],
+        "a4_notes": ["A4 revisions to App 4 buried-cable methods"]
+      },
+      "3": {
+        "file": "src/pages/upskilling/BS7671Module5Section3.tsx",
+        "title": "Containment systems and mechanical protection",
+        "regs": ["521.5", "521.10", "522.6", "522.8"],
+        "topic_queries": [
+          "conduit",
+          "trunking",
+          "tray",
+          "SWA",
+          "fire-resistant cable",
+          "mechanical damage"
+        ]
+      },
+      "4": {
+        "file": "src/pages/upskilling/BS7671Module5Section4.tsx",
+        "title": "Isolation, switching and emergency controls",
+        "regs": ["462.1", "463.1", "537.1", "537.2", "537.3", "537.4"],
+        "topic_queries": [
+          "isolation",
+          "switching",
+          "emergency switching",
+          "functional switching",
+          "main switch",
+          "lock-off"
+        ]
+      },
+      "5": {
+        "file": "src/pages/upskilling/BS7671Module5Section5.tsx",
+        "title": "Grid interaction and anti-islanding protection",
+        "regs": ["551.7.1", "712.x"],
+        "topic_queries": ["anti-islanding", "G98", "G99", "PV inverter", "type test cert"],
+        "a4_notes": ["A4 551.7.1 bidirectional energy revisions"]
+      },
+      "6": {
+        "file": "src/pages/upskilling/BS7671Module5Section6.tsx",
+        "title": "Environmental protection (IP ratings, fire resistance)",
+        "regs": ["512.2", "522.1", "527.1"],
+        "topic_queries": [
+          "IP rating",
+          "IK rating",
+          "fire-resistant cable",
+          "fire spread",
+          "smoke emission"
+        ]
+      }
+    }
+  },
+
+  "M6": {
+    "title": "Inspection, testing & certification (Part 6)",
+    "sections": {
+      "1": {
+        "file": "src/pages/upskilling/BS7671Module6Section1.tsx",
+        "title": "Requirements for initial verification",
+        "regs": ["641.1", "641.2", "642.1", "642.3"],
+        "topic_queries": ["initial verification", "design data", "compliance check"]
+      },
+      "2": {
+        "file": "src/pages/upskilling/BS7671Module6Section2.tsx",
+        "title": "Visual inspection and testing responsibilities",
+        "regs": ["642.x", "643.1"],
+        "topic_queries": ["visual inspection checklist", "competence", "schedule of inspection"]
+      },
+      "3": {
+        "file": "src/pages/upskilling/BS7671Module6Section3.tsx",
+        "title": "Sequence of tests and testing procedures",
+        "regs": ["643.x"],
+        "topic_queries": [
+          "continuity",
+          "insulation resistance",
+          "polarity",
+          "Ze",
+          "Zs",
+          "RCD operation",
+          "phase rotation",
+          "live testing"
+        ]
+      },
+      "4": {
+        "file": "src/pages/upskilling/BS7671Module6Section4.tsx",
+        "title": "Model forms and certification overview (EIC, MEIWC, EICR)",
+        "regs": ["644.x", "651.x", "653.x"],
+        "topic_queries": ["EIC", "EICR", "Minor Works Certificate", "schedule of test results"],
+        "tables_figures": ["App 6 model forms"],
+        "a4_notes": [
+          "A4 model forms — AFDD col 30, max permitted Zs col, reference method col, SPD type per board, supplied-from, max demand, safety alerts disclaimer"
+        ]
+      },
+      "5": {
+        "file": "src/pages/upskilling/BS7671Module6Section5.tsx",
+        "title": "Certification errors and common pitfalls",
+        "regs": [],
+        "topic_queries": [
+          "common cert mistakes",
+          "wrong code C1 C2 C3 FI",
+          "missing schedule",
+          "limitations not recorded"
+        ],
+        "facet_filter": "facet_type='note' AND keywords && ARRAY['error','pitfall','common']"
+      },
+      "6": {
+        "file": "src/pages/upskilling/BS7671Module6Section6.tsx",
+        "title": "Recording limitations and safety observations",
+        "regs": ["653.2"],
+        "topic_queries": [
+          "limitations",
+          "agreed limitations",
+          "safety observation wording",
+          "C1 C2 C3 FI codes"
+        ]
+      }
+    }
+  },
+
+  "M7": {
+    "title": "Special installations / locations (Part 7)",
+    "sections": {
+      "1": {
+        "file": "src/pages/upskilling/BS7671Module7Section1.tsx",
+        "title": "Locations requiring additional precautions (bathrooms, pools)",
+        "regs": ["701.x", "702.x"],
+        "topic_queries": ["bathroom zones 0 1 2", "swimming pool zones", "supplementary bonding"]
+      },
+      "2": {
+        "file": "src/pages/upskilling/BS7671Module7Section2.tsx",
+        "title": "Electric vehicle charging installations (Part 722)",
+        "regs": ["722.x"],
+        "topic_queries": ["EV charging", "EVCP", "PME limitation", "Type A + 6mA DC RCD", "OZEV"]
+      },
+      "3": {
+        "file": "src/pages/upskilling/BS7671Module7Section3.tsx",
+        "title": "Outdoor and agricultural installations",
+        "regs": ["705.x", "708.x", "709.x"],
+        "topic_queries": ["agricultural", "marina", "construction site", "horticultural"]
+      },
+      "4": {
+        "file": "src/pages/upskilling/BS7671Module7Section4.tsx",
+        "title": "Medical, commercial and industrial locations",
+        "regs": ["710.x", "729.x", "730.x"],
+        "topic_queries": ["medical location group 0 1 2", "operating gangway", "exhibition"],
+        "a4_notes": ["A4 revisions to Section 710"]
+      },
+      "5": {
+        "file": "src/pages/upskilling/BS7671Module7Section5.tsx",
+        "title": "Prosumer electrical installations (Part 8)",
+        "regs": ["826.x"],
+        "topic_queries": ["prosumer", "LEM", "demand-side response", "self-consumption"]
+      }
+    }
+  },
+
+  "M8": {
+    "title": "Reference materials & appendices",
+    "sections": {
+      "1": {
+        "file": "src/pages/upskilling/BS7671Module8Section1.tsx",
+        "title": "Navigating key appendices",
+        "regs": [],
+        "topic_queries": [
+          "App 1 BS standards",
+          "App 2 statutory regs",
+          "App 3 device curves",
+          "App 4 cable",
+          "App 6 forms",
+          "App 14 PSCC",
+          "App 16"
+        ]
+      },
+      "2": {
+        "file": "src/pages/upskilling/BS7671Module8Section2.tsx",
+        "title": "Schedules, checklists and reference charts",
+        "regs": [],
+        "topic_queries": [
+          "schedule of inspection",
+          "schedule of test results",
+          "schedule of circuit details",
+          "GN3 form templates"
+        ]
+      },
+      "3": {
+        "file": "src/pages/upskilling/BS7671Module8Section3.tsx",
+        "title": "Amendment 4 highlights and transition (rebrand from A3)",
+        "regs": ["411.3.4", "419", "545", "716"],
+        "topic_queries": ["A4 transition", "withdrawal of A3"],
+        "rename_required": "Section currently titled 'Amendment 3 Highlights' — needs A4 rebrand"
+      }
+    }
+  }
+}

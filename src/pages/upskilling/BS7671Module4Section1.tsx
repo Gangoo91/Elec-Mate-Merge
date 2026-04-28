@@ -1,514 +1,709 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AmendmentBadge,
+  RegBadge,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
+import { videos } from '@/data/study-centre/video-library';
 
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'ads-purpose',
-    question: 'What is the primary purpose of ADS in electrical systems?',
+    id: 'm4s1-basic-vs-fault',
+    question:
+      'Basic protection has failed — a live conductor has come into contact with the metal casing of a Class I appliance. Which protective measure is now responsible for keeping the user safe?',
     options: [
-      'To provide surge protection',
-      'To automatically disconnect supply during earth faults within safe time limits',
-      'To monitor power consumption',
-      'To improve power factor',
+      'Basic protection — the insulation will recover',
+      'Fault protection — earthing, bonding and automatic disconnection of supply',
+      'The user must keep clear; no protection is required',
+      'Functional earthing of the appliance',
     ],
     correctIndex: 1,
     explanation:
-      'ADS (Automatic Disconnection of Supply) is designed to automatically disconnect the electrical supply when an earth fault occurs, within time limits that prevent dangerous touch voltages persisting long enough to cause harm.',
+      'BS 7671 layers protection: basic protection (Section 416 — insulation per Reg 416.2.1, barriers, enclosures) prevents contact in normal use; fault protection (Section 411) takes over once basic has been compromised. For ADS, fault protection is delivered by protective earthing + protective equipotential bonding + automatic disconnection (Reg 411.3.1.1, 411.3.1.2, 411.3.2).',
   },
   {
-    id: 'selv-characteristic',
-    question: 'Which protection method provides safety through isolation with no earth reference?',
-    options: ['PELV', 'FELV', 'SELV', 'ADS'],
-    correctIndex: 2,
-    explanation:
-      'SELV (Safety Extra-Low Voltage) provides protection through complete isolation from earth and other circuits, with no intentional earth connections. The voltage limitation (≤50V AC) combined with isolation provides inherent safety.',
-  },
-  {
-    id: 'double-insulation',
-    question: 'What protection does double insulation provide?',
+    id: 'm4s1-411-3-4-scope',
+    question:
+      'You are designing a new lighting circuit for a kitchen in a private dwelling. Under BS 7671:2018+A4:2026, must the circuit be RCD-protected?',
     options: [
-      'Only basic protection',
-      'Only fault protection',
-      'Both basic and fault protection without requiring earthing',
-      'Surge protection only',
+      'No — Reg 411.3.3 only mandates RCDs on socket-outlet circuits up to 32 A',
+      'Yes — Reg 411.3.4 (new in A4) requires 30 mA RCD additional protection on AC final circuits supplying luminaires within domestic (household) premises',
+      'Only if the lighting points are inside a bathroom zone',
+      'Only if the cables are buried in walls less than 50 mm deep',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Reg 411.3.4 is one of the headline A4 additions. Within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. It is independent of Reg 411.3.3 (sockets and mobile equipment) and applies whether or not the lighting points sit in a special location.',
+  },
+  {
+    id: 'm4s1-tn-disconnection',
+    question:
+      'A 32 A TN final circuit with socket-outlets is protected by a Type B MCB. What is the maximum permitted disconnection time for ADS to be deemed effective?',
+    options: ['0.2 s', '0.4 s', '1 s', '5 s'],
+    correctIndex: 1,
+    explanation:
+      'Reg 411.3.2 / Table 41.1: in TN systems, final circuits with one or more socket-outlets rated up to 63 A — and final circuits up to 32 A supplying fixed connected current-using equipment — must disconnect within 0.4 s. 5 s applies to TN distribution circuits (Reg 411.3.2 NOTE); 1 s applies to TT distribution (Reg 411.3.2.4).',
+  },
+  {
+    id: 'm4s1-tn-c-s-pen',
+    question:
+      'You are adding a new EV charging point to a domestic property fed from a TN-C-S (PME) supply. What does BS 7671 specifically prohibit you from doing in the EV circuit?',
+    options: [
+      'Using an RCD with rated residual operating current ≤ 30 mA',
+      'Using a Type A RCD',
+      'Including a PEN conductor in the EV charging circuit (Reg 722.312.2.1)',
+      'Bonding the EV charging chassis to the consumer unit MET',
     ],
     correctIndex: 2,
     explanation:
-      'Double or reinforced insulation provides both basic and fault protection through two independent insulation layers, eliminating the need for protective earthing. Equipment marked with the Class II symbol (⧈) uses this protection method.',
+      'Reg 722.312.2.1: a circuit supplying charging equipment for electric vehicles in a TN system shall NOT include a PEN conductor. Either provide a TN-S configuration to the EV (split N and PE before the EV circuit) or apply one of the alternative protective measures listed in Section 722 (e.g. open-PEN detection device, separate earth electrode). Reg 461.2 separately prohibits switching or isolating the PEN within TN-C / TN-C-S anywhere upstream.',
+  },
+  {
+    id: 'm4s1-felv-not-protective',
+    question:
+      'A 24 V control circuit is derived from a 230 V auto-transformer (single winding tapped). The customer asks you to mark the circuit "SELV" on the cert. What is the right call?',
+    options: [
+      'Mark it SELV — the voltage is below 50 V AC',
+      'Mark it PELV — earthing is permitted',
+      'Refuse — there is no safety isolation between primary and secondary, so the circuit is FELV, and FELV is not a protective measure',
+      'Mark it FELV and treat as a protective measure',
+    ],
+    correctIndex: 2,
+    explanation:
+      'A SELV / PELV source must provide AT LEAST simple separation between windings — a safety isolating transformer (BS EN 61558-2-6). An auto-transformer has shared windings — no isolation. The result is FELV, which BS 7671 explicitly does not recognise as a protective measure: every FELV circuit must have full basic + fault protection AT THE PRIMARY voltage (230 V), not at 24 V.',
+  },
+  {
+    id: 'm4s1-rcd-type-ev',
+    question:
+      'You are wiring a 7 kW EV charge point. The charger has built-in 6 mA DC fault detection. Which RCD type is required UPSTREAM at the consumer unit?',
+    options: [
+      'Type AC',
+      'Type A — sufficient because the charger handles the DC residual itself',
+      'Type B — always required for any EV install',
+      'No RCD needed — the charger handles all detection internally',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Where the EV charger has its own internal 6 mA DC fault detection (a "PCE with simple separation"), Type A upstream is sufficient. Type B is required only where the charger cannot handle smooth DC residual itself. Type AC is essentially obsolete domestically — it cannot detect pulsating DC produced by LED drivers, phone chargers and most consumer electronics. Always confirm against the EV-charger manufacturer\'s installation manual.',
   },
 ];
 
-const faqs = [
+const quizQuestions = [
   {
-    question: 'When should I use SELV instead of PELV?',
-    answer:
-      'Use SELV when complete isolation from earth is required for maximum safety—typically in high-risk locations like swimming pools, bathrooms (zone 0/1), and areas accessible to children. PELV is suitable when functional earthing is needed but extra-low voltage safety is still required, such as for EMC purposes in control systems.',
+    id: 1,
+    question:
+      'Under Section 411 (Reg 411.3.1.1, 411.3.1.2, 411.3.2), the protective measure "automatic disconnection of supply" is built from four ingredients. Which option lists them correctly?',
+    options: [
+      'Basic insulation, barriers, enclosures, supplementary bonding',
+      'Basic protection, protective earthing, protective equipotential bonding, automatic disconnection in case of a fault',
+      'Class II equipment, SELV, PELV, ADS',
+      'RCD, MCB, fuse, AFDD',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Section 411 (BS 7671 ADS protective measure): ADS is basic protection (Section 416) plus fault protection by protective earthing (Reg 411.3.1.1), protective equipotential bonding (Reg 411.3.1.2) and automatic disconnection in case of a fault (Reg 411.3.2), applied per the system earthing arrangement (Reg 411.4.4 TN, 411.5.3 TT or 411.6.3 IT).',
   },
   {
-    question: "Why isn't FELV recognised as a protective measure?",
-    answer:
-      'FELV (Functional Extra-Low Voltage) lacks proper safety isolation from higher voltage circuits. It may be derived from autotransformers or have direct connections to mains, meaning a fault could expose users to dangerous voltages. FELV circuits must be treated as low voltage installations with full basic and fault protection.',
+    id: 2,
+    question:
+      'Which document is the prosecutorial route if an installation defect causes injury — and where does BS 7671 sit in that picture?',
+    options: [
+      'BS 7671 itself; departures are a criminal offence',
+      'EAWR 1989 (and HSWA 1974) is the statutory route; BS 7671 compliance is the evidence used to demonstrate the duty was discharged',
+      'Building Regulations Part P only',
+      'The IET Code of Practice',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 7671 is non-statutory. Prosecution comes through EAWR 1989 (Reg 4 in particular) and HSWA 1974. BS 7671 compliance is the benchmark courts and HSE use to assess whether the statutory duty was discharged. Reg 120.3 permits a designed departure but the burden of justification then sits with the designer/installer.',
   },
   {
-    question: 'How do I choose between ADS and double insulation?',
-    answer:
-      'ADS is the standard approach for most fixed installations where earthing is practical. Double insulation is preferred for portable equipment, situations where earthing is difficult or undesirable, and where equipment is marked Class II. Consider maintenance requirements—double insulation eliminates earth continuity testing.',
+    id: 3,
+    question:
+      'A new domestic lighting circuit is wired on a Type B 6 A MCB with no RCD. From 15 April 2026 onwards, what BS 7671 observation code applies on an EICR?',
+    options: [
+      'C3 — improvement recommended; non-compliance is historic only',
+      'C2 — potentially dangerous; A4 brings 411.3.4 into force and the absence of 30 mA RCD additional protection on a domestic luminaire circuit is now non-compliant',
+      'No code — lighting circuits never need RCDs',
+      'C1 — danger present, requires immediate action',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A4 (published 15 April 2026, replacing A3 from 15 October 2026) makes 411.3.4 a mandatory ("shall") requirement for AC final circuits supplying luminaires within domestic (household) premises. GN3 (Section K) requires every observation to be coded C1 / C2 / C3 / FI; "satisfactory" overall is not permitted with any C1 or C2 present. A new dwelling lighting circuit installed without 30 mA RCD protection is non-compliant with the current edition — typically C2 (potentially dangerous) where the absence increases real-world shock risk, C3 where the install is historic and otherwise sound.',
   },
   {
-    question: "What's the relationship between basic and fault protection?",
-    answer:
-      'Basic protection prevents contact with live parts during normal operation (insulation, barriers, enclosures). Fault protection activates when basic protection fails, ensuring dangerous voltages are cleared quickly (ADS, double insulation, equipotential bonding). Both must be present for complete shock protection.',
+    id: 4,
+    question:
+      'Reg 411.3.3 mandates 30 mA RCD additional protection on socket-outlets up to 32 A. Which exception does the regulation actually allow?',
+    options: [
+      'No exception — RCDs are mandatory in every case',
+      'An exception to socket-outlets in dwellings only',
+      'An exception to (b) — sockets in non-dwelling locations — where a documented risk assessment by a skilled person (electrically) determines RCD protection is not necessary; (a) sockets used by ordinary persons / children and (c) mobile equipment outdoors cannot be excepted',
+      'An exception only for industrial 110 V CTE supplies',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Reg 411.3.3 lists three categories. Only category (b) — sockets in other locations — is exceptable, and only where the risk assessment is documented, signed off by a skilled person (electrically) and attached to the EIC. (a) BA1/BA2 locations and (c) mobile equipment outdoors must always have 30 mA RCD additional protection.',
+  },
+  {
+    id: 5,
+    question:
+      'In a TN system, an installer measures Zs = 1.43 Ω at the furthest point of a 32 A Type B MCB circuit. Reference Zs (corrected) for ADS within 0.4 s on a Type B 32 A is approximately 1.37 Ω. What is the right call?',
+    options: [
+      "Pass — it's close enough",
+      'Fail — measured Zs exceeds the maximum permitted value, so disconnection within the required time cannot be demonstrated; redesign or add an RCD to provide ADS',
+      'Re-test using a long-lead Zs',
+      'Increase MCB rating to relax the Zs limit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'GN3 makes verification of EFLI the primary evidence that Reg 411.3.2 disconnection times can be met. If measured Zs exceeds the published maximum for that device (Reg 411.4.4 / OSG / manufacturer data), ADS via the MCB is not demonstrable. The fix is design — supplementing with a 30 mA RCD lets you rely on the RCD operating-time route; raising MCB rating breaks coordination with the cable.',
+  },
+  {
+    id: 6,
+    question: 'Which combination correctly describes SELV under Section 414?',
+    options: [
+      'Up to 50 V AC / 120 V DC, earthed midpoint, basic protection by enclosure only',
+      'Up to 50 V AC / 120 V DC, no intentional connection to earth, fed by a safety isolating source (per Reg 414.4.4), exposed-conductive-parts not connected to earth',
+      'Up to 230 V AC, fed by an isolating transformer, earthed at the secondary',
+      'Functional earthing only; no isolation requirement',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'SELV is band I (≤50 V AC / 120 V DC ripple-free), with no earth reference and complete electrical separation from any other circuit. The source must be a safety isolating transformer (BS EN 61558-2-6) or equivalent. Reg 414.4.4 also requires basic protection where the nominal voltage exceeds 25 V AC / 60 V DC ripple-free or where equipment is immersed.',
+  },
+  {
+    id: 7,
+    question:
+      'A Class II portable luminaire (no earth terminal, double square symbol) is being inspected. Which test is NOT required and which observation would warrant a code?',
+    options: [
+      'Continuity of CPC required; missing earth = C1',
+      'Earth continuity NOT required; presence of an unauthorised earth connection (i.e. someone has wired one in) would be coded — the equipment is being relied on as Class II per Section 412 (Reg 412.1.2 / 412.2.1.3)',
+      'Insulation resistance test not required',
+      'No tests apply to Class II equipment at all',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Section 412 protective measure (double / reinforced insulation, Reg 412.1.2) is invalidated the moment an earth path is introduced — the measure relies on no single earth-fault path. Insulation resistance testing is still required during initial verification; earth continuity is not, because there is no CPC to verify.',
+  },
+  {
+    id: 8,
+    question:
+      'Which protective measure should NOT be used as the sole protective measure on a circuit feeding a socket-outlet that the user can change equipment on?',
+    options: [
+      'Automatic Disconnection of Supply',
+      'Double or reinforced insulation as the sole measure (Reg 412.1.2) — because the user could plug in Class I equipment, defeating the measure',
+      'SELV',
+      '30 mA RCD additional protection',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Reg 412.1.2 explicitly forbids using double / reinforced insulation as the sole protective measure on any circuit that includes a socket-outlet with earthing contact, LSC, DCL, cable coupler, or anywhere the user can change equipment without authorisation. The reason is that the protective measure depends on the entire circuit being Class II — one Class I plug-in defeats it.',
   },
 ];
 
-const quizQuestion = {
-  question: 'Where is PELV typically more practical than SELV?',
-  options: [
-    'In bathrooms only',
-    'Where functional earthing is required for equipment operation',
-    'In outdoor installations',
-    'For motor circuits only',
-  ],
-  correctAnswer: 1,
-  explanation:
-    'PELV is used where equipment requires an earth connection for functional purposes (such as EMC screening or reference voltages) but you still want the safety benefits of extra-low voltage. SELV cannot have any earth connections.',
-};
+const faqItems = [
+  {
+    question: 'Is the 411.3.4 luminaire RCD requirement retrospective on existing installations?',
+    answer:
+      'No — Reg 411.3.4 applies to new design and new circuits installed under BS 7671:2018+A4:2026 (in force 15 April 2026). On an EICR of an older installation it is reported as a deviation from the current edition; per GN3, every observation gets a single classification (C1, C2, C3 or FI) — typically C3 for a historic install where there is no other risk factor, but C2 where the absence of RCD increases real-world risk (e.g. damaged accessories, extensive metal-bodied luminaires).',
+  },
+  {
+    question: 'Does 411.3.4 apply to commercial or industrial lighting?',
+    answer:
+      'No. Reg 411.3.4 is scoped to "domestic (household) premises". Commercial / industrial luminaire circuits remain governed by Reg 411.3.3 (sockets ≤32 A) and the wider 30 mA additional-protection rules (e.g. lighting accessible to the public, sauna circuits, agricultural). Always check Part 7 for the location.',
+  },
+  {
+    question: 'When should I rely on SELV rather than ADS?',
+    answer:
+      'SELV is the right choice where reducing voltage below the touch-current threshold is more reliable than disconnection: bath/shower zone 0, fountain zone 0, equipment in reach of children (BA2), some medical scenarios. ADS is the default for general fixed installations because its infrastructure (earthing, bonding, devices) already exists.',
+  },
+  {
+    question: 'Why is FELV NOT a protective measure?',
+    answer:
+      'FELV runs at extra-low voltage but lacks safety isolation from the higher-voltage primary. A primary fault can drive primary voltage onto the FELV side, defeating the voltage-limit assumption. FELV circuits must therefore be designed with full basic + fault protection at the primary voltage, not at the FELV voltage.',
+  },
+  {
+    question: 'How do I prove ADS disconnection times on site?',
+    answer:
+      'GN3 names Zs verification as the primary evidence that Chapter 41 disconnection times can be met. Measure Ze at origin, calculate Zs = Ze + R1+R2 (or measure Zs directly), correct for conductor temperature, and compare to the maximum value for the protective device per Reg 411.4.4 / OSG App / manufacturer data. RCD operation is verified separately at IΔn and 5 IΔn.',
+  },
+  {
+    question: 'Can I use a documented risk assessment to omit RCD on a domestic luminaire circuit?',
+    answer:
+      'No. The 411.3.3 risk-assessment exception only applies to category (b) — non-domestic socket-outlets in other locations. Reg 411.3.4 (luminaire circuits in domestic premises) provides no equivalent exception: the requirement is unconditional within scope.',
+  },
+  {
+    question: 'Why does BS 7671 forbid switching the PEN in a TN-C-S installation?',
+    answer:
+      'Reg 461.2 prohibits isolating or switching the PEN in TN-C and TN-C-S because an open PEN with load on the system causes the local earth potential to rise toward line voltage. Every Class I exposed metal part bonded to the MET will sit at that elevated potential — touching the kettle and the kitchen tap simultaneously becomes the fault path. The risk is invisible to a basic insulation test and only shows up under load. Reg 722.312.2.1 (A4) extends the rule to EV charging: no PEN at all in the EV circuit on TN supplies, because the conductive vehicle body amplifies the touch-current risk.',
+  },
+  {
+    question: 'When is supplementary equipotential bonding still required in a bathroom?',
+    answer:
+      'Reg 701.415.2 lets you omit supplementary bonding in a bathroom (location containing a bath or shower) ONLY if all three of the following hold: (a) every circuit in the location meets its disconnection time, (b) every circuit has 30 mA RCD additional protection, and (c) all extraneous-conductive-parts are reliably bonded back to the MET. Miss any one — supplementary bonding goes back in, sized per Reg 415.2.1 / 544.2 (4 mm² minimum unprotected, 2.5 mm² minimum protected).',
+  },
+  {
+    question: 'Why is RLV (110 V CTE) chosen over a 230 V supply on a construction site?',
+    answer:
+      'Construction sites are environment AD3 / AD4 (water) / AG3 (mechanical impact). Cables get cut, ploughed, dragged through puddles. The 110 V centre-tapped supply puts each line conductor at 55 V to earth — significantly below the 230 V touch-current threshold. A bare line conductor against earth therefore presents a much lower shock current than the same fault at 230 V. Reg 411.8.3 requires fault protection by OPD or RCD with 5 s disconnection and full earthing of exposed-conductive-parts; Reg 411.8.4.1 requires a double-wound isolating transformer to BS EN IEC 61558-1 / BS EN 61558-2-23 as the source.',
+  },
+];
 
 const BS7671Module4Section1 = () => {
+  const navigate = useNavigate();
+
   useSEO({
-    title: 'Electric Shock Protection Methods | BS 7671 Module 4.1',
+    title: 'Electric Shock Protection Methods | BS 7671:2018+A4:2026 | Module 4.1',
     description:
-      'Learn about SELV, PELV, ADS, double insulation and other protection methods against electric shock per BS 7671 requirements.',
+      'How BS 7671:2018+A4:2026 layers shock protection — basic protection, fault protection, ADS, RCDs, SELV/PELV and Class II — including the new Reg 411.3.4 luminaire RCD requirement.',
   });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/bs7671-module-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Module 4
+          </button>
 
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Page Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Electric Shock Protection Methods
-          </h1>
-          <p className="text-white">SELV, PELV, ADS, and other protection strategies</p>
-        </header>
-
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Basic protection:</strong> Prevents contact during normal operation
-              </li>
-              <li>
-                <strong>Fault protection:</strong> Activates when basic protection fails
-              </li>
-              <li>
-                <strong>ADS:</strong> Most common method—rapid disconnection during faults
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>SELV:</strong> High-risk areas (pools, bathrooms zone 0/1)
-              </li>
-              <li>
-                <strong>PELV:</strong> When functional earthing needed
-              </li>
-              <li>
-                <strong>Double insulation:</strong> Portable equipment, Class II symbol ⧈
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Distinguish between basic and fault protection requirements',
-              'Apply ADS systems with correct earthing and device coordination',
-              'Specify SELV and PELV for special locations',
-              "Select double insulation where protective earthing isn't practical",
-              'Understand why FELV is NOT a protective measure',
-              'Choose appropriate protection methods for different environments',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Basic vs Fault Protection */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Basic vs Fault Protection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              BS 7671 distinguishes between two fundamental types of protection against electric
-              shock. Both must be present for complete safety—basic protection is the first line of
-              defence, fault protection is the backup.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Basic Protection</p>
-                <p className="text-xs text-white mb-2">
-                  Prevents contact with live parts during normal operation
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>
-                    <strong>Insulation:</strong> Cable and equipment insulation
-                  </li>
-                  <li>
-                    <strong>Barriers:</strong> Physical prevention of access
-                  </li>
-                  <li>
-                    <strong>Enclosures:</strong> IP-rated equipment housings
-                  </li>
-                  <li>
-                    <strong>Positioning:</strong> Placing live parts out of reach
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fault Protection</p>
-                <p className="text-xs text-white mb-2">Activates when basic protection fails</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>
-                    <strong>ADS:</strong> Automatic disconnection during faults
-                  </li>
-                  <li>
-                    <strong>Double insulation:</strong> Second layer if first fails
-                  </li>
-                  <li>
-                    <strong>Equipotential bonding:</strong> Reducing potential differences
-                  </li>
-                  <li>
-                    <strong>Electrical separation:</strong> Isolating circuits from earth
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Inline Check 1 */}
-        <div className="mb-10">
-          <InlineCheck {...quickCheckQuestions[0]} />
-        </div>
-
-        {/* Section 2: Automatic Disconnection of Supply */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Automatic Disconnection of Supply (ADS)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              ADS is the primary fault protection method in most UK installations. It relies on
-              coordinated operation of earthing systems and protective devices to ensure rapid
-              disconnection during earth faults.
-            </p>
-
-            <div className="p-5 rounded-lg bg-white/5 my-6">
-              <h3 className="text-sm font-medium text-elec-yellow mb-3">ADS System Requirements</h3>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-2">Essential Elements:</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Protective earthing of exposed parts</li>
-                    <li>• Main equipotential bonding</li>
-                    <li>• Protective conductors (CPCs)</li>
-                    <li>• Overcurrent devices (MCBs, fuses, RCDs)</li>
-                    <li>• Low earth fault loop impedance (Zs)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-2">Disconnection Times:</p>
-                  <ul className="text-white space-y-1">
-                    <li>
-                      <strong>Socket outlets:</strong> 0.4s maximum
-                    </li>
-                    <li>
-                      <strong>Fixed equipment:</strong> 5s maximum
-                    </li>
-                    <li>
-                      <strong>Distribution circuits:</strong> 5s maximum
-                    </li>
-                    <li>
-                      <strong>Special locations:</strong> May require faster
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-1">TN Systems</p>
-                <p className="text-white text-xs">Low Zs allows MCBs to provide ADS</p>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-1">TT Systems</p>
-                <p className="text-white text-xs">High Ra requires RCD protection</p>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-1">IT Systems</p>
-                <p className="text-white text-xs">First fault monitored, second disconnects</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Inline Check 2 */}
-        <div className="mb-10">
-          <InlineCheck {...quickCheckQuestions[1]} />
-        </div>
-
-        {/* Section 3: SELV and PELV */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Extra-Low Voltage Systems (SELV & PELV)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              SELV and PELV provide protection through voltage limitation rather than disconnection.
-              Both limit voltage to ≤50V AC or ≤120V DC, but differ in their earthing arrangements.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-green-400/80 mb-2">
-                  SELV (Safety Extra-Low Voltage)
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>• Maximum 50V AC / 120V DC</li>
-                  <li>• NO connection to earth</li>
-                  <li>• Complete isolation from other circuits</li>
-                  <li>• Safety isolating transformer required</li>
-                  <li>
-                    <strong>Use:</strong> Bathrooms, pools, children's areas
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  PELV (Protective Extra-Low Voltage)
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>• Maximum 50V AC / 120V DC</li>
-                  <li>• Earth connection PERMITTED</li>
-                  <li>• Safety isolation still required</li>
-                  <li>• Functional earthing allowed</li>
-                  <li>
-                    <strong>Use:</strong> Control systems, instrumentation
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-red-500/5 border border-red-500/20 my-6">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                FELV - NOT a Protective Measure
-              </p>
-              <p className="text-sm text-white">
-                Functional Extra-Low Voltage (FELV) operates at ELV but lacks safety isolation. It
-                may be derived from autotransformers or have direct mains connection. FELV circuits
-                must have full basic AND fault protection—treat as low voltage.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Inline Check 3 */}
-        <div className="mb-10">
-          <InlineCheck {...quickCheckQuestions[2]} />
-        </div>
-
-        {/* Section 4: Double Insulation */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Double or Reinforced Insulation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Class II equipment provides both basic and fault protection through two independent
-              insulation layers, eliminating the need for protective earthing.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Double Insulation</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>
-                    <strong>Basic insulation:</strong> Primary protection layer
-                  </li>
-                  <li>
-                    <strong>Supplementary insulation:</strong> Independent second layer
-                  </li>
-                  <li>• No single point failure</li>
-                  <li>• No earth terminal on equipment</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Reinforced Insulation
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>• Single enhanced layer</li>
-                  <li>• Equivalent to double insulation</li>
-                  <li>• Higher voltage withstand</li>
-                  <li>• Same protection level</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Recognition and Testing:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>• Look for Class II symbol ⧈ (double square)</li>
-                <li>• No earth terminal on equipment</li>
-                <li>• Insulation resistance testing required</li>
-                <li>• No earth continuity test needed</li>
-                <li>• Visual inspection for insulation damage</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Real World Scenario */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Real World Scenario</h2>
-          <div className="p-5 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-            <h3 className="text-sm font-medium text-elec-yellow mb-3">
-              Children's Play Centre Lighting Design
-            </h3>
-            <p className="text-sm text-white mb-3">
-              A new soft play centre requires low-level lighting in areas accessible to young
-              children. Risk assessment identifies potential contact with lighting equipment during
-              play activities.
-            </p>
-            <div className="p-3 rounded bg-green-500/5 border border-green-500/20">
-              <p className="text-sm text-green-400 font-medium mb-1">Design Solution:</p>
-              <p className="text-sm text-white">
-                12V SELV lighting system using safety isolating transformers located outside the
-                play area. Even if a child contacts the lighting circuit, the 12V SELV supply cannot
-                cause electric shock, and complete isolation from 230V mains ensures safety.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Quick Reference */}
-        <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
-          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-            <div>
-              <p className="font-medium text-elec-yellow mb-1">Protection Methods</p>
-              <ul className="space-y-0.5 text-white">
-                <li>ADS: Most common, requires low Zs</li>
-                <li>SELV: ≤50V AC, no earth, highest safety</li>
-                <li>PELV: ≤50V AC, earth permitted</li>
-                <li>Double insulation: Class II, no earth needed</li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-medium text-elec-yellow mb-1">Key Disconnection Times</p>
-              <ul className="space-y-0.5 text-white">
-                <li>Socket outlets: 0.4s (TN systems)</li>
-                <li>Fixed equipment: 5s maximum</li>
-                <li>Distribution: 5s maximum</li>
-                <li>Special locations: Often faster</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Quiz */}
-        <section className="my-10">
-          <SingleQuestionQuiz
-            question={quizQuestion.question}
-            options={quizQuestion.options}
-            correctAnswer={quizQuestion.correctAnswer}
-            explanation={quizQuestion.explanation}
+          <PageHero
+            eyebrow="Module 4 · Section 1 · Updated for A4:2026"
+            title="Protection against electric shock"
+            description="Two layers of defence — basic and fault protection — and the four protective measures the regulations actually recognise. Includes the headline A4 change (Reg 411.3.4 luminaire RCD) and how the inspector evidences ADS on site."
+            actions={
+              <>
+                <RegBadge>411.3.4</RegBadge>
+                <RegBadge>412.1.2</RegBadge>
+                <RegBadge>414.11</RegBadge>
+                <AmendmentBadge regs={['411.3.4']} />
+              </>
+            }
+            tone="yellow"
           />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <TLDR
+            points={[
+              'BS 7671 layers shock protection: basic protection (insulation, barriers, enclosures — Section 416) plus fault protection (earthing + bonding + automatic disconnection — Reg 411).',
+              'ADS is the default UK measure. SELV, PELV and Class II (Sections 412 and 414) are alternatives for specific risk profiles. FELV is NOT a protective measure.',
+              'A4:2026 adds Reg 411.3.4 — within domestic premises, AC final circuits supplying luminaires must have 30 mA RCD additional protection.',
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'State the four BS 7671-recognised protective measures and pick the right one for a given environment.',
+              'Build the four ingredients of ADS (Section 411 — Reg 411.3.1.1, 411.3.1.2, 411.3.2) and list the maximum disconnection times in TN and TT systems.',
+              'Apply Reg 411.3.3 (sockets) and the new Reg 411.3.4 (domestic luminaires) correctly, including which exceptions are available.',
+              'Distinguish TN-S, TN-C-S (PME / PNB), TT and IT system earthing, identify which Reg series applies (411.4 / 411.5 / 411.6) and why TN-C-S forbids switching the PEN (Reg 461.2 / 722.312.2.1).',
+              'Distinguish SELV, PELV and FELV by their earthing arrangement, source requirement (Section 414.3) and why FELV (Reg 411.7) is not a protective measure.',
+              'Apply reduced low voltage (Reg 411.8) and supplementary equipotential bonding (Reg 415.2.1) to high-risk environments, and choose between them rather than always reaching for ADS.',
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <ContentEyebrow>Two layers of defence</ContentEyebrow>
+
+          <ConceptBlock
+            title="Basic protection vs fault protection"
+            plainEnglish="Basic protection stops you ever touching a live part in normal use. Fault protection takes over the moment basic has failed — typically a live conductor in contact with a metal enclosure."
+            onSite="Every Class I appliance you fit relies on both layers being intact: the cord and casing are basic; the CPC, bonding and breaker are fault. If either is missing, the protection is not in place."
           >
-            <Link to="/study-centre/upskilling/bs7671-module-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 4
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
+            <p>
+              Section 416 lists the basic-protection methods: insulation of live parts, barriers,
+              enclosures, obstacles and placing out of reach. Reg 411 then describes the
+              fault-protection layer — protective earthing, protective equipotential bonding and
+              automatic disconnection in case of a fault. The two layers are independent on purpose:
+              defeating one (a damaged enclosure, a missing CPC) leaves the other still fighting.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...inlineChecks[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Automatic Disconnection of Supply (ADS)</ContentEyebrow>
+
+          <ConceptBlock
+            title="The four ingredients of ADS"
+            plainEnglish="ADS isn't a device — it's a designed combination of earthing, bonding, the right protective device and a verified loop impedance."
+            onSite="On the EIC schedule, the boxes you tick for ADS map to the four ingredients: protective earthing present, MET bonded, OPD/RCD selected, Zs measured."
           >
-            <Link to="/study-centre/upskilling/bs7671-module-4-section-2">
-              Next Section
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+            <p>
+              Section 411 defines ADS as basic protection (per Section 416) plus fault protection
+              provided by <strong>(a)</strong> protective earthing of exposed-conductive-parts (Reg
+              411.3.1.1), <strong>(b)</strong> protective equipotential bonding of
+              extraneous-conductive-parts to the main earthing terminal (Reg 411.3.1.2),
+              <strong> (c)</strong> automatic disconnection by an overcurrent protective device or
+              RCD (Reg 411.3.2), and <strong>(d)</strong> coordination of these with the system
+              earthing arrangement (Reg 411.4.4 TN, 411.5.3 TT or 411.6.3 IT).
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 411.3.1.1 — Protective earthing"
+            clause="Exposed-conductive-parts shall be connected to a protective conductor under the specific conditions for each type of system earthing as specified in Regulations 411.4 to 411.6. Simultaneously accessible exposed-conductive-parts shall be connected to the same earthing system individually, in groups or collectively. A circuit protective conductor shall be run to and terminated at each point in wiring and at each accessory except a lampholder having no exposed-conductive-parts and suspended from such a point."
+            meaning="A CPC at every point and every accessory is the legal default. The lampholder exception is narrow: pendant lampholder, no exposed metal. Replace it with a metal-bodied luminaire or downlight and the CPC must be present and connected."
+            cite="BS 7671:2018+A4:2026, Reg 411.3.1.1 (p.66)"
+          />
+
+          <ConceptBlock
+            title="Maximum disconnection times (Reg 411.3.2 / Table 41.1)"
+            plainEnglish="0.4 s for TN circuits with sockets up to 63 A and TN circuits up to 32 A supplying fixed equipment. 5 s for TN distribution. 1 s for TT distribution."
+            onSite="The numbers don't move per device — they're system-and-circuit numbers. The OPD or RCD has to deliver them at the measured Zs. Above the limit and the protective measure is not demonstrably in place — that's a design problem, not a test problem."
+          />
+
+          <InlineCheck {...inlineChecks[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Additional protection — the RCD layer</ContentEyebrow>
+
+          <ConceptBlock
+            title="30 mA RCDs on top of ADS — Reg 411.3.3 and the new 411.3.4"
+            plainEnglish="Additional protection by a 30 mA RCD is now mandatory on most socket-outlet circuits up to 32 A, on outdoor mobile equipment, AND — new in A4 — on all AC final circuits supplying luminaires in domestic premises."
+            onSite="Treat 411.3.4 as the headline A4 change for domestic certification. A new dwelling lighting circuit on an MCB without RCD is non-compliant from 15 April 2026."
+          >
+            <p>
+              Reg 411.3.3 covers (a) sockets ≤32 A used by ordinary persons or children, (b) sockets
+              ≤32 A in other locations, and (c) mobile equipment ≤32 A outdoors. Only (b) can be
+              excepted via a documented risk assessment by a skilled person (electrically), and the
+              assessment must accompany the EIC. Reg 411.3.4 — new in A4 — has no equivalent
+              exception within domestic (household) premises.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 411.3.4 — Additional requirements for circuits with luminaires (NEW IN A4)"
+            clause="Within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires."
+            meaning="Mandatory ('shall'), unconditional within scope, no risk-assessment exception. Applies to every AC final circuit feeding luminaires inside a private dwelling — not just bathroom or kitchen, the whole property."
+            cite="BS 7671:2018+A4:2026, Reg 411.3.4 (in force from 15 April 2026)"
+          />
+
+          <InlineCheck {...inlineChecks[1]} />
+
+          <SectionRule />
+
+          <VideoCard
+            url={videos.circuitBreakersDontProtectPeople.url}
+            title={videos.circuitBreakersDontProtectPeople.title}
+            channel={videos.circuitBreakersDontProtectPeople.channel}
+            duration={videos.circuitBreakersDontProtectPeople.duration}
+            topic="Watch · Why MCBs alone don't stop electric shock"
+            caption="The Engineering Mindset reinforces why Reg 411.3.3 / 411.3.4 require 30 mA RCD additional protection on top of MCB-led ADS — MCBs trip on overload (tens to hundreds of amps), RCDs trip on imbalance between line and neutral (milliamps). The two protect against fundamentally different failure modes: overload heating versus user-touching-a-fault, which is why BS 7671 stacks them rather than treating either as a substitute for the other."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>System earthing — TN, TT, IT (and PNB)</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why the system earthing arrangement decides everything"
+            plainEnglish="The same 230 V circuit, on TN-S vs TT vs IT, has completely different fault paths, different Zs targets, and different acceptable protective devices. The system earthing arrangement isn't a label — it's the entire fault-current model."
+            onSite="Reg 411.3 hands you off to 411.4 (TN), 411.5 (TT) or 411.6 (IT). The right reg is the one that matches what's at the cut-out. Get this wrong on the EIC and the disconnection-time test you ran is meaningless — it was the right number, against the wrong system."
+          >
+            <p>
+              In a <strong>TN system</strong> (Reg 411.4) the source neutral is earthed and the
+              installation's exposed-conductive-parts are connected back to that earth via a
+              dedicated CPC. Reg 411.4.4 sets the Zs ≤ U₀ × Cmin / Ia condition — the fault loop
+              impedance must be low enough that the OPD or RCD interrupts within Table 41.1's time.
+              TN-S keeps protective and neutral conductors fully separate from the source; TN-C
+              combines them as a PEN throughout (now rare in UK installations beyond the cut-out);
+              TN-C-S (PME) is combined upstream of the cut-out and split into separate N and PE
+              inside the consumer's installation.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="TN-C-S (PME / PNB) — the dominant UK arrangement"
+            plainEnglish="In TN-C-S, the PEN conductor brings combined protective-earth + neutral up to the cut-out. Inside the installation, MET and N are tied together, then split. PNB is the new A4 cert-form name for a TN-C-S where there's only one connection point to true earth."
+            onSite="A4:2026 introduces 'TN-C-S (PNB)' as an explicit cert-form option. The reasons matter for fault analysis: a broken PEN (open PEN) above the property elevates the MET and every Class I exposed metal part to near-line voltage. That's why EV charging in TN-C-S has its own A4 prohibition — Reg 722.312.2.1."
+          >
+            <p>
+              Reg 461.2 is unambiguous: in TN-C and TN-C-S systems, the PEN conductor SHALL NOT be
+              isolated or switched. Putting a switch or isolator in the PEN line creates the
+              open-PEN failure that is the single most dangerous mode of TN-C-S. An open PEN with
+              load on the system drives the local earth potential up — every CPC-connected exposed
+              metal part rises with it. Reg 722.312.2.1 (new in A4) extends this to EV charging: the
+              EV-charging circuit in a TN system shall not include a PEN conductor at all, because
+              of the heightened touch-current risk in vehicles.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="TT and IT — when the supply isn't TN"
+            plainEnglish="TT means the installation has its own separate earth electrode, with no protective conductor from the supply (e.g. caravans, agricultural buildings, properties without DNO earth). IT is rare — used in continuity-critical sites (theatres, hospital ITUs) where a first earth fault must NOT cause disconnection."
+            onSite="On TT, RCDs are essentially mandatory because Ze is too high to give ADS via OPD alone. Reg 411.5.3 sets the RCD condition: Ra × IΔn ≤ 50 V. On IT, Reg 411.6.3 lists the permitted devices: insulation monitoring devices (IMDs), residual-current monitoring devices (RCMs), insulation-fault location systems (IFLS), OPDs and RCDs."
+          >
+            <p>
+              Reg 411.5.3 (TT with RCD): the disconnection time shall meet Reg 411.3.2.2 or
+              411.3.2.4 (1 s for distribution, 0.4 s for final), and Ra × IΔn ≤ 50 V — Ra being the
+              sum of the earth-electrode and protective-conductor resistance back to exposed metal.
+              Reg 411.5.4 (TT with OPD only) requires Zs × Ia ≤ U₀, the same form as TN but with the
+              higher Ra of a separate electrode. Reg 411.6.3 (IT) requires either continuous
+              insulation monitoring or, where the second fault occurs, automatic disconnection
+              meeting the same Table 41.1 times.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...inlineChecks[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>The alternatives to ADS</ContentEyebrow>
+
+          <ConceptBlock
+            title="SELV and PELV (Section 414)"
+            plainEnglish="Both limit the system to band I voltage (≤50 V AC / 120 V DC ripple-free) and require a safety-isolating source. SELV has no intentional connection to earth; PELV does."
+            onSite="Use SELV where you don't want any earth path on the secondary (bath zone 0, fountain zone 0, equipment in reach of children). Use PELV where the equipment needs functional earthing, e.g. EMC shielding on a control system."
+          >
+            <p>
+              Reg 414.11 limits the SELV/PELV circuit to the upper limit of voltage band I — 50 V AC
+              RMS or 120 V DC ripple-free. Reg 414.4.4 still requires basic protection (by
+              insulation per Section 416, or barriers/enclosures per Reg 416.2.1) where the nominal
+              voltage exceeds 25 V AC / 60 V DC ripple-free, or where equipment is immersed.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Double or reinforced insulation — Class II (Section 412)"
+            plainEnglish="Two independent insulation layers (or one reinforced layer) replace the protective earthing route entirely. Recognised by the double-square symbol on the equipment."
+            onSite="Reg 412.1.2 forbids you from relying on Class II as the SOLE protective measure on any circuit a user can change equipment on — sockets, LSCs, DCLs, cable couplers. One Class I plug-in defeats the whole measure. Class II is great as a per-equipment choice, weak as a circuit-level choice."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>
+            FELV — and why BS 7671 won't let you call it a protective measure
+          </ContentEyebrow>
+
+          <ConceptBlock
+            title="FELV (Reg 411.7) — extra-low voltage without safety isolation"
+            plainEnglish="A circuit that runs at SELV/PELV voltage but lacks the safety-isolating source. The voltage is low; the safety guarantee isn't."
+            onSite="Spotting it: an auto-transformer feeding 24 V controls. A 12 V LED driver with a single-winding ferro-resonant primary. Anywhere the primary and secondary share metal or windings without explicit safety isolation per Section 414.3 / BS EN 61558-2-6."
+          >
+            <p>
+              Reg 411.7.1 defines FELV as the case where, for functional reasons, the circuit
+              voltage is ≤ 50 V AC / 120 V DC ripple-free, but not all of Section 414's requirements
+              for SELV or PELV are met, and SELV / PELV is not strictly required. Reg 411.7.4 forces
+              the source to be either a transformer with at least simple winding separation OR a
+              source complying with Section 414.3. If neither, the circuit isn't FELV — it's just a
+              low-voltage circuit operating at extra-low voltage. Reg 411.7.3 then requires basic
+              AND fault protection AT THE PRIMARY VOLTAGE — no shortcuts based on the secondary
+              being 24 V.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...inlineChecks[4]} />
+
+          <ConceptBlock
+            title="Reduced low voltage (RLV) — Reg 411.8 — the construction-site & workshop measure"
+            plainEnglish="A 110 V centre-tapped (CTE) supply. Each line conductor sits at 55 V to earth. Lower touch-current risk in environments where cables get damaged routinely — sites, demolition, hot-dirty workshops."
+            onSite="The yellow 110 V transformer in every site cabin is exactly this. Reg 411.8.4.1 sets the source: a double-wound isolating transformer to BS EN IEC 61558-1 / BS EN 61558-2-23, or a motor-generator set with isolated windings. Reg 411.8.3 still requires fault protection — an OPD or RCD on each line conductor with 5 s disconnection."
+          >
+            <p>
+              RLV is not a panacea — it is a controlled-risk lower-voltage measure for high-damage
+              environments. Reg 411.8.1.1 makes it explicit: where, for functional reasons, ELV is
+              impracticable and SELV / PELV isn't needed, RLV may be used. Reg 411.8.3 sets the
+              disconnection: 5 s for the highest line-to-earth voltage in the system (typically 55 V
+              on a centre-tapped 110 V), with all exposed-conductive-parts earthed. Plug-and-socket
+              arrangements use the dedicated 110 V coloured connector system (BS EN 60309-2) so 110
+              V kit can never be inadvertently plugged into 230 V.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>Supplementary equipotential bonding (Reg 415.2.1)</ContentEyebrow>
+
+          <ConceptBlock
+            title="When ADS isn't enough on its own"
+            plainEnglish="Where Zs can't be guaranteed low enough to deliver the disconnection time, supplementary bonding ties together every accessible exposed-conductive-part and extraneous-conductive-part so the touch voltage stays below the dangerous threshold even during a fault."
+            onSite="Bathrooms historically required it on every job. Today most BS 7671 bathrooms can omit supplementary bonding if all three of these are true: (a) all circuits in the location meet disconnection times, (b) all circuits have 30 mA RCD additional protection, and (c) all extraneous-conductive-parts are reliably bonded back to the MET. Miss any one — supplementary bonding goes back in."
+          >
+            <p>
+              Reg 415.2.1 sets the bonding-conductor sizing rules. The minimum cross-sectional area
+              for a supplementary bonding conductor connecting two exposed-conductive-parts is
+              determined by Reg 544.2 — but the floor is 4 mm² where mechanical protection is not
+              provided, or 2.5 mm² where it is. The conductor must connect either two
+              exposed-conductive-parts, two extraneous-conductive-parts, or an
+              exposed-conductive-part to an extraneous-conductive-part — completing the
+              equipotential zone within the location.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+          <CommonMistake
+            title="Treating Reg 411.3.4 like 411.3.3"
+            whatHappens="Designer omits 30 mA RCD on a domestic lighting circuit on the basis that 'lighting isn't a socket', falling back on Reg 411.3.3. EICR coded C2 — wrong code, wrong reasoning, both flagged at the next inspection."
+            doInstead="Reg 411.3.4 is a separate, unconditional rule for domestic luminaire circuits. From 15 April 2026, every AC final lighting circuit in a dwelling is on a 30 mA RCD or RCBO — no exception, no risk-assessment route. Default to RCBOs at the consumer unit."
+          />
+
+          <CommonMistake
+            title="Calling FELV a protective measure"
+            whatHappens="A 24 V control circuit derived from an autotransformer is described on the EIC as 'protected by extra-low voltage'. There is no safety isolation between the 230 V primary and the 24 V secondary — a primary fault can drive 230 V onto the controls."
+            doInstead="FELV is not a protective measure. Either redesign with a safety isolating transformer (making it SELV or PELV) or treat the 24 V circuit as low voltage and apply full basic + fault protection at the primary voltage."
+          />
+
+          <CommonMistake
+            title="Switching or isolating the PEN in a TN-C-S installation"
+            whatHappens="A handyman fits a 'whole-house isolator' that breaks both lines AND the incoming PEN at the cut-out — or wires the main switch incorrectly so it interrupts the PEN. Reg 461.2 forbids this in TN-C and TN-C-S systems. With load on the property and an open PEN, every Class I exposed metal part rises to near-line voltage. The result is a fatal-shock risk that does not show on a basic insulation-resistance test."
+            doInstead="Never switch, isolate, fuse or break a PEN conductor in TN-C / TN-C-S. The PEN is always continuous from the DNO transformer star point through to the consumer's MET. Inside the installation, N and PE are split AT the MET; switching may disconnect line(s) and (where required) the post-MET neutral, but never the PEN. Reg 722.312.2.1 (A4) goes further — no PEN at all in EV charging circuits on TN supplies."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>RCDs in practice — picking the right type</ContentEyebrow>
+
+          <ConceptBlock
+            title="Type AC, A, F and B — getting the waveform right"
+            plainEnglish="The RCD type is about WHAT shape of residual current it can detect. Pick the wrong type and you've fitted a device that's blind to the very fault it's meant to clear."
+            onSite="The 4 types in plain English: Type AC sees only sinusoidal AC residual — now obsolete domestically because nearly everything plugged in produces some pulsating DC. Type A sees AC plus pulsating DC (most domestic / commercial). Type F adds composite high-frequency residual (single-phase VSDs and inverter-driven appliances). Type B adds smooth DC residual (three-phase VSDs, EV chargers without internal DC detection, larger PV / battery hybrids)."
+          >
+            <p>
+              The mistake to avoid is treating "RCD" as a single product. A single 100 mA Type AC
+              upstream RCD on a board feeding modern LED lighting, an air-source heat pump and an EV
+              charger may already be defeated — pulsating DC from the lighting drivers and smooth DC
+              from the EV charger fall outside its detection window. Confirm against the equipment
+              manufacturer's installation guidance before you commit a type — the wrong choice is an
+              EICR observation waiting to happen and is not visible without type-specific testing.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...inlineChecks[5]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Worked example — designing a kitchen radial under A4</ContentEyebrow>
+
+          <ConceptBlock
+            title="From load to compliant design in eight steps"
+            plainEnglish="A standard kitchen radial pulls together everything in this section: design current, cable selection, MCB rating, Zs target, RCD additional protection, A4 luminaire rule, and the cert entries that demonstrate it."
+            onSite="This is the design log every cert needs to be defensible. If a future inspector asks 'how did you arrive at the protective device?' the answer is the eight-step record below — written before the install, not reconstructed afterwards."
+          >
+            <p>
+              <strong>1. Load and design current (Ib).</strong> Kitchen socket ring with hob,
+              microwave, dishwasher, kettle, fridge — assess by diversity; assume a worst-case ring
+              sustained loading of ~25 A. <strong>2. Cable selection.</strong> 2.5 mm² T&E clipped
+              direct, Reference Method C — App 4 gives Iz nominal ≈ 27 A (after grouping and ambient
+              correction). <strong>3. MCB rating.</strong> Type B 32 A on the ring standard, but
+              check Reg 433.1.1: In ≥ Ib (32 ≥ 25 ✓), In ≤ Iz only if you accept the ring topology
+              (BS 7671 ring rules). <strong>4. Disconnection time target.</strong>
+              0.4 s for a sub-32 A ring final on TN. <strong>5. Zs target.</strong> From the Type B
+              32 A row of Appendix 3 / OSG: Zs(max) = 1.37 Ω at 230 V (corrected). Plan to measure ≤
+              1.10 Ω at the furthest point to leave a safety margin.{' '}
+              <strong>6. RCD additional protection.</strong> 30 mA on every socket circuit — Reg
+              411.3.3.
+              <strong>7. The A4 luminaire rule.</strong> Even if the kitchen radial is sockets only,
+              any kitchen lighting circuit (under-cabinet LEDs, downlights) is a separate luminaire
+              final circuit and must also be on a 30 mA RCD or RCBO — Reg 411.3.4.
+              <strong>8. Cert entries.</strong> EIC schedule of test results: measured Zs, Ze,
+              R1+R2, RCD operating time at IΔn and 5 IΔn, MCB type and rating, RCD type and rating.
+              The EIC schedule of inspection ticks Sections K (RCD additional protection) and L
+              (luminaire RCD per A4) explicitly.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+          <Scenario
+            title="Rewire of a 1970s semi — A4 in force"
+            situation="Customer wants 12 lighting points on a single circuit through a Type B 6 A MCB at the existing consumer unit. The board is a 17th edition split-load with main switch + 30 mA RCD on socket-circuits only — lighting is on the non-RCD bus."
+            whatToDo="Under A4 Reg 411.3.4 the new lighting circuit must have 30 mA additional protection. The simplest route is an RCBO on the lighting way. If the existing CU can't accept RCBOs of the required type, replace the CU — partial-board RCD added retrospectively is rarely acceptable on a notified rewire."
+            whyItMatters="The cert (EIC) records compliance with the in-force edition. Issuing an EIC against A4:2026 with a non-RCD-protected luminaire circuit is a documented departure under Reg 120.3 and the burden of justification falls on the designer. In a household with insurers, mortgage providers and BPGs in the loop, that's a hard letter to write."
+          />
+
+          <Scenario
+            title="EV charger added to a 5-year-old TN-C-S consumer unit"
+            situation="Customer has a 7 kW single-phase tethered EV charger on order. The charger spec sheet states 'integrated 6 mA DC fault detection per BS EN 61851'. Existing CU has a 100 A main switch and Type AC 30 mA RCDs on every busbar — a 3-year-old metal split-load board."
+            whatToDo="Don't add the EV charger to the existing Type AC bus — Type AC is blind to the smooth DC residuals an EV install can produce in fault. Fit a dedicated way: Type A 32 A RCBO upstream of the charger (the charger's own 6 mA DC detection covers the smooth DC route inside it). Run the EV circuit as TN-S — split N and PE at the CU and bring only PE to the charger; do NOT include a PEN in the EV circuit. Add an open-PEN protection device (PEN-fault relay) at the charger position to cover the TN-C-S open-PEN failure mode."
+            whyItMatters="Type B RCDs cost 4-5× a Type A and the manufacturer's instructions are the binding spec. If the charger handles DC residual itself, Type A is correct and over-engineering with Type B isn't free. If it doesn't, Type B is mandatory. The EV-circuit PEN prohibition (Reg 722.312.2.1, A4) is non-negotiable on TN — it's the single most-tested point in the EV-charging sections of the assessment."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Designer's quick reference</ContentEyebrow>
+
+          <ConceptBlock
+            title="Picking the right protective measure for a circuit"
+            plainEnglish="Walk a four-step decision tree. (1) What's the touch-current risk profile of the load? (2) What's the system earthing? (3) Can ADS be demonstrated? (4) Are there special-location overrides?"
+            onSite="(1) Class I Power equipment in normal-occupancy = ADS default. Bath / shower / pool zone 0 = SELV. Equipment user can change = NOT Class II as sole measure. Construction site / workshop with high cable-damage risk = RLV. (2) TN with low Ze → ADS via OPD straightforward. TT → ADS typically via RCD (Reg 411.5.3 limb b). IT → ADS only on second fault (Reg 411.6). (3) Verify Zs ≤ Zs(max) per Appendix 3 / OSG. (4) Section 701-753 for bathrooms, pools, EVs etc — these may require additional protection beyond the general regulations."
+          >
+            <p>
+              The decision tree gets you from 'what's the right protective measure?' to 'spec it and
+              verify it' in seconds. For typical UK domestic on TN-C-S: ADS via 30 mA RCBO
+              everywhere, with Reg 411.3.4's domestic luminaire rule (A4) ensuring lighting circuits
+              get the same protection as sockets. For commercial: same logic, more rigorous
+              documentation, more attention to special locations and load types.
+            </p>
+          </ConceptBlock>
+
+          <FAQ items={faqItems} />
+
+          <KeyTakeaways
+            points={[
+              'Two layers: basic protection (Section 416) plus fault protection (Reg 411). ADS is the default fault-protection measure for fixed UK installations.',
+              'ADS = protective earthing (411.3.1.1) + protective equipotential bonding (411.3.1.2) + automatic disconnection by OPD/RCD (411.3.2) + system earthing coordination (411.4.4 TN / 411.5.3 TT / 411.6.3 IT).',
+              'Disconnection times: TN final-circuit ≤ 0.4 s (Reg 411.3.2 / Table 41.1), TN distribution ≤ 5 s, TT distribution ≤ 1 s (Reg 411.3.2.4). Verified by Zs measurement (GN3).',
+              'A4:2026 — Reg 411.3.4 mandates 30 mA RCD additional protection for AC final circuits supplying luminaires in domestic (household) premises. No exceptions.',
+              "Designer's decision tree: (1) Touch-risk profile? (2) System earthing? (3) Can ADS be demonstrated? (4) Special-location overrides? Walk it on every circuit.",
+            ]}
+          />
+
+          <Quiz questions={quizQuestions} />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/bs7671-module-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 4
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/bs7671-module-4-section-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                4.2 Overcurrent protection
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

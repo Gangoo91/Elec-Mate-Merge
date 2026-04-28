@@ -15,16 +15,27 @@
 import { type ReactNode, useState } from 'react';
 import {
   AlertTriangle,
+  ArrowRight,
+  BookOpen,
   CheckCircle2,
   ChevronDown,
+  ExternalLink,
   Play,
   Quote,
   ScrollText,
   Sparkles,
 } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
+import { useQuery } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import {
+  BS7671_A4_CHANGES,
+  A4_2026_EDITION_ID,
+  type A4Change,
+} from '@/data/upskilling/bs7671-a4-changes';
 
 // Native (Capacitor) proxy: bypasses YouTube Error 153 caused by WKWebView's
 // capacitor:// origin not sending a valid HTTP Referer. The proxy page on
@@ -219,13 +230,7 @@ interface ScenarioProps {
   className?: string;
 }
 
-export function Scenario({
-  title,
-  situation,
-  whatToDo,
-  whyItMatters,
-  className,
-}: ScenarioProps) {
+export function Scenario({ title, situation, whatToDo, whyItMatters, className }: ScenarioProps) {
   return (
     <section className={cn('space-y-3 border-l-2 border-cyan-400/40 pl-4 sm:pl-5', className)}>
       <div className="flex items-center gap-2">
@@ -502,9 +507,7 @@ export function VideoCard({
         <h4 className="text-[15px] sm:text-[16px] font-semibold text-white tracking-tight leading-snug">
           {title}
         </h4>
-        {channel && (
-          <div className="mt-1.5 text-[12.5px] text-white/65">{channel}</div>
-        )}
+        {channel && <div className="mt-1.5 text-[12.5px] text-white/65">{channel}</div>}
       </div>
 
       {caption && (
@@ -586,9 +589,7 @@ function VideoListRow({ url, title, channel, duration, topic }: VideoListItem) {
           <div className="text-[13.5px] font-semibold text-white leading-snug line-clamp-2">
             {title}
           </div>
-          {channel && (
-            <div className="mt-1 text-[11.5px] text-white/60 truncate">{channel}</div>
-          )}
+          {channel && <div className="mt-1 text-[11.5px] text-white/60 truncate">{channel}</div>}
         </div>
       </div>
     );
@@ -639,10 +640,431 @@ function VideoListRow({ url, title, channel, duration, topic }: VideoListItem) {
         <div className="text-[13.5px] font-semibold text-white leading-snug line-clamp-2">
           {title}
         </div>
-        {channel && (
-          <div className="mt-1 text-[11.5px] text-white/60 truncate">{channel}</div>
-        )}
+        {channel && <div className="mt-1 text-[11.5px] text-white/60 truncate">{channel}</div>}
       </div>
     </button>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * BS 7671 A4:2026 editorial primitives — used by the 18th Edition course
+ * to mark, diff and surface regulations affected by Amendment 4.
+ * ────────────────────────────────────────────────────────────────────── */
+
+/* ── AmendmentBadge — inline pill marking an A4-affected paragraph ── */
+
+interface AmendmentBadgeProps {
+  /** Reg numbers covered by this badge — used to look up the change record. */
+  regs: string[];
+  /** Edition label shown in the pill. Default: 'A4:2026'. */
+  edition?: string;
+  /**
+   * Override the change-record lookup. If omitted, the first reg in `regs`
+   * with a matching `BS7671_A4_CHANGES` entry is used.
+   */
+  changeId?: string;
+  className?: string;
+}
+
+export function AmendmentBadge({
+  regs,
+  edition = 'A4:2026',
+  changeId,
+  className,
+}: AmendmentBadgeProps) {
+  const [open, setOpen] = useState(false);
+
+  const change: A4Change | undefined = changeId
+    ? BS7671_A4_CHANGES.find((c) => c.id === changeId)
+    : BS7671_A4_CHANGES.find((c) => c.regNumbers.some((r) => regs.includes(r)));
+
+  const typeLabel = change
+    ? change.changeType === 'new'
+      ? 'New in A4:2026'
+      : change.changeType === 'deleted'
+        ? 'Removed in A4:2026'
+        : change.changeType === 'reorganised'
+          ? 'Reorganised in A4:2026'
+          : 'Changed in A4:2026'
+    : `New in ${edition}`;
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={cn(
+          'inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow hover:bg-elec-yellow/15 transition-colors touch-manipulation align-baseline',
+          className
+        )}
+        aria-label={`${typeLabel} — ${regs.join(', ')}. Tap for detail.`}
+      >
+        <Sparkles className="h-3 w-3" />
+        <span>{edition}</span>
+      </button>
+
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-elec-yellow/20"
+        >
+          <SheetHeader className="px-5 pt-5 pb-3 border-b border-white/[0.06]">
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
+              <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                {typeLabel}
+              </span>
+            </div>
+            <SheetTitle className="text-white text-[18px] sm:text-[20px] font-semibold tracking-tight leading-snug text-left">
+              {change?.regNumbers.join(', ') ?? regs.join(', ')}
+            </SheetTitle>
+          </SheetHeader>
+
+          <div className="px-5 py-5 overflow-y-auto h-[calc(85vh-88px)] space-y-5">
+            {change ? (
+              <>
+                {change.was && (
+                  <section className="space-y-2">
+                    <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Before A4:2026
+                    </div>
+                    <p className="text-[14px] text-white/85 leading-relaxed border-l-2 border-white/15 pl-4">
+                      {change.was}
+                    </p>
+                  </section>
+                )}
+
+                <section className="space-y-2">
+                  <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                    Now under A4:2026
+                  </div>
+                  <p className="text-[14px] text-white leading-relaxed border-l-2 border-elec-yellow/60 pl-4">
+                    {change.now}
+                  </p>
+                </section>
+
+                <section className="space-y-2 pt-2 border-t border-white/[0.06]">
+                  <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-blue-300">
+                    Why it changed
+                  </div>
+                  <p className="text-[13.5px] text-white/85 leading-relaxed">{change.rationale}</p>
+                </section>
+              </>
+            ) : (
+              <p className="text-[14px] text-white/85 leading-relaxed">
+                {regs.join(', ')} introduced or modified by BS 7671:2018+{edition}. See Module 8 for
+                the full Amendment 4 (2026) reference.
+              </p>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
+  );
+}
+
+/* ── AmendmentDiff — Was / Now side-by-side card ──────────────────── */
+
+interface AmendmentDiffProps {
+  was: ReactNode;
+  now: ReactNode;
+  /** Reg / table reference shown as a small caption. */
+  regNumber?: string;
+  /** Optional one-line summary of why the change was made. */
+  rationale?: ReactNode;
+  className?: string;
+}
+
+export function AmendmentDiff({ was, now, regNumber, rationale, className }: AmendmentDiffProps) {
+  return (
+    <div
+      className={cn(
+        'relative rounded-2xl bg-[hsl(0_0%_10%)] border border-elec-yellow/20 overflow-hidden',
+        className
+      )}
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-80" />
+
+      <div className="px-5 pt-4 sm:px-6 sm:pt-5 flex items-center gap-2">
+        <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
+        <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+          Amendment 4 (2026) change
+        </span>
+        {regNumber && (
+          <span className="ml-auto text-[10.5px] font-semibold text-white/65 tracking-wide">
+            {regNumber}
+          </span>
+        )}
+      </div>
+
+      <div className="px-5 py-4 sm:px-6 sm:py-5 grid gap-4 md:grid-cols-2 md:gap-5">
+        <section className="space-y-1.5">
+          <div className="flex items-center gap-1.5 text-[10.5px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Before
+          </div>
+          <div className="border-l-2 border-white/15 pl-3 text-[13.5px] text-white/85 leading-relaxed">
+            {was}
+          </div>
+        </section>
+
+        <section className="space-y-1.5">
+          <div className="flex items-center gap-1.5 text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+            Now
+            <ArrowRight className="h-3 w-3 hidden md:inline" />
+          </div>
+          <div className="border-l-2 border-elec-yellow/60 pl-3 text-[13.5px] text-white leading-relaxed">
+            {now}
+          </div>
+        </section>
+      </div>
+
+      {rationale && (
+        <div className="px-5 pb-4 sm:px-6 sm:pb-5 -mt-1 border-t border-white/[0.06] pt-3">
+          <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-blue-300 mb-1">
+            Why it changed
+          </div>
+          <p className="text-[13px] text-white/85 leading-relaxed">{rationale}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── RegBadge — clickable reg number, opens verbatim text from facets ── */
+
+interface RegBadgeProps {
+  /** The regulation number to look up (e.g. "411.3.4"). */
+  children: string;
+  /**
+   * Edition id to query. Defaults to A4:2026 — override only for historical
+   * reference (e.g. teaching the Was / Now split where Was is from A3).
+   */
+  editionId?: string;
+  className?: string;
+}
+
+interface RegFacet {
+  reg_number: string;
+  reg_title: string | null;
+  part: string | null;
+  chapter: string | null;
+  section: string | null;
+  content: string;
+  page_number: number | null;
+}
+
+/**
+ * The OCR ingest preserves PDF-column line breaks — one word per line in the
+ * narrow standard column becomes a literal '\n' between every word. This
+ * collapses single newlines to spaces while keeping double newlines as real
+ * paragraph breaks, so prose flows horizontally on render.
+ */
+function cleanRegText(text: string): string {
+  return text
+    .replace(/\r\n/g, '\n')
+    .split(/\n{2,}/)
+    .map((para) =>
+      para
+        .replace(/\n+/g, ' ')
+        .replace(/[ \t]{2,}/g, ' ')
+        .trim()
+    )
+    .filter(Boolean)
+    .join('\n\n');
+}
+
+export function RegBadge({ children, editionId = A4_2026_EDITION_ID, className }: RegBadgeProps) {
+  const [open, setOpen] = useState(false);
+  const regNumber = children;
+
+  const { data, isLoading, isError } = useQuery<RegFacet | null>({
+    queryKey: ['bs7671-facet', editionId, regNumber],
+    enabled: open,
+    staleTime: Infinity,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('bs7671_regulations')
+        .select(
+          'reg_number, reg_title:title, part, chapter, section, content:full_text, page_number'
+        )
+        .eq('edition_id', editionId)
+        .eq('reg_number', regNumber)
+        .order('page_number', { ascending: true, nullsFirst: false })
+        .limit(1)
+        .maybeSingle();
+      if (error) throw error;
+      return (data ?? null) as RegFacet | null;
+    },
+  });
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={cn(
+          'inline-flex items-center gap-1 h-6 px-1.5 rounded-md border border-white/15 bg-white/[0.04] text-[12px] font-mono font-semibold text-elec-yellow hover:bg-white/[0.08] hover:border-elec-yellow/40 transition-colors touch-manipulation align-baseline',
+          className
+        )}
+        aria-label={`Open BS 7671 ${regNumber}`}
+      >
+        <BookOpen className="h-3 w-3 opacity-70" />
+        <span>{regNumber}</span>
+      </button>
+
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-purple-500/25"
+        >
+          <SheetHeader className="px-5 pt-5 pb-3 border-b border-white/[0.06]">
+            <div className="flex items-center gap-2 mb-2">
+              <ScrollText className="h-3.5 w-3.5 text-purple-300" />
+              <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-purple-300">
+                BS 7671:2018+A4:2026 · Regulation
+              </span>
+            </div>
+            <SheetTitle className="text-white text-[18px] sm:text-[20px] font-semibold tracking-tight leading-snug text-left font-mono">
+              {regNumber}
+              {data?.reg_title ? (
+                <span className="block mt-1 text-[14.5px] font-sans font-semibold text-white/90">
+                  {data.reg_title}
+                </span>
+              ) : null}
+            </SheetTitle>
+          </SheetHeader>
+
+          <div className="px-4 sm:px-5 py-5 overflow-y-auto h-[calc(85vh-88px)]">
+            {isLoading ? (
+              <p className="text-[14px] text-white/65 leading-relaxed">Loading regulation…</p>
+            ) : isError ? (
+              <p className="text-[14px] text-orange-300 leading-relaxed">
+                Couldn’t load this regulation right now. Check the printed copy of BS 7671 or try
+                again in a moment.
+              </p>
+            ) : data ? (
+              <article className="space-y-4">
+                {(data.part || data.chapter || data.section) && (
+                  <div className="text-[11.5px] uppercase tracking-[0.14em] text-white/55">
+                    {[data.part, data.chapter, data.section].filter(Boolean).join(' · ')}
+                  </div>
+                )}
+                <blockquote className="text-[15px] sm:text-[15.5px] text-white leading-[1.6] border-l-2 border-purple-500/40 pl-4 space-y-3 whitespace-pre-line break-words">
+                  {cleanRegText(data.content)
+                    .split(/\n\n+/)
+                    .map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                </blockquote>
+                {data.page_number != null && (
+                  <div className="pt-3 mt-3 border-t border-white/[0.06] text-[11.5px] text-white/55">
+                    Page {data.page_number} · BS 7671:2018+A4:2026
+                  </div>
+                )}
+              </article>
+            ) : (
+              <p className="text-[14px] text-white/65 leading-relaxed">
+                No verbatim text on file for {regNumber}. The reg may be a heading or section marker
+                — check the printed copy.
+              </p>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
+  );
+}
+
+/* ── AppendixTable — mobile-friendly tabular wrapper for App 4 / Table 51 etc. ── */
+
+interface AppendixTableProps {
+  /** Caption shown above the table. */
+  caption: string;
+  /** Optional source reference (e.g. "BS 7671:2018+A4:2026 — Table 4D4A"). */
+  source?: string;
+  /** Column headings — first heading is rendered sticky on mobile. */
+  headers: string[];
+  /** Row data — each row is an array matching the header order. */
+  rows: ReactNode[][];
+  /** Optional footnotes under the table. */
+  notes?: ReactNode;
+  className?: string;
+}
+
+export function AppendixTable({
+  caption,
+  source,
+  headers,
+  rows,
+  notes,
+  className,
+}: AppendixTableProps) {
+  return (
+    <figure
+      className={cn(
+        'relative rounded-2xl bg-[hsl(0_0%_10%)] border border-white/[0.06] overflow-hidden',
+        className
+      )}
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/40 via-amber-400/40 to-orange-400/40 opacity-70" />
+
+      <figcaption className="px-5 pt-4 sm:px-6 sm:pt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Reference table
+        </span>
+        <span className="text-[14.5px] sm:text-[15.5px] font-semibold text-white tracking-tight">
+          {caption}
+        </span>
+        {source && (
+          <span className="ml-auto text-[10.5px] text-white/55 tracking-wide">{source}</span>
+        )}
+      </figcaption>
+
+      <div className="px-3 pt-3 pb-3 sm:px-5 sm:pt-4 sm:pb-4 overflow-x-auto">
+        <table className="w-full min-w-[480px] text-left text-[12.5px] sm:text-[13px] text-white/90 border-collapse">
+          <thead>
+            <tr className="border-b border-white/[0.08]">
+              {headers.map((h, i) => (
+                <th
+                  key={i}
+                  scope="col"
+                  className={cn(
+                    'px-3 py-2.5 font-semibold text-[11px] sm:text-[11.5px] uppercase tracking-[0.12em] text-elec-yellow/85 align-bottom',
+                    i === 0 && 'sticky left-0 z-10 bg-[hsl(0_0%_10%)] sm:static sm:bg-transparent',
+                    i === 0 ? 'min-w-[140px]' : 'min-w-[88px]'
+                  )}
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-white/[0.04]">
+            {rows.map((row, ri) => (
+              <tr key={ri} className="hover:bg-white/[0.02] transition-colors">
+                {row.map((cell, ci) => (
+                  <td
+                    key={ci}
+                    className={cn(
+                      'px-3 py-2.5 align-top leading-relaxed',
+                      ci === 0 &&
+                        'sticky left-0 z-10 bg-[hsl(0_0%_10%)] sm:static sm:bg-transparent font-medium text-white'
+                    )}
+                  >
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {notes && (
+        <div className="px-5 pb-4 sm:px-6 sm:pb-5 -mt-1 border-t border-white/[0.06] pt-3 text-[12px] text-white/70 leading-relaxed">
+          {notes}
+        </div>
+      )}
+    </figure>
   );
 }

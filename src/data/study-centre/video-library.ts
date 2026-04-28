@@ -74,7 +74,7 @@ export const videos = {
   conventionalCurrent: lookup(
     'MUh_dOcqgVw',
     'Conventional current vs electron flow · Unit 202 LO1',
-    ['1.1'],
+    ['1.1']
   ),
   multimeter: lookup('J3kKNNizARc', 'Using a multimeter · Unit 202 LO1', ['1.3']),
 
@@ -92,33 +92,22 @@ export const videos = {
   /* ── Section 4 — Magnetism, motors, transformers (LO4) ──────────── */
 
   dcMotor: lookup('GQatiB-JHdI', 'How a DC motor works · Unit 202 LO4', ['4.1', '4.2']),
-  inductionMotor: lookup(
-    '59HBoIXzX_c',
-    'Three-phase AC induction motors · Unit 202 LO4',
-    ['4.1', '4.2'],
-  ),
+  inductionMotor: lookup('59HBoIXzX_c', 'Three-phase AC induction motors · Unit 202 LO4', [
+    '4.1',
+    '4.2',
+  ]),
   alternators: lookup('jdSKlg80DjU', 'How alternators work · Unit 202 LO4', ['4.3']),
   acGenerator: lookup('WhATjUHgzxQ', 'AC generator basics · Unit 202 LO4', ['4.3']),
   transformers: lookup('jcY4QN7awEc', 'How transformers work · Unit 202 LO4', ['4.3']),
-  threePhaseTransformers: lookup(
-    'u0SsejDCVkU',
-    'Three-phase transformers · Unit 202 LO4',
-    ['4.3'],
-  ),
+  threePhaseTransformers: lookup('u0SsejDCVkU', 'Three-phase transformers · Unit 202 LO4', ['4.3']),
 
   /* ── Section 5 — AC theory, single + three phase (LO5) ──────────── */
 
   acBasics: lookup('OUcKJuMSSW4', 'AC basics · Unit 202 LO5', ['5.1']),
   acVsDc: lookup('2jqJZxxX6gQ', 'AC vs DC electricity · Unit 202 LO5', ['5.1']),
   singlePhase: lookup('W0_1xRqT8uU', 'Single-phase electricity · Unit 202 LO5', ['5.1']),
-  threePhase: lookup('4oRT7PoXSS0', 'How three-phase electricity works · Unit 202 LO5', [
-    '5.2',
-  ]),
-  threePhaseCalcs: lookup(
-    'qthuFLNSrlg',
-    'Three-phase calculations · Unit 202 LO5',
-    ['5.2', '5.3'],
-  ),
+  threePhase: lookup('4oRT7PoXSS0', 'How three-phase electricity works · Unit 202 LO5', ['5.2']),
+  threePhaseCalcs: lookup('qthuFLNSrlg', 'Three-phase calculations · Unit 202 LO5', ['5.2', '5.3']),
 
   /* ── Section 6 — Components, semiconductors, control gear (LO6) ── */
 
@@ -128,7 +117,7 @@ export const videos = {
   capacitorCalcs: lookup(
     'ucEiEic-kZ4',
     'Capacitor calculations — series and parallel · Unit 202 LO6',
-    ['6.2'],
+    ['6.2']
   ),
   inductors: lookup('KSylo01n5FY', 'Inductors explained · Unit 202 LO6', ['6.1']),
   leds: lookup('O8M2z2hIbag', 'How LEDs work · Unit 202 LO6', ['6.1']),
@@ -138,11 +127,7 @@ export const videos = {
 
   fuses: lookup('W770Z1yvXs8', 'How fuses work · Unit 202 LO7', ['7.1']),
   batteries: lookup('PXNKkcB0pI4', 'How batteries work · Unit 202 LO7', ['7.2']),
-  electricHeating: lookup(
-    'FOh0iesTvx0',
-    'Electric heating systems · Unit 202 LO7',
-    ['7.3'],
-  ),
+  electricHeating: lookup('FOh0iesTvx0', 'Electric heating systems · Unit 202 LO7', ['7.3']),
 
   /* ── Module 3 — Electrical installations technology (Unit 203) ──── */
 
@@ -150,58 +135,55 @@ export const videos = {
   circuitBreakersDontProtectPeople: lookup(
     'gqEu9t8HwW0',
     "Why circuit breakers don't protect people · Unit 203 LO4",
-    ['4.2'],
+    ['4.2']
   ),
   // §4 Earthing — Ze test on a single-phase supply (Craig Wiltshire)
-  zeTest: lookup(
-    'CSMpfjSQK-g',
-    'Ze test on a single-phase supply · Unit 203 LO4',
-    ['4.5'],
-  ),
+  zeTest: lookup('CSMpfjSQK-g', 'Ze test on a single-phase supply · Unit 203 LO4', ['4.5']),
   // §5 Supply — how transformers step voltage up and down (transmission)
   transformerStepUpDown: lookup(
     'lWEaGGZv8n8',
     'How transformers step voltage up and down · Unit 203 LO5',
-    ['5.2'],
+    ['5.2']
   ),
   // §6 Micro-renewables — what an inverter is and how it works (PV / battery)
-  inverter: lookup(
-    '8XI6GVLjPng',
-    'What an inverter is and how it works · Unit 203 LO6',
-    ['6.1', '6.2'],
-  ),
+  inverter: lookup('8XI6GVLjPng', 'What an inverter is and how it works · Unit 203 LO6', [
+    '6.1',
+    '6.2',
+  ]),
   // §6 Micro-renewables — lead-acid battery electrochemistry (storage)
-  leadAcidBatteries: lookup(
-    'hObLxlXJPPM',
-    'How lead-acid batteries work · Unit 203 LO6',
-    ['6.1'],
-  ),
+  leadAcidBatteries: lookup('hObLxlXJPPM', 'How lead-acid batteries work · Unit 203 LO6', ['6.1']),
 
   /* ── Module 4 (Unit 204) — Installation, inspection & testing ────── */
 
   // §3 Safe isolation — JIB 9-step procedure: where to test (Craig Wiltshire)
-  safeIsolation: lookup(
-    'YMJzWC_e_Uw',
-    'JIB safe isolation — where to test · Unit 204 LO3',
-    ['3.7'],
-  ),
+  safeIsolation: lookup('YMJzWC_e_Uw', 'JIB safe isolation — where to test · Unit 204 LO3', [
+    '3.7',
+  ]),
   // §6 Ring final test — three-part method (Craig Wiltshire)
-  ringFinalTest: lookup(
-    'K7-FxWD87Kg',
-    'Ring final continuity test · Unit 204 LO6',
-    ['6.2'],
-  ),
+  ringFinalTest: lookup('K7-FxWD87Kg', 'Ring final continuity test · Unit 204 LO6', ['6.2']),
   // §6 Insulation resistance — A4:2026 procedure (Craig Wiltshire)
-  insulationResistanceAmd2: lookup(
-    'sWvtpLZsAEE',
-    'Insulation resistance per AMD2 · Unit 204 LO6',
-    ['6.3'],
-  ),
+  insulationResistanceAmd2: lookup('sWvtpLZsAEE', 'Insulation resistance per AMD2 · Unit 204 LO6', [
+    '6.3',
+  ]),
   // §5 Schedule of Inspections — full walkthrough (Craig Wiltshire)
   scheduleOfInspections: lookup(
     'DJn8KIQkApo',
     'Schedule of Inspections walkthrough · Unit 204 LO5',
-    ['5.1'],
+    ['5.1']
+  ),
+
+  /* ── Module 303 (Unit 303 / L3) — Fault diagnosis & rectification ─── */
+
+  // §3 Fault symptoms — describing faults in assessment context (Craig Wiltshire)
+  faultFinding: lookup('4_YaoRGUB5Y', 'Fault finding and how to describe a fault · Unit 303 LO3', [
+    '3.2',
+    '3.3',
+  ]),
+  // §4 2357 Faults Presentation — systematic fault tracing (Craig Wiltshire)
+  faultsPresentation2357: lookup(
+    '9p0_OqPdLLo',
+    '2357 faults presentation — systematic tracing · Unit 303 LO4',
+    ['4.5']
   ),
 } as const satisfies Record<string, VideoLibraryEntry>;
 
