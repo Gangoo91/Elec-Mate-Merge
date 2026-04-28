@@ -107,13 +107,22 @@ export default function CollegeOtjPage() {
           <h1 className="text-2xl sm:text-[32px] font-semibold text-white tracking-tight leading-tight">
             OTJ overview
           </h1>
-          <button
-            type="button"
-            onClick={handleExport}
-            className="h-10 px-4 rounded-full text-[12.5px] font-medium border border-white/[0.12] text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
-          >
-            Export ESFA CSV
-          </button>
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              type="button"
+              onClick={() => navigate('/college/otj/inbox')}
+              className="h-10 px-4 rounded-full text-[12.5px] font-semibold bg-amber-500 text-black hover:bg-amber-400 transition-colors touch-manipulation"
+            >
+              Verification inbox →
+            </button>
+            <button
+              type="button"
+              onClick={handleExport}
+              className="h-10 px-4 rounded-full text-[12.5px] font-medium border border-white/[0.12] text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+            >
+              Export ESFA CSV
+            </button>
+          </div>
         </div>
         <p className="mt-2 text-[12.5px] text-white/65 leading-relaxed max-w-2xl">
           ESFA expects 6 hours per week off-the-job training. Banding shows whether

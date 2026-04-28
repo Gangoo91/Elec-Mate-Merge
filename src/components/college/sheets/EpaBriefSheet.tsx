@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Wand2, RotateCw, Printer, Heart, AlertTriangle, BookOpen, Sparkles, Target, ListChecks, History, ChevronDown } from 'lucide-react';
+import { RotateCw, Printer, AlertTriangle, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   SheetShell,
@@ -139,31 +139,21 @@ export function EpaBriefSheet({ open, onOpenChange, collegeStudentId, studentNam
 
 function LoadingState() {
   return (
-    <div className="space-y-4">
-      <div className="relative rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
-        <div
-          className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-elec-yellow to-transparent opacity-80"
-          style={{ animation: 'shimmer 1.4s ease-in-out infinite' }}
-        />
-        <style>{`@keyframes shimmer { 0%,100% { transform: translateX(-30%); opacity: 0.4 } 50% { transform: translateX(30%); opacity: 1 } }`}</style>
-        <div className="px-5 py-5 flex items-center gap-3">
-          <Wand2 className="h-5 w-5 text-elec-yellow" />
-          <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-              Drafting your brief
-            </div>
-            <div className="mt-0.5 text-[12px] text-white/85">
-              Reading your weak units, observations, mocks, and BS 7671 hot zones…
-            </div>
-          </div>
+    <div className="space-y-6 px-1">
+      <div>
+        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
+          Drafting your brief
         </div>
+        <p className="mt-2 text-[13px] text-white leading-relaxed">
+          Reading your weak units, observations, mock results, and BS 7671 hot zones…
+        </p>
       </div>
-      <div className="space-y-3 animate-pulse">
+      <div className="space-y-4 animate-pulse">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="rounded-2xl border border-white/[0.04] bg-[hsl(0_0%_12%)] px-5 py-4">
-            <div className="h-2.5 w-1/3 rounded bg-white/[0.06]" />
-            <div className="mt-2 h-2 w-3/4 rounded bg-white/[0.04]" />
-            <div className="mt-1.5 h-2 w-2/3 rounded bg-white/[0.04]" />
+          <div key={i}>
+            <div className="h-2.5 w-1/3 rounded bg-white/[0.08]" />
+            <div className="mt-2.5 h-2 w-3/4 rounded bg-white/[0.06]" />
+            <div className="mt-1.5 h-2 w-2/3 rounded bg-white/[0.06]" />
           </div>
         ))}
       </div>
@@ -173,92 +163,100 @@ function LoadingState() {
 
 function ErrorState({ message }: { message: string | null }) {
   return (
-    <div className="rounded-2xl border border-red-500/[0.2] bg-[hsl(0_0%_12%)] px-5 py-4 flex items-center gap-3">
-      <div className="p-2 rounded-xl bg-red-500/15 flex-shrink-0">
-        <AlertTriangle className="h-5 w-5 text-red-300" />
+    <div className="px-1">
+      <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-red-300">
+        Could not generate brief
       </div>
-      <div className="min-w-0 flex-1">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-red-300">
-          Could not generate brief
-        </div>
-        <p className="mt-1 text-[12.5px] text-white/85 leading-relaxed">
-          {message ?? 'Try again in a moment.'}
-        </p>
-      </div>
+      <p className="mt-2 text-[13px] text-white leading-relaxed">
+        {message ?? 'Try again in a moment.'}
+      </p>
     </div>
   );
 }
 
 function BriefView({ brief }: { brief: EpaBrief }) {
   return (
-    <div className="space-y-4">
-      {/* Intro */}
-      <div className="rounded-2xl border border-elec-yellow/[0.18] bg-elec-yellow/[0.04] px-5 py-4 flex items-start gap-3">
-        <Heart className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-        <p className="text-[13px] text-white/90 leading-relaxed">{brief.intro}</p>
-      </div>
+    <div className="space-y-7 px-1">
+      {/* Intro — typographic, no decorative card */}
+      <p className="text-[14px] sm:text-[15px] text-white leading-relaxed border-l-2 border-elec-yellow pl-4">
+        {brief.intro}
+      </p>
 
       {/* Viva topics */}
-      <Section icon={<Sparkles className="h-3.5 w-3.5 text-purple-300" />} label="5 likely viva topics">
-        <ol className="space-y-2.5">
+      <Section label="Five likely viva topics">
+        <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
           {brief.likely_viva_topics.map((t, i) => (
-            <li key={i} className="rounded-xl bg-[hsl(0_0%_14%)] border border-white/[0.04] px-4 py-3">
-              <div className="flex items-baseline gap-2">
-                <span className="text-[11px] text-white/45 tabular-nums">{i + 1}.</span>
-                <h4 className="text-[13.5px] font-semibold text-white leading-tight">{t.topic}</h4>
+            <li key={i} className="py-4 flex items-baseline gap-3">
+              <span className="text-[11px] text-white/55 tabular-nums font-mono w-6 flex-shrink-0">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div className="min-w-0 flex-1">
+                <h4 className="text-[13.5px] sm:text-[14px] font-semibold text-white leading-snug">
+                  {t.topic}
+                </h4>
+                <p className="mt-1.5 text-[12.5px] text-white leading-relaxed">
+                  <span className="text-white/55">Why this for you. </span>
+                  {t.why}
+                </p>
+                <p className="mt-1 text-[12.5px] text-elec-yellow leading-relaxed">
+                  <span className="text-elec-yellow/65">Prep. </span>
+                  {t.prep}
+                </p>
               </div>
-              <p className="mt-1.5 text-[11.5px] text-white/65 leading-snug">
-                <span className="text-white/45">Why this for you:</span> {t.why}
-              </p>
-              <p className="mt-1 text-[11.5px] text-elec-yellow/85 leading-snug">
-                <span className="text-elec-yellow/55">Prep:</span> {t.prep}
-              </p>
             </li>
           ))}
         </ol>
       </Section>
 
-      {/* BS 7671 hot zones */}
-      <Section icon={<BookOpen className="h-3.5 w-3.5 text-blue-300" />} label="BS 7671 hot zones">
-        <ul className="space-y-2">
+      {/* BS 7671 hot zones — editorial citation list */}
+      <Section label="BS 7671 hot zones">
+        <ul className="space-y-3">
           {brief.bs7671_hot_zones.map((z, i) => (
-            <li key={i} className="flex items-start gap-3">
-              <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-blue-500/[0.12] border border-blue-500/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-blue-200 flex-shrink-0">
+            <li key={i} className="border-l-2 border-blue-400/40 pl-3 break-words">
+              <div className="text-[11px] font-semibold tracking-[0.04em] text-blue-200 break-all">
                 {z.ref}
-              </span>
-              <p className="text-[12px] text-white/85 leading-snug">{z.what_to_remember}</p>
+              </div>
+              <p className="mt-1 text-[12.5px] text-white leading-relaxed">
+                {z.what_to_remember}
+              </p>
             </li>
           ))}
         </ul>
       </Section>
 
       {/* Weak ACs */}
-      <Section icon={<ListChecks className="h-3.5 w-3.5 text-amber-300" />} label="Weak ACs to revise">
-        <ul className="space-y-2.5">
+      <Section label="ACs to revise hardest">
+        <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
           {brief.weak_ac_revision.map((a, i) => (
-            <li key={i} className="rounded-xl bg-[hsl(0_0%_14%)] border border-white/[0.04] px-4 py-3">
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-amber-500/[0.10] border border-amber-500/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-amber-200">
+            <li key={i} className="py-3.5">
+              <div className="flex items-baseline gap-2 flex-wrap">
+                <span className="text-[10.5px] font-semibold tracking-[0.06em] uppercase text-amber-300">
                   {a.unit_code}
                 </span>
-                <span className="text-[12.5px] text-white">{a.focus}</span>
+                <span className="text-[13px] sm:text-[13.5px] font-medium text-white leading-snug">
+                  {a.focus}
+                </span>
               </div>
               {a.exemplar && (
-                <p className="mt-1.5 text-[11.5px] text-white/65 leading-snug">
-                  <span className="text-white/45">Picture:</span> {a.exemplar}
+                <p className="mt-1.5 text-[12px] text-white leading-relaxed">
+                  <span className="text-white/55">Picture this. </span>
+                  {a.exemplar}
                 </p>
               )}
             </li>
           ))}
-        </ul>
+        </ol>
       </Section>
 
       {/* Common pitfalls */}
-      <Section icon={<AlertTriangle className="h-3.5 w-3.5 text-orange-300" />} label="Watch out for">
-        <ul className="space-y-1.5">
+      <Section label="Watch out for">
+        <ul className="space-y-2 text-[12.5px] text-white leading-relaxed">
           {brief.common_pitfalls.map((p, i) => (
-            <li key={i} className="text-[12px] text-white/85 leading-snug pl-3 relative">
-              <span aria-hidden className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-orange-400/85" />
+            <li key={i} className="pl-4 relative">
+              <span
+                aria-hidden
+                className="absolute left-0 top-[9px] h-1 w-1 rounded-full bg-orange-400"
+              />
               {p}
             </li>
           ))}
@@ -266,42 +264,42 @@ function BriefView({ brief }: { brief: EpaBrief }) {
       </Section>
 
       {/* Day of */}
-      <Section icon={<Target className="h-3.5 w-3.5 text-emerald-300" />} label="On the day">
-        <ul className="space-y-1.5">
+      <Section label="On the day">
+        <ul className="space-y-2 text-[12.5px] text-white leading-relaxed">
           {brief.day_of_advice.map((d, i) => (
-            <li key={i} className="text-[12px] text-white/85 leading-snug pl-3 relative">
-              <span aria-hidden className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-emerald-400/85" />
+            <li key={i} className="pl-4 relative">
+              <span
+                aria-hidden
+                className="absolute left-0 top-[9px] h-1 w-1 rounded-full bg-emerald-400"
+              />
               {d}
             </li>
           ))}
         </ul>
       </Section>
 
-      {/* Confidence message */}
-      <div className="rounded-2xl border border-elec-yellow/[0.30] bg-elec-yellow/[0.06] px-5 py-4">
-        <p className="text-[13px] text-white leading-relaxed font-medium">{brief.confidence_message}</p>
-      </div>
+      {/* Confidence message — left-rule editorial closer */}
+      <p className="text-[14px] sm:text-[15px] text-white leading-relaxed font-medium border-l-2 border-elec-yellow pl-4">
+        {brief.confidence_message}
+      </p>
     </div>
   );
 }
 
 function Section({
-  icon,
   label,
   children,
 }: {
-  icon: React.ReactNode;
   label: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-      <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-3">
-        {icon}
+    <section>
+      <h3 className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-white/65 mb-3">
         {label}
-      </div>
+      </h3>
       {children}
-    </div>
+    </section>
   );
 }
 
@@ -323,20 +321,15 @@ function ViewingPastBanner({
   onClose: () => void;
 }) {
   return (
-    <div className="rounded-2xl border border-blue-500/[0.20] bg-blue-500/[0.05] px-5 py-3 flex items-center gap-3">
-      <History className="h-4 w-4 text-blue-300 flex-shrink-0" />
-      <div className="min-w-0 flex-1">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-200">
-          Viewing past brief
-        </div>
-        <div className="mt-0.5 text-[12px] text-white/85">
-          Generated {formatDate(pastBrief.created_at)} for {pastBrief.generated_for}
-        </div>
-      </div>
+    <div className="px-1 -mt-1 mb-2 flex items-baseline justify-between gap-3 border-l-2 border-blue-400 pl-3">
+      <p className="text-[12.5px] text-white leading-snug">
+        <span className="text-blue-300 font-medium">Viewing past brief — </span>
+        Generated {formatDate(pastBrief.created_at)} for {pastBrief.generated_for}
+      </p>
       <button
         type="button"
         onClick={onClose}
-        className="text-[11.5px] font-medium text-white/85 hover:text-white touch-manipulation"
+        className="text-[11.5px] font-medium text-elec-yellow hover:text-elec-yellow/80 touch-manipulation flex-shrink-0"
       >
         Back to current
       </button>
@@ -358,64 +351,60 @@ function PastBriefsList({
   onSelectCurrent: () => void;
 }) {
   const [open, setOpen] = useState(false);
-  // Filter out the brief the user is currently viewing as "current" (just generated)
   const list = briefs.filter((b) => b.id !== currentId);
   if (list.length === 0) return null;
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
+    <section className="mt-8 px-1">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full px-5 py-3 flex items-center justify-between gap-3 hover:bg-white/[0.02] transition-colors touch-manipulation"
+        className="w-full flex items-baseline justify-between gap-3 py-2 touch-manipulation"
       >
-        <div className="flex items-center gap-2">
-          <History className="h-3.5 w-3.5 text-white/55" />
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Past briefs
-          </div>
-          <span className="text-[10.5px] text-white/45 tabular-nums">
-            {list.length}
-          </span>
-        </div>
-        <ChevronDown className={cn('h-4 w-4 text-white/55 transition-transform', open && 'rotate-180')} />
+        <h3 className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-white/65">
+          Past briefs · {list.length}
+        </h3>
+        <ChevronDown
+          className={cn(
+            'h-4 w-4 text-white/55 transition-transform',
+            open && 'rotate-180'
+          )}
+        />
       </button>
       {open && (
-        <ul className="divide-y divide-white/[0.04] border-t border-white/[0.04]">
+        <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06] mt-2">
           {activeId && (
-            <li>
+            <li className="py-3">
               <button
                 type="button"
                 onClick={onSelectCurrent}
-                className="w-full px-5 py-3 text-left hover:bg-white/[0.02] flex items-center gap-2 touch-manipulation"
+                className="text-[11.5px] font-medium text-elec-yellow hover:text-elec-yellow/80 touch-manipulation"
               >
-                <span className="text-[11.5px] text-elec-yellow font-medium">← Back to the current brief</span>
+                ← Back to the current brief
               </button>
             </li>
           )}
           {list.map((b) => (
-            <li key={b.id}>
+            <li key={b.id} className="py-3.5">
               <button
                 type="button"
                 onClick={() => onSelect(b.id)}
                 className={cn(
-                  'w-full px-5 py-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation',
-                  activeId === b.id && 'bg-blue-500/[0.04]'
+                  'w-full text-left touch-manipulation',
+                  activeId === b.id && 'opacity-80'
                 )}
               >
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[12.5px] text-white">
-                    {formatDate(b.created_at)}
-                  </span>
-                  <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9px] font-semibold tracking-[0.06em] uppercase text-white/55">
-                    {b.generated_for}
-                  </span>
+                <p className="text-[10.5px] tabular-nums text-white/65">
+                  {formatDate(b.created_at)}
+                  <Sep />
+                  <span className="capitalize">{b.generated_for}</span>
                   {b.facets_used > 0 && (
-                    <span className="text-[10.5px] text-white/45 tabular-nums">
-                      {b.facets_used} BS 7671 cite{b.facets_used === 1 ? '' : 's'}
-                    </span>
+                    <>
+                      <Sep />
+                      <span>{b.facets_used} BS 7671 cite{b.facets_used === 1 ? '' : 's'}</span>
+                    </>
                   )}
-                </div>
-                <p className="mt-1 text-[11.5px] text-white/65 leading-snug line-clamp-2">
+                </p>
+                <p className="mt-1 text-[12.5px] text-white leading-relaxed line-clamp-2">
                   {b.brief.intro}
                 </p>
               </button>
@@ -423,6 +412,10 @@ function PastBriefsList({
           ))}
         </ul>
       )}
-    </div>
+    </section>
   );
+}
+
+function Sep() {
+  return <span className="mx-1.5 text-white/25">·</span>;
 }

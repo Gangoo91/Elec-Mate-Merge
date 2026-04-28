@@ -40,6 +40,7 @@ import { MarkAttendanceSheet } from '@/components/college/sheets/MarkAttendanceS
 import { LogGradeSheet } from '@/components/college/sheets/LogGradeSheet';
 import { CreateQuizSheet } from '@/components/college/sheets/CreateQuizSheet';
 import { UploadAssessmentDocSheet } from '@/components/college/sheets/UploadAssessmentDocSheet';
+import { CurriculumStatusBadge } from '@/components/college/ui/CurriculumStatusBadge';
 
 /* ==========================================================================
    Student360Page — /college/students/:id
@@ -276,6 +277,13 @@ export default function Student360Page() {
                 <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-3">
                   On this learner
                 </div>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/college/ai-notebook?student=${core.id}`)}
+                  className="w-full text-left h-9 px-2 rounded-md text-[12px] font-semibold text-amber-300 hover:text-amber-200 hover:bg-white/[0.03] transition-colors touch-manipulation mb-2"
+                >
+                  Ask AI about {core.name.split(' ')[0]} →
+                </button>
                 <NavLink href="#next-best">Next best</NavLink>
                 <NavLink href="#risk">Risk</NavLink>
                 <NavLink href="#ilp">ILP</NavLink>
@@ -744,6 +752,7 @@ function IdentityHero({ core, risk }: { core: StudentCore; risk: RiskSnapshot | 
               <>
                 <span className="text-white/25">·</span>
                 <span>{core.course_name}</span>
+                <CurriculumStatusBadge courseId={core.course_id} variant="compact" />
               </>
             )}
             {core.uln && (

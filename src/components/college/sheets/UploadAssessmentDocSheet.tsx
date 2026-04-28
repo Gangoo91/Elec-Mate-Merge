@@ -341,6 +341,34 @@ export function UploadAssessmentDocSheet({
             <PreviewBlock result={ai.result} />
           ) : (
             <>
+              {/* Sticky context strip — pinned while form scrolls */}
+              <div className="sticky -top-5 -mx-5 px-5 py-2 bg-[hsl(0_0%_8%)]/95 backdrop-blur-md border-b border-white/[0.06] z-10 -mt-5 mb-1">
+                <div className="flex items-center gap-2 flex-wrap text-[10.5px] tabular-nums">
+                  <span className="inline-flex items-center gap-1 h-5 px-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white">
+                    {targetMode === 'cohort' ? <Users className="h-3 w-3" /> : <User className="h-3 w-3" />}
+                    {(() => {
+                      if (targetMode === 'cohort') {
+                        const c = cohorts.find((x) => x.id === selectedCohortId);
+                        return c ? `Cohort · ${c.name}` : 'Cohort · pick one';
+                      }
+                      if (studentName) return `For ${studentName.split(' ')[0]}`;
+                      return 'No target picked';
+                    })()}
+                  </span>
+                  <span className="inline-flex items-center h-5 px-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white capitalize">
+                    {targetKind === 'mock_exam' ? 'Mock exam' : targetKind} · {count} q · {difficulty}
+                  </span>
+                  <span className="inline-flex items-center h-5 px-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white">
+                    {timeLimit}m · {passMark}% pass
+                  </span>
+                  {isHomework && (
+                    <span className="inline-flex items-center h-5 px-2 rounded-full bg-purple-500/[0.10] border border-purple-400/30 text-purple-200">
+                      Homework
+                    </span>
+                  )}
+                </div>
+              </div>
+
               {/* Drop zone */}
               <div
                 onDragOver={(e) => {
@@ -462,7 +490,7 @@ export function UploadAssessmentDocSheet({
                     <select
                       value={selectedCohortId ?? ''}
                       onChange={(e) => setSelectedCohortId(e.target.value || null)}
-                      className="w-full h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
+                      className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
                     >
                       <option value="">Choose cohort…</option>
                       {cohorts.map((c) => (
@@ -482,7 +510,7 @@ export function UploadAssessmentDocSheet({
                   <select
                     value={selectedLessonPlanId ?? ''}
                     onChange={(e) => setSelectedLessonPlanId(e.target.value || null)}
-                    className="w-full h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
+                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
                   >
                     <option value="">No lesson plan</option>
                     {lessonPlans
@@ -508,7 +536,7 @@ export function UploadAssessmentDocSheet({
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="What should this quiz be called?"
-                  className="w-full h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white placeholder:text-white/35 px-4 touch-manipulation"
+                  className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white placeholder:text-white/35 px-4 touch-manipulation"
                 />
               </Field>
               <Field label="Description (optional)">
@@ -581,7 +609,7 @@ export function UploadAssessmentDocSheet({
               </Field>
 
               {/* Counts + thresholds */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Field label="Questions">
                   <input
                     type="number"
@@ -589,7 +617,7 @@ export function UploadAssessmentDocSheet({
                     max={30}
                     value={count}
                     onChange={(e) => setCount(Math.max(1, Math.min(30, Number(e.target.value) || 1)))}
-                    className="w-full h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[14px] tabular-nums text-white px-4 touch-manipulation"
+                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[14px] tabular-nums text-white px-4 touch-manipulation"
                   />
                 </Field>
                 <Field label="Difficulty">
@@ -618,7 +646,7 @@ export function UploadAssessmentDocSheet({
                     max={240}
                     value={timeLimit}
                     onChange={(e) => setTimeLimit(Math.max(1, Math.min(240, Number(e.target.value) || 1)))}
-                    className="w-full h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[14px] tabular-nums text-white px-4 touch-manipulation"
+                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[14px] tabular-nums text-white px-4 touch-manipulation"
                   />
                 </Field>
                 <Field label="Pass mark (%)">
@@ -628,7 +656,7 @@ export function UploadAssessmentDocSheet({
                     max={100}
                     value={passMark}
                     onChange={(e) => setPassMark(Math.max(0, Math.min(100, Number(e.target.value) || 0)))}
-                    className="w-full h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[14px] tabular-nums text-white px-4 touch-manipulation"
+                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[14px] tabular-nums text-white px-4 touch-manipulation"
                   />
                 </Field>
               </div>
@@ -660,7 +688,7 @@ export function UploadAssessmentDocSheet({
                     type="date"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
-                    className="w-full h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
+                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
                   />
                 </Field>
               )}
@@ -1048,18 +1076,19 @@ function QuestionPreviewCard({
         )}
         {q.bs7671_citations && q.bs7671_citations.length > 0 && (
           <div className="mt-2 pt-2 border-t border-white/[0.04]">
-            <div className="flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white mb-1">
-              <BookOpen className="h-3 w-3" />
+            <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-1.5">
               BS 7671
             </div>
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {q.bs7671_citations.map((c, k) => (
-                <li key={k} className="flex items-baseline gap-1.5">
-                  <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.10] border border-blue-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200 flex-shrink-0">
+                <li key={k} className="border-l-2 border-blue-400/30 pl-2.5 break-words">
+                  <div className="text-[10px] font-semibold tracking-[0.04em] text-blue-200 break-all">
                     {c.ref}
-                  </span>
+                  </div>
                   {c.snippet && (
-                    <span className="text-[10.5px] text-white/85 leading-snug">{c.snippet}</span>
+                    <p className="mt-0.5 text-[11px] text-white/85 leading-relaxed break-words">
+                      {c.snippet}
+                    </p>
                   )}
                 </li>
               ))}

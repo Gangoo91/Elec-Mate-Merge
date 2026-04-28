@@ -10,10 +10,13 @@ import {
   AlertTriangle,
   Check,
   TrendingUp,
+  Download,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageFrame, LoadingState } from '@/components/college/primitives';
 import { useTutorQuizzes, type TutorQuizListItem, type TutorQuizKind } from '@/hooks/useTutorQuizzes';
+import { rowsToCsv, downloadCsv } from '@/lib/csv';
+import { useToast } from '@/hooks/use-toast';
 
 /* ==========================================================================
    TutorQuizzesPage — /college/quizzes
@@ -27,10 +30,70 @@ type SortKey = 'recent' | 'completion' | 'avg' | 'pass_rate';
 
 export default function TutorQuizzesPage() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const { quizzes, loading } = useTutorQuizzes();
   const [status, setStatus] = useState<StatusFilter>('all');
   const [kind, setKind] = useState<KindFilter>('all');
   const [sort, setSort] = useState<SortKey>('recent');
+
+  const handleExportCsv = () => {
+    const list = filtered;
+    if (list.length === 0) {
+      toast({ title: 'Nothing to export', description: 'Filter matches no quizzes.' });
+      return;
+    }
+    const rows = list.map((q) => ({
+      title: q.title,
+      kind: q.kind,
+      status: q.is_published ? 'published' : 'draft',
+      qualification: q.qualification_code ?? '',
+      cohort: q.cohort_name ?? '',
+      questions: q.questions_count,
+      time_limit_minutes: q.time_limit_minutes ?? '',
+      pass_mark_percent: q.pass_mark ?? '',
+      is_homework: q.is_homework ? 'yes' : 'no',
+      due_date: q.due_date ?? '',
+      assigned: q.assigned_count,
+      completed: q.completed_count,
+      in_progress: q.in_progress_count,
+      overdue: q.overdue_count,
+      ai_marks_pending: q.pending_ai_grade_count,
+      avg_score_percent: q.avg_percentage ?? '',
+      pass_rate_percent: q.pass_rate_percent ?? '',
+      source: q.source ?? '',
+      from_document: q.source_document_id ? 'yes' : 'no',
+      created_at: q.created_at ?? '',
+      published_at: q.published_at ?? '',
+      quiz_id: q.id,
+    }));
+    const csv = rowsToCsv(rows, [
+      { key: 'title', header: 'Title' },
+      { key: 'kind', header: 'Kind' },
+      { key: 'status', header: 'Status' },
+      { key: 'qualification', header: 'Qualification' },
+      { key: 'cohort', header: 'Cohort' },
+      { key: 'questions', header: 'Questions' },
+      { key: 'time_limit_minutes', header: 'Time limit (min)' },
+      { key: 'pass_mark_percent', header: 'Pass mark %' },
+      { key: 'is_homework', header: 'Homework' },
+      { key: 'due_date', header: 'Due date' },
+      { key: 'assigned', header: 'Assigned' },
+      { key: 'completed', header: 'Completed' },
+      { key: 'in_progress', header: 'In progress' },
+      { key: 'overdue', header: 'Overdue' },
+      { key: 'ai_marks_pending', header: 'AI marks pending' },
+      { key: 'avg_score_percent', header: 'Avg score %' },
+      { key: 'pass_rate_percent', header: 'Pass rate %' },
+      { key: 'source', header: 'Source' },
+      { key: 'from_document', header: 'From document' },
+      { key: 'created_at', header: 'Created at' },
+      { key: 'published_at', header: 'Published at' },
+      { key: 'quiz_id', header: 'Quiz ID' },
+    ]);
+    const stamp = new Date().toISOString().slice(0, 10);
+    downloadCsv(csv, `tutor-quizzes-${stamp}.csv`);
+    toast({ title: 'CSV exported', description: `${rows.length} quizzes` });
+  };
 
   const filtered = useMemo(() => {
     let list = [...quizzes];
@@ -151,6 +214,16 @@ export default function TutorQuizzesPage() {
         </FilterPill>
 
         <div className="ml-auto flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={handleExportCsv}
+            disabled={loading || filtered.length === 0}
+            title="Export the visible quizzes to CSV"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08] text-[11px] touch-manipulation disabled:opacity-50"
+          >
+            <Download className="h-3 w-3" />
+            Export CSV
+          </button>
           <button
             type="button"
             onClick={() =>

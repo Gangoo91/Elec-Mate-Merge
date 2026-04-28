@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Brain, FileUp, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Pill, type Tone } from '@/components/college/primitives';
@@ -68,6 +69,7 @@ export function SectionQuizzes({
   userId: string | null;
   collegeStudentId?: string;
 }) {
+  const navigate = useNavigate();
   const { attempts, rollUp, loading } = useStudentQuizzes(userId);
   const [expanded, setExpanded] = useState(false);
   const [reviewAttemptId, setReviewAttemptId] = useState<string | null>(null);
@@ -169,15 +171,21 @@ export function SectionQuizzes({
           </div>
         ) : (
           <div className="space-y-2.5">
-            {visible.map((a) => (
-              <AttemptRow
-                key={a.id}
-                attempt={a}
-                onClick={
-                  a.source === 'tutor_quiz' ? () => setReviewAttemptId(a.id) : undefined
+            {visible.map((a) => {
+              // Tutor-authored attempts → open the review sheet (use the raw
+              // attempt_id, NOT the namespaced `tq_` id).
+              // Tutor-authored "Sent" entries (no attempt yet) → jump to the
+              // per-quiz detail page so the tutor can preview / unpublish.
+              let onClick: (() => void) | undefined;
+              if (a.source === 'tutor_quiz') {
+                if (a.attempt_id) {
+                  onClick = () => setReviewAttemptId(a.attempt_id ?? null);
+                } else if (a.quiz_id) {
+                  onClick = () => navigate(`/college/quizzes/${a.quiz_id}`);
                 }
-              />
-            ))}
+              }
+              return <AttemptRow key={a.id} attempt={a} onClick={onClick} />;
+            })}
             {attempts.length > 8 && (
               <button
                 type="button"
@@ -266,12 +274,17 @@ function AttemptRow({
   attempt: AssessmentEntry;
   onClick?: () => void;
 }) {
-  const verdict =
-    attempt.passed === true
-      ? { label: 'Pass', class: 'text-emerald-300', dot: 'bg-emerald-400' }
-      : attempt.passed === false
-        ? { label: 'Fail', class: 'text-red-300', dot: 'bg-red-400' }
-        : null;
+  const isSent = attempt.status === 'sent';
+  const isInProgress = attempt.status === 'in_progress';
+  const verdict = isSent
+    ? { label: 'Sent', class: 'text-blue-300', dot: 'bg-blue-400' }
+    : isInProgress
+      ? { label: 'In progress', class: 'text-amber-300', dot: 'bg-amber-400' }
+      : attempt.passed === true
+        ? { label: 'Pass', class: 'text-emerald-300', dot: 'bg-emerald-400' }
+        : attempt.passed === false
+          ? { label: 'Fail', class: 'text-red-300', dot: 'bg-red-400' }
+          : null;
 
   const Wrapper: React.ElementType = onClick ? 'button' : 'div';
   const wrapperProps = onClick
@@ -298,13 +311,27 @@ function AttemptRow({
               <h3 className="text-[13.5px] font-medium text-white leading-tight truncate">
                 {attempt.title}
               </h3>
+              {attempt.kind === 'assessment' && (
+                <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-cyan-500/[0.10] border border-cyan-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-cyan-200">
+                  Assessment
+                </span>
+              )}
+              {attempt.kind === 'mock_exam' && (
+                <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-orange-500/[0.10] border border-orange-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-orange-200">
+                  Mock exam
+                </span>
+              )}
               {verdict && (
                 <span
                   className={cn(
                     'inline-flex items-center h-5 px-1.5 rounded-md border text-[10px] font-semibold tracking-[0.06em] uppercase',
                     verdict.label === 'Pass'
                       ? 'border-emerald-500/30 bg-emerald-500/[0.1] text-emerald-200'
-                      : 'border-red-500/30 bg-red-500/[0.1] text-red-200'
+                      : verdict.label === 'Fail'
+                        ? 'border-red-500/30 bg-red-500/[0.1] text-red-200'
+                        : verdict.label === 'In progress'
+                          ? 'border-amber-500/30 bg-amber-500/[0.1] text-amber-200'
+                          : 'border-blue-500/30 bg-blue-500/[0.1] text-blue-200'
                   )}
                 >
                   {verdict.label}

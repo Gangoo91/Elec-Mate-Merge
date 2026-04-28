@@ -103,9 +103,60 @@ export function StudentMessageSheet({
     loadMessages(activeThreadId);
   }, [activeThreadId, loadMessages]);
 
-  // Realtime: merge new messages for the active thread as they arrive
+  // When the tutor opens a thread, mark it read via the RPC. The RPC
+  // bypasses RLS in a single SECURITY DEFINER call: zeroes their counter
+  // and stamps read_at on apprentice-sent messages. Replaces the previous
+  // two-step UPDATE (which had race + RLS friction).
   useEffect(() => {
-    if (!activeThreadId) return;
+    if (!activeThreadId || !open) return;
+    let cancelled = false;
+    (async () => {
+      await supabase.rpc('mark_message_thread_read', { p_thread_id: activeThreadId });
+      if (cancelled) return;
+      setThreads((prev) =>
+        prev.map((t) => (t.id === activeThreadId ? { ...t, unread_count_tutor: 0 } : t))
+      );
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [activeThreadId, open]);
+
+  // Realtime: thread-level changes (new threads, last_message_at bumps,
+  // unread count from another tutor session). Keeps the list view live.
+  useEffect(() => {
+    if (!open) return;
+    const channel = supabase
+      .channel(`student_message_threads:${studentId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'student_message_threads',
+          filter: `student_id=eq.${studentId}`,
+        },
+        () => {
+          supabase
+            .from('student_message_threads')
+            .select('id, subject, last_message_at, unread_count_tutor')
+            .eq('student_id', studentId)
+            .order('last_message_at', { ascending: false })
+            .limit(50)
+            .then(({ data }) => setThreads((data ?? []) as Thread[]));
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [open, studentId]);
+
+  // Realtime: merge new messages for the active thread as they arrive.
+  // Gated on `open` so closing the sheet tears down the subscription —
+  // otherwise reopening the same sheet would stack duplicate channels.
+  useEffect(() => {
+    if (!open || !activeThreadId) return;
     const channel = supabase
       .channel(`student_messages:${activeThreadId}`)
       .on(
@@ -128,7 +179,7 @@ export function StudentMessageSheet({
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [activeThreadId]);
+  }, [open, activeThreadId]);
 
   // Scroll to bottom when new messages arrive
   useEffect(() => {
@@ -184,7 +235,9 @@ export function StudentMessageSheet({
             college_id: profile.college_id,
             subject: subjectForNewThread || null,
             created_by: staff?.id ?? null,
-            unread_count_student: 1,
+            // No counter seeding — the bump_thread_counters trigger
+            // sets unread_count_student when the tutor's first message
+            // is inserted immediately after.
           })
           .select('id, subject, last_message_at, unread_count_tutor')
           .maybeSingle();
@@ -213,14 +266,50 @@ export function StudentMessageSheet({
         )
       );
 
-      await supabase
-        .from('student_message_threads')
-        .update({
-          last_message_at: new Date().toISOString(),
-          unread_count_student:
-            (threads.find((t) => t.id === threadId)?.unread_count_tutor ?? 0) + 1,
-        })
-        .eq('id', threadId);
+      // No manual counter update — the bump_thread_counters trigger on
+      // student_messages handles unread_count_student and last_message_at
+      // atomically (avoids race + RLS friction).
+
+      // Fire-and-forget push notification to the apprentice. We resolve
+      // the apprentice's auth uid from the college_students row (since
+      // studentId here is college_students.id, not auth.users.id).
+      void (async () => {
+        try {
+          const { data: cs } = await supabase
+            .from('college_students')
+            .select('user_id')
+            .eq('id', studentId)
+            .maybeSingle();
+          const apprenticeUid = (cs as { user_id?: string | null } | null)?.user_id ?? null;
+          if (!apprenticeUid) return;
+          const { data: session } = await supabase.auth.getSession();
+          const token = session.session?.access_token;
+          if (!token) return;
+          await fetch(
+            `${(import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? ''}/functions/v1/send-push-notification`,
+            {
+              method: 'POST',
+              headers: {
+                'content-type': 'application/json',
+                authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                userId: apprenticeUid,
+                title: 'New message from your tutor',
+                body: trimmed.slice(0, 140),
+                type: 'college',
+                data: {
+                  kind: 'tutor_message',
+                  thread_id: threadId,
+                  deeplink: '/apprentice/college-plan#plan',
+                },
+              }),
+            }
+          );
+        } catch (err) {
+          console.error('tutor message push failed:', (err as Error).message);
+        }
+      })();
     } catch (e) {
       // Roll back the optimistic bubble
       setMessages((prev) => prev.filter((m) => m.id !== optimisticToken));

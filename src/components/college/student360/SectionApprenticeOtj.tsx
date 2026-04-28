@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Pill, type Tone } from '@/components/college/primitives';
 import { useApprenticeOtj, type OtjEntry, type OtjSource } from '@/hooks/useApprenticeOtj';
+import { OtjVerificationPanel } from '@/components/college/student360/OtjVerificationPanel';
 
 /* ==========================================================================
    SectionApprenticeOtj — cross-hub Off-the-Job training panel.
@@ -62,6 +64,7 @@ export function SectionApprenticeOtj({
   weeklyTargetMinutes?: number;
   onAdd: () => void;
 }) {
+  const navigate = useNavigate();
   const { entries, breakdown, loading } = useApprenticeOtj(userId, weeklyTargetMinutes);
   const [expanded, setExpanded] = useState(false);
 
@@ -83,13 +86,22 @@ export function SectionApprenticeOtj({
             OTJ activity
           </h2>
         </div>
-        <button
-          onClick={onAdd}
-          disabled={noLink}
-          className="text-[12px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors touch-manipulation no-print disabled:opacity-40"
-        >
-          Log college activity →
-        </button>
+        <div className="flex items-center gap-3 flex-wrap no-print">
+          <button
+            type="button"
+            onClick={() => navigate('/college/otj/inbox')}
+            className="text-[12px] font-medium text-amber-300/85 hover:text-amber-200 transition-colors touch-manipulation"
+          >
+            Verification inbox →
+          </button>
+          <button
+            onClick={onAdd}
+            disabled={noLink}
+            className="text-[12px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors touch-manipulation disabled:opacity-40"
+          >
+            Log college activity →
+          </button>
+        </div>
       </div>
 
       {noLink ? (
@@ -104,6 +116,12 @@ export function SectionApprenticeOtj({
           <div className="mt-5 grid grid-cols-1 md:grid-cols-[260px_minmax(0,1fr)] gap-4">
             <ProgressCard breakdown={breakdown} loading={loading} />
             <BreakdownCard breakdown={breakdown} />
+          </div>
+
+          {/* H.3: Tri-source verification panel — pending submissions
+              from the apprentice land here for one-click sign-off. */}
+          <div className="mt-5">
+            <OtjVerificationPanel studentUserId={userId} />
           </div>
 
           <div className="mt-5">

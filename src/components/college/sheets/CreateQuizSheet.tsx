@@ -275,8 +275,42 @@ function ConfigForm({
   const filteredLessons = selectedCohortId
     ? lessonPlans.filter((l) => l.cohort_id === selectedCohortId || l.cohort_id == null)
     : lessonPlans;
+  // Sticky context summary so the user always sees who/what they're sending
+  const targetSummary = (() => {
+    if (targetMode === 'cohort') {
+      const cohort = cohorts.find((c) => c.id === selectedCohortId);
+      if (cohort) return `Cohort · ${cohort.name} (${cohort.member_count})`;
+      return 'Cohort · pick one';
+    }
+    if (learnerName) return `For ${learnerName.split(' ')[0]}`;
+    return 'No target picked';
+  })();
+
   return (
     <div className="space-y-4">
+      {/* Sticky context strip — pinned while form scrolls */}
+      <div className="sticky -top-5 -mx-5 px-5 py-2 bg-[hsl(0_0%_8%)]/95 backdrop-blur-md border-b border-white/[0.06] z-10 -mt-5 mb-1">
+        <div className="flex items-center gap-2 flex-wrap text-[10.5px] tabular-nums">
+          <span className="inline-flex items-center gap-1 h-5 px-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white">
+            {targetMode === 'cohort' ? <Users className="h-3 w-3" /> : <User className="h-3 w-3" />}
+            {targetSummary}
+          </span>
+          <span className="inline-flex items-center h-5 px-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white">
+            {count} questions · {difficulty}
+          </span>
+          {timeLimit > 0 && (
+            <span className="inline-flex items-center h-5 px-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white">
+              {timeLimit}m · {passMark}% pass
+            </span>
+          )}
+          {isHomework && (
+            <span className="inline-flex items-center h-5 px-2 rounded-full bg-purple-500/[0.10] border border-purple-400/30 text-purple-200">
+              Homework
+            </span>
+          )}
+        </div>
+      </div>
+
       <div className="rounded-2xl border border-elec-yellow/[0.18] bg-elec-yellow/[0.04] px-5 py-4 flex items-start gap-3">
         <Wand2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
         <p className="text-[12.5px] text-white leading-snug">
@@ -402,7 +436,7 @@ function ConfigForm({
         />
       </Field>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Field label="Number of questions">
           <select
             value={count}
@@ -422,7 +456,7 @@ function ConfigForm({
                 type="button"
                 onClick={() => setDifficulty(d.value)}
                 className={cn(
-                  'h-10 rounded-lg border text-[11.5px] font-semibold transition-colors touch-manipulation',
+                  'h-12 sm:h-11 rounded-lg border text-[12px] sm:text-[11.5px] font-semibold transition-colors touch-manipulation',
                   difficulty === d.value
                     ? 'bg-elec-yellow/[0.14] border-elec-yellow/40 text-elec-yellow'
                     : 'bg-[hsl(0_0%_12%)] border-white/[0.10] text-white hover:bg-white/[0.04]'
@@ -435,7 +469,7 @@ function ConfigForm({
         </Field>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Field label="Time limit (minutes)">
           <input
             type="number"
@@ -680,7 +714,7 @@ function QuestionCard({ index, q }: { index: number; q: AuthorQuizQuestion }) {
    ──────────────────────────────────────────────────────── */
 
 const inputCls =
-  'mt-1 w-full h-11 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[13px] text-white px-3 touch-manipulation';
+  'mt-1 w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[14px] sm:text-[13px] text-white px-3 touch-manipulation';
 
 function Field({
   label,

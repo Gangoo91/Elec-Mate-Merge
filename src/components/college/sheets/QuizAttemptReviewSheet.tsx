@@ -468,18 +468,19 @@ function QuestionReview({
 
       {q.bs7671_citations && q.bs7671_citations.length > 0 && (
         <div className="mt-2 pt-2 border-t border-white/[0.04]">
-          <div className="flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white mb-1">
-            <BookOpen className="h-3 w-3" />
+          <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-1.5">
             BS 7671
           </div>
-          <ul className="space-y-1">
+          <ul className="space-y-2">
             {q.bs7671_citations.map((c, k) => (
-              <li key={k} className="flex items-baseline gap-1.5">
-                <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.10] border border-blue-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200 flex-shrink-0">
+              <li key={k} className="border-l-2 border-blue-400/30 pl-2.5 break-words">
+                <div className="text-[10px] font-semibold tracking-[0.04em] text-blue-200 break-all">
                   {c.ref}
-                </span>
+                </div>
                 {c.snippet && (
-                  <span className="text-[10.5px] text-white/85 leading-snug">{c.snippet}</span>
+                  <p className="mt-0.5 text-[11px] text-white/85 leading-relaxed break-words">
+                    {c.snippet}
+                  </p>
                 )}
               </li>
             ))}

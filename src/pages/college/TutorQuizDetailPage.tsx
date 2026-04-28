@@ -11,12 +11,14 @@ import {
   TrendingUp,
   FileText,
   X,
+  Download,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageFrame, LoadingState } from '@/components/college/primitives';
 import { supabase } from '@/integrations/supabase/client';
 import { QuizAttemptReviewSheet } from '@/components/college/sheets/QuizAttemptReviewSheet';
 import { useToast } from '@/hooks/use-toast';
+import { rowsToCsv, downloadCsv } from '@/lib/csv';
 
 /* ==========================================================================
    TutorQuizDetailPage — /college/quizzes/:id
@@ -347,6 +349,67 @@ export default function TutorQuizDetailPage() {
     }
   };
 
+  const handleExportCsv = () => {
+    if (!quiz) return;
+    if (attempts.length === 0) {
+      toast({ title: 'Nothing to export', description: 'No attempts yet.' });
+      return;
+    }
+    const gradesByAttemptQ = new Map<string, GradeRow>();
+    for (const g of allGrades) {
+      gradesByAttemptQ.set(`${g.attempt_id}:${g.question_id}`, g);
+    }
+    const rows = attempts.map((a) => {
+      const pct =
+        a.score != null && a.total_points != null && a.total_points > 0
+          ? Math.round((a.score / a.total_points) * 100)
+          : null;
+      const passed = quiz.pass_mark != null && pct != null ? pct >= quiz.pass_mark : null;
+      let pendingForAttempt = 0;
+      let overrideCount = 0;
+      for (const q of questions) {
+        const g = gradesByAttemptQ.get(`${a.id}:${q.id}`);
+        if (!g) continue;
+        if (g.ai_score == null) pendingForAttempt += 1;
+        if (g.tutor_override_score != null) overrideCount += 1;
+      }
+      return {
+        learner_name: a.student_name,
+        student_id: a.student_id,
+        status: a.completed_at ? (passed === false ? 'failed' : passed ? 'passed' : 'submitted') : 'in_progress',
+        score: a.score ?? '',
+        total_points: a.total_points ?? '',
+        percentage: pct ?? '',
+        passed: passed == null ? '' : passed ? 'yes' : 'no',
+        time_taken_minutes: a.time_taken_seconds != null ? Math.round(a.time_taken_seconds / 60) : '',
+        started_at: a.started_at ?? '',
+        completed_at: a.completed_at ?? '',
+        ai_marks_pending: pendingForAttempt,
+        tutor_overrides: overrideCount,
+        attempt_id: a.id,
+      };
+    });
+    const csv = rowsToCsv(rows, [
+      { key: 'learner_name', header: 'Learner' },
+      { key: 'status', header: 'Status' },
+      { key: 'score', header: 'Score' },
+      { key: 'total_points', header: 'Total points' },
+      { key: 'percentage', header: 'Percentage' },
+      { key: 'passed', header: 'Passed' },
+      { key: 'time_taken_minutes', header: 'Time taken (min)' },
+      { key: 'started_at', header: 'Started at' },
+      { key: 'completed_at', header: 'Completed at' },
+      { key: 'ai_marks_pending', header: 'AI marks pending' },
+      { key: 'tutor_overrides', header: 'Tutor overrides' },
+      { key: 'student_id', header: 'Student ID' },
+      { key: 'attempt_id', header: 'Attempt ID' },
+    ]);
+    const stamp = new Date().toISOString().slice(0, 10);
+    const safeTitle = quiz.title.replace(/[^a-zA-Z0-9-_]+/g, '-').replace(/^-|-$/g, '').slice(0, 60).toLowerCase();
+    downloadCsv(csv, `${safeTitle || 'quiz'}-${stamp}.csv`);
+    toast({ title: 'CSV exported', description: `${rows.length} attempts` });
+  };
+
   const handleRegradeAll = async () => {
     setBusy('regrade');
     try {
@@ -499,6 +562,16 @@ export default function TutorQuizDetailPage() {
               {busy === 'regrade' ? 'Regrading…' : `Regrade ${stats.pending} pending`}
             </button>
           )}
+          <button
+            type="button"
+            onClick={handleExportCsv}
+            disabled={attempts.length === 0}
+            title="Export every attempt for this quiz to CSV (ESFA-friendly)"
+            className="h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.10] text-white text-[12px] font-semibold hover:bg-white/[0.08] touch-manipulation disabled:opacity-50 inline-flex items-center gap-1.5"
+          >
+            <Download className="h-3.5 w-3.5" />
+            Export CSV
+          </button>
         </div>
       </div>
 

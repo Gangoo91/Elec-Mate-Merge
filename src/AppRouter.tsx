@@ -118,6 +118,8 @@ const CompliancePackPage = lazy(() => import('@/pages/college/CompliancePackPage
 const IqaDashboardPage = lazy(() => import('@/pages/college/IqaDashboardPage'));
 const IqaSamplingPlanPage = lazy(() => import('@/pages/college/IqaSamplingPlanPage'));
 const CollegeOtjPage = lazy(() => import('@/pages/college/CollegeOtjPage'));
+const OtjInboxPage = lazy(() => import('@/pages/college/OtjInboxPage'));
+const AiNotebookPage = lazy(() => import('@/pages/college/AiNotebookPage'));
 const CohortEpaPage = lazy(() => import('@/pages/college/CohortEpaPage'));
 const TutorQuizzesPage = lazy(() => import('@/pages/college/TutorQuizzesPage'));
 const TutorQuizDetailPage = lazy(() => import('@/pages/college/TutorQuizDetailPage'));
@@ -1985,6 +1987,30 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <CollegeOtjPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* OTJ verification inbox — pending apprentice submissions */}
+          <Route
+            path="college/otj/inbox"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <OtjInboxPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* AI Notebook — tutor's analytical AI co-tutor */}
+          <Route
+            path="college/ai-notebook"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <AiNotebookPage />
                 </CollegeGuard>
               </LazyRoute>
             }

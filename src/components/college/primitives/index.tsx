@@ -265,6 +265,21 @@ interface StatStripProps {
   className?: string;
 }
 
+// Per-tone soft background gradient for stat cells — adds a splash of
+// colour without overwhelming the dark theme.
+const toneCellBg: Record<Tone, string> = {
+  blue: 'bg-gradient-to-br from-blue-500/[0.10] via-blue-500/[0.03] to-transparent',
+  emerald: 'bg-gradient-to-br from-emerald-500/[0.10] via-emerald-500/[0.03] to-transparent',
+  amber: 'bg-gradient-to-br from-amber-500/[0.10] via-amber-500/[0.03] to-transparent',
+  purple: 'bg-gradient-to-br from-purple-500/[0.10] via-purple-500/[0.03] to-transparent',
+  yellow: 'bg-gradient-to-br from-elec-yellow/[0.10] via-amber-500/[0.03] to-transparent',
+  green: 'bg-gradient-to-br from-green-500/[0.10] via-green-500/[0.03] to-transparent',
+  orange: 'bg-gradient-to-br from-orange-500/[0.10] via-orange-500/[0.03] to-transparent',
+  red: 'bg-gradient-to-br from-red-500/[0.10] via-red-500/[0.03] to-transparent',
+  cyan: 'bg-gradient-to-br from-cyan-500/[0.10] via-cyan-500/[0.03] to-transparent',
+  indigo: 'bg-gradient-to-br from-indigo-500/[0.10] via-indigo-500/[0.03] to-transparent',
+};
+
 export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
   const colClass =
     columns === 5
@@ -304,7 +319,15 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
 
         const content = (
           <>
-            <Eyebrow>
+            {stat.tone && (
+              <div
+                className={cn(
+                  'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-80',
+                  toneAccent[stat.tone]
+                )}
+              />
+            )}
+            <Eyebrow className={stat.tone ? toneText[stat.tone] : undefined}>
               {String(i + 1).padStart(2, '0')} · {stat.label}
             </Eyebrow>
             <span
@@ -316,18 +339,20 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
             >
               {stat.value}
             </span>
-            {stat.sub && <span className="mt-3 text-[11px] text-white">{stat.sub}</span>}
+            {stat.sub && <span className="mt-3 text-[11px] text-white/70">{stat.sub}</span>}
           </>
         );
 
-        const baseClass =
-          'group flex flex-col items-start bg-[hsl(0_0%_12%)] transition-colors px-5 py-6 sm:px-6 sm:py-7 lg:px-7 lg:py-8 text-left';
+        const baseClass = cn(
+          'group relative flex flex-col items-start transition-colors px-5 py-6 sm:px-6 sm:py-7 lg:px-7 lg:py-8 text-left',
+          stat.tone ? toneCellBg[stat.tone] : 'bg-[hsl(0_0%_12%)]'
+        );
 
         return stat.onClick ? (
           <button
             key={`${stat.label}-${i}`}
             onClick={stat.onClick}
-            className={cn(baseClass, 'hover:bg-[hsl(0_0%_15%)] touch-manipulation')}
+            className={cn(baseClass, 'hover:brightness-125 touch-manipulation')}
           >
             {content}
           </button>
@@ -977,7 +1002,10 @@ export function SheetShell({
         {children}
       </div>
       {footer && (
-        <div className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2">
+        <div
+          className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2 bg-[hsl(0_0%_8%)]"
+          style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+        >
           {footer}
         </div>
       )}
