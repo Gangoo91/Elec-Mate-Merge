@@ -65,3 +65,50 @@ export function formatLargeNumber(num: number, decimals: number = 1): string {
     return formatNumber(num, decimals);
   }
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Time + duration helpers shared across the apprentice college hub and the
+   tutor's Student 360 OTJ verification panel. Extracted here so we don't
+   maintain five copies of the same logic.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/** Minutes → "30m", "1.5h", "12h". 0 / negative returns "0m". */
+export function fmtHours(min: number): string {
+  if (!min || min < 0) return '0m';
+  if (min < 60) return `${Math.round(min)}m`;
+  const h = min / 60;
+  return h >= 10 ? `${h.toFixed(0)}h` : `${h.toFixed(1)}h`;
+}
+
+/** Hours → "1.5h" / "12h" — for already-decimal hour values. */
+export function fmtHoursValue(h: number): string {
+  if (h >= 100) return `${Math.round(h)}h`;
+  if (h >= 10) return `${h.toFixed(0)}h`;
+  return `${h.toFixed(1)}h`;
+}
+
+/** Relative date — "today", "yesterday", "3d ago", "2w ago", "12 Apr". */
+export function fmtRel(iso: string | null): string {
+  if (!iso) return '';
+  const t = new Date(iso).getTime();
+  if (Number.isNaN(t)) return '';
+  const days = Math.round((Date.now() - t) / 86_400_000);
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 7) return `${days}d ago`;
+  if (days < 30) return `${Math.round(days / 7)}w ago`;
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+/** Relative time — "just now", "5m ago", "2h ago", then falls through to fmtRel. */
+export function fmtRelTime(iso: string | null): string {
+  if (!iso) return '';
+  const t = new Date(iso).getTime();
+  if (Number.isNaN(t)) return '';
+  const mins = Math.round((Date.now() - t) / 60_000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return fmtRel(iso);
+}

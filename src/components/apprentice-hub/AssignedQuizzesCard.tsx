@@ -1,12 +1,15 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Brain, Check, Clock, AlertTriangle, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useMyAssignedQuizzes, type AssignedQuiz } from '@/hooks/useMyAssignedQuizzes';
 
 /* ==========================================================================
-   AssignedQuizzesCard — apprentice-side card listing every quiz a tutor or
-   assessor has sent. Sorted by: overdue → due soon → not_started → in_progress
-   → completed. One-tap "Take quiz" / "Resume" / "View results".
+   AssignedQuizzesCard — editorial.
+
+   No decorative icons, no badges-everywhere. Typographic hierarchy carries
+   the meaning: section eyebrow → list of items, each with a title, a meta
+   line, and one subtle status pill. Yellow only shows up when something
+   genuinely new arrives. Designed to read like a college reading list.
    ========================================================================== */
 
 const STATUS_PRIORITY: Record<AssignedQuiz['status'], number> = {
@@ -29,17 +32,85 @@ function formatDate(iso: string | null): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
+function kindWord(kind: AssignedQuiz['kind']): string {
+  if (kind === 'mock_exam') return 'Mock exam';
+  if (kind === 'assessment') return 'Assessment';
+  return 'Quiz';
+}
+
+const SEEN_KEY = 'em_seen_assigned_quizzes';
+const NEW_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+
+function loadSeen(): Set<string> {
+  if (typeof window === 'undefined') return new Set();
+  try {
+    const raw = window.localStorage.getItem(SEEN_KEY);
+    return new Set(raw ? (JSON.parse(raw) as string[]) : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function saveSeen(set: Set<string>): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(SEEN_KEY, JSON.stringify(Array.from(set)));
+  } catch {
+    /* ignore */
+  }
+}
+
 export function AssignedQuizzesCard() {
   const navigate = useNavigate();
   const { quizzes, loading } = useMyAssignedQuizzes();
+  const [seen, setSeen] = useState<Set<string>>(() => loadSeen());
+
+  useEffect(() => {
+    saveSeen(seen);
+  }, [seen]);
+
+  const newQuizzes = useMemo(() => {
+    const now = Date.now();
+    return quizzes.filter((q) => {
+      if (q.status !== 'not_started') return false;
+      if (seen.has(q.id)) return false;
+      if (!q.published_at) return false;
+      const t = new Date(q.published_at).getTime();
+      return Number.isFinite(t) && now - t < NEW_WINDOW_MS;
+    });
+  }, [quizzes, seen]);
+
+  const dismissAllNew = () => {
+    setSeen((prev) => {
+      const next = new Set(prev);
+      for (const q of newQuizzes) next.add(q.id);
+      return next;
+    });
+  };
+
+  const openQuiz = (id: string) => {
+    setSeen((prev) => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+    navigate(`/apprentice/college/quiz/${id}`);
+  };
 
   if (loading) {
-    return (
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4 animate-pulse h-[140px]" />
-    );
+    return <div className="h-[180px] animate-pulse rounded-2xl bg-[hsl(0_0%_12%)]/60" />;
   }
 
-  if (quizzes.length === 0) return null;
+  if (quizzes.length === 0) {
+    return (
+      <Section eyebrow="Quizzes & assessments" subtle="Nothing yet">
+        <p className="text-[13px] sm:text-[13.5px] text-white/90 leading-relaxed">
+          Quizzes and assessments will appear here when your tutor sends them.
+        </p>
+      </Section>
+    );
+  }
 
   const sorted = [...quizzes].sort(
     (a, b) =>
@@ -49,148 +120,202 @@ export function AssignedQuizzesCard() {
 
   const pendingCount = quizzes.filter((q) => q.status !== 'completed').length;
   const overdueCount = quizzes.filter((q) => q.status === 'overdue').length;
+  const visible = sorted.slice(0, 6);
+  const overflow = sorted.length - visible.length;
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
-      <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between gap-3 flex-wrap">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-xl bg-blue-500/[0.14] border border-blue-400/30 flex items-center justify-center">
-            <Brain className="h-4 w-4 text-blue-200" />
-          </div>
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              From your tutor
-            </div>
-            <div className="mt-0.5 text-[11px] text-white/85 tabular-nums">
-              {pendingCount} pending
-              {overdueCount > 0 && (
-                <>
-                  <span className="mx-1.5 text-white/35">·</span>
-                  <span className="text-red-300">{overdueCount} overdue</span>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+    <Section
+      eyebrow="Quizzes & assessments"
+      subtle={
+        overdueCount > 0
+          ? `${pendingCount} pending · ${overdueCount} overdue`
+          : `${pendingCount} pending`
+      }
+      subtleTone={overdueCount > 0 ? 'red' : undefined}
+      accent={newQuizzes.length > 0}
+    >
+      {newQuizzes.length > 0 && (
+        <NewArrivalsBanner newQuizzes={newQuizzes} onDismiss={dismissAllNew} />
+      )}
 
-      <ul className="divide-y divide-white/[0.04]">
-        {sorted.slice(0, 6).map((q) => (
-          <li key={q.id}>
-            <QuizRow
-              q={q}
-              onClick={() => navigate(`/apprentice/college/quiz/${q.id}`)}
-            />
-          </li>
-        ))}
+      <ul className="divide-y divide-white/[0.06]">
+        {visible.map((q) => {
+          const isNew = newQuizzes.some((n) => n.id === q.id);
+          return (
+            <li key={q.id}>
+              <QuizRow q={q} isNew={isNew} onClick={() => openQuiz(q.id)} />
+            </li>
+          );
+        })}
       </ul>
 
-      {sorted.length > 6 && (
+      {overflow > 0 && (
         <button
           type="button"
           onClick={() => navigate('/apprentice/quizzes')}
-          className="w-full px-5 py-3 text-[11.5px] font-medium text-white hover:bg-white/[0.03] border-t border-white/[0.04] touch-manipulation"
+          className="w-full px-1 py-3 text-left text-[12px] font-medium text-white/90 hover:text-white touch-manipulation transition-colors"
         >
-          View all {sorted.length} quizzes →
+          View all {sorted.length} →
         </button>
       )}
+    </Section>
+  );
+}
+
+/* ────────────────── Editorial primitives ────────────────── */
+
+function Section({
+  eyebrow,
+  subtle,
+  subtleTone,
+  accent,
+  children,
+}: {
+  eyebrow: string;
+  subtle?: string;
+  subtleTone?: 'red';
+  accent?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <section
+      className={cn(
+        'rounded-2xl border bg-[hsl(0_0%_10%)] overflow-hidden',
+        accent ? 'border-elec-yellow/30' : 'border-white/[0.06]'
+      )}
+    >
+      <header className="px-4 sm:px-5 pt-4 sm:pt-5 pb-3 flex items-baseline justify-between gap-3">
+        <h2 className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
+          {eyebrow}
+        </h2>
+        {subtle && (
+          <span
+            className={cn(
+              'text-[11px] tabular-nums whitespace-nowrap',
+              subtleTone === 'red' ? 'text-red-300' : 'text-white/85'
+            )}
+          >
+            {subtle}
+          </span>
+        )}
+      </header>
+      <div className="px-4 sm:px-5 pb-2 sm:pb-3">{children}</div>
+    </section>
+  );
+}
+
+function NewArrivalsBanner({
+  newQuizzes,
+  onDismiss,
+}: {
+  newQuizzes: AssignedQuiz[];
+  onDismiss: () => void;
+}) {
+  const headline = (() => {
+    if (newQuizzes.length === 1) {
+      const q = newQuizzes[0];
+      const who = q.tutor_name ? q.tutor_name.split(' ')[0] : 'Your tutor';
+      return `${who} has sent you a new ${kindWord(q.kind).toLowerCase()}`;
+    }
+    const tutors = Array.from(
+      new Set(newQuizzes.map((q) => q.tutor_name?.split(' ')[0]).filter((n): n is string => !!n))
+    );
+    if (tutors.length === 1) {
+      return `${tutors[0]} has sent you ${newQuizzes.length} new items`;
+    }
+    return `${newQuizzes.length} new items from your tutor`;
+  })();
+
+  return (
+    <div className="-mt-1 mb-2 flex items-baseline justify-between gap-3 border-l-2 border-elec-yellow pl-3">
+      <p className="text-[12.5px] sm:text-[13px] font-medium text-white leading-snug">{headline}</p>
+      <button
+        type="button"
+        onClick={onDismiss}
+        className="text-[11px] text-white/85 hover:text-white touch-manipulation flex-shrink-0"
+      >
+        Got it
+      </button>
     </div>
   );
 }
 
-function QuizRow({ q, onClick }: { q: AssignedQuiz; onClick: () => void }) {
+function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onClick: () => void }) {
   const statusMeta = (() => {
     if (q.status === 'overdue')
-      return {
-        icon: <AlertTriangle className="h-3.5 w-3.5 text-red-300" />,
-        label: 'Overdue',
-        cls: 'bg-red-500/[0.10] border-red-500/30 text-red-200',
-      };
+      return { label: 'Overdue', cls: 'text-red-300', accentLabel: 'Open' };
     if (q.status === 'completed')
       return {
-        icon: <Check className="h-3.5 w-3.5 text-emerald-300" strokeWidth={3} />,
-        label:
-          q.best_percentage != null
-            ? `Done · ${q.best_percentage}%`
-            : 'Completed',
-        cls: 'bg-emerald-500/[0.10] border-emerald-400/30 text-emerald-200',
+        label: q.best_percentage != null ? `${q.best_percentage}%` : 'Completed',
+        cls: 'text-emerald-300',
+        accentLabel: 'View',
       };
     if (q.status === 'in_progress')
-      return {
-        icon: <Clock className="h-3.5 w-3.5 text-amber-300" />,
-        label: 'Resume',
-        cls: 'bg-amber-500/[0.10] border-amber-400/30 text-amber-200',
-      };
-    return {
-      icon: <ArrowRight className="h-3.5 w-3.5 text-blue-200" />,
-      label: 'Start',
-      cls: 'bg-blue-500/[0.10] border-blue-400/30 text-blue-200',
-    };
+      return { label: 'In progress', cls: 'text-amber-300', accentLabel: 'Resume' };
+    return { label: kindWord(q.kind), cls: 'text-white/90', accentLabel: 'Start' };
   })();
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className="w-full px-5 py-3 flex items-center gap-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation"
+      className={cn(
+        'group w-full -mx-4 sm:-mx-5 px-4 sm:px-5 py-3.5 flex items-baseline gap-4 text-left transition-colors touch-manipulation',
+        'hover:bg-white/[0.02] active:bg-white/[0.04]'
+      )}
     >
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-[13px] font-medium text-white truncate">{q.title}</span>
-          {q.kind === 'assessment' && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-cyan-500/[0.10] border border-cyan-400/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-cyan-200">
-              Assessment
+        {/* Title */}
+        <h3 className="text-[14.5px] sm:text-[14px] font-medium text-white leading-snug tracking-tight">
+          <span className="break-words">{q.title}</span>
+          {isNew && (
+            <span className="ml-2 align-middle text-[9.5px] font-bold tracking-[0.12em] uppercase text-elec-yellow">
+              New
             </span>
           )}
-          {q.kind === 'mock_exam' && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-orange-500/[0.10] border border-orange-400/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-orange-200">
-              Mock exam
-            </span>
-          )}
-          {q.source === 'ai_authored' && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-elec-yellow/[0.10] border border-elec-yellow/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-elec-yellow">
-              AI
-            </span>
-          )}
-          {q.is_homework && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-purple-500/[0.10] border border-purple-400/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-purple-200">
-              Homework
-            </span>
-          )}
-        </div>
-        <div className="mt-0.5 text-[10.5px] text-white tabular-nums">
-          {q.questions_count} questions
+        </h3>
+
+        {/* Meta line — single sentence rather than chips */}
+        <p className="mt-1 text-[11.5px] sm:text-[11px] text-white/85 tabular-nums leading-relaxed">
+          <span className={statusMeta.cls}>{statusMeta.label}</span>
+          <Sep />
+          <span>{q.questions_count} questions</span>
           {q.time_limit_minutes && (
             <>
-              <span className="mx-1.5 text-white/35">·</span>
-              <span>{q.time_limit_minutes}m</span>
+              <Sep />
+              <span>{q.time_limit_minutes} min</span>
             </>
           )}
-          {q.pass_mark != null && (
+          {q.pass_mark != null && q.status !== 'completed' && (
             <>
-              <span className="mx-1.5 text-white/35">·</span>
+              <Sep />
               <span>{q.pass_mark}% to pass</span>
             </>
           )}
-          {q.due_date && (
+          {q.due_date && q.status !== 'completed' && (
             <>
-              <span className="mx-1.5 text-white/35">·</span>
-              <span className={cn(q.status === 'overdue' && 'text-red-300')}>
+              <Sep />
+              <span className={cn(q.status === 'overdue' && 'text-red-300 font-medium')}>
                 Due {formatDate(q.due_date)}
               </span>
             </>
           )}
-        </div>
+          {q.is_homework && (
+            <>
+              <Sep />
+              <span>Homework</span>
+            </>
+          )}
+        </p>
       </div>
-      <span
-        className={cn(
-          'inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full border text-[11px] font-semibold tracking-tight whitespace-nowrap',
-          statusMeta.cls
-        )}
-      >
-        {statusMeta.icon}
-        {statusMeta.label}
+
+      <span className="text-[12px] sm:text-[11.5px] font-medium text-elec-yellow whitespace-nowrap flex-shrink-0 group-hover:text-elec-yellow group-hover:underline underline-offset-4">
+        {statusMeta.accentLabel} →
       </span>
     </button>
   );
+}
+
+function Sep() {
+  return <span className="mx-1.5 text-white/25">·</span>;
 }

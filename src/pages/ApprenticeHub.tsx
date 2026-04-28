@@ -36,6 +36,7 @@ import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 import { useMyIlp } from '@/hooks/useMyIlp';
+import { useMyAssignedQuizzes } from '@/hooks/useMyAssignedQuizzes';
 import { LearningVideosSection } from '@/components/apprentice/learning-videos/LearningVideosSection';
 import { useVideoInsights } from '@/hooks/apprentice-stats/useVideoInsights';
 import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
@@ -167,15 +168,18 @@ function ApprenticeStatsBar() {
               aria-label={`View ${stat.label}`}
             >
               <div className="rounded-2xl px-4 py-3 sm:py-4 bg-white/[0.03] border border-white/[0.06] group-active:bg-white/[0.06] transition-colors duration-150">
-                <p className="text-[11px] text-white mb-1 uppercase tracking-wider font-medium">{stat.label}</p>
+                <p className="text-[11px] text-white mb-1 uppercase tracking-wider font-medium">
+                  {stat.label}
+                </p>
                 <div className="flex items-baseline">
                   <AnimatedCounter
                     value={stat.value}
-                    className={cn('text-2xl sm:text-3xl font-bold tracking-tight', stat.accentColor)}
+                    className={cn(
+                      'text-2xl sm:text-3xl font-bold tracking-tight',
+                      stat.accentColor
+                    )}
                   />
-                  {stat.suffix && (
-                    <span className="text-xs text-white ml-0.5">{stat.suffix}</span>
-                  )}
+                  {stat.suffix && <span className="text-xs text-white ml-0.5">{stat.suffix}</span>}
                 </div>
               </div>
             </motion.button>
@@ -207,12 +211,7 @@ interface PrimaryToolCardProps {
   accent?: 'yellow' | 'purple' | 'cyan';
 }
 
-function PrimaryToolCard({
-  title,
-  description,
-  icon: _Icon,
-  link,
-}: PrimaryToolCardProps) {
+function PrimaryToolCard({ title, description, icon: _Icon, link }: PrimaryToolCardProps) {
   return (
     <Link to={link} className="block group touch-manipulation">
       <motion.div
@@ -294,16 +293,33 @@ function CompactToolCard({ title, description, icon: _Icon, link }: CompactToolC
 
 function CollegePlanHubCard() {
   const { ilp, rollUp, hasCollegeLink } = useMyIlp();
+  const { quizzes } = useMyAssignedQuizzes();
+
+  const pendingQuizzes = quizzes.filter((q) => q.status !== 'completed');
+  const overdueQuizzes = pendingQuizzes.filter((q) => q.status === 'overdue');
+  const notStartedQuizzes = pendingQuizzes.filter((q) => q.status === 'not_started');
+  const inProgressQuizzes = pendingQuizzes.filter((q) => q.status === 'in_progress');
 
   // Always render — never hide. Description adapts to the learner's state.
+  // Quizzes take priority over ILP messaging when something is awaiting action.
   const description = !hasCollegeLink
     ? 'Connect with your college to see goals from your tutor and tick them off here'
-    : ilp
-      ? (ilp.headline_focus ??
-        `${rollUp.completed}/${rollUp.total_goals} goals complete · set by your tutor`)
-      : 'Your tutor will set goals here you can tick off and reply to';
+    : pendingQuizzes.length > 0
+      ? overdueQuizzes.length > 0
+        ? `${overdueQuizzes.length} overdue · ${notStartedQuizzes.length + inProgressQuizzes.length} more pending`
+        : notStartedQuizzes.length === 1 && inProgressQuizzes.length === 0
+          ? `New from your tutor: ${notStartedQuizzes[0].title}`
+          : `${pendingQuizzes.length} ${pendingQuizzes.length === 1 ? 'item' : 'items'} from your tutor — tap to start`
+      : ilp
+        ? (ilp.headline_focus ??
+          `${rollUp.completed}/${rollUp.total_goals} goals complete · set by your tutor`)
+        : 'Your tutor will set goals here you can tick off and reply to';
 
-  const newCount = rollUp.unread_tutor_comments + (rollUp.needs_acknowledgement || 0);
+  // Combined "new" count for the badge — unstarted quizzes + unread ILP comments
+  // + ILP entries needing acknowledgement.
+  const newCount =
+    notStartedQuizzes.length + rollUp.unread_tutor_comments + (rollUp.needs_acknowledgement || 0);
+  const hasOverdue = overdueQuizzes.length > 0;
 
   return (
     <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
@@ -322,11 +338,15 @@ function CollegePlanHubCard() {
               <h3 className="text-[13px] sm:text-sm font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
                 My College Plan
               </h3>
-              {newCount > 0 && (
-                <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.12] border border-blue-500/40 text-[9px] font-semibold tracking-[0.06em] uppercase text-blue-200 flex-shrink-0">
+              {hasOverdue ? (
+                <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-red-500/[0.12] border border-red-500/40 text-[9px] font-semibold tracking-[0.06em] uppercase text-red-200 flex-shrink-0">
+                  {overdueQuizzes.length} overdue
+                </span>
+              ) : newCount > 0 ? (
+                <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-elec-yellow/[0.16] border border-elec-yellow/50 text-[9px] font-semibold tracking-[0.06em] uppercase text-elec-yellow flex-shrink-0">
                   {newCount} new
                 </span>
-              )}
+              ) : null}
             </div>
             <p className="mt-0.5 text-[11px] sm:text-[12px] text-white leading-tight line-clamp-2">
               {description}

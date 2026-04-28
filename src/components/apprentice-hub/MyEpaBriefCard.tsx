@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Award, Wand2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { EpaBriefSheet } from '@/components/college/sheets/EpaBriefSheet';
 
 /* ==========================================================================
-   MyEpaBriefCard — apprentice-side gateway to their personalised pre-EPA
-   brief. Looks up the learner's college_students row, only renders if
-   they're linked to a college. Opens the same EpaBriefSheet as tutors use.
+   MyEpaBriefCard — editorial. No icons. Single neutral panel matching the
+   college-hub editorial pattern. CTA wraps to its own line on mobile so the
+   description never gets crushed.
    ========================================================================== */
 
 export function MyEpaBriefCard() {
@@ -36,30 +35,25 @@ export function MyEpaBriefCard() {
 
   return (
     <>
-      <div className="rounded-2xl border border-elec-yellow/[0.18] bg-elec-yellow/[0.04] px-5 py-4 flex items-center gap-4">
-        <div className="h-11 w-11 rounded-xl bg-elec-yellow/[0.14] border border-elec-yellow/30 flex items-center justify-center flex-shrink-0">
-          <Award className="h-5 w-5 text-elec-yellow" />
+      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 sm:px-5 py-4 sm:py-5">
+        <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+          Personalised brief
         </div>
-        <div className="min-w-0 flex-1">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-            Personalised brief
-          </div>
-          <h3 className="mt-0.5 text-[15px] font-semibold text-white leading-tight">
-            Get ready for your EPA
-          </h3>
-          <p className="mt-1 text-[12px] text-white/65 leading-snug">
-            5 likely viva topics, BS 7671 hot zones, weak ACs to revise — written for you.
-          </p>
-        </div>
+        <h3 className="mt-2 text-[16px] sm:text-[17px] font-semibold text-white leading-tight tracking-tight">
+          Get ready for your end-point assessment
+        </h3>
+        <p className="mt-2 text-[12.5px] sm:text-[13px] text-white/90 leading-relaxed max-w-prose">
+          Five likely viva topics, BS 7671 hot zones, and the ACs you should revise hardest —
+          written for you, grounded in your portfolio and mock results.
+        </p>
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex items-center justify-center gap-1.5 h-10 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation flex-shrink-0"
+          className="mt-4 inline-flex items-center h-10 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
         >
-          <Wand2 className="h-3.5 w-3.5" strokeWidth={2.5} />
-          Get my brief
+          Generate my brief →
         </button>
-      </div>
+      </section>
 
       <EpaBriefSheet
         open={open}

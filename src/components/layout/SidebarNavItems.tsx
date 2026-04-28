@@ -4,6 +4,10 @@ export type NavItem = {
   roles: string[];
   adminOnly?: boolean;
   allowedEmails?: string[];
+  /** When true, only show this item if the user has a row in college_staff
+      or college_students. Auto-includes anyone provisioned as a tutor or
+      apprentice without needing an email allowlist edit. */
+  requireCollegeLink?: boolean;
   dividerAfter?: boolean;
   badge?: string;
   badgeVariant?: 'early' | 'new';
@@ -49,7 +53,7 @@ export const mainNavItems: NavItem[] = [
     name: 'College Hub',
     path: '/college',
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
-    allowedEmails: ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'],
+    requireCollegeLink: true,
   },
   {
     name: 'Study Centre',

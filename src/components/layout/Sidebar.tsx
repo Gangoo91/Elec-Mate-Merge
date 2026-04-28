@@ -7,6 +7,7 @@ import SidebarFooter from './SidebarFooter';
 import { mainNavItems } from './SidebarNavItems';
 import { useEffect } from 'react';
 import { useScrollLock } from '@/hooks/use-scroll-lock';
+import { useHasCollegeLink } from '@/hooks/useHasCollegeLink';
 import SafeLink from '@/components/common/SafeLink';
 import { ChevronLeft } from 'lucide-react';
 
@@ -18,8 +19,14 @@ interface SidebarProps {
   onToggleDesktopCollapsed?: () => void;
 }
 
-const Sidebar = ({ open, setOpen, desktopCollapsed = false, onToggleDesktopCollapsed }: SidebarProps) => {
+const Sidebar = ({
+  open,
+  setOpen,
+  desktopCollapsed = false,
+  onToggleDesktopCollapsed,
+}: SidebarProps) => {
   const { profile, user } = useAuth();
+  const { hasCollegeLink } = useHasCollegeLink();
 
   // Get the user role from the profile, defaulting to "visitor" if not available
   const userRole = profile?.role || 'visitor';
@@ -153,6 +160,7 @@ const Sidebar = ({ open, setOpen, desktopCollapsed = false, onToggleDesktopColla
             items={mainNavItems}
             userRole={userRole}
             userEmail={user?.email}
+            hasCollegeLink={hasCollegeLink}
             adminRole={adminRole}
             onItemClick={() => setOpen(false)}
           />

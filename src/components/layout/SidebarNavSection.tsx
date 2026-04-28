@@ -7,6 +7,7 @@ interface SidebarNavSectionProps {
   items: NavItem[];
   userRole: string;
   userEmail?: string;
+  hasCollegeLink?: boolean;
   adminRole?: 'super_admin' | 'admin' | null;
   className?: string;
   onItemClick?: () => void;
@@ -17,21 +18,24 @@ const SidebarNavSection = ({
   items,
   userRole,
   userEmail,
+  hasCollegeLink,
   adminRole,
   className,
   onItemClick,
 }: SidebarNavSectionProps) => {
-  // Filter items based on user role, admin status, and allowed emails
+  // Filter items based on user role, admin status, allowed emails, and
+  // whether the user has a college_staff/college_students row.
   const filteredItems = items.filter((item) => {
-    // Check if item requires admin access
     if (item.adminOnly && !adminRole) {
       return false;
     }
-    // Check if item is restricted to specific emails
     if (item.allowedEmails && item.allowedEmails.length > 0) {
       if (!userEmail || !item.allowedEmails.includes(userEmail.toLowerCase())) {
         return false;
       }
+    }
+    if (item.requireCollegeLink && !hasCollegeLink) {
+      return false;
     }
     return item.roles.includes(userRole);
   });

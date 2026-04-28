@@ -262,7 +262,9 @@ export default function TakeQuizPage() {
         if (insErr || !newRow) throw new Error(insErr?.message ?? 'Could not start attempt');
         setAttempt(newRow as AttemptRow);
         attemptId = (newRow as AttemptRow).id;
-        startedAtRef.current = new Date((newRow as AttemptRow).started_at ?? new Date().toISOString());
+        startedAtRef.current = new Date(
+          (newRow as AttemptRow).started_at ?? new Date().toISOString()
+        );
       } else if (!attempt?.started_at) {
         const startedAt = new Date().toISOString();
         const { error: updErr } = await supabase
@@ -287,10 +289,7 @@ export default function TakeQuizPage() {
     setAnswers(next);
     if (revealExplanation) setShowExplanation(true);
     if (attempt) {
-      void supabase
-        .from('tutor_quiz_attempts')
-        .update({ answers: next })
-        .eq('id', attempt.id);
+      void supabase.from('tutor_quiz_attempts').update({ answers: next }).eq('id', attempt.id);
     }
   };
 
@@ -304,41 +303,36 @@ export default function TakeQuizPage() {
     if (!attempt || submitting) return;
     setSubmitting(true);
     try {
-      // Auto-grade for kinds we can verify deterministically. Free-response
-      // kinds (short_answer / long_answer / scenario) are deferred for AI
-      // grading server-side; they earn 0 points immediately and the points
-      // are reconciled when ai-grade-free-response runs.
+      // Single source of truth: scoreVerdict. Refuses to count questions that
+      // have no usable answer key (a 5/5 honesty bug we hit on AI-authored
+      // quizzes where the model didn't supply correct_answer_index).
       const pendingGradeRows: Array<{ question_id: string; learner_answer: LearnerAnswer }> = [];
       let score = 0;
+      let gradableTotalPoints = 0;
+      let ungradeableCount = 0;
       for (const q of questions) {
-        const a = answers[q.id];
-        if (a == null) continue;
         const points = q.points ?? 1;
-        if (q.question_kind === 'multi_choice' && a.kind === 'multi_choice') {
-          if (a.index === q.correct_answer_index) score += points;
-        } else if (q.question_kind === 'true_false' && a.kind === 'true_false') {
-          // true_false uses options ["True","False"] — correct_answer_index 0 = True
-          const expectedTrue = q.correct_answer_index === 0;
-          if (a.value === expectedTrue) score += points;
-        } else if (q.question_kind === 'calculation' && a.kind === 'calculation') {
-          const expected = (q.expected_answer ?? {}) as { numeric_value?: number; tolerance?: number };
-          if (
-            expected.numeric_value != null &&
-            a.numeric != null &&
-            Math.abs(a.numeric - expected.numeric_value) <= (expected.tolerance ?? 0)
-          ) {
-            score += points;
-          }
-        } else if (
-          q.question_kind === 'short_answer' ||
-          q.question_kind === 'long_answer' ||
-          q.question_kind === 'scenario' ||
-          q.question_kind === 'image_annotation' ||
-          q.question_kind === 'practical_evidence'
-        ) {
-          // Defer to AI grading
-          pendingGradeRows.push({ question_id: q.id, learner_answer: a });
+        const a = answers[q.id];
+        const verdict = scoreVerdict(q, a);
+        if (verdict === 'no_key') {
+          // Don't count broken questions in the denominator either — keeps
+          // the percentage honest. Tutor will see ungradeableCount > 0 and
+          // can review.
+          ungradeableCount += 1;
+          continue;
         }
+        if (isFreeResponseKind(q.question_kind)) {
+          // Free-response counts toward total_points. Score reconciles when
+          // ai-grade-free-response runs.
+          gradableTotalPoints += points;
+          if (a != null) {
+            pendingGradeRows.push({ question_id: q.id, learner_answer: a });
+          }
+          continue;
+        }
+        // Deterministic kinds with a usable answer key.
+        gradableTotalPoints += points;
+        if (verdict === 'correct') score += points;
       }
 
       // Insert pending grade rows for AI grading
@@ -367,7 +361,7 @@ export default function TakeQuizPage() {
         .from('tutor_quiz_attempts')
         .update({
           score,
-          total_points: totalPoints,
+          total_points: gradableTotalPoints,
           answers,
           completed_at: completedAt,
           time_taken_seconds: timeTaken,
@@ -375,7 +369,8 @@ export default function TakeQuizPage() {
         .eq('id', attempt.id);
       if (submitErr) throw new Error(submitErr.message);
 
-      const pct = totalPoints > 0 ? Math.round((score / totalPoints) * 100) : 0;
+      const pct = gradableTotalPoints > 0 ? Math.round((score / gradableTotalPoints) * 100) : 0;
+      void ungradeableCount; // surfaced via scoreVerdict in SubmittedState
 
       // OTJ: log this completed quiz as off-the-job structured learning so it
       // feeds the OTJ gauge, the EPA verdict, and ESFA exports. Best-effort
@@ -395,11 +390,12 @@ export default function TakeQuizPage() {
             metadata: {
               quiz_id: quiz.id,
               score,
-              total_points: totalPoints,
+              total_points: gradableTotalPoints,
               percentage: pct,
               passed: quiz.pass_mark != null ? pct >= quiz.pass_mark : null,
               qualification_code: quiz.qualification_code,
               difficulty: quiz.difficulty,
+              ungradeable_questions: ungradeableCount,
             },
           });
         } catch {
@@ -411,12 +407,12 @@ export default function TakeQuizPage() {
       if (autoSubmitted) {
         toast({
           title: 'Time up — submitted',
-          description: `You scored ${score}/${totalPoints} (${pct}%).`,
+          description: `You scored ${score}/${gradableTotalPoints} (${pct}%).`,
         });
       } else {
         toast({
           title: 'Quiz submitted',
-          description: `You scored ${score}/${totalPoints} (${pct}%).`,
+          description: `You scored ${score}/${gradableTotalPoints} (${pct}%).`,
         });
       }
 
@@ -442,7 +438,11 @@ export default function TakeQuizPage() {
   /* ─────────────────── render ─────────────────── */
 
   if (phase === 'loading') {
-    return <CenterShell><div className="text-white/85 text-sm">Loading quiz…</div></CenterShell>;
+    return (
+      <CenterShell>
+        <div className="text-white/85 text-sm">Loading quiz…</div>
+      </CenterShell>
+    );
   }
 
   if (phase === 'error') {
@@ -524,7 +524,12 @@ export default function TakeQuizPage() {
             {phase === 'in_progress' && secondsLeft != null && (
               <>
                 <span className="text-white/35">·</span>
-                <span className={cn('inline-flex items-center gap-1', secondsLeft < 60 && 'text-red-300')}>
+                <span
+                  className={cn(
+                    'inline-flex items-center gap-1',
+                    secondsLeft < 60 && 'text-red-300'
+                  )}
+                >
                   <Clock className="h-3 w-3" />
                   {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, '0')}
                 </span>
@@ -700,8 +705,12 @@ function QuestionStep({
         ))}
       </div>
       <div className="flex items-center justify-between text-[10.5px] text-white tabular-nums">
-        <span>Question {index + 1} of {total}</span>
-        <span>{answeredCount}/{total} answered</span>
+        <span>
+          Question {index + 1} of {total}
+        </span>
+        <span>
+          {answeredCount}/{total} answered
+        </span>
       </div>
 
       {/* Question card */}
@@ -770,18 +779,19 @@ function QuestionStep({
 
               {q.bs7671_citations && q.bs7671_citations.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-white/[0.04]">
-                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white mb-1.5">
-                    <BookOpen className="h-3 w-3" />
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-2">
                     BS 7671
                   </div>
-                  <ul className="space-y-1.5">
+                  <ul className="space-y-2.5">
                     {q.bs7671_citations.map((c, k) => (
-                      <li key={k} className="flex items-baseline gap-2">
-                        <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.10] border border-blue-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200 flex-shrink-0">
+                      <li key={k} className="border-l-2 border-blue-400/30 pl-3 break-words">
+                        <div className="text-[10.5px] font-semibold tracking-[0.04em] text-blue-200 break-all">
                           {c.ref}
-                        </span>
+                        </div>
                         {c.snippet && (
-                          <span className="text-[11px] text-white leading-snug">{c.snippet}</span>
+                          <p className="mt-0.5 text-[12px] text-white/85 leading-relaxed break-words">
+                            {c.snippet}
+                          </p>
                         )}
                       </li>
                     ))}
@@ -795,12 +805,7 @@ function QuestionStep({
 
       {/* Nav row */}
       <div className="flex items-center gap-2">
-        <Button
-          variant="outline"
-          onClick={onPrev}
-          disabled={index === 0}
-          className="flex-1"
-        >
+        <Button variant="outline" onClick={onPrev} disabled={index === 0} className="flex-1">
           <ChevronLeft className="h-4 w-4 mr-1" />
           Previous
         </Button>
@@ -866,8 +871,12 @@ function AnswerInput({
                   {String.fromCharCode(65 + j)}
                 </span>
                 <span className="min-w-0 flex-1 text-[13px] leading-snug">{opt}</span>
-                {locked && correct && <Check className="h-4 w-4 text-emerald-300 flex-shrink-0" strokeWidth={3} />}
-                {locked && isSelected && !correct && <X className="h-4 w-4 text-red-300 flex-shrink-0" />}
+                {locked && correct && (
+                  <Check className="h-4 w-4 text-emerald-300 flex-shrink-0" strokeWidth={3} />
+                )}
+                {locked && isSelected && !correct && (
+                  <X className="h-4 w-4 text-red-300 flex-shrink-0" />
+                )}
               </button>
             </li>
           );
@@ -914,7 +923,11 @@ function AnswerInput({
     );
   }
 
-  if (q.question_kind === 'short_answer' || q.question_kind === 'long_answer' || q.question_kind === 'scenario') {
+  if (
+    q.question_kind === 'short_answer' ||
+    q.question_kind === 'long_answer' ||
+    q.question_kind === 'scenario'
+  ) {
     const text = answer?.kind === q.question_kind ? answer.text : '';
     const minRows = q.question_kind === 'short_answer' ? 3 : 6;
     const placeholder =
@@ -987,7 +1000,11 @@ function AnswerInput({
                 const n = e.target.value === '' ? null : Number(e.target.value);
                 onAnswer(
                   q.id,
-                  { kind: 'calculation', numeric: Number.isFinite(n as number) ? (n as number) : null, working },
+                  {
+                    kind: 'calculation',
+                    numeric: Number.isFinite(n as number) ? (n as number) : null,
+                    working,
+                  },
                   false
                 );
               }}
@@ -1014,11 +1031,7 @@ function AnswerInput({
             value={working}
             disabled={locked}
             onChange={(e) =>
-              onAnswer(
-                q.id,
-                { kind: 'calculation', numeric, working: e.target.value },
-                false
-              )
+              onAnswer(q.id, { kind: 'calculation', numeric, working: e.target.value }, false)
             }
             placeholder="Step through your calculation…"
             rows={4}
@@ -1031,14 +1044,7 @@ function AnswerInput({
 
   // image_annotation / practical_evidence — file upload + caption
   if (q.question_kind === 'image_annotation' || q.question_kind === 'practical_evidence') {
-    return (
-      <MediaAnswerInput
-        q={q}
-        answer={answer}
-        locked={locked}
-        onAnswer={onAnswer}
-      />
-    );
+    return <MediaAnswerInput q={q} answer={answer} locked={locked} onAnswer={onAnswer} />;
   }
 
   return null;
@@ -1069,9 +1075,7 @@ function MediaAnswerInput({
           files: Array<{ url: string; name: string; mime?: string }>;
         });
   const accept =
-    q.question_kind === 'image_annotation'
-      ? 'image/*'
-      : 'image/*,video/*,application/pdf';
+    q.question_kind === 'image_annotation' ? 'image/*' : 'image/*,video/*,application/pdf';
 
   const handleFiles = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
@@ -1091,9 +1095,7 @@ function MediaAnswerInput({
           .from('portfolio-evidence')
           .upload(path, f, { contentType: f.type || 'application/octet-stream' });
         if (upErr) throw new Error(upErr.message);
-        const { data: pub } = supabase.storage
-          .from('portfolio-evidence')
-          .getPublicUrl(path);
+        const { data: pub } = supabase.storage.from('portfolio-evidence').getPublicUrl(path);
         uploaded.push({ url: pub.publicUrl, name: f.name, mime: f.type });
       }
       const next: LearnerAnswer = {
@@ -1148,7 +1150,8 @@ function MediaAnswerInput({
               : 'Tap to upload photo / video / PDF evidence'}
         </div>
         <div className="text-[10.5px] text-white/65 mt-0.5">
-          Up to 10 MB per file. {q.question_kind === 'image_annotation' ? 'Image only.' : 'Image, video or PDF.'}
+          Up to 10 MB per file.{' '}
+          {q.question_kind === 'image_annotation' ? 'Image only.' : 'Image, video or PDF.'}
         </div>
       </button>
       {current.files.length > 0 && (
@@ -1278,9 +1281,7 @@ function ReviewState({
         </div>
         <p className="text-[12.5px] text-white">
           {answeredCount} of {questions.length} answered
-          {unanswered > 0 && (
-            <span className="ml-1 text-amber-300">· {unanswered} unanswered</span>
-          )}
+          {unanswered > 0 && <span className="ml-1 text-amber-300">· {unanswered} unanswered</span>}
         </p>
       </div>
 
@@ -1296,12 +1297,16 @@ function ReviewState({
                 className="w-full text-left rounded-xl border border-white/[0.06] bg-[hsl(0_0%_12%)] hover:bg-white/[0.03] px-4 py-3 transition-colors touch-manipulation"
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-semibold tabular-nums text-white">Q{i + 1}</span>
+                  <span className="text-[10px] font-semibold tabular-nums text-white">
+                    Q{i + 1}
+                  </span>
                   <span className="text-[12px] text-white truncate flex-1">{q.question_text}</span>
                   {a != null ? (
                     <Check className="h-3.5 w-3.5 text-emerald-300 flex-shrink-0" strokeWidth={3} />
                   ) : (
-                    <span className="text-[10px] uppercase tracking-[0.06em] text-amber-300">Skip</span>
+                    <span className="text-[10px] uppercase tracking-[0.06em] text-amber-300">
+                      Skip
+                    </span>
                   )}
                 </div>
                 {preview && (
@@ -1341,99 +1346,117 @@ function SubmittedState({
   resultPct: number | null;
   onBack: () => void;
 }) {
+  // Recompute verdict-counts from the canonical scoreVerdict so the recap and
+  // the headline never disagree.
+  const verdicts = questions.map((q) => scoreVerdict(q, answers[q.id]));
+  const correctCount = verdicts.filter((v) => v === 'correct').length;
+  const incorrectCount = verdicts.filter((v) => v === 'incorrect').length;
+  const pendingCount = verdicts.filter((v) => v === 'pending').length;
+  const noKeyCount = verdicts.filter((v) => v === 'no_key').length;
+  const unansweredCount = verdicts.filter((v) => v === 'unanswered').length;
+  const gradableCount = correctCount + incorrectCount + pendingCount + unansweredCount;
+
   const passed = quiz.pass_mark != null && resultPct != null && resultPct >= quiz.pass_mark;
-  const pendingAi = questions.some(
-    (q) => isFreeResponseKind(q.question_kind) && answers[q.id] != null
-  );
+  const accentTone: 'emerald' | 'amber' | 'red' = passed
+    ? 'emerald'
+    : resultPct != null && resultPct >= 50
+      ? 'amber'
+      : 'red';
+  const accent =
+    accentTone === 'emerald'
+      ? 'text-emerald-300'
+      : accentTone === 'amber'
+        ? 'text-amber-300'
+        : 'text-red-300';
+
   return (
-    <div className="space-y-3">
-      <div
-        className={cn(
-          'rounded-2xl border px-5 py-5 flex items-center gap-4',
-          passed
-            ? 'border-emerald-500/[0.30] bg-emerald-500/[0.06]'
-            : resultPct != null && resultPct > 0
-              ? 'border-amber-500/[0.30] bg-amber-500/[0.05]'
-              : 'border-red-500/[0.25] bg-red-500/[0.05]'
-        )}
-      >
-        <div
-          className={cn(
-            'h-14 w-14 rounded-2xl flex items-center justify-center flex-shrink-0',
-            passed ? 'bg-emerald-500/[0.18] border border-emerald-400/30' : 'bg-white/[0.06] border border-white/[0.10]'
-          )}
-        >
-          <Trophy className={cn('h-7 w-7', passed ? 'text-emerald-300' : 'text-white/65')} />
+    <div className="space-y-6">
+      {/* Headline — typography only, no card / icon */}
+      <div className="px-1">
+        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/65">
+          {passed ? 'Passed' : 'Submitted'}
         </div>
-        <div className="min-w-0 flex-1">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white mb-0.5">
-            {passed ? 'Passed' : 'Submitted'}
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-[28px] font-semibold tabular-nums text-white leading-none">
-              {resultPct ?? 0}%
-            </span>
-            {quiz.pass_mark != null && (
-              <span className="text-[11px] text-white">
-                {passed ? 'above' : 'below'} pass mark of {quiz.pass_mark}%
-              </span>
+        <div className="mt-2 flex items-baseline gap-3 flex-wrap">
+          <span
+            className={cn(
+              'text-[56px] sm:text-[64px] font-semibold tabular-nums leading-none',
+              accent
             )}
-          </div>
-          {pendingAi && (
-            <div className="mt-1 inline-flex items-center gap-1 text-[10.5px] text-blue-200">
-              <Brain className="h-3 w-3" />
-              Written answers will be marked by AI shortly — score may rise.
-            </div>
-          )}
+          >
+            {resultPct ?? 0}
+            <span className="text-[28px] sm:text-[32px] ml-0.5 align-baseline">%</span>
+          </span>
+          <span className="text-[13px] text-white/85 tabular-nums">
+            {correctCount} of {gradableCount} correct
+            {pendingCount > 0 && ` · ${pendingCount} pending`}
+          </span>
         </div>
+        <p className="mt-2 text-[12.5px] text-white/65 leading-relaxed">
+          {quiz.pass_mark != null && (
+            <>
+              Pass mark {quiz.pass_mark}% · you{' '}
+              {passed ? 'cleared it' : `need ${quiz.pass_mark - (resultPct ?? 0)}% more`}.
+            </>
+          )}
+          {pendingCount > 0 && (
+            <>
+              {quiz.pass_mark != null ? ' ' : ''}
+              Your written answers will be marked by AI shortly — your score may rise.
+            </>
+          )}
+          {noKeyCount > 0 && (
+            <>
+              {' '}
+              {noKeyCount} {noKeyCount === 1 ? 'question is' : 'questions are'} flagged for tutor
+              review (no answer key).
+            </>
+          )}
+        </p>
       </div>
 
-      {/* Per-question summary */}
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
-        <div className="px-5 py-3 border-b border-white/[0.06] text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      {/* Question recap — editorial list, no per-row containers */}
+      <div>
+        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/65 mb-3 px-1">
           Question recap
         </div>
-        <ol className="divide-y divide-white/[0.04]">
+        <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
           {questions.map((q, i) => {
             const a = answers[q.id];
-            const verdict = scoreVerdict(q, a);
+            const verdict = verdicts[i];
             const preview = answerPreview(q, a);
+            const verdictMeta = (() => {
+              if (verdict === 'correct') return { label: 'Correct', cls: 'text-emerald-300' };
+              if (verdict === 'incorrect') return { label: 'Wrong', cls: 'text-red-300' };
+              if (verdict === 'pending') return { label: 'Awaiting AI', cls: 'text-blue-300' };
+              if (verdict === 'no_key') return { label: 'For tutor review', cls: 'text-amber-300' };
+              return { label: 'Skipped', cls: 'text-white/45' };
+            })();
             return (
-              <li key={q.id} className="px-5 py-3">
-                <div className="flex items-start gap-3">
-                  <span
-                    className={cn(
-                      'mt-0.5 inline-flex items-center justify-center h-5 w-5 rounded-full text-[10px] font-bold flex-shrink-0',
-                      verdict === 'correct'
-                        ? 'bg-emerald-500/20 text-emerald-300'
-                        : verdict === 'incorrect'
-                          ? 'bg-red-500/20 text-red-300'
-                          : verdict === 'pending'
-                            ? 'bg-blue-500/20 text-blue-300'
-                            : 'bg-white/[0.06] text-white/55'
-                    )}
-                  >
-                    {verdict === 'correct' ? '✓' : verdict === 'incorrect' ? '✗' : verdict === 'pending' ? '…' : '–'}
+              <li key={q.id} className="py-4 px-1">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[10.5px] tabular-nums text-white/55 font-mono w-6 flex-shrink-0">
+                    {String(i + 1).padStart(2, '0')}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[12px] text-white leading-snug">
-                      Q{i + 1}: {q.question_text}
+                    <div
+                      className={cn(
+                        'text-[10.5px] font-semibold uppercase tracking-[0.14em]',
+                        verdictMeta.cls
+                      )}
+                    >
+                      {verdictMeta.label}
                     </div>
+                    <p className="mt-1 text-[13px] sm:text-[13.5px] text-white leading-snug break-words">
+                      {q.question_text}
+                    </p>
                     {preview && (
-                      <div className="mt-1 text-[11px] text-white/75">
-                        <span className="text-white/45">Your answer: </span>
-                        {preview}
-                      </div>
-                    )}
-                    {verdict === 'incorrect' && q.explanation && (
-                      <p className="mt-1.5 text-[11px] text-white leading-snug">
-                        <span className="text-white/55">Why: </span>
-                        {q.explanation}
+                      <p className="mt-1.5 text-[11.5px] text-white/65 leading-relaxed break-words">
+                        Your answer: <span className="text-white/85">{preview}</span>
                       </p>
                     )}
-                    {verdict === 'pending' && (
-                      <p className="mt-1.5 text-[11px] text-blue-200 leading-snug">
-                        Awaiting AI marking
+                    {(verdict === 'incorrect' || verdict === 'no_key') && q.explanation && (
+                      <p className="mt-1.5 text-[11.5px] text-white/85 leading-relaxed break-words">
+                        {q.explanation}
                       </p>
                     )}
                   </div>
@@ -1447,7 +1470,7 @@ function SubmittedState({
       <button
         type="button"
         onClick={onBack}
-        className="w-full h-12 rounded-full bg-white/[0.06] border border-white/[0.10] text-white text-[13px] font-semibold hover:bg-white/[0.10] transition-all touch-manipulation"
+        className="text-[13px] font-medium text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation px-1"
       >
         ← Back to my college hub
       </button>
@@ -1500,21 +1523,37 @@ function questionKindMixLabel(qs: QuizQuestion[]): string {
   return 'mixed-format questions';
 }
 
-type Verdict = 'correct' | 'incorrect' | 'pending' | 'unanswered';
+type Verdict = 'correct' | 'incorrect' | 'pending' | 'unanswered' | 'no_key';
+
+/** True when this deterministic question has no usable answer key — the AI
+ *  failed to supply correct_answer_index (multi_choice / true_false) or a
+ *  numeric_value (calculation). We refuse to grade it rather than guess. */
+function isUngradeable(q: QuizQuestion): boolean {
+  if (q.question_kind === 'multi_choice') return q.correct_answer_index == null;
+  if (q.question_kind === 'true_false') return q.correct_answer_index == null;
+  if (q.question_kind === 'calculation') {
+    const e = (q.expected_answer ?? {}) as { numeric_value?: number };
+    return e.numeric_value == null;
+  }
+  return false; // free-response goes to AI grading
+}
 
 function scoreVerdict(q: QuizQuestion, a: LearnerAnswer | undefined): Verdict {
+  if (isUngradeable(q)) return 'no_key';
   if (a == null) return 'unanswered';
   if (q.question_kind === 'multi_choice' && a.kind === 'multi_choice') {
     return a.index === q.correct_answer_index ? 'correct' : 'incorrect';
   }
   if (q.question_kind === 'true_false' && a.kind === 'true_false') {
+    // correct_answer_index 0 = True, 1 = False. We've already proven it's
+    // not null in isUngradeable.
     const expectedTrue = q.correct_answer_index === 0;
     return a.value === expectedTrue ? 'correct' : 'incorrect';
   }
   if (q.question_kind === 'calculation' && a.kind === 'calculation') {
     const expected = (q.expected_answer ?? {}) as { numeric_value?: number; tolerance?: number };
-    if (expected.numeric_value == null || a.numeric == null) return 'pending';
-    return Math.abs(a.numeric - expected.numeric_value) <= (expected.tolerance ?? 0)
+    if (a.numeric == null) return 'incorrect';
+    return Math.abs(a.numeric - (expected.numeric_value as number)) <= (expected.tolerance ?? 0)
       ? 'correct'
       : 'incorrect';
   }
@@ -1534,7 +1573,10 @@ function answerPreview(q: QuizQuestion, a: LearnerAnswer | undefined): string | 
     return a.numeric == null ? '—' : `${a.numeric}${expected.units ? ' ' + expected.units : ''}`;
   }
   if (a.kind === 'image_annotation' || a.kind === 'practical_evidence') {
-    const fileLabel = a.files.length === 0 ? 'no files' : `${a.files.length} file${a.files.length === 1 ? '' : 's'}`;
+    const fileLabel =
+      a.files.length === 0
+        ? 'no files'
+        : `${a.files.length} file${a.files.length === 1 ? '' : 's'}`;
     if (!a.caption) return fileLabel;
     return `${fileLabel} · ${a.caption.length > 80 ? a.caption.slice(0, 77) + '…' : a.caption}`;
   }

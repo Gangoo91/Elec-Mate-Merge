@@ -156,12 +156,12 @@ export function MyGoalSheet({
             <h2
               className={cn(
                 'mt-1.5 text-[20px] font-semibold leading-tight',
-                isComplete ? 'text-white/55 line-through' : 'text-white'
+                isComplete ? 'text-white/85 line-through' : 'text-white'
               )}
             >
               {goal.title}
             </h2>
-            <div className="mt-2 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white/55 tabular-nums">
+            <div className="mt-2 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white/85 tabular-nums">
               <span className="inline-flex items-center gap-1">
                 <Tag className="h-3 w-3" />
                 {CATEGORY_LABEL[goal.category]}
@@ -175,7 +175,7 @@ export function MyGoalSheet({
                       ? 'text-red-300'
                       : goal.status === 'blocked'
                         ? 'text-amber-300'
-                        : 'text-white/65'
+                        : 'text-white/90'
                 )}
               >
                 {STATUS_LABEL[goal.status]}
@@ -196,7 +196,7 @@ export function MyGoalSheet({
           <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
             {goal.description && (
               <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-1.5">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/85 mb-1.5">
                   What success looks like
                 </div>
                 <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-line">
@@ -207,7 +207,7 @@ export function MyGoalSheet({
 
             {goal.acceptance_criteria && (
               <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-1.5">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/85 mb-1.5">
                   How we'll know it's done
                 </div>
                 <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-line">
@@ -231,7 +231,7 @@ export function MyGoalSheet({
                     From your tutor
                   </div>
                   {goal.tutor_comment_at && (
-                    <div className="text-[10.5px] text-white/45 tabular-nums">
+                    <div className="text-[10.5px] text-white/95 tabular-nums">
                       {formatRelative(goal.tutor_comment_at)}
                     </div>
                   )}
@@ -243,28 +243,27 @@ export function MyGoalSheet({
             )}
 
             {/* Existing student comment */}
-            {goal.student_comment &&
-              goal.student_comment !== reply && (
-                <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
-                  <div className="flex items-baseline justify-between gap-2 mb-1.5">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-emerald-300/85">
-                      Your last reply
-                    </div>
-                    {goal.student_comment_at && (
-                      <div className="text-[10.5px] text-white/45 tabular-nums">
-                        {formatRelative(goal.student_comment_at)}
-                      </div>
-                    )}
+            {goal.student_comment && goal.student_comment !== reply && (
+              <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
+                <div className="flex items-baseline justify-between gap-2 mb-1.5">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-emerald-300/85">
+                    Your last reply
                   </div>
-                  <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-line">
-                    {goal.student_comment}
-                  </p>
+                  {goal.student_comment_at && (
+                    <div className="text-[10.5px] text-white/95 tabular-nums">
+                      {formatRelative(goal.student_comment_at)}
+                    </div>
+                  )}
                 </div>
-              )}
+                <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-line">
+                  {goal.student_comment}
+                </p>
+              </div>
+            )}
 
             {/* Reply box */}
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-1.5 flex items-center gap-1.5">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/85 mb-1.5 flex items-center gap-1.5">
                 <MessageCircle className="h-3 w-3" />
                 Reply to your tutor
               </div>
@@ -281,9 +280,7 @@ export function MyGoalSheet({
                 rows={4}
                 className="w-full px-3 py-2.5 text-[13px] text-white bg-white/[0.04] border border-white/[0.1] rounded-xl resize-none touch-manipulation focus:border-purple-400/50 focus:outline-none focus:ring-1 focus:ring-purple-400/30"
               />
-              <div className="mt-1 text-[10.5px] text-white/40">
-                ⌘ + Enter to send
-              </div>
+              <div className="mt-1 text-[10.5px] text-white/40">⌘ + Enter to send</div>
             </div>
           </div>
 
@@ -297,16 +294,12 @@ export function MyGoalSheet({
               className={cn(
                 'flex-1 h-11 rounded-full border touch-manipulation transition-colors',
                 isComplete
-                  ? 'border-white/[0.15] text-white/75 hover:bg-white/[0.06]'
+                  ? 'border-white/[0.15] text-white/95 hover:bg-white/[0.06]'
                   : 'border-emerald-400/40 bg-emerald-500/[0.08] text-emerald-200 hover:bg-emerald-500/[0.16]'
               )}
             >
               <Check className="h-4 w-4 mr-1.5" strokeWidth={3} />
-              {busy === 'tick'
-                ? 'Saving…'
-                : isComplete
-                  ? 'Mark not done'
-                  : 'Mark done'}
+              {busy === 'tick' ? 'Saving…' : isComplete ? 'Mark not done' : 'Mark done'}
             </Button>
             <Button
               type="button"
