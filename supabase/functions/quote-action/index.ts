@@ -255,12 +255,12 @@ async function sendEmailNotification(
   // Fetch company profile for sender info
   const { data: company } = await supabase
     .from('company_profiles')
-    .select('company_name, email')
+    .select('company_name, company_email')
     .eq('user_id', quote.user_id)
     .single();
 
   const companyName = company?.company_name || 'ElecMate';
-  const toEmail = company?.email || quote.user_email || 'support@elec-mate.com';
+  const toEmail = company?.company_email || quote.user_email || '';
 
   const subject =
     action === 'accept'
