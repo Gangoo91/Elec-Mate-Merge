@@ -92,9 +92,19 @@ export const reportCloud = {
       if (countError) throw countError;
 
       // Get paginated data (excluding auto-drafts by default)
+      // ELE-946: select only list-view columns (not the full data JSONB blob)
+      // Simon's 7 certs weighed 1.27 MB with select('*') causing slow load + timeouts.
+      // The full data blob is only needed when opening a cert to edit it.
+      const LIST_COLUMNS = [
+        'report_id', 'report_type', 'certificate_number', 'client_name',
+        'installation_address', 'status', 'updated_at', 'created_at',
+        'customer_id', 'pdf_document_id', 'pdf_url', 'pdf_generated_at',
+        'edit_version', 'last_synced_at', 'inspector_name', 'inspection_date',
+        'deleted_at',
+      ].join(', ');
       let query = supabase
         .from('reports')
-        .select('*')
+        .select(LIST_COLUMNS)
         .eq('user_id', userId)
         .is('deleted_at', null)
         .order('updated_at', { ascending: false });
