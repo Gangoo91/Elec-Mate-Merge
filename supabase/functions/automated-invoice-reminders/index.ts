@@ -155,13 +155,18 @@ serve(async (req: Request) => {
 
       const { data: company } = await supabase
         .from('company_profiles')
-        .select('company_name, company_email, email')
+        .select('company_name, company_email')
         .eq('user_id', invoice.user_id)
         .single();
 
       if (company) {
         companyName = company.company_name || 'Your Electrician';
-        replyToEmail = company.company_email || company.email || '';
+        replyToEmail = company.company_email || '';
+      }
+      // ELE-662 fix: if no company_email, fall back to auth user email
+      if (!replyToEmail) {
+        const { data: authUser } = await supabase.auth.admin.getUserById(invoice.user_id);
+        replyToEmail = authUser?.user?.email || '';
       }
 
       // ELE-880 — mint a mark-paid token so the reminder includes a one-tap
