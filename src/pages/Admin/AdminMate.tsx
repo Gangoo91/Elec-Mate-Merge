@@ -4,13 +4,22 @@
  */
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { RefreshCw } from 'lucide-react';
+import { Plus, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+import PullToRefresh from '@/components/admin/PullToRefresh';
+import ProvisionMateSheet from '@/components/admin/ProvisionMateSheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import {
   PageFrame,
   PageHero,
@@ -26,6 +35,7 @@ import {
   EmptyState,
   LoadingBlocks,
   IconButton,
+  FilterBar,
   type Tone,
 } from '@/components/admin/editorial';
 
@@ -70,6 +80,9 @@ interface MateHealth {
   }[];
 }
 
+type FilterKey = 'all' | 'active' | 'errors' | 'jwt' | 'idle' | 'lowrag';
+type SortKey = 'recent' | 'errors' | 'jwt' | 'active' | 'lowrag';
+
 function getInitials(name: string | null) {
   if (!name) return '·';
   return name
@@ -105,10 +118,28 @@ function statusTone(status: string | null): Tone {
   return 'blue';
 }
 
+function jwtDays(expiresAt: string | null): number {
+  if (!expiresAt) return -Infinity;
+  return (parseISO(expiresAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24);
+}
+
+function lastSeenAge(lastSeenAt: string | null): number {
+  if (!lastSeenAt) return Infinity;
+  return (Date.now() - parseISO(lastSeenAt).getTime()) / (1000 * 60 * 60);
+}
+
+function ragShare(u: MateUser): number {
+  if (u.tool_calls_24h === 0) return 1; // ignore inactive users for "low RAG" detection
+  return u.rag_calls_24h / u.tool_calls_24h;
+}
+
 export default function AdminMate() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [filter, setFilter] = useState<FilterKey>('all');
+  const [sort, setSort] = useState<SortKey>('recent');
+  const [provisionOpen, setProvisionOpen] = useState(false);
 
   const { data, isLoading, isFetching, error } = useQuery<MateHealth>({
     queryKey: ['admin-mate-health'],
@@ -133,6 +164,41 @@ export default function AdminMate() {
     setTimeout(() => setIsRefreshing(false), 500);
   }, [queryClient]);
 
+  const filterCounts = useMemo(() => {
+    if (!data) return null;
+    const u = data.users;
+    return {
+      all: u.length,
+      active: u.filter((x) => lastSeenAge(x.last_seen_at) <= 24).length,
+      errors: u.filter((x) => x.errors_24h > 0).length,
+      jwt: u.filter((x) => jwtDays(x.jwt_expires_at) < 14).length,
+      idle: u.filter((x) => lastSeenAge(x.last_seen_at) > 24 * 7).length,
+      lowrag: u.filter((x) => x.tool_calls_24h > 0 && ragShare(x) < 0.3).length,
+    };
+  }, [data]);
+
+  const filteredSortedUsers = useMemo(() => {
+    if (!data) return [];
+    let list = data.users.slice();
+
+    if (filter === 'active') list = list.filter((x) => lastSeenAge(x.last_seen_at) <= 24);
+    else if (filter === 'errors') list = list.filter((x) => x.errors_24h > 0);
+    else if (filter === 'jwt') list = list.filter((x) => jwtDays(x.jwt_expires_at) < 14);
+    else if (filter === 'idle') list = list.filter((x) => lastSeenAge(x.last_seen_at) > 24 * 7);
+    else if (filter === 'lowrag')
+      list = list.filter((x) => x.tool_calls_24h > 0 && ragShare(x) < 0.3);
+
+    list.sort((a, b) => {
+      if (sort === 'errors') return b.errors_24h - a.errors_24h;
+      if (sort === 'jwt') return jwtDays(a.jwt_expires_at) - jwtDays(b.jwt_expires_at);
+      if (sort === 'active') return b.tool_calls_24h - a.tool_calls_24h;
+      if (sort === 'lowrag') return ragShare(a) - ragShare(b);
+      return lastSeenAge(a.last_seen_at) - lastSeenAge(b.last_seen_at);
+    });
+
+    return list;
+  }, [data, filter, sort]);
+
   if (isLoading) {
     return (
       <PageFrame>
@@ -155,215 +221,287 @@ export default function AdminMate() {
     );
   }
 
-  const { summary, users, top_tools_24h, top_errors_24h } = data;
+  const { summary, top_tools_24h, top_errors_24h } = data;
   const ragPct = Math.round(summary.rag_share_24h * 100);
   const errorPct = Math.round(summary.error_rate_24h * 100);
 
+  const filterTabs: { value: FilterKey; label: string; count?: number }[] = [
+    { value: 'all', label: 'All', count: filterCounts?.all },
+    { value: 'active', label: 'Active', count: filterCounts?.active },
+    { value: 'errors', label: 'Errors', count: filterCounts?.errors },
+    { value: 'jwt', label: 'JWT', count: filterCounts?.jwt },
+    { value: 'idle', label: 'Idle', count: filterCounts?.idle },
+    { value: 'lowrag', label: 'Low RAG', count: filterCounts?.lowrag },
+  ];
+
   return (
-    <PageFrame>
-      <PageHero
-        eyebrow="Operations"
-        title="Mate"
-        description="Health of the Elec-AI agent fleet. Tool calls, errors, and how often answers come from the RAG corpus."
-        tone="yellow"
-        live={{ label: 'Live' }}
-        actions={
-          <IconButton
-            onClick={handleRefresh}
-            disabled={isFetching || isRefreshing}
-            aria-label="Refresh"
-          >
-            <RefreshCw className={cn('h-4 w-4', (isFetching || isRefreshing) && 'animate-spin')} />
-          </IconButton>
-        }
-      />
-
-      {/* RAG-grounded hero — the A4:2026 truth meter */}
-      <HeroNumber
-        eyebrow="RAG-grounded — last 24h"
-        live
-        tone={ragPct >= 60 ? 'emerald' : ragPct >= 30 ? 'amber' : 'red'}
-        value={<AnimatedCounter value={ragPct} suffix="%" />}
-        caption={`${summary.rag_calls_24h} of ${summary.tool_calls_24h} tool calls hit the BS 7671 / GN3 / OSG corpus`}
-        columns={[
-          {
-            label: 'Tool calls',
-            value: <AnimatedCounter value={summary.tool_calls_24h} />,
-          },
-          {
-            label: 'RAG calls',
-            value: <AnimatedCounter value={summary.rag_calls_24h} />,
-            tone: 'emerald',
-          },
-          {
-            label: 'Error rate',
-            value: <AnimatedCounter value={errorPct} suffix="%" />,
-            tone: errorPct >= 5 ? 'red' : errorPct >= 1 ? 'orange' : 'emerald',
-          },
-        ]}
-      />
-
-      <StatStrip
-        columns={4}
-        stats={[
-          {
-            label: 'Agents',
-            value: <AnimatedCounter value={summary.total_agents} />,
-          },
-          {
-            label: 'Active 24h',
-            value: <AnimatedCounter value={summary.active_24h} />,
-            tone: 'green',
-          },
-          {
-            label: 'Active 7d',
-            value: <AnimatedCounter value={summary.active_7d} />,
-            tone: 'blue',
-          },
-          {
-            label: 'Calls 7d',
-            value: <AnimatedCounter value={summary.tool_calls_7d} />,
-          },
-        ]}
-      />
-
-      <Divider label="Agents" />
-
-      <ListCard>
-        <ListCardHeader
+    <PullToRefresh onRefresh={handleRefresh}>
+      <PageFrame>
+        <PageHero
+          eyebrow="Operations"
+          title="Mate"
+          description="Health of the Elec-AI agent fleet. Tool calls, errors, and how often answers come from the RAG corpus."
           tone="yellow"
-          title="Provisioned agents"
-          meta={
-            <span className="text-[11px] text-white tabular-nums">
-              {users.length} total · {summary.active_24h} active 24h
-            </span>
+          live={{ label: 'Live' }}
+          actions={
+            <>
+              <button
+                onClick={() => setProvisionOpen(true)}
+                className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation flex items-center gap-1.5"
+              >
+                <Plus className="h-4 w-4" />
+                Provision
+              </button>
+              <IconButton
+                onClick={handleRefresh}
+                disabled={isFetching || isRefreshing}
+                aria-label="Refresh"
+              >
+                <RefreshCw
+                  className={cn('h-4 w-4', (isFetching || isRefreshing) && 'animate-spin')}
+                />
+              </IconButton>
+            </>
           }
         />
-        {users.length === 0 ? (
-          <EmptyState
-            title="No agents provisioned yet"
-            description="Once you provision a user via the VPS, they'll appear here."
-          />
-        ) : (
-          <ListBody>
-            {users.map((u) => {
-              const lastSeen = u.last_seen_at
-                ? formatDistanceToNow(parseISO(u.last_seen_at), {
-                    addSuffix: true,
-                  }).replace('about ', '')
-                : 'Never';
-              const errPct = Math.round(u.error_rate_24h * 100);
-              return (
-                <ListRow
-                  key={u.user_id}
-                  lead={<Avatar initials={getInitials(u.full_name)} />}
-                  title={u.full_name ?? 'Unknown'}
-                  subtitle={
-                    <span className="truncate">
-                      {[u.phone, u.role].filter(Boolean).join(' · ') || '—'}
-                      {' · '}
-                      <span className="tabular-nums">{u.tool_calls_24h} calls / 24h</span>
-                      {u.errors_24h > 0 && (
-                        <span className="tabular-nums text-red-400">
-                          {' · '}
-                          {u.errors_24h} err
-                        </span>
-                      )}
-                    </span>
-                  }
-                  trailing={
-                    <>
-                      <Pill tone={statusTone(u.agent_status)}>{u.agent_status ?? 'unknown'}</Pill>
-                      <Pill tone={jwtTone(u.jwt_expires_at)}>JWT {jwtLabel(u.jwt_expires_at)}</Pill>
-                      {errPct >= 5 && <Pill tone="red">{errPct}% err</Pill>}
-                      <span className="text-[11px] text-white tabular-nums whitespace-nowrap">
-                        {lastSeen}
-                      </span>
-                    </>
-                  }
-                  onClick={() => navigate(`/admin/users?focus=${u.user_id}`)}
-                />
-              );
-            })}
-          </ListBody>
-        )}
-      </ListCard>
 
-      <Divider label="Tools" />
+        <HeroNumber
+          eyebrow="RAG-grounded — last 24h"
+          live
+          tone={ragPct >= 60 ? 'emerald' : ragPct >= 30 ? 'amber' : 'red'}
+          value={<AnimatedCounter value={ragPct} suffix="%" />}
+          caption={`${summary.rag_calls_24h} of ${summary.tool_calls_24h} tool calls hit BS 7671 / GN3 / OSG`}
+          columns={[
+            {
+              label: 'Tool calls',
+              value: <AnimatedCounter value={summary.tool_calls_24h} />,
+            },
+            {
+              label: 'RAG calls',
+              value: <AnimatedCounter value={summary.rag_calls_24h} />,
+              tone: 'emerald',
+            },
+            {
+              label: 'Error rate',
+              value: <AnimatedCounter value={errorPct} suffix="%" />,
+              tone: errorPct >= 5 ? 'red' : errorPct >= 1 ? 'orange' : 'emerald',
+            },
+          ]}
+        />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <StatStrip
+          columns={4}
+          stats={[
+            {
+              label: 'Agents',
+              value: <AnimatedCounter value={summary.total_agents} />,
+            },
+            {
+              label: 'Active 24h',
+              value: <AnimatedCounter value={summary.active_24h} />,
+              tone: 'green',
+            },
+            {
+              label: 'Active 7d',
+              value: <AnimatedCounter value={summary.active_7d} />,
+              tone: 'blue',
+            },
+            {
+              label: 'Calls 7d',
+              value: <AnimatedCounter value={summary.tool_calls_7d} />,
+            },
+          ]}
+        />
+
+        <Divider label="Agents" />
+
+        <FilterBar
+          tabs={filterTabs}
+          activeTab={filter}
+          onTabChange={(v) => setFilter(v as FilterKey)}
+          actions={
+            <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
+              <SelectTrigger className="h-10 w-[170px] shrink-0 rounded-full bg-[hsl(0_0%_12%)] border-white/[0.08] focus:border-elec-yellow/60 text-[13px] text-white touch-manipulation">
+                <SelectValue placeholder="Sort" />
+              </SelectTrigger>
+              <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                <SelectItem value="recent">Recently seen</SelectItem>
+                <SelectItem value="active">Most active 24h</SelectItem>
+                <SelectItem value="errors">Most errors</SelectItem>
+                <SelectItem value="jwt">JWT expiring</SelectItem>
+                <SelectItem value="lowrag">Lowest RAG</SelectItem>
+              </SelectContent>
+            </Select>
+          }
+        />
+
         <ListCard>
           <ListCardHeader
-            tone="cyan"
-            title="Top tools — 24h"
+            tone="yellow"
+            title="Provisioned agents"
             meta={
               <span className="text-[11px] text-white tabular-nums">
-                {top_tools_24h.length} distinct
+                {filteredSortedUsers.length} shown
               </span>
             }
           />
-          {top_tools_24h.length === 0 ? (
+          {filteredSortedUsers.length === 0 ? (
             <EmptyState
-              title="No tool calls in the last 24h"
-              description="Activity will show up here as agents handle messages."
+              title="No agents match"
+              description={
+                filter === 'all'
+                  ? 'No agents provisioned yet — provision a user via the VPS and they will appear here.'
+                  : 'Try a different filter or sort.'
+              }
             />
           ) : (
             <ListBody>
-              {top_tools_24h.map((t) => (
-                <ListRow
-                  key={t.tool}
-                  title={t.tool}
-                  trailing={
-                    <span className="text-[13px] font-semibold tabular-nums text-white">
-                      {t.count}
-                    </span>
-                  }
-                />
-              ))}
+              {filteredSortedUsers.map((u) => {
+                const lastSeen = u.last_seen_at
+                  ? formatDistanceToNow(parseISO(u.last_seen_at), {
+                      addSuffix: true,
+                    }).replace('about ', '')
+                  : 'Never';
+                const errPct = Math.round(u.error_rate_24h * 100);
+                const lowRag = u.tool_calls_24h > 0 && ragShare(u) < 0.3;
+                const jwtT = jwtTone(u.jwt_expires_at);
+                const jwtUrgent = jwtT === 'red' || jwtT === 'orange';
+                return (
+                  <ListRow
+                    key={u.user_id}
+                    lead={<Avatar initials={getInitials(u.full_name)} />}
+                    title={<span className="truncate">{u.full_name ?? 'Unknown'}</span>}
+                    subtitle={
+                      <span className="truncate">
+                        <span className="hidden sm:inline">
+                          {[u.phone, u.role].filter(Boolean).join(' · ') || '—'}
+                          {' · '}
+                        </span>
+                        <span className="tabular-nums">{u.tool_calls_24h} calls</span>
+                        {u.errors_24h > 0 && (
+                          <span className="tabular-nums text-red-400">
+                            {' · '}
+                            {u.errors_24h} err
+                          </span>
+                        )}
+                        <span className="tabular-nums text-white/70">
+                          {' · '}
+                          {lastSeen}
+                        </span>
+                      </span>
+                    }
+                    trailing={
+                      <>
+                        <Pill tone={statusTone(u.agent_status)}>{u.agent_status ?? '—'}</Pill>
+                        <Pill tone={jwtT} className={cn(!jwtUrgent && 'hidden md:inline-flex')}>
+                          JWT {jwtLabel(u.jwt_expires_at)}
+                        </Pill>
+                        {errPct >= 5 && (
+                          <Pill tone="red" className="hidden sm:inline-flex">
+                            {errPct}%
+                          </Pill>
+                        )}
+                        {lowRag && (
+                          <Pill tone="amber" className="hidden md:inline-flex">
+                            Low RAG
+                          </Pill>
+                        )}
+                      </>
+                    }
+                    onClick={() => navigate(`/admin/mate/${u.user_id}`)}
+                  />
+                );
+              })}
             </ListBody>
           )}
         </ListCard>
 
-        <ListCard>
-          <ListCardHeader
-            tone={top_errors_24h.length > 0 ? 'red' : 'emerald'}
-            title="Recent errors — 24h"
-            meta={
-              <span className="text-[11px] text-white tabular-nums">
-                {summary.errors_24h} total
-              </span>
-            }
-          />
-          {top_errors_24h.length === 0 ? (
-            <EmptyState title="No errors" description="Nothing's failed in the last 24h. Nice." />
-          ) : (
-            <ListBody>
-              {top_errors_24h.map((e, i) => (
-                <ListRow
-                  key={`${e.tool}-${i}`}
-                  accent="red"
-                  title={
-                    <span className="truncate">
-                      {e.tool}
-                      <span className="text-white/60"> · {e.error}</span>
-                    </span>
-                  }
-                  subtitle={
-                    <span className="tabular-nums">
-                      {e.users_affected} user
-                      {e.users_affected === 1 ? '' : 's'} affected · last{' '}
-                      {formatDistanceToNow(parseISO(e.last_seen), {
-                        addSuffix: true,
-                      }).replace('about ', '')}
-                    </span>
-                  }
-                  trailing={<Pill tone="red">{e.count}</Pill>}
-                />
-              ))}
-            </ListBody>
-          )}
-        </ListCard>
-      </div>
-    </PageFrame>
+        <Divider label="Tools" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <ListCard>
+            <ListCardHeader
+              tone="cyan"
+              title="Top tools — 24h"
+              meta={
+                <span className="text-[11px] text-white tabular-nums">
+                  {top_tools_24h.length} distinct
+                </span>
+              }
+            />
+            {top_tools_24h.length === 0 ? (
+              <EmptyState
+                title="No tool calls in the last 24h"
+                description="Activity will show up here as agents handle messages."
+              />
+            ) : (
+              <ListBody>
+                {top_tools_24h.map((t) => (
+                  <ListRow
+                    key={t.tool}
+                    title={t.tool}
+                    trailing={
+                      <span className="text-[13px] font-semibold tabular-nums text-white">
+                        {t.count}
+                      </span>
+                    }
+                  />
+                ))}
+              </ListBody>
+            )}
+          </ListCard>
+
+          <ListCard>
+            <ListCardHeader
+              tone={top_errors_24h.length > 0 ? 'red' : 'emerald'}
+              title="Recent errors — 24h"
+              meta={
+                <span className="text-[11px] text-white tabular-nums">
+                  {summary.errors_24h} total
+                </span>
+              }
+            />
+            {top_errors_24h.length === 0 ? (
+              <EmptyState title="No errors" description="Nothing's failed in the last 24h. Nice." />
+            ) : (
+              <ListBody>
+                {top_errors_24h.map((e, i) => (
+                  <ListRow
+                    key={`${e.tool}-${i}`}
+                    accent="red"
+                    title={
+                      <span className="truncate">
+                        {e.tool}
+                        <span className="text-white/60 hidden sm:inline">
+                          {' · '}
+                          {e.error}
+                        </span>
+                      </span>
+                    }
+                    subtitle={
+                      <span className="tabular-nums truncate">
+                        <span className="sm:hidden text-white/60">{e.error} · </span>
+                        {e.users_affected} user
+                        {e.users_affected === 1 ? '' : 's'} · last{' '}
+                        {formatDistanceToNow(parseISO(e.last_seen), {
+                          addSuffix: true,
+                        }).replace('about ', '')}
+                      </span>
+                    }
+                    trailing={<Pill tone="red">{e.count}</Pill>}
+                  />
+                ))}
+              </ListBody>
+            )}
+          </ListCard>
+        </div>
+      </PageFrame>
+
+      <ProvisionMateSheet
+        open={provisionOpen}
+        onOpenChange={setProvisionOpen}
+        onProvisioned={handleRefresh}
+      />
+    </PullToRefresh>
   );
 }

@@ -9,16 +9,14 @@ import OfflineBanner from '@/components/admin/OfflineBanner';
 import { ArrowLeft, ChevronDown, Search } from 'lucide-react';
 import { Kbd, AnimatePresence } from '@/components/admin/editorial';
 import { motion } from 'framer-motion';
-import {
-  CommandPalette,
-  type CommandItem,
-} from '@/components/admin/editorial/CommandPalette';
+import { CommandPalette, type CommandItem } from '@/components/admin/editorial/CommandPalette';
 
 type NavItem = { name: string; path: string };
 
 const primaryNavItems: NavItem[] = [
   { name: 'Dashboard', path: '/admin' },
   { name: 'Users', path: '/admin/users' },
+  { name: 'Mate', path: '/admin/mate' },
   { name: 'Trials', path: '/admin/trials' },
   { name: 'Revenue', path: '/admin/revenue' },
   { name: 'Messages', path: '/admin/user-messages' },
@@ -138,8 +136,7 @@ export default function AdminPanel() {
   }, [location.pathname]);
 
   const isActivePath = (path: string) =>
-    location.pathname === path ||
-    (path !== '/admin' && location.pathname.startsWith(path + '/'));
+    location.pathname === path || (path !== '/admin' && location.pathname.startsWith(path + '/'));
 
   const activeGroupKey: GroupKey | null = useMemo(() => {
     for (const g of GROUPS) {
@@ -195,9 +192,7 @@ export default function AdminPanel() {
         onTouchStart={() => onPrefetch(item.path)}
         className={cn(
           'shrink-0 h-9 sm:h-10 px-3.5 sm:px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
-          active
-            ? 'bg-elec-yellow text-black'
-            : 'text-white hover:text-white hover:bg-white/[0.05]'
+          active ? 'bg-elec-yellow text-black' : 'text-white hover:text-white hover:bg-white/[0.05]'
         )}
       >
         {item.name}
@@ -264,10 +259,7 @@ export default function AdminPanel() {
                   >
                     {g.label}
                     <ChevronDown
-                      className={cn(
-                        'h-3.5 w-3.5 transition-transform',
-                        isOpen && 'rotate-180'
-                      )}
+                      className={cn('h-3.5 w-3.5 transition-transform', isOpen && 'rotate-180')}
                     />
                   </button>
                 </div>
@@ -321,18 +313,11 @@ export default function AdminPanel() {
         </div>
       </header>
 
-      <div
-        className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-20 safe-bottom"
-        {...swipeHandlers}
-      >
+      <div className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-20 safe-bottom" {...swipeHandlers}>
         <Outlet />
       </div>
 
-      <CommandPalette
-        open={paletteOpen}
-        onOpenChange={setPaletteOpen}
-        items={commandItems}
-      />
+      <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} items={commandItems} />
     </div>
   );
 }

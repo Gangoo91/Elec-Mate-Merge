@@ -83,6 +83,7 @@ const AdminAnalytics = lazy(() => import('@/pages/Admin/AdminAnalytics'));
 const AdminVerificationQueue = lazy(() => import('@/pages/Admin/AdminVerificationQueue'));
 const AdminRevenue = lazy(() => import('@/pages/Admin/AdminRevenue'));
 const AdminMate = lazy(() => import('@/pages/Admin/AdminMate'));
+const AdminMateUser = lazy(() => import('@/pages/Admin/AdminMateUser'));
 const AdminEmailLogs = lazy(() => import('@/pages/Admin/AdminEmailLogs'));
 const AdminEmployerModeration = lazy(() => import('@/pages/Admin/AdminEmployerModeration'));
 const AdminDataExport = lazy(() => import('@/pages/Admin/AdminDataExport'));
@@ -1468,6 +1469,14 @@ const AppRouter = () => {
               element={
                 <LazyRoute>
                   <AdminMate />
+                </LazyRoute>
+              }
+            />
+            <Route
+              path="mate/:userId"
+              element={
+                <LazyRoute>
+                  <AdminMateUser />
                 </LazyRoute>
               }
             />
