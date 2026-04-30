@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ComplianceDocsSection } from '@/components/college/sections/ComplianceDocsSection';
+import { ShowMePanel } from '@/components/college/compliance/ShowMePanel';
 
 /* ==========================================================================
    ComplianceHubPage — single front door to every compliance surface.
@@ -22,9 +23,10 @@ import { ComplianceDocsSection } from '@/components/college/sections/ComplianceD
 
 const OfstedEifPage = lazy(() => import('@/pages/college/OfstedEifPage'));
 
-type Tab = 'vault' | 'eif' | 'pack';
+type Tab = 'showme' | 'vault' | 'eif' | 'pack';
 
 const TABS: { key: Tab; label: string; eyebrow: string }[] = [
+  { key: 'showme', label: 'Show me', eyebrow: 'Inspector evidence search' },
   { key: 'vault', label: 'Vault & Policies', eyebrow: 'Records, CPD, policies' },
   { key: 'eif', label: 'Ofsted EIF', eyebrow: 'Live RAG snapshot' },
   { key: 'pack', label: 'Audit Pack', eyebrow: 'Print-ready inspection bundle' },
@@ -32,6 +34,7 @@ const TABS: { key: Tab; label: string; eyebrow: string }[] = [
 
 function tabFromHash(hash: string): Tab {
   const stripped = hash.replace('#', '').toLowerCase();
+  if (stripped === 'showme') return 'showme';
   if (stripped === 'eif') return 'eif';
   if (stripped === 'pack') return 'pack';
   return 'vault';
@@ -73,15 +76,25 @@ export default function ComplianceHubPage() {
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
             Compliance Hub
           </div>
-          <div className="mt-1 flex items-center gap-1.5 sm:gap-2 overflow-x-auto -mx-1 px-1 scrollbar-none">
+          {/* Tab strip — horizontal scroll on phone (4 × 140px > 375px),
+              snap-x mandatory so swipes settle cleanly on a tab boundary
+              instead of leaving a half-tab visible. */}
+          <div
+            className="mt-1 flex items-center gap-1.5 sm:gap-2 overflow-x-auto -mx-1 px-1 snap-x snap-mandatory scrollbar-none"
+            role="tablist"
+            aria-label="Compliance hub sections"
+          >
             {TABS.map((t) => {
               const isActive = activeTab === t.key;
               return (
                 <button
                   key={t.key}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
                   onClick={() => setTab(t.key)}
                   className={cn(
-                    'inline-flex flex-col items-start shrink-0 px-3 py-2 rounded-xl border transition-colors touch-manipulation min-w-[140px]',
+                    'inline-flex flex-col items-start shrink-0 px-3 py-2 rounded-xl border transition-colors touch-manipulation min-w-[140px] snap-start',
                     isActive
                       ? 'border-purple-300/40 bg-purple-500/[0.10]'
                       : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
@@ -112,6 +125,11 @@ export default function ComplianceHubPage() {
 
       {/* Tab content */}
       <div className="pt-2">
+        {activeTab === 'showme' && (
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <ShowMePanel />
+          </div>
+        )}
         {activeTab === 'vault' && <ComplianceDocsSection />}
         {activeTab === 'eif' && (
           <Suspense

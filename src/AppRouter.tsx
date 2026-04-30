@@ -82,6 +82,7 @@ const AdminSettings = lazy(() => import('@/pages/Admin/AdminSettings'));
 const AdminAnalytics = lazy(() => import('@/pages/Admin/AdminAnalytics'));
 const AdminVerificationQueue = lazy(() => import('@/pages/Admin/AdminVerificationQueue'));
 const AdminRevenue = lazy(() => import('@/pages/Admin/AdminRevenue'));
+const AdminMate = lazy(() => import('@/pages/Admin/AdminMate'));
 const AdminEmailLogs = lazy(() => import('@/pages/Admin/AdminEmailLogs'));
 const AdminEmployerModeration = lazy(() => import('@/pages/Admin/AdminEmployerModeration'));
 const AdminDataExport = lazy(() => import('@/pages/Admin/AdminDataExport'));
@@ -118,6 +119,7 @@ const CompliancePackPage = lazy(() => import('@/pages/college/CompliancePackPage
 const OfstedEifPage = lazy(() => import('@/pages/college/OfstedEifPage'));
 const ComplianceHubPage = lazy(() => import('@/pages/college/ComplianceHubPage'));
 const EvidenceTimelinePage = lazy(() => import('@/pages/college/EvidenceTimelinePage'));
+const TutorTodayPage = lazy(() => import('@/pages/college/TutorTodayPage'));
 const IqaDashboardPage = lazy(() => import('@/pages/college/IqaDashboardPage'));
 const IqaSamplingPlanPage = lazy(() => import('@/pages/college/IqaSamplingPlanPage'));
 const CollegeOtjPage = lazy(() => import('@/pages/college/CollegeOtjPage'));
@@ -1462,6 +1464,14 @@ const AppRouter = () => {
               }
             />
             <Route
+              path="mate"
+              element={
+                <LazyRoute>
+                  <AdminMate />
+                </LazyRoute>
+              }
+            />
+            <Route
               path="analytics"
               element={
                 <LazyRoute>
@@ -1954,6 +1964,18 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <PolicyDetailPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Tutor Today — morning landing tying it all together */}
+          <Route
+            path="college/today"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <TutorTodayPage />
                 </CollegeGuard>
               </LazyRoute>
             }

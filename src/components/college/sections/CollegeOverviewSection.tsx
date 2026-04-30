@@ -5,6 +5,7 @@
  */
 
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { AtRiskPredictor } from '@/components/college/widgets/AtRiskPredictor';
 import { EPACountdown } from '@/components/college/widgets/EPACountdown';
@@ -68,6 +69,7 @@ function SectionHeader({
 }
 
 export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionProps) {
+  const navigate = useNavigate();
   const {
     students,
     epaRecords,
@@ -235,6 +237,36 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
       animate="visible"
       className="mx-auto max-w-7xl space-y-12 sm:space-y-16 lg:space-y-20"
     >
+      {/* ──────────────── TODAY HERO ──────────────── */}
+      {/* Editorial CTA into the new Tutor Today morning view (M2 / ELE-939).
+          One-tap into classes, inbox, at-risk and the inspector "show me"
+          search bar. The dashboard hubs below stay as the deep-navigation. */}
+      <motion.section variants={itemVariants}>
+        <button
+          type="button"
+          onClick={() => navigate('/college/today')}
+          className="w-full text-left rounded-2xl border border-purple-300/30 bg-gradient-to-br from-purple-500/[0.08] via-[hsl(0_0%_11%)] to-[hsl(0_0%_11%)] px-5 sm:px-7 py-5 sm:py-6 hover:from-purple-500/[0.12] transition-colors touch-manipulation overflow-hidden"
+        >
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
+            New · Today's view
+          </div>
+          <div className="mt-2 flex items-end justify-between gap-4 flex-wrap">
+            <div className="min-w-0 flex-1">
+              <h2 className="text-[20px] sm:text-[24px] font-semibold text-white tracking-tight leading-tight">
+                Open your morning at a glance
+              </h2>
+              <p className="mt-1 text-[13px] text-white/85 leading-snug max-w-2xl">
+                Classes today · OTJ awaiting verification · action-required comments · IQA queue ·
+                at-risk learners · the inspector "show me" search — one screen, one tap each.
+              </p>
+            </div>
+            <span className="text-purple-300 text-[14px] font-semibold whitespace-nowrap">
+              Open Today's view →
+            </span>
+          </div>
+        </button>
+      </motion.section>
+
       {/* ──────────────── DAILY DIGEST ──────────────── */}
       <motion.section variants={itemVariants}>
         <DailyDigestCard />

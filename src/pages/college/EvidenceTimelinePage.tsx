@@ -226,29 +226,41 @@ export default function EvidenceTimelinePage() {
                 </button>
               ))}
             </div>
-            <div className="mt-2 flex items-center gap-2 flex-wrap">
-              <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/55 mr-1">
+            <div className="mt-2 flex items-start gap-2">
+              <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/55 shrink-0 pt-1.5">
                 Kind
               </span>
-              {FILTER_KINDS.map((k) => {
-                const count =
-                  k.key === 'all' ? data.events.length : data.counts[k.key as EvidenceKind];
-                return (
-                  <button
-                    key={k.key}
-                    onClick={() => setKindFilter(k.key)}
-                    className={cn(
-                      'inline-flex items-center gap-1.5 h-7 px-2.5 rounded-md text-[11px] font-semibold transition-colors touch-manipulation',
-                      kindFilter === k.key
-                        ? 'bg-elec-yellow text-black'
-                        : 'border border-white/[0.10] text-white/85 hover:bg-white/[0.04]'
-                    )}
-                  >
-                    {k.label}
-                    <span className="text-[10px] tabular-nums opacity-70">{count}</span>
-                  </button>
-                );
-              })}
+              {/* 10 chips wrap into a 3-row mess on phones. Horizontal-scroll
+                  on mobile (snap-start so swipes settle on chip boundaries),
+                  flex-wrap on desktop where there's room. */}
+              <div
+                className="flex items-center gap-1.5 sm:flex-wrap overflow-x-auto -mx-1 px-1 snap-x scrollbar-none"
+                role="tablist"
+                aria-label="Evidence kind filter"
+              >
+                {FILTER_KINDS.map((k) => {
+                  const count =
+                    k.key === 'all' ? data.events.length : data.counts[k.key as EvidenceKind];
+                  return (
+                    <button
+                      key={k.key}
+                      type="button"
+                      role="tab"
+                      aria-selected={kindFilter === k.key}
+                      onClick={() => setKindFilter(k.key)}
+                      className={cn(
+                        'inline-flex items-center shrink-0 gap-1.5 h-7 px-2.5 rounded-md text-[11px] font-semibold transition-colors touch-manipulation snap-start',
+                        kindFilter === k.key
+                          ? 'bg-elec-yellow text-black'
+                          : 'border border-white/[0.10] text-white/85 hover:bg-white/[0.04]'
+                      )}
+                    >
+                      {k.label}
+                      <span className="text-[10px] tabular-nums opacity-70">{count}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
 
