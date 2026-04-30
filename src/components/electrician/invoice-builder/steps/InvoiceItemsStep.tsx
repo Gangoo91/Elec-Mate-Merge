@@ -2,14 +2,7 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Button } from '@/components/ui/button';
-import {
-  Trash2,
-  ChevronDown,
-  ChevronUp,
-  Check,
-  Pencil,
-  Copy,
-} from 'lucide-react';
+import { Trash2, ChevronDown, ChevronUp, Check, Pencil, Copy } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplates';
 import { cn } from '@/lib/utils';
@@ -88,10 +81,14 @@ interface InvoiceItemsStepProps {
 type AddMethod = 'quick' | 'manual' | 'templates' | 'scan';
 type Category = 'labour' | 'materials' | 'equipment';
 
-
 export const InvoiceItemsStep = ({
-  originalItems,
-  additionalItems,
+  // Default to empty arrays so the component can never crash on
+  // `.length` / `.map` if a parent or persisted draft passes undefined.
+  // Sentry issues 76 / 72: `Cannot read properties of undefined (reading
+  // 'length')` on /electrician/invoice-builder/create — both fired when
+  // a stale draft restored from storage didn't have `additional_invoice_items`.
+  originalItems = [],
+  additionalItems = [],
   onAddItem,
   onUpdateItem,
   onRemoveItem,
@@ -360,7 +357,6 @@ export const InvoiceItemsStep = ({
     }));
   };
 
-
   const duplicateItem = (item: InvoiceItem) => {
     const duplicate = {
       description: `${item.description} (Copy)`,
@@ -416,12 +412,15 @@ export const InvoiceItemsStep = ({
         </div>
         {settings?.discountEnabled && (settings?.discountValue || 0) > 0 && (
           <div className="flex items-center justify-between">
-            <span className="text-[13px] text-red-400">{settings?.discountLabel || 'Discount'}</span>
+            <span className="text-[13px] text-red-400">
+              {settings?.discountLabel || 'Discount'}
+            </span>
             <span className="text-[14px] text-red-400 tabular-nums">
-              -{formatCurrency(
+              -
+              {formatCurrency(
                 (settings?.discountType || 'percentage') === 'percentage'
                   ? subtotal * ((settings?.discountValue || 0) / 100)
-                  : (settings?.discountValue || 0)
+                  : settings?.discountValue || 0
               )}
             </span>
           </div>
@@ -434,7 +433,9 @@ export const InvoiceItemsStep = ({
         )}
         <div className="flex items-center justify-between pt-1.5">
           <span className="text-[14px] font-semibold text-white">Total</span>
-          <span className="text-[18px] font-bold text-white tabular-nums">{formatCurrency(total)}</span>
+          <span className="text-[18px] font-bold text-white tabular-nums">
+            {formatCurrency(total)}
+          </span>
         </div>
       </div>
 
@@ -457,10 +458,7 @@ export const InvoiceItemsStep = ({
           {showOriginalItems && (
             <div className="divide-y divide-white/[0.06]">
               {originalItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="py-3"
-                >
+                <div key={item.id} className="py-3">
                   <div className="flex items-center justify-between mb-2">
                     {editingItemId === item.id ? (
                       <input
@@ -469,12 +467,14 @@ export const InvoiceItemsStep = ({
                         value={editingDescription}
                         onChange={(e) => setEditingDescription(e.target.value)}
                         onBlur={() => {
-                          if (editingDescription.trim()) onUpdateItem(item.id, { description: editingDescription.trim() });
+                          if (editingDescription.trim())
+                            onUpdateItem(item.id, { description: editingDescription.trim() });
                           setEditingItemId(null);
                         }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') {
-                            if (editingDescription.trim()) onUpdateItem(item.id, { description: editingDescription.trim() });
+                            if (editingDescription.trim())
+                              onUpdateItem(item.id, { description: editingDescription.trim() });
                             setEditingItemId(null);
                           }
                           if (e.key === 'Escape') setEditingItemId(null);
@@ -487,13 +487,21 @@ export const InvoiceItemsStep = ({
                       </p>
                     )}
                     <div className="flex items-center gap-1 ml-2">
-                      <p className={cn('text-[13px] font-bold mr-1', (item.quantity || 0) * (item.unitPrice || 0) === 0 ? 'text-red-400' : 'text-white')}>
+                      <p
+                        className={cn(
+                          'text-[13px] font-bold mr-1',
+                          (item.quantity || 0) * (item.unitPrice || 0) === 0
+                            ? 'text-red-400'
+                            : 'text-white'
+                        )}
+                      >
                         {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
                       </p>
                       <button
                         onClick={() => {
                           if (editingItemId === item.id) {
-                            if (editingDescription.trim()) onUpdateItem(item.id, { description: editingDescription.trim() });
+                            if (editingDescription.trim())
+                              onUpdateItem(item.id, { description: editingDescription.trim() });
                             setEditingItemId(null);
                           } else {
                             setEditingDescription(item.description);
@@ -503,9 +511,11 @@ export const InvoiceItemsStep = ({
                         className={`w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 ${editingItemId === item.id ? 'bg-white/[0.12]' : 'bg-white/[0.08]'}`}
                         aria-label={editingItemId === item.id ? 'Confirm edit' : 'Edit description'}
                       >
-                        {editingItemId === item.id
-                          ? <Check className="h-3.5 w-3.5 text-white" />
-                          : <Pencil className="h-3.5 w-3.5 text-white" />}
+                        {editingItemId === item.id ? (
+                          <Check className="h-3.5 w-3.5 text-white" />
+                        ) : (
+                          <Pencil className="h-3.5 w-3.5 text-white" />
+                        )}
                       </button>
                       <button
                         onClick={() => onRemoveItem(item.id)}
@@ -563,7 +573,9 @@ export const InvoiceItemsStep = ({
               onClick={() => setActiveAddMethod(method.id)}
               className={cn(
                 'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-all touch-manipulation',
-                isActive ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40' : 'text-white'
+                isActive
+                  ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
+                  : 'text-white'
               )}
             >
               {method.label}
@@ -589,7 +601,9 @@ export const InvoiceItemsStep = ({
                   onClick={() => handleCategoryChange(cat.id)}
                   className={cn(
                     'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-all touch-manipulation',
-                    isActive ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40' : 'text-white'
+                    isActive
+                      ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
+                      : 'text-white'
                   )}
                 >
                   {cat.label}
@@ -910,7 +924,9 @@ export const InvoiceItemsStep = ({
       {originalItems.length === 0 && additionalItems.length === 0 && (
         <div className="text-center py-10 px-4">
           <p className="text-[15px] font-medium text-white mb-1">No items yet</p>
-          <p className="text-[13px] text-white mb-5">Add labour, materials, or equipment to your invoice</p>
+          <p className="text-[13px] text-white mb-5">
+            Add labour, materials, or equipment to your invoice
+          </p>
           <div className="flex gap-2 justify-center">
             <button
               onClick={() => setActiveAddMethod('quick')}
@@ -1085,7 +1101,9 @@ export const InvoiceItemsStep = ({
             {/* Divider */}
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px bg-white/[0.12]" />
-              <span className="text-[11px] text-white uppercase tracking-wide">or pick a common value</span>
+              <span className="text-[11px] text-white uppercase tracking-wide">
+                or pick a common value
+              </span>
               <div className="flex-1 h-px bg-white/[0.12]" />
             </div>
 
@@ -1181,9 +1199,7 @@ export const InvoiceItemsStep = ({
                     <p className="text-[12px] text-white">{material.category}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-[15px] font-bold text-white">
-                      £{price.toFixed(2)}
-                    </span>
+                    <span className="text-[15px] font-bold text-white">£{price.toFixed(2)}</span>
                     {isSelected && <Check className="h-5 w-5 text-white" />}
                   </div>
                 </button>

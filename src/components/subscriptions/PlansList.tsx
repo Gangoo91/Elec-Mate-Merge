@@ -20,7 +20,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { stripePriceData, PlanDetails } from '@/data/stripePrices';
 import { cn } from '@/lib/utils';
-import { capturePaymentError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
+import { capturePaymentError, toError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 import { Capacitor } from '@capacitor/core';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { Link } from 'react-router-dom';
@@ -91,14 +91,14 @@ const PlansList = ({ billing }: PlansListProps) => {
     } catch (error) {
       console.error('Checkout error:', error);
       // Payment errors are critical - track with high priority
-      capturePaymentError(error instanceof Error ? error : new Error(String(error)), {
+      capturePaymentError(error, {
         planId,
         priceId,
         context: 'create-checkout',
       });
       toast({
         title: 'Checkout Error',
-        description: error instanceof Error ? error.message : 'Failed to start checkout',
+        description: toError(error).message || 'Failed to start checkout',
         variant: 'destructive',
       });
     } finally {

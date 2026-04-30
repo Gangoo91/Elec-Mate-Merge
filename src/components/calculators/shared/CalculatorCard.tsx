@@ -10,6 +10,14 @@ interface CalculatorCardProps {
   className?: string;
 }
 
+// Fallback when an unknown category is passed at runtime (e.g. legacy
+// saved state, typo, future category not yet added). Sentry issue 8T:
+// `undefined is not an object (evaluating 'a.gradientFrom')` was caused by
+// `config = CALCULATOR_CONFIG[category]` returning undefined and the next
+// line `config.icon` throwing. The TS type says CalculatorCategory but
+// runtime will accept any string.
+const FALLBACK_CATEGORY: CalculatorCategory = 'power';
+
 export const CalculatorCard = ({
   category,
   title,
@@ -17,7 +25,7 @@ export const CalculatorCard = ({
   children,
   className,
 }: CalculatorCardProps) => {
-  const config = CALCULATOR_CONFIG[category];
+  const config = CALCULATOR_CONFIG[category] ?? CALCULATOR_CONFIG[FALLBACK_CATEGORY];
   const Icon = config.icon;
 
   return (
@@ -61,7 +69,7 @@ interface CalculatorDividerProps {
 }
 
 export const CalculatorDivider = ({ category, className }: CalculatorDividerProps) => {
-  const config = CALCULATOR_CONFIG[category];
+  const config = CALCULATOR_CONFIG[category] ?? CALCULATOR_CONFIG[FALLBACK_CATEGORY];
 
   return (
     <div

@@ -184,7 +184,27 @@ export const useInvoiceStorage = () => {
           // network blips (Supabase reconnects automatically). Only escalate
           // when there's a real error payload to investigate.
           if (err) {
-            captureApiError(err, 'invoices/realtime', { status });
+            // The "mismatch between server and client bindings" error is a known
+            // Supabase realtime negotiation failure — usually a stale schema
+            // cache after a migration, or a token-refresh race. The initial
+            // fetchInvoices() above has already loaded the data; live updates
+            // simply won't fire for this session. Don't pollute Sentry with it
+            // (was 2+ events/day per Sentry on 2026-04-29).
+            const message =
+              err instanceof Error
+                ? err.message
+                : String((err as { message?: string })?.message ?? '');
+            const isKnownBindingsMismatch =
+              typeof message === 'string' &&
+              message.toLowerCase().includes('mismatch between server and client bindings');
+            if (isKnownBindingsMismatch) {
+              addBreadcrumb('Realtime bindings mismatch (recoverable)', 'realtime', {
+                channel: 'invoice-realtime',
+                status,
+              });
+            } else {
+              captureApiError(err, 'invoices/realtime', { status });
+            }
           } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
             addBreadcrumb(`Realtime ${status}`, 'realtime', { channel: 'invoice-realtime' });
           }

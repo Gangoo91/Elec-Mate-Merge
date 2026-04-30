@@ -12,13 +12,24 @@ export function PWAUpdatePrompt() {
     onRegisteredSW(swUrl, registration) {
       console.log('SW Registered:', swUrl);
       if (registration) {
-        // Periodically check for updates (catches new deploys during long sessions)
+        // Periodically check for updates (catches new deploys during long sessions).
+        // `registration.update()` can reject when the sw.js fetch fails — typically a
+        // transient network blip, an in-flight deploy that swapped chunk hashes, or
+        // a cached SW pointing at a removed file. The next tick (or a user refresh)
+        // recovers automatically, so we swallow the rejection here to avoid
+        // polluting Sentry with `Script .../sw.js load failed` (was Sentry issues
+        // 2H/2S — 12 users / 79 events combined).
         setInterval(() => {
-          registration.update();
+          registration.update().catch((err) => {
+            // Keep visibility in dev / breadcrumb trail without escalating.
+            console.debug('[SW] periodic update failed (recoverable):', err);
+          });
         }, UPDATE_CHECK_INTERVAL);
       }
     },
     onRegisterError(error) {
+      // VitePWA already swallows these into this callback rather than letting them
+      // bubble — but log for breadcrumb visibility.
       console.log('SW registration error', error);
     },
   });

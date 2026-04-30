@@ -10,7 +10,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
-import { captureEdgeFunctionError, addBreadcrumb } from '@/lib/sentry';
+import { captureEdgeFunctionError, addBreadcrumb, toError } from '@/lib/sentry';
 
 type InvokeOptions = {
   body?: Record<string, unknown>;
@@ -50,8 +50,11 @@ export async function trackedInvoke<T = unknown>(
 
     return { data: data as T, error: null };
   } catch (err) {
-    const error = err instanceof Error ? err : new Error(String(err));
-    captureEdgeFunctionError(error, functionName, {
+    // toError extracts the real .message from non-Error objects so the
+    // returned `error` is useful to callers; pass the raw `err` to Sentry
+    // so its originalValue is preserved.
+    const error = toError(err);
+    captureEdgeFunctionError(err, functionName, {
       errorType: 'exception',
       hasBody: !!options?.body,
     });
@@ -101,9 +104,9 @@ export async function trackedInvokeCritical<T = unknown>(
 
     return { data: data as T, error: null };
   } catch (err) {
-    const error = err instanceof Error ? err : new Error(String(err));
+    const error = toError(err);
     const { capturePaymentError } = await import('@/lib/sentry');
-    capturePaymentError(error, {
+    capturePaymentError(err, {
       functionName,
       errorType: 'exception',
       critical: true,

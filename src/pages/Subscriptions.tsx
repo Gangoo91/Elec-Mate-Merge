@@ -19,7 +19,7 @@ import { Capacitor } from '@capacitor/core';
 import { supabase } from '@/integrations/supabase/client';
 import { stripePriceData, nativePriceData, PlanDetails } from '@/data/stripePrices';
 import { cn } from '@/lib/utils';
-import { capturePaymentError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
+import { capturePaymentError, toError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { storageGetSync, storageRemoveSync } from '@/utils/storage';
@@ -269,14 +269,14 @@ const Subscriptions = () => {
       }
     } catch (err) {
       console.error('Checkout error:', err);
-      capturePaymentError(err instanceof Error ? err : new Error(String(err)), {
+      capturePaymentError(err, {
         planId,
         priceId,
         context: 'create-checkout',
       });
       toast({
         title: 'Checkout Error',
-        description: err instanceof Error ? err.message : 'Failed to start checkout',
+        description: toError(err).message || 'Failed to start checkout',
         variant: 'destructive',
       });
     } finally {

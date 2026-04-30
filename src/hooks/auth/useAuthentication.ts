@@ -8,6 +8,7 @@ import {
   clearSentryUser,
   trackMilestone,
   addBreadcrumb,
+  toError,
 } from '@/lib/sentry';
 import { clearCredentials, setBiometricEnabled } from '@/utils/biometricAuth';
 
@@ -117,8 +118,11 @@ export function useAuthentication() {
 
       return { error: null, user: data?.user };
     } catch (error: unknown) {
-      const err = error instanceof Error ? error : new Error(String(error));
-      captureError(err, { context: 'signIn', email });
+      // toError extracts the real .message from non-Error throws so the
+      // toast text and returned error are useful; raw `error` to Sentry
+      // preserves the originalValue payload.
+      const err = toError(error);
+      captureError(error, { context: 'signIn', email });
       toast({
         title: 'Login Error',
         description: err.message || 'An unexpected error occurred',
@@ -223,9 +227,9 @@ export function useAuthentication() {
 
       return { error: null, data };
     } catch (error: unknown) {
-      const err = error instanceof Error ? error : new Error(String(error));
+      const err = toError(error);
       logger.api('auth/signUp', requestId).error(err, { email });
-      captureError(err, { context: 'signUp', email });
+      captureError(error, { context: 'signUp', email });
       toast({
         title: 'Signup Error',
         description: getFriendlyErrorMessage(err.message || 'An unexpected error occurred'),
@@ -310,7 +314,7 @@ export function useAuthentication() {
       return { error: null };
     } catch (error: unknown) {
       // Even on error, show success message to prevent enumeration
-      const err = error instanceof Error ? error : new Error(String(error));
+      const err = toError(error);
       logger.warn('Password reset exception (non-fatal)', { error: err.message });
       toast({
         title: 'Check Your Email',
@@ -354,9 +358,9 @@ export function useAuthentication() {
 
       return { error: null };
     } catch (error: unknown) {
-      const err = error instanceof Error ? error : new Error(String(error));
+      const err = toError(error);
       logger.api('auth/updatePassword', requestId).error(err);
-      captureError(err, { context: 'updatePassword' });
+      captureError(error, { context: 'updatePassword' });
       toast({
         title: 'Update Error',
         description: err.message || 'An unexpected error occurred',
@@ -400,7 +404,7 @@ export function useAuthentication() {
 
       return { error: null };
     } catch (error: unknown) {
-      const err = error instanceof Error ? error : new Error(String(error));
+      const err = toError(error);
       toast({
         title: 'Error',
         description: err.message || 'An unexpected error occurred',
@@ -439,7 +443,7 @@ export function useAuthentication() {
       logger.api('profiles/update', requestId).success({ userId });
       return { error: null };
     } catch (error: unknown) {
-      const err = error instanceof Error ? error : new Error(String(error));
+      const err = toError(error);
       logger.api('profiles/update', requestId).error(err, { userId });
       return { error: err };
     }

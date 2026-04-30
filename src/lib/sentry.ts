@@ -80,10 +80,47 @@ export function initSentry() {
         /webkit\.messageHandlers/i,
         /Object Not Found Matching Id/i,
 
+        // Capacitor Browser plugin can't open the URL (empty / malformed /
+        // unreachable). openExternalUrl() now catches this internally with a
+        // graceful system-anchor fallback, but legacy paths or browser-internal
+        // failures may still bubble.
+        /Unable to display URL/i,
+
         // Service worker lifecycle races (browser-internal, 0 users affected)
         // e.g. "InvalidStateError: newestWorker is null" during SW update
         /InvalidStateError.*newestWorker is null/i,
         /Failed to update a ServiceWorker/i,
+        // SW source fetch failures during update — VitePWA's hourly check
+        // racing a deploy, transient network, or cached SW pointing at a
+        // chunk that's just been replaced. PWAUpdatePrompt catches these
+        // explicitly now, but they can still bubble from browser-internal
+        // SW lifecycle paths. The user's next refresh recovers automatically.
+        /Script .*\/sw\.js load failed/i,
+        /ServiceWorker script at .*\/sw\.js .* encountered an error during installation/i,
+        /Cannot update a null\/nonexistent service worker/i,
+
+        // Android WebView lifecycle: a Java object the WebView holds gets
+        // garbage-collected before a queued JS callback fires. We can't fix
+        // this from JS — the WebView is already gone. Sentry events: 6B/6C/
+        // 64/6E/6G/6H/6J/6K/6M/6N/6P/6Q/71/73/79/7B/7H/85/8X.
+        /Java object is gone/i,
+
+        // Auth-helpers monkey-patches frozen objects from Stripe/RevenueCat.
+        // Library-side bug, not actionable. Sentry: 8P, 8Q.
+        /Cannot add property .*object is not extensible/i,
+
+        // Vite preload of a CSS chunk that's been replaced by a newer deploy.
+        // Auto-refresh in main.tsx already handles this for the user.
+        /Unable to preload CSS/i,
+
+        // PostHog session-recording bootstrap timing — fires when
+        // `posthog.startSessionRecording()` is called before the recorder
+        // script finishes loading. Drops itself once the script lands.
+        /Called on script loaded before session recording is available/i,
+
+        // Old Safari/WebView (<17.4) lacks AbortSignal.timeout. Supabase
+        // auth-helpers now feature-detects, so this is historical noise.
+        /AbortSignal\.timeout is not a function/i,
       ],
 
       // NOTE: We DO NOT ignore these anymore (they were filtered before):
@@ -205,6 +242,28 @@ export function captureError(error: unknown, context?: Record<string, unknown>) 
   Sentry.captureException(normalised, {
     extra: { ...(context || {}), ...(originalValue ? { originalValue } : {}) },
   });
+}
+
+/**
+ * Coerce any thrown value into a real Error with the right message.
+ *
+ * Prefer this over `error instanceof Error ? error : new Error(String(error))`
+ * at call sites — that pattern produces `Error("[object Object]")` for plain
+ * Supabase / fetch / RevenueCat error objects, losing the actual `.message`.
+ *
+ * Use it whenever you need both:
+ *   - to call captureError/captureApiError (pass the raw error to those —
+ *     they call normaliseError internally, no need for toError on the way in)
+ *   - AND to read `.message` locally for a toast or return value
+ *
+ * Then write:
+ *   const err = toError(rawError);
+ *   captureError(rawError, ctx);   // pass the raw value
+ *   toast({ description: err.message });
+ *   return { error: err };
+ */
+export function toError(input: unknown): Error {
+  return normaliseError(input).error;
 }
 
 export function addBreadcrumb(message: string, category: string, data?: Record<string, unknown>) {

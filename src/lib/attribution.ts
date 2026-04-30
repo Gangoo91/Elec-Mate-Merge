@@ -204,7 +204,7 @@ export async function fireServerCapi(event: {
       return;
     }
 
-    captureError(err instanceof Error ? err : new Error(String(err)), {
+    captureError(err, {
       context: 'meta_capi_client_forward',
       event_name: event.event_name,
       event_id: event.event_id,

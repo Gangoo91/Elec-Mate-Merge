@@ -65,6 +65,16 @@ export const reportCloud = {
   /**
    * Get all reports for a user with pagination
    * By default, filters out 'auto-draft' reports (auto-saved but never manually saved)
+   *
+   * ELE-946 — DO NOT switch this back to `select('*')`. The full `data` JSONB
+   * column can be 300KB+ per row when signatures or photos are saved as
+   * base64 data URIs inline (legacy save path). Pulling 7 such rows produces
+   * a ~1.3MB response that silently fails on flaky / corporate networks,
+   * leaving the user looking at "No certificates yet" while the count tabs
+   * (which use a slim `getReportCounts`) correctly show 7. Only pluck the
+   * specific `data` keys the list / dashboard actually renders. Editors and
+   * PDF generation already fetch the full `data` separately via
+   * `getReportData` / `getReportByReportId`.
    */
   getUserReports: async (
     userId: string,
@@ -80,6 +90,18 @@ export const reportCloud = {
       status?: string;
     }
   ): Promise<ReportsResponse> => {
+    // Slim SELECT (ELE-946): explicit columns + only the JSONB sub-keys the
+    // list/dashboard read (`getTypeLabel` reads systemCategory, MyReports
+    // reads inspectionDate / dateOfInspection / satisfactoryForContinuedUse).
+    const LIST_SELECT =
+      'id, report_id, report_type, certificate_number, client_name, ' +
+      'installation_address, inspector_name, inspection_date, status, ' +
+      'updated_at, customer_id, edit_version, pdf_url, pdf_generated_at, ' +
+      'data_inspectionDate:data->inspectionDate, ' +
+      'data_dateOfInspection:data->dateOfInspection, ' +
+      'data_satisfactoryForContinuedUse:data->satisfactoryForContinuedUse, ' +
+      'data_systemCategory:data->systemCategory';
+
     try {
       const page = options?.page || 1;
       const pageSize = options?.pageSize || 20;
@@ -87,13 +109,12 @@ export const reportCloud = {
       const includeAutoDrafts = options?.includeAutoDrafts ?? false;
       const reportTypeFilter =
         options?.reportType && options.reportType !== 'all' ? options.reportType : null;
-      const statusFilter =
-        options?.status && options.status !== 'all' ? options.status : null;
+      const statusFilter = options?.status && options.status !== 'all' ? options.status : null;
 
       // Get total count (excluding auto-drafts by default)
       let countQuery = supabase
         .from('reports')
-        .select('*', { count: 'exact', head: true })
+        .select('id', { count: 'exact', head: true })
         .eq('user_id', userId)
         .is('deleted_at', null);
 
@@ -107,10 +128,10 @@ export const reportCloud = {
 
       if (countError) throw countError;
 
-      // Get paginated data (excluding auto-drafts by default)
+      // Get paginated data (excluding auto-drafts by default) — slim columns only
       let query = supabase
         .from('reports')
-        .select('*')
+        .select(LIST_SELECT)
         .eq('user_id', userId)
         .is('deleted_at', null)
         .order('updated_at', { ascending: false });
@@ -133,7 +154,33 @@ export const reportCloud = {
       if (error) throw error;
 
       const totalCount = count || 0;
-      const reports = (data || []) as CloudReport[];
+      // Re-shape rows so consumers can keep reading `report.data?.<key>` —
+      // the slim SELECT returns plucked JSONB values as flat top-level
+      // aliases (`data_inspectionDate`, etc.) which we fold back under `data`.
+      type SlimRow = Record<string, unknown> & {
+        data_inspectionDate?: unknown;
+        data_dateOfInspection?: unknown;
+        data_satisfactoryForContinuedUse?: unknown;
+        data_systemCategory?: unknown;
+      };
+      const reports = ((data || []) as SlimRow[]).map((row) => {
+        const {
+          data_inspectionDate,
+          data_dateOfInspection,
+          data_satisfactoryForContinuedUse,
+          data_systemCategory,
+          ...rest
+        } = row;
+        return {
+          ...rest,
+          data: {
+            inspectionDate: data_inspectionDate,
+            dateOfInspection: data_dateOfInspection,
+            satisfactoryForContinuedUse: data_satisfactoryForContinuedUse,
+            systemCategory: data_systemCategory,
+          },
+        } as CloudReport;
+      });
       const hasMore = offset + reports.length < totalCount;
 
       return { reports, totalCount, hasMore };
@@ -392,20 +439,20 @@ export const reportCloud = {
                                 : lc.startsWith('testing-only')
                                   ? 'testing-only'
                                   : lc.startsWith('danger-notice')
-                                  ? 'danger-notice'
-                                  : lc.startsWith('isolation-cert')
-                                    ? 'isolation-cert'
-                                    : lc.startsWith('permit-to-work')
-                                      ? 'permit-to-work'
-                                      : lc.startsWith('safe-isolation')
-                                        ? 'safe-isolation'
-                                        : lc.startsWith('warning-labels')
-                                          ? 'warning-labels'
-                                          : lc.startsWith('minor-works')
-                                            ? 'minor-works'
-                                            : lc.startsWith('eic-')
-                                              ? 'eic'
-                                              : 'eicr';
+                                    ? 'danger-notice'
+                                    : lc.startsWith('isolation-cert')
+                                      ? 'isolation-cert'
+                                      : lc.startsWith('permit-to-work')
+                                        ? 'permit-to-work'
+                                        : lc.startsWith('safe-isolation')
+                                          ? 'safe-isolation'
+                                          : lc.startsWith('warning-labels')
+                                            ? 'warning-labels'
+                                            : lc.startsWith('minor-works')
+                                              ? 'minor-works'
+                                              : lc.startsWith('eic-')
+                                                ? 'eic'
+                                                : 'eicr';
 
       // Get current status to check if it's an auto-draft
       const { data: currentReport } = await supabase

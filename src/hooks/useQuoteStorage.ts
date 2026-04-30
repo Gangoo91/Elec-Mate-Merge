@@ -162,9 +162,10 @@ export const useQuoteStorage = () => {
       setInvoicedQuotes(invoiced);
       setLastUpdated(new Date());
     } catch (error) {
-      captureApiError(error instanceof Error ? error : new Error(String(error)), 'quotes/refresh', {
-        context: 'refreshQuotes',
-      });
+      // Pass the raw error — captureApiError → normaliseError extracts
+      // .message from Supabase POJOs. Pre-wrapping with new Error(String(err))
+      // mangles object errors to "[object Object]" before Sentry sees them.
+      captureApiError(error, 'quotes/refresh', { context: 'refreshQuotes' });
     }
   }, [fetchActiveQuotesForUser, fetchInvoicedQuotesForUser]);
 
@@ -184,9 +185,7 @@ export const useQuoteStorage = () => {
         setSavedQuotes(quotes);
         setLastUpdated(new Date());
       } catch (error) {
-        captureApiError(error instanceof Error ? error : new Error(String(error)), 'quotes/load', {
-          context: 'loadQuotes',
-        });
+        captureApiError(error, 'quotes/load', { context: 'loadQuotes' });
       } finally {
         setLoading(false);
       }
@@ -203,11 +202,7 @@ export const useQuoteStorage = () => {
         const converted = await fetchInvoicedQuotesForUser(user.id);
         setInvoicedQuotes(converted);
       } catch (error) {
-        captureApiError(
-          error instanceof Error ? error : new Error(String(error)),
-          'quotes/load-invoiced',
-          { context: 'loadInvoicedQuotes' }
-        );
+        captureApiError(error, 'quotes/load-invoiced', { context: 'loadInvoicedQuotes' });
       }
     };
 

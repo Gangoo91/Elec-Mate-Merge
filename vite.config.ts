@@ -5,6 +5,7 @@ import { execSync } from 'child_process';
 // import { componentTagger } from "lovable-tagger"; // Disabled - causing JSX corruption
 import { VitePWA } from 'vite-plugin-pwa';
 import { compression } from 'vite-plugin-compression2';
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 
 // Git commit hash for Sentry release tracking
 const gitCommit = (() => {
@@ -75,6 +76,31 @@ export default defineConfig(({ mode }) => ({
     }),
     compression({ algorithm: 'gzip', threshold: 1024 }),
     compression({ algorithm: 'brotliCompress', threshold: 1024 }),
+    // Source-map upload to Sentry — only runs when SENTRY_AUTH_TOKEN is set
+    // (CI / production builds), so local dev builds without the token still
+    // succeed without uploading anything. Symbolicates minified stack traces
+    // in Sentry so issues like RangeError and ReferenceError actually point
+    // at real source files instead of `App-qembCcYp.js:507:54649 (pt)`.
+    process.env.SENTRY_AUTH_TOKEN &&
+      sentryVitePlugin({
+        org: 'elec-mate',
+        project: 'javascript-react',
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        url: 'https://de.sentry.io/',
+        release: { name: `elec-mate@${gitCommit}` },
+        sourcemaps: {
+          // Maps build alongside the chunks; the plugin uploads them then
+          // (by default) deletes the .map files from the deployed dist so
+          // the public bundle doesn't ship sourceMappingURL comments.
+          filesToDeleteAfterUpload: ['./dist/**/*.map'],
+        },
+        // Don't fail the build if upload fails (e.g. transient network).
+        // Sentry just won't have maps for that build — better than blocking
+        // a deploy because of a Sentry hiccup.
+        errorHandler: (err) => {
+          console.warn('[sentry-vite-plugin] upload failed (non-fatal):', err.message);
+        },
+      }),
   ].filter(Boolean),
   optimizeDeps: {
     noDiscovery: true,
@@ -185,7 +211,13 @@ export default defineConfig(({ mode }) => ({
     drop: ['console'],
   },
   build: {
-    sourcemap: false,
+    // Source maps are only generated when SENTRY_AUTH_TOKEN is set (CI /
+    // production deploys). 'hidden' = build the .map files for upload but
+    // don't add sourceMappingURL comments to the JS, so they're not
+    // auto-loaded by browsers. The Sentry vite plugin then uploads + deletes
+    // the .map files from dist. Without a token, no maps are generated at
+    // all — guarantees nothing can leak to the deployed bundle.
+    sourcemap: process.env.SENTRY_AUTH_TOKEN ? 'hidden' : false,
     minify: 'esbuild',
     chunkSizeWarningLimit: 500,
     rollupOptions: {
