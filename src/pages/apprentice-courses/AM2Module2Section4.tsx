@@ -1,31 +1,34 @@
-import {
-  AlertTriangle,
-  FileText,
-  CheckSquare,
-  PenTool,
-  Eye,
-  Timer,
-  BookOpen,
-  TestTube,
-  Scale,
-  Clipboard,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
+/**
+ * Module 2 · Section 4 — Completing paperwork under pressure
+ * AM2 day-prep — AM2 Phase A (H&S, safe isolation, RAMS, paperwork)
+ * Certificates, test sheets and RAMS — neat, accurate, finished on time, with measured values not book answers.
+ */
+
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  SectionRule,
+  LearningOutcomes,
+  TLDR,
+  KeyTakeaways,
+  FAQ,
+  Scenario,
+  CommonMistake,
+  RegsCallout,
+} from '@/components/study-centre/learning';
+
+const TITLE = 'Completing Paperwork Under Pressure | AM2 Module 2.4 | Elec-Mate';
+const DESCRIPTION =
+  'Certificates, test sheets and RAMS finished neatly on the clock — measured values not book answers, with no boxes left blank.';
 
 const AM2Module2Section4 = () => {
-  useSEO(
-    'Completing Paperwork Under Pressure - AM2 Module 2',
-    'Accurate completion of certificates, test sheets, and RAMS forms within AM2 time limits - critical skills for passing AM2'
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const quickCheckQuestions = [
     {
@@ -234,761 +237,549 @@ const AM2Module2Section4 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module2"
-      breadcrumbs={[{ label: 'Module 2', href: '..' }, { label: 'Section 4' }]}
-    >
-      <AM2HeroSection
-        moduleNumber="2"
-        sectionNumber="4"
-        title="Completing Paperwork Under Pressure"
-        description="Accurate completion of certificates, test sheets, and RAMS forms within AM2 time limits - critical skills for passing AM2 and real-world electrical work."
-        readTime="20 min read"
-        icon={<FileText className="w-4 h-4" />}
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 2
+          </button>
 
-      <AM2CriticalWarning title="CRITICAL: Paperwork Failure = Assessment Failure">
-        <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
-          In the AM2, paperwork is not an afterthought — it's part of the assessment. Candidates
-          must complete certificates, test sheets, and RAMS forms accurately and efficiently within
-          the strict time limit. Many otherwise competent electricians fail because their
-          documentation is rushed, incomplete, or unrealistic.
-        </p>
-        <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
-          In real life, poor paperwork means liability, invalid certificates, and disciplinary
-          issues. In AM2, it means lost marks and possible failure.
-        </p>
-      </AM2CriticalWarning>
+          <PageHero
+            eyebrow="Module 2 · Section 4"
+            title="Completing Paperwork Under Pressure"
+            description="Accurate completion of certificates, test sheets, and RAMS forms within AM2 time limits - critical skills for passing AM2 and real-world electrical work."
+            tone="yellow"
+          />
 
-      <AM2LearningOutcomes outcomes={learningOutcomes} />
+          <TLDR
+            points={[
+              'Paperwork is part of the marked assessment, not an admin afterthought.',
+              'Falsifying readings (e.g. inventing a Zs because you didn’t have time to test it) is a critical fail and could mean criminal liability in real life.',
+              'Every blank field is a Not Yet Competent. Tick boxes, signatures, dates and sheet references all count.',
+              'Build paperwork into your time plan — Section B is 3.5 hours and most of the back half is documentation.',
+            ]}
+          />
 
-      {/* Types of Paperwork */}
-      <AM2ContentCard title="1. Types of Paperwork in AM2">
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-              <PenTool className="w-4 h-4 text-elec-yellow" />
-              Risk Assessments and Method Statements (RAMS)
-            </h3>
-            <p className="mb-2">
-              Pre-work planning documentation showing hazard identification and safe working
-              procedures.
+          <ConceptBlock title="Paperwork Failure = Assessment Failure">
+            <p>
+              <strong className="text-red-300">Critical.</strong> In the AM2, paperwork is not an
+              afterthought — it's part of the assessment. Candidates must complete certificates,
+              test sheets, and RAMS forms accurately and efficiently within the strict time limit.
+              Many otherwise competent electricians fail because their documentation is rushed,
+              incomplete, or unrealistic.
             </p>
-            <p className="text-white">
-              Must be task-specific and realistic for the actual work being undertaken.
+            <p>
+              In real life, poor paperwork means liability, invalid certificates, and disciplinary
+              issues. In AM2, it means lost marks and possible failure.
             </p>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-              <Eye className="w-4 h-4 text-elec-yellow" />
-              Inspection & Testing Sheets
-            </h3>
-            <p className="mb-2">Records of visual inspection and electrical testing results.</p>
-            <p className="text-white">
-              Must contain actual measured values, not theoretical or 'book' answers.
+          </ConceptBlock>
+
+          <LearningOutcomes outcomes={learningOutcomes} />
+
+          <ConceptBlock title="Types of Paperwork You'll Complete">
+            <p>
+              <strong>Risk Assessments and Method Statements (RAMS).</strong> Pre-work planning
+              documentation showing hazard identification and safe working procedures. Must be
+              task-specific and realistic for the actual work being undertaken.
             </p>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-              <FileText className="w-4 h-4 text-elec-yellow" />
-              Electrical Installation Certificate (EIC)
-            </h3>
-            <p className="mb-2">Formal certification that installation complies with BS 7671.</p>
-            <p className="text-white">
-              Legal document requiring complete and accurate information in all sections.
+            <p>
+              <strong>Inspection &amp; Testing Sheets.</strong> Records of visual inspection and
+              electrical testing results. Must contain actual measured values, not theoretical or
+              'book' answers.
             </p>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-elec-yellow" />
-              Schedule of Test Results
-            </h3>
-            <p className="mb-2">Detailed test measurements for each circuit.</p>
-            <p className="text-white">
-              Values must be consistent with actual installation and realistic for the circuit
-              types.
+            <p>
+              <strong>Electrical Installation Certificate (EIC).</strong> Formal certification that
+              installation complies with BS 7671. Legal document requiring complete and accurate
+              information in all sections.
             </p>
-          </div>
-        </div>
-        <InlineCheck {...quickCheckQuestions[0]} />
-      </AM2ContentCard>
-
-      {/* NET Testing Procedures */}
-      <AM2ContentCard
-        title="NET-Aligned Testing Procedures & Documentation"
-        icon={<TestTube className="w-5 h-5" />}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="font-semibold mb-3 text-elec-yellow">
-              Initial Verification Tests (EIC)
-            </h3>
-            <div className="space-y-3">
-              <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
-                <h4 className="font-medium text-sm mb-1">1. Continuity of Protective Conductors</h4>
-                <p className="text-xs text-white mb-2">
-                  Test all CPC connections including main and supplementary bonding
-                </p>
-                <ul className="text-xs text-white space-y-1">
-                  <li>• Record actual measured resistance values</li>
-                  <li>• Check R1+R2 values for each circuit</li>
-                  <li>• Document bonding conductor continuity</li>
-                </ul>
-              </div>
-              <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
-                <h4 className="font-medium text-sm mb-1">2. Continuity of Ring Final Circuits</h4>
-                <p className="text-xs text-white mb-2">
-                  End-to-end and cross-connection tests for socket circuits
-                </p>
-                <ul className="text-xs text-white space-y-1">
-                  <li>• Record live-neutral, live-earth, neutral-earth values</li>
-                  <li>• Calculate and verify (R1+R2)/4 values</li>
-                  <li>• Document any interconnections found</li>
-                </ul>
-              </div>
-              <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
-                <h4 className="font-medium text-sm mb-1">3. Insulation Resistance</h4>
-                <p className="text-xs text-white mb-2">
-                  Minimum 1MΩ at 500V DC between live conductors and earth
-                </p>
-                <ul className="text-xs text-white space-y-1">
-                  <li>• Test between live and neutral conductors</li>
-                  <li>• Test between live conductors and earth</li>
-                  <li>• Record values in MΩ, never as &gt;999MΩ</li>
-                </ul>
-              </div>
-              <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
-                <h4 className="font-medium text-sm mb-1">4. Polarity Testing</h4>
-                <p className="text-xs text-white mb-2">
-                  Verify correct connections at switches, sockets and accessories
-                </p>
-                <ul className="text-xs text-white space-y-1">
-                  <li>• Check switch line connections</li>
-                  <li>• Verify socket outlet polarity</li>
-                  <li>• Confirm protective device arrangements</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-3 text-elec-yellow">Live Testing & Documentation</h3>
-            <div className="space-y-3">
-              <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
-                <h4 className="font-medium text-sm mb-1">5. Earth Fault Loop Impedance (Zs)</h4>
-                <p className="text-xs text-white mb-2">
-                  Verify disconnection times meet BS 7671 requirements
-                </p>
-                <ul className="text-xs text-white space-y-1">
-                  <li>• Measure actual Zs at each outlet</li>
-                  <li>• Compare with maximum permitted values</li>
-                  <li>• Never record 0.00Ω - always shows measurable value</li>
-                </ul>
-              </div>
-              <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
-                <h4 className="font-medium text-sm mb-1">6. RCD Operation Testing</h4>
-                <p className="text-xs text-white mb-2">
-                  Test trip times at x1, x5 rated current and ramp testing
-                </p>
-                <ul className="text-xs text-white space-y-1">
-                  <li>• Record trip times at 1× and 5× IΔn</li>
-                  <li>• Document ramp test results</li>
-                  <li>• Test mechanical operation button</li>
-                </ul>
-              </div>
-              <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
-                <h4 className="font-medium text-sm mb-1">7. Voltage and Phase Sequence</h4>
-                <p className="text-xs text-white mb-2">
-                  Supply voltage verification and three-phase rotation
-                </p>
-                <ul className="text-xs text-white space-y-1">
-                  <li>• Record actual supply voltages</li>
-                  <li>• Verify phase rotation for 3-phase supplies</li>
-                  <li>• Check voltage balance between phases</li>
-                </ul>
-              </div>
-              <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
-                <h4 className="font-medium text-sm mb-1">8. Functional Testing</h4>
-                <p className="text-xs text-white mb-2">
-                  Operation of switches, isolators and control devices
-                </p>
-                <ul className="text-xs text-white space-y-1">
-                  <li>• Test all switching and control functions</li>
-                  <li>• Verify emergency stop operations</li>
-                  <li>• Document any operational limitations</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Complete Documentation Package */}
-      <AM2ContentCard
-        title="Complete Documentation Package (NET Standards)"
-        icon={<Clipboard className="w-5 h-5" />}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <h3 className="font-semibold mb-3 text-elec-yellow">Design Stage Documentation</h3>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Design calculations and load assessments</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Cable sizing and protection coordination</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Circuit schedules and distribution board layouts</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Installation method statements and routing</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Special location considerations (BS 7671 sections)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Earthing and bonding arrangements</span>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-3 text-elec-yellow">Installation Stage Records</h3>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Installation method verification records</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Material compliance certificates (CE marking)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Progressive inspection records and hold points</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Amendment records and design variations</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Risk assessments and method statements</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Non-conformance reports and rectifications</span>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-3 text-elec-yellow">Handover Documentation</h3>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Complete test results and certificates (EIC/EICR)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Operation and maintenance manuals</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>As-built drawings and updated schedules</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Manufacturer warranties and technical data</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Periodic inspection recommendations and intervals</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Building Regulations compliance notifications</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Legal Framework */}
-      <AM2ContentCard title="Legal Framework & NET Compliance" icon={<Scale className="w-5 h-5" />}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="font-semibold mb-3">Building Regulations Part P</h3>
-            <p className="text-sm text-white mb-3">
-              Mandatory for notifiable electrical work in dwellings and certain other premises.
+            <p>
+              <strong>Schedule of Test Results.</strong> Detailed test measurements for each
+              circuit. Values must be consistent with actual installation and realistic for the
+              circuit types.
             </p>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Special locations (bathrooms, kitchens) require notification</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>New circuits and consumer unit changes</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Outdoor electrical installations and garden supplies</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Certificate submission to Building Control within 30 days</span>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-3">BS 7671:2018+A2:2022 Requirements</h3>
-            <p className="text-sm text-white mb-3">
-              IET Wiring Regulations compliance verification and documentation standards.
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <ConceptBlock title="NET Testing Procedures">
+            <p>
+              <strong className="text-elec-yellow">Initial Verification Tests (EIC):</strong>
             </p>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Design verification and calculation documentation</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Installation method compliance verification</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Protection coordination and discrimination</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>RCD protection requirements (Section 411)</span>
-              </li>
+            <p>
+              <strong>1. Continuity of Protective Conductors.</strong> Test all CPC connections
+              including main and supplementary bonding.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Record actual measured resistance values</li>
+              <li>Check R1+R2 values for each circuit</li>
+              <li>Document bonding conductor continuity</li>
             </ul>
-          </div>
-        </div>
-        <div className="mt-6 p-4 bg-[#1a1a1a]/50 rounded-lg">
-          <h3 className="font-semibold mb-2 text-elec-yellow">
-            NET Testing Standards & AM2 Requirements
-          </h3>
-          <p className="text-sm text-white mb-3">
-            National Electrical Testing requirements ensure competency in documentation and testing
-            procedures.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>AM2 practical assessment documentation standards</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Portfolio evidence compilation requirements</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Health and safety documentation standards</span>
-              </li>
+            <p>
+              <strong>2. Continuity of Ring Final Circuits.</strong> End-to-end and cross-connection
+              tests for socket circuits.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Record live-neutral, live-earth, neutral-earth values</li>
+              <li>Calculate and verify (R1+R2)/4 values</li>
+              <li>Document any interconnections found</li>
             </ul>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Time-limited documentation completion skills</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Realistic test result recording techniques</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span>Industry-standard certificate completion</span>
-              </li>
+            <p>
+              <strong>3. Insulation Resistance.</strong> Minimum 1MΩ at 500V DC between live
+              conductors and earth.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Test between live and neutral conductors</li>
+              <li>Test between live conductors and earth</li>
+              <li>Record values in MΩ, never as &gt;999MΩ</li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+            <p>
+              <strong>4. Polarity Testing.</strong> Verify correct connections at switches, sockets
+              and accessories.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Check switch line connections</li>
+              <li>Verify socket outlet polarity</li>
+              <li>Confirm protective device arrangements</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Live Testing &amp; Documentation:</strong>
+            </p>
+            <p>
+              <strong>5. Earth Fault Loop Impedance (Zs).</strong> Verify disconnection times meet
+              BS 7671 requirements.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Measure actual Zs at each outlet</li>
+              <li>Compare with maximum permitted values</li>
+              <li>Never record 0.00Ω — always shows measurable value</li>
+            </ul>
+            <p>
+              <strong>6. RCD Operation Testing.</strong> Test trip times at x1, x5 rated current and
+              ramp testing.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Record trip time at 1×IΔn (A4:2026 — 5×IΔn test deleted)</li>
+              <li>Document ramp test results</li>
+              <li>Test mechanical operation button</li>
+            </ul>
+            <p>
+              <strong>7. Voltage and Phase Sequence.</strong> Supply voltage verification and
+              three-phase rotation.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Record actual supply voltages</li>
+              <li>Verify phase rotation for 3-phase supplies</li>
+              <li>Check voltage balance between phases</li>
+            </ul>
+            <p>
+              <strong>8. Functional Testing.</strong> Operation of switches, isolators and control
+              devices.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Test all switching and control functions</li>
+              <li>Verify emergency stop operations</li>
+              <li>Document any operational limitations</li>
+            </ul>
+          </ConceptBlock>
 
-      {/* Pre-Paperwork Checklist */}
-      <AM2ContentCard title="Pre-Paperwork Checklist">
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-          <div>
-            <h3 className="font-semibold text-base mb-3">Before You Start</h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Check all paperwork is provided and complete
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Understand the installation you're certifying
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Have testing equipment calibrated and ready
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Plan your testing sequence to match paperwork
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Ensure pen (not pencil) is available
-              </li>
+          <ConceptBlock title="Complete Documentation Package">
+            <p>
+              <strong className="text-elec-yellow">Design Stage Documentation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Design calculations and load assessments</li>
+              <li>Cable sizing and protection coordination</li>
+              <li>Circuit schedules and distribution board layouts</li>
+              <li>Installation method statements and routing</li>
+              <li>Special location considerations (BS 7671 sections)</li>
+              <li>Earthing and bonding arrangements</li>
             </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-3">Time Management Strategy</h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Allocate specific time for documentation
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Record results immediately after each test
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Don't leave all paperwork until the end
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Allow buffer time for final checks
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Practice timing on blank forms beforehand
-              </li>
+            <p>
+              <strong className="text-elec-yellow">Installation Stage Records:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Installation method verification records</li>
+              <li>Material compliance certificates (CE marking)</li>
+              <li>Progressive inspection records and hold points</li>
+              <li>Amendment records and design variations</li>
+              <li>Risk assessments and method statements</li>
+              <li>Non-conformance reports and rectifications</li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+            <p>
+              <strong className="text-elec-yellow">Handover Documentation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Complete test results and certificates (EIC/EICR)</li>
+              <li>Operation and maintenance manuals</li>
+              <li>As-built drawings and updated schedules</li>
+              <li>Manufacturer warranties and technical data</li>
+              <li>Periodic inspection recommendations and intervals</li>
+              <li>Building Regulations compliance notifications</li>
+            </ul>
+          </ConceptBlock>
 
-      {/* Common Paperwork Mistakes */}
-      <AM2ContentCard title="2. Common Paperwork Mistakes (NET Guidance)">
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div>
-              <h3 className="font-semibold text-base mb-3 text-elec-yellow">
-                Critical Errors to Avoid
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  Missing or illegible entries
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  Recording "perfect" values instead of measured ones
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  Mixing up insulation resistance vs continuity values
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  Forgetting polarity results
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold text-base mb-3 text-elec-yellow">
-                Format and Technical Errors
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  Not completing all sections of certificates
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  Using the wrong units or symbols
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  Inconsistent measurement formats
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  Missing signatures and dates
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg">
-          <h4 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">
-            Why Realistic Values Matter
-          </h4>
-          <p className="text-sm text-yellow-700 dark:text-yellow-300">
-            Assessors are experienced electricians who know what realistic test results look like.
-            They can spot copied or "book" values immediately. Values like "999.9 MΩ" for insulation
-            resistance or "0.00 Ω" for earth fault loop impedance are red flags that indicate you
-            haven't actually performed the tests.
-          </p>
-        </div>
-        <InlineCheck {...quickCheckQuestions[1]} />
-      </AM2ContentCard>
+          <ConceptBlock title="Legal Framework">
+            <p>
+              <strong>Building Regulations Part P.</strong> Mandatory for notifiable electrical work
+              in dwellings and certain other premises.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Special locations (bathrooms, kitchens) require notification</li>
+              <li>New circuits and consumer unit changes</li>
+              <li>Outdoor electrical installations and garden supplies</li>
+              <li>Certificate submission to Building Control within 30 days</li>
+            </ul>
+            <p>
+              <strong>BS 7671:2018+A4:2026 Requirements.</strong> IET Wiring Regulations compliance
+              verification and documentation standards.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Design verification and calculation documentation</li>
+              <li>Installation method compliance verification</li>
+              <li>Protection coordination and discrimination</li>
+              <li>RCD protection requirements (Section 411)</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">
+                NET Testing Standards &amp; AM2 Requirements.
+              </strong>{' '}
+              National Electrical Testing requirements ensure competency in documentation and
+              testing procedures.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>AM2 practical assessment documentation standards</li>
+              <li>Portfolio evidence compilation requirements</li>
+              <li>Health and safety documentation standards</li>
+              <li>Time-limited documentation completion skills</li>
+              <li>Realistic test result recording techniques</li>
+              <li>Industry-standard certificate completion</li>
+            </ul>
+          </ConceptBlock>
 
-      {/* Time Pressure in AM2 */}
-      <AM2ContentCard title="3. Time Pressure in AM2" icon={<Timer className="w-5 h-5" />}>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-muted/20 p-4 rounded-lg">
-              <h3 className="font-semibold text-base mb-2">Assessment Structure</h3>
-              <p>
-                Paperwork is completed during the inspection & testing stage of the AM2 assessment.
-              </p>
-            </div>
-            <div className="bg-muted/20 p-4 rounded-lg">
-              <h3 className="font-semibold text-base mb-2">Time Allocation</h3>
-              <p>
-                About 3.5 hours for testing and documentation combined - no separate paperwork time.
-              </p>
-            </div>
-            <div className="bg-muted/20 p-4 rounded-lg">
-              <h3 className="font-semibold text-base mb-2">Common Problem</h3>
-              <p>Candidates who don't pace themselves often run out of time or rush at the end.</p>
-            </div>
-          </div>
-          <div className="mt-6 p-4 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg">
-            <h4 className="font-semibold text-orange-800 dark:text-orange-200 mb-2">
-              Time Management Reality
-            </h4>
-            <p className="text-sm text-orange-700 dark:text-elec-yellow">
-              With approximately 3.5 hours to complete inspection, testing AND all documentation,
-              you cannot afford to leave paperwork until the end. Successful candidates integrate
+          <ConceptBlock title="Pre-Paperwork Checklist">
+            <p>
+              <strong>Before You Start:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Check all paperwork is provided and complete</li>
+              <li>Understand the installation you're certifying</li>
+              <li>Have testing equipment calibrated and ready</li>
+              <li>Plan your testing sequence to match paperwork</li>
+              <li>Ensure pen (not pencil) is available</li>
+            </ul>
+            <p>
+              <strong>Time Management Strategy:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Allocate specific time for documentation</li>
+              <li>Record results immediately after each test</li>
+              <li>Don't leave all paperwork until the end</li>
+              <li>Allow buffer time for final checks</li>
+              <li>Practice timing on blank forms beforehand</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Common Paperwork Mistakes">
+            <p>
+              <strong className="text-elec-yellow">Critical Errors to Avoid:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-red-400/70">
+              <li>Missing or illegible entries</li>
+              <li>Recording "perfect" values instead of measured ones</li>
+              <li>Mixing up insulation resistance vs continuity values</li>
+              <li>Forgetting polarity results</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Format and Technical Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-red-400/70">
+              <li>Not completing all sections of certificates</li>
+              <li>Using the wrong units or symbols</li>
+              <li>Inconsistent measurement formats</li>
+              <li>Missing signatures and dates</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Why Realistic Values Matter.</strong> Assessors
+              are experienced electricians who know what realistic test results look like. They can
+              spot copied or "book" values immediately. Values like "999.9 MΩ" for insulation
+              resistance or "0.00 Ω" for earth fault loop impedance are red flags that indicate you
+              haven't actually performed the tests.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <ConceptBlock title="Time Pressure in AM2">
+            <p>
+              <strong>Assessment Structure.</strong> Paperwork is completed during the inspection
+              &amp; testing stage of the AM2 assessment.
+            </p>
+            <p>
+              <strong>Time Allocation.</strong> About 3.5 hours for testing and documentation
+              combined — no separate paperwork time.
+            </p>
+            <p>
+              <strong>Common Problem.</strong> Candidates who don't pace themselves often run out of
+              time or rush at the end.
+            </p>
+            <p>
+              <strong className="text-orange-400">Time Management Reality.</strong> With
+              approximately 3.5 hours to complete inspection, testing AND all documentation, you
+              cannot afford to leave paperwork until the end. Successful candidates integrate
               documentation into their testing process, recording results immediately after each
               test.
             </p>
-          </div>
-        </div>
-        <InlineCheck {...quickCheckQuestions[3]} />
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Strategies for Success */}
-      <AM2ContentCard
-        title="4. Strategies for Success"
-        className="bg-gradient-to-r from-card to-card/80"
-      >
-        <div className="space-y-6">
-          <div>
-            <h3 className="font-semibold text-base mb-3">Pre-Assessment Preparation</h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <ConceptBlock title="Strategies for Success">
+            <p>
+              <strong>Pre-Assessment Preparation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
                 Practice certificates beforehand — fill in blank EICs and test sheets until it's
                 second nature
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Time yourself completing full certificate sets to build muscle memory
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Familiarize yourself with typical test result ranges for common installations
-              </li>
+              <li>Time yourself completing full certificate sets to build muscle memory</li>
+              <li>Familiarize yourself with typical test result ranges for common installations</li>
             </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-3">During Assessment</h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Record results as you go — don't wait until the end of the section
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Be neat and legible — if assessors can't read it, you lose marks
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Use standard units (Ω, MΩ, V, A) consistently throughout
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Check every box before submission — blanks lose marks
-              </li>
+            <p>
+              <strong>During Assessment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Record results as you go — don't wait until the end of the section</li>
+              <li>Be neat and legible — if assessors can't read it, you lose marks</li>
+              <li>Use standard units (Ω, MΩ, V, A) consistently throughout</li>
+              <li>Check every box before submission — blanks lose marks</li>
             </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-3">Quality Control</h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Cross-check measurements against installation reality
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Ensure values are consistent across different test sheets
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+            <p>
+              <strong>Quality Control:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cross-check measurements against installation reality</li>
+              <li>Ensure values are consistent across different test sheets</li>
+              <li>
                 Verify all mandatory tests are recorded (continuity, insulation, polarity, etc.)
               </li>
             </ul>
-          </div>
-        </div>
-        <InlineCheck {...quickCheckQuestions[2]} />
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Real-world Examples */}
-      <AM2ContentCard title="Real-world Examples">
-        <div className="grid gap-4">
-          <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-            <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
-              Example 1: Polarity Omission
-            </h3>
-            <p className="text-sm text-red-700 dark:text-elec-yellow">
-              Candidate completed all tests but rushed paperwork. Missed filling in the polarity
-              results. Despite excellent practical work, the section failed due to incomplete
-              mandatory test records.
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <ConceptBlock title="Real-world Examples">
+            <p>
+              <strong className="text-red-400">Example 1: Polarity Omission.</strong> Candidate
+              completed all tests but rushed paperwork. Missed filling in the polarity results.
+              Despite excellent practical work, the section failed due to incomplete mandatory test
+              records.
             </p>
-          </div>
-          <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-            <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
-              Example 2: Book Value Detection
-            </h3>
-            <p className="text-sm text-red-700 dark:text-elec-yellow">
-              Candidate wrote down "ideal textbook" insulation resistance values (999 MΩ). Assessor
-              checked actual meter logs — values didn't match the recorded results. Automatic fail
-              for false documentation.
+            <p>
+              <strong className="text-red-400">Example 2: Book Value Detection.</strong> Candidate
+              wrote down "ideal textbook" insulation resistance values (999 MΩ). Assessor checked
+              actual meter logs — values didn't match the recorded results. Automatic fail for false
+              documentation.
             </p>
-          </div>
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-            <h3 className="font-semibold text-green-800 dark:text-green-200 mb-2">
-              Example 3: Integrated Approach
-            </h3>
-            <p className="text-sm text-green-700 dark:text-green-300">
-              Candidate filled paperwork as they tested, kept documentation neat and consistent with
-              actual measurements. Passed comfortably with high marks across all assessment
-              criteria.
+            <p>
+              <strong className="text-green-400">Example 3: Integrated Approach.</strong> Candidate
+              filled paperwork as they tested, kept documentation neat and consistent with actual
+              measurements. Passed comfortably with high marks across all assessment criteria.
             </p>
-          </div>
-          <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg p-4">
-            <h3 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">
-              Example 4: Industry Consequences
-            </h3>
-            <p className="text-sm text-yellow-700 dark:text-yellow-300">
-              In industry, an electrician signed off an incomplete EIC without proper test results.
+            <p>
+              <strong className="text-amber-400">Example 4: Industry Consequences.</strong> In
+              industry, an electrician signed off an incomplete EIC without proper test results.
               Work was later audited by building control — disciplinary action taken and
               professional reputation damaged.
             </p>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* FAQs */}
-      <AM2ContentCard
-        title="Frequently Asked Questions"
-        className="bg-gradient-to-br from-card to-card/60"
-      >
-        <div className="space-y-4">
-          <div className="bg-gradient-to-r from-elec-yellow/5 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q1: Can I use pencil in AM2 paperwork?
-            </h3>
-            <p className="text-sm text-white">
-              A: No — all paperwork must be completed in pen for legal certification requirements.
+          <ConceptBlock title="Frequently Asked Questions">
+            <p>
+              <strong>Q1: Can I use pencil in AM2 paperwork?</strong> No — all paperwork must be
+              completed in pen for legal certification requirements.
             </p>
-          </div>
-          <div className="bg-gradient-to-r from-elec-yellow/5 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q2: Will assessors allow small mistakes?
-            </h3>
-            <p className="text-sm text-white">
-              A: Minor slips may not fail you, but repeated or major omissions will. Quality and
-              accuracy are assessed holistically.
+            <p>
+              <strong>Q2: Will assessors allow small mistakes?</strong> Minor slips may not fail
+              you, but repeated or major omissions will. Quality and accuracy are assessed
+              holistically.
             </p>
-          </div>
-          <div className="bg-gradient-to-r from-elec-yellow/5 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q3: Do I need to write explanations for test results?
-            </h3>
-            <p className="text-sm text-white">
-              A: No, just accurate measured values in the correct boxes. Over-explanation can waste
-              valuable time.
+            <p>
+              <strong>Q3: Do I need to write explanations for test results?</strong> No, just
+              accurate measured values in the correct boxes. Over-explanation can waste valuable
+              time.
             </p>
-          </div>
-          <div className="bg-gradient-to-r from-elec-yellow/5 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q4: What happens if I don't complete the paperwork in time?
-            </h3>
-            <p className="text-sm text-white">
-              A: Marks are lost proportionally. Incomplete documentation may tip you below the pass
-              threshold despite good practical work.
+            <p>
+              <strong>Q4: What happens if I don't complete the paperwork in time?</strong> Marks are
+              lost proportionally. Incomplete documentation may tip you below the pass threshold
+              despite good practical work.
             </p>
-          </div>
-          <div className="bg-gradient-to-r from-elec-yellow/5 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q5: Can I bring pre-filled paperwork?
-            </h3>
-            <p className="text-sm text-white">
-              A: No — all paperwork must be completed during the assessment to demonstrate
-              competency under exam conditions.
+            <p>
+              <strong>Q5: Can I bring pre-filled paperwork?</strong> No — all paperwork must be
+              completed during the assessment to demonstrate competency under exam conditions.
             </p>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Summary */}
-      <AM2ContentCard title="Summary" className="bg-gradient-to-r from-elec-yellow/5 to-card">
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <p className="text-base font-medium">
-            Paperwork is as important as the practical work. You must:
-          </p>
-          <ul className="space-y-2">
-            <li className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              Fill in all sections (RAMS, test sheets, certificates) completely and accurately
-            </li>
-            <li className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              Record realistic, measured values that reflect actual testing performed
-            </li>
-            <li className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              Work neatly and legibly — illegible entries cannot be marked
-            </li>
-            <li className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              Manage your time effectively — don't leave documentation until the end
-            </li>
-          </ul>
-          <div className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg mt-4">
-            <p className="text-sm font-medium text-red-800 dark:text-red-200">
-              Remember: Failing paperwork = failing the AM2, even if your installation work is
-              flawless.
+          <ConceptBlock title="Summary">
+            <p>Paperwork is as important as the practical work. You must:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Fill in all sections (RAMS, test sheets, certificates) completely and accurately
+              </li>
+              <li>Record realistic, measured values that reflect actual testing performed</li>
+              <li>Work neatly and legibly — illegible entries cannot be marked</li>
+              <li>Manage your time effectively — don't leave documentation until the end</li>
+            </ul>
+            <p>
+              <strong className="text-red-400">
+                Remember: Failing paperwork = failing the AM2, even if your installation work is
+                flawless.
+              </strong>
             </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 641.1"
+            clause="Every installation shall, during erection and on completion before being put into service, be inspected and tested to verify, so far as is reasonably practicable, that the requirements of BS 7671 have been met."
+            meaning={
+              <>
+                Inspection and testing isn’t just a Section B exercise — it’s a regulatory
+                requirement for every installation. Your AM2 paperwork has to record what you
+                tested, what you measured, and the certificate confirms the install meets BS 7671.
+                Blank readings break the regulation. Made-up readings break the law.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 641.1."
+          />
+
+          <Scenario
+            title="Twenty minutes left and the certificate is half done"
+            situation={
+              <>
+                End of Section B. You’ve done all the tests and recorded readings on a rough sheet,
+                but the formal Electrical Installation Certificate is only half-completed. The clock
+                shows twenty minutes. The candidate next to you has already handed in.
+              </>
+            }
+            whatToDo={
+              <>
+                Don’t panic-fill. Work through it methodically: schedule of inspections (tick what
+                you actually inspected, leave the rest blank rather than tick everything to be
+                safe), schedule of test results (transcribe from your rough sheet — never make a
+                number up), then declarations and signatures. If you genuinely run out of time, hand
+                in what you’ve honestly completed. A blank field loses one criterion. A fabricated
+                reading is a critical fail.
+              </>
+            }
+            whyItMatters={
+              <>
+                The assessor cross-checks your readings against the rig. They know what the loop
+                impedance should be at each accessory. Inventing values doesn’t just fail you — it’s
+                grounds to invalidate the whole sitting.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title="Filling in the certificate as you go and not cross-referencing the test sheet"
+            whatHappens={
+              <>
+                You jot Zs values straight onto the certificate during testing, then the rough sheet
+                says something different at the end. The assessor spots the mismatch and you’ve got
+                no clean trail.
+              </>
+            }
+            doInstead={
+              <>
+                Use one rough sheet for live test results, then transcribe to the certificate at the
+                end. Cross-check before you sign. One source of truth, transcribed once, signed
+                once.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Can I take the certificate home and finish it?',
+                answer:
+                  'No. Section B is the certification time. Whatever isn’t done by the end of the section is marked as it stands.',
+              },
+              {
+                question: 'What if I accidentally write the wrong reading?',
+                answer:
+                  'Cross it out with a single line, write the correct value next to it, initial the correction. Don’t use Tippex or scribble. Auditable corrections are fine; obscured corrections are not.',
+              },
+              {
+                question: 'Do I sign as designer, installer and inspector?',
+                answer:
+                  'On AM2 you are typically all three for the simulated installation. Sign each declaration with the same name and date. The candidate brief tells you which boxes to tick.',
+              },
+              {
+                question: 'How important is handwriting?',
+                answer:
+                  'Important. If the assessor can’t read your figures, they can’t mark them. Block capitals for names and addresses, neat numbers in the test boxes.',
+              },
+              {
+                question: 'What’s the difference between EIC and Minor Works?',
+                answer:
+                  'An Electrical Installation Certificate (EIC) covers a new installation or significant addition. A Minor Electrical Installation Works Certificate (MEIWC) covers small alterations to an existing circuit. AM2 typically uses an EIC plus a Schedule of Test Results.',
+              },
+              {
+                question: 'Should I record values to two decimal places?',
+                answer:
+                  'Match the precision of your instrument. Most modern testers display to two decimal places — record what you read. Don’t round to "neat" numbers.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Paperwork is part of the marked assessment — treat it like installation work.',
+              'BS 7671 Reg 641.1 makes inspection and testing a legal requirement, with the certificate as the evidence.',
+              'Falsifying readings is a critical fail and can have legal consequences in real work.',
+              'Use one rough test sheet, then transcribe to the formal certificate. Cross-check before signing.',
+              'Cross-check against the rig — assessors know what the readings should be.',
+              'Blank fields are NYCs. Made-up entries are critical fails. Honest gaps beat dishonest fills.',
+              'Block capitals for names, neat figures for readings, single-line strikethrough with initials for corrections.',
+              'Plan paperwork time into Section B from the start — at least 45 minutes for the full EIC and schedules.',
+            ]}
+          />
+
+          <Quiz questions={quizQuestions} title="Knowledge Check" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module2/section3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">Section 3</div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module2/section5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Continue to Section 5
+              </div>
+            </button>
           </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Quiz Section */}
-      <AM2ContentCard title="Knowledge Check: 10-Question Quiz">
-        <p className="text-sm text-white mb-6">
-          Test your understanding of AM2 paperwork requirements and best practices.
-        </p>
-        <Quiz questions={quizQuestions} />
-      </AM2ContentCard>
-
-      <AM2NavigationFooter
-        prevHref="/study-centre/apprentice/am2/module2/section3"
-        prevLabel="Previous: Section 3"
-        nextHref="/study-centre/apprentice/am2/module2/section5"
-        nextLabel="Continue to Section 5"
-        currentSection={4}
-        totalSections={5}
-      />
-    </AM2SectionLayout>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 

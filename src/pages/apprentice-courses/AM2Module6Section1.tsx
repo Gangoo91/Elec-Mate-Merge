@@ -1,28 +1,44 @@
+/**
+ * Module 6 · Section 1 — Format and structure of the online test
+ * AM2 day-prep — AM2 Phase E (online knowledge tests)
+ * What the AM2 online knowledge test actually looks like: question style, timing and how it is delivered.
+ */
+
 import {
-  Clock,
-  CheckCircle,
-  Monitor,
-  FileText,
-  Eye,
-  Lightbulb,
-  Target,
+  ArrowLeft,
   BookOpen,
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Eye,
+  FileText,
+  Lightbulb,
+  Monitor,
+  Target,
 } from 'lucide-react';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { Link } from 'react-router-dom';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  TLDR,
+  RegsCallout,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+} from '@/components/study-centre/learning';
+import { PageFrame, PageHero } from '@/components/college/primitives';
 import useSEO from '@/hooks/useSEO';
 
+const TITLE = 'Format and Structure of the Online Test | AM2 Module 6.1 | Elec-Mate';
+const DESCRIPTION =
+  'What the AM2 online knowledge test actually looks like — question style, timing and how it is delivered on the day.';
+
 const AM2Module6Section1 = () => {
-  useSEO(
-    'Format and Structure of the Online Test | AM2 Module 6 Section 1',
-    'Understanding the AM2 online knowledge test format, timing, question types and strategies for success'
-  );
+  useSEO(TITLE, DESCRIPTION);
 
   const quickCheckQuestions: Array<{
     id: string;
@@ -187,630 +203,538 @@ const AM2Module6Section1 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module6"
-      breadcrumbs={[
-        { label: 'AM2', href: '/study-centre/apprentice/am2' },
-        { label: 'Module 6', href: '/study-centre/apprentice/am2/module6' },
-        { label: 'Section 1' },
-      ]}
-    >
-      <AM2HeroSection
-        icon={Clock}
-        title="Format and Structure of the Online Test"
-        description="The AM2 online knowledge test is a computer-based, multiple-choice exam. It assesses your knowledge of electrical regulations, science, and safety, alongside your ability to apply theory to real-world situations. The test lasts 60 minutes and contains 30 questions."
-        badge="Module 6 - Section 1"
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <Link
+            to="/study-centre/apprentice/am2/module6"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 6
+          </Link>
 
-      <div className="space-y-6">
-        {/* Introduction */}
-        <AM2ContentCard>
-          <p className="text-ios-body text-white leading-relaxed">
-            Understanding the test format is essential for managing your time and answering
-            confidently. Many candidates fail this section not because they don't know the content,
-            but because they mismanage their time or misunderstand the question style.
-          </p>
-        </AM2ContentCard>
+          <PageHero
+            eyebrow="Module 6 - Section 1"
+            title="Format and Structure of the Online Test"
+            description="The AM2 online knowledge test is a computer-based, multiple-choice exam. It assesses your knowledge of electrical regulations, science, and safety, alongside your ability to apply theory to real-world situations. The test lasts 60 minutes and contains 30 questions."
+            tone="yellow"
+          />
 
-        {/* Critical Warning */}
-        <AM2CriticalWarning title="CRITICAL: Time Management is Everything">
-          <p className="text-ios-callout text-white mb-3 leading-relaxed">
-            Many candidates fail the knowledge test not due to lack of knowledge, but poor time
-            management. Getting stuck on difficult questions and leaving others blank is a
-            guaranteed route to failure.
-          </p>
-          <p className="text-ios-callout text-white font-medium leading-relaxed">
-            You must attempt every question. There's no penalty for guessing, but blank answers
-            guarantee lost marks.
-          </p>
-        </AM2CriticalWarning>
+          <TLDR
+            points={[
+              '60 minutes, 30 multiple-choice questions, pass mark 70% (21/30). All closed-book except the BS 7671 paper which may be open-book — check with NET on the day.',
+              'Two minutes per question average. Flag the hard ones, complete the easy ones first, return with fresh eyes.',
+              'No penalty for wrong answers. Blank = guaranteed lost mark. Always answer every question.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <AM2LearningOutcomes outcomes={learningOutcomes} />
+          <div className="space-y-6">
+            {/* Introduction */}
+            <section className="space-y-3">
+              <p className="text-ios-body text-white leading-relaxed">
+                Understanding the test format is essential for managing your time and answering
+                confidently. Many candidates fail this section not because they don't know the
+                content, but because they mismanage their time or misunderstand the question style.
+              </p>
+            </section>
 
-        {/* Test Structure */}
-        <AM2ContentCard title="1. Understanding the Test Structure" icon={Monitor}>
-          <div className="space-y-4">
-            <p className="text-ios-body text-white leading-relaxed">
-              The AM2 knowledge test is delivered in a controlled environment at approved assessment
-              centres across the UK. Understanding exactly what to expect will help you feel more
-              confident and perform better on the day.
-            </p>
+            {/* Critical Warning */}
+            <CommonMistake
+              title="Time Management is Everything"
+              whatHappens={
+                <>
+                  <p className="text-ios-callout text-white mb-3 leading-relaxed">
+                    Many candidates fail the knowledge test not due to lack of knowledge, but poor
+                    time management. Getting stuck on difficult questions and leaving others blank
+                    is a guaranteed route to failure.
+                  </p>
+                  <p className="text-ios-callout text-white font-medium leading-relaxed">
+                    You must attempt every question. There's no penalty for guessing, but blank
+                    answers guarantee lost marks.
+                  </p>
+                </>
+              }
+              doInstead={<>Treat this as a hard rule on AM2 day — there are no exceptions.</>}
+            />
 
-            <p className="text-ios-callout text-white leading-relaxed">
-              <strong className="text-white">Test Environment and Logistics:</strong> You'll be
-              seated at a computer workstation in a quiet examination room. The test is supervised
-              by qualified invigilators who will ensure fair conditions throughout. Before
-              beginning, you'll receive a brief demonstration of the test software and navigation
-              features.
-            </p>
+            {/* Learning Outcomes */}
+            <LearningOutcomes outcomes={learningOutcomes} />
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Key Test Parameters:
-              </h4>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    <strong className="text-white">Duration:</strong> Exactly 60 minutes from when
-                    you start the test
-                  </span>
+            {/* Test Structure */}
+            <ConceptBlock title="1. Understanding the Test Structure">
+              <p>
+                The AM2 knowledge test is delivered in a controlled environment at approved
+                assessment centres across the UK. Understanding exactly what to expect will help you
+                feel more confident and perform better on the day.
+              </p>
+
+              <p>
+                <strong className="text-elec-yellow">Test Environment and Logistics:</strong> You'll
+                be seated at a computer workstation in a quiet examination room. The test is
+                supervised by qualified invigilators who will ensure fair conditions throughout.
+                Before beginning, you'll receive a brief demonstration of the test software and
+                navigation features.
+              </p>
+
+              <p>
+                <strong className="text-elec-yellow">Key Test Parameters:</strong>
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Duration:</strong> Exactly 60 minutes from when you start the test
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    <strong className="text-white">Question Count:</strong> 30 questions
-                  </span>
+                <li>
+                  <strong>Question Count:</strong> 30 questions
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    <strong className="text-white">Question Format:</strong> Multiple-choice with 4
-                    possible answers per question
-                  </span>
+                <li>
+                  <strong>Question Format:</strong> Multiple-choice with 4 possible answers per
+                  question
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    <strong className="text-white">Pass Mark:</strong> 70% (21 correct answers out
-                    of 30)
-                  </span>
+                <li>
+                  <strong>Pass Mark:</strong> 70% (21 correct answers out of 30)
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    <strong className="text-white">Marking:</strong> One mark per correct answer, no
-                    penalty for wrong answers
-                  </span>
+                <li>
+                  <strong>Marking:</strong> One mark per correct answer, no penalty for wrong
+                  answers
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    <strong className="text-white">Results:</strong> Available immediately upon
-                    completion
-                  </span>
+                <li>
+                  <strong>Results:</strong> Available immediately upon completion
                 </li>
               </ul>
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Time Management Breakdown:
-              </h4>
-              <p className="text-ios-callout text-white mb-3 leading-relaxed">
+              <p>
+                <strong className="text-elec-yellow">Time Management Breakdown:</strong>
+              </p>
+              <p>
                 With 60 minutes for 30 questions, you have exactly 2 minutes per question. However,
                 this doesn't mean you should spend exactly this time on each question. The most
                 effective approach is:
               </p>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Quick wins:</strong> Answer straightforward
-                    questions immediately (30-60 seconds)
-                  </span>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Quick wins:</strong> Answer straightforward questions immediately (30-60
+                  seconds)
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Standard questions:</strong> Take 1-2 minutes for
-                    typical questions
-                  </span>
+                <li>
+                  <strong>Standard questions:</strong> Take 1-2 minutes for typical questions
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Complex scenarios:</strong> Allow up to 3-4
-                    minutes for challenging questions
-                  </span>
+                <li>
+                  <strong>Complex scenarios:</strong> Allow up to 3-4 minutes for challenging
+                  questions
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Review time:</strong> Reserve 5-10 minutes at the
-                    end for flagged questions
-                  </span>
+                <li>
+                  <strong>Review time:</strong> Reserve 5-10 minutes at the end for flagged
+                  questions
                 </li>
               </ul>
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Important Test Rules:
-              </h4>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    No mobile phones, calculators, or reference materials allowed
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    You cannot pause the test once started
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    All questions must be attempted - blank answers receive zero marks
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    You can change answers until you submit the test
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    The test auto-submits when time expires
-                  </span>
-                </li>
+              <p>
+                <strong className="text-elec-yellow">Important Test Rules:</strong>
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>No mobile phones, calculators, or reference materials allowed</li>
+                <li>You cannot pause the test once started</li>
+                <li>All questions must be attempted - blank answers receive zero marks</li>
+                <li>You can change answers until you submit the test</li>
+                <li>The test auto-submits when time expires</li>
               </ul>
-            </div>
-          </div>
-        </AM2ContentCard>
+            </ConceptBlock>
 
-        <InlineCheck
-          id={quickCheckQuestions[0].id}
-          question={quickCheckQuestions[0].question}
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
+            <InlineCheck
+              id={quickCheckQuestions[0].id}
+              question={quickCheckQuestions[0].question}
+              options={quickCheckQuestions[0].options}
+              correctIndex={quickCheckQuestions[0].correctIndex}
+              explanation={quickCheckQuestions[0].explanation}
+            />
 
-        {/* Question Types */}
-        <AM2ContentCard title="2. Question Types and Content Areas" icon={FileText} accent>
-          <div className="space-y-4">
-            <p className="text-ios-body text-white leading-relaxed">
-              The AM2 knowledge test covers five main types of questions, each designed to assess
-              different aspects of your electrical knowledge and competence.
-            </p>
+            {/* Question Types */}
+            <ConceptBlock title="2. Question Types and Content Areas">
+              <p>
+                The AM2 knowledge test covers five main types of questions, each designed to assess
+                different aspects of your electrical knowledge and competence.
+              </p>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Straight Knowledge Questions (25-30% of test)
-              </h4>
-              <p className="text-ios-callout text-white mb-2 leading-relaxed">
+              <p>
+                <strong className="text-elec-yellow">
+                  Straight Knowledge Questions (25-30% of test)
+                </strong>
+              </p>
+              <p>
                 These questions test your direct recall of facts, figures, and regulations from BS
                 7671 and related standards.
               </p>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Example topics:</strong> IP ratings, cable
-                    current ratings, diversity factors, protective device characteristics
-                  </span>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Example topics:</strong> IP ratings, cable current ratings, diversity
+                  factors, protective device characteristics
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> These should be quick wins -
-                    if you know it, answer immediately. If not, flag and move on
-                  </span>
+                <li>
+                  <strong>Strategy:</strong> These should be quick wins - if you know it, answer
+                  immediately. If not, flag and move on
                 </li>
               </ul>
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Applied Scenario Questions (35-40% of test)
-              </h4>
-              <p className="text-ios-callout text-white mb-2 leading-relaxed">
+              <p>
+                <strong className="text-elec-yellow">
+                  Applied Scenario Questions (35-40% of test)
+                </strong>
+              </p>
+              <p>
                 These questions present real-world electrical situations and ask you to apply your
                 knowledge to solve problems or make decisions.
               </p>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Common scenarios:</strong> Test results
-                    interpretation, fault symptoms, remedial actions, compliance issues
-                  </span>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Common scenarios:</strong> Test results interpretation, fault symptoms,
+                  remedial actions, compliance issues
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> Read the scenario carefully,
-                    identify what's happening, then consider what regulations or procedures apply
-                  </span>
+                <li>
+                  <strong>Strategy:</strong> Read the scenario carefully, identify what's happening,
+                  then consider what regulations or procedures apply
                 </li>
               </ul>
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Regulation Reference Questions (15-20% of test)
-              </h4>
-              <p className="text-ios-callout text-white mb-2 leading-relaxed">
+              <p>
+                <strong className="text-elec-yellow">
+                  Regulation Reference Questions (15-20% of test)
+                </strong>
+              </p>
+              <p>
                 These questions require you to know which specific regulations apply in given
                 situations.
               </p>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Example areas:</strong> Regulation numbers for
-                    specific requirements, table references, appendix content
-                  </span>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Example areas:</strong> Regulation numbers for specific requirements,
+                  table references, appendix content
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> Learn key regulation numbers
-                    and their purposes rather than trying to memorise everything
-                  </span>
+                <li>
+                  <strong>Strategy:</strong> Learn key regulation numbers and their purposes rather
+                  than trying to memorise everything
                 </li>
               </ul>
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Calculation and Science Questions (20-25% of test)
-              </h4>
-              <p className="text-ios-callout text-white mb-2 leading-relaxed">
+              <p>
+                <strong className="text-elec-yellow">
+                  Calculation and Science Questions (20-25% of test)
+                </strong>
+              </p>
+              <p>
                 These questions test your understanding of electrical principles and ability to
                 perform basic calculations.
               </p>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Common topics:</strong> Ohm's law applications,
-                    power calculations, voltage drop, fault current, cable sizing
-                  </span>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Common topics:</strong> Ohm's law applications, power calculations,
+                  voltage drop, fault current, cable sizing
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> Show your working mentally and
-                    double-check calculations
-                  </span>
+                <li>
+                  <strong>Strategy:</strong> Show your working mentally and double-check
+                  calculations
                 </li>
               </ul>
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Health and Safety Questions (10-15% of test)
-              </h4>
-              <p className="text-ios-callout text-white mb-2 leading-relaxed">
+              <p>
+                <strong className="text-elec-yellow">
+                  Health and Safety Questions (10-15% of test)
+                </strong>
+              </p>
+              <p>
                 These questions cover safe working practices, risk assessment, PPE requirements, and
                 legal obligations.
               </p>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Key areas:</strong> CDM regulations, risk
-                    assessment, safe isolation, PPE, working at height
-                  </span>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Key areas:</strong> CDM regulations, risk assessment, safe isolation, PPE,
+                  working at height
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> Think about best practice and
-                    legal requirements - safety is always the priority
-                  </span>
+                <li>
+                  <strong>Strategy:</strong> Think about best practice and legal requirements -
+                  safety is always the priority
                 </li>
               </ul>
-            </div>
-          </div>
-        </AM2ContentCard>
+            </ConceptBlock>
 
-        <InlineCheck
-          id={quickCheckQuestions[1].id}
-          question={quickCheckQuestions[1].question}
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
+            <InlineCheck
+              id={quickCheckQuestions[1].id}
+              question={quickCheckQuestions[1].question}
+              options={quickCheckQuestions[1].options}
+              correctIndex={quickCheckQuestions[1].correctIndex}
+              explanation={quickCheckQuestions[1].explanation}
+            />
 
-        {/* Assessor Expectations */}
-        <AM2ContentCard title="3. Assessor Expectations" icon={Target}>
-          <p className="text-ios-callout text-white mb-4 leading-relaxed">
-            Assessors don't just want correct answers - they want to see that you:
-          </p>
+            <Scenario
+              title="You're 30 minutes in and only on question 8 — what now?"
+              situation={
+                <>
+                  You've been hammering the science calculations and you spotted at the 30-minute
+                  checkpoint that you've only completed 8 of 30 questions. That's well off pace
+                  (should be 15 by now). Panic starts setting in. The clock keeps ticking.
+                </>
+              }
+              whatToDo={
+                <>
+                  Stop. Take 30 seconds to breathe. Then change tactics:{' '}
+                  <strong>flag aggressively.</strong> Skim the next 10 questions, answer only the
+                  ones you can do in under 60 seconds, flag everything else. Aim to clear all
+                  easy/medium questions first across the remaining 22, then come back to flagged
+                  with whatever time's left. You'll guess on some — that's fine, no penalty. The
+                  goal is to not leave any blank, and to bank the marks you definitely know.
+                </>
+              }
+              whyItMatters={
+                <>
+                  Most online test failures come from candidates who knew the material but managed
+                  time badly. Spending 5 minutes on a tricky calculation question that's worth 1
+                  mark, while leaving 5 easy questions unanswered, is the classic mistake. Pace
+                  checkpoints (10 questions in 20 min, 20 in 40 min, 30 in 55 min) save you.
+                </>
+              }
+            />
 
-          <div className="space-y-3">
-            <div className="flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
-              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white">
-                Understand how to approach scenario-based questions, not just memorise facts
+            {/* Assessor Expectations */}
+            <ConceptBlock title="3. Assessor Expectations">
+              <p>Assessors don't just want correct answers - they want to see that you:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  Understand how to approach scenario-based questions, not just memorise facts
+                </li>
+                <li>Use regulation knowledge to choose the correct answer</li>
+                <li>Manage your time and attempt every question (no blanks)</li>
+              </ul>
+            </ConceptBlock>
+
+            {/* Test-Taking Strategies */}
+            <ConceptBlock title="4. Test-Taking Strategies and Practical Guidance">
+              <p>
+                Success in the AM2 knowledge test depends not just on what you know, but how
+                effectively you apply your knowledge under time pressure.
               </p>
-            </div>
 
-            <div className="flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
-              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white">
-                Use regulation knowledge to choose the correct answer
+              <p>
+                <strong className="text-elec-yellow">Before You Begin:</strong>
               </p>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Arrive early:</strong> Get to the test centre 15-20 minutes before your
+                  appointment
+                </li>
+                <li>
+                  <strong>Listen to the briefing:</strong> Pay attention to any last-minute
+                  instructions
+                </li>
+                <li>
+                  <strong>Familiarise with interface:</strong> Take the practice questions seriously
+                </li>
+                <li>
+                  <strong>Mental preparation:</strong> Take a deep breath and remind yourself you've
+                  prepared thoroughly
+                </li>
+              </ul>
 
-            <div className="flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
-              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white">
-                Manage your time and attempt every question (no blanks)
+              <p>
+                <strong className="text-elec-yellow">Reading and Understanding Questions:</strong>
               </p>
-            </div>
-          </div>
-        </AM2ContentCard>
-
-        {/* Test-Taking Strategies */}
-        <AM2ContentCard title="4. Test-Taking Strategies and Practical Guidance" icon={Lightbulb}>
-          <div className="space-y-4">
-            <p className="text-ios-body text-white leading-relaxed">
-              Success in the AM2 knowledge test depends not just on what you know, but how
-              effectively you apply your knowledge under time pressure.
-            </p>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">Before You Begin:</h4>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Arrive early:</strong> Get to the test centre
-                    15-20 minutes before your appointment
-                  </span>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Read the entire question:</strong> Don't assume after reading the first
+                  few words
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Listen to the briefing:</strong> Pay attention to
-                    any last-minute instructions
-                  </span>
+                <li>
+                  <strong>Identify key words:</strong> Look for "minimum", "maximum", "not",
+                  "except", "best"
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Familiarise with interface:</strong> Take the
-                    practice questions seriously
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Mental preparation:</strong> Take a deep breath
-                    and remind yourself you've prepared thoroughly
-                  </span>
+                <li>
+                  <strong>Check for negatives:</strong> Questions asking what "should NOT" be done
+                  catch many candidates
                 </li>
               </ul>
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Reading and Understanding Questions:
-              </h4>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Read the entire question:</strong> Don't assume
-                    after reading the first few words
-                  </span>
+              <p>
+                <strong className="text-elec-yellow">Elimination Strategy:</strong>
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Look for extreme values:</strong> Unusually high or low answers are often
+                  incorrect
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Identify key words:</strong> Look for "minimum",
-                    "maximum", "not", "except", "best"
-                  </span>
+                <li>
+                  <strong>Eliminate unsafe options:</strong> Any answer that would create a safety
+                  hazard is likely wrong
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Check for negatives:</strong> Questions asking
-                    what "should NOT" be done catch many candidates
-                  </span>
+                <li>
+                  <strong>Use your experience:</strong> What would you actually do in this situation
+                  on site?
                 </li>
               </ul>
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Elimination Strategy:
-              </h4>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Look for extreme values:</strong> Unusually high
-                    or low answers are often incorrect
-                  </span>
+              <p>
+                <strong className="text-elec-yellow">Time Management Techniques:</strong>
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Quick scan first:</strong> Identify easy questions you can answer
+                  immediately
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Eliminate unsafe options:</strong> Any answer
-                    that would create a safety hazard is likely wrong
-                  </span>
+                <li>
+                  <strong>Set time checkpoints:</strong> 50% in 25 minutes, 75% in 40 minutes
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Use your experience:</strong> What would you
-                    actually do in this situation on site?
-                  </span>
+                <li>
+                  <strong>Don't get stuck:</strong> If more than 3 minutes on a question, flag it
+                  and move on
+                </li>
+                <li>
+                  <strong>Save time for review:</strong> Finish with 5-10 minutes for flagged
+                  questions
                 </li>
               </ul>
-            </div>
+            </ConceptBlock>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-3">
-                Time Management Techniques:
-              </h4>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Quick scan first:</strong> Identify easy
-                    questions you can answer immediately
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Set time checkpoints:</strong> 50% in 25 minutes,
-                    75% in 40 minutes
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Don't get stuck:</strong> If more than 3 minutes
-                    on a question, flag it and move on
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Save time for review:</strong> Finish with 5-10
-                    minutes for flagged questions
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </AM2ContentCard>
+            <InlineCheck
+              id={quickCheckQuestions[2].id}
+              question={quickCheckQuestions[2].question}
+              options={quickCheckQuestions[2].options}
+              correctIndex={quickCheckQuestions[2].correctIndex}
+              explanation={quickCheckQuestions[2].explanation}
+            />
 
-        <InlineCheck
-          id={quickCheckQuestions[2].id}
-          question={quickCheckQuestions[2].question}
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
+            <CommonMistake
+              title="Treating the test as 'know-or-don't' instead of 'attempt everything'"
+              whatHappens={
+                <>
+                  You hit a question you don't immediately know, you stare at it, you eventually
+                  leave it blank thinking "no point guessing". You repeat this 4–5 times across the
+                  hour. Result: you've thrown away 4–5 marks just by not picking ANY answer. With a
+                  70% pass mark on 30 questions, that's the difference between pass and fail.
+                </>
+              }
+              doInstead={
+                <>
+                  Eliminate obviously wrong options first. If you can rule out 2 of 4, you're now at
+                  50/50. Pick one and move on. Even random guessing on all 4 options gives you 25%
+                  right by chance. Blank gives you 0%. Always pick something. Always.
+                </>
+              }
+            />
 
-        {/* Real-world Examples */}
-        <AM2ContentCard title="5. Real-World Examples" icon={Eye}>
-          <div className="space-y-4">
-            <div className="bg-red-950/20 border border-red-800/30 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-red-200 mb-2">
-                Example 1: Poor Time Management
-              </h4>
-              <p className="text-ios-callout text-white">
+            {/* Real-world Examples */}
+            <ConceptBlock title="5. Real-World Examples">
+              <p>
+                <strong className="text-elec-yellow">Example 1: Poor Time Management</strong>
+              </p>
+              <p>
                 Candidate spent 15 minutes stuck on one science question, ran out of time, and left
-                5 unanswered. <strong className="text-white">Failed.</strong>
+                5 unanswered. <strong>Failed.</strong>
               </p>
-            </div>
 
-            <div className="bg-green-950/20 border border-green-800/30 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-green-200 mb-2">
-                Example 2: Smart Strategy
-              </h4>
-              <p className="text-ios-callout text-white">
+              <p>
+                <strong className="text-elec-yellow">Example 2: Smart Strategy</strong>
+              </p>
+              <p>
                 Candidate flagged 3 questions, completed the rest, then came back with fresh focus
-                and answered correctly. <strong className="text-white">Passed.</strong>
+                and answered correctly. <strong>Passed.</strong>
               </p>
-            </div>
 
-            <div className="bg-amber-950/20 border border-amber-800/30 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-amber-200 mb-2">
-                Example 3: Rushing Error
-              </h4>
-              <p className="text-ios-callout text-white">
+              <p>
+                <strong className="text-elec-yellow">Example 3: Rushing Error</strong>
+              </p>
+              <p>
                 Candidate misread a question on Zs values and picked the maximum permitted value
                 instead of actual measured. Lost marks through rushing.
               </p>
-            </div>
-          </div>
-        </AM2ContentCard>
+            </ConceptBlock>
 
-        {/* FAQs */}
-        <AM2ContentCard title="6. Frequently Asked Questions" icon={FileText}>
-          <div className="space-y-4">
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-2">
-                Q1: How many questions are in the knowledge test?
-              </h4>
-              <p className="text-ios-callout text-white">A: 30 questions.</p>
-            </div>
+            <FAQ
+              items={[
+                {
+                  question: 'How many questions are in the knowledge test?',
+                  answer:
+                    "30 questions — multiple-choice format, 4 options per question, one correct answer (or sometimes 'best' answer where multiple options seem right but one is most correct).",
+                },
+                {
+                  question: 'How long do I have?',
+                  answer:
+                    "60 minutes total. The test auto-submits when time expires — anything unanswered counts as wrong, so always have SOMETHING selected on every question even if it's a guess.",
+                },
+                {
+                  question: "What's the pass mark?",
+                  answer:
+                    "70% — 21 correct answers out of 30. That means you can get up to 9 wrong and still pass. Knowing this changes your strategy: if you definitely know 25 questions and can guess 5 with 50/50 odds, you're statistically going to pass.",
+                },
+                {
+                  question: 'Can I skip and return to questions?',
+                  answer:
+                    'Yes — every test station has a flag/mark-for-review feature and you can navigate forwards and backwards freely until you submit. Use this aggressively. Flag anything taking more than 90 seconds and come back.',
+                },
+                {
+                  question: 'Are questions only on regs?',
+                  answer:
+                    'No — coverage is roughly regs (BS 7671) ~25–30%, applied scenarios ~35–40%, regulation references ~15–20%, calculations/science ~20–25%, health & safety ~10–15%. Spread your revision across all of these, not just BS 7671.',
+                },
+                {
+                  question: 'What if I run out of time mid-question?',
+                  answer:
+                    "The test auto-submits with whatever you've selected. Anything unanswered = wrong. In the last 5 minutes, prioritise giving SOME answer to every question over getting any single one perfectly right. A wild guess is better than a blank.",
+                },
+              ]}
+            />
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-2">
-                Q2: How long do I have?
-              </h4>
-              <p className="text-ios-callout text-white">A: 60 minutes.</p>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-2">
-                Q3: What's the pass mark?
-              </h4>
-              <p className="text-ios-callout text-white">A: 70% (21 correct answers out of 30).</p>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-2">
-                Q4: Can I skip and return to questions?
-              </h4>
-              <p className="text-ios-callout text-white">A: Yes - flag them in the system.</p>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-2">
-                Q5: Are questions only on regs?
-              </h4>
-              <p className="text-ios-callout text-white">
-                A: No - they cover regs, science, and safety.
+            {/* Summary */}
+            <ConceptBlock title="Summary">
+              <p className="text-ios-body text-white leading-relaxed">
+                The AM2 online knowledge test is a 60-minute, multiple-choice exam with 30 questions
+                covering regs, science, and safety. You need 70% (21/30) to pass. Success depends
+                not only on knowledge but also on managing your time and answering every question.
+                Assessors expect candidates to work methodically, avoid rushing, and use strategies
+                like flagging tricky questions.
               </p>
+            </ConceptBlock>
+
+            <KeyTakeaways
+              points={[
+                '60 minutes, 30 questions, 70% pass mark (21/30). You can afford up to 9 wrong answers.',
+                'Two minutes per question average — but not equal split. Easy ones in 30 seconds, complex calcs up to 4 minutes, save 5–10 min for flagged review.',
+                'Always answer every question. No penalty for wrong, blank guarantees lost mark. Eliminate, guess, move on.',
+                "Pace checkpoints: 10 done by 20 min, 20 done by 40 min, 30 done by 55 min. Falling behind = flag aggressively, don't dig in.",
+                'Test station rules: no phone, no calculator, no reference materials (except possibly BS 7671 for the open-book paper — confirm with NET on the day).',
+              ]}
+            />
+
+            {/* Quiz Section */}
+            <div className="border-t border-white/10 pt-8">
+              <Quiz title="Test Your Knowledge: Online Test Format" questions={quizQuestions} />
+            </div>
+
+            {/* Navigation */}
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <Link
+                to="/study-centre/apprentice/am2/module6"
+                className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                  Module 6 Overview
+                </div>
+              </Link>
+              <Link
+                to="/study-centre/apprentice/am2/module6/section2"
+                className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                  Core Topics
+                </div>
+              </Link>
             </div>
           </div>
-        </AM2ContentCard>
-
-        {/* Summary */}
-        <AM2ContentCard title="Summary" icon={BookOpen} accent>
-          <p className="text-ios-body text-white leading-relaxed">
-            The AM2 online knowledge test is a 60-minute, multiple-choice exam with 30 questions
-            covering regs, science, and safety. You need 70% (21/30) to pass. Success depends not
-            only on knowledge but also on managing your time and answering every question. Assessors
-            expect candidates to work methodically, avoid rushing, and use strategies like flagging
-            tricky questions.
-          </p>
-        </AM2ContentCard>
-
-        {/* Quiz Section */}
-        <div className="border-t border-white/10 pt-8">
-          <Quiz title="Test Your Knowledge: Online Test Format" questions={quizQuestions} />
-        </div>
-
-        {/* Navigation */}
-        <AM2NavigationFooter
-          previousHref="/study-centre/apprentice/am2/module6"
-          previousLabel="Module 6 Overview"
-          nextHref="/study-centre/apprentice/am2/module6/section2"
-          nextLabel="Core Topics"
-          currentSection={1}
-          totalSections={4}
-        />
+        </PageFrame>
       </div>
-    </AM2SectionLayout>
+    </div>
   );
 };
 

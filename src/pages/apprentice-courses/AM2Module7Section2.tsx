@@ -1,31 +1,33 @@
-import {
-  Brain,
-  CheckCircle,
-  AlertTriangle,
-  Target,
-  Timer,
-  Lightbulb,
-  Heart,
-  Shield,
-  BookOpen,
-  Users,
-  Wrench,
-} from 'lucide-react';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+/**
+ * Module 7 · Section 2 — Coping with nerves and pressure
+ * AM2 day-prep — Cross-cutting exam strategy
+ * Keeping a clear head on AM2 day so nerves don't make you skip a step like re-prove on safe isolation.
+ */
+
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import useSEO from '@/hooks/useSEO';
+import { useNavigate } from 'react-router-dom';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  SectionRule,
+  LearningOutcomes,
+  TLDR,
+  KeyTakeaways,
+  FAQ,
+  Scenario,
+  CommonMistake,
+} from '@/components/study-centre/learning';
+
+const TITLE = 'Coping with Nerves and Pressure | AM2 Module 7.2 | Elec-Mate';
+const DESCRIPTION =
+  'Keeping a clear head on AM2 day — practical ways to settle nerves so you do not skip a step like re-prove on safe isolation.';
 
 const AM2Module7Section2 = () => {
-  useSEO(
-    'Coping with Nerves and Pressure | AM2 Module 7 Section 2',
-    'Master strategies for managing nerves and pressure during the AM2 electrical assessment'
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const quickCheckQuestions: Array<{
     id: string;
@@ -213,645 +215,441 @@ const AM2Module7Section2 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module7"
-      breadcrumbs={[
-        { label: 'AM2', href: '/study-centre/apprentice/am2' },
-        { label: 'Module 7', href: '/study-centre/apprentice/am2/module7' },
-        { label: 'Section 2' },
-      ]}
-    >
-      {/* Hero Section */}
-      <AM2HeroSection
-        icon={Brain}
-        title="Coping with Nerves and Pressure"
-        description="Every candidate feels nervous walking into AM2 - it's the industry's benchmark test and there's pressure to pass first time. NET assessors know this and expect you to feel under stress. What they are measuring is not whether you look calm, but whether you can still work safely, methodically, and professionally under pressure."
-        badge="Module 7 - Section 2"
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module7')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 7
+          </button>
 
-      {/* Critical Warning */}
-      <AM2CriticalWarning
-        title="CRITICAL: Managing Nerves is Essential for AM2 Success"
-        message="If nerves make you rush, skip safety procedures, or forget critical steps, marks are lost instantly. Safety-critical errors due to panic result in automatic failure. Assessors expect you to work safely and methodically under pressure - this is a core competency being tested in AM2."
-      />
+          <PageHero
+            eyebrow="Module 7 · Section 2"
+            title="Coping with Nerves and Pressure"
+            description="Every candidate feels nervous walking into AM2 - it's the industry's benchmark test and there's pressure to pass first time. NET assessors know this and expect you to feel under stress. What they are measuring is not whether you look calm, but whether you can still work safely, methodically, and professionally under pressure."
+            tone="yellow"
+          />
 
-      {/* Learning Outcomes */}
-      <AM2LearningOutcomes outcomes={learningOutcomes} />
+          <TLDR
+            points={[
+              'Nerves are normal — assessors expect them. They’re marking whether you still work safely under pressure, not whether you look calm.',
+              'Sleep, food, water, and a familiar tool kit do more for your nerves than any last-minute revision.',
+              'Slow down deliberately on safety-critical steps — isolation, prove-tester, energising. Speed kills marks here.',
+              'If you mess up a section, reset and continue — the day isn’t over because one criterion went red.',
+            ]}
+          />
 
-      {/* Why Nerves Matter */}
-      <AM2ContentCard title="1. Why Nerves Matter in AM2" icon={AlertTriangle} accent>
-        <p className="text-ios-callout text-white mb-4">
-          Nerves create physical and mental reactions that can directly affect your performance:
-        </p>
+          <ConceptBlock title="Managing Nerves is Essential for AM2 Success">
+            <p>
+              <strong className="text-red-300">Critical.</strong> If nerves make you rush, skip
+              safety procedures, or forget critical steps, marks are lost instantly. Safety-critical
+              errors due to panic result in automatic failure. Assessors expect you to work safely
+              and methodically under pressure — this is a core competency being tested in AM2.
+            </p>
+          </ConceptBlock>
 
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
-              <h4 className="text-ios-headline text-red-400 mb-3">Physical Effects:</h4>
-              <ul className="text-ios-callout text-white space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Shaking hands make terminations sloppy or unsafe</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Sweating can affect grip on tools and instruments</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Increased heart rate affects fine motor control</span>
-                </li>
-              </ul>
-            </div>
+          <LearningOutcomes outcomes={learningOutcomes} />
 
-            <div className="bg-white/5 border border-orange-500/30 rounded-xl p-4">
-              <h4 className="text-ios-headline text-orange-400 mb-3">Mental Effects:</h4>
-              <ul className="text-ios-callout text-white space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400">•</span>
-                  <span>Brain fog causes forgotten steps in safe isolation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400">•</span>
-                  <span>Memory lapses in GN3 test sequences</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400">•</span>
-                  <span>Negative self-talk leads to loss of focus</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-yellow-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-yellow-400 mb-3">Behavioural Consequences:</h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-yellow-400">•</span>
-                <span>
-                  Rushing increases errors like bare copper, missing CPC sleeving, or wrong
-                  paperwork entries
-                </span>
+          <ConceptBlock title="Why Nerves Matter">
+            <p>
+              Nerves create physical and mental reactions that can directly affect your performance:
+            </p>
+            <p>
+              <strong className="text-red-400">Physical Effects:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-red-400/70">
+              <li>Shaking hands make terminations sloppy or unsafe</li>
+              <li>Sweating can affect grip on tools and instruments</li>
+              <li>Increased heart rate affects fine motor control</li>
+            </ul>
+            <p>
+              <strong className="text-orange-400">Mental Effects:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>Brain fog causes forgotten steps in safe isolation</li>
+              <li>Memory lapses in GN3 test sequences</li>
+              <li>Negative self-talk leads to loss of focus</li>
+            </ul>
+            <p>
+              <strong className="text-yellow-400">Behavioural Consequences:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-yellow-400/70">
+              <li>
+                Rushing increases errors like bare copper, missing CPC sleeving, or wrong paperwork
+                entries
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-yellow-400">•</span>
-                <span>Skipping safety steps due to time pressure</span>
+              <li>Skipping safety steps due to time pressure</li>
+              <li>Poor decision making under stress</li>
+            </ul>
+            <p>
+              <strong className="text-green-400">Key Point.</strong> NET's marking system rewards
+              steady, professional behaviour. Being slightly slow but safe still earns marks;
+              rushing and unsafe = instant fail.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={quickCheckQuestions[0].id}
+            question={quickCheckQuestions[0].question}
+            options={quickCheckQuestions[0].options}
+            correctIndex={quickCheckQuestions[0].correctIndex}
+            explanation={quickCheckQuestions[0].explanation}
+          />
+
+          <ConceptBlock title="Strategies to Reduce Nerves Before Exam">
+            <p>
+              The way you prepare in the days leading up to AM2 will directly influence your stress
+              level on the day.
+            </p>
+            <p>
+              <strong>1. Preparation Builds Confidence.</strong> Practise safe isolation daily and
+              run through testing procedures until they feel automatic. The more natural the task
+              feels, the less nerves will interfere.
+            </p>
+            <p>
+              <strong className="text-blue-400">Daily Practice Routine:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-blue-400/70">
+              <li>Safe isolation sequence every morning</li>
+              <li>GN3 testing procedures until automatic</li>
+              <li>Termination techniques with proper tools</li>
+              <li>Paperwork completion under time pressure</li>
+            </ul>
+            <p>
+              <strong>2. Sleep and Rest.</strong> Avoid last-minute all-night revision. A tired
+              candidate makes more mistakes than a calm, rested one.
+            </p>
+            <p>
+              <strong className="text-green-400">Sleep Strategy:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>7-8 hours sleep for 3 nights before AM2</li>
+              <li>No cramming after 8pm the night before</li>
+              <li>Light revision only on exam morning</li>
+            </ul>
+            <p>
+              <strong>3. Fuel Your Body.</strong> Eat a balanced meal before the exam. High sugar or
+              energy drinks can cause shakes and crashes mid-assessment.
+            </p>
+            <p>
+              <strong className="text-purple-400">Nutrition Plan:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-purple-400/70">
+              <li>Complex carbohydrates for sustained energy</li>
+              <li>Avoid caffeine overdose or energy drinks</li>
+              <li>Bring healthy snacks for breaks</li>
+              <li>Stay hydrated but not over-hydrated</li>
+            </ul>
+            <p>
+              <strong>4. Plan Your Arrival.</strong> Get to the centre early so you're not rushing,
+              which adds unnecessary stress.
+            </p>
+            <p>
+              <strong className="text-orange-400">Arrival Strategy:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>Arrive 30 minutes early minimum</li>
+              <li>Plan route and check travel times</li>
+              <li>Have backup transport arrangements</li>
+              <li>Use extra time to settle and focus</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={quickCheckQuestions[1].id}
+            question={quickCheckQuestions[1].question}
+            options={quickCheckQuestions[1].options}
+            correctIndex={quickCheckQuestions[1].correctIndex}
+            explanation={quickCheckQuestions[1].explanation}
+          />
+
+          <ConceptBlock title="Techniques During Exam">
+            <p>When nerves hit during AM2, you need quick techniques to keep control.</p>
+            <p>
+              <strong className="text-blue-400">Controlled Breathing.</strong> If panic rises, step
+              back for 10 seconds, inhale slowly through your nose, exhale slowly through your
+              mouth. This resets your focus. 4-7-8 Technique: Inhale for 4, hold for 7, exhale for
+              8.
+            </p>
+            <p>
+              <strong className="text-green-400">Break Tasks into Chunks.</strong> Instead of
+              thinking about an 8.5-hour install, focus on the next step: mark out, containment,
+              wiring, terminations. One section at a time reduces overwhelm.
+            </p>
+            <p>
+              <strong className="text-purple-400">Positive Self-Talk.</strong> Replace "I'm messing
+              this up" with "I know the process, I've trained for this." Simple but stops panic
+              spirals. "I can do this safely and methodically."
+            </p>
+            <p>
+              <strong className="text-orange-400">Ignore Others.</strong> Don't compare your speed
+              with other candidates. The assessor only marks your work, not relative performance.
+              Focus on your own professional standard.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Assessor Expectations">
+            <p>NET assessors don't mark nerves — they mark your work. They expect you to:</p>
+            <p>
+              <strong className="text-green-400">Professional Behaviour:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Work steadily and safely, even if you look anxious</li>
+              <li>Maintain calm, methodical approach under pressure</li>
+              <li>Show competence through actions, not appearance</li>
+            </ul>
+            <p>
+              <strong className="text-blue-400">Safety Compliance:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-blue-400/70">
+              <li>Keep to procedure (safe isolation, GN3 sequence) without skipping</li>
+              <li>Never compromise safety due to time pressure</li>
+              <li>Complete all safety-critical steps in correct order</li>
+            </ul>
+            <p>
+              <strong className="text-purple-400">Time Management.</strong> Complete sections within
+              the set time without rushing. Quality and safety take priority over speed.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={quickCheckQuestions[2].id}
+            question={quickCheckQuestions[2].question}
+            options={quickCheckQuestions[2].options}
+            correctIndex={quickCheckQuestions[2].correctIndex}
+            explanation={quickCheckQuestions[2].explanation}
+          />
+
+          <ConceptBlock title="Practical Guidance">
+            <p>
+              <strong className="text-blue-400">Think of AM2 Like a Real Job Handover.</strong>{' '}
+              On-site, you may feel pressure from deadlines or customers, but you wouldn't skip
+              earthing or rush unsafe terminations to finish quicker. Treat AM2 the same way — safe,
+              steady, professional.
+            </p>
+            <p>
+              <strong>Practical things you can do:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Mental Checklists.</strong> Make checklists in your head: safe isolation
+                steps, test order. Stick to them regardless of nerves.
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-yellow-400">•</span>
-                <span>Poor decision making under stress</span>
+              <li>
+                <strong>If You Get Stuck.</strong> Don't freeze. Move on, complete another part, and
+                come back later.
+              </li>
+              <li>
+                <strong>Record Results.</strong> Write down test results as you go so you don't
+                forget under pressure.
+              </li>
+              <li>
+                <strong>Stay Hydrated.</strong> Dehydration increases stress. Keep water with you
+                throughout the assessment.
               </li>
             </ul>
-          </div>
+          </ConceptBlock>
 
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <div>
-                <h4 className="text-ios-headline text-green-400 mb-2">Key Point:</h4>
-                <p className="text-ios-callout text-white">
-                  NET's marking system rewards steady, professional behaviour. Being slightly slow
-                  but safe still earns marks; rushing and unsafe = instant fail.
-                </p>
+          <ConceptBlock title="Real-World Examples">
+            <p>
+              <strong className="text-red-400">Failure Examples:</strong>
+            </p>
+            <p>
+              <strong className="text-red-400">Example 1.</strong> Candidate skipped re-proving
+              tester in safe isolation due to nerves — instant fail.
+            </p>
+            <p>
+              <strong className="text-red-400">Example 2.</strong> Candidate felt behind on time in
+              the install section, rushed SWA glanding, armour not earthed — marks lost.
+            </p>
+            <p>
+              <strong className="text-green-400">Success Examples:</strong>
+            </p>
+            <p>
+              <strong className="text-green-400">Example 3.</strong> Candidate paused for breathing,
+              slowed pace, completed all sections safely — passed comfortably.
+            </p>
+            <p>
+              <strong className="text-green-400">Example 4.</strong> On-site, an electrician under
+              deadline pressure maintained safety standards despite client pressure. Same approach
+              in AM2 = success.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Frequently Asked Questions">
+            <p>
+              <strong>Q1: Will assessors fail me just for looking nervous?</strong> No — they only
+              fail you if nerves cause unsafe or incomplete work.
+            </p>
+            <p>
+              <strong>Q2: What if I forget steps in testing because of panic?</strong> Pause,
+              breathe, reset. Assessors prefer slow but correct over rushed and wrong.
+            </p>
+            <p>
+              <strong>Q3: Should I copy other candidates' pace?</strong> No — focus only on your own
+              work. Comparing speeds adds unnecessary stress.
+            </p>
+            <p>
+              <strong>Q4: Is feeling anxious normal?</strong> Yes — every candidate feels it. The
+              difference is how you manage it.
+            </p>
+            <p>
+              <strong>Q5: What's the best way to reduce nerves overall?</strong> Consistent practice
+              until procedures become automatic — especially safe isolation and GN3 testing.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Summary">
+            <p>
+              Nerves are normal in AM2, but you must control them. NET wants to see that you can:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Stay safe and methodical under pressure</li>
+              <li>Use breathing, chunking, and positive self-talk to reset focus</li>
+              <li>Avoid rushing or skipping steps due to panic</li>
+              <li>Treat the exam like a professional job handover</li>
+              <li>Remember: Safe and steady will pass; rushed and unsafe will fail</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Key Takeaway.</strong> NET assessors understand
+              that you will feel nervous. What they're testing is your ability to work safely and
+              professionally despite those nerves — just like you would on a real job site under
+              pressure.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <Scenario
+            title="Hands shaking on the proving unit"
+            situation={
+              <>
+                Section C. The assessor stops talking and gestures at the rig. You pick up the
+                tester and your hands have started shaking. You can feel everyone watching. Your
+                mind has gone blank on which conductor combination to test first.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop. Take a breath. Put the tester down for ten seconds. Say to yourself out loud:
+                "prove the tester first". Pick up the proving unit. The procedure takes over once
+                you start it. Assessors don’t fail you for visible nerves — they fail you for
+                skipping steps. Slow is fine. Frozen is fine for ten seconds. Skipping a prove is
+                not.
+              </>
+            }
+            whyItMatters={
+              <>
+                Adrenaline shrinks working memory. The fix is muscle memory — practise the isolation
+                sequence so often it runs without thinking. Then nerves can shake your hands but not
+                your procedure.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title="Trying to look calm by speeding up"
+            whatHappens={
+              <>
+                You feel nervous and decide if you just power through quickly, the moment will be
+                over. Speed introduces errors — over-stripped conductors, missed steps, sloppy
+                paperwork. You fail not because you couldn’t do it, but because you tried to outrun
+                the nerves.
+              </>
+            }
+            doInstead={
+              <>
+                Deliberately slow down on the safety-critical steps. Talk yourself through them out
+                loud — assessors will accept you narrating the procedure. Speed comes back naturally
+                once the first ten minutes have settled.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Will the assessor mark me down if I look nervous?',
+                answer:
+                  'No. They expect nervousness. They’re marking your work, not your composure. As long as you keep working safely and methodically, the result is the same.',
+              },
+              {
+                question: 'Can I take a break if I’m struggling?',
+                answer:
+                  'Yes — within reason. A few minutes outside the rig to compose yourself is fine. The section clock keeps running, so plan it into your time. A coffee and a deep breath beats a panicked half-hour.',
+              },
+              {
+                question: 'What if I make a mistake mid-section?',
+                answer:
+                  'Acknowledge it, fix it if you can within the section, move on. One NYC criterion is recoverable; abandoning the rest of the section because of one mistake is not.',
+              },
+              {
+                question: 'Should I eat before the assessment?',
+                answer:
+                  'Yes. Slow-release carbs, water, no alcohol the night before. Low blood sugar makes nerves worse and decision-making slower. Bring a snack for the breaks.',
+              },
+              {
+                question: 'I had a bad mock — does that mean I’ll fail AM2?',
+                answer:
+                  'No. Most candidates have at least one bad mock. Use the feedback, fix the gap, and book the real thing only when your last two mocks have been clean.',
+              },
+              {
+                question: 'How do I keep going if Section A goes badly?',
+                answer:
+                  'Each section is marked separately. A weak Section A doesn’t doom the rest. Reset, eat at lunch, treat Section B as a fresh start. The day-two candidates who recover are the ones who don’t carry yesterday’s frustration to today’s rig.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Nerves are expected — assessors mark on procedure, not appearance.',
+              'Adrenaline shrinks working memory — muscle memory is the antidote. Practise the safety steps until they’re automatic.',
+              'Slow down deliberately on isolation, prove-tester, energising. Speed loses marks here.',
+              'Eat properly the night before. Sleep, water, slow-release carbs. Caffeine in moderation.',
+              'A few minutes of fresh air mid-section beats a panicked half-hour at the rig.',
+              'One NYC criterion isn’t the end — reset and carry on. Each section is scored separately.',
+              'Talk yourself through safety procedures out loud if it helps. Assessors accept it.',
+              'Don’t book the real assessment until your last two mocks are clean.',
+            ]}
+          />
+
+          <Quiz
+            questions={quizQuestions}
+            title="Test Your Knowledge: Coping with Nerves and Pressure"
+          />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module7/section1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
               </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      <InlineCheck
-        id={quickCheckQuestions[0].id}
-        question={quickCheckQuestions[0].question}
-        options={quickCheckQuestions[0].options}
-        correctIndex={quickCheckQuestions[0].correctIndex}
-        explanation={quickCheckQuestions[0].explanation}
-      />
-
-      {/* Strategies to Reduce Nerves Before Exam */}
-      <AM2ContentCard title="2. Strategies to Reduce Nerves Before the Exam" icon={Timer}>
-        <p className="text-ios-callout text-white mb-6">
-          The way you prepare in the days leading up to AM2 will directly influence your stress
-          level on the day.
-        </p>
-
-        <div className="space-y-6">
-          {/* Strategy 1 */}
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-              1
-            </div>
-            <div className="flex-1">
-              <h5 className="text-ios-headline text-white mb-2">Preparation Builds Confidence</h5>
-              <p className="text-ios-callout text-white mb-3">
-                Practise safe isolation daily and run through testing procedures until they feel
-                automatic. The more natural the task feels, the less nerves will interfere.
-              </p>
-              <div className="bg-white/5 border border-blue-500/30 rounded-xl p-3">
-                <strong className="text-blue-400 text-ios-callout">Daily Practice Routine:</strong>
-                <ul className="text-ios-callout text-white mt-2 space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <span>Safe isolation sequence every morning</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <span>GN3 testing procedures until automatic</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <span>Termination techniques with proper tools</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <span>Paperwork completion under time pressure</span>
-                  </li>
-                </ul>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Knowledge Test Practice
               </div>
-            </div>
-          </div>
-
-          {/* Strategy 2 */}
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-              2
-            </div>
-            <div className="flex-1">
-              <h5 className="text-ios-headline text-white mb-2">Sleep and Rest</h5>
-              <p className="text-ios-callout text-white mb-3">
-                Avoid last-minute all-night revision. A tired candidate makes more mistakes than a
-                calm, rested one.
-              </p>
-              <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
-                <strong className="text-green-400 text-ios-callout">Sleep Strategy:</strong>
-                <ul className="text-ios-callout text-white mt-2 space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>7-8 hours sleep for 3 nights before AM2</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>No cramming after 8pm the night before</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Light revision only on exam morning</span>
-                  </li>
-                </ul>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module7/section3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
               </div>
-            </div>
-          </div>
-
-          {/* Strategy 3 */}
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-              3
-            </div>
-            <div className="flex-1">
-              <h5 className="text-ios-headline text-white mb-2">Fuel Your Body</h5>
-              <p className="text-ios-callout text-white mb-3">
-                Eat a balanced meal before the exam. High sugar or energy drinks can cause shakes
-                and crashes mid-assessment.
-              </p>
-              <div className="bg-white/5 border border-purple-500/30 rounded-xl p-3">
-                <strong className="text-purple-400 text-ios-callout">Nutrition Plan:</strong>
-                <ul className="text-ios-callout text-white mt-2 space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-400">•</span>
-                    <span>Complex carbohydrates for sustained energy</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-400">•</span>
-                    <span>Avoid caffeine overdose or energy drinks</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-400">•</span>
-                    <span>Bring healthy snacks for breaks</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-400">•</span>
-                    <span>Stay hydrated but not over-hydrated</span>
-                  </li>
-                </ul>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Safety-first Approach
               </div>
-            </div>
+            </button>
           </div>
-
-          {/* Strategy 4 */}
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-              4
-            </div>
-            <div className="flex-1">
-              <h5 className="text-ios-headline text-white mb-2">Plan Your Arrival</h5>
-              <p className="text-ios-callout text-white mb-3">
-                Get to the centre early so you're not rushing, which adds unnecessary stress.
-              </p>
-              <div className="bg-white/5 border border-orange-500/30 rounded-xl p-3">
-                <strong className="text-orange-400 text-ios-callout">Arrival Strategy:</strong>
-                <ul className="text-ios-callout text-white mt-2 space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Arrive 30 minutes early minimum</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Plan route and check travel times</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Have backup transport arrangements</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Use extra time to settle and focus</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      <InlineCheck
-        id={quickCheckQuestions[1].id}
-        question={quickCheckQuestions[1].question}
-        options={quickCheckQuestions[1].options}
-        correctIndex={quickCheckQuestions[1].correctIndex}
-        explanation={quickCheckQuestions[1].explanation}
-      />
-
-      {/* Techniques During Exam */}
-      <AM2ContentCard title="3. Techniques During the Exam" icon={Heart}>
-        <p className="text-ios-callout text-white mb-6">
-          When nerves hit during AM2, you need quick techniques to keep control.
-        </p>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Lightbulb className="w-5 h-5 text-blue-400" />
-              <h4 className="text-ios-headline text-blue-400">Controlled Breathing</h4>
-            </div>
-            <p className="text-ios-callout text-white mb-3">
-              If panic rises, step back for 10 seconds, inhale slowly through your nose, exhale
-              slowly through your mouth. This resets your focus.
-            </p>
-            <div className="text-ios-footnote text-blue-400 font-medium">
-              4-7-8 Technique: Inhale for 4, hold for 7, exhale for 8
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Target className="w-5 h-5 text-green-400" />
-              <h4 className="text-ios-headline text-green-400">Break Tasks into Chunks</h4>
-            </div>
-            <p className="text-ios-callout text-white mb-3">
-              Instead of thinking about an 8.5-hour install, focus on the next step: mark out,
-              containment, wiring, terminations.
-            </p>
-            <div className="text-ios-footnote text-green-400 font-medium">
-              One section at a time reduces overwhelm
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-purple-500/30 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Brain className="w-5 h-5 text-purple-400" />
-              <h4 className="text-ios-headline text-purple-400">Positive Self-Talk</h4>
-            </div>
-            <p className="text-ios-callout text-white mb-3">
-              Replace "I'm messing this up" with "I know the process, I've trained for this." Simple
-              but stops panic spirals.
-            </p>
-            <div className="text-ios-footnote text-purple-400 font-medium">
-              "I can do this safely and methodically"
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-orange-500/30 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Shield className="w-5 h-5 text-orange-400" />
-              <h4 className="text-ios-headline text-orange-400">Ignore Others</h4>
-            </div>
-            <p className="text-ios-callout text-white mb-3">
-              Don't compare your speed with other candidates. The assessor only marks your work, not
-              relative performance.
-            </p>
-            <div className="text-ios-footnote text-orange-400 font-medium">
-              Focus on your own professional standard
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Assessor Expectations */}
-      <AM2ContentCard title="4. Assessor Expectations" icon={Users}>
-        <p className="text-ios-callout text-white mb-6">
-          NET assessors don't mark nerves - they mark your work. They expect you to:
-        </p>
-
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-              <h4 className="text-ios-headline text-green-400 mb-3">Professional Behaviour:</h4>
-              <ul className="text-ios-callout text-white space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">•</span>
-                  <span>Work steadily and safely, even if you look anxious</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">•</span>
-                  <span>Maintain calm, methodical approach under pressure</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">•</span>
-                  <span>Show competence through actions, not appearance</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-              <h4 className="text-ios-headline text-blue-400 mb-3">Safety Compliance:</h4>
-              <ul className="text-ios-callout text-white space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-400">•</span>
-                  <span>Keep to procedure (safe isolation, GN3 sequence) without skipping</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-400">•</span>
-                  <span>Never compromise safety due to time pressure</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-400">•</span>
-                  <span>Complete all safety-critical steps in correct order</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-purple-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-purple-400 mb-3">Time Management:</h4>
-            <p className="text-ios-callout text-white">
-              Complete sections within the set time without rushing. Quality and safety take
-              priority over speed.
-            </p>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      <InlineCheck
-        id={quickCheckQuestions[2].id}
-        question={quickCheckQuestions[2].question}
-        options={quickCheckQuestions[2].options}
-        correctIndex={quickCheckQuestions[2].correctIndex}
-        explanation={quickCheckQuestions[2].explanation}
-      />
-
-      {/* Practical Guidance */}
-      <AM2ContentCard title="5. Practical Guidance" icon={Wrench}>
-        <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4 mb-6">
-          <h4 className="text-ios-headline text-blue-400 mb-3 flex items-center gap-2">
-            <Lightbulb className="w-4 h-4" />
-            Think of AM2 Like a Real Job Handover
-          </h4>
-          <p className="text-ios-callout text-white">
-            On-site, you may feel pressure from deadlines or customers, but you wouldn't skip
-            earthing or rush unsafe terminations to finish quicker. Treat AM2 the same way - safe,
-            steady, professional.
-          </p>
-        </div>
-
-        <div className="space-y-4">
-          <h4 className="text-ios-headline text-white">Practical things you can do:</h4>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                  1
-                </div>
-                <div>
-                  <h5 className="text-ios-headline text-white">Mental Checklists</h5>
-                  <p className="text-ios-footnote text-white">
-                    Make checklists in your head: safe isolation steps, test order. Stick to them
-                    regardless of nerves.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                  2
-                </div>
-                <div>
-                  <h5 className="text-ios-headline text-white">If You Get Stuck</h5>
-                  <p className="text-ios-footnote text-white">
-                    Don't freeze. Move on, complete another part, and come back later.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                  3
-                </div>
-                <div>
-                  <h5 className="text-ios-headline text-white">Record Results</h5>
-                  <p className="text-ios-footnote text-white">
-                    Write down test results as you go so you don't forget under pressure.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                  4
-                </div>
-                <div>
-                  <h5 className="text-ios-headline text-white">Stay Hydrated</h5>
-                  <p className="text-ios-footnote text-white">
-                    Dehydration increases stress. Keep water with you throughout the assessment.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Real-World Examples */}
-      <AM2ContentCard title="6. Real-World Examples" icon={BookOpen}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {/* Failure Examples */}
-          <div className="space-y-4">
-            <h4 className="text-ios-headline text-red-400">Failure Examples:</h4>
-
-            <div className="bg-white/5 border border-red-500/30 rounded-xl p-3">
-              <h5 className="text-ios-headline text-red-400 mb-2">Example 1:</h5>
-              <p className="text-ios-footnote text-white">
-                Candidate skipped re-proving tester in safe isolation due to nerves - instant fail.
-              </p>
-            </div>
-
-            <div className="bg-white/5 border border-red-500/30 rounded-xl p-3">
-              <h5 className="text-ios-headline text-red-400 mb-2">Example 2:</h5>
-              <p className="text-ios-footnote text-white">
-                Candidate felt behind on time in the install section, rushed SWA glanding, armour
-                not earthed - marks lost.
-              </p>
-            </div>
-          </div>
-
-          {/* Success Examples */}
-          <div className="space-y-4">
-            <h4 className="text-ios-headline text-green-400">Success Examples:</h4>
-
-            <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
-              <h5 className="text-ios-headline text-green-400 mb-2">Example 3:</h5>
-              <p className="text-ios-footnote text-white">
-                Candidate paused for breathing, slowed pace, completed all sections safely - passed
-                comfortably.
-              </p>
-            </div>
-
-            <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
-              <h5 className="text-ios-headline text-green-400 mb-2">Example 4:</h5>
-              <p className="text-ios-footnote text-white">
-                On-site, an electrician under deadline pressure maintained safety standards despite
-                client pressure. Same approach in AM2 = success.
-              </p>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* FAQ Section */}
-      <AM2ContentCard title="7. Frequently Asked Questions" icon={BookOpen}>
-        <div className="space-y-4">
-          <div className="border-l-4 border-elec-yellow pl-4">
-            <h5 className="text-ios-headline text-white mb-1">
-              Q1: Will assessors fail me just for looking nervous?
-            </h5>
-            <p className="text-ios-footnote text-white">
-              No - they only fail you if nerves cause unsafe or incomplete work.
-            </p>
-          </div>
-
-          <div className="border-l-4 border-green-500 pl-4">
-            <h5 className="text-ios-headline text-white mb-1">
-              Q2: What if I forget steps in testing because of panic?
-            </h5>
-            <p className="text-ios-footnote text-white">
-              Pause, breathe, reset. Assessors prefer slow but correct over rushed and wrong.
-            </p>
-          </div>
-
-          <div className="border-l-4 border-purple-500 pl-4">
-            <h5 className="text-ios-headline text-white mb-1">
-              Q3: Should I copy other candidates' pace?
-            </h5>
-            <p className="text-ios-footnote text-white">
-              No - focus only on your own work. Comparing speeds adds unnecessary stress.
-            </p>
-          </div>
-
-          <div className="border-l-4 border-orange-500 pl-4">
-            <h5 className="text-ios-headline text-white mb-1">Q4: Is feeling anxious normal?</h5>
-            <p className="text-ios-footnote text-white">
-              Yes - every candidate feels it. The difference is how you manage it.
-            </p>
-          </div>
-
-          <div className="border-l-4 border-red-500 pl-4">
-            <h5 className="text-ios-headline text-white mb-1">
-              Q5: What's the best way to reduce nerves overall?
-            </h5>
-            <p className="text-ios-footnote text-white">
-              Consistent practice until procedures become automatic - especially safe isolation and
-              GN3 testing.
-            </p>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Summary */}
-      <AM2ContentCard title="8. Summary" icon={CheckCircle}>
-        <p className="text-ios-callout text-white mb-4">
-          Nerves are normal in AM2, but you must control them. NET wants to see that you can:
-        </p>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-          <div className="space-y-2">
-            <div className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white">
-                Stay safe and methodical under pressure
-              </span>
-            </div>
-            <div className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white">
-                Use breathing, chunking, and positive self-talk to reset focus
-              </span>
-            </div>
-            <div className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white">
-                Avoid rushing or skipping steps due to panic
-              </span>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white">
-                Treat the exam like a professional job handover
-              </span>
-            </div>
-            <div className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white">
-                Remember: Safe and steady will pass; rushed and unsafe will fail
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
-          <div className="flex items-start gap-3">
-            <Target className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-            <div>
-              <h4 className="text-ios-headline text-elec-yellow mb-2">Key Takeaway:</h4>
-              <p className="text-ios-callout text-white">
-                NET assessors understand that you will feel nervous. What they're testing is your
-                ability to work safely and professionally despite those nerves - just like you would
-                on a real job site under pressure.
-              </p>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Quiz Section */}
-      <Quiz
-        questions={quizQuestions}
-        title="Test Your Knowledge: Coping with Nerves and Pressure"
-      />
-
-      {/* Navigation Footer */}
-      <AM2NavigationFooter
-        previousHref="/study-centre/apprentice/am2/module7/section1"
-        previousLabel="Knowledge Test Practice"
-        nextHref="/study-centre/apprentice/am2/module7/section3"
-        nextLabel="Safety-first Approach"
-        currentSection={2}
-        totalSections={4}
-      />
-    </AM2SectionLayout>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 

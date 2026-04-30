@@ -58,6 +58,21 @@ function formatRel(iso: string | null | undefined): string {
 }
 
 export default function TutorTodayPage() {
+  return (
+    <PageFrame>
+      <TutorTodayBody mode="page" />
+    </PageFrame>
+  );
+}
+
+/** TutorTodayBody — the actionable morning view, extracted so both the
+    standalone /college/today route and the main /college overview can
+    render the same content without duplication.
+
+    `mode="page"` shows the full greeting + intro paragraph (standalone
+    route). `mode="embed"` swaps to a tighter eyebrow heading suitable
+    for use as the top section of another page. ELE-939 / [M2]. */
+export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = {}) {
   const { data, loading, error, refresh } = useTutorToday();
   const navigate = useNavigate();
 
@@ -69,20 +84,44 @@ export default function TutorTodayPage() {
   });
 
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants}>
-        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
-          Today · {todayLong}
-        </div>
-        <h1 className="mt-2 text-[28px] sm:text-[36px] font-semibold text-white tracking-tight leading-[1.1]">
-          {greeting()}
-          {firstName ? `, ${firstName}` : ''}.
-        </h1>
-        <p className="mt-2 text-[13px] sm:text-[14px] text-white/85 leading-snug max-w-2xl">
-          Here's your day in one screen — classes, inbox, at-risk learners and what's due this week.
-          Type any inspector question into the search bar to land on the evidence chain in seconds.
-        </p>
-      </motion.div>
+    <>
+      {mode === 'page' ? (
+        <motion.div variants={itemVariants}>
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
+            Today · {todayLong}
+          </div>
+          <h1 className="mt-2 text-[28px] sm:text-[36px] font-semibold text-white tracking-tight leading-[1.1]">
+            {greeting()}
+            {firstName ? `, ${firstName}` : ''}.
+          </h1>
+          <p className="mt-2 text-[13px] sm:text-[14px] text-white/85 leading-snug max-w-2xl">
+            Here's your day in one screen — classes, inbox, at-risk learners and what's due this
+            week. Type any inspector question into the search bar to land on the evidence chain in
+            seconds.
+          </p>
+        </motion.div>
+      ) : (
+        <motion.div variants={itemVariants}>
+          <div className="flex items-baseline justify-between gap-3 flex-wrap">
+            <div>
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
+                Today · {todayLong}
+              </div>
+              <h2 className="mt-1.5 text-[22px] sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
+                {greeting()}
+                {firstName ? `, ${firstName}` : ''}.
+              </h2>
+            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/college/today')}
+              className="text-[12px] font-medium text-purple-300/90 hover:text-purple-200 transition-colors touch-manipulation whitespace-nowrap"
+            >
+              Open full Today's view →
+            </button>
+          </div>
+        </motion.div>
+      )}
 
       {error && (
         <motion.div
@@ -259,7 +298,7 @@ export default function TutorTodayPage() {
           </Section>
         </motion.div>
       )}
-    </PageFrame>
+    </>
   );
 }
 

@@ -1,27 +1,44 @@
+/**
+ * Module 5 · Section 6 — AM2 fault diagnosis & rectification quick reference
+ * AM2 day-prep — AM2 Phase D (fault diagnosis + rectification)
+ * One-page revision: fault types, symptoms, rectification steps and the re-tests required after each.
+ */
+
 import {
-  FileText,
-  Zap,
-  Search,
-  Target,
   AlertTriangle,
-  CheckCircle,
+  ArrowLeft,
   BookOpen,
-  Wrench,
-  Settings,
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
   Clock,
+  FileText,
+  Search,
+  Settings,
+  Target,
+  Wrench,
+  Zap,
 } from 'lucide-react';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { Link } from 'react-router-dom';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  TLDR,
+  RegsCallout,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+} from '@/components/study-centre/learning';
+import { PageFrame, PageHero } from '@/components/college/primitives';
 import useSEO from '@/hooks/useSEO';
 
+const TITLE = 'Fault Diagnosis & Rectification Quick Reference | AM2 Module 5.6 | Elec-Mate';
+const DESCRIPTION =
+  'One-page AM2 revision: fault types, symptoms, rectification steps and the re-tests you have to repeat after each fix.';
+
 const AM2Module5Section6 = () => {
-  useSEO(
-    'AM2 Fault Diagnosis & Rectification Quick Reference Sheet | Module 5 Section 6',
-    'Essential quick reference guide for AM2 fault-finding procedures. Fault types, rectification methods and re-testing requirements.'
-  );
+  useSEO(TITLE, DESCRIPTION);
 
   const faultTypes = [
     {
@@ -92,312 +109,317 @@ const AM2Module5Section6 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module5"
-      breadcrumbs={[
-        { label: 'AM2', href: '/study-centre/apprentice/am2' },
-        { label: 'Module 5', href: '/study-centre/apprentice/am2/module5' },
-        { label: 'Section 6' },
-      ]}
-    >
-      <AM2HeroSection
-        icon={FileText}
-        title="AM2 Fault Diagnosis & Rectification"
-        description="Essential reference guide for AM2 fault-finding procedures. Keep this handy during your preparation and assessment."
-        badge="Quick Reference Sheet"
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <Link
+            to="/study-centre/apprentice/am2/module5"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 5
+          </Link>
 
-      <div className="space-y-6">
-        {/* Quick Access Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <AM2ContentCard>
-            <div className="text-center">
-              <Search className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <h3 className="text-ios-headline font-semibold text-white">8 Common Faults</h3>
-              <p className="text-ios-footnote text-white mt-1">Complete reference table</p>
-            </div>
-          </AM2ContentCard>
-          <AM2ContentCard>
-            <div className="text-center">
-              <Target className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <h3 className="text-ios-headline font-semibold text-white">Golden Rules</h3>
-              <p className="text-ios-footnote text-white mt-1">Never lose marks again</p>
-            </div>
-          </AM2ContentCard>
-          <AM2ContentCard>
-            <div className="text-center">
-              <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <h3 className="text-ios-headline font-semibold text-white">Quick Testing</h3>
-              <p className="text-ios-footnote text-white mt-1">Right test for each fault</p>
-            </div>
-          </AM2ContentCard>
-        </div>
+          <PageHero
+            eyebrow="Quick Reference Sheet"
+            title="AM2 Fault Diagnosis & Rectification"
+            description="Essential reference guide for AM2 fault-finding procedures. Keep this handy during your preparation and assessment."
+            tone="yellow"
+          />
 
-        {/* Fault Types Table */}
-        <AM2ContentCard title="Fault Types, Rectification & Re-Test" icon={Wrench}>
-          <div className="space-y-4">
-            {faultTypes.map((fault, index) => (
-              <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <div className="flex justify-between items-start mb-3">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-ios-footnote font-medium bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30">
-                    {fault.type}
-                  </span>
-                  <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
-                    <span className="text-ios-callout font-bold text-white">{index + 1}</span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  <div>
-                    <h4 className="text-ios-callout font-semibold text-white mb-1">
-                      Typical Symptom
-                    </h4>
-                    <p className="text-ios-footnote text-white">{fault.symptom}</p>
-                  </div>
-                  <div>
-                    <h4 className="text-ios-callout font-semibold text-white mb-1">
-                      Rectification
-                    </h4>
-                    <p className="text-ios-footnote text-white">{fault.rectification}</p>
-                  </div>
-                  <div>
-                    <h4 className="text-ios-callout font-semibold text-white mb-1">
-                      Re-Test Required
-                    </h4>
-                    <p className="text-ios-footnote text-elec-yellow font-medium">{fault.reTest}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </AM2ContentCard>
+          <TLDR
+            points={[
+              'On AM2 day: 2 deliberate faults, ~1.5–2 hours, prove-test-prove every time, target 3 of 4 if there are extra rig anomalies (typical pass requirement).',
+              'Format every fault answer as Type + Location + Rectification + Re-test. Skip any of those four and you cap your marks.',
+              'Aim for full marks not by speed but by clarity: name the BS 7671 reg, name the maximum value, name the test settings. Detail wins.',
+            ]}
+          />
 
-        {/* Golden Rules */}
-        <AM2ContentCard title="Golden Rules" icon={Target} accent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {goldenRules.map((rule, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-xl"
-              >
-                <div className="w-6 h-6 bg-elec-yellow/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-ios-footnote font-bold text-elec-yellow">{index + 1}</span>
-                </div>
-                <p className="text-ios-callout text-white leading-relaxed">{rule}</p>
-              </div>
-            ))}
-          </div>
-        </AM2ContentCard>
-
-        {/* Essential Test Equipment */}
-        <AM2ContentCard title="Essential Test Equipment" icon={Settings}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-callout font-semibold text-white mb-2">Continuity Tester</h4>
-              <p className="text-ios-footnote text-white">
-                200mA test current for conductor continuity
-              </p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-callout font-semibold text-white mb-2">Insulation Tester</h4>
-              <p className="text-ios-footnote text-white">500V DC for IR between conductors</p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-callout font-semibold text-white mb-2">Loop Tester</h4>
-              <p className="text-ios-footnote text-white">Zs measurements for earth faults</p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-callout font-semibold text-white mb-2">RCD Tester</h4>
-              <p className="text-ios-footnote text-white">
-                Verify RCD operation after earth faults
-              </p>
-            </div>
-          </div>
-        </AM2ContentCard>
-
-        {/* Time Management */}
-        <AM2ContentCard title="AM2 Time Management" icon={Clock}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="text-ios-headline font-semibold text-white">
-                Typical Time Allocation:
-              </h4>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    Initial circuit inspection: 5-10 minutes
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    Fault diagnosis per circuit: 15-20 minutes
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">Rectification: 10-15 minutes</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    Re-testing and documentation: 5-10 minutes
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <div className="space-y-3">
-              <h4 className="text-ios-headline font-semibold text-white">Pro Tips:</h4>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    Start with obvious visual checks
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    Use logical sequence: dead tests first
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    Document as you work, not at the end
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    Don't spend too long on one fault
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </AM2ContentCard>
-
-        {/* Quick Testing Guide */}
-        <AM2ContentCard title="Quick Testing Guide" icon={Zap}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {quickTestingGuide.map((item, index) => (
-              <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                  <h4 className="text-ios-callout font-semibold text-white">{item.fault}</h4>
-                </div>
-                <p className="text-ios-footnote text-white">→ {item.test}</p>
-              </div>
-            ))}
-          </div>
-        </AM2ContentCard>
-
-        {/* Safety Reminders */}
-        <AM2CriticalWarning title="Safety First - Always Remember">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-2">Before Any Work:</h4>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">Prove circuit is dead</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">Lock off and tag supply</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">Use appropriate PPE</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">Check test equipment works</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline font-semibold text-white mb-2">During Testing:</h4>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">Use GS38 compliant leads</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    Keep one hand in pocket when possible
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">Never assume - always verify</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">Report any unsafe conditions</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </AM2CriticalWarning>
-
-        {/* Success Formula */}
-        <AM2ContentCard title="Success Formula" icon={CheckCircle} accent>
           <div className="space-y-6">
-            <p className="text-ios-body text-white text-center font-medium leading-relaxed">
-              If apprentices memorise this sheet, they'll walk into fault-finding with a clear plan:
-            </p>
+            {/* Fault Types Table */}
+            <ConceptBlock title="Fault Types, Rectification & Re-Test">
+              {faultTypes.map((fault, index) => (
+                <div key={index}>
+                  <p>
+                    <strong className="text-elec-yellow">
+                      {index + 1}. {fault.type}
+                    </strong>
+                  </p>
+                  <p>
+                    <strong>Typical Symptom:</strong> {fault.symptom}
+                  </p>
+                  <p>
+                    <strong>Rectification:</strong> {fault.rectification}
+                  </p>
+                  <p>
+                    <strong>Re-Test Required:</strong> {fault.reTest}
+                  </p>
+                </div>
+              ))}
+            </ConceptBlock>
 
-            <div className="flex flex-col items-center space-y-3 sm:space-y-4">
-              <div className="w-full max-w-xs sm:max-w-sm bg-white/5 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
-                <span className="text-ios-headline font-semibold text-white">1. Diagnose</span>
-              </div>
+            <RegsCallout
+              source="BS 7671 — Regulation 134.1.1 + 643.1 (workmanship + verification)"
+              clause="Good workmanship by competent persons or persons under their proper supervision and proper materials shall be used. Inspection and testing shall be carried out to verify that the requirements of the Regulations have been met."
+              meaning={
+                <>
+                  These two regs are the spine of fault-finding on AM2. Workmanship faults (loose
+                  terminations, missing CPCs, wrong polarity) are deliberately set under Reg 134,
+                  and verification (initial + after alteration) is what your testing proves under
+                  Reg 643. When you write your answer, frame it in this language: identify the
+                  workmanship defect, describe the workmanship-quality fix, name the verification
+                  test that confirms compliance.
+                </>
+              }
+              cite="Reference: BS 7671 Part 1 — Reg 134; Part 6 — Reg 643"
+            />
 
-              <div className="text-elec-yellow font-bold text-xl">|</div>
+            {/* Golden Rules */}
+            <ConceptBlock title="Golden Rules">
+              <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+                {goldenRules.map((rule, index) => (
+                  <li key={index}>{rule}</li>
+                ))}
+              </ol>
+            </ConceptBlock>
 
-              <div className="w-full max-w-xs sm:max-w-sm bg-white/5 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
-                <span className="text-ios-headline font-semibold text-white">
-                  2. State Rectification
-                </span>
-              </div>
+            {/* Essential Test Equipment */}
+            <ConceptBlock title="Essential Test Equipment">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Continuity Tester:</strong> 200mA test current for conductor continuity
+                </li>
+                <li>
+                  <strong>Insulation Tester:</strong> 500V DC for IR between conductors
+                </li>
+                <li>
+                  <strong>Loop Tester:</strong> Zs measurements for earth faults
+                </li>
+                <li>
+                  <strong>RCD Tester:</strong> Verify RCD operation after earth faults
+                </li>
+              </ul>
+            </ConceptBlock>
 
-              <div className="text-elec-yellow font-bold text-xl">|</div>
+            {/* Time Management */}
+            <ConceptBlock title="AM2 Time Management">
+              <p>
+                <strong className="text-elec-yellow">Typical Time Allocation:</strong>
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>Initial circuit inspection: 5-10 minutes</li>
+                <li>Fault diagnosis per circuit: 15-20 minutes</li>
+                <li>Rectification: 10-15 minutes</li>
+                <li>Re-testing and documentation: 5-10 minutes</li>
+              </ul>
 
-              <div className="w-full max-w-xs sm:max-w-sm bg-white/5 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
-                <span className="text-ios-headline font-semibold text-white">3. State Re-Test</span>
-              </div>
+              <p>
+                <strong className="text-elec-yellow">Pro Tips:</strong>
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>Start with obvious visual checks</li>
+                <li>Use logical sequence: dead tests first</li>
+                <li>Document as you work, not at the end</li>
+                <li>Don't spend too long on one fault</li>
+              </ul>
+            </ConceptBlock>
 
-              <div className="text-elec-yellow font-bold text-xl">|</div>
+            <Scenario
+              title="The day arrives — what do you do in the first 5 minutes?"
+              situation={
+                <>
+                  Assessor's briefed you. You're at the AM2 fault rig. The board's set up with two
+                  deliberate faults somewhere in the circuits. Test instruments on the bench, paper
+                  for recording, your kit ready. The clock starts now.
+                </>
+              }
+              whatToDo={
+                <>
+                  <strong>Don't touch anything yet.</strong> First 5 minutes: visual walkaround.
+                  Look at the consumer unit, look at every accessory, note circuit names, identify
+                  the isolation point. Then put the kettle on (figuratively). When you start
+                  testing, your very first action is safe isolation: prove voltage indicator on a
+                  known live source, isolate at the CU, prove dead, re-prove the indicator. Only
+                  THEN start dead testing. Methodical opening sets the tone for everything that
+                  follows.
+                </>
+              }
+              whyItMatters={
+                <>
+                  The most common AM2 failure isn't getting the fault wrong — it's rushing the
+                  start. Candidates skip safe isolation under time pressure and either (a) get
+                  marked instant fail or (b) trip a live RCD when they shouldn't and confuse
+                  themselves. 5 minutes of methodical observation saves 30 minutes of chaos.
+                </>
+              }
+            />
 
-              <div className="w-full max-w-xs sm:max-w-sm bg-elec-yellow/20 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
-                <span className="text-ios-headline font-semibold text-elec-yellow">4. Done</span>
-              </div>
+            {/* Quick Testing Guide */}
+            <ConceptBlock title="Quick Testing Guide">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                {quickTestingGuide.map((item, index) => (
+                  <li key={index}>
+                    <strong>{item.fault}:</strong> → {item.test}
+                  </li>
+                ))}
+              </ul>
+            </ConceptBlock>
+
+            {/* Safety Reminders */}
+            <CommonMistake
+              title="Safety First - Always Remember"
+              whatHappens={
+                <>
+                  <p>
+                    <strong>Before Any Work:</strong>
+                  </p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Prove circuit is dead</li>
+                    <li>Lock off and tag supply</li>
+                    <li>Use appropriate PPE</li>
+                    <li>Check test equipment works</li>
+                  </ul>
+                  <p>
+                    <strong>During Testing:</strong>
+                  </p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Use GS38 compliant leads</li>
+                    <li>Keep one hand in pocket when possible</li>
+                    <li>Never assume - always verify</li>
+                    <li>Report any unsafe conditions</li>
+                  </ul>
+                </>
+              }
+              doInstead={<>Treat this as a hard rule on AM2 day — there are no exceptions.</>}
+            />
+
+            {/* Success Formula */}
+            <ConceptBlock title="Success Formula">
+              <p>
+                If apprentices memorise this sheet, they'll walk into fault-finding with a clear
+                plan:
+              </p>
+              <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Diagnose</strong>
+                </li>
+                <li>
+                  <strong>State Rectification</strong>
+                </li>
+                <li>
+                  <strong>State Re-Test</strong>
+                </li>
+                <li>
+                  <strong className="text-elec-yellow">Done</strong>
+                </li>
+              </ol>
+            </ConceptBlock>
+
+            <CommonMistake
+              title="Treating fault diagnosis like 'find the answer' instead of 'follow the method'"
+              whatHappens={
+                <>
+                  You walk in determined to identify what the fault is. You jab around with the
+                  meter, spot something wrong, write "earth fault at SO2 — fix it" and feel
+                  relieved. Assessor marks you partial because there's no methodology shown, no test
+                  sequence, no rectification format, no re-test. Even though you found the fault,
+                  you didn't prove competence.
+                </>
+              }
+              doInstead={
+                <>
+                  AM2 marks the JOURNEY, not just the destination. Talk through your symptom
+                  analysis, name your test choices, record actual values, format rectification
+                  properly, name the re-test. Even if you misidentify the exact fault location,
+                  demonstrating method earns method marks. Random guessing earns nothing.
+                </>
+              }
+            />
+
+            <FAQ
+              items={[
+                {
+                  question: 'How long do I get on AM2 fault diagnosis?',
+                  answer:
+                    'Around 1.5–2 hours. Typically 2 deliberate faults in the rig. Budget ~45–60 minutes per fault including diagnosis, recording, and stating re-test. Build in 5 minutes at the start for visual inspection and safe isolation.',
+                },
+                {
+                  question: 'Do I have to find ALL the faults to pass?',
+                  answer:
+                    "Pass mark is usually 3 out of 4 if extra rig anomalies are present, or both deliberate faults found correctly. Even if you don't find every fault, complete and correct method on what you DO find scores well — partial method is what fails most candidates.",
+                },
+                {
+                  question: "What's the most common reason candidates fail this section?",
+                  answer:
+                    'Forgetting the re-test. Diagnosis correct, location correct, rectification stated — but no re-test mentioned. Caps your marks even with everything else right. Always: Type + Location + Rectification + Re-test. Four parts, every fault, every time.',
+                },
+                {
+                  question: 'Should I work on both faults at the same time or one at a time?',
+                  answer:
+                    "One at a time. Diagnose, document, state rectification + re-test for fault 1. Then re-isolate, restart, work on fault 2. Trying to test both simultaneously gets you confused readings (one fault affects another circuit's IR or Zs) and confused recording.",
+                },
+                {
+                  question: 'Can I ask the assessor for help?',
+                  answer:
+                    "You can ask clarifying questions about the rig setup or instrumentation, but not for hints about where the fault is. Assessors observe silently and only intervene if you do something dangerous. Treat them like a customer who's hired you — they want professional service, not a quiz partner.",
+                },
+                {
+                  question:
+                    'What if I find what looks like an unsafe install (not a deliberate fault)?',
+                  answer:
+                    'Stop and flag it to the assessor. Genuine safety issues take priority over the AM2 task. Continuing past a real hazard is exactly what BS 7671 + EAWR + HASAWA say not to do — and the assessor would rather see safety judgement than ignored risk.',
+                },
+              ]}
+            />
+
+            <KeyTakeaways
+              points={[
+                'AM2 fault day: 2 deliberate faults, ~1.5–2 hours, target 3-of-4 method completeness for pass.',
+                'Every answer needs four parts: Type + Location + Rectification + Re-test. Miss any one and your marks cap.',
+                "Match the test to the symptom (Module 5 Section 1–3 reference table). Don't randomly try every test on every fault.",
+                "Re-test isn't optional — BS 7671 Reg 643.1 makes it a regulation. Earth faults need IR + RCD; everything else needs the matching specific test.",
+                "Workmanship language earns marks. 'Reconnect', 'remake', 're-terminate', 'replace' are the verbs the regs use. 'Fix', 'sort', 'have a go' are not.",
+                "If you spot a real (non-deliberate) safety issue, stop and tell the assessor. That's competence, not a distraction from the test.",
+              ]}
+            />
+
+            {/* Module Summary */}
+            <ConceptBlock title="Module 5 Complete">
+              <p className="text-ios-body text-white leading-relaxed">
+                You've completed Module 5: Fault Diagnosis and Rectification. This quick reference
+                sheet summarises all the key concepts from the module. Use it as a study aid and
+                refer back to it before your assessment.
+              </p>
+            </ConceptBlock>
+
+            {/* Navigation */}
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <Link
+                to="/study-centre/apprentice/am2/module5/section5"
+                className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                  Re-testing Procedures
+                </div>
+              </Link>
+              <Link
+                to="/study-centre/apprentice/am2/module6"
+                className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                  Module 6: Documentation
+                </div>
+              </Link>
             </div>
           </div>
-        </AM2ContentCard>
-
-        {/* Module Summary */}
-        <AM2ContentCard title="Module 5 Complete" icon={BookOpen}>
-          <p className="text-ios-body text-white leading-relaxed">
-            You've completed Module 5: Fault Diagnosis and Rectification. This quick reference sheet
-            summarises all the key concepts from the module. Use it as a study aid and refer back to
-            it before your assessment.
-          </p>
-        </AM2ContentCard>
-
-        {/* Navigation */}
-        <AM2NavigationFooter
-          previousHref="/study-centre/apprentice/am2/module5/section5"
-          previousLabel="Re-testing Procedures"
-          nextHref="/study-centre/apprentice/am2/module6"
-          nextLabel="Module 6: Documentation"
-          currentSection={6}
-          totalSections={6}
-        />
+        </PageFrame>
       </div>
-    </AM2SectionLayout>
+    </div>
   );
 };
 

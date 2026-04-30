@@ -1,31 +1,36 @@
-import {
-  AlertTriangle,
-  CheckSquare,
-  Shield,
-  Clock,
-  Users,
-  Cable,
-  Wrench,
-  Zap,
-  Eye,
-  Ruler,
-  BookOpen,
-} from 'lucide-react';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+/**
+ * Module 3 · Section 1 — Cable selection and containment
+ * AM2 day-prep — AM2 Phase B (composite installation: cable, containment, circuits, terminations)
+ * Picking the right cable to spec and installing trunking, conduit and tray to a workmanlike standard.
+ */
+
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import VoltageDropCalculator from '@/components/apprentice-courses/VoltageDropCalculator';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  VideoCard,
+  TLDR,
+  RegsCallout,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+} from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
+const TITLE = 'Cable Selection and Containment | AM2 Module 3.1 | Elec-Mate';
+const DESCRIPTION =
+  'Cable to the spec on the drawing — and containment (trunking, conduit, tray) installed straight, level and workmanlike.';
+
 const AM2Module3Section1 = () => {
-  useSEO(
-    'Cable Selection and Containment - AM2 Module 3',
-    'Essential guide to cable selection and containment systems for AM2 - trunking, conduit, tray installation and assessment requirements'
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const quickCheckQuestions: Array<{
     id: string;
@@ -273,99 +278,70 @@ const AM2Module3Section1 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module3"
-      breadcrumbs={[
-        { label: 'AM2', href: '/study-centre/apprentice/am2' },
-        { label: 'Module 3', href: '/study-centre/apprentice/am2/module3' },
-        { label: 'Section 1' },
-      ]}
-    >
-      {/* Hero Section */}
-      <AM2HeroSection
-        icon={Cable}
-        title="Cable Selection and Containment (Trunking, Conduit, Tray)"
-        description="Essential guide to cable selection and containment systems for AM2 - trunking, conduit, tray installation and assessment requirements."
-        badge="Module 3 - Section 1"
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 3
+          </button>
 
-      {/* Critical Compliance Warning */}
-      <AM2CriticalWarning
-        title="CRITICAL: Cable Selection and Containment Are Non-Negotiable"
-        message="In the AM2 your installation task will involve selecting the correct cables and installing them within containment systems such as trunking, conduit, and cable tray. The assessor is looking for two things: Correctness - cables and containment must match the drawings and the written specification exactly. Workmanship - neat, safe, and compliant installation in line with BS 7671 and IET 'workmanlike' standards. This section is where poor preparation shows: wrong cable type/size, messy containment, or not following dimensions are among the most common reasons candidates fail the installation section."
-      />
+          <PageHero
+            eyebrow="Module 3 · Section 1"
+            title="Cable Selection and Containment (Trunking, Conduit, Tray)"
+            description="Essential guide to cable selection and containment systems for AM2 - trunking, conduit, tray installation and assessment requirements."
+            tone="yellow"
+          />
 
-      {/* Learning Outcomes */}
-      <AM2LearningOutcomes outcomes={learningOutcomes} />
+          <TLDR
+            points={[
+              'On AM2 day the spec gives you the cable size and the containment route — your job is to install it exactly as drawn, not redesign it.',
+              'Workmanship is what the assessor photographs: square cuts, flush lids, deburred edges, even saddle spacing, sheath into every accessory.',
+              'Segregation between LV and ELV is a hard rule — mixing them in the same trunking compartment is a fail.',
+              'Space factor (45% trunking, 40% mixed, 31% single-cable conduit) is checked — overfilled containment loses marks even if everything else is perfect.',
+              'Measure twice, cut once. A short trunking run with a gap under the lid is the easiest mark you can throw away.',
+            ]}
+          />
 
-      {/* Equipment and Documentation */}
-      <AM2ContentCard title="Equipment & Documentation Requirements" icon={Wrench}>
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-          <div>
-            <h3 className="font-semibold text-base mb-3 text-white">Essential Tools & Equipment</h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Cable strippers and termination tools
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Trunking cutters and deburring tools
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Conduit benders and cutting equipment
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Measuring tools (tape measure, spirit level)
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Fixings and fasteners for containment systems
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-3 text-white">Essential References</h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                AM2 drawings and written specifications
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                BS 7671 cable tables and installation methods
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Manufacturer's installation instructions
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Cable selection guides and space factor charts
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                NET assessment criteria and marking scheme
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <CommonMistake
+            title="CRITICAL: Cable Selection and Containment Are Non-Negotiable"
+            whatHappens="In the AM2 your installation task will involve selecting the correct cables and installing them within containment systems such as trunking, conduit, and cable tray. The assessor is looking for two things: Correctness - cables and containment must match the drawings and the written specification exactly. Workmanship - neat, safe, and compliant installation in line with BS 7671 and IET 'workmanlike' standards. This section is where poor preparation shows: wrong cable type/size, messy containment, or not following dimensions are among the most common reasons candidates fail the installation section."
+            doInstead="Work through this section methodically — every standard below is non-negotiable for AM2 success."
+          />
 
-      {/* Cable Selection Section */}
-      <AM2ContentCard title="1. Cable Selection in AM2" icon={Zap} accent>
-        <div className="space-y-6 text-xs sm:text-sm text-white">
-          <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2 text-white">
-              Specification Compliance
-            </h3>
-            <p className="mb-2">
-              Match the specification exactly - you'll be told what size and type (e.g. 2.5 mm² T&E
-              for ring, 4 mm² radial, flex for motor).
+          <LearningOutcomes outcomes={learningOutcomes} />
+
+          <ConceptBlock title="Equipment & Documentation Requirements">
+            <p>
+              <strong>Essential Tools & Equipment</strong>
             </p>
-            <ul className="space-y-1 text-white ml-4">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cable strippers and termination tools</li>
+              <li>Trunking cutters and deburring tools</li>
+              <li>Conduit benders and cutting equipment</li>
+              <li>Measuring tools (tape measure, spirit level)</li>
+              <li>Fixings and fasteners for containment systems</li>
+            </ul>
+            <p>
+              <strong>Essential References</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>AM2 drawings and written specifications</li>
+              <li>BS 7671 cable tables and installation methods</li>
+              <li>Manufacturer's installation instructions</li>
+              <li>Cable selection guides and space factor charts</li>
+              <li>NET assessment criteria and marking scheme</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="1. Cable Selection in AM2">
+            <p>
+              <strong>Specification Compliance.</strong> Match the specification exactly - you'll be
+              told what size and type (e.g. 2.5 mm² T&E for ring, 4 mm² radial, flex for motor).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
                 Derating factors don't come into play in AM2 (assessors want you to follow the spec,
                 not recalc)
@@ -376,41 +352,32 @@ const AM2Module3Section1 = () => {
               <li>Sheath maintained into all accessories and connection points</li>
               <li>No substitutions - 2.5mm² specified means 2.5mm² installed</li>
             </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2 text-white">
-              Common Cable Types in AM2
-            </h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <p className="font-medium text-white">Power Circuits:</p>
-                <ul className="space-y-1 text-white ml-4 text-xs">
-                  <li>1.5mm² T&E - Lighting circuits (6A MCB)</li>
-                  <li>2.5mm² T&E - Socket radials (20A MCB)</li>
-                  <li>2.5mm² T&E - Ring finals (32A MCB)</li>
-                  <li>4.0mm² T&E - Cooker radials (32A MCB)</li>
-                  <li>6.0mm² T&E - Shower circuits (40A MCB)</li>
-                </ul>
-              </div>
-              <div className="space-y-2">
-                <p className="font-medium text-white">Special Applications:</p>
-                <ul className="space-y-1 text-white ml-4 text-xs">
-                  <li>3-core & earth - Two-way switching</li>
-                  <li>1.5mm² flex - Pendant lights</li>
-                  <li>2.5mm² flex - Portable equipment</li>
-                  <li>2.5mm² SY cable - Motor control circuits</li>
-                  <li>4.0mm² SWA cable - Motor feeders (outdoor/industrial)</li>
-                  <li>Cat6 data cable - Network points</li>
-                  <li>Fire-rated cable - Fire alarm circuits</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
-            <h4 className="font-semibold text-amber-400 mb-2">Critical Cable Requirements</h4>
-            <ul className="space-y-1 text-sm text-white">
+            <p>
+              <strong>Common Cable Types in AM2 — Power Circuits:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1.5mm² T&E - Lighting circuits (6A MCB)</li>
+              <li>2.5mm² T&E - Socket radials (20A MCB)</li>
+              <li>2.5mm² T&E - Ring finals (32A MCB)</li>
+              <li>4.0mm² T&E - Cooker radials (32A MCB)</li>
+              <li>6.0mm² T&E - Shower circuits (40A MCB)</li>
+            </ul>
+            <p>
+              <strong>Special Applications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>3-core & earth - Two-way switching</li>
+              <li>1.5mm² flex - Pendant lights</li>
+              <li>2.5mm² flex - Portable equipment</li>
+              <li>2.5mm² SY cable - Motor control circuits</li>
+              <li>4.0mm² SWA cable - Motor feeders (outdoor/industrial)</li>
+              <li>Cat6 data cable - Network points</li>
+              <li>Fire-rated cable - Fire alarm circuits</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Critical Cable Requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Correct size as per specification (no substitutions allowed)</li>
               <li>Appropriate cable type for installation method and environment</li>
               <li>Proper colour identification throughout installation</li>
@@ -418,204 +385,202 @@ const AM2Module3Section1 = () => {
               <li>Current-carrying capacity matches or exceeds circuit protection</li>
               <li>Voltage rating appropriate for system (300/500V minimum for T&E)</li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-      {/* Containment Systems Section */}
-      <AM2ContentCard title="2. Containment Systems: What Assessors Expect" icon={Shield}>
-        <div className="space-y-6 text-xs sm:text-sm text-white">
-          <p className="text-base">
-            Containment systems protect cables and demonstrate professional workmanship. Assessors
-            focus on three key areas: compliance with installation standards, quality of
-            workmanship, and adherence to safety requirements.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-            <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-              <h3 className="font-semibold text-base mb-2 text-blue-400">Trunking Systems</h3>
-              <ul className="space-y-1 text-white text-xs">
-                <li>Straight runs, cut square, burrs removed</li>
-                <li>Lids flush, no gaps, screws aligned</li>
-                <li>Cables not overfilled - comply with space factor</li>
-                <li>Correct segregation for LV and ELV circuits</li>
-                <li>Joints properly made with couplers</li>
-                <li>End caps fitted where required</li>
-                <li>Support spacing per manufacturer specs</li>
-              </ul>
-            </div>
-            <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
-              <h3 className="font-semibold text-base mb-2 text-elec-yellow">Conduit Systems</h3>
-              <ul className="space-y-1 text-white text-xs">
-                <li>Neat bends - no kinking or flattening</li>
-                <li>Saddles evenly spaced (300-600mm apart)</li>
-                <li>Boxes aligned level and square</li>
-                <li>Bushes fitted, no sharp edges exposed</li>
-                <li>Pull boxes every 10m maximum</li>
-                <li>Maximum 2 x 90° bends per run</li>
-                <li>Threads cut clean on steel conduit</li>
-              </ul>
-            </div>
-            <div className="bg-white/5 border border-purple-500/30 rounded-xl p-4">
-              <h3 className="font-semibold text-base mb-2 text-purple-400">Cable Tray</h3>
-              <ul className="space-y-1 text-white text-xs">
-                <li>Runs level and properly supported</li>
-                <li>Correct clips or ties (no insulation tape)</li>
-                <li>No sharp edges against cables</li>
-                <li>Consistent spacing of support fixings</li>
-                <li>Cable segregation maintained on tray</li>
-                <li>Tray joints properly made</li>
-                <li>Load calculations considered</li>
-              </ul>
-            </div>
+          <div className="my-6">
+            <VideoCard
+              url={videos.containmentVsClipping.url}
+              title={videos.containmentVsClipping.title}
+              channel={videos.containmentVsClipping.channel}
+              duration={videos.containmentVsClipping.duration}
+              topic="Containment choice on the AM2 rig"
+              caption={
+                <>
+                  Craig's take on when to clip vs containment on a typical AM2-style install — the
+                  same decision you'll make on the day depending on the rig spec you're handed.
+                </>
+              }
+            />
           </div>
 
-          <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
-            <h4 className="font-semibold text-amber-400 mb-2">Space Factor Requirements</h4>
-            <div className="grid md:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium mb-1 text-white">Trunking & Tray:</p>
-                <ul className="space-y-1">
-                  <li>Single cable type: 45% fill factor</li>
-                  <li>Mixed cable types: 40% fill factor</li>
-                  <li>Consider cable outer diameter</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium mb-1 text-white">Conduit Systems:</p>
-                <ul className="space-y-1">
-                  <li>Single cable: 31% fill factor</li>
-                  <li>Two cables: 43% fill factor</li>
-                  <li>Three or more: 40% fill factor</li>
-                </ul>
-              </div>
-            </div>
+          <div className="my-6">
+            <h3 className="text-ios-headline font-semibold text-elec-yellow mb-3">
+              Try the calculator — voltage drop check on your AM2 cable
+            </h3>
+            <p className="text-xs sm:text-sm text-white/80 mb-3">
+              The AM2 spec gives you the cable size, but assessors expect you to know whether it
+              stays within the BS 7671 voltage drop limits (3% lighting, 5% other) over the route
+              length. Drop in your circuit current and route length and confirm the chosen cable
+              passes.
+            </p>
+            <VoltageDropCalculator />
           </div>
-        </div>
-      </AM2ContentCard>
 
-      <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="2. Containment Systems: What Assessors Expect">
+            <p>
+              Containment systems protect cables and demonstrate professional workmanship. Assessors
+              focus on three key areas: compliance with installation standards, quality of
+              workmanship, and adherence to safety requirements.
+            </p>
+            <p>
+              <strong>Trunking Systems:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Straight runs, cut square, burrs removed</li>
+              <li>Lids flush, no gaps, screws aligned</li>
+              <li>Cables not overfilled - comply with space factor</li>
+              <li>Correct segregation for LV and ELV circuits</li>
+              <li>Joints properly made with couplers</li>
+              <li>End caps fitted where required</li>
+              <li>Support spacing per manufacturer specs</li>
+            </ul>
+            <p>
+              <strong>Conduit Systems:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Neat bends - no kinking or flattening</li>
+              <li>Saddles evenly spaced (300-600mm apart)</li>
+              <li>Boxes aligned level and square</li>
+              <li>Bushes fitted, no sharp edges exposed</li>
+              <li>Pull boxes every 10m maximum</li>
+              <li>Maximum 2 x 90° bends per run</li>
+              <li>Threads cut clean on steel conduit</li>
+            </ul>
+            <p>
+              <strong>Cable Tray:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Runs level and properly supported</li>
+              <li>Correct clips or ties (no insulation tape)</li>
+              <li>No sharp edges against cables</li>
+              <li>Consistent spacing of support fixings</li>
+              <li>Cable segregation maintained on tray</li>
+              <li>Tray joints properly made</li>
+              <li>Load calculations considered</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">
+                Space Factor Requirements — Trunking & Tray:
+              </strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single cable type: 45% fill factor</li>
+              <li>Mixed cable types: 40% fill factor</li>
+              <li>Consider cable outer diameter</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Conduit Systems:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single cable: 31% fill factor</li>
+              <li>Two cables: 43% fill factor</li>
+              <li>Three or more: 40% fill factor</li>
+            </ul>
+          </ConceptBlock>
 
-      {/* What Assessor Checks Section */}
-      <AM2ContentCard title="3. What the Assessor Checks (NET Guidance)" icon={Eye}>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <h3 className="font-semibold text-base mb-3 text-white">Assessment Focus Areas</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  <span>
-                    <strong className="text-white">Accuracy to drawing/spec:</strong> Heights,
-                    positions, routes, and terminations exactly as shown
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  <span>
-                    <strong className="text-white">Workmanship:</strong> Is it neat, straight,
-                    aligned? Cables not twisted, sheath maintained into accessories
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  <span>
-                    <strong className="text-white">Compliance:</strong> Correct cable types, correct
-                    containment fixings, no breaches of BS 7671
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  <span>
-                    <strong className="text-white">Safety:</strong> Grommets/bushes used, no exposed
-                    sharp edges, boxes secure
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold text-base mb-3 text-white">Mark Allocation</h3>
-              <div className="space-y-2">
-                <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
-                  <h4 className="font-medium text-green-400 text-sm">Pass Standard</h4>
-                  <ul className="text-xs text-white mt-1">
-                    <li>Specification compliance (40%)</li>
-                    <li>Workmanship quality (30%)</li>
-                    <li>Safety compliance (20%)</li>
-                    <li>Completion time (10%)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-      <InlineCheck {...quickCheckQuestions[2]} />
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 522.6.1"
+            clause={
+              <>
+                "Wiring systems shall be selected and erected so as to minimize the damage arising
+                from mechanical stress, for example, by impact, abrasion, penetration, tension or
+                compression during installation, use or maintenance."
+              </>
+            }
+            meaning={
+              <>
+                On the AM2 rig this is the clause behind every grommet, every bush, every saddle and
+                every clip. Sharp edges in conduit, an unbushed knockout in a metal back box, or a
+                cable taking the strain at a pulled-in tray fixing — all fail this reg.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 522.6.1."
+          />
 
-      {/* Common Errors Section */}
-      <AM2ContentCard
-        title="4. Common Errors in AM2 Containment Tasks (NET 'Common Errors' List)"
-        icon={AlertTriangle}
-      >
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <h3 className="font-semibold text-base mb-3 text-elec-yellow">
-                Critical Errors That Cause Failure
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Using wrong cable type/size</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Poor segregation in trunking</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Kinked or uneven conduit bends</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Leaving sharp edges on cut trunking/conduit</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Not securing tray properly</span>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold text-base mb-3 text-elec-yellow">
-                Mark-Losing Mistakes
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Accessories fixed off-level</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Overfilled trunking</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Poor measurement and marking out</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Inconsistent fixing spacing</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-6 p-4 bg-white/5 border border-red-500/30 rounded-xl">
-            <h4 className="font-semibold text-red-400 mb-2">Real AM2 Failure Examples</h4>
-            <ul className="space-y-1 text-sm text-white">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 522.6.201"
+            clause={
+              <>
+                "A cable installed under a floor or above a ceiling shall be run in such a position
+                that it is not liable to be damaged by contact with the floor or ceiling or their
+                fixings. A cable passing through a joist within a floor or ceiling construction or
+                through a ceiling support (for example, under floorboards), shall: (a) be installed
+                at least 50 mm measured vertically from the top, or bottom as appropriate, of the
+                joist or batten; or (b) comply with Regulation 522.6.204."
+              </>
+            }
+            meaning={
+              <>
+                If your AM2 rig has a joist run, drill at least 50 mm from the top or bottom — or
+                use mechanical protection / earthed metallic containment per 522.6.204. Drilling
+                straight through the centre of a joist 20 mm down is the textbook fail.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 522.6.201."
+          />
+
+          <ConceptBlock title="3. What the Assessor Checks (NET Guidance)">
+            <p>
+              <strong>Assessment Focus Areas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Accuracy to drawing/spec:</strong> Heights, positions, routes, and
+                terminations exactly as shown
+              </li>
+              <li>
+                <strong>Workmanship:</strong> Is it neat, straight, aligned? Cables not twisted,
+                sheath maintained into accessories
+              </li>
+              <li>
+                <strong>Compliance:</strong> Correct cable types, correct containment fixings, no
+                breaches of BS 7671
+              </li>
+              <li>
+                <strong>Safety:</strong> Grommets/bushes used, no exposed sharp edges, boxes secure
+              </li>
+            </ul>
+            <p>
+              <strong>Mark Allocation — Pass Standard:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Specification compliance (40%)</li>
+              <li>Workmanship quality (30%)</li>
+              <li>Safety compliance (20%)</li>
+              <li>Completion time (10%)</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <ConceptBlock title="4. Common Errors in AM2 Containment Tasks (NET 'Common Errors' List)">
+            <p>
+              <strong className="text-elec-yellow">Critical Errors That Cause Failure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Using wrong cable type/size</li>
+              <li>Poor segregation in trunking</li>
+              <li>Kinked or uneven conduit bends</li>
+              <li>Leaving sharp edges on cut trunking/conduit</li>
+              <li>Not securing tray properly</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Mark-Losing Mistakes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Accessories fixed off-level</li>
+              <li>Overfilled trunking</li>
+              <li>Poor measurement and marking out</li>
+              <li>Inconsistent fixing spacing</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Real AM2 Failure Examples:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
                 Candidate completed installation electrically correct but conduit bends were kinked
                 - lost marks for workmanship
@@ -632,265 +597,272 @@ const AM2Module3Section1 = () => {
                 unsafe support
               </li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Practical Guidance Section */}
-      <AM2ContentCard title="5. Practical Guidance for Candidates" icon={Wrench}>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div>
-              <h3 className="font-semibold text-base mb-3 text-white">
-                Pre-Installation Checklist
-              </h3>
-              <ol className="space-y-2 text-white">
-                <li className="flex gap-2">
-                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">
-                    1
-                  </span>
-                  <span>Read the spec twice before starting</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">
-                    2
-                  </span>
-                  <span>Mark out routes and positions clearly</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">
-                    3
-                  </span>
-                  <span>Dry fit first - lay trunking/conduit before cutting</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">
-                    4
-                  </span>
-                  <span>Measure twice, cut once</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">
-                    5
-                  </span>
-                  <span>Check cable types and sizes against spec</span>
-                </li>
-              </ol>
-            </div>
-            <div>
-              <h3 className="font-semibold text-base mb-3 text-white">
-                Installation Best Practices
-              </h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  Cut trunking/conduit square and deburr every edge
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  Bend slowly and evenly - practice with conduit benders
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  Use correct fixing spacing, keep all screws straight
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  Keep cables straight, no twists
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  Always maintain sheath into accessories
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4 mt-4">
-            <h3 className="font-semibold text-base mb-2 text-blue-400 flex items-center gap-2">
-              <Eye className="w-4 h-4" />
-              Self-Assessment Question
-            </h3>
-            <p className="text-sm text-white">
-              Check as you go: "Would an assessor photograph this as good practice or poor
-              practice?"
+          <ConceptBlock title="5. Practical Guidance for Candidates">
+            <p>
+              <strong>Pre-Installation Checklist:</strong>
             </p>
-          </div>
-        </div>
-      </AM2ContentCard>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>Read the spec twice before starting</li>
+              <li>Mark out routes and positions clearly</li>
+              <li>Dry fit first - lay trunking/conduit before cutting</li>
+              <li>Measure twice, cut once</li>
+              <li>Check cable types and sizes against spec</li>
+            </ol>
+            <p>
+              <strong>Installation Best Practices:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cut trunking/conduit square and deburr every edge</li>
+              <li>Bend slowly and evenly - practice with conduit benders</li>
+              <li>Use correct fixing spacing, keep all screws straight</li>
+              <li>Keep cables straight, no twists</li>
+              <li>Always maintain sheath into accessories</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Self-Assessment Question:</strong> Check as you
+              go: "Would an assessor photograph this as good practice or poor practice?"
+            </p>
+          </ConceptBlock>
 
-      <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-      {/* Assessment Criteria Section */}
-      <AM2ContentCard title="6. Assessment Criteria and Mark Allocations" icon={CheckSquare}>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <h3 className="font-semibold text-base mb-2 text-green-400">Pass Criteria</h3>
-              <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-                <ul className="space-y-1 text-white">
-                  <li>100% specification compliance</li>
-                  <li>Professional workmanship standards</li>
-                  <li>Correct cable types and sizes</li>
-                  <li>Neat, secure containment installation</li>
-                  <li>Proper segregation maintained</li>
-                  <li>All edges deburred and safe</li>
-                </ul>
-              </div>
-            </div>
-            <div>
-              <h3 className="font-semibold text-base mb-2 text-red-400">Failure Points</h3>
-              <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
-                <ul className="space-y-1 text-white">
-                  <li>Wrong cable size/type used</li>
-                  <li>Poor workmanship (kinked bends, misaligned)</li>
-                  <li>Segregation breaches</li>
-                  <li>Sharp edges left on containment</li>
-                  <li>Insecure fixings or overfilled systems</li>
-                  <li>Non-compliance with drawings</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <ConceptBlock title="6. Assessment Criteria and Mark Allocations">
+            <p>
+              <strong className="text-elec-yellow">Pass Criteria:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>100% specification compliance</li>
+              <li>Professional workmanship standards</li>
+              <li>Correct cable types and sizes</li>
+              <li>Neat, secure containment installation</li>
+              <li>Proper segregation maintained</li>
+              <li>All edges deburred and safe</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Failure Points:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Wrong cable size/type used</li>
+              <li>Poor workmanship (kinked bends, misaligned)</li>
+              <li>Segregation breaches</li>
+              <li>Sharp edges left on containment</li>
+              <li>Insecure fixings or overfilled systems</li>
+              <li>Non-compliance with drawings</li>
+            </ul>
+          </ConceptBlock>
 
-      <InlineCheck {...quickCheckQuestions[4]} />
+          <InlineCheck {...quickCheckQuestions[4]} />
 
-      {/* Professional Standards Section */}
-      <AM2ContentCard title="7. Professional Standards and Industry Expectations" icon={Ruler}>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div>
-            <h3 className="font-semibold text-base mb-2 text-white">Real-World Application</h3>
-            <p className="mb-3">
+          <ConceptBlock title="7. Professional Standards and Industry Expectations">
+            <p>
               The standards expected in AM2 mirror real industry requirements where specification
-              compliance and workmanship quality are non-negotiable:
+              compliance and workmanship quality are non-negotiable.
             </p>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <h4 className="font-medium mb-2 text-elec-yellow">Industry Consequences</h4>
-                <ul className="space-y-1 text-white">
-                  <li>Contract non-compliance penalties</li>
-                  <li>Insurance claims voided</li>
-                  <li>Safety certification failures</li>
-                  <li>Rework costs and delays</li>
-                  <li>Professional reputation damage</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-2 text-elec-yellow">Professional Benefits</h4>
-                <ul className="space-y-1 text-white">
-                  <li>Specification compliance confidence</li>
-                  <li>Quality workmanship reputation</li>
-                  <li>Reduced callback and fault rates</li>
-                  <li>Enhanced career progression</li>
-                  <li>Industry recognition and trust</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Real-World Examples */}
-      <AM2ContentCard title="Real-World Examples" icon={BookOpen}>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="space-y-4">
-            <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
-              <h4 className="font-semibold text-red-400 mb-2">Failure Examples</h4>
-              <ul className="space-y-1 text-white">
-                <li>
-                  <strong>Example 1:</strong> Candidate completed installation electrically correct
-                  but conduit bends were kinked. Lost marks for workmanship.
-                </li>
-                <li>
-                  <strong>Example 2:</strong> Candidate forgot to segregate data cable from power in
-                  trunking. Failed segregation requirement.
-                </li>
-                <li>
-                  <strong>Example 3:</strong> Candidate measured once and cut trunking short. Left
-                  gap under lid - lost marks.
-                </li>
-                <li>
-                  <strong>Example 4:</strong> In real life, an apprentice drilled a tray fixing too
-                  close to edge of brick. Fixing pulled out - unsafe support. Same mistake loses
-                  marks in AM2.
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-              <h4 className="font-semibold text-blue-400 mb-2">Industry Applications</h4>
-              <ul className="space-y-1 text-white">
-                <li>
-                  <strong>Hospital Project:</strong> Segregation requirements critical for medical
-                  equipment interference prevention
-                </li>
-                <li>
-                  <strong>Data Centre:</strong> Cable tray systems requiring precise spacing and
-                  professional appearance for client acceptance
-                </li>
-                <li>
-                  <strong>Industrial Installation:</strong> Conduit systems needing robust
-                  protection and proper earthing for safety certification
-                </li>
-                <li>
-                  <strong>Commercial Office:</strong> Trunking systems requiring easy access for
-                  future modifications and maintenance
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Summary */}
-      <AM2ContentCard title="Summary" icon={CheckSquare} accent>
-        <div className="space-y-4 text-sm text-white">
-          <p className="font-medium">
-            In AM2, cable selection and containment are about compliance and workmanship. The
-            assessor wants to see:
-          </p>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <h3 className="font-semibold mb-2 text-white">Essential Requirements</h3>
-              <ul className="space-y-1">
-                <li>Correct cable types and sizes exactly as per spec</li>
-                <li>Containment systems installed straight, square, and burr-free</li>
-                <li>Proper segregation, secure fixings, and safe terminations</li>
-                <li>Work that looks professional and "workmanlike"</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-2 text-red-400">Failure Causes</h3>
-              <ul className="space-y-1 text-red-300">
-                <li>Messy work and shortcuts</li>
-                <li>Wrong cables or non-specification compliance</li>
-                <li>Poor containment installation</li>
-                <li>Safety breaches and workmanship failures</li>
-              </ul>
-            </div>
-          </div>
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-3 mt-4">
-            <p className="font-semibold text-green-400">
-              Golden Rule: Follow the specification exactly, maintain professional workmanship
-              standards, and prioritise compliance over speed.
+            <p>
+              <strong className="text-elec-yellow">Industry Consequences:</strong>
             </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Contract non-compliance penalties</li>
+              <li>Insurance claims voided</li>
+              <li>Safety certification failures</li>
+              <li>Rework costs and delays</li>
+              <li>Professional reputation damage</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Professional Benefits:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Specification compliance confidence</li>
+              <li>Quality workmanship reputation</li>
+              <li>Reduced callback and fault rates</li>
+              <li>Enhanced career progression</li>
+              <li>Industry recognition and trust</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Real-World Examples">
+            <p>
+              <strong className="text-elec-yellow">Failure Examples:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Example 1:</strong> Candidate completed installation electrically correct
+                but conduit bends were kinked. Lost marks for workmanship.
+              </li>
+              <li>
+                <strong>Example 2:</strong> Candidate forgot to segregate data cable from power in
+                trunking. Failed segregation requirement.
+              </li>
+              <li>
+                <strong>Example 3:</strong> Candidate measured once and cut trunking short. Left gap
+                under lid - lost marks.
+              </li>
+              <li>
+                <strong>Example 4:</strong> In real life, an apprentice drilled a tray fixing too
+                close to edge of brick. Fixing pulled out - unsafe support. Same mistake loses marks
+                in AM2.
+              </li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Industry Applications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hospital Project:</strong> Segregation requirements critical for medical
+                equipment interference prevention
+              </li>
+              <li>
+                <strong>Data Centre:</strong> Cable tray systems requiring precise spacing and
+                professional appearance for client acceptance
+              </li>
+              <li>
+                <strong>Industrial Installation:</strong> Conduit systems needing robust protection
+                and proper earthing for safety certification
+              </li>
+              <li>
+                <strong>Commercial Office:</strong> Trunking systems requiring easy access for
+                future modifications and maintenance
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Summary">
+            <p>
+              In AM2, cable selection and containment are about compliance and workmanship. The
+              assessor wants to see:
+            </p>
+            <p>
+              <strong>Essential Requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Correct cable types and sizes exactly as per spec</li>
+              <li>Containment systems installed straight, square, and burr-free</li>
+              <li>Proper segregation, secure fixings, and safe terminations</li>
+              <li>Work that looks professional and "workmanlike"</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Failure Causes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Messy work and shortcuts</li>
+              <li>Wrong cables or non-specification compliance</li>
+              <li>Poor containment installation</li>
+              <li>Safety breaches and workmanship failures</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Golden Rule:</strong> Follow the specification
+              exactly, maintain professional workmanship standards, and prioritise compliance over
+              speed.
+            </p>
+          </ConceptBlock>
+
+          <Scenario
+            title="The trunking is 30 mm short — do you swap the run or fudge a coupler?"
+            situation={
+              <>
+                You measured your steel trunking run from the DB to the first dado box, cut it,
+                fitted it — and you can see daylight under the lid where the trunking stops 30 mm
+                short of the box. You've already used the offcut for a different drop. There's a
+                spare 1 m length on the bench.
+              </>
+            }
+            whatToDo={
+              <>
+                Swap the short run for a fresh cut from the spare length. Coupling a 30 mm offcut in
+                just to bridge the gap looks rushed, leaves an unnecessary joint, and the assessor
+                will photograph it. Take the 5-minute hit, cut a clean replacement, deburr the ends,
+                and refit. Square cut, lid flush, gap closed.
+              </>
+            }
+            whyItMatters={
+              <>
+                Workmanship marks live on these decisions. NET assessors are explicitly looking for
+                "straight runs, flush lids, secure fixings" — a coupler shoved in to hide a
+                measuring error fails all three at once. Reg 522.6.1 also expects the wiring system
+                to be selected and erected to minimise mechanical stress; an extra unnecessary joint
+                is the opposite of that.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question:
+                  "Do I have to calculate cable size on AM2, or just install what's on the spec?",
+                answer:
+                  "Just install what's on the spec — exactly. AM2 isn't a design exam. The drawing tells you 2.5 mm² ring, 1.5 mm² lighting, 6 mm² shower; your job is to install that, neatly, in the containment shown. No derating, no recalculation. Substituting 2.5 mm² where 4 mm² is specified is an automatic mark loss even if the circuit would work.",
+              },
+              {
+                question: 'How tight is the space factor — do assessors actually count cables?',
+                answer:
+                  "They don't count individual cables, but they will spot an obviously overstuffed trunking. Rule of thumb: 45% fill for single cable type, 40% mixed, 31% for one cable in conduit, 40% for three or more. If the lid won't go flush because cables are bulging out, you're over the space factor — and the lid going on flat is what the assessor sees first.",
+              },
+              {
+                question: 'What does "segregation" actually mean on the AM2 rig?',
+                answer:
+                  'Mains (LV) and ELV (data, fire alarm, intruder, telecoms) cannot share the same trunking compartment. Either run them in separate trunking, use a partitioned trunking with the divider fitted, or use separate conduit. Cat6 next to a 230 V T&E in the same compartment with no partition is a section fail — both for safety and spec compliance.',
+              },
+              {
+                question: 'How do I avoid kinking conduit on a bend?',
+                answer:
+                  "Bend slowly, lubricate the former, and don't try to do it in one pass — pull the bender through gradually. For 20 mm steel conduit on the AM2 rig, work it in small increments and check the radius against the former. A kinked or flattened bend can't be unbent — you'll be cutting that piece off and starting again, which costs you 10 minutes you can't afford.",
+              },
+              {
+                question: 'Do I need to deburr plastic conduit, or just steel?',
+                answer:
+                  "Both. The point of deburring isn't about the conduit material — it's about the cable insulation that has to slide past the cut edge. PVC conduit cut with a hacksaw leaves a sharp internal lip just like steel does. A quick swipe with a deburring tool or even a half-round file takes 5 seconds and protects the sheath. Assessors will catch a sharp edge with a fingernail.",
+              },
+              {
+                question: 'Can I use cable ties or insulation tape to hold cables on tray?',
+                answer:
+                  "Cable ties — yes (UV-stable for outdoor, properly tensioned, ends trimmed). Insulation tape — no, never. Tape is not a recognised cable support. On tray, use proper cleats or cable ties at the spacing called for in the spec, and trim the tie ends flush so they don't snag. Tape on tray is an automatic workmanship mark loss and looks unprofessional in the photographs.",
+              },
+            ]}
+          />
+
+          <KeyTakeaways
+            points={[
+              'Install exactly to spec — cable size, type and route. AM2 is a workmanship test, not a design exercise.',
+              "Square cuts, deburred edges, flush lids, even saddle spacing (300–600 mm) — that's what the assessor photographs.",
+              "Space factor: 45% trunking single cable, 40% mixed, 31% single-cable conduit. If the lid won't sit flat, you're over.",
+              'LV and ELV must be segregated — separate trunking, partitioned trunking, or separate conduit. No exceptions.',
+              'Reg 522.6.1 — minimise mechanical stress (grommets, bushes, supports). Reg 522.6.201 — at least 50 mm from joist edges.',
+              'Sheath maintained into every accessory. No bare cores visible outside any termination.',
+            ]}
+          />
+
+          <Quiz questions={quizQuestions} title="Cable Selection and Containment Quiz" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module 3 Overview
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module3/section2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Power Circuits
+              </div>
+            </button>
           </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Quiz Section */}
-      <Quiz questions={quizQuestions} title="Cable Selection and Containment Quiz" />
-
-      {/* Navigation Footer */}
-      <AM2NavigationFooter
-        previousHref="/study-centre/apprentice/am2/module3"
-        previousLabel="Module 3 Overview"
-        nextHref="/study-centre/apprentice/am2/module3/section2"
-        nextLabel="Power Circuits"
-        currentSection={1}
-        totalSections={6}
-      />
-    </AM2SectionLayout>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 

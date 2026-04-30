@@ -1,20 +1,34 @@
-import { AlertTriangle, Shield, CheckSquare, Lock, Zap, HardHat } from 'lucide-react';
-import { Link } from 'react-router-dom';
+/**
+ * Module 2 · Section 5 — Avoiding critical safety errors
+ * AM2 day-prep — AM2 Phase A (H&S, safe isolation, RAMS, paperwork)
+ * The instant-fail behaviours: re-energising faulted circuits, working live, ignoring lock-off — and how to design them out.
+ */
+
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  SectionRule,
+  LearningOutcomes,
+  TLDR,
+  KeyTakeaways,
+  FAQ,
+  Scenario,
+  CommonMistake,
+  RegsCallout,
+} from '@/components/study-centre/learning';
+
+const TITLE = 'Avoiding Critical Safety Errors | AM2 Module 2.5 | Elec-Mate';
+const DESCRIPTION =
+  'The instant-fail behaviours on the AM2 — re-energising faulted circuits, working live, ignoring lock-off — and how to design them out.';
 
 const AM2Module2Section5 = () => {
-  useSEO(
-    'Avoiding Critical Safety Errors - AM2 Module 2',
-    'Critical safety errors that cause instant AM2 failure - safe isolation, energising unsafe circuits, and health & safety breaches'
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const quickCheckQuestions = [
     {
@@ -227,513 +241,471 @@ const AM2Module2Section5 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module2"
-      breadcrumbs={[{ label: 'Module 2', href: '..' }, { label: 'Section 5' }]}
-    >
-      <AM2HeroSection
-        moduleNumber="2"
-        sectionNumber="5"
-        title="Avoiding Critical Safety Errors"
-        description="Some mistakes in the AM2 cost marks; others cause instant failure. NET defines these as critical safety errors involving unsafe isolation, energising unsafe circuits, or breaching basic health and safety law."
-        readTime="15 min read"
-        icon={<Shield className="w-4 h-4" />}
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 2
+          </button>
 
-      <AM2CriticalWarning title="CRITICAL: Safety Errors = Instant Failure">
-        <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
-          Critical safety errors result in immediate section failure with no second chances. These
-          include unsafe isolation, energising faulted circuits, and serious health & safety
-          breaches. AM2 simulates real work — unsafe practices could kill someone in real life, so
-          NET's role is to confirm you are safe to work unsupervised.
-        </p>
-        <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
-          Golden Rule: If it's unsafe in the real world, it's an instant fail in AM2. One critical
-          mistake proves you're not ready for unsupervised work.
-        </p>
-      </AM2CriticalWarning>
+          <PageHero
+            eyebrow="Module 2 · Section 5"
+            title="Avoiding Critical Safety Errors"
+            description="Some mistakes in the AM2 cost marks; others cause instant failure. NET defines these as critical safety errors involving unsafe isolation, energising unsafe circuits, or breaching basic health and safety law."
+            tone="yellow"
+          />
 
-      <AM2LearningOutcomes outcomes={learningOutcomes} />
+          <TLDR
+            points={[
+              'Critical safety errors override every other mark — one of these and the assessment ends.',
+              'The big four: unsafe isolation, energising an unsafe circuit, working live without justification, breaching site H&S law.',
+              'EAWR 1989 makes "work dead" the default. Live working needs written justification before you start.',
+              'Assessors are watching from the moment you walk on the rig — every PPE choice, every cable strip, every tool selection counts.',
+            ]}
+          />
 
-      {/* Critical Safety Errors Definition */}
-      <AM2ContentCard title="1. What Counts as a Critical Safety Error?">
-        <p className="text-sm text-white mb-6">
-          NET highlights the following as automatic fail points that result in immediate section
-          termination:
-        </p>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-              <Lock className="w-4 h-4 text-elec-yellow" />
-              Failing Safe Isolation
-            </h3>
-            <ul className="space-y-1 text-white ml-6">
-              <li>• Missing prove/re-prove steps with voltage indicator</li>
-              <li>• Not using proper lock-off devices (using tape instead)</li>
-              <li>• Isolating wrong circuit or incomplete isolation</li>
-              <li>• Working on circuits without proper isolation verification</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-              <Zap className="w-4 h-4 text-elec-yellow" />
-              Energising Unsafe Circuits
-            </h3>
-            <ul className="space-y-1 text-white ml-6">
-              <li>• Energising a circuit with a known fault</li>
-              <li>• Leaving a circuit unsafe or incomplete but live</li>
-              <li>• Switching on before completing all required tests</li>
-              <li>• Bypassing or defeating protective devices</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-              <HardHat className="w-4 h-4 text-elec-yellow" />
-              Serious Health & Safety Breaches
-            </h3>
-            <ul className="space-y-1 text-white ml-6">
-              <li>• Ignoring required PPE (safety glasses, gloves, hard hat)</li>
-              <li>• Working live without proper justification and precautions</li>
-              <li>• Unsafe use of tools or test equipment</li>
-              <li>• Creating unsafe conditions for others</li>
-            </ul>
-          </div>
-        </div>
-        <InlineCheck {...quickCheckQuestions[0]} />
-      </AM2ContentCard>
-
-      {/* Why Instant Fails */}
-      <AM2ContentCard
-        title="2. Why These Are Instant Fails"
-        className="bg-gradient-to-br from-elec-yellow/10 via-card to-card/80"
-      >
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="p-4 bg-gradient-to-r from-background/80 to-background/60 rounded-lg border border-elec-yellow/30">
-            <h3 className="font-semibold mb-2 text-elec-yellow">Real-World Simulation</h3>
-            <p className="text-white">
-              AM2 simulates real work conditions. Unsafe practices in the assessment represent the
-              same risks that could kill someone in real life - electric shock, fire, explosion, or
-              serious injury. Every safety procedure you follow (or skip) directly translates to
-              real-world competency.
+          <ConceptBlock title="Safety Errors = Instant Failure">
+            <p>
+              <strong className="text-red-300">Critical.</strong> Critical safety errors result in
+              immediate section failure with no second chances. These include unsafe isolation,
+              energising faulted circuits, and serious health &amp; safety breaches. AM2 simulates
+              real work — unsafe practices could kill someone in real life, so NET's role is to
+              confirm you are safe to work unsupervised.
             </p>
-          </div>
-          <div className="p-4 bg-gradient-to-r from-background/80 to-background/60 rounded-lg border border-elec-yellow/30">
-            <h3 className="font-semibold mb-2 text-elec-yellow">Competency Verification</h3>
-            <p className="text-white">
-              NET's role is to confirm you are safe to work unsupervised. One critical mistake
-              proves you're not ready for independent work, regardless of your technical abilities.
-              This isn't about being harsh - it's about ensuring public safety and protecting the
-              electrical industry's reputation.
+            <p>
+              <strong className="text-red-300">Golden Rule.</strong> If it's unsafe in the real
+              world, it's an instant fail in AM2. One critical mistake proves you're not ready for
+              unsupervised work.
             </p>
-          </div>
-          <div className="p-4 bg-gradient-to-r from-background/80 to-background/60 rounded-lg border border-elec-yellow/30">
-            <h3 className="font-semibold mb-2 text-elec-yellow">
-              Legal and Insurance Implications
-            </h3>
-            <p className="text-white">
+          </ConceptBlock>
+
+          <LearningOutcomes outcomes={learningOutcomes} />
+
+          <ConceptBlock title="Critical Safety Errors Definition">
+            <p>
+              NET highlights the following as automatic fail points that result in immediate section
+              termination:
+            </p>
+            <p>
+              <strong>Failing Safe Isolation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Missing prove/re-prove steps with voltage indicator</li>
+              <li>Not using proper lock-off devices (using tape instead)</li>
+              <li>Isolating wrong circuit or incomplete isolation</li>
+              <li>Working on circuits without proper isolation verification</li>
+            </ul>
+            <p>
+              <strong>Energising Unsafe Circuits:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Energising a circuit with a known fault</li>
+              <li>Leaving a circuit unsafe or incomplete but live</li>
+              <li>Switching on before completing all required tests</li>
+              <li>Bypassing or defeating protective devices</li>
+            </ul>
+            <p>
+              <strong>Serious Health &amp; Safety Breaches:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ignoring required PPE (safety glasses, gloves, hard hat)</li>
+              <li>Working live without proper justification and precautions</li>
+              <li>Unsafe use of tools or test equipment</li>
+              <li>Creating unsafe conditions for others</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <ConceptBlock title="Why These Errors Cause Instant Failure">
+            <p>
+              <strong className="text-elec-yellow">Real-World Simulation.</strong> AM2 simulates
+              real work conditions. Unsafe practices in the assessment represent the same risks that
+              could kill someone in real life — electric shock, fire, explosion, or serious injury.
+              Every safety procedure you follow (or skip) directly translates to real-world
+              competency.
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Competency Verification.</strong> NET's role is
+              to confirm you are safe to work unsupervised. One critical mistake proves you're not
+              ready for independent work, regardless of your technical abilities. This isn't about
+              being harsh — it's about ensuring public safety and protecting the electrical
+              industry's reputation.
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Legal and Insurance Implications.</strong>{' '}
               Employers and insurance companies rely on NET certification. Critical safety errors
               indicate potential liability risks that could result in prosecution under the
               Electricity at Work Regulations, massive insurance claims, or complete loss of
               professional indemnity cover.
             </p>
-          </div>
-          <div className="p-4 bg-gradient-to-r from-orange-50/50 to-orange-100/30 dark:from-orange-950/30 dark:to-orange-900/20 rounded-lg border border-orange-200/50 dark:border-orange-800/30">
-            <h3 className="font-semibold mb-2 text-orange-700 dark:text-elec-yellow">
-              Industry Standards
-            </h3>
-            <p className="text-orange-600 dark:text-elec-yellow text-sm">
-              The electrical industry has zero tolerance for unsafe practices because the
-              consequences are so severe. A single mistake can result in fatalities, major fires, or
-              explosions. NET reflects this reality - safety isn't negotiable, and competency must
-              be absolute.
+            <p>
+              <strong className="text-orange-400">Industry Standards.</strong> The electrical
+              industry has zero tolerance for unsafe practices because the consequences are so
+              severe. A single mistake can result in fatalities, major fires, or explosions. NET
+              reflects this reality — safety isn't negotiable, and competency must be absolute.
             </p>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Common Mistakes */}
-      <AM2ContentCard title="3. Common Safety-Critical Mistakes Candidates Make">
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-          <div>
-            <h3 className="font-semibold text-base mb-3 text-elec-yellow">
-              Critical Isolation Failures
-            </h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Skipping the re-prove step after isolation (most common failure)
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Using tape instead of proper lock-off devices
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Testing circuits assumed to be dead without proper verification
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Isolating the wrong circuit due to poor identification
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Working on multiple circuits without individual isolation
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Failing to prove voltage indicator before and after testing
-              </li>
+          <ConceptBlock title="Common Critical Mistakes">
+            <p>
+              <strong className="text-elec-yellow">Critical Isolation Failures:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-red-400/70">
+              <li>Skipping the re-prove step after isolation (most common failure)</li>
+              <li>Using tape instead of proper lock-off devices</li>
+              <li>Testing circuits assumed to be dead without proper verification</li>
+              <li>Isolating the wrong circuit due to poor identification</li>
+              <li>Working on multiple circuits without individual isolation</li>
+              <li>Failing to prove voltage indicator before and after testing</li>
             </ul>
-            <div className="mt-4 p-3 bg-red-50/50 dark:bg-red-950/20 rounded-lg border border-red-200/50 dark:border-red-800/30">
-              <p className="text-xs text-red-700 dark:text-elec-yellow font-medium">
-                Remember: Safe isolation isn't just about switching off - it's a complete procedure
+            <p>
+              <strong className="text-red-400">
+                Remember: Safe isolation isn't just about switching off — it's a complete procedure
                 that must be followed exactly.
-              </p>
-            </div>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-3 text-elec-yellow">
-              Energising Errors & PPE Breaches
-            </h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Energising circuits without completing all required tests
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Switching on circuits with known or suspected faults
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Leaving incomplete work energised at any point
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Not wearing safety glasses during cutting or drilling operations
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Using damaged or inappropriate tools for the task
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                Ignoring required hard hat or high-visibility clothing
-              </li>
+              </strong>
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Energising Errors &amp; PPE Breaches:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-red-400/70">
+              <li>Energising circuits without completing all required tests</li>
+              <li>Switching on circuits with known or suspected faults</li>
+              <li>Leaving incomplete work energised at any point</li>
+              <li>Not wearing safety glasses during cutting or drilling operations</li>
+              <li>Using damaged or inappropriate tools for the task</li>
+              <li>Ignoring required hard hat or high-visibility clothing</li>
             </ul>
-            <div className="mt-4 p-3 bg-orange-50/50 dark:bg-orange-950/20 rounded-lg border border-orange-200/50 dark:border-orange-800/30">
-              <p className="text-xs text-orange-700 dark:text-elec-yellow font-medium">
-                PPE isn't optional in AM2 - assessors watch for health & safety compliance
+            <p>
+              <strong className="text-orange-400">
+                PPE isn't optional in AM2 — assessors watch for health &amp; safety compliance
                 throughout the entire assessment.
-              </p>
-            </div>
-          </div>
-        </div>
-        <InlineCheck {...quickCheckQuestions[1]} />
-      </AM2ContentCard>
+              </strong>
+            </p>
+          </ConceptBlock>
 
-      {/* Strategies to Avoid Errors */}
-      <AM2ContentCard
-        title="4. Strategies to Avoid Critical Errors"
-        icon={<Shield className="w-5 h-5" />}
-        className="bg-gradient-to-br from-elec-yellow/10 via-card to-card/60"
-      >
-        <div className="space-y-6">
-          <div>
-            <h3 className="font-semibold text-base mb-3 text-elec-yellow">Safety-First Mindset</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-gradient-to-r from-elec-yellow/5 to-background/50 rounded-lg border border-elec-yellow/30">
-                <h4 className="font-medium text-sm mb-2 text-elec-yellow">Slow Down on Safety</h4>
-                <p className="text-xs text-white">
-                  Speed is irrelevant if unsafe. Take time with isolation procedures, PPE checks,
-                  and verification steps.
-                </p>
-              </div>
-              <div className="p-4 bg-gradient-to-r from-elec-yellow/5 to-background/50 rounded-lg border border-elec-yellow/30">
-                <h4 className="font-medium text-sm mb-2 text-elec-yellow">Real-Site Behavior</h4>
-                <p className="text-xs text-white">
-                  Treat AM2 like a live site where others' lives depend on your work - because
-                  that's exactly what real work is.
-                </p>
-              </div>
-            </div>
-            <ul className="space-y-2 text-xs sm:text-sm text-white mt-4">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Never skip safety procedures to save time - time pressure is no excuse for unsafe
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <ConceptBlock title="Strategies to Avoid Errors">
+            <p>
+              <strong className="text-elec-yellow">Safety-First Mindset.</strong>
+            </p>
+            <p>
+              <strong>Slow Down on Safety.</strong> Speed is irrelevant if unsafe. Take time with
+              isolation procedures, PPE checks, and verification steps.
+            </p>
+            <p>
+              <strong>Real-Site Behaviour.</strong> Treat AM2 like a live site where others' lives
+              depend on your work — because that's exactly what real work is.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Never skip safety procedures to save time — time pressure is no excuse for unsafe
                 work
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+              <li>
                 Remember that in real work, your actions affect colleagues, customers, and the
                 public
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Build safety habits that become automatic under pressure
-              </li>
+              <li>Build safety habits that become automatic under pressure</li>
             </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-3 text-elec-yellow">
-              Systematic Safety Procedures
-            </h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-gradient-to-r from-blue-50/50 to-background/50 dark:from-blue-950/20 dark:to-background/50 rounded-lg border border-blue-200/50 dark:border-blue-800/30">
-                <h4 className="font-medium text-sm mb-2 text-blue-700 dark:text-elec-yellow">
-                  Safe Isolation Checklist
-                </h4>
-                <ul className="text-xs text-elec-yellow dark:text-elec-yellow space-y-1">
-                  <li>1. Identify correct circuit</li>
-                  <li>2. Prove voltage indicator</li>
-                  <li>3. Isolate at source</li>
-                  <li>4. Secure with lock-off</li>
-                  <li>5. Test circuit dead</li>
-                  <li>6. Re-prove voltage indicator</li>
-                </ul>
-              </div>
-              <div className="p-4 bg-gradient-to-r from-green-50/50 to-background/50 dark:from-green-950/20 dark:to-background/50 rounded-lg border border-green-200/50 dark:border-green-800/30">
-                <h4 className="font-medium text-sm mb-2 text-green-700 dark:text-green-300">
-                  Pre-Energising Checklist
-                </h4>
-                <ul className="text-xs text-green-600 dark:text-green-400 space-y-1">
-                  <li>1. All installation work complete</li>
-                  <li>2. All testing completed satisfactorily</li>
-                  <li>3. No known faults or defects</li>
-                  <li>4. Area clear and safe</li>
-                  <li>5. Paperwork completed</li>
-                  <li>6. Remove lock-off and energise</li>
-                </ul>
-              </div>
-            </div>
-            <ul className="space-y-2 text-xs sm:text-sm text-white mt-4">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Use written checklists every time - don't rely on memory under pressure
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Double-check circuit identification against drawings before isolating
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Never energise unless you've tested and certified the complete installation
-              </li>
+            <p>
+              <strong className="text-elec-yellow">Systematic Safety Procedures.</strong>
+            </p>
+            <p>
+              <strong>Safe Isolation Checklist:</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>Identify correct circuit</li>
+              <li>Prove voltage indicator</li>
+              <li>Isolate at source</li>
+              <li>Secure with lock-off</li>
+              <li>Test circuit dead</li>
+              <li>Re-prove voltage indicator</li>
+            </ol>
+            <p>
+              <strong>Pre-Energising Checklist:</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-green-400/70">
+              <li>All installation work complete</li>
+              <li>All testing completed satisfactorily</li>
+              <li>No known faults or defects</li>
+              <li>Area clear and safe</li>
+              <li>Paperwork completed</li>
+              <li>Remove lock-off and energise</li>
+            </ol>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use written checklists every time — don't rely on memory under pressure</li>
+              <li>Double-check circuit identification against drawings before isolating</li>
+              <li>Never energise unless you've tested and certified the complete installation</li>
             </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-base mb-3 text-elec-yellow">
-              Personal Protective Equipment (PPE) Protocol
-            </h3>
-            <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-              <div className="p-3 bg-gradient-to-r from-purple-50/50 to-background/50 dark:from-purple-950/20 dark:to-background/50 rounded-lg border border-purple-200/50 dark:border-purple-800/30">
-                <h4 className="font-medium text-xs mb-1 text-purple-700 dark:text-elec-yellow">
-                  Basic PPE
-                </h4>
-                <ul className="text-xs text-purple-600 dark:text-elec-yellow space-y-1">
-                  <li>• Hard hat at all times</li>
-                  <li>• High-visibility clothing</li>
-                  <li>• Safety footwear</li>
-                </ul>
+            <p>
+              <strong className="text-elec-yellow">
+                Personal Protective Equipment (PPE) Protocol — Basic PPE:
+              </strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Hard hat at all times</li>
+              <li>High-visibility clothing</li>
+              <li>Safety footwear</li>
+            </ul>
+            <p>
+              <strong className="text-amber-400">Task-Specific PPE:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-amber-400/70">
+              <li>Safety glasses (cutting/drilling)</li>
+              <li>Gloves (when appropriate)</li>
+              <li>Hearing protection</li>
+            </ul>
+            <p>
+              <strong className="text-red-400">Critical Reminders:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-red-400/70">
+              <li>Check condition before use</li>
+              <li>Replace if damaged</li>
+              <li>Wear throughout task</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <ConceptBlock title="Real-World Examples">
+            <p>
+              <strong className="text-red-400">AM2 Example 1: Isolation Failure.</strong> Candidate
+              skipped re-proving tester after isolation. The assessor stopped the test immediately →
+              instant fail. The candidate had completed 90% of excellent work but failed the entire
+              section.
+            </p>
+            <p>
+              <strong className="text-red-400">AM2 Example 2: Energising Fault.</strong> Candidate
+              completed most of installation but energised a circuit with a deliberate fault left in
+              by NET. Despite excellent installation work, instant fail for critical safety error.
+            </p>
+            <p>
+              <strong className="text-red-400">AM2 Example 3: Lock-off Device.</strong> Candidate
+              used tape instead of a proper lock-off device to secure isolation. This is considered
+              unsafe isolation practice → instant fail, despite otherwise competent work.
+            </p>
+            <p>
+              <strong className="text-orange-400">Industry Example: Real Consequences.</strong> An
+              apprentice failed to isolate properly; a colleague received a serious shock requiring
+              hospital treatment. Company fined £50,000 under Electricity at Work Regulations.
+              Individual faced disciplinary action.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Frequently Asked Questions">
+            <p>
+              <strong>Q1: What's the biggest single cause of critical safety fails?</strong>{' '}
+              Incorrect safe isolation procedures, particularly skipping the re-prove step or using
+              inadequate lock-off methods. Remember: safe isolation is a complete 6-step procedure,
+              not just switching off.
+            </p>
+            <p>
+              <strong>Q2: Can a paperwork mistake ever be a critical fail?</strong> Not usually —
+              unless it hides or misrepresents a dangerous condition that could affect safety
+              decisions. Exception: documentation that could mislead someone about safety-critical
+              information.
+            </p>
+            <p>
+              <strong>
+                Q3: Do assessors give a second chance if you miss a step in safe isolation?
+              </strong>{' '}
+              No — safety is non-negotiable. Critical safety errors result in immediate section
+              failure with no opportunity for correction. Zero tolerance policy: one mistake =
+              instant section fail.
+            </p>
+            <p>
+              <strong>
+                Q4: If I realise I made a critical error halfway through, can I correct it?
+              </strong>{' '}
+              No — once a critical safety error is observed by the assessor, the section is
+              immediately failed. Prevention is the only strategy. Assessors will stop the section
+              immediately upon observing critical errors.
+            </p>
+            <p>
+              <strong>Q5: Are critical fails only about electrical safety?</strong> No — they also
+              cover unsafe tool use, PPE breaches, and general unsafe site behaviour that could
+              cause injury. Covers all aspects of health &amp; safety, not just electrical work.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[4]} />
+
+          <ConceptBlock title="Summary">
+            <p>
+              Critical safety errors are the quickest way to fail AM2. They include unsafe
+              isolation, energising unsafe circuits, and breaching fundamental health and safety
+              principles. These errors result in instant section failure because they represent
+              practices that could cause serious injury or death in real-world work.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use systematic safety procedures and never skip steps to save time</li>
+              <li>Treat the assessment as a live site where others' lives depend on your work</li>
+              <li>Remember: if it's unsafe in the real world, it's an instant fail in AM2</li>
+            </ul>
+            <p>
+              <strong className="text-red-400">
+                Golden Rule: Safety is non-negotiable. One critical error can end your AM2
+                assessment regardless of how excellent your other work might be.
+              </strong>
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <RegsCallout
+            source="Electricity at Work Regulations 1989 — Regulation 14"
+            clause="No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless— (a) it is unreasonable in all the circumstances for it to be dead; and (b) it is reasonable in all the circumstances for him to be at work on or near it while it is live; and (c) suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury."
+            meaning={
+              <>
+                All three tests must be met before live working is lawful. AM2 simulates
+                installation and testing — there’s effectively never a justification for live work
+                on the rig. Touch anything live and the assessment is over.
+              </>
+            }
+            cite="Source: legislation.gov.uk — Electricity at Work Regulations 1989, Regulation 14."
+          />
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 131.2.1"
+            clause="Persons and livestock shall be protected against dangers that may arise from contact with live parts of the installation."
+            meaning={
+              <>
+                This is the regulatory framing for basic protection. Every install you do on AM2
+                must leave no live parts accessible — terminal screws covered, accessory plates
+                squared and tightened, no exposed copper. An exposed live conductor on a finished
+                accessory is a critical safety error.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 131.2.1."
+          />
+
+          <Scenario
+            title="Energising before final inspection"
+            situation={
+              <>
+                You’ve finished installation. The rig is connected, all accessories are in. You’ve
+                wired the consumer unit and the supply is right there. You think a quick power-up
+                before the formal tests would let you spot a wiring fault now rather than later.
+              </>
+            }
+            whatToDo={
+              <>
+                Don’t. The sequence is: visual inspection, dead tests (continuity, IR, polarity,
+                R₁+R₂), then and only then energise for live tests. Energising before the dead tests
+                are complete and recorded is a critical safety error. If a fault drops a phase to
+                earth when you flick it on, you’ve put yourself and the assessor at risk.
+              </>
+            }
+            whyItMatters={
+              <>
+                BS 7671 Reg 642.1 says inspection precedes testing, and live tests happen after dead
+                tests are satisfactory. The order is the law of the rig — assessors will fail you
+                for getting it backwards even if everything turns out fine.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title={`Skipping PPE because the rig "looks safe"`}
+            whatHappens={
+              <>
+                You walk up to the rig without safety glasses or you take your gloves off to feel a
+                terminal. The assessor logs an H&S breach before you’ve even started.
+              </>
+            }
+            doInstead={
+              <>
+                PPE on at the boundary of the rig and stays on until the section closes. Safety
+                glasses, gloves where the RAMS specifies them, sturdy footwear from the moment you
+                arrive. PPE is the visible signal you’re working safely.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'What counts as "energising an unsafe circuit"?',
+                answer:
+                  'Powering up before dead tests are complete and recorded; powering up with exposed live parts; powering up while someone has hands in an enclosure; powering up without checking polarity. Any of these is a critical fail.',
+              },
+              {
+                question: 'Can I ever work live in AM2?',
+                answer:
+                  'No. Live testing (Zs, RCD operation) is not "live working" in the EAWR sense — you’re using approved test instruments with shrouded probes. Actual live work on conductors is never justified on the rig.',
+              },
+              {
+                question: 'What’s the most common critical fail in AM2?',
+                answer:
+                  'Incomplete safe isolation — usually missing the second prove of the tester, or skipping the lock-off. NET data has put it at the top of the list for years.',
+              },
+              {
+                question: 'If I make a critical error, am I told immediately?',
+                answer:
+                  'Yes — the assessor will stop you, explain what was wrong, and end the affected section. The rest of the assessment continues for record purposes but you can’t recover the section once a critical fail is logged.',
+              },
+              {
+                question: 'Does the assessor allow second chances on PPE?',
+                answer:
+                  'For minor lapses (briefly forgetting glasses), they may give a verbal warning. For repeated or serious lapses (no glasses while drilling, gloves off near live test), it’s logged as an H&S breach.',
+              },
+              {
+                question: 'What if the rig has a defect — can I still work on it?',
+                answer:
+                  'No. Stop work, tell the assessor, document it. Working on defective equipment is itself a safety breach. The centre will swap kit or adjust the rig.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'One critical safety error ends the assessment regardless of every other mark.',
+              'The big four: unsafe isolation, energising prematurely, live working, H&S breaches.',
+              'EAWR 1989 Reg 14 makes live working unlawful unless three tests are met. They’re not met on AM2.',
+              'BS 7671 Reg 131.2.1: no accessible live parts on a finished install. Visible copper = critical fail.',
+              'Sequence matters: visual → dead tests → energise → live tests. Never out of order.',
+              'PPE on at the boundary of the rig and stays on until the section closes.',
+              'A defective rig is the assessor’s problem — stop work, report it, don’t work around it.',
+              'Assessors stop you immediately on a critical fail. You’ll know in real time.',
+            ]}
+          />
+
+          <Quiz questions={quizQuestions} title="Knowledge Check" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module2/section4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
               </div>
-              <div className="p-3 bg-gradient-to-r from-amber-50/50 to-background/50 dark:from-amber-950/20 dark:to-background/50 rounded-lg border border-amber-200/50 dark:border-amber-800/30">
-                <h4 className="font-medium text-xs mb-1 text-amber-700 dark:text-amber-300">
-                  Task-Specific PPE
-                </h4>
-                <ul className="text-xs text-amber-600 dark:text-amber-400 space-y-1">
-                  <li>• Safety glasses (cutting/drilling)</li>
-                  <li>• Gloves (when appropriate)</li>
-                  <li>• Hearing protection</li>
-                </ul>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Completing Paperwork
               </div>
-              <div className="p-3 bg-gradient-to-r from-red-50/50 to-background/50 dark:from-red-950/20 dark:to-background/50 rounded-lg border border-red-200/50 dark:border-red-800/30">
-                <h4 className="font-medium text-xs mb-1 text-red-700 dark:text-elec-yellow">
-                  Critical Reminders
-                </h4>
-                <ul className="text-xs text-red-600 dark:text-elec-yellow space-y-1">
-                  <li>• Check condition before use</li>
-                  <li>• Replace if damaged</li>
-                  <li>• Wear throughout task</li>
-                </ul>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
               </div>
-            </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Module 3: Installation Tasks
+              </div>
+            </button>
           </div>
-        </div>
-        <InlineCheck {...quickCheckQuestions[2]} />
-      </AM2ContentCard>
-
-      {/* Real-World Examples */}
-      <AM2ContentCard title="Real-World Examples">
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-          <div className="bg-gradient-to-r from-red-50 to-background dark:from-red-950/20 dark:to-background border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-            <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
-              AM2 Example 1: Isolation Failure
-            </h3>
-            <p className="text-sm text-red-700 dark:text-elec-yellow">
-              Candidate skipped re-proving tester after isolation. The assessor stopped the test
-              immediately → instant fail. The candidate had completed 90% of excellent work but
-              failed the entire section.
-            </p>
-          </div>
-          <div className="bg-gradient-to-r from-red-50 to-background dark:from-red-950/20 dark:to-background border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-            <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
-              AM2 Example 2: Energising Fault
-            </h3>
-            <p className="text-sm text-red-700 dark:text-elec-yellow">
-              Candidate completed most of installation but energised a circuit with a deliberate
-              fault left in by NET. Despite excellent installation work, instant fail for critical
-              safety error.
-            </p>
-          </div>
-          <div className="bg-gradient-to-r from-red-50 to-background dark:from-red-950/20 dark:to-background border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-            <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
-              AM2 Example 3: Lock-off Device
-            </h3>
-            <p className="text-sm text-red-700 dark:text-elec-yellow">
-              Candidate used tape instead of a proper lock-off device to secure isolation. This is
-              considered unsafe isolation practice → instant fail, despite otherwise competent work.
-            </p>
-          </div>
-          <div className="bg-gradient-to-r from-orange-50 to-background dark:from-orange-950/20 dark:to-background border border-orange-200 dark:border-orange-800/30 rounded-lg p-4">
-            <h3 className="font-semibold text-orange-800 dark:text-orange-200 mb-2">
-              Industry Example: Real Consequences
-            </h3>
-            <p className="text-sm text-orange-700 dark:text-elec-yellow">
-              An apprentice failed to isolate properly; a colleague received a serious shock
-              requiring hospital treatment. Company fined £50,000 under Electricity at Work
-              Regulations. Individual faced disciplinary action.
-            </p>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* FAQs */}
-      <AM2ContentCard
-        title="Frequently Asked Questions"
-        className="bg-gradient-to-br from-elec-yellow/15 via-card to-card/70"
-      >
-        <div className="space-y-4">
-          <div className="bg-gradient-to-br from-elec-yellow/10 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q1: What's the biggest single cause of critical safety fails?
-            </h3>
-            <p className="text-sm text-white mb-2">
-              A: Incorrect safe isolation procedures, particularly skipping the re-prove step or
-              using inadequate lock-off methods.
-            </p>
-            <div className="text-xs text-elec-yellow font-medium">
-              Remember: Safe isolation is a complete 6-step procedure, not just switching off
-            </div>
-          </div>
-          <div className="bg-gradient-to-br from-elec-yellow/10 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q2: Can a paperwork mistake ever be a critical fail?
-            </h3>
-            <p className="text-sm text-white mb-2">
-              A: Not usually — unless it hides or misrepresents a dangerous condition that could
-              affect safety decisions.
-            </p>
-            <div className="text-xs text-orange-600 dark:text-elec-yellow font-medium">
-              Exception: Documentation that could mislead someone about safety-critical information
-            </div>
-          </div>
-          <div className="bg-gradient-to-br from-elec-yellow/10 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q3: Do assessors give a second chance if you miss a step in safe isolation?
-            </h3>
-            <p className="text-sm text-white mb-2">
-              A: No — safety is non-negotiable. Critical safety errors result in immediate section
-              failure with no opportunity for correction.
-            </p>
-            <div className="text-xs text-red-600 dark:text-elec-yellow font-medium">
-              Zero tolerance policy - one mistake = instant section fail
-            </div>
-          </div>
-          <div className="bg-gradient-to-br from-elec-yellow/10 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q4: If I realise I made a critical error halfway through, can I correct it?
-            </h3>
-            <p className="text-sm text-white mb-2">
-              A: No — once a critical safety error is observed by the assessor, the section is
-              immediately failed. Prevention is the only strategy.
-            </p>
-            <div className="text-xs text-red-600 dark:text-elec-yellow font-medium">
-              Assessors will stop the section immediately upon observing critical errors
-            </div>
-          </div>
-          <div className="bg-gradient-to-br from-elec-yellow/10 to-background border border-elec-yellow/30 rounded-lg p-4">
-            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-              Q5: Are critical fails only about electrical safety?
-            </h3>
-            <p className="text-sm text-white mb-2">
-              A: No — they also cover unsafe tool use, PPE breaches, and general unsafe site
-              behaviour that could cause injury.
-            </p>
-            <div className="text-xs text-elec-yellow dark:text-elec-yellow font-medium">
-              Covers all aspects of health & safety, not just electrical work
-            </div>
-          </div>
-        </div>
-        <InlineCheck {...quickCheckQuestions[4]} />
-      </AM2ContentCard>
-
-      {/* Summary */}
-      <AM2ContentCard
-        title="Summary"
-        className="bg-gradient-to-r from-elec-yellow/15 via-card to-card/60"
-      >
-        <div className="space-y-4">
-          <p className="text-xs sm:text-sm text-white">
-            Critical safety errors are the quickest way to fail AM2. They include unsafe isolation,
-            energising unsafe circuits, and breaching fundamental health and safety principles.
-            These errors result in instant section failure because they represent practices that
-            could cause serious injury or death in real-world work.
-          </p>
-          <ul className="space-y-2 text-xs sm:text-sm text-white">
-            <li className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              Use systematic safety procedures and never skip steps to save time
-            </li>
-            <li className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              Treat the assessment as a live site where others' lives depend on your work
-            </li>
-            <li className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              Remember: if it's unsafe in the real world, it's an instant fail in AM2
-            </li>
-          </ul>
-          <div className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg mt-4">
-            <p className="text-sm font-medium text-red-800 dark:text-red-200">
-              Golden Rule: Safety is non-negotiable. One critical error can end your AM2 assessment
-              regardless of how excellent your other work might be.
-            </p>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Quiz Section */}
-      <AM2ContentCard title="Knowledge Check: 10-Question Quiz">
-        <p className="text-sm text-white mb-6">
-          Test your understanding of critical safety errors and how to avoid them in AM2.
-        </p>
-        <Quiz questions={quizQuestions} />
-      </AM2ContentCard>
-
-      <AM2NavigationFooter
-        prevHref="/study-centre/apprentice/am2/module2/section4"
-        prevLabel="Section 4: Completing Paperwork Under Pressure"
-        nextHref="/study-centre/apprentice/am2/module3"
-        nextLabel="Module 3: Installation Tasks"
-        currentSection={5}
-        totalSections={5}
-      />
-    </AM2SectionLayout>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 

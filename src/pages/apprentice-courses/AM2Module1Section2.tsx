@@ -1,3 +1,9 @@
+/**
+ * Module 1 · Section 2 — Structure and timings of the AM2 assessment
+ * AM2 day-prep — Assessment overview (purpose, structure, marking, common fails)
+ * The five sections (A-E), how long you get for each and how to pace your day.
+ */
+
 import {
   Clock,
   CheckCircle,
@@ -7,18 +13,30 @@ import {
   Settings,
   AlertTriangle,
   BookOpen,
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { useNavigate } from 'react-router-dom';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  SectionRule,
+  TLDR,
+  KeyTakeaways,
+  FAQ,
+  Scenario,
+  CommonMistake,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
+const TITLE = 'Structure and Timings of the AM2 Assessment | AM2 Module 1.2 | Elec-Mate';
+const DESCRIPTION =
+  'How the AM2 day breaks down across Sections A to E, the time you get for each and the pacing that keeps you on track.';
+
 const AM2Module1Section2 = () => {
-  useSEO(
-    'Structure and Timings of the AM2 Assessment - AM2 Module 1 Section 2',
-    'Detailed breakdown of the AM2 assessment structure, timings, and time management strategies for successful completion'
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const assessmentStats = [
     {
@@ -125,320 +143,355 @@ const AM2Module1Section2 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module1"
-      breadcrumbs={['AM2', 'Module 1', 'Section 2']}
-    >
-      {/* Hero Section */}
-      <AM2HeroSection
-        icon={Clock}
-        title="Structure and Timings of the Assessment"
-        description="One of the main challenges of the AM2 is not just completing the tasks but doing them within the strict time limits. Understanding the structure and timings before you walk in gives you a huge advantage."
-        badge="Module 1 - Section 2"
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 1
+          </button>
 
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-        {assessmentStats.map((stat, index) => (
-          <AM2ContentCard key={index} className="text-center">
-            <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">{stat.number}</div>
-            <div className="text-ios-footnote font-semibold text-white mb-1">{stat.label}</div>
-            <div className="text-ios-footnote text-white">{stat.description}</div>
-          </AM2ContentCard>
-        ))}
+          <PageHero
+            eyebrow="Module 1 · Section 2"
+            title="Structure and Timings of the Assessment"
+            description="One of the main challenges of the AM2 is not just completing the tasks but doing them within the strict time limits. Understanding the structure and timings before you walk in gives you a huge advantage."
+            tone="yellow"
+          />
+
+          <TLDR
+            points={[
+              'AM2 has five sections (A–E) over roughly 16.5 hours spread across 2½ days.',
+              'Section A (composite installation) eats 8.5 hours — that’s where time pressure hits hardest.',
+              'Safe isolation is short (~45 minutes) but a critical fail here ends the assessment regardless of the rest.',
+              'Plan your sequence in the first five minutes of every section — pace beats panic every time.',
+            ]}
+          />
+
+          {/* Statistics Cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {assessmentStats.map((stat, index) => (
+              <div
+                key={index}
+                className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5 text-center"
+              >
+                <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">
+                  {stat.number}
+                </div>
+                <div className="text-ios-footnote font-semibold text-white mb-1">{stat.label}</div>
+                <div className="text-ios-footnote text-white">{stat.description}</div>
+              </div>
+            ))}
+          </div>
+
+          <SectionRule />
+
+          {/* Assessment Structure */}
+          <ConceptBlock title="How the AM2 Is Structured">
+            <p>
+              The AM2 is divided into five main sections (A through E). Each section tests a
+              different set of skills, but together they prove you are safe, competent, and ready
+              for industry.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              {assessmentSections.map((section, index) => (
+                <li key={index}>
+                  <strong>
+                    {section.section} – {section.title}
+                  </strong>{' '}
+                  <span className="text-elec-yellow">({section.duration})</span> —{' '}
+                  {section.description}
+                </li>
+              ))}
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* Total Time */}
+          <ConceptBlock title="Total Time">
+            <p>
+              The overall duration of the AM2 is around{' '}
+              <span className="text-elec-yellow font-semibold">~16.5 hours</span>, normally spread
+              across <span className="text-elec-yellow font-semibold">two and a half days</span>.
+              Some centres allow short breaks between sections, but you should be prepared for long
+              sessions of focused work.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* Time Management Tips */}
+          <ConceptBlock title="Time Management Tips">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              {timeManagementTips.map((tip, index) => (
+                <li key={index}>
+                  <strong>{tip.title}.</strong> {tip.description}
+                </li>
+              ))}
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* Additional Time Management Strategies */}
+          <ConceptBlock title="Additional Time Management Strategies">
+            <p>
+              <span className="text-elec-yellow font-semibold">Treat each section as a reset.</span>{' '}
+              If one task doesn't go perfectly, don't carry the stress into the next. The AM2 is
+              marked section by section, not on overall impression.
+            </p>
+            <p>
+              <span className="text-elec-yellow font-semibold">Practice under time pressure.</span>{' '}
+              During your preparation, time yourself on practice tasks to get used to working
+              efficiently under pressure.
+            </p>
+            <p>
+              <span className="text-elec-yellow font-semibold">Know your weak areas.</span> Spend
+              extra time practicing the sections you find most challenging, but don't neglect the
+              areas you're confident in.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* Assessment Day Schedule */}
+          <ConceptBlock title="Typical Assessment Schedule">
+            <p>
+              <strong>Day 1 (6–7 hours):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Installation Work begins (6-7 hours)</li>
+              <li>Break periods as centre allows</li>
+            </ul>
+            <p>
+              <strong>Day 2 (6–7 hours):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Continue Installation Work (2.5-3.5 hours)</li>
+              <li>Begin Testing &amp; Certification (3.5 hours)</li>
+              <li>Complete paperwork</li>
+            </ul>
+            <p>
+              <strong>Day 3 (3–4 hours):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Safe Isolation of Circuits (45 min)</li>
+              <li>Fault Diagnosis (2 hours)</li>
+              <li>Online Knowledge Test (1 hour)</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* Common Time Wasters */}
+          <ConceptBlock title="Common Time Wasters to Avoid">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Poor Planning</strong> — Not reading the entire brief before starting work
+              </li>
+              <li>
+                <strong>Tool Organisation</strong> — Wasting time looking for tools or components
+              </li>
+              <li>
+                <strong>Measurement Errors</strong> — Having to re-run cables due to incorrect
+                measurements
+              </li>
+              <li>
+                <strong>Perfectionism</strong> — Spending too long on cosmetic improvements
+              </li>
+              <li>
+                <strong>Test Equipment Issues</strong> — Not checking equipment functionality
+                beforehand
+              </li>
+              <li>
+                <strong>Paperwork Panic</strong> — Leaving insufficient time for test certificates
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* Preparation Focus Areas */}
+          <ConceptBlock title="How to Prepare for Time Management">
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
+                  Practice with Realistic Timings
+                </h4>
+                <p className="text-ios-body text-white">
+                  Set yourself challenges during training: "Can I complete this ring final in 45
+                  minutes?" Time yourself regularly to build realistic expectations.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
+                  Master Your Test Equipment
+                </h4>
+                <p className="text-ios-body text-white">
+                  Know exactly which buttons to press and in what sequence. Practice until testing
+                  procedures become automatic.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
+                  Memorise Key Calculations
+                </h4>
+                <p className="text-ios-body text-white">
+                  Know cable length calculations, volt drop formulas, and certification requirements
+                  by heart. No time to look these up during the assessment.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
+                  Develop Work Sequences
+                </h4>
+                <p className="text-ios-body text-white">
+                  Create standard approaches for common tasks. Always do risk assessment, isolation,
+                  installation, testing, and certification in that order.
+                </p>
+              </div>
+            </div>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* Tips and Checklist */}
+          <ConceptBlock title="Tips and Checklist">
+            <div className="space-y-3">
+              {checklistItems.map((item, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span className="text-ios-body text-white">{item}</span>
+                </div>
+              ))}
+            </div>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <Scenario
+            title="The first hour of Section A"
+            situation={
+              <>
+                You’ve started Section A. The rig has conduit, trunking, an SWA run and a
+                three-phase isolator to terminate. The candidate next to you has already started
+                bending conduit and you can feel yourself wanting to do the same.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop. Read the spec end-to-end. Walk the rig once and check what cable, what
+                fixings, what terminations are required. Sketch a rough sequence — installation
+                order matters because some accessories block access to others. Five minutes of
+                planning saves an hour of unpicking.
+              </>
+            }
+            whyItMatters={
+              <>
+                Candidates who run out of time in Section A almost always rushed the first ten
+                minutes. The clock starts when you start the planning, not when you pick up a tool.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title="Treating the 8.5-hour installation as one long block"
+            whatHappens={
+              <>
+                You head down without sub-targets and look up at lunch on day one to realise you’re
+                hours behind. By day two you’re cutting corners on terminations to claw time back —
+                and that’s when the workmanship marks slip.
+              </>
+            }
+            doInstead={
+              <>
+                Break Section A into A1–A5 sub-tasks and give each a target finish time. Tick them
+                off as you go. If you’re behind on one sub-task, decide whether to fix it now or
+                bank the lost time and work it into the next one.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Do I get the timings on the day or know them in advance?',
+                answer:
+                  'You know the section timings in advance — they’re published by NET. The order can vary slightly by centre, but the durations don’t change.',
+              },
+              {
+                question: 'Can I take breaks?',
+                answer:
+                  'Yes — there’s a scheduled lunch break each day, and you can take the loo or a brew break if you need to. The clock keeps running on the section, so factor that in when planning.',
+              },
+              {
+                question: 'What if I finish a section early?',
+                answer:
+                  'Use the time to check your work. Re-walk the rig, double-check terminations, tidy your workspace. Don’t hand in early — the assessor scores neatness and finish, and an early hand-in often leaves marks on the table.',
+              },
+              {
+                question: 'Is the inspection and testing time really 3.5 hours?',
+                answer:
+                  'Yes — and most candidates underestimate it. You have to do the full sequence (continuity, IR, polarity, Zs, RCD) and complete the certificate properly. Practise this end-to-end before the day.',
+              },
+              {
+                question: 'How long is the online knowledge test?',
+                answer:
+                  'One hour, multiple-choice, sat at a workstation in the centre. It covers BS 7671:2018+A4:2026, health and safety law, and inspection and testing procedure. You can have your BS 7671 book open.',
+              },
+              {
+                question: 'Can I run over time on a section?',
+                answer:
+                  'No — when the section closes, work stops. Anything unfinished is marked as it stands, which usually means a Not Yet Competent on that criterion. That’s why pacing is half the battle.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Five sections (A–E) totalling about 16.5 hours over 2½ days.',
+              'Section A is 8.5 hours of installation — break it into A1–A5 sub-targets.',
+              'Section B is 3.5 hours of inspection, testing and certification — don’t underestimate paperwork time.',
+              'Section C is 45 minutes of safe isolation. Short but critical — a fail here ends the assessment.',
+              'Section D is 2 hours of fault diagnosis. Logic, not luck. Work step by step.',
+              'Section E is a 1-hour online knowledge test, BS 7671 open-book.',
+              'Plan the first five minutes of every section. Pace beats speed every time.',
+              'When the section clock stops, work stops — finish what you can to a clean standard.',
+            ]}
+          />
+
+          {/* Navigation Footer */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module1/section1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Purpose of AM2
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module1/section3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Marking Criteria
+              </div>
+            </button>
+          </div>
+        </PageFrame>
       </div>
-
-      {/* Assessment Structure */}
-      <AM2ContentCard accent>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
-          How the AM2 Is Structured
-        </h2>
-        <p className="text-ios-body text-white mb-6">
-          The AM2 is divided into five main sections (A through E). Each section tests a different
-          set of skills, but together they prove you are safe, competent, and ready for industry.
-        </p>
-
-        <div className="space-y-4">
-          {assessmentSections.map((section, index) => (
-            <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30">
-                    <section.icon className={`w-6 h-6 ${section.color}`} />
-                  </div>
-                </div>
-                <div className="flex-grow">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                    <h3 className="text-ios-headline font-semibold text-white">
-                      {section.section} - {section.title}
-                    </h3>
-                    <span className="text-ios-callout font-medium text-elec-yellow mt-1 sm:mt-0">
-                      {section.duration}
-                    </span>
-                  </div>
-                  <p className="text-ios-callout text-white leading-relaxed">
-                    {section.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </AM2ContentCard>
-
-      {/* Total Time */}
-      <AM2ContentCard>
-        <h3 className="text-ios-headline font-semibold text-white mb-3">Total Time</h3>
-        <p className="text-ios-body text-white">
-          The overall duration of the AM2 is around{' '}
-          <span className="text-elec-yellow font-semibold">~16.5 hours</span>, normally spread
-          across <span className="text-elec-yellow font-semibold">two and a half days</span>. Some
-          centres allow short breaks between sections, but you should be prepared for long sessions
-          of focused work.
-        </p>
-      </AM2ContentCard>
-
-      {/* Time Management Tips */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-4">Time Management Tips</h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          {timeManagementTips.map((tip, index) => (
-            <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex gap-3">
-                <div className="flex-shrink-0">
-                  <tip.icon className="w-5 h-5 text-elec-yellow mt-0.5" />
-                </div>
-                <div>
-                  <h3 className="text-ios-headline font-semibold text-white mb-2">{tip.title}</h3>
-                  <p className="text-ios-callout text-white">{tip.description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </AM2ContentCard>
-
-      {/* Additional Time Management Strategies */}
-      <AM2ContentCard>
-        <h3 className="text-ios-headline font-semibold text-white mb-4">
-          Additional Time Management Strategies
-        </h3>
-        <div className="space-y-4">
-          <p className="text-ios-body text-white">
-            <span className="text-elec-yellow font-semibold">Treat each section as a reset.</span>{' '}
-            If one task doesn't go perfectly, don't carry the stress into the next. The AM2 is
-            marked section by section, not on overall impression.
-          </p>
-          <p className="text-ios-body text-white">
-            <span className="text-elec-yellow font-semibold">Practice under time pressure.</span>{' '}
-            During your preparation, time yourself on practice tasks to get used to working
-            efficiently under pressure.
-          </p>
-          <p className="text-ios-body text-white">
-            <span className="text-elec-yellow font-semibold">Know your weak areas.</span> Spend
-            extra time practicing the sections you find most challenging, but don't neglect the
-            areas you're confident in.
-          </p>
-        </div>
-      </AM2ContentCard>
-
-      {/* Assessment Day Schedule */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-4">
-          Typical Assessment Schedule
-        </h2>
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h3 className="text-ios-headline font-semibold text-white mb-3">Day 1 (6-7 hours)</h3>
-            <ul className="space-y-2 text-ios-callout text-white">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Installation Work begins (6-7 hours)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Break periods as centre allows</span>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h3 className="text-ios-headline font-semibold text-white mb-3">Day 2 (6-7 hours)</h3>
-            <ul className="space-y-2 text-ios-callout text-white">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Continue Installation Work (2.5-3.5 hours)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Begin Testing & Certification (3.5 hours)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Complete paperwork</span>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h3 className="text-ios-headline font-semibold text-white mb-3">Day 3 (3-4 hours)</h3>
-            <ul className="space-y-2 text-ios-callout text-white">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Safe Isolation of Circuits (45 min)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Fault Diagnosis (2 hours)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Online Knowledge Test (1 hour)</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Common Time Wasters */}
-      <AM2ContentCard>
-        <h3 className="text-ios-headline font-semibold text-white mb-4">
-          Common Time Wasters to Avoid
-        </h3>
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-white text-ios-callout mb-1">Poor Planning</h4>
-                <p className="text-ios-footnote text-white">
-                  Not reading the entire brief before starting work
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-white text-ios-callout mb-1">
-                  Tool Organisation
-                </h4>
-                <p className="text-ios-footnote text-white">
-                  Wasting time looking for tools or components
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-white text-ios-callout mb-1">
-                  Measurement Errors
-                </h4>
-                <p className="text-ios-footnote text-white">
-                  Having to re-run cables due to incorrect measurements
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-white text-ios-callout mb-1">Perfectionism</h4>
-                <p className="text-ios-footnote text-white">
-                  Spending too long on cosmetic improvements
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-white text-ios-callout mb-1">
-                  Test Equipment Issues
-                </h4>
-                <p className="text-ios-footnote text-white">
-                  Not checking equipment functionality beforehand
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-white text-ios-callout mb-1">Paperwork Panic</h4>
-                <p className="text-ios-footnote text-white">
-                  Leaving insufficient time for test certificates
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Preparation Focus Areas */}
-      <AM2ContentCard>
-        <h3 className="text-ios-headline font-semibold text-white mb-4">
-          How to Prepare for Time Management
-        </h3>
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
-              Practice with Realistic Timings
-            </h4>
-            <p className="text-ios-body text-white">
-              Set yourself challenges during training: "Can I complete this ring final in 45
-              minutes?" Time yourself regularly to build realistic expectations.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
-              Master Your Test Equipment
-            </h4>
-            <p className="text-ios-body text-white">
-              Know exactly which buttons to press and in what sequence. Practice until testing
-              procedures become automatic.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
-              Memorise Key Calculations
-            </h4>
-            <p className="text-ios-body text-white">
-              Know cable length calculations, volt drop formulas, and certification requirements by
-              heart. No time to look these up during the assessment.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
-              Develop Work Sequences
-            </h4>
-            <p className="text-ios-body text-white">
-              Create standard approaches for common tasks. Always do risk assessment, isolation,
-              installation, testing, and certification in that order.
-            </p>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Tips and Checklist */}
-      <AM2ContentCard>
-        <h3 className="text-ios-headline font-semibold text-white mb-4">Tips and Checklist</h3>
-        <div className="space-y-3">
-          {checklistItems.map((item, index) => (
-            <div key={index} className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-ios-body text-white">{item}</span>
-            </div>
-          ))}
-        </div>
-      </AM2ContentCard>
-
-      {/* Navigation Footer */}
-      <AM2NavigationFooter
-        prevHref="/study-centre/apprentice/am2/module1/section1"
-        prevLabel="Purpose of AM2"
-        nextHref="/study-centre/apprentice/am2/module1/section3"
-        nextLabel="Marking Criteria"
-        currentSection={2}
-        totalSections={4}
-      />
-    </AM2SectionLayout>
+    </div>
   );
 };
 

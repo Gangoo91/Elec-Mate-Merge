@@ -74,8 +74,8 @@ export default defineConfig(({ mode }) => ({
         type: 'module',
       },
     }),
-    compression({ algorithm: 'gzip', threshold: 1024 }),
-    compression({ algorithm: 'brotliCompress', threshold: 1024 }),
+    mode === 'production' && compression({ algorithm: 'gzip', threshold: 1024 }),
+    mode === 'production' && compression({ algorithm: 'brotliCompress', threshold: 1024 }),
     // Source-map upload to Sentry — only runs when SENTRY_AUTH_TOKEN is set
     // (CI / production builds), so local dev builds without the token still
     // succeed without uploading anything. Symbolicates minified stack traces

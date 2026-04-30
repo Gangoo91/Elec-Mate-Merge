@@ -1,30 +1,46 @@
+/**
+ * Module 5 · Section 1 — Typical faults set in the AM2 assessment
+ * AM2 day-prep — AM2 Phase D (fault diagnosis + rectification)
+ * The faults NET typically build in: open circuits, shorts, polarity swaps, missing CPCs — and how to spot each.
+ */
+
 import {
   AlertTriangle,
-  CheckCircle,
-  Target,
-  Search,
-  Lightbulb,
+  ArrowLeft,
   BookOpen,
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Lightbulb,
+  Search,
+  Settings,
+  Target,
   Wrench,
   Zap,
-  Eye,
-  Settings,
 } from 'lucide-react';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { Link } from 'react-router-dom';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  TLDR,
+  RegsCallout,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+} from '@/components/study-centre/learning';
+import { PageFrame, PageHero } from '@/components/college/primitives';
 import useSEO from '@/hooks/useSEO';
 
+const TITLE = 'Typical Faults Set in the AM2 Assessment | AM2 Module 5.1 | Elec-Mate';
+const DESCRIPTION =
+  'The faults NET typically builds into the AM2 — open circuits, shorts, polarity swaps, missing CPCs — and the symptoms that give them away.';
+
 const AM2Module5Section1 = () => {
-  useSEO(
-    'Typical Faults Set in the AM2 Assessment | AM2 Module 5 Section 1',
-    'Master recognition and diagnosis of common electrical faults encountered in AM2 assessments. Learn symptoms, testing methods and what assessors expect.'
-  );
+  useSEO(TITLE, DESCRIPTION);
 
   const quickCheckQuestions: Array<{
     id: string;
@@ -214,1165 +230,1029 @@ const AM2Module5Section1 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module5"
-      breadcrumbs={[
-        { label: 'AM2', href: '/study-centre/apprentice/am2' },
-        { label: 'Module 5', href: '/study-centre/apprentice/am2/module5' },
-        { label: 'Section 1' },
-      ]}
-    >
-      {/* Hero Section */}
-      <AM2HeroSection
-        icon={Search}
-        title="Typical Faults Set in the AM2 Assessment"
-        description="The AM2 assessment deliberately includes electrical faults that you must identify, test, and document. These aren't random - they're carefully selected realistic faults that electricians encounter in the field."
-        badge="Module 5 - Section 1"
-      />
-
-      {/* Additional Context */}
-      <p className="text-ios-body text-white leading-relaxed -mt-4 mb-6">
-        Understanding common fault types, their symptoms, and appropriate testing methods is
-        essential for AM2 success. Assessors want to see systematic diagnosis, not guesswork.
-      </p>
-
-      {/* Critical Warning */}
-      <AM2CriticalWarning
-        title="CRITICAL: Real vs Deliberate Faults"
-        message="If you discover what appears to be a genuine safety fault (not a deliberate test fault), stop work immediately and report it to your assessor. Never assume all faults are deliberate. Your safety assessment skills are being tested - both in finding deliberate faults and recognising genuine hazards."
-      />
-
-      {/* Learning Outcomes */}
-      <AM2LearningOutcomes outcomes={learningOutcomes} />
-
-      {/* Fault Diagnosis Decision Tree Diagram */}
-      <div className="my-8 flex justify-center">
-        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
-          <svg
-            viewBox="0 0 500 500"
-            className="w-full h-auto"
-            role="img"
-            aria-label="Fault diagnosis decision tree showing four common symptoms, the appropriate test for each, and the resulting fault type identified"
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <Link
+            to="/study-centre/apprentice/am2/module5"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            {/* Title */}
-            <text
-              x="250"
-              y="24"
-              textAnchor="middle"
-              fill="#F3F4F6"
-              fontSize="15"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Fault Diagnosis Decision Tree
-            </text>
+            <ArrowLeft className="h-4 w-4" /> Module 5
+          </Link>
 
-            {/* Column headers */}
-            <text
-              x="80"
-              y="52"
-              textAnchor="middle"
-              fill="#9CA3AF"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              SYMPTOM
-            </text>
-            <text
-              x="250"
-              y="52"
-              textAnchor="middle"
-              fill="#9CA3AF"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              TEST
-            </text>
-            <text
-              x="420"
-              y="52"
-              textAnchor="middle"
-              fill="#9CA3AF"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              FAULT TYPE
-            </text>
+          {/* Hero Section */}
+          <PageHero
+            eyebrow="Module 5 - Section 1"
+            title="Typical Faults Set in the AM2 Assessment"
+            description="The AM2 assessment deliberately includes electrical faults that you must identify, test, and document. These aren't random - they're carefully selected realistic faults that electricians encounter in the field."
+            tone="yellow"
+          />
 
-            {/* Row 1: Dead Circuit */}
-            <rect x="10" y="70" width="140" height="44" rx="8" fill="#2563EB" />
-            <text
-              x="80"
-              y="88"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Dead Circuit
-            </text>
-            <text
-              x="80"
-              y="104"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              (No power at all)
-            </text>
+          <TLDR
+            points={[
+              'On AM2 day, expect 2 deliberate faults built into the rig — open circuit, short circuit, earth fault, high-resistance joint or polarity error are the usual suspects.',
+              "You're not being marked on luck — you're marked on whether you prove dead first, then test logically, then state type + location + rectification.",
+              "Continuity finds opens. Insulation resistance finds shorts and earth faults. Zs finds high-resistance joints. Match the test to the symptom — don't guess.",
+            ]}
+          />
 
-            <line x1="150" y1="92" x2="180" y2="92" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="176,86 186,92 176,98" fill="#9CA3AF" />
+          {/* Additional Context */}
+          <p className="text-ios-body text-white leading-relaxed -mt-4 mb-6">
+            Understanding common fault types, their symptoms, and appropriate testing methods is
+            essential for AM2 success. Assessors want to see systematic diagnosis, not guesswork.
+          </p>
 
-            <rect x="185" y="70" width="130" height="44" rx="8" fill="#D97706" />
-            <text
-              x="250"
-              y="88"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Continuity
-            </text>
-            <text
-              x="250"
-              y="104"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              Test R1+R2
-            </text>
+          {/* Critical Warning */}
+          <CommonMistake
+            title="Real vs Deliberate Faults"
+            whatHappens={
+              'If you discover what appears to be a genuine safety fault (not a deliberate test fault), stop work immediately and report it to your assessor. Never assume all faults are deliberate. Your safety assessment skills are being tested - both in finding deliberate faults and recognising genuine hazards.'
+            }
+            doInstead="Treat this as a hard rule on AM2 day — there are no exceptions."
+          />
 
-            <line x1="315" y1="92" x2="345" y2="92" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="341,86 351,92 341,98" fill="#9CA3AF" />
+          {/* Learning Outcomes */}
+          <LearningOutcomes outcomes={learningOutcomes} />
 
-            <rect x="350" y="70" width="140" height="44" rx="8" fill="#DC2626" />
-            <text
-              x="420"
-              y="88"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Open Circuit
-            </text>
-            <text
-              x="420"
-              y="104"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              Fault
-            </text>
+          {/* Fault Diagnosis Decision Tree Diagram */}
+          <div className="my-8 flex justify-center">
+            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
+              <svg
+                viewBox="0 0 500 500"
+                className="w-full h-auto"
+                role="img"
+                aria-label="Fault diagnosis decision tree showing four common symptoms, the appropriate test for each, and the resulting fault type identified"
+              >
+                {/* Title */}
+                <text
+                  x="250"
+                  y="24"
+                  textAnchor="middle"
+                  fill="#F3F4F6"
+                  fontSize="15"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Fault Diagnosis Decision Tree
+                </text>
 
-            {/* Row 2: MCB Trips */}
-            <rect x="10" y="130" width="140" height="44" rx="8" fill="#2563EB" />
-            <text
-              x="80"
-              y="148"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              MCB Trips
-            </text>
-            <text
-              x="80"
-              y="164"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              (Immediately)
-            </text>
+                {/* Column headers */}
+                <text
+                  x="80"
+                  y="52"
+                  textAnchor="middle"
+                  fill="#9CA3AF"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  SYMPTOM
+                </text>
+                <text
+                  x="250"
+                  y="52"
+                  textAnchor="middle"
+                  fill="#9CA3AF"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  TEST
+                </text>
+                <text
+                  x="420"
+                  y="52"
+                  textAnchor="middle"
+                  fill="#9CA3AF"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  FAULT TYPE
+                </text>
 
-            <line x1="150" y1="152" x2="180" y2="152" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="176,146 186,152 176,158" fill="#9CA3AF" />
+                {/* Row 1: Dead Circuit */}
+                <rect x="10" y="70" width="140" height="44" rx="8" fill="#2563EB" />
+                <text
+                  x="80"
+                  y="88"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Dead Circuit
+                </text>
+                <text
+                  x="80"
+                  y="104"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  (No power at all)
+                </text>
 
-            <rect x="185" y="130" width="130" height="44" rx="8" fill="#D97706" />
-            <text
-              x="250"
-              y="148"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Insulation
-            </text>
-            <text
-              x="250"
-              y="164"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              Resistance (IR)
-            </text>
+                <line x1="150" y1="92" x2="180" y2="92" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="176,86 186,92 176,98" fill="#9CA3AF" />
 
-            <line x1="315" y1="152" x2="345" y2="152" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="341,146 351,152 341,158" fill="#9CA3AF" />
+                <rect x="185" y="70" width="130" height="44" rx="8" fill="#D97706" />
+                <text
+                  x="250"
+                  y="88"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Continuity
+                </text>
+                <text
+                  x="250"
+                  y="104"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Test R1+R2
+                </text>
 
-            <rect x="350" y="130" width="140" height="44" rx="8" fill="#DC2626" />
-            <text
-              x="420"
-              y="148"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Short Circuit
-            </text>
-            <text
-              x="420"
-              y="164"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              Fault
-            </text>
+                <line x1="315" y1="92" x2="345" y2="92" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="341,86 351,92 341,98" fill="#9CA3AF" />
 
-            {/* Row 3: RCD Trips */}
-            <rect x="10" y="190" width="140" height="44" rx="8" fill="#2563EB" />
-            <text
-              x="80"
-              y="208"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              RCD Trips
-            </text>
-            <text
-              x="80"
-              y="224"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              (On energisation)
-            </text>
+                <rect x="350" y="70" width="140" height="44" rx="8" fill="#DC2626" />
+                <text
+                  x="420"
+                  y="88"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Open Circuit
+                </text>
+                <text
+                  x="420"
+                  y="104"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Fault
+                </text>
 
-            <line x1="150" y1="212" x2="180" y2="212" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="176,206 186,212 176,218" fill="#9CA3AF" />
+                {/* Row 2: MCB Trips */}
+                <rect x="10" y="130" width="140" height="44" rx="8" fill="#2563EB" />
+                <text
+                  x="80"
+                  y="148"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  MCB Trips
+                </text>
+                <text
+                  x="80"
+                  y="164"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  (Immediately)
+                </text>
 
-            <rect x="185" y="190" width="130" height="44" rx="8" fill="#D97706" />
-            <text
-              x="250"
-              y="208"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              IR Line-Earth
-            </text>
-            <text
-              x="250"
-              y="224"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              L-E and N-E
-            </text>
+                <line x1="150" y1="152" x2="180" y2="152" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="176,146 186,152 176,158" fill="#9CA3AF" />
 
-            <line x1="315" y1="212" x2="345" y2="212" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="341,206 351,212 341,218" fill="#9CA3AF" />
+                <rect x="185" y="130" width="130" height="44" rx="8" fill="#D97706" />
+                <text
+                  x="250"
+                  y="148"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Insulation
+                </text>
+                <text
+                  x="250"
+                  y="164"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Resistance (IR)
+                </text>
 
-            <rect x="350" y="190" width="140" height="44" rx="8" fill="#DC2626" />
-            <text
-              x="420"
-              y="208"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Earth Fault
-            </text>
-            <text
-              x="420"
-              y="224"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              (Insulation breakdown)
-            </text>
+                <line x1="315" y1="152" x2="345" y2="152" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="341,146 351,152 341,158" fill="#9CA3AF" />
 
-            {/* Row 4: Poor Performance */}
-            <rect x="10" y="250" width="140" height="44" rx="8" fill="#2563EB" />
-            <text
-              x="80"
-              y="268"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Poor Performance
-            </text>
-            <text
-              x="80"
-              y="284"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              (Dim lights, heat)
-            </text>
+                <rect x="350" y="130" width="140" height="44" rx="8" fill="#DC2626" />
+                <text
+                  x="420"
+                  y="148"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Short Circuit
+                </text>
+                <text
+                  x="420"
+                  y="164"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Fault
+                </text>
 
-            <line x1="150" y1="272" x2="180" y2="272" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="176,266 186,272 176,278" fill="#9CA3AF" />
+                {/* Row 3: RCD Trips */}
+                <rect x="10" y="190" width="140" height="44" rx="8" fill="#2563EB" />
+                <text
+                  x="80"
+                  y="208"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  RCD Trips
+                </text>
+                <text
+                  x="80"
+                  y="224"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  (On energisation)
+                </text>
 
-            <rect x="185" y="250" width="130" height="44" rx="8" fill="#D97706" />
-            <text
-              x="250"
-              y="268"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Zs (Loop
-            </text>
-            <text
-              x="250"
-              y="284"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              Impedance)
-            </text>
+                <line x1="150" y1="212" x2="180" y2="212" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="176,206 186,212 176,218" fill="#9CA3AF" />
 
-            <line x1="315" y1="272" x2="345" y2="272" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="341,266 351,272 341,278" fill="#9CA3AF" />
+                <rect x="185" y="190" width="130" height="44" rx="8" fill="#D97706" />
+                <text
+                  x="250"
+                  y="208"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  IR Line-Earth
+                </text>
+                <text
+                  x="250"
+                  y="224"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  L-E and N-E
+                </text>
 
-            <rect x="350" y="250" width="140" height="44" rx="8" fill="#DC2626" />
-            <text
-              x="420"
-              y="268"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              High Resistance
-            </text>
-            <text
-              x="420"
-              y="284"
-              textAnchor="middle"
-              fill="white"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              Joint
-            </text>
+                <line x1="315" y1="212" x2="345" y2="212" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="341,206 351,212 341,218" fill="#9CA3AF" />
 
-            {/* Bottom guidance box */}
-            <rect
-              x="50"
-              y="320"
-              width="400"
-              height="60"
-              rx="8"
-              fill="#1F2937"
-              stroke="#D97706"
-              strokeWidth="1.5"
-            />
-            <text
-              x="250"
-              y="344"
-              textAnchor="middle"
-              fill="#FCD34D"
-              fontSize="12"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Systematic Approach:
-            </text>
-            <text
-              x="250"
-              y="362"
-              textAnchor="middle"
-              fill="#F3F4F6"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              Identify Symptom &rarr; Select Correct Test &rarr; Diagnose Fault Type
-            </text>
-            <text
-              x="250"
-              y="376"
-              textAnchor="middle"
-              fill="#9CA3AF"
-              fontSize="9"
-              fontFamily="system-ui, sans-serif"
-            >
-              Never guess -- always test methodically
-            </text>
+                <rect x="350" y="190" width="140" height="44" rx="8" fill="#DC2626" />
+                <text
+                  x="420"
+                  y="208"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Earth Fault
+                </text>
+                <text
+                  x="420"
+                  y="224"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  (Insulation breakdown)
+                </text>
 
-            {/* Colour legend */}
-            <rect
-              x="115"
-              y="400"
-              width="270"
-              height="44"
-              rx="6"
-              fill="#1F2937"
-              stroke="#374151"
-              strokeWidth="1"
-            />
-            <rect x="130" y="414" width="16" height="16" rx="3" fill="#2563EB" />
-            <text x="152" y="426" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
-              Symptom
-            </text>
-            <rect x="210" y="414" width="16" height="16" rx="3" fill="#D97706" />
-            <text x="232" y="426" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
-              Test
-            </text>
-            <rect x="275" y="414" width="16" height="16" rx="3" fill="#DC2626" />
-            <text x="297" y="426" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
-              Fault Type
-            </text>
+                {/* Row 4: Poor Performance */}
+                <rect x="10" y="250" width="140" height="44" rx="8" fill="#2563EB" />
+                <text
+                  x="80"
+                  y="268"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Poor Performance
+                </text>
+                <text
+                  x="80"
+                  y="284"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  (Dim lights, heat)
+                </text>
 
-            {/* Bottom label */}
-            <text
-              x="250"
-              y="470"
-              textAnchor="middle"
-              fill="#9CA3AF"
-              fontSize="10"
-              fontFamily="system-ui, sans-serif"
-            >
-              AM2 Module 5 -- Fault Diagnosis Methodology
-            </text>
-          </svg>
-        </div>
-      </div>
+                <line x1="150" y1="272" x2="180" y2="272" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="176,266 186,272 176,278" fill="#9CA3AF" />
 
-      {/* Common Fault Types */}
-      <AM2ContentCard title="1. Common Fault Types in AM2" icon={Target} accent>
-        <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-          <h4 className="text-ios-headline text-white mb-3">
-            TOP 4 Fault Categories You Must Know:
-          </h4>
-          <ul className="space-y-3 text-ios-callout text-white">
-            <li className="flex items-start gap-3">
-              <span className="text-elec-yellow font-bold">1.</span>
-              <span>
-                <strong className="text-white">Open Circuits:</strong> Complete break in
-                conductor - circuit appears dead
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-elec-yellow font-bold">2.</span>
-              <span>
-                <strong className="text-white">High Resistance Connections:</strong> Poor joints
-                - circuit works but resistance too high
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-elec-yellow font-bold">3.</span>
-              <span>
-                <strong className="text-white">Short Circuits:</strong> Direct L-N or L-E contact
-                - protective devices trip
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-elec-yellow font-bold">4.</span>
-              <span>
-                <strong className="text-white">Polarity Errors:</strong> Incorrect connections -
-                switches in neutral, reversed sockets
-              </span>
-            </li>
-          </ul>
-        </div>
-      </AM2ContentCard>
+                <rect x="185" y="250" width="130" height="44" rx="8" fill="#D97706" />
+                <text
+                  x="250"
+                  y="268"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Zs (Loop
+                </text>
+                <text
+                  x="250"
+                  y="284"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Impedance)
+                </text>
 
-      <InlineCheck
-        id={quickCheckQuestions[0].id}
-        question={quickCheckQuestions[0].question}
-        options={quickCheckQuestions[0].options}
-        correctIndex={quickCheckQuestions[0].correctIndex}
-        explanation={quickCheckQuestions[0].explanation}
-      />
+                <line x1="315" y1="272" x2="345" y2="272" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="341,266 351,272 341,278" fill="#9CA3AF" />
 
-      {/* How to Test for Each Fault Type */}
-      <AM2ContentCard title="2. How to Test for Each Fault Type" icon={Eye}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white mb-3">Open Circuit Testing:</h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Primary test:</strong> Continuity between
-                  conductor ends
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Expected result:</strong> Infinite resistance/no
-                  reading
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Symptom:</strong> Circuit completely dead, no
-                  power
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Location:</strong> Half-split method at junction
-                  boxes
-                </span>
-              </li>
-            </ul>
+                <rect x="350" y="250" width="140" height="44" rx="8" fill="#DC2626" />
+                <text
+                  x="420"
+                  y="268"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  High Resistance
+                </text>
+                <text
+                  x="420"
+                  y="284"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Joint
+                </text>
+
+                {/* Bottom guidance box */}
+                <rect
+                  x="50"
+                  y="320"
+                  width="400"
+                  height="60"
+                  rx="8"
+                  fill="#1F2937"
+                  stroke="#D97706"
+                  strokeWidth="1.5"
+                />
+                <text
+                  x="250"
+                  y="344"
+                  textAnchor="middle"
+                  fill="#FCD34D"
+                  fontSize="12"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Systematic Approach:
+                </text>
+                <text
+                  x="250"
+                  y="362"
+                  textAnchor="middle"
+                  fill="#F3F4F6"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Identify Symptom &rarr; Select Correct Test &rarr; Diagnose Fault Type
+                </text>
+                <text
+                  x="250"
+                  y="376"
+                  textAnchor="middle"
+                  fill="#9CA3AF"
+                  fontSize="9"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Never guess -- always test methodically
+                </text>
+
+                {/* Colour legend */}
+                <rect
+                  x="115"
+                  y="400"
+                  width="270"
+                  height="44"
+                  rx="6"
+                  fill="#1F2937"
+                  stroke="#374151"
+                  strokeWidth="1"
+                />
+                <rect x="130" y="414" width="16" height="16" rx="3" fill="#2563EB" />
+                <text
+                  x="152"
+                  y="426"
+                  fill="#F3F4F6"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Symptom
+                </text>
+                <rect x="210" y="414" width="16" height="16" rx="3" fill="#D97706" />
+                <text
+                  x="232"
+                  y="426"
+                  fill="#F3F4F6"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Test
+                </text>
+                <rect x="275" y="414" width="16" height="16" rx="3" fill="#DC2626" />
+                <text
+                  x="297"
+                  y="426"
+                  fill="#F3F4F6"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  Fault Type
+                </text>
+
+                {/* Bottom label */}
+                <text
+                  x="250"
+                  y="470"
+                  textAnchor="middle"
+                  fill="#9CA3AF"
+                  fontSize="10"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  AM2 Module 5 -- Fault Diagnosis Methodology
+                </text>
+              </svg>
+            </div>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white mb-3">High Resistance Testing:</h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Primary test:</strong> Continuity with 200mA
-                  current
-                </span>
+          {/* Common Fault Types */}
+          <ConceptBlock title="1. Common Fault Types in AM2">
+            <p>
+              <strong className="text-elec-yellow">TOP 4 Fault Categories You Must Know:</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Open Circuits:</strong> Complete break in conductor - circuit appears dead
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Expected result:</strong> Higher than normal
-                  resistance
-                </span>
+              <li>
+                <strong>High Resistance Connections:</strong> Poor joints - circuit works but
+                resistance too high
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Symptom:</strong> Circuit works but poor
-                  performance
-                </span>
+              <li>
+                <strong>Short Circuits:</strong> Direct L-N or L-E contact - protective devices trip
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Also check:</strong> Earth fault loop impedance
-                  (Zs)
-                </span>
+              <li>
+                <strong>Polarity Errors:</strong> Incorrect connections - switches in neutral,
+                reversed sockets
+              </li>
+            </ol>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={quickCheckQuestions[0].id}
+            question={quickCheckQuestions[0].question}
+            options={quickCheckQuestions[0].options}
+            correctIndex={quickCheckQuestions[0].correctIndex}
+            explanation={quickCheckQuestions[0].explanation}
+          />
+
+          <RegsCallout
+            source="BS 7671 — Regulation 643.1"
+            clause="Inspection and testing shall be carried out to verify, so far as is reasonably practicable, that the requirements of the Regulations have been met."
+            meaning={
+              <>
+                On AM2 day, fault diagnosis isn't a separate world from initial verification — every
+                test you do at the rig (continuity, IR, polarity, Zs, RCD) is the same test sequence
+                BS 7671 Part 6 requires. The assessor wants to see you're treating each fault check
+                as a proper Part 6 verification, not a quick poke around with a meter.
+              </>
+            }
+            cite="Reference: BS 7671:2018+A4:2026 Part 6 — Inspection and testing"
+          />
+
+          {/* How to Test for Each Fault Type */}
+          <ConceptBlock title="2. How to Test for Each Fault Type">
+            <p>
+              <strong className="text-elec-yellow">Open Circuit Testing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Primary test:</strong> Continuity between conductor ends
+              </li>
+              <li>
+                <strong>Expected result:</strong> Infinite resistance/no reading
+              </li>
+              <li>
+                <strong>Symptom:</strong> Circuit completely dead, no power
+              </li>
+              <li>
+                <strong>Location:</strong> Half-split method at junction boxes
               </li>
             </ul>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white mb-3">Short Circuit Testing:</h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Primary test:</strong> Insulation resistance L-N
-                  at 500V
-                </span>
+            <p>
+              <strong className="text-elec-yellow">High Resistance Testing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Primary test:</strong> Continuity with 200mA current
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Expected result:</strong> Very low/zero reading
-                </span>
+              <li>
+                <strong>Expected result:</strong> Higher than normal resistance
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Symptom:</strong> MCB trips immediately when
-                  energised
-                </span>
+              <li>
+                <strong>Symptom:</strong> Circuit works but poor performance
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Safety:</strong> Never energise confirmed short
-                  circuits
-                </span>
+              <li>
+                <strong>Also check:</strong> Earth fault loop impedance (Zs)
               </li>
             </ul>
-          </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white mb-3">Earth Fault Testing:</h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Primary test:</strong> Insulation resistance L-E
-                  and N-E
-                </span>
+            <p>
+              <strong className="text-elec-yellow">Short Circuit Testing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Primary test:</strong> Insulation resistance L-N at 500V
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Expected result:</strong> Below 1MΩ to earth
-                </span>
+              <li>
+                <strong>Expected result:</strong> Very low/zero reading
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Symptom:</strong> RCD trips when circuit
-                  energised
-                </span>
+              <li>
+                <strong>Symptom:</strong> MCB trips immediately when energised
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Also check:</strong> RCD sensitivity and
-                  operation time
-                </span>
+              <li>
+                <strong>Safety:</strong> Never energise confirmed short circuits
               </li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
 
-      <InlineCheck
-        id={quickCheckQuestions[1].id}
-        question={quickCheckQuestions[1].question}
-        options={quickCheckQuestions[1].options}
-        correctIndex={quickCheckQuestions[1].correctIndex}
-        explanation={quickCheckQuestions[1].explanation}
-      />
+            <p>
+              <strong className="text-elec-yellow">Earth Fault Testing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Primary test:</strong> Insulation resistance L-E and N-E
+              </li>
+              <li>
+                <strong>Expected result:</strong> Below 1MΩ to earth
+              </li>
+              <li>
+                <strong>Symptom:</strong> RCD trips when circuit energised
+              </li>
+              <li>
+                <strong>Also check:</strong> RCD sensitivity and operation time
+              </li>
+            </ul>
+          </ConceptBlock>
 
-      {/* Advanced Fault-Finding Techniques */}
-      <AM2ContentCard title="3. Advanced Fault-Finding Techniques" icon={Lightbulb}>
-        <div className="space-y-4">
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 mb-3">The "Half-Split" Method:</h4>
-            <p className="text-ios-callout text-white mb-3">
+          <InlineCheck
+            id={quickCheckQuestions[1].id}
+            question={quickCheckQuestions[1].question}
+            options={quickCheckQuestions[1].options}
+            correctIndex={quickCheckQuestions[1].correctIndex}
+            explanation={quickCheckQuestions[1].explanation}
+          />
+
+          <Scenario
+            title="The lighting circuit is dead — but the MCB hasn't tripped"
+            situation={
+              <>
+                You're on the AM2 rig. The assessor asks you to investigate a lighting circuit that
+                isn't working. You proved dead, locked off, and gathered your meter. The MCB is on,
+                the consumer unit looks fine, and there's no obvious damage. Symptom: dead circuit,
+                no power at all.
+              </>
+            }
+            whatToDo={
+              <>
+                Don't start tearing accessories apart. The MCB hasn't tripped, so it's not a short
+                or earth fault. A dead circuit with the MCB happily on points to an{' '}
+                <strong>open circuit</strong> — most likely a loose conductor at a JB, switch or
+                rose. Do continuity (R1+R2) from the consumer unit out to each accessory. The point
+                where continuity fails is where your fault lives. Then state type + location + how
+                you'd rectify it.
+              </>
+            }
+            whyItMatters={
+              <>
+                On AM2 day you've got roughly 1.5–2 hours for fault-finding and you'll typically be
+                set 2 faults. If you start swapping accessories or ripping cables before testing,
+                you've burned half your time and shown the assessor you don't work systematically.
+                BS 7671 Reg 643.1 wants verification — and the half-split continuity method is
+                verification.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title="Energising a faulty circuit before you've finished testing"
+            whatHappens={
+              <>
+                You think you've found the fault, you flip the MCB to "see if it works", and either
+                (a) the MCB trips again because it was a short you missed, (b) you blow up the rig
+                equipment, or (c) you fail safety and the assessor stops the test. All three end
+                your AM2 day badly.
+              </>
+            }
+            doInstead={
+              <>
+                Stay dead until you've fully diagnosed. Prove-test-prove every time you go back to
+                isolation. Energising is the LAST step, and only when you can state with confidence
+                what the fault was, where it was, and how it would be rectified.
+              </>
+            }
+          />
+
+          {/* Advanced Fault-Finding Techniques */}
+          <ConceptBlock title="3. Advanced Fault-Finding Techniques">
+            <p>
+              <strong className="text-elec-yellow">The "Half-Split" Method:</strong>
+            </p>
+            <p>
               The most efficient way to locate faults in long circuits. Start testing at the
               midpoint, then eliminate half the circuit each time.
             </p>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>
-                  <strong className="text-white">Step 1:</strong> Test continuity from origin to
-                  circuit midpoint
-                </span>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Test continuity from origin to circuit midpoint
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>
-                  <strong className="text-white">Step 2:</strong> If fault present, check first
-                  half; if clear, check second half
-                </span>
+              <li>
+                <strong>Step 2:</strong> If fault present, check first half; if clear, check second
+                half
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>
-                  <strong className="text-white">Step 3:</strong> Repeat halving process until
-                  fault section isolated
-                </span>
+              <li>
+                <strong>Step 3:</strong> Repeat halving process until fault section isolated
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>
-                  <strong className="text-white">Result:</strong> Locate fault in minimum number
-                  of tests
-                </span>
+              <li>
+                <strong>Result:</strong> Locate fault in minimum number of tests
               </li>
             </ul>
-          </div>
 
-          <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-amber-400 mb-3">Visual Inspection Priorities:</h4>
-            <p className="text-ios-callout text-white mb-3">
+            <p>
+              <strong className="text-elec-yellow">Visual Inspection Priorities:</strong>
+            </p>
+            <p>
               Before touching test instruments, your eyes are your best diagnostic tool. Look for
               obvious issues first.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <h5 className="text-ios-headline text-amber-400 mb-2">At Outlets:</h5>
-                <ul className="text-ios-callout text-white space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400">•</span>
-                    <span>Loose terminal screws</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400">•</span>
-                    <span>Burned/discoloured terminals</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400">•</span>
-                    <span>Missing earth connections</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400">•</span>
-                    <span>Incorrect wire positions</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="text-ios-headline text-amber-400 mb-2">In Junction Boxes:</h5>
-                <ul className="text-ios-callout text-white space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400">•</span>
-                    <span>Disconnected conductors</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400">•</span>
-                    <span>Poor strip connector joints</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400">•</span>
-                    <span>Exposed conductors touching</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400">•</span>
-                    <span>Wrong colour coding</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+            <p>
+              <strong>At Outlets:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Loose terminal screws</li>
+              <li>Burned/discoloured terminals</li>
+              <li>Missing earth connections</li>
+              <li>Incorrect wire positions</li>
+            </ul>
+            <p>
+              <strong>In Junction Boxes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Disconnected conductors</li>
+              <li>Poor strip connector joints</li>
+              <li>Exposed conductors touching</li>
+              <li>Wrong colour coding</li>
+            </ul>
 
-          <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-red-400 mb-3">Dangerous Assumptions to Avoid:</h4>
-            <ul className="text-ios-callout text-white space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-red-400">•</span>
-                <span>
-                  <strong className="text-white">Never assume</strong> all circuits are the same
-                  - test each individually
-                </span>
+            <p>
+              <strong className="text-elec-yellow">Dangerous Assumptions to Avoid:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Never assume</strong> all circuits are the same - test each individually
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-400">•</span>
-                <span>
-                  <strong className="text-white">Never assume</strong> cables follow logical
-                  routes - physically trace them
-                </span>
+              <li>
+                <strong>Never assume</strong> cables follow logical routes - physically trace them
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-400">•</span>
-                <span>
-                  <strong className="text-white">Never assume</strong> colours indicate function
-                  - verify with testing
-                </span>
+              <li>
+                <strong>Never assume</strong> colours indicate function - verify with testing
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-400">•</span>
-                <span>
-                  <strong className="text-white">Never assume</strong> a circuit is dead - always
-                  test before working
-                </span>
+              <li>
+                <strong>Never assume</strong> a circuit is dead - always test before working
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-400">•</span>
-                <span>
-                  <strong className="text-white">Never assume</strong> one fault = no other
-                  faults present
-                </span>
+              <li>
+                <strong>Never assume</strong> one fault = no other faults present
               </li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Real-World Fault Scenarios */}
-      <AM2ContentCard title="4. Real-World Fault Scenarios" icon={Wrench}>
-        <div className="space-y-4">
-          <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-blue-400 mb-3">
-              Scenario 1: "Lighting Circuit Dead"
-            </h4>
-            <div className="text-ios-callout text-white space-y-2">
-              <p>
-                <strong className="text-white">Customer complaint:</strong> "Half the downstairs
-                lights stopped working this morning"
-              </p>
-              <p>
-                <strong className="text-white">Your observation:</strong> MCB hasn't tripped,
-                other circuits working normally
-              </p>
-              <p>
-                <strong className="text-white">Likely fault:</strong> Open circuit in lighting
-                final circuit
-              </p>
-              <p>
-                <strong className="text-white">Test approach:</strong> R1+R2 continuity from
-                consumer unit to each light position
-              </p>
-              <p>
-                <strong className="text-white">Common location:</strong> Junction box under
-                floorboards where cable has been damaged
-              </p>
-            </div>
-          </div>
+          {/* Real-World Fault Scenarios */}
+          <ConceptBlock title="4. Real-World Fault Scenarios">
+            <p>
+              <strong className="text-elec-yellow">Scenario 1: "Lighting Circuit Dead"</strong>
+            </p>
+            <p>
+              <strong>Customer complaint:</strong> "Half the downstairs lights stopped working this
+              morning"
+            </p>
+            <p>
+              <strong>Your observation:</strong> MCB hasn't tripped, other circuits working normally
+            </p>
+            <p>
+              <strong>Likely fault:</strong> Open circuit in lighting final circuit
+            </p>
+            <p>
+              <strong>Test approach:</strong> R1+R2 continuity from consumer unit to each light
+              position
+            </p>
+            <p>
+              <strong>Common location:</strong> Junction box under floorboards where cable has been
+              damaged
+            </p>
 
-          <div className="bg-white/5 border border-orange-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-orange-400 mb-3">
-              Scenario 2: "Socket Keeps Tripping RCD"
-            </h4>
-            <div className="text-ios-callout text-white space-y-2">
-              <p>
-                <strong className="text-white">Customer complaint:</strong> "RCD trips every time
-                I plug anything into the kitchen socket"
-              </p>
-              <p>
-                <strong className="text-white">Your observation:</strong> RCD operates
-                immediately, other sockets work fine
-              </p>
-              <p>
-                <strong className="text-white">Likely fault:</strong> Earth fault on that socket
-                circuit
-              </p>
-              <p>
-                <strong className="text-white">Test approach:</strong> Insulation resistance L-E
-                and N-E with socket isolated
-              </p>
-              <p>
-                <strong className="text-white">Common cause:</strong> Moisture ingress or damaged
-                cable insulation
-              </p>
-            </div>
-          </div>
+            <p>
+              <strong className="text-elec-yellow">Scenario 2: "Socket Keeps Tripping RCD"</strong>
+            </p>
+            <p>
+              <strong>Customer complaint:</strong> "RCD trips every time I plug anything into the
+              kitchen socket"
+            </p>
+            <p>
+              <strong>Your observation:</strong> RCD operates immediately, other sockets work fine
+            </p>
+            <p>
+              <strong>Likely fault:</strong> Earth fault on that socket circuit
+            </p>
+            <p>
+              <strong>Test approach:</strong> Insulation resistance L-E and N-E with socket isolated
+            </p>
+            <p>
+              <strong>Common cause:</strong> Moisture ingress or damaged cable insulation
+            </p>
 
-          <div className="bg-white/5 border border-purple-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-purple-400 mb-3">
-              Scenario 3: "Lights Work But Dim"
-            </h4>
-            <div className="text-ios-callout text-white space-y-2">
-              <p>
-                <strong className="text-white">Customer complaint:</strong> "Lights come on but
-                they're much dimmer than normal"
-              </p>
-              <p>
-                <strong className="text-white">Your observation:</strong> All lights on circuit
-                affected equally
-              </p>
-              <p>
-                <strong className="text-white">Likely fault:</strong> High resistance in neutral
-                or live conductor
-              </p>
-              <p>
-                <strong className="text-white">Test approach:</strong> Line and neutral
-                continuity tests with 200mA
-              </p>
-              <p>
-                <strong className="text-white">Common cause:</strong> Loose neutral connection in
-                consumer unit or junction box
-              </p>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
+            <p>
+              <strong className="text-elec-yellow">Scenario 3: "Lights Work But Dim"</strong>
+            </p>
+            <p>
+              <strong>Customer complaint:</strong> "Lights come on but they're much dimmer than
+              normal"
+            </p>
+            <p>
+              <strong>Your observation:</strong> All lights on circuit affected equally
+            </p>
+            <p>
+              <strong>Likely fault:</strong> High resistance in neutral or live conductor
+            </p>
+            <p>
+              <strong>Test approach:</strong> Line and neutral continuity tests with 200mA
+            </p>
+            <p>
+              <strong>Common cause:</strong> Loose neutral connection in consumer unit or junction
+              box
+            </p>
+          </ConceptBlock>
 
-      {/* Where NET Typically Places Faults */}
-      <AM2ContentCard title="5. Where NET Typically Places Faults" icon={Settings}>
-        <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-          <h4 className="text-ios-headline text-white mb-3">Most Common Locations:</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <ul className="text-ios-callout text-white space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Junction boxes:</strong> Easy assessor access,
-                  realistic
-                </span>
+          {/* Where NET Typically Places Faults */}
+          <ConceptBlock title="5. Where NET Typically Places Faults">
+            <p>
+              <strong className="text-elec-yellow">Most Common Locations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Junction boxes:</strong> Easy assessor access, realistic
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Socket outlets:</strong> Terminal connections
-                  visible
-                </span>
+              <li>
+                <strong>Socket outlets:</strong> Terminal connections visible
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Light fittings:</strong> Switch and rose
-                  connections
-                </span>
+              <li>
+                <strong>Light fittings:</strong> Switch and rose connections
+              </li>
+              <li>
+                <strong>Consumer unit:</strong> MCB and neutral bar connections
+              </li>
+              <li>
+                <strong>Cooker outlets:</strong> High current connections
+              </li>
+              <li>
+                <strong>Motor controls:</strong> Stop/start and overload settings
               </li>
             </ul>
-            <ul className="text-ios-callout text-white space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Consumer unit:</strong> MCB and neutral bar
-                  connections
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Cooker outlets:</strong> High current
-                  connections
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  <strong className="text-white">Motor controls:</strong> Stop/start and overload
-                  settings
-                </span>
-              </li>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={quickCheckQuestions[2].id}
+            question={quickCheckQuestions[2].question}
+            options={quickCheckQuestions[2].options}
+            correctIndex={quickCheckQuestions[2].correctIndex}
+            explanation={quickCheckQuestions[2].explanation}
+          />
+
+          <RegsCallout
+            source="BS 7671 — Regulation 134.1.1"
+            clause="Good workmanship by competent persons or persons under their proper supervision and proper materials shall be used in the erection of an electrical installation."
+            meaning={
+              <>
+                High-resistance joints, loose terminations, missing CPCs at sockets — these are
+                workmanship faults. The assessor sets them deliberately because they're the most
+                common real-world cause of trouble. When you state your rectification, frame it as
+                workmanship: "remake termination", "tighten CPC into earth bar". That's the language
+                BS 7671 Reg 134 expects.
+              </>
+            }
+            cite="Reference: BS 7671 Part 1 — Fundamental principles, Reg 134.1.1"
+          />
+
+          {/* What Assessors Look For */}
+          <ConceptBlock title="6. What Assessors Look For">
+            <p>
+              <strong className="text-elec-yellow">What Assessors Want to See:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Systematic testing sequence - no random checking</li>
+              <li>Clear explanation of each test and its purpose</li>
+              <li>Proper isolation procedures before all testing</li>
+              <li>Accurate documentation of all findings</li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
 
-      <InlineCheck
-        id={quickCheckQuestions[2].id}
-        question={quickCheckQuestions[2].question}
-        options={quickCheckQuestions[2].options}
-        correctIndex={quickCheckQuestions[2].correctIndex}
-        explanation={quickCheckQuestions[2].explanation}
-      />
-
-      {/* What Assessors Look For */}
-      <AM2ContentCard title="6. What Assessors Look For" icon={Eye}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 mb-3">What Assessors Want to See:</h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>Systematic testing sequence - no random checking</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>Clear explanation of each test and its purpose</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>Proper isolation procedures before all testing</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>Accurate documentation of all findings</span>
-              </li>
+            <p>
+              <strong className="text-elec-yellow">Professional Qualities Demonstrated:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Methodical diagnosis under assessment pressure</li>
+              <li>Safety prioritised throughout testing</li>
+              <li>Clear communication of technical findings</li>
+              <li>Logical reasoning from test results</li>
             </ul>
-          </div>
+          </ConceptBlock>
 
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white mb-3">
-              Professional Qualities Demonstrated:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Methodical diagnosis under assessment pressure</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Safety prioritised throughout testing</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Clear communication of technical findings</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Logical reasoning from test results</span>
-              </li>
+          {/* Professional Testing Techniques */}
+          <ConceptBlock title="7. Professional Testing Techniques">
+            <p>
+              <strong className="text-elec-yellow">
+                Test Equipment Mastery — Continuity Testing:
+              </strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use 200mA test current for accurate results</li>
+              <li>Always null test leads first</li>
+              <li>Test from origin to each point individually</li>
+              <li>Record actual Ohm readings, not just pass/fail</li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
 
-      {/* Professional Testing Techniques */}
-      <AM2ContentCard title="7. Professional Testing Techniques" icon={Zap} accent>
-        <div className="space-y-4">
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 mb-3">Test Equipment Mastery:</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <h5 className="text-ios-headline text-green-400 mb-2">Continuity Testing:</h5>
-                <ul className="text-ios-callout text-white space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Use 200mA test current for accurate results</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Always null test leads first</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Test from origin to each point individually</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Record actual Ohm readings, not just pass/fail</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="text-ios-headline text-green-400 mb-2">Safe Isolation:</h5>
-                <ul className="text-ios-callout text-white space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Test-Prove-Test sequence essential</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Two-pole voltage testing L-N and L-E</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>GS38 compliant test probes</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Lock-off isolation points when possible</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+            <p>
+              <strong className="text-elec-yellow">Test Equipment Mastery — Safe Isolation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Test-Prove-Test sequence essential</li>
+              <li>Two-pole voltage testing L-N and L-E</li>
+              <li>GS38 compliant test probes</li>
+              <li>Lock-off isolation points when possible</li>
+            </ul>
 
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white mb-3">Industry-Standard Approach:</h4>
-            <p className="text-ios-callout text-white mb-3">
+            <p>
+              <strong className="text-elec-yellow">Industry-Standard Approach:</strong>
+            </p>
+            <p>
               Professional electricians follow this systematic sequence for any fault-finding
               scenario:
             </p>
-            <ol className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow font-bold">1.</span>
-                <span>
-                  <strong className="text-white">Visual inspection</strong> - Check obvious
-                  issues first (finds 70% of faults)
-                </span>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Visual inspection</strong> - Check obvious issues first (finds 70% of
+                faults)
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow font-bold">2.</span>
-                <span>
-                  <strong className="text-white">Safe isolation</strong> - Proper isolation and
-                  proving procedures
-                </span>
+              <li>
+                <strong>Safe isolation</strong> - Proper isolation and proving procedures
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow font-bold">3.</span>
-                <span>
-                  <strong className="text-white">Dead testing</strong> - Continuity and
-                  insulation resistance
-                </span>
+              <li>
+                <strong>Dead testing</strong> - Continuity and insulation resistance
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow font-bold">4.</span>
-                <span>
-                  <strong className="text-white">Live testing</strong> - Only when circuits
-                  proven safe
-                </span>
+              <li>
+                <strong>Live testing</strong> - Only when circuits proven safe
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow font-bold">5.</span>
-                <span>
-                  <strong className="text-white">Documentation</strong> - Record results as you
-                  test
-                </span>
+              <li>
+                <strong>Documentation</strong> - Record results as you test
               </li>
             </ol>
+          </ConceptBlock>
+
+          <FAQ
+            items={[
+              {
+                question: 'How many faults will be set on AM2 day?',
+                answer:
+                  "Typically 2. They're built into the rig before you start and you've usually got around 1.5–2 hours to find them, prove them, and state rectification. The assessor's not looking for speed — they're looking for safety and method.",
+              },
+              {
+                question: "What if I can't find the fault?",
+                answer:
+                  "Don't panic. Stay systematic — half-split continuity from the CU outward, IR L-N and L-E if there's any sign of trip activity. Even if you don't pin it down exactly, marks come from showing a logical sequence. Random poking gets you nothing.",
+              },
+              {
+                question: "What if I find a fault that wasn't deliberately set?",
+                answer:
+                  "Stop and tell the assessor. Never assume every fault is part of the test. Real safety hazards (damaged insulation, exposed conductor, broken CPC) need flagging — that's part of being a competent electrician, not just a candidate.",
+              },
+              {
+                question: 'How do I tell a short from an earth fault?',
+                answer:
+                  "Insulation resistance test will show you. Short circuit (L-N) reads near 0 MΩ between line and neutral. Earth fault reads low between line/neutral and earth. If you only test L-N you'll miss the earth fault entirely — so do all three combinations.",
+              },
+              {
+                question: 'Do I need to physically rectify the fault?',
+                answer:
+                  "No — AM2 fault diagnosis is diagnose + state rectification + state re-test. You don't actually swap the accessory or remake the joint. You describe what you'd do and what test would prove it safe afterwards.",
+              },
+              {
+                question: "What's the most common AM2 fault?",
+                answer:
+                  'Open circuits at junction boxes, sockets or roses — usually a loose conductor or CPC missing from the earth terminal. Easy for assessors to set, realistic, and a great test of whether you know your half-split method.',
+              },
+            ]}
+          />
+
+          <KeyTakeaways
+            points={[
+              'Two faults on the day. Roughly 1.5–2 hours. Prove dead, test logically, state type + location + rectification.',
+              'Match the test to the symptom: dead circuit → continuity. MCB tripping → IR. RCD tripping → IR L-E and N-E. Sluggish circuit → Zs.',
+              'Open circuits at terminations are the most common AM2 fault — half-split continuity from the CU outward finds them.',
+              'Workmanship faults (loose joints, missing CPCs) are deliberate — frame your rectification in BS 7671 Reg 134 language.',
+              'If you suspect a real (non-deliberate) safety issue, stop and tell the assessor. Ignoring it is worse than not finding the fault.',
+              'Energising is the last step, only when you can confidently state what the fault was. Prove-test-prove every time.',
+            ]}
+          />
+
+          {/* Quiz Section */}
+          <Quiz title="Test Your Knowledge: AM2 Fault Types" questions={quizQuestions} />
+
+          {/* Navigation Footer */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <Link
+              to="/study-centre/apprentice/am2/module4/section6"
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Time Management
+              </div>
+            </Link>
+            <Link
+              to="/study-centre/apprentice/am2/module5/section2"
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Fault-Finding Techniques
+              </div>
+            </Link>
           </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Section Summary */}
-      <AM2ContentCard title="8. Section Summary: AM2 Fault-Finding Success" icon={BookOpen}>
-        <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
-          <h4 className="text-ios-headline text-white mb-3">Key Takeaways:</h4>
-          <ul className="text-ios-callout text-white space-y-1">
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Most AM2 faults are open circuits - complete breaks in continuity</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>High resistance connections show as elevated resistance readings</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Short circuits cause protective devices to operate immediately</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Earth faults affect RCD operation and show low insulation to earth</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>
-                Systematic approach and clear communication are as important as technical skills
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
-          <h4 className="text-ios-headline text-elec-yellow mb-3">Remember:</h4>
-          <p className="text-ios-callout text-white">
-            Fault-finding in AM2 demonstrates your professional competence. Assessors want to see
-            safe, systematic diagnosis - the same skills you'll use as a qualified electrician.
-          </p>
-        </div>
-      </AM2ContentCard>
-
-      {/* Quiz Section */}
-      <Quiz title="Test Your Knowledge: AM2 Fault Types" questions={quizQuestions} />
-
-      {/* Navigation Footer */}
-      <AM2NavigationFooter
-        previousHref="/study-centre/apprentice/am2/module4/section6"
-        previousLabel="Time Management"
-        nextHref="/study-centre/apprentice/am2/module5/section2"
-        nextLabel="Fault-Finding Techniques"
-        currentSection={1}
-        totalSections={6}
-      />
-    </AM2SectionLayout>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 

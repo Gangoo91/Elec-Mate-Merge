@@ -1,24 +1,37 @@
 /**
  * Dashboard
  *
- * Main dashboard page - the first thing users see.
- * Premium design with real personalized stats, glass morphism,
- * and best-in-class mobile experience.
+ * The first page users see. Editorial layout — verdict over data, numbered
+ * sections, hairline grids, role-aware copy. Composes from college editorial
+ * primitives so the whole product feels like one designer's hand.
+ *
+ * Flow:
+ *   00 · VERDICT       — huge display sentence, "is the business OK?"
+ *   01 · TODAY         — what to do today (overdue, drafts, expiring, etc.)
+ *   02 · THIS MONTH    — slim StatStrip of headline numbers
+ *   03 · YOUR HUBS     — editorial HubCards with live signals
+ *   04 · MOMENTUM      — newspaper-style closer
+ *
+ * Apprentice and electrician roles each see their own variant.
  */
 
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+
 import { DashboardContainer } from '@/components/dashboard/DashboardContainer';
-import { PremiumHero } from '@/components/dashboard/PremiumHero';
-import { LiveStatsBar } from '@/components/dashboard/LiveStatsBar';
-import { PremiumHubGrid } from '@/components/dashboard/PremiumHubGrid';
-import { SmartActions } from '@/components/dashboard/SmartActions';
 import TrialBanner from '@/components/dashboard/TrialBanner';
 import ReferralBanner from '@/components/referrals/ReferralBanner';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
-import { DesignedCircuitsCard } from '@/components/dashboard/DesignedCircuitsCard';
+
+import { VerdictHero } from '@/components/dashboard/editorial/VerdictHero';
+import { TodayQueue } from '@/components/dashboard/editorial/TodayQueue';
+import { HeadlineStats } from '@/components/dashboard/editorial/HeadlineStats';
+import { EditorialHubGrid } from '@/components/dashboard/editorial/EditorialHubGrid';
+import { MomentumStrip } from '@/components/dashboard/editorial/MomentumStrip';
+
 import { DashboardDataProvider } from '@/hooks/useDashboardData';
+import { useDashboardVerdict } from '@/hooks/useDashboardVerdict';
 import { useAuth } from '@/contexts/AuthContext';
 import useSEO from '@/hooks/useSEO';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
@@ -51,19 +64,10 @@ const Dashboard = () => {
 
   const quickStart =
     profile?.role === 'apprentice'
-      ? {
-          cta: 'Open Study Centre',
-          href: '/study-centre/apprentice',
-        }
+      ? { cta: 'Open Study Centre', href: '/study-centre/apprentice' }
       : profile?.role === 'employer'
-      ? {
-          cta: 'Open Employer Hub',
-          href: '/employer',
-        }
-      : {
-          cta: 'Open Certificates',
-          href: '/electrician/inspection-testing',
-        };
+        ? { cta: 'Open Employer Hub', href: '/employer' }
+        : { cta: 'Open Certificates', href: '/electrician/inspection-testing' };
 
   const dismissFirstStop = () => {
     storageSetSync(FIRST_STOP_DISMISSED_KEY, '1');
@@ -87,7 +91,6 @@ const Dashboard = () => {
   // Show welcome modal for first-time users
   useEffect(() => {
     if (!isLoading && profile && !profile.onboarding_completed) {
-      // Also check localStorage as fallback (in case profile update was slow)
       if (storageGetSync('elec-mate-onboarding-done')) return;
       const timer = setTimeout(() => setShowWelcome(true), 500);
       return () => clearTimeout(timer);
@@ -97,89 +100,98 @@ const Dashboard = () => {
   return (
     <DashboardContainer>
       <DashboardDataProvider>
-      <div className="space-y-6 sm:space-y-8">
-        {isFirstVisit && (
-          <motion.section
-            variants={sectionVariants}
-            initial="hidden"
-            animate="visible"
-            custom={-0.5}
-          >
-            <div className="relative rounded-[1.5rem] border border-white/[0.08] bg-white/[0.03] p-5 sm:p-6">
-              <button
-                type="button"
-                onClick={dismissFirstStop}
-                className="absolute right-3 top-3 h-8 touch-manipulation rounded-xl border border-white/[0.12] bg-black/40 px-3 text-[12px] font-medium text-white transition-colors hover:bg-black/70 hover:text-yellow-400"
-                aria-label="Dismiss"
-              >
-                Dismiss
-              </button>
-              <div className="flex flex-col gap-4 pr-20 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pr-24">
-                <div>
-                  <h2 className="text-[1.25rem] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[1.5rem]">
-                    Make the first{' '}
-                    <span className="text-yellow-400">ten minutes</span> count.
-                  </h2>
-                  <p className="mt-2 text-[14px] leading-[1.55] text-white sm:text-[15px]">
-                    Run one real task through the platform — the rest of the workflow unfolds
-                    from there.
-                  </p>
-                </div>
-                <Link
-                  to={quickStart.href}
-                  className="inline-flex h-11 flex-shrink-0 touch-manipulation items-center justify-center rounded-2xl bg-yellow-500 px-5 text-[14px] font-semibold text-black transition-colors hover:bg-yellow-400"
+        <div className="space-y-10 sm:space-y-14">
+          {/* First-visit welcome banner — kept, single yellow accent only */}
+          {isFirstVisit && (
+            <motion.section
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={-0.5}
+            >
+              <div className="relative rounded-2xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent p-5 sm:p-6">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-70" />
+                <button
+                  type="button"
+                  onClick={dismissFirstStop}
+                  className="absolute right-3 top-3 h-8 touch-manipulation rounded-xl border border-white/[0.12] bg-black/40 px-3 text-[12px] font-medium text-white transition-colors hover:bg-black/70 hover:text-yellow-400"
+                  aria-label="Dismiss"
                 >
-                  {quickStart.cta}
-                </Link>
+                  Dismiss
+                </button>
+                <div className="flex flex-col gap-4 pr-20 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pr-24">
+                  <div>
+                    <h2 className="text-[1.25rem] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[1.5rem]">
+                      Make the first <span className="text-yellow-400">ten minutes</span> count.
+                    </h2>
+                    <p className="mt-2 text-[14px] leading-[1.55] text-white sm:text-[15px]">
+                      Run one real task through the platform — the rest of the workflow unfolds from
+                      there.
+                    </p>
+                  </div>
+                  <Link
+                    to={quickStart.href}
+                    className="inline-flex h-11 flex-shrink-0 touch-manipulation items-center justify-center rounded-2xl bg-yellow-500 px-5 text-[14px] font-semibold text-black transition-colors hover:bg-yellow-400"
+                  >
+                    {quickStart.cta}
+                  </Link>
+                </div>
               </div>
-            </div>
-          </motion.section>
-        )}
+            </motion.section>
+          )}
 
-        {/* Premium Hero Welcome */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
-          <PremiumHero />
-        </motion.section>
+          {/* Editorial dashboard — single component so it can read the
+              shared dashboard context the parent provider mounts. */}
+          <EditorialDashboard />
 
-        {/* Live Stats Bar - Real data, swipeable on mobile */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
-          <LiveStatsBar />
-        </motion.section>
+          {/* Trial / referral promos — kept but slimmed below the fold */}
+          <div className="space-y-4">
+            <TrialBanner />
+            <ReferralBanner />
+          </div>
 
-        {/* Trial Banner (if applicable) */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
-          <TrialBanner />
-        </motion.section>
+          {/* Footer spacing for mobile nav */}
+          <div className="h-4 sm:h-6" />
+        </div>
 
-        {/* Referral Banner (first 7 days) */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2.5}>
-          <ReferralBanner />
-        </motion.section>
-
-        {/* Premium Hub Cards */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={3}>
-          <PremiumHubGrid />
-        </motion.section>
-
-        {/* Smart Actions - Prioritized action queue */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={4}>
-          <SmartActions />
-        </motion.section>
-
-        {/* Designed Circuits from Circuit Designer */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={5}>
-          <DesignedCircuitsCard />
-        </motion.section>
-
-        {/* Footer spacing for mobile nav */}
-        <div className="h-4 sm:h-6" />
-      </div>
-
-      {/* Welcome modal for first-time users */}
-      <WelcomeModal isOpen={showWelcome} onClose={() => setShowWelcome(false)} />
+        {/* Welcome modal for first-time users */}
+        <WelcomeModal isOpen={showWelcome} onClose={() => setShowWelcome(false)} />
       </DashboardDataProvider>
     </DashboardContainer>
   );
 };
 
 export default Dashboard;
+
+/**
+ * EditorialDashboard — the actual dashboard body. Extracted so it can call
+ * `useDashboardVerdict` (which reads the DashboardDataProvider context
+ * mounted by the parent). Renders the full numbered editorial flow:
+ * Verdict → Today → This Month → Hubs → Momentum.
+ */
+function EditorialDashboard() {
+  const { eyebrow, verdict, sub, tone, cta, queueItems, isLoading, role } = useDashboardVerdict();
+
+  const todayLabel = role === 'apprentice' ? "TODAY'S TRAINING" : 'TODAY';
+  const todayEmpty =
+    role === 'apprentice'
+      ? 'Nothing scheduled — pick up where you left off in Study Centre.'
+      : "You're all caught up. Use the calm to push a quote out.";
+
+  return (
+    <div className="space-y-12 sm:space-y-16">
+      <VerdictHero
+        eyebrow={eyebrow}
+        verdict={verdict}
+        sub={sub}
+        tone={tone}
+        cta={cta}
+        isLoading={isLoading}
+      />
+      <TodayQueue number="01" label={todayLabel} items={queueItems} emptyMessage={todayEmpty} />
+      <HeadlineStats number="02" label="THIS MONTH" />
+      <EditorialHubGrid number="03" label="YOUR HUBS" />
+      <MomentumStrip number="04" label="MOMENTUM" />
+    </div>
+  );
+}

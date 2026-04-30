@@ -1,31 +1,36 @@
-import {
-  Shield,
-  AlertTriangle,
-  Lock,
-  CheckCircle,
-  XCircle,
-  Wrench,
-  Clock,
-  Target,
-  Book,
-  FileText,
-  Settings,
-} from 'lucide-react';
+/**
+ * Module 2 · Section 1 — Safe isolation procedures
+ * AM2 day-prep — AM2 Phase A (H&S, safe isolation, RAMS, paperwork)
+ * The single most-failed step on the AM2: prove dead, lock off, prove again — done right, every time.
+ */
+
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import { VideoCard } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
+import { useNavigate } from 'react-router-dom';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  SectionRule,
+  LearningOutcomes,
+  TLDR,
+  KeyTakeaways,
+  FAQ,
+  Scenario,
+  CommonMistake,
+  RegsCallout,
+} from '@/components/study-centre/learning';
+
+const TITLE = 'Safe Isolation Procedures | AM2 Module 2.1 | Elec-Mate';
+const DESCRIPTION =
+  'The single biggest cause of AM2 failure — get safe isolation locked in: prove the tester, isolate, lock off, prove dead, re-prove.';
 
 const AM2Module2Section1 = () => {
-  useSEO(
-    'Safe Isolation Procedures - AM2 Module 2',
-    'Critical safe isolation procedures for AM2 - instant fail if wrong. Complete guide to NET standards and safety requirements.'
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const safeIsolationSteps = [
     'Identify the correct circuit using drawings/spec',
@@ -239,854 +244,705 @@ const AM2Module2Section1 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module2"
-      breadcrumbs={['AM2', 'Module 2', 'Section 1']}
-    >
-      {/* Hero Section */}
-      <AM2HeroSection
-        icon={Shield}
-        title="Safe Isolation Procedures"
-        description="Critical safe isolation procedures for AM2 - instant fail if wrong. Complete guide to NET standards and safety requirements."
-        badge="Module 2 - Section 1"
-      />
-
-      {/* Critical Warning */}
-      <AM2CriticalWarning title="INSTANT FAIL IF WRONG">
-        <p className="text-ios-callout text-white">
-          Safe isolation is the foundation of electrical safety and the most unforgiving part of the
-          AM2. If you get it wrong, you fail - regardless of how well you perform elsewhere. In real
-          working life, safe isolation mistakes can kill. In the AM2, they instantly end your
-          assessment.
-        </p>
-      </AM2CriticalWarning>
-
-      {/* Learning Outcomes */}
-      <AM2LearningOutcomes outcomes={learningOutcomes} />
-
-      {/* Equipment Required */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Wrench className="h-5 w-5" />
-          Equipment Required
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          Essential equipment for safe isolation procedures:
-        </p>
-        <div className="grid md:grid-cols-2 gap-3">
-          {equipmentRequired.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center p-2 bg-white/5 rounded-xl border border-white/10"
-            >
-              <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-              <span className="text-ios-callout text-white">{item}</span>
-            </div>
-          ))}
-        </div>
-      </AM2ContentCard>
-
-      {/* Pre-Isolation Checklist */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <FileText className="h-5 w-5" />
-          Pre-Isolation Checklist
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          Complete these steps before beginning isolation:
-        </p>
-        <div className="space-y-2">
-          {preIsolationChecklist.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-start p-2 bg-white/5 rounded-xl border border-white/10"
-            >
-              <div className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center mr-2 flex-shrink-0 text-xs">
-                {index + 1}
-              </div>
-              <span className="text-ios-callout text-white">{item}</span>
-            </div>
-          ))}
-        </div>
-      </AM2ContentCard>
-
-      {/* Why Safe Isolation Matters */}
-      <AM2ContentCard accent>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
-          Why Safe Isolation Matters
-        </h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-ios-headline text-white font-semibold mb-3">Safety Reasons:</h3>
-            <ul className="space-y-2 text-ios-callout">
-              <li className="flex items-start gap-2 text-white">
-                <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span>Prevents electrocution, burns, and arc flash injuries</span>
-              </li>
-              <li className="flex items-start gap-2 text-white">
-                <Shield className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span>Ensures no one else can accidentally re-energise the system</span>
-              </li>
-              <li className="flex items-start gap-2 text-white">
-                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span>Protects both you and others on site</span>
-              </li>
-              <li className="flex items-start gap-2 text-white">
-                <XCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span>Eliminates risk of electrical shock from induced voltages</span>
-              </li>
-              <li className="flex items-start gap-2 text-white">
-                <Lock className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span>Prevents equipment damage from short circuits</span>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-ios-headline text-white font-semibold mb-3">Legal & Assessment:</h3>
-            <ul className="space-y-2 text-ios-callout">
-              <li className="flex items-start gap-2 text-white">
-                <FileText className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span>
-                  Mandatory legal requirement under the Electricity at Work Regulations 1989
-                </span>
-              </li>
-              <li className="flex items-start gap-2 text-white">
-                <XCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span>In AM2, failure = instant disqualification</span>
-              </li>
-              <li className="flex items-start gap-2 text-white">
-                <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span>No second chances or partial marks</span>
-              </li>
-              <li className="flex items-start gap-2 text-white">
-                <Book className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span>Demonstrates competency to IET Code of Practice</span>
-              </li>
-              <li className="flex items-start gap-2 text-white">
-                <Target className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span>Required for professional certification maintenance</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Statistics */}
-        <div className="mt-6 bg-white/5 border border-white/10 rounded-xl p-4">
-          <h3 className="text-ios-headline text-elec-yellow font-semibold mb-3">
-            Sobering Statistics:
-          </h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="text-center p-3 bg-white/5 rounded-xl border border-white/10">
-              <div className="text-ios-title-2 font-bold text-elec-yellow">30+</div>
-              <div className="text-ios-footnote text-white">
-                Electrical deaths annually in UK workplace
-              </div>
-            </div>
-            <div className="text-center p-3 bg-white/5 rounded-xl border border-white/10">
-              <div className="text-ios-title-2 font-bold text-elec-yellow">1,000+</div>
-              <div className="text-ios-footnote text-white">
-                Electrical injuries requiring hospital treatment
-              </div>
-            </div>
-            <div className="text-center p-3 bg-white/5 rounded-xl border border-white/10">
-              <div className="text-ios-title-2 font-bold text-elec-yellow">67%</div>
-              <div className="text-ios-footnote text-white">
-                Of AM2 failures due to safe isolation errors
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Industry Examples */}
-        <div className="mt-6 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-          <h3 className="text-ios-headline text-elec-yellow font-semibold mb-3">
-            Real Industry Consequences:
-          </h3>
-          <div className="space-y-3 text-ios-callout">
-            <div className="flex items-start">
-              <div className="w-2 h-2 bg-red-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-              <div className="text-white">
-                <span className="font-medium">Fatal Incident (2019):</span> Electrician bypassed
-                isolation procedure to "save time" - resulted in fatality and company prosecution
-                under Section 37 of Health & Safety at Work Act.
-              </div>
-            </div>
-            <div className="flex items-start">
-              <div className="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-              <div className="text-white">
-                <span className="font-medium">Serious Injury (2021):</span> Apprentice received 11kV
-                shock when supervisor failed to follow lock-off procedure - 6 months recovery,
-                permanent nerve damage.
-              </div>
-            </div>
-            <div className="flex items-start">
-              <div className="w-2 h-2 bg-elec-yellow rounded-full mr-3 mt-2 flex-shrink-0"></div>
-              <div className="text-white">
-                <span className="font-medium">AM2 Impact:</span> 2023 data shows 7 out of 10 AM2
-                failures directly linked to incomplete or incorrect safe isolation procedures.
-              </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      <InlineCheck
-        id="safe-isolation-regulation"
-        question="Which UK regulation underpins the requirement for safe isolation?"
-        options={[
-          'CDM Regulations 2015',
-          'Electricity at Work Regulations 1989',
-          'Building Regulations 2010',
-          'Health and Safety at Work Act 1974',
-        ]}
-        correctIndex={1}
-        explanation="The Electricity at Work Regulations 1989 specifically require safe isolation procedures to be followed when working on electrical systems."
-      />
-
-      {/* Safe Isolation Procedure Flowchart */}
-      <div className="my-8 flex justify-center">
-        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
-          <svg
-            viewBox="0 0 400 620"
-            className="w-full h-auto"
-            role="img"
-            aria-label="Safe Isolation Procedure - 6-step vertical flowchart showing the mandatory sequence from identifying the circuit through to re-proving the tester"
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            {/* Title */}
-            <text
-              x="200"
-              y="28"
-              textAnchor="middle"
-              fill="#F3F4F6"
-              fontSize="16"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Safe Isolation Procedure
-            </text>
+            <ArrowLeft className="h-4 w-4" /> Module 2
+          </button>
 
-            {/* Step 1 - IDENTIFY */}
-            <rect x="75" y="50" width="250" height="56" rx="10" fill="#2563EB" />
-            <text
-              x="200"
-              y="72"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              STEP 1
-            </text>
-            <text
-              x="200"
-              y="92"
-              textAnchor="middle"
-              fill="white"
-              fontSize="13"
-              fontFamily="system-ui, sans-serif"
-            >
-              IDENTIFY circuit
-            </text>
+          <PageHero
+            eyebrow="Module 2 · Section 1"
+            title="Safe Isolation Procedures"
+            description="Critical safe isolation procedures for AM2 - instant fail if wrong. Complete guide to NET standards and safety requirements."
+            tone="yellow"
+          />
 
-            {/* Arrow 1-2 */}
-            <line x1="200" y1="106" x2="200" y2="126" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="192,122 200,132 208,122" fill="#9CA3AF" />
+          <TLDR
+            points={[
+              'Safe isolation is the most unforgiving part of AM2 — get it wrong and the day ends, regardless of the rest.',
+              'The sequence: prove tester on live → identify circuit → isolate → lock off → post warning → test dead → re-prove tester on live.',
+              'EAWR 1989 Reg 4 makes "work dead" the legal default. Working live needs justification, in writing.',
+              'You must isolate every live conductor — line, neutral, and any other live — not just the line.',
+            ]}
+          />
 
-            {/* Step 2 - ISOLATE */}
-            <rect x="75" y="136" width="250" height="56" rx="10" fill="#2563EB" />
-            <text
-              x="200"
-              y="158"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              STEP 2
-            </text>
-            <text
-              x="200"
-              y="178"
-              textAnchor="middle"
-              fill="white"
-              fontSize="13"
-              fontFamily="system-ui, sans-serif"
-            >
-              ISOLATE supply
-            </text>
+          <ConceptBlock title="Instant fail if wrong">
+            <p>
+              <strong className="text-red-300">Critical.</strong> Safe isolation is the foundation
+              of electrical safety and the most unforgiving part of the AM2. If you get it wrong,
+              you fail — regardless of how well you perform elsewhere. In real working life, safe
+              isolation mistakes can kill. In the AM2, they instantly end your assessment.
+            </p>
+          </ConceptBlock>
 
-            {/* Arrow 2-3 */}
-            <line x1="200" y1="192" x2="200" y2="212" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="192,208 200,218 208,208" fill="#9CA3AF" />
+          <LearningOutcomes outcomes={learningOutcomes} />
 
-            {/* Step 3 - SECURE */}
-            <rect x="75" y="222" width="250" height="56" rx="10" fill="#2563EB" />
-            <text
-              x="200"
-              y="244"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              STEP 3
-            </text>
-            <text
-              x="200"
-              y="264"
-              textAnchor="middle"
-              fill="white"
-              fontSize="13"
-              fontFamily="system-ui, sans-serif"
-            >
-              SECURE isolation (lock-off + signs)
-            </text>
-
-            {/* Arrow 3-4 */}
-            <line x1="200" y1="278" x2="200" y2="298" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="192,294 200,304 208,294" fill="#9CA3AF" />
-
-            {/* Step 4 - PROVE tester */}
-            <rect x="75" y="308" width="250" height="56" rx="10" fill="#D97706" />
-            <text
-              x="200"
-              y="330"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              STEP 4
-            </text>
-            <text
-              x="200"
-              y="350"
-              textAnchor="middle"
-              fill="white"
-              fontSize="13"
-              fontFamily="system-ui, sans-serif"
-            >
-              PROVE tester on known source
-            </text>
-
-            {/* Arrow 4-5 */}
-            <line x1="200" y1="364" x2="200" y2="384" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="192,380 200,390 208,380" fill="#9CA3AF" />
-
-            {/* Step 5 - TEST circuit */}
-            <rect x="75" y="394" width="250" height="56" rx="10" fill="#D97706" />
-            <text
-              x="200"
-              y="416"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              STEP 5
-            </text>
-            <text
-              x="200"
-              y="436"
-              textAnchor="middle"
-              fill="white"
-              fontSize="13"
-              fontFamily="system-ui, sans-serif"
-            >
-              TEST circuit for dead
-            </text>
-
-            {/* Arrow 5-6 */}
-            <line x1="200" y1="450" x2="200" y2="470" stroke="#9CA3AF" strokeWidth="2" />
-            <polygon points="192,466 200,476 208,466" fill="#9CA3AF" />
-
-            {/* Step 6 - RE-PROVE (red emphasis) */}
-            <rect
-              x="55"
-              y="480"
-              width="290"
-              height="72"
-              rx="10"
-              fill="#DC2626"
-              stroke="#FCA5A5"
-              strokeWidth="2"
-            />
-            <text
-              x="200"
-              y="504"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              STEP 6
-            </text>
-            <text
-              x="200"
-              y="524"
-              textAnchor="middle"
-              fill="white"
-              fontSize="14"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              RE-PROVE tester on known source
-            </text>
-
-            {/* Warning note for Step 6 */}
-            <rect
-              x="75"
-              y="565"
-              width="250"
-              height="34"
-              rx="6"
-              fill="#1F2937"
-              stroke="#DC2626"
-              strokeWidth="1"
-            />
-            <text
-              x="200"
-              y="587"
-              textAnchor="middle"
-              fill="#FCA5A5"
-              fontSize="11"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="bold"
-            >
-              Forgetting this step = automatic fail
-            </text>
-          </svg>
-        </div>
-      </div>
-
-      {/* Step-by-Step Procedure */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Lock className="h-5 w-5" />
-          Step-by-Step Safe Isolation Procedure (NET Standard)
-        </h2>
-        <div className="space-y-3">
-          {safeIsolationSteps.map((step, index) => (
-            <div
-              key={index}
-              className="flex items-start p-3 bg-white/5 rounded-xl border border-white/10"
-            >
-              <div className="bg-elec-yellow text-black font-bold w-7 h-7 rounded-full flex items-center justify-center mr-3 flex-shrink-0 text-sm">
-                {index + 1}
-              </div>
-              <div className="flex-1">
-                <p className="text-ios-callout text-white">{step}</p>
-                {index === 5 && (
-                  <p className="text-ios-footnote text-elec-yellow mt-1">
-                    Critical: Always prove on known live source first
-                  </p>
-                )}
-                {index === 7 && (
-                  <p className="text-ios-footnote text-elec-yellow mt-1">
-                    Critical: Must re-prove to validate test equipment
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-4 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Practical Tips:</h4>
-          <ul className="text-ios-callout text-white space-y-1">
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Allow 10-15 minutes for complete isolation procedure</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Double-check circuit identification before switching</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Use unique locks - never share keys</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Keep tester calibration certificates accessible</span>
-            </li>
-          </ul>
-        </div>
-      </AM2ContentCard>
-
-      <InlineCheck
-        id="re-prove-tester"
-        question="Why do you re-prove the tester after testing?"
-        options={[
-          'To check battery levels',
-          "To ensure it hasn't failed during the test",
-          'To calibrate the instrument',
-          'To reset the display',
-        ]}
-        correctIndex={1}
-        explanation="Re-proving ensures the tester hasn't failed during the testing process, confirming your test results are valid."
-      />
-
-      {/* 10-Point Test Sequence */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
-          10-Point Test Sequence (Single-Phase Example)
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          All combinations must be checked to ensure the circuit is completely dead:
-        </p>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <h3 className="text-ios-headline text-white font-semibold mb-3">Required Tests:</h3>
-            <div className="space-y-2">
-              {tenPointTests.map((test, index) => (
-                <div
-                  key={index}
-                  className="flex items-center p-2 bg-white/5 rounded-xl border border-white/10"
-                >
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                  <span className="text-ios-callout text-white">{test}</span>
-                </div>
+          <ConceptBlock title="Equipment Required">
+            <p>Essential equipment for safe isolation procedures:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              {equipmentRequired.map((item, index) => (
+                <li key={index}>{item}</li>
               ))}
-            </div>
-          </div>
-          <div className="bg-elec-yellow/10 border-l-4 border-elec-yellow p-4 rounded-xl">
-            <h3 className="text-ios-headline text-elec-yellow font-semibold mb-2">
-              Important Notes:
-            </h3>
-            <ul className="space-y-1 text-ios-callout text-white">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Test at both origin and point of work</span>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Pre-Isolation Checklist">
+            <p>Complete these steps before beginning isolation:</p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              {preIsolationChecklist.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ol>
+          </ConceptBlock>
+
+          <ConceptBlock title="Why Safe Isolation Matters">
+            <p>
+              <strong>Safety Reasons:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Prevents electrocution, burns, and arc flash injuries</li>
+              <li>Ensures no one else can accidentally re-energise the system</li>
+              <li>Protects both you and others on site</li>
+              <li>Eliminates risk of electrical shock from induced voltages</li>
+              <li>Prevents equipment damage from short circuits</li>
+            </ul>
+            <p>
+              <strong>Legal &amp; Assessment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mandatory legal requirement under the Electricity at Work Regulations 1989</li>
+              <li>In AM2, failure = instant disqualification</li>
+              <li>No second chances or partial marks</li>
+              <li>Demonstrates competency to IET Code of Practice</li>
+              <li>Required for professional certification maintenance</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Sobering Statistics:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>30+</strong> electrical deaths annually in UK workplace
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>In three-phase, repeat across all phases</span>
+              <li>
+                <strong>1,000+</strong> electrical injuries requiring hospital treatment
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>All combinations must show no voltage</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Record results accurately</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Use appropriate test leads for voltage level</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Expect 0V reading on all tests</span>
+              <li>
+                <strong>67%</strong> of AM2 failures due to safe isolation errors
               </li>
             </ul>
+            <p>
+              <strong className="text-elec-yellow">Real Industry Consequences:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fatal Incident (2019):</strong> Electrician bypassed isolation procedure to
+                "save time" — resulted in fatality and company prosecution under Section 37 of
+                Health &amp; Safety at Work Act.
+              </li>
+              <li>
+                <strong>Serious Injury (2021):</strong> Apprentice received 11kV shock when
+                supervisor failed to follow lock-off procedure — 6 months recovery, permanent nerve
+                damage.
+              </li>
+              <li>
+                <strong>AM2 Impact:</strong> 2023 data shows 7 out of 10 AM2 failures directly
+                linked to incomplete or incorrect safe isolation procedures.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck
+            id="safe-isolation-regulation"
+            question="Which UK regulation underpins the requirement for safe isolation?"
+            options={[
+              'CDM Regulations 2015',
+              'Electricity at Work Regulations 1989',
+              'Building Regulations 2010',
+              'Health and Safety at Work Act 1974',
+            ]}
+            correctIndex={1}
+            explanation="The Electricity at Work Regulations 1989 specifically require safe isolation procedures to be followed when working on electrical systems."
+          />
+
+          {/* Safe Isolation Procedure Flowchart */}
+          <div className="my-8 flex justify-center">
+            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
+              <svg
+                viewBox="0 0 400 620"
+                className="w-full h-auto"
+                role="img"
+                aria-label="Safe Isolation Procedure - 6-step vertical flowchart showing the mandatory sequence from identifying the circuit through to re-proving the tester"
+              >
+                <text
+                  x="200"
+                  y="28"
+                  textAnchor="middle"
+                  fill="#F3F4F6"
+                  fontSize="16"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Safe Isolation Procedure
+                </text>
+                <rect x="75" y="50" width="250" height="56" rx="10" fill="#2563EB" />
+                <text
+                  x="200"
+                  y="72"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  STEP 1
+                </text>
+                <text
+                  x="200"
+                  y="92"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="13"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  IDENTIFY circuit
+                </text>
+                <line x1="200" y1="106" x2="200" y2="126" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="192,122 200,132 208,122" fill="#9CA3AF" />
+                <rect x="75" y="136" width="250" height="56" rx="10" fill="#2563EB" />
+                <text
+                  x="200"
+                  y="158"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  STEP 2
+                </text>
+                <text
+                  x="200"
+                  y="178"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="13"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  ISOLATE supply
+                </text>
+                <line x1="200" y1="192" x2="200" y2="212" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="192,208 200,218 208,208" fill="#9CA3AF" />
+                <rect x="75" y="222" width="250" height="56" rx="10" fill="#2563EB" />
+                <text
+                  x="200"
+                  y="244"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  STEP 3
+                </text>
+                <text
+                  x="200"
+                  y="264"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="13"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  SECURE isolation (lock-off + signs)
+                </text>
+                <line x1="200" y1="278" x2="200" y2="298" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="192,294 200,304 208,294" fill="#9CA3AF" />
+                <rect x="75" y="308" width="250" height="56" rx="10" fill="#D97706" />
+                <text
+                  x="200"
+                  y="330"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  STEP 4
+                </text>
+                <text
+                  x="200"
+                  y="350"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="13"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  PROVE tester on known source
+                </text>
+                <line x1="200" y1="364" x2="200" y2="384" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="192,380 200,390 208,380" fill="#9CA3AF" />
+                <rect x="75" y="394" width="250" height="56" rx="10" fill="#D97706" />
+                <text
+                  x="200"
+                  y="416"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  STEP 5
+                </text>
+                <text
+                  x="200"
+                  y="436"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="13"
+                  fontFamily="system-ui, sans-serif"
+                >
+                  TEST circuit for dead
+                </text>
+                <line x1="200" y1="450" x2="200" y2="470" stroke="#9CA3AF" strokeWidth="2" />
+                <polygon points="192,466 200,476 208,466" fill="#9CA3AF" />
+                <rect
+                  x="55"
+                  y="480"
+                  width="290"
+                  height="72"
+                  rx="10"
+                  fill="#DC2626"
+                  stroke="#FCA5A5"
+                  strokeWidth="2"
+                />
+                <text
+                  x="200"
+                  y="504"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  STEP 6
+                </text>
+                <text
+                  x="200"
+                  y="524"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="14"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  RE-PROVE tester on known source
+                </text>
+                <rect
+                  x="75"
+                  y="565"
+                  width="250"
+                  height="34"
+                  rx="6"
+                  fill="#1F2937"
+                  stroke="#DC2626"
+                  strokeWidth="1"
+                />
+                <text
+                  x="200"
+                  y="587"
+                  textAnchor="middle"
+                  fill="#FCA5A5"
+                  fontSize="11"
+                  fontFamily="system-ui, sans-serif"
+                  fontWeight="bold"
+                >
+                  Forgetting this step = automatic fail
+                </text>
+              </svg>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-4 p-4 bg-white/5 border border-red-500/30 rounded-xl">
-          <h4 className="text-ios-headline text-red-400 font-semibold mb-2">Common Test Errors:</h4>
-          <ul className="text-ios-callout text-white space-y-1">
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>Testing with switch in wrong position</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>Missing N-E combinations</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>Not testing at point of work</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>Using faulty test equipment</span>
-            </li>
-          </ul>
-        </div>
-      </AM2ContentCard>
+          <ConceptBlock title="Step-by-Step Safe Isolation Procedure (NET Standard)">
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              {safeIsolationSteps.map((step, index) => (
+                <li key={index}>
+                  {step}
+                  {index === 5 && (
+                    <>
+                      {' '}
+                      <strong className="text-elec-yellow">
+                        Critical: Always prove on known live source first.
+                      </strong>
+                    </>
+                  )}
+                  {index === 7 && (
+                    <>
+                      {' '}
+                      <strong className="text-elec-yellow">
+                        Critical: Must re-prove to validate test equipment.
+                      </strong>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ol>
+            <p>
+              <strong className="text-elec-yellow">Practical Tips:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Allow 10-15 minutes for complete isolation procedure</li>
+              <li>Double-check circuit identification before switching</li>
+              <li>Use unique locks - never share keys</li>
+              <li>Keep tester calibration certificates accessible</li>
+            </ul>
+          </ConceptBlock>
 
-      {/* Critical Fails */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <XCircle className="h-5 w-5" />
-          Common Critical Fails in AM2 Safe Isolation
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          These errors from NET's common failures list will result in automatic fail:
-        </p>
-        <div className="space-y-2">
-          {criticalFails.map((fail, index) => (
-            <div
-              key={index}
-              className="flex items-start p-3 rounded-xl border border-red-500/30 bg-red-500/10"
+          <div className="my-6">
+            <VideoCard
+              url={videos.safeIsolation.url}
+              title={videos.safeIsolation.title}
+              channel={videos.safeIsolation.channel}
+              duration={videos.safeIsolation.duration}
+              topic="Safe isolation 9-step on AM2 day"
+              caption={
+                <>
+                  Craig Wiltshire walks through where to test during the safe isolation procedure —
+                  the exact thing you must demonstrate on AM2 day. Watch for the prove-test-prove
+                  discipline and the conductor combinations at every isolation point.
+                </>
+              }
+            />
+          </div>
+
+          <InlineCheck
+            id="re-prove-tester"
+            question="Why do you re-prove the tester after testing?"
+            options={[
+              'To check battery levels',
+              "To ensure it hasn't failed during the test",
+              'To calibrate the instrument',
+              'To reset the display',
+            ]}
+            correctIndex={1}
+            explanation="Re-proving ensures the tester hasn't failed during the testing process, confirming your test results are valid."
+          />
+
+          <ConceptBlock title="10-Point Test Sequence (Single-Phase Example)">
+            <p>All combinations must be checked to ensure the circuit is completely dead.</p>
+            <p>
+              <strong>Required Tests:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              {tenPointTests.map((test, index) => (
+                <li key={index}>{test}</li>
+              ))}
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Important Notes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Test at both origin and point of work</li>
+              <li>In three-phase, repeat across all phases</li>
+              <li>All combinations must show no voltage</li>
+              <li>Record results accurately</li>
+              <li>Use appropriate test leads for voltage level</li>
+              <li>Expect 0V reading on all tests</li>
+            </ul>
+            <p>
+              <strong className="text-red-400">Common Test Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-red-400/70">
+              <li>Testing with switch in wrong position</li>
+              <li>Missing N-E combinations</li>
+              <li>Not testing at point of work</li>
+              <li>Using faulty test equipment</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Common Critical Fails in AM2 Safe Isolation">
+            <p>These errors from NET's common failures list will result in automatic fail:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-red-400/70">
+              {criticalFails.map((fail, index) => (
+                <li key={index}>{fail}</li>
+              ))}
+            </ul>
+            <p>
+              <strong className="text-red-400">Prevention Strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Create a personal checklist and use it every time</li>
+              <li>Practice the sequence until it's automatic</li>
+              <li>Never rush - take your time</li>
+              <li>Communicate clearly with assessors about your actions</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Practice Scenarios">
+            <p>Work through these realistic AM2 scenarios to build confidence:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              {practiceScenarios.map((scenario, index) => (
+                <li key={index}>
+                  <strong>{scenario.title}</strong> — {scenario.description}{' '}
+                  <em>({scenario.keyPoints.join('; ')})</em>
+                </li>
+              ))}
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Real-World Examples">
+            <p>
+              <strong className="text-red-400">Example 1: Forgotten Re-Prove.</strong> A candidate
+              did everything correctly but forgot to re-prove the tester during safe isolation. The
+              assessor stopped the test and recorded a fail.{' '}
+              <strong className="text-elec-yellow">Lesson:</strong> never skip the final tester
+              proving step.
+            </p>
+            <p>
+              <strong className="text-red-400">Example 2: Wrong Lock-Off.</strong> Candidate used
+              tape instead of a lock-off device. Unsafe — instant fail.{' '}
+              <strong className="text-elec-yellow">Lesson:</strong> only proper padlocks are
+              acceptable.
+            </p>
+            <p>
+              <strong className="text-red-400">Example 3: Missing Warning Notice.</strong> A
+              candidate isolated a lighting circuit correctly but didn't attach a warning notice.
+              Lost critical marks, failed the section.{' '}
+              <strong className="text-elec-yellow">Lesson:</strong> lock-off AND warning notice are
+              both mandatory.
+            </p>
+            <p>
+              <strong className="text-red-400">Example 4: Wrong Circuit Isolated.</strong> Candidate
+              misread the circuit schedule and isolated the wrong circuit. Despite perfect
+              procedure, this was a critical fail.{' '}
+              <strong className="text-elec-yellow">Lesson:</strong> always double-check circuit
+              identification first.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="What Assessors Look For">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Correct Sequence</strong> — assessors check you follow the exact NET
+                sequence without shortcuts
+              </li>
+              <li>
+                <strong>Equipment Handling</strong> — proper use of test equipment, proving before
+                and after
+              </li>
+              <li>
+                <strong>Safety Consciousness</strong> — clear demonstration that you understand the
+                risks
+              </li>
+              <li>
+                <strong>Communication</strong> — clear explanation of what you're doing and why
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Frequently Asked Questions">
+            <p>
+              <strong>Q1: Can I just switch off at the consumer unit without locking off?</strong>{' '}
+              No. Locking off and warning notices are mandatory under regulations.
+            </p>
+            <p>
+              <strong>Q2: Do I have to use my own tester?</strong> You can bring your own if it
+              complies, but the centre provides approved testers.
+            </p>
+            <p>
+              <strong>Q3: Why is the 10-point test required?</strong> To confirm the circuit is dead
+              in all conductor combinations.
+            </p>
+            <p>
+              <strong>Q4: What happens if I forget one step?</strong> Missing a critical step =
+              automatic fail.
+            </p>
+            <p>
+              <strong>Q5: Can I talk through the process instead of demonstrating it?</strong> No.
+              You must physically demonstrate the procedure.
+            </p>
+            <p>
+              <strong>Q6: How long should safe isolation take?</strong> Allow 10-15 minutes
+              including all tests and documentation.
+            </p>
+            <p>
+              <strong>Q7: What if the tester fails during the process?</strong> Stop immediately,
+              get a replacement tester, and start again.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Summary">
+            <p>
+              Safe isolation is the most important part of the AM2. It must be carried out exactly
+              as NET describes, with no shortcuts, no missed steps, and no unsafe practices.
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Remember the Sequence:</strong> Prove tester →
+              Isolate → Lock off → Warning notice → Test all combinations → Re-prove tester → Keep
+              key. <strong className="text-elec-yellow">Missing any step = automatic fail.</strong>
+            </p>
+            <p>
+              <strong className="text-green-400">Key Success Factor:</strong> practice until
+              automatic. <strong className="text-red-400">Main Failure Cause:</strong> rushing the
+              process.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 462.1"
+            clause="Each electrical installation shall have provisions for isolation from each supply."
+            meaning={
+              <>
+                Every installation must have a way to cut every supply feeding it. On AM2 the rig is
+                wired so you can demonstrate this — your job is to identify the right device,
+                isolate it, lock it off and prove dead. Skip any step and you’ve broken the
+                regulation.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 462.1."
+          />
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 462.3"
+            clause="Devices for isolation shall be designed and/or installed so as to prevent unintentional or inadvertent closure."
+            meaning={
+              <>
+                This is the regulatory basis for lock-off. The device alone isn’t enough — it must
+                be secured against being switched back on. On AM2, "I closed the breaker" is not
+                isolation. Padlock with your own key, your warning notice, your retained key.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 462.3."
+          />
+
+          <Scenario
+            title="Section C — three-phase isolation under the clock"
+            situation={
+              <>
+                Section C. The assessor points at a three-phase isolator feeding a small
+                distribution board. You have a two-pole tester, a proving unit, a padlock and a
+                warning notice. The clock starts.
+              </>
+            }
+            whatToDo={
+              <>
+                Prove the tester on the proving unit. Identify the circuit on the schedule. Switch
+                the isolator off. Apply your padlock and retain the key. Post the warning notice.
+                Test between every pair of conductors — L1-L2, L2-L3, L3-L1, each line to neutral,
+                each line to earth, neutral to earth. Re-prove the tester on the proving unit. Only
+                then is the board safely isolated.
+              </>
+            }
+            whyItMatters={
+              <>
+                On a three-phase isolation, missing one combination (especially neutral-to-earth) is
+                a critical fail. The test sequence isn’t just for show — a damaged neutral can leave
+                you with a hidden live path even after the breaker is open.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title="Locking off after the dead test"
+            whatHappens={
+              <>
+                You isolate, dead-test, then think about the padlock. In the gap between switching
+                off and locking off, somebody could walk past and re-energise the circuit — the
+                assessor included, as a deliberate test.
+              </>
+            }
+            doInstead={
+              <>
+                Lock off <em>immediately</em> after switching off, before you do anything else. Then
+                prove the tester, then dead-test. The order is: switch off → lock off → warning
+                notice → prove tester → test dead → re-prove tester.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Why do I have to prove the tester twice?',
+                answer:
+                  'Because a tester can fail silently. If it failed before you tested dead, every reading is a lie. Re-proving on a known live source after the dead test confirms the tester was working when you used it.',
+              },
+              {
+                question: 'Can I use a multimeter instead of a two-pole voltage tester?',
+                answer:
+                  'No — a multimeter is not approved for safe isolation. Use a GS38-compliant two-pole voltage indicator with shrouded probes. Multimeters can read residual voltages or sit on a wrong range and miss a live conductor.',
+              },
+              {
+                question: 'What if the proving unit fails on the second prove?',
+                answer:
+                  'You can no longer trust the dead test. Replace the tester or the proving unit, repeat the full sequence. In real life, that means re-isolating after replacing the kit. On AM2, raise it with the assessor immediately.',
+              },
+              {
+                question: 'Do I need a separate lock for every conductor?',
+                answer:
+                  'No — you lock the means of isolation (the breaker, isolator, switch-fuse). One padlock on the device, with the key in your pocket. If multiple people are working on the circuit, each adds their own lock.',
+              },
+              {
+                question: 'What happens if I touch a live conductor by accident?',
+                answer:
+                  'In the assessment, the assessor will stop you immediately and it’s a critical fail. In real life it can kill. Treat every conductor as live until proved dead — including neutral, which can sit at line voltage under fault conditions.',
+              },
+              {
+                question: 'Is the AM2 procedure the same as the HSE GS38 guidance?',
+                answer:
+                  'Yes — NET aligns the AM2 isolation procedure with HSE GS38 (test instruments) and the IET Code of Practice for Electrical Safe Isolation. Learn one and you’ve learned the other.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Safe isolation is a critical fail if any step is missed — practise until it’s automatic.',
+              'EAWR 1989 Reg 4 makes "work dead" the legal default. Live work needs written justification.',
+              'BS 7671 Reg 462.1 / 462.3: every supply must have isolation, and the device must be lockable.',
+              'Sequence: prove tester → identify circuit → switch off → lock off → warning notice → test dead → re-prove tester.',
+              'Use a GS38-compliant two-pole voltage indicator — never a multimeter for isolation.',
+              'On three-phase: test every conductor combination including neutral-to-earth.',
+              'Lock off immediately after switching off, before testing dead. Order matters.',
+              'Re-proving the tester is the most-skipped step and the most-failed item in AM2.',
+            ]}
+          />
+
+          <Quiz questions={quizQuestions} title="Knowledge Check: 10-Question Quiz" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
             >
-              <XCircle className="h-4 w-4 text-red-400 mr-2 mt-0.5 flex-shrink-0" />
-              <span className="text-ios-callout text-white">{fail}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
-          <h4 className="text-ios-headline text-red-400 font-semibold mb-2">
-            Prevention Strategies:
-          </h4>
-          <ul className="text-ios-callout text-white space-y-1">
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Create a personal checklist and use it every time</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Practice the sequence until it's automatic</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Never rush - take your time</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Communicate clearly with assessors about your actions</span>
-            </li>
-          </ul>
-        </div>
-      </AM2ContentCard>
-
-      {/* Practice Scenarios */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Settings className="h-5 w-5" />
-          Practice Scenarios
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          Work through these realistic AM2 scenarios to build confidence:
-        </p>
-        <div className="space-y-4">
-          {practiceScenarios.map((scenario, index) => (
-            <div key={index} className="p-4 bg-white/5 rounded-xl border border-white/10">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">{scenario.title}</h4>
-              <p className="text-ios-callout text-white mb-2">{scenario.description}</p>
-              <div className="flex flex-wrap gap-1">
-                {scenario.keyPoints.map((point, i) => (
-                  <span
-                    key={i}
-                    className="text-ios-footnote bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded"
-                  >
-                    {point}
-                  </span>
-                ))}
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
               </div>
-            </div>
-          ))}
-        </div>
-      </AM2ContentCard>
-
-      {/* Real-World Examples */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Real-World Examples</h2>
-        <div className="space-y-4">
-          <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/10">
-            <h3 className="text-ios-headline text-red-400 font-semibold mb-1">
-              Example 1: Forgotten Re-Prove
-            </h3>
-            <p className="text-ios-callout text-white">
-              A candidate did everything correctly but forgot to re-prove the tester during safe
-              isolation. The assessor stopped the test and recorded a fail.
-            </p>
-            <p className="text-ios-footnote text-elec-yellow mt-1">
-              Lesson: Never skip the final tester proving step
-            </p>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Back to Module
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module2/section2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Continue to Section 2
+              </div>
+            </button>
           </div>
-          <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/10">
-            <h3 className="text-ios-headline text-red-400 font-semibold mb-1">
-              Example 2: Wrong Lock-Off
-            </h3>
-            <p className="text-ios-callout text-white">
-              Candidate used tape instead of a lock-off device. Unsafe - instant fail.
-            </p>
-            <p className="text-ios-footnote text-elec-yellow mt-1">
-              Lesson: Only proper padlocks are acceptable
-            </p>
-          </div>
-          <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/10">
-            <h3 className="text-ios-headline text-red-400 font-semibold mb-1">
-              Example 3: Missing Warning Notice
-            </h3>
-            <p className="text-ios-callout text-white">
-              A candidate isolated a lighting circuit correctly but didn't attach a warning notice.
-              Lost critical marks, failed the section.
-            </p>
-            <p className="text-ios-footnote text-elec-yellow mt-1">
-              Lesson: Lock-off AND warning notice are both mandatory
-            </p>
-          </div>
-          <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/10">
-            <h3 className="text-ios-headline text-red-400 font-semibold mb-1">
-              Example 4: Wrong Circuit Isolated
-            </h3>
-            <p className="text-ios-callout text-white">
-              Candidate misread the circuit schedule and isolated the wrong circuit. Despite perfect
-              procedure, this was a critical fail.
-            </p>
-            <p className="text-ios-footnote text-elec-yellow mt-1">
-              Lesson: Always double-check circuit identification first
-            </p>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* What Assessors Look For */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Book className="h-5 w-5" />
-          What Assessors Look For
-        </h2>
-        <div className="space-y-3">
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h4 className="text-ios-headline text-white font-semibold mb-1">Correct Sequence</h4>
-            <p className="text-ios-callout text-white">
-              Assessors check you follow the exact NET sequence without shortcuts
-            </p>
-          </div>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h4 className="text-ios-headline text-white font-semibold mb-1">Equipment Handling</h4>
-            <p className="text-ios-callout text-white">
-              Proper use of test equipment, proving before and after
-            </p>
-          </div>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h4 className="text-ios-headline text-white font-semibold mb-1">
-              Safety Consciousness
-            </h4>
-            <p className="text-ios-callout text-white">
-              Clear demonstration that you understand the risks
-            </p>
-          </div>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h4 className="text-ios-headline text-white font-semibold mb-1">Communication</h4>
-            <p className="text-ios-callout text-white">
-              Clear explanation of what you're doing and why
-            </p>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* FAQs */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
-          Frequently Asked Questions
-        </h2>
-        <div className="space-y-4">
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">
-              Q1: Can I just switch off at the consumer unit without locking off?
-            </h3>
-            <p className="text-ios-callout text-white">
-              A: No. Locking off and warning notices are mandatory under regulations.
-            </p>
-          </div>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">
-              Q2: Do I have to use my own tester?
-            </h3>
-            <p className="text-ios-callout text-white">
-              A: You can bring your own if it complies, but the centre provides approved testers.
-            </p>
-          </div>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">
-              Q3: Why is the 10-point test required?
-            </h3>
-            <p className="text-ios-callout text-white">
-              A: To confirm the circuit is dead in all conductor combinations.
-            </p>
-          </div>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">
-              Q4: What happens if I forget one step?
-            </h3>
-            <p className="text-ios-callout text-white">
-              A: Missing a critical step = automatic fail.
-            </p>
-          </div>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">
-              Q5: Can I talk through the process instead of demonstrating it?
-            </h3>
-            <p className="text-ios-callout text-white">
-              A: No. You must physically demonstrate the procedure.
-            </p>
-          </div>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">
-              Q6: How long should safe isolation take?
-            </h3>
-            <p className="text-ios-callout text-white">
-              A: Allow 10-15 minutes including all tests and documentation.
-            </p>
-          </div>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">
-              Q7: What if the tester fails during the process?
-            </h3>
-            <p className="text-ios-callout text-white">
-              A: Stop immediately, get a replacement tester, and start again.
-            </p>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Summary */}
-      <AM2ContentCard accent>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Summary</h2>
-        <p className="text-ios-body text-white leading-relaxed mb-4">
-          Safe isolation is the most important part of the AM2. It must be carried out exactly as
-          NET describes, with no shortcuts, no missed steps, and no unsafe practices.
-        </p>
-        <div className="bg-elec-yellow/10 border-l-4 border-elec-yellow p-4 rounded-xl">
-          <h3 className="text-ios-headline text-elec-yellow font-bold mb-2">
-            Remember the Sequence:
-          </h3>
-          <p className="text-ios-callout text-white font-medium">
-            Prove tester → Isolate → Lock off → Warning notice → Test all combinations → Re-prove
-            tester → Keep key
-          </p>
-          <p className="text-ios-callout text-elec-yellow font-semibold mt-2">
-            Missing any step = automatic fail
-          </p>
-        </div>
-
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          <div className="text-center p-3 rounded-xl border border-green-500/30 bg-green-500/10">
-            <div className="text-ios-callout text-green-400 font-semibold">Key Success Factor</div>
-            <div className="text-ios-footnote text-white">Practice until automatic</div>
-          </div>
-          <div className="text-center p-3 rounded-xl border border-red-500/30 bg-red-500/10">
-            <div className="text-ios-callout text-red-400 font-semibold">Main Failure Cause</div>
-            <div className="text-ios-footnote text-white">Rushing the process</div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Quiz Section */}
-      <Quiz questions={quizQuestions} title="Knowledge Check: 10-Question Quiz" />
-
-      {/* Navigation Footer */}
-      <AM2NavigationFooter
-        prevHref="/study-centre/apprentice/am2/module2"
-        prevLabel="Back to Module"
-        nextHref="/study-centre/apprentice/am2/module2/section2"
-        nextLabel="Continue to Section 2"
-        currentSection={1}
-        totalSections={5}
-      />
-    </AM2SectionLayout>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 

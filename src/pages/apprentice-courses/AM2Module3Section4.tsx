@@ -1,29 +1,33 @@
-import {
-  Settings,
-  Cable,
-  CheckCircle,
-  AlertTriangle,
-  Target,
-  Wrench,
-  Zap,
-  Terminal,
-  BookOpen,
-} from 'lucide-react';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+/**
+ * Module 3 · Section 4 — Termination, connections, and circuit labelling
+ * AM2 day-prep — AM2 Phase B (composite installation: cable, containment, circuits, terminations)
+ * No exposed copper, the right torque, the right sleeving — and every circuit clearly labelled.
+ */
+
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  TLDR,
+  RegsCallout,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
+const TITLE = 'Termination, Connections, and Circuit Labelling | AM2 Module 3.4 | Elec-Mate';
+const DESCRIPTION =
+  'Tight, sleeved, no exposed copper — and every circuit labelled. The terminations and labelling that earn marks on the AM2.';
+
 const AM2Module3Section4 = () => {
-  useSEO(
-    'Termination, Connections, and Circuit Labelling | AM2 Module 3 Section 4',
-    'Professional workmanship standards and NET compliance requirements for AM2 assessment - terminations, connections and labelling'
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const quickCheckQuestions: Array<{
     id: string;
@@ -211,803 +215,605 @@ const AM2Module3Section4 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module3"
-      breadcrumbs={[
-        { label: 'AM2', href: '/study-centre/apprentice/am2' },
-        { label: 'Module 3', href: '/study-centre/apprentice/am2/module3' },
-        { label: 'Section 4' },
-      ]}
-    >
-      {/* Hero Section */}
-      <AM2HeroSection
-        icon={Terminal}
-        title="Termination, Connections, and Circuit Labelling"
-        description="Professional workmanship standards and NET compliance requirements for AM2 assessment - master terminations, connections and labelling for assessment success."
-        badge="Module 3 - Section 4"
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 3
+          </button>
 
-      {/* Critical Warning */}
-      <AM2CriticalWarning
-        title="CRITICAL: Terminations Determine AM2 Success or Failure"
-        message="Poor terminations are the #1 cause of AM2 failures. Even if your circuits work perfectly, exposed copper, loose connections, or missing labels will fail you. The assessor opens every accessory, checks every connection, and examines every label. There are no second chances. Perfect terminations require systematic preparation, correct tools, and understanding of NET standards. Rush this section and you risk everything."
-      />
+          <PageHero
+            eyebrow="Module 3 · Section 4"
+            title="Termination, Connections, and Circuit Labelling"
+            description="Professional workmanship standards and NET compliance requirements for AM2 assessment - master terminations, connections and labelling for assessment success."
+            tone="yellow"
+          />
 
-      {/* Learning Outcomes */}
-      <AM2LearningOutcomes outcomes={learningOutcomes} />
+          <TLDR
+            points={[
+              "Terminations are where AM2 days are won or lost. The assessor opens every accessory and lifts the DB lid — what's underneath either passes or fails you.",
+              'Reg 526.1 — durable continuity, mechanical strength, protection. Reg 526.5 — every joint inside a proper accessory or enclosure, no bare connectors in voids.',
+              'Sheath into every accessory. CPC sleeved green/yellow at every termination, including plastic ones. No bare copper outside any terminal.',
+              'DB: line into MCB/RCBO, neutral into neutral bar (right RCD side if split-board), CPC into earth bar — never crossed.',
+              'SWA: gland tight, banjo washer fitted, CPC tail to earth terminal, armour visibly clamped.',
+              'Label every circuit at the DB with permanent labels — pencil marks and masking tape lose marks.',
+            ]}
+          />
 
-      {/* NET Assessment Criteria */}
-      <AM2ContentCard title="NET Assessment Criteria - What Assessors Check" icon={Target} accent>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">
-              Primary Assessment Areas (Pass/Fail)
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li className="flex gap-2">
-                <span className="font-medium text-red-400 min-w-[20px]">X</span>
-                <div>
-                  <strong className="text-white">Exposed copper beyond terminals</strong> -
-                  Immediate fail
-                  <p className="text-xs mt-1 text-white">
-                    Any visible copper creates shock/short circuit risk
-                  </p>
-                </div>
+          <CommonMistake
+            title="CRITICAL: Terminations Determine AM2 Success or Failure"
+            whatHappens="Poor terminations are the #1 cause of AM2 failures. Even if your circuits work perfectly, exposed copper, loose connections, or missing labels will fail you. The assessor opens every accessory, checks every connection, and examines every label. There are no second chances. Perfect terminations require systematic preparation, correct tools, and understanding of NET standards. Rush this section and you risk everything."
+            doInstead="Slow down at every termination — strip to the right length, sleeve every CPC, torque every terminal, and label as you go."
+          />
+
+          <LearningOutcomes outcomes={learningOutcomes} />
+
+          <ConceptBlock title="NET Assessment Criteria - What Assessors Check">
+            <p>
+              <strong>Primary Assessment Areas (Pass/Fail):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Exposed copper beyond terminals</strong> - Immediate fail. Any visible
+                copper creates shock/short circuit risk.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-red-400 min-w-[20px]">X</span>
-                <div>
-                  <strong className="text-white">CPC not sleeved or connected</strong> - Safety
-                  critical failure
-                  <p className="text-xs mt-1 text-white">
-                    Required everywhere, including plastic accessories
-                  </p>
-                </div>
+              <li>
+                <strong>CPC not sleeved or connected</strong> - Safety critical failure. Required
+                everywhere, including plastic accessories.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-red-400 min-w-[20px]">X</span>
-                <div>
-                  <strong className="text-white">Loose or insecure connections</strong> -
-                  Fire/safety risk
-                  <p className="text-xs mt-1 text-white">
-                    Must be mechanically and electrically sound
-                  </p>
-                </div>
+              <li>
+                <strong>Loose or insecure connections</strong> - Fire/safety risk. Must be
+                mechanically and electrically sound.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-red-400 min-w-[20px]">X</span>
-                <div>
-                  <strong className="text-white">Incorrect polarity in DB</strong> - Fundamental
-                  error
-                  <p className="text-xs mt-1 text-white">CPC to neutral bar = automatic fail</p>
-                </div>
+              <li>
+                <strong>Incorrect polarity in DB</strong> - Fundamental error. CPC to neutral bar =
+                automatic fail.
               </li>
             </ul>
-          </div>
-
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">
-              Secondary Assessment (Marks Deduction)
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li className="flex gap-2">
-                <span className="font-medium text-amber-400 min-w-[20px]">!</span>
-                <div>
-                  <strong className="text-white">Poor cable preparation/stripping</strong> -
-                  Workmanship marks
-                  <p className="text-xs mt-1 text-white">
-                    Nicked insulation, incorrect strip lengths
-                  </p>
-                </div>
+            <p>
+              <strong>Secondary Assessment (Marks Deduction):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Poor cable preparation/stripping</strong> - Workmanship marks. Nicked
+                insulation, incorrect strip lengths.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-amber-400 min-w-[20px]">!</span>
-                <div>
-                  <strong className="text-white">Untidy cable dressing</strong> - Professional
-                  standards
-                  <p className="text-xs mt-1 text-white">
-                    Cables crossing, poor routing, excessive length
-                  </p>
-                </div>
+              <li>
+                <strong>Untidy cable dressing</strong> - Professional standards. Cables crossing,
+                poor routing, excessive length.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-amber-400 min-w-[20px]">!</span>
-                <div>
-                  <strong className="text-white">Missing or poor labelling</strong> - Identification
-                  requirements
-                  <p className="text-xs mt-1 text-white">
-                    Pencil marks, temporary labels, illegible text
-                  </p>
-                </div>
+              <li>
+                <strong>Missing or poor labelling</strong> - Identification requirements. Pencil
+                marks, temporary labels, illegible text.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-amber-400 min-w-[20px]">!</span>
-                <div>
-                  <strong className="text-white">Conductor damage during installation</strong> -
-                  Care and skill
-                  <p className="text-xs mt-1 text-white">Damaged insulation, kinked conductors</p>
-                </div>
+              <li>
+                <strong>Conductor damage during installation</strong> - Care and skill. Damaged
+                insulation, kinked conductors.
               </li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* General Termination Standards */}
-      <AM2ContentCard
-        title="1. General Termination Standards (BS 7671, Section 526)"
-        icon={Terminal}
-      >
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">
-              Core Requirements - Non-Negotiable
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li className="flex gap-2">
-                <span className="font-medium text-green-400 min-w-[20px]">Y</span>
-                <div>
-                  <strong className="text-white">
-                    Conductors electrically and mechanically sound
-                  </strong>
-                  <p className="text-xs mt-1 text-white">
-                    Secure connections that won't work loose over time
-                  </p>
-                </div>
+          <ConceptBlock title="1. General Termination Standards (BS 7671, Section 526)">
+            <p>
+              <strong>Core Requirements - Non-Negotiable:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Conductors electrically and mechanically sound.</strong> Secure connections
+                that won't work loose over time.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-green-400 min-w-[20px]">Y</span>
-                <div>
-                  <strong className="text-white">No bare copper visible outside terminals</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Critical safety requirement - prevents shock and short circuits
-                  </p>
-                </div>
+              <li>
+                <strong>No bare copper visible outside terminals.</strong> Critical safety
+                requirement - prevents shock and short circuits.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-green-400 min-w-[20px]">Y</span>
-                <div>
-                  <strong className="text-white">Insulation runs up to terminal</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Proper cable preparation with correct strip lengths
-                  </p>
-                </div>
+              <li>
+                <strong>Insulation runs up to terminal.</strong> Proper cable preparation with
+                correct strip lengths.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-green-400 min-w-[20px]">Y</span>
-                <div>
-                  <strong className="text-white">CPC sleeving correctly applied</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Green/yellow identification on all CPC conductors
-                  </p>
-                </div>
+              <li>
+                <strong>CPC sleeving correctly applied.</strong> Green/yellow identification on all
+                CPC conductors.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-green-400 min-w-[20px]">Y</span>
-                <div>
-                  <strong className="text-white">Correct torque values applied</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Manufacturer specifications met for critical connections
-                  </p>
-                </div>
+              <li>
+                <strong>Correct torque values applied.</strong> Manufacturer specifications met for
+                critical connections.
               </li>
             </ul>
-          </div>
-
-          <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">Professional Tips</h4>
-            <ul className="space-y-1 text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Strip cables using proper strippers - avoid damaging conductor insulation
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Cut conductors to exact length - no bunching or excessive length in terminals
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+            <p>
+              <strong className="text-elec-yellow">Professional Tips:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Strip cables using proper strippers - avoid damaging conductor insulation</li>
+              <li>Cut conductors to exact length - no bunching or excessive length in terminals</li>
+              <li>
                 Use torque screwdrivers for DB connections - demonstrates professional standards
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Check terminations twice - once during installation, once before energising
-              </li>
+              <li>Check terminations twice - once during installation, once before energising</li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-      {/* Accessory Terminations */}
-      <AM2ContentCard
-        title="2. Accessory Terminations (Sockets, Switches, Cooker Outlets)"
-        icon={Zap}
-      >
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">
-              Step-by-Step Accessory Termination
-            </h4>
-            <ol className="space-y-2 text-sm">
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
-                <div>
-                  <strong className="text-white">Cable preparation</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Strip outer sheath to allow cable entry into accessory (typically 15-20mm).
-                    Sheath must enter the accessory - no excessive stripping.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
-                <div>
-                  <strong className="text-white">CPC identification</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Apply green/yellow sleeving to CPC - required in ALL accessories including
-                    plastic ones. No exceptions in AM2.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
-                <div>
-                  <strong className="text-white">Conductor preparation</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Cut conductors to correct length - no twisting or bunching. Allow enough length
-                    for secure termination without stress.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
-                <div>
-                  <strong className="text-white">Terminal connections</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Tighten terminals firmly without over-tightening. Multiple conductors must be
-                    neat and equally secure.
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 526.1"
+            clause={
+              <>
+                "Every connection between conductors or between a conductor and other equipment
+                shall provide durable electrical continuity and adequate mechanical strength and
+                protection."
+              </>
+            }
+            meaning={
+              <>
+                "Durable" is the AM2 word. Tight today isn't enough — the connection has to stay
+                tight after thermal cycling. That's why you torque to spec, why you don't double
+                flex into a single rigid terminal, and why the assessor will give a screw a gentle
+                pull-test. Loose, hand-tight or over-crushed terminations all fail this clause.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 526.1."
+          />
 
-          <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
-            <h4 className="font-medium text-red-400 mb-2">Common Accessory Errors</h4>
-            <ul className="space-y-1 text-sm text-white">
-              <li>
-                <strong className="text-red-400">Over-stripped cable sheath</strong> - Exposes cable
-                outside accessory
-              </li>
-              <li>
-                <strong className="text-red-400">CPC not sleeved in plastic accessories</strong> -
-                Still required for identification
-              </li>
-              <li>
-                <strong className="text-red-400">Twisted or damaged conductors</strong> - Poor
-                workmanship and safety risk
-              </li>
-              <li>
-                <strong className="text-red-400">Loose terminal connections</strong> - Creates
-                arcing and fire risk
-              </li>
-              <li>
-                <strong className="text-red-400">Mixed up Line/Neutral</strong> - Polarity error
-                affects RCD protection
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 526.5"
+            clause={
+              <>
+                "Every termination and joint in a live conductor or a PEN conductor shall be made
+                within one of the following or a combination thereof: (a) a suitable accessory
+                complying with the appropriate product standard; (b) an equipment enclosure
+                complying with the appropriate product standard; (c) an enclosure partially formed
+                or completed with building material which is non-combustible when tested to BS
+                476-4."
+              </>
+            }
+            meaning={
+              <>
+                Every joint on AM2 has to live inside a proper accessory or enclosure — full stop. A
+                connector block taped up and pushed into a void fails this reg, even if the
+                connection itself is sound. If you can't reach an outlet in one cable run, your
+                joint goes inside a BS 4662 box or a BS 5733 maintenance-free junction box, fixed
+                and accessible.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 526.5."
+          />
 
-      {/* Distribution Board Terminations */}
-      <AM2ContentCard
-        title="3. Distribution Board (DB) Terminations - Critical Assessment Area"
-        icon={Wrench}
-      >
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">DB Termination Sequence</h4>
-            <ol className="space-y-2 text-sm">
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
-                <div>
-                  <strong className="text-white">Verify circuit/MCB matching</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Check drawing - correct cable size in correct protective device. Ring circuits
-                    in 32A, lighting in 6A/10A, etc.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
-                <div>
-                  <strong className="text-white">Prepare cable entries</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Use proper cable entries. Strip cables to correct length. Plan cable routes to
-                    avoid crossing.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
-                <div>
-                  <strong className="text-white">Line conductor termination</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Into MCB/RCBO terminal. Ensure full insertion and correct torque. No copper
-                    visible outside terminal.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
-                <div>
-                  <strong className="text-white">Neutral conductor termination</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Into neutral bar only. NEVER into earth bar. Apply blue identification if
-                    required.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
-                <div>
-                  <strong className="text-white">CPC termination</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Into earth bar only with green/yellow sleeving. Ensure mechanical continuity
-                    throughout installation.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
-                <div>
-                  <strong className="text-white">Cable dressing and labelling</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Dress cables neatly. Apply permanent labels to each circuit. No temporary
-                    markings.
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-
-          <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
-            <h4 className="font-medium text-red-400 mb-2">
-              DB Errors That Cause Immediate Failure
-            </h4>
-            <ul className="space-y-1 text-sm text-white">
-              <li>
-                <strong className="text-red-400">CPC connected to neutral bar</strong> - Fundamental
-                polarity error
-              </li>
-              <li>
-                <strong className="text-red-400">Wrong cable in wrong MCB</strong> - Circuit
-                protection mismatch
-              </li>
-              <li>
-                <strong className="text-red-400">Exposed copper in terminals</strong> - Safety
-                critical failure
-              </li>
-              <li>
-                <strong className="text-red-400">Loose connections</strong> - Creates arcing,
-                overheating, fire risk
-              </li>
-              <li>
-                <strong className="text-red-400">Cables crossing untidily</strong> - Poor
-                workmanship, access issues
-              </li>
-              <li>
-                <strong className="text-red-400">No circuit identification</strong> - Doesn't meet
-                BS7671 requirements
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <h4 className="font-medium text-green-400 mb-2">Professional DB Standards</h4>
-            <ul className="space-y-1 text-sm text-white">
-              <li>
-                <strong className="text-green-400">Use torque screwdriver</strong> - Demonstrates
-                professional approach
-              </li>
-              <li>
-                <strong className="text-green-400">Plan cable routes</strong> - Avoid cables
-                crossing each other
-              </li>
-              <li>
-                <strong className="text-green-400">Label as you go</strong> - Prevents errors and
-                saves time
-              </li>
-              <li>
-                <strong className="text-green-400">Check polarity twice</strong> - Before and after
-                termination
-              </li>
-              <li>
-                <strong className="text-green-400">Dress cables systematically</strong> - Group by
-                function, neat presentation
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      <InlineCheck {...quickCheckQuestions[1]} />
-
-      {/* SWA Terminations */}
-      <AM2ContentCard title="4. SWA Cable Terminations - Advanced Techniques" icon={Cable}>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">SWA Termination Process</h4>
-            <ol className="space-y-2 text-sm">
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
-                <div>
-                  <strong className="text-white">Cable preparation</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Mark and cut outer sheath to correct length. Remove armour carefully without
-                    damaging cores. Clean armour ends.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
-                <div>
-                  <strong className="text-white">Gland assembly</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Thread gland components onto cable in correct order. Ensure banjo washer is
-                    properly positioned for armour contact.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
-                <div>
-                  <strong className="text-white">Armour clamping</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Clamp armour securely in gland. No loose strands. Armour must make good
-                    electrical contact with banjo washer.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
-                <div>
-                  <strong className="text-white">Earthing connection</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Connect CPC to banjo washer or separate earth terminal. This provides the armour
-                    earthing path.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
-                <div>
-                  <strong className="text-white">Seal and secure</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Tighten gland assembly to IP rating requirements. Check cable strain relief and
-                    weatherproofing.
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-
-          <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
-            <h4 className="font-medium text-amber-400 mb-2">SWA Common Issues</h4>
-            <ul className="space-y-1 text-sm text-white">
-              <li>
-                <strong className="text-amber-400">Loose armour strands</strong> - Can cause short
-                circuits or poor earthing
-              </li>
-              <li>
-                <strong className="text-amber-400">Damaged core insulation</strong> - Often occurs
-                during armour removal
-              </li>
-              <li>
-                <strong className="text-amber-400">Poor armour-banjo contact</strong> - Results in
-                high earth loop impedance
-              </li>
-              <li>
-                <strong className="text-amber-400">Under-tightened gland</strong> - Allows moisture
-                ingress and movement
-              </li>
-              <li>
-                <strong className="text-amber-400">Missing earth connection</strong> - Armour not
-                properly earthed
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      <InlineCheck {...quickCheckQuestions[2]} />
-
-      {/* Circuit Labelling */}
-      <AM2ContentCard title="5. Circuit Identification and Labelling" icon={BookOpen}>
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">Systematic Labelling Strategy</h4>
-            <ol className="space-y-2 text-sm">
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
-                <div>
-                  <strong className="text-white">Label as you install</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Don't leave labelling until the end. Mark cables and circuits during
-                    installation to prevent confusion.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
-                <div>
-                  <strong className="text-white">Distribution board circuits</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Each protective device must be clearly labelled with the circuit it protects
-                    (e.g., "Ring Main Kitchen", "Lights Ground Floor").
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
-                <div>
-                  <strong className="text-white">Conductor identification</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Label conductors where multiple circuits are present in same area. Use permanent
-                    markers or proper labels.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
-                <div>
-                  <strong className="text-white">Accessory labelling</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Label isolators, switches, and special outlets as specified in drawings (e.g.,
-                    "Cooker Isolator", "Emergency Stop").
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
-                <div>
-                  <strong className="text-white">Verification and durability</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Check all labels are legible, permanent, and accurately describe the circuits.
-                    No temporary markings allowed.
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-
-          <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
-            <h4 className="font-medium text-red-400 mb-2">Labelling Mistakes That Lose Marks</h4>
-            <ul className="space-y-1 text-sm text-white">
-              <li>
-                <strong className="text-red-400">Pencil markings</strong> - Not permanent, will fade
-              </li>
-              <li>
-                <strong className="text-red-400">Masking tape and pen</strong> - Temporary and
-                unprofessional
-              </li>
-              <li>
-                <strong className="text-red-400">Illegible handwriting</strong> - Can't be read by
-                assessor
-              </li>
-              <li>
-                <strong className="text-red-400">Generic labels</strong> - "Circuit 1" instead of
-                descriptive names
-              </li>
-              <li>
-                <strong className="text-red-400">Missing labels</strong> - Circuits not identified
-                in DB
-              </li>
-              <li>
-                <strong className="text-red-400">Wrong information</strong> - Labels don't match
-                actual circuits
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <h4 className="font-medium text-green-400 mb-2">Professional Labelling Standards</h4>
-            <ul className="space-y-1 text-sm text-white">
-              <li>
-                <strong className="text-green-400">Use label maker or permanent markers</strong> -
-                Professional appearance
-              </li>
-              <li>
-                <strong className="text-green-400">Descriptive circuit names</strong> - "Kitchen
-                Sockets", "Upstairs Lights"
-              </li>
-              <li>
-                <strong className="text-green-400">Consistent naming convention</strong> - Follow
-                pattern throughout installation
-              </li>
-              <li>
-                <strong className="text-green-400">Multiple language where required</strong> -
-                Symbols plus text if specified
-              </li>
-              <li>
-                <strong className="text-green-400">Weatherproof labels outdoors</strong> - Survive
-                environmental conditions
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Common Assessment Failures */}
-      <AM2ContentCard
-        title="6. Common Assessment Failures - NET Data Analysis"
-        icon={AlertTriangle}
-      >
-        <div className="space-y-4 text-xs sm:text-sm text-white">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">
-              Top 10 Termination Failures (NET Statistics)
-            </h4>
-            <ol className="space-y-2 text-sm">
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">1.</span>
-                <div>
-                  <strong className="text-white">Over-stripped cables (42% of failures)</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Exposed copper beyond terminals - immediate safety failure
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">2.</span>
-                <div>
-                  <strong className="text-white">CPC not sleeved (38% of failures)</strong>
-                  <p className="text-xs mt-1 text-white">
-                    Particularly in plastic accessories where candidates assume it's not needed
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">3.</span>
-                <div>
-                  <strong className="text-white">Polarity errors in DB (31% of failures)</strong>
-                  <p className="text-xs mt-1 text-white">
-                    CPC in neutral bar, line/neutral confusion
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">4.</span>
-                <div>
-                  <strong className="text-white">
-                    Loose terminal connections (29% of failures)
-                  </strong>
-                  <p className="text-xs mt-1 text-white">
-                    Insufficient tightening or damaged terminals
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">5.</span>
-                <div>
-                  <strong className="text-white">
-                    Poor SWA gland installation (24% of failures)
-                  </strong>
-                  <p className="text-xs mt-1 text-white">Armour not properly clamped or earthed</p>
-                </div>
-              </li>
-            </ol>
-          </div>
-
-          <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">Assessment Recovery Strategy</h4>
-            <p className="text-sm text-white mb-3">
-              If you make a termination error during assessment:
+          <ConceptBlock title="2. Accessory Terminations (Sockets, Switches, Cooker Outlets)">
+            <p>
+              <strong>Step-by-Step Accessory Termination:</strong>
             </p>
-            <ul className="space-y-1 text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white">Acknowledge immediately</strong> - Don't try to hide
-                mistakes
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable preparation.</strong> Strip outer sheath to allow cable entry into
+                accessory (typically 15-20mm). Sheath must enter the accessory - no excessive
+                stripping.
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white">Rectify systematically</strong> - Fix the root cause,
-                not just symptoms
+              <li>
+                <strong>CPC identification.</strong> Apply green/yellow sleeving to CPC - required
+                in ALL accessories including plastic ones. No exceptions in AM2.
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white">Check similar connections</strong> - Prevent
-                recurring errors
+              <li>
+                <strong>Conductor preparation.</strong> Cut conductors to correct length - no
+                twisting or bunching. Allow enough length for secure termination without stress.
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white">Document the fix</strong> - Show understanding of the
-                issue
+              <li>
+                <strong>Terminal connections.</strong> Tighten terminals firmly without
+                over-tightening. Multiple conductors must be neat and equally secure.
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white">Test thoroughly</strong> - Prove the repair is
-                effective
+            </ol>
+            <p>
+              <strong className="text-elec-yellow">Common Accessory Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Over-stripped cable sheath</strong> - Exposes cable outside accessory
+              </li>
+              <li>
+                <strong>CPC not sleeved in plastic accessories</strong> - Still required for
+                identification
+              </li>
+              <li>
+                <strong>Twisted or damaged conductors</strong> - Poor workmanship and safety risk
+              </li>
+              <li>
+                <strong>Loose terminal connections</strong> - Creates arcing and fire risk
+              </li>
+              <li>
+                <strong>Mixed up Line/Neutral</strong> - Polarity error affects RCD protection
               </li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Summary and Key Takeaways */}
-      <AM2ContentCard title="Section Summary - Key Takeaways" icon={CheckCircle} accent>
-        <div className="space-y-4 text-sm text-white">
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <h4 className="font-medium text-green-400 mb-2">Critical Success Factors</h4>
-            <ul className="space-y-1">
+          <ConceptBlock title="3. Distribution Board (DB) Terminations - Critical Assessment Area">
+            <p>
+              <strong>DB Termination Sequence:</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong className="text-green-400">No exposed copper</strong> - Fundamental safety
-                requirement
+                <strong>Verify circuit/MCB matching.</strong> Check drawing - correct cable size in
+                correct protective device. Ring circuits in 32A, lighting in 6A/10A, etc.
               </li>
               <li>
-                <strong className="text-green-400">CPC sleeving everywhere</strong> - Including
-                plastic accessories
+                <strong>Prepare cable entries.</strong> Use proper cable entries. Strip cables to
+                correct length. Plan cable routes to avoid crossing.
               </li>
               <li>
-                <strong className="text-green-400">Correct polarity in DB</strong> - CPC and neutral
-                in correct bars
+                <strong>Line conductor termination.</strong> Into MCB/RCBO terminal. Ensure full
+                insertion and correct torque. No copper visible outside terminal.
               </li>
               <li>
-                <strong className="text-green-400">Systematic labelling</strong> - As you go, not at
-                the end
+                <strong>Neutral conductor termination.</strong> Into neutral bar only. NEVER into
+                earth bar. Apply blue identification if required.
               </li>
               <li>
-                <strong className="text-green-400">Professional tools</strong> - Proper strippers,
-                torque screwdrivers
+                <strong>CPC termination.</strong> Into earth bar only with green/yellow sleeving.
+                Ensure mechanical continuity throughout installation.
+              </li>
+              <li>
+                <strong>Cable dressing and labelling.</strong> Dress cables neatly. Apply permanent
+                labels to each circuit. No temporary markings.
+              </li>
+            </ol>
+            <p>
+              <strong className="text-elec-yellow">DB Errors That Cause Immediate Failure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>CPC connected to neutral bar</strong> - Fundamental polarity error
+              </li>
+              <li>
+                <strong>Wrong cable in wrong MCB</strong> - Circuit protection mismatch
+              </li>
+              <li>
+                <strong>Exposed copper in terminals</strong> - Safety critical failure
+              </li>
+              <li>
+                <strong>Loose connections</strong> - Creates arcing, overheating, fire risk
+              </li>
+              <li>
+                <strong>Cables crossing untidily</strong> - Poor workmanship, access issues
+              </li>
+              <li>
+                <strong>No circuit identification</strong> - Doesn't meet BS7671 requirements
               </li>
             </ul>
-          </div>
-
-          <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">Remember for Assessment Day</h4>
-            <ul className="space-y-1">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                The assessor will inspect every connection you make
+            <p>
+              <strong className="text-elec-yellow">Professional DB Standards:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Use torque screwdriver</strong> - Demonstrates professional approach
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Poor terminations can fail you even if circuits work correctly
+              <li>
+                <strong>Plan cable routes</strong> - Avoid cables crossing each other
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Label circuits as you install them - saves time and prevents errors
+              <li>
+                <strong>Label as you go</strong> - Prevents errors and saves time
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Use proper tools - demonstrates professional competence
+              <li>
+                <strong>Check polarity twice</strong> - Before and after termination
               </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Check your work twice - once during installation, once before energising
+              <li>
+                <strong>Dress cables systematically</strong> - Group by function, neat presentation
               </li>
             </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <ConceptBlock title="4. SWA Cable Terminations - Advanced Techniques">
+            <p>
+              <strong>SWA Termination Process:</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable preparation.</strong> Mark and cut outer sheath to correct length.
+                Remove armour carefully without damaging cores. Clean armour ends.
+              </li>
+              <li>
+                <strong>Gland assembly.</strong> Thread gland components onto cable in correct
+                order. Ensure banjo washer is properly positioned for armour contact.
+              </li>
+              <li>
+                <strong>Armour clamping.</strong> Clamp armour securely in gland. No loose strands.
+                Armour must make good electrical contact with banjo washer.
+              </li>
+              <li>
+                <strong>Earthing connection.</strong> Connect CPC to banjo washer or separate earth
+                terminal. This provides the armour earthing path.
+              </li>
+              <li>
+                <strong>Seal and secure.</strong> Tighten gland assembly to IP rating requirements.
+                Check cable strain relief and weatherproofing.
+              </li>
+            </ol>
+            <p>
+              <strong className="text-elec-yellow">SWA Common Issues:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Loose armour strands</strong> - Can cause short circuits or poor earthing
+              </li>
+              <li>
+                <strong>Damaged core insulation</strong> - Often occurs during armour removal
+              </li>
+              <li>
+                <strong>Poor armour-banjo contact</strong> - Results in high earth loop impedance
+              </li>
+              <li>
+                <strong>Under-tightened gland</strong> - Allows moisture ingress and movement
+              </li>
+              <li>
+                <strong>Missing earth connection</strong> - Armour not properly earthed
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <ConceptBlock title="5. Circuit Identification and Labelling">
+            <p>
+              <strong>Systematic Labelling Strategy:</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Label as you install.</strong> Don't leave labelling until the end. Mark
+                cables and circuits during installation to prevent confusion.
+              </li>
+              <li>
+                <strong>Distribution board circuits.</strong> Each protective device must be clearly
+                labelled with the circuit it protects (e.g., "Ring Main Kitchen", "Lights Ground
+                Floor").
+              </li>
+              <li>
+                <strong>Conductor identification.</strong> Label conductors where multiple circuits
+                are present in same area. Use permanent markers or proper labels.
+              </li>
+              <li>
+                <strong>Accessory labelling.</strong> Label isolators, switches, and special outlets
+                as specified in drawings (e.g., "Cooker Isolator", "Emergency Stop").
+              </li>
+              <li>
+                <strong>Verification and durability.</strong> Check all labels are legible,
+                permanent, and accurately describe the circuits. No temporary markings allowed.
+              </li>
+            </ol>
+            <p>
+              <strong className="text-elec-yellow">Labelling Mistakes That Lose Marks:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pencil markings</strong> - Not permanent, will fade
+              </li>
+              <li>
+                <strong>Masking tape and pen</strong> - Temporary and unprofessional
+              </li>
+              <li>
+                <strong>Illegible handwriting</strong> - Can't be read by assessor
+              </li>
+              <li>
+                <strong>Generic labels</strong> - "Circuit 1" instead of descriptive names
+              </li>
+              <li>
+                <strong>Missing labels</strong> - Circuits not identified in DB
+              </li>
+              <li>
+                <strong>Wrong information</strong> - Labels don't match actual circuits
+              </li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Professional Labelling Standards:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Use label maker or permanent markers</strong> - Professional appearance
+              </li>
+              <li>
+                <strong>Descriptive circuit names</strong> - "Kitchen Sockets", "Upstairs Lights"
+              </li>
+              <li>
+                <strong>Consistent naming convention</strong> - Follow pattern throughout
+                installation
+              </li>
+              <li>
+                <strong>Multiple language where required</strong> - Symbols plus text if specified
+              </li>
+              <li>
+                <strong>Weatherproof labels outdoors</strong> - Survive environmental conditions
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="6. Common Assessment Failures - NET Data Analysis">
+            <p>
+              <strong>Top 10 Termination Failures (NET Statistics):</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Over-stripped cables (42% of failures).</strong> Exposed copper beyond
+                terminals - immediate safety failure.
+              </li>
+              <li>
+                <strong>CPC not sleeved (38% of failures).</strong> Particularly in plastic
+                accessories where candidates assume it's not needed.
+              </li>
+              <li>
+                <strong>Polarity errors in DB (31% of failures).</strong> CPC in neutral bar,
+                line/neutral confusion.
+              </li>
+              <li>
+                <strong>Loose terminal connections (29% of failures).</strong> Insufficient
+                tightening or damaged terminals.
+              </li>
+              <li>
+                <strong>Poor SWA gland installation (24% of failures).</strong> Armour not properly
+                clamped or earthed.
+              </li>
+            </ol>
+            <p>
+              <strong className="text-elec-yellow">Assessment Recovery Strategy.</strong> If you
+              make a termination error during assessment:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Acknowledge immediately</strong> - Don't try to hide mistakes
+              </li>
+              <li>
+                <strong>Rectify systematically</strong> - Fix the root cause, not just symptoms
+              </li>
+              <li>
+                <strong>Check similar connections</strong> - Prevent recurring errors
+              </li>
+              <li>
+                <strong>Document the fix</strong> - Show understanding of the issue
+              </li>
+              <li>
+                <strong>Test thoroughly</strong> - Prove the repair is effective
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Section Summary - Key Takeaways">
+            <p>
+              <strong className="text-elec-yellow">Critical Success Factors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>No exposed copper</strong> - Fundamental safety requirement
+              </li>
+              <li>
+                <strong>CPC sleeving everywhere</strong> - Including plastic accessories
+              </li>
+              <li>
+                <strong>Correct polarity in DB</strong> - CPC and neutral in correct bars
+              </li>
+              <li>
+                <strong>Systematic labelling</strong> - As you go, not at the end
+              </li>
+              <li>
+                <strong>Professional tools</strong> - Proper strippers, torque screwdrivers
+              </li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Remember for Assessment Day:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>The assessor will inspect every connection you make</li>
+              <li>Poor terminations can fail you even if circuits work correctly</li>
+              <li>Label circuits as you install them - saves time and prevents errors</li>
+              <li>Use proper tools - demonstrates professional competence</li>
+              <li>Check your work twice - once during installation, once before energising</li>
+            </ul>
+          </ConceptBlock>
+
+          <Scenario
+            title="The assessor lifts the DB lid and finds a CPC in the neutral bar"
+            situation={
+              <>
+                You've finished wiring the DB. Six circuits in, you're tired, you've been swapping
+                between line, neutral and earth tails and the lid is closed. The assessor opens it,
+                scans the bars, and points at one circuit's CPC sat in the neutral bar. Everything
+                else is correct.
+              </>
+            }
+            whatToDo={
+              <>
+                Acknowledge it immediately, isolate the supply, lift the misplaced conductor, drop
+                it into the correct bar, and re-tighten. Then check every other CPC and neutral — if
+                you mixed one, you might have mixed another. Don't try to defend the mistake. The
+                recovery — calm, methodical, full check — is what an assessor wants to see.
+              </>
+            }
+            whyItMatters={
+              <>
+                CPC in the neutral bar disconnects the circuit's earth path entirely. On a fault,
+                the casing of an accessory could go to mains potential with no return path through
+                the MCB — exposed-conductive-parts at 230 V. It's a fundamental polarity error and a
+                section fail. The assessor isn't looking to embarrass you — they're checking whether
+                you spot and fix safety-critical errors.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'How much insulation should I strip back at a terminal?',
+                answer:
+                  "Just enough that the conductor goes fully into the terminal with no bare copper visible outside it. For most accessory terminals that's 8–12 mm of conductor; for larger DB terminals 10–15 mm. Strip a bit short and the terminal grips insulation, not copper — bad connection, IR fail. Strip a bit long and bare copper is visible — safety fail. Practice on offcuts before the day.",
+              },
+              {
+                question: 'Do I need to sleeve the CPC in a plastic accessory?',
+                answer:
+                  "Yes. BS 7671 identification rules apply everywhere — a bare CPC in a plastic socket back box still has to be sleeved green/yellow. AM2 statistics show this is one of the most common mark losses (around 38% of failures involve missed CPC sleeving). Apply the sleeving when you're preparing the cable, not at the final termination — saves time and ensures it's never missed.",
+              },
+              {
+                question: 'What torque do I use on MCB and RCBO terminals?',
+                answer:
+                  "Whatever the manufacturer's data sheet specifies — usually 2.0–2.5 Nm for the line terminal on a domestic-style MCB and 1.0–1.2 Nm for neutral bars. Use a torque screwdriver if you've got one; the assessor will absolutely notice and it demonstrates professional standards. Over-tightening crushes the conductor and fails durability under thermal cycling; under-tightening leaves a loose connection that arcs.",
+              },
+              {
+                question: 'How do I get the SWA armour properly earthed at a gland?',
+                answer:
+                  "Strip outer sheath to expose the armour, fit the gland body so the armour clamps under the cone — you should see clean armour ends visible inside the gland nut. Slide on the banjo washer between the gland body and the enclosure, then run an earth tail (CPC) from the banjo bolt to the equipment earth terminal. Test continuity from the armour at one end to the earth bar at the other end — should read very low. If it reads high, the banjo isn't biting on the armour properly.",
+              },
+              {
+                question:
+                  "What's the right way to label the DB — handwriting on tape, or printed labels?",
+                answer:
+                  "Permanent, legible, descriptive. A label printer or printed insert in the DB's own labelling strip is best. Permanent marker on a proper label is acceptable. Pencil, masking tape with a Biro, or 'Circuit 1, Circuit 2, Circuit 3' instead of 'Ring Kitchen, Lights Up, Cooker' all lose marks. Label as you wire each circuit, not in the last 5 minutes.",
+              },
+              {
+                question: "How does the assessor decide a connection is 'loose'?",
+                answer:
+                  "Visual check first — gap visible between conductor and terminal, or insulation pulled into the terminal. Then a gentle pull-test: a finger-and-thumb tug on the conductor should not move it. They might also flick it with a screwdriver tip. A connection that wobbles is a fail under Reg 526.1 (durability + mechanical strength). If you've got any doubt as you wire it, re-do it before they see it.",
+              },
+            ]}
+          />
+
+          <KeyTakeaways
+            points={[
+              'No bare copper visible outside any terminal — anywhere. This is the #1 termination fail.',
+              'CPC sleeved green/yellow at every termination, including in plastic accessories.',
+              'Reg 526.1 — durable continuity + mechanical strength. Reg 526.5 — joints inside approved accessories/enclosures only.',
+              'DB polarity: line in MCB/RCBO, neutral in neutral bar, CPC in earth bar. Never cross them.',
+              'SWA: gland tight, armour clamped, banjo washer fitted, separate earth tail to equipment earth terminal.',
+              'Label every circuit at the DB with permanent, legible, descriptive labels. Label as you wire, not at the end.',
+            ]}
+          />
+
+          <Quiz questions={quizQuestions} title="Termination and Labelling Assessment" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module3/section3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Lighting Circuits
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module3/section5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Accuracy & Neatness
+              </div>
+            </button>
           </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Knowledge Check Quiz */}
-      <Quiz questions={quizQuestions} title="Termination and Labelling Assessment" />
-
-      {/* Navigation Footer */}
-      <AM2NavigationFooter
-        previousHref="/study-centre/apprentice/am2/module3/section3"
-        previousLabel="Lighting Circuits"
-        nextHref="/study-centre/apprentice/am2/module3/section5"
-        nextLabel="Accuracy & Neatness"
-        currentSection={4}
-        totalSections={6}
-      />
-    </AM2SectionLayout>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 

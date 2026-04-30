@@ -1,30 +1,34 @@
-import {
-  CheckCircle,
-  Shield,
-  Target,
-  Award,
-  BookOpen,
-  AlertTriangle,
-  Eye,
-  FileCheck,
-  XCircle,
-  Wrench,
-  Timer,
-} from 'lucide-react';
+/**
+ * Module 1 · Section 4 — Common reasons for failure
+ * AM2 day-prep — Assessment overview (purpose, structure, marking, common fails)
+ * The recurring reasons candidates trip on the AM2 — and the habits that stop you joining them.
+ */
+
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  SectionRule,
+  LearningOutcomes,
+  TLDR,
+  KeyTakeaways,
+  FAQ,
+  Scenario,
+  CommonMistake,
+  RegsCallout,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
+const TITLE = 'Common Reasons for AM2 Failure | AM2 Module 1.4 | Elec-Mate';
+const DESCRIPTION =
+  'The patterns that fail candidates on the AM2 — safe isolation slips, paperwork gaps, time mismanagement — and how to dodge each one.';
+
 const AM2Module1Section4 = () => {
-  useSEO(
-    'Section 4: Common Reasons for Failure - AM2 Preparation',
-    'Understanding the main reasons candidates fail the AM2 assessment and how to avoid these critical mistakes'
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const quizQuestions = [
     {
@@ -91,655 +95,533 @@ const AM2Module1Section4 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module1"
-      breadcrumbs={['AM2', 'Module 1', 'Section 4']}
-    >
-      {/* Hero Section */}
-      <AM2HeroSection
-        icon={XCircle}
-        title="Common Reasons for Failure"
-        description="Learn from others' mistakes - understanding why candidates fail helps you avoid the same traps."
-        badge="Module 1 - Section 4"
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 1
+          </button>
 
-      {/* Key Statistics */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-        <AM2ContentCard className="text-center">
-          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">#1</div>
-          <div className="text-ios-footnote text-white">Safe isolation errors</div>
-        </AM2ContentCard>
-        <AM2ContentCard className="text-center">
-          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">7</div>
-          <div className="text-ios-footnote text-white">Main failure categories</div>
-        </AM2ContentCard>
-        <AM2ContentCard className="text-center">
-          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">100%</div>
-          <div className="text-ios-footnote text-white">Avoidable failures</div>
-        </AM2ContentCard>
-        <AM2ContentCard className="text-center">
-          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">NET</div>
-          <div className="text-ios-footnote text-white">Publishes error data</div>
-        </AM2ContentCard>
-      </div>
+          <PageHero
+            eyebrow="Module 1 · Section 4"
+            title="Common Reasons for Failure"
+            description="Learn from others' mistakes - understanding why candidates fail helps you avoid the same traps."
+            tone="yellow"
+          />
 
-      {/* Learning Outcomes */}
-      <AM2ContentCard accent>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Target className="h-5 w-5" />
-          Learning Outcomes
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          By the end of this section, you should be able to:
-        </p>
-        <ul className="space-y-2 text-ios-body text-white">
-          <li className="flex items-start gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-            <span>Identify the main reasons candidates fail the AM2</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-            <span>Recognise which errors are safety-critical and lead to automatic fails</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-            <span>Apply strategies to avoid falling into common traps</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-            <span>Self-check your readiness using NET's published common error guidance</span>
-          </li>
-        </ul>
-      </AM2ContentCard>
+          <TLDR
+            points={[
+              'Safe isolation errors are NET’s number one cause of AM2 failure — every time.',
+              'Drifting from the specification, even where the circuit works, loses you marks.',
+              'Testing in the wrong sequence (or skipping a test) is one of the most common Section B fails.',
+              'Time management failures and untidy workmanship account for most of the rest.',
+            ]}
+          />
 
-      {/* Introduction */}
-      <AM2ContentCard>
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-4">
-          <p className="text-ios-footnote text-amber-400 font-semibold mb-1">Important Reality:</p>
-          <p className="text-ios-callout text-white">
-            Every year, candidates fail the AM2 for the same reasons. NET publishes "Common Errors"
-            in its Pre-Assessment Manual, and training centres confirm the same patterns. These
-            aren't just minor mistakes - they are avoidable errors that can cost you marks, time,
-            and even result in an automatic fail.
-          </p>
-        </div>
-        <p className="text-ios-body text-white">
-          This section gives you a clear view of the top reasons candidates fail, why they happen,
-          and how to avoid them. Learning from others' mistakes is one of the most effective ways to
-          ensure your own success.
-        </p>
-      </AM2ContentCard>
-
-      {/* 1. Safe Isolation Mistakes */}
-      <AM2CriticalWarning title="1. Safe Isolation Mistakes (The #1 Fail Point)">
-        <p className="text-ios-body text-white mb-4">
-          NET highlights safe isolation errors as the single biggest cause of failure. These are
-          critical safety issues that result in automatic fails.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
-              Common Isolation Errors:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Not proving test equipment before and after use</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Missing the full 10-point test sequence</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Isolating the wrong circuit</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Not fitting warning notices or securing keys</span>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
-              Why These Happen:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Nervousness causing procedural lapses</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Over-confidence skipping steps</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Poor practice habits from training</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Misunderstanding GS38 requirements</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2CriticalWarning>
-
-      <InlineCheck
-        id="isolation-final-step"
-        question="What's the final step in safe isolation before starting work?"
-        options={[
-          'Lock off the circuit breaker',
-          'Attach warning notice',
-          'Re-prove your tester to confirm it still works',
-          'Test the circuit is dead',
-        ]}
-        correctIndex={2}
-        explanation="Re-proving your tester confirms it still works after proving dead, completing the safe isolation procedure."
-      />
-
-      {/* 2. Specification Failures */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <FileCheck className="h-5 w-5" />
-          2. Not Following the Specification
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          Even small deviations from the specification can cost significant marks. Assessors check
-          installations against drawings precisely:
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-amber-400 font-semibold mb-2">
-              Common Spec Errors:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Using wrong cable size or type</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Installing accessories at wrong heights</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Poor identification of conductors</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Incorrect cable routing methods</span>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
-              Prevention Strategies:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Read drawings carefully before starting</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Double-check cable schedules</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Measure and mark positions accurately</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Follow routing exactly as shown</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      <InlineCheck
-        id="specification-deviation"
-        question="If the drawing shows sockets at 300mm height and you install them at 400mm, will you lose marks?"
-        options={[
-          'No, if they still work properly',
-          'Yes, deviations from spec lose marks even if the circuit works',
-          'Only if the assessor notices',
-          'No, close enough is acceptable',
-        ]}
-        correctIndex={1}
-        explanation="Yes - deviations from specifications lose marks even if the circuit works. Precision is essential in following drawings."
-      />
-
-      {/* 3. Testing & Certification Errors */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Wrench className="h-5 w-5" />
-          3. Inspection, Testing & Certification Errors
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          NET emphasises mistakes in this area as a major failure cause. Testing must follow exact
-          procedures:
-        </p>
-        <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">
-            Major Testing Failures:
-          </h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p className="text-ios-callout text-white font-medium mb-2">Procedural Errors:</p>
-              <ul className="text-ios-callout text-white space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Incorrect instrument setup or range selection</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Skipping stages in the GN3 sequence</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Wrong test lead connections</span>
-                </li>
-              </ul>
+          {/* Key Statistics */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5 text-center">
+              <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">#1</div>
+              <div className="text-ios-footnote text-white">Safe isolation errors</div>
             </div>
-            <div>
-              <p className="text-ios-callout text-white font-medium mb-2">Recording Errors:</p>
-              <ul className="text-ios-callout text-white space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Recording results inaccurately</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Writing "book answers" instead of measured values</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Completing certificates incorrectly</span>
-                </li>
-              </ul>
+            <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5 text-center">
+              <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">7</div>
+              <div className="text-ios-footnote text-white">Main failure categories</div>
+            </div>
+            <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5 text-center">
+              <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">100%</div>
+              <div className="text-ios-footnote text-white">Avoidable failures</div>
+            </div>
+            <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5 text-center">
+              <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">NET</div>
+              <div className="text-ios-footnote text-white">Publishes error data</div>
             </div>
           </div>
-        </div>
-        <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-          <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
-            How to Avoid Testing Failures:
-          </h4>
-          <ul className="text-ios-callout text-white space-y-1">
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Memorise the GN3 testing sequence completely</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Practice with the exact instruments you'll use</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Always record actual measured values</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow">•</span>
-              <span>Double-check certificate entries for accuracy</span>
-            </li>
-          </ul>
-        </div>
-      </AM2ContentCard>
 
-      <InlineCheck
-        id="testing-sequence"
-        question="Which document sets out the correct test sequence for AM2?"
-        options={[
-          'BS 7671 Wiring Regulations',
-          'IET Guidance Note 3 (GN3)',
-          'NET Assessment Manual',
-          'City & Guilds Guidelines',
-        ]}
-        correctIndex={1}
-        explanation="IET Guidance Note 3 (GN3) provides the step-by-step testing sequence that must be followed in the AM2."
-      />
+          <LearningOutcomes
+            outcomes={[
+              'Identify the main reasons candidates fail the AM2',
+              'Recognise which errors are safety-critical and lead to automatic fails',
+              'Apply strategies to avoid falling into common traps',
+              "Self-check your readiness using NET's published common error guidance",
+            ]}
+          />
 
-      {/* 4. Fault Diagnosis Mistakes */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Eye className="h-5 w-5" />
-          4. Fault Diagnosis Mistakes
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          Fault finding requires precision in identification and clear explanation of rectification
-          methods:
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
-              Common Fault-Finding Errors:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>
-                  Vague fault location (e.g., "lighting circuit" instead of precise terminal)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Misstating the fault type</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Not stating rectification steps clearly</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Skipping safe isolation before working on faulted circuit</span>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
-              Successful Fault Diagnosis:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Precise location identification</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Accurate fault type classification</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Clear rectification methodology</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Verification of repair effectiveness</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <SectionRule />
 
-      <InlineCheck
-        id="fault-diagnosis-requirements"
-        question="If you identify a fault but don't explain how to rectify it, do you get full marks?"
-        options={[
-          'Yes, finding the fault is enough',
-          'No, rectification method is part of the mark',
-          'Only if you find all other faults',
-          'Yes, if the location is precise',
-        ]}
-        correctIndex={1}
-        explanation="No - you must identify the location, type, and rectification method for each fault to achieve full marks."
-      />
+          {/* Introduction */}
+          <ConceptBlock title="What this section is for">
+            <p>
+              <strong className="text-amber-400">Important Reality.</strong> Every year, candidates
+              fail the AM2 for the same reasons. NET publishes "Common Errors" in its Pre-Assessment
+              Manual, and training centres confirm the same patterns. These aren't just minor
+              mistakes — they are avoidable errors that can cost you marks, time, and even result in
+              an automatic fail.
+            </p>
+            <p>
+              This section gives you a clear view of the top reasons candidates fail, why they
+              happen, and how to avoid them. Learning from others' mistakes is one of the most
+              effective ways to ensure your own success.
+            </p>
+          </ConceptBlock>
 
-      {/* 5. Health & Safety Breaches */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Shield className="h-5 w-5" />
-          5. Health & Safety Breaches
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          Safety violations can result in automatic failure regardless of technical competence:
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
-              Critical Safety Errors:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Poor or incomplete risk assessment</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Unsafe use of tools and equipment</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Not wearing required PPE</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Leaving work area untidy or unsafe</span>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
-              Safety Best Practices:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Complete thorough risk assessments</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Maintain PPE discipline throughout</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Keep work areas clean and organised</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Be aware of hazards to others</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <SectionRule />
 
-      {/* 6. Time Management Failures */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Timer className="h-5 w-5" />
-          6. Time Management Failures
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          Poor time management leads to rushed work, incomplete sections, or unsafe practices:
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Time Traps:</h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Rushing the composite installation</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Spending too long on one fault</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Leaving work incomplete</span>
-              </li>
+          {/* 1. Safe Isolation Mistakes */}
+          <ConceptBlock title="1. Safe Isolation Mistakes (The #1 Fail Point)">
+            <p>
+              <strong className="text-red-300">Critical.</strong> NET highlights safe isolation
+              errors as the single biggest cause of failure. These are critical safety issues that
+              result in automatic fails.
+            </p>
+            <p>
+              <strong>Common Isolation Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Not proving test equipment before and after use</li>
+              <li>Missing the full 10-point test sequence</li>
+              <li>Isolating the wrong circuit</li>
+              <li>Not fitting warning notices or securing keys</li>
             </ul>
-          </div>
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-amber-400 font-semibold mb-2">Warning Signs:</h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Skipping safety checks</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Making careless mistakes</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Incomplete testing</span>
-              </li>
+            <p>
+              <strong>Why These Happen:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Nervousness causing procedural lapses</li>
+              <li>Over-confidence skipping steps</li>
+              <li>Poor practice habits from training</li>
+              <li>Misunderstanding GS38 requirements</li>
             </ul>
-          </div>
-          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">Solutions:</h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Plan time allocation carefully</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Practice under pressure</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Never sacrifice safety for speed</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      <InlineCheck
-        id="time-pressure-choice"
-        question="If you're short of time, is it better to leave a section incomplete but safe, or rush it and risk unsafe work?"
-        options={[
-          'Rush it to complete everything',
-          'Leave safe - unsafe work can cause failure',
-          'Ask for extra time',
-          'Skip to the next section',
-        ]}
-        correctIndex={1}
-        explanation="Always prioritise safety. Leaving work incomplete but safe is better than rushing and creating unsafe conditions that could result in automatic failure."
-      />
+          <InlineCheck
+            id="isolation-final-step"
+            question="What's the final step in safe isolation before starting work?"
+            options={[
+              'Lock off the circuit breaker',
+              'Attach warning notice',
+              'Re-prove your tester to confirm it still works',
+              'Test the circuit is dead',
+            ]}
+            correctIndex={2}
+            explanation="Re-proving your tester confirms it still works after proving dead, completing the safe isolation procedure."
+          />
 
-      {/* 7. Workmanship Issues */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
-          <Award className="h-5 w-5" />
-          7. Neatness and Workmanship Issues
-        </h2>
-        <p className="text-ios-body text-white mb-4">
-          Professional workmanship is assessed throughout the AM2. Poor standards can significantly
-          impact your score:
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
-              Poor Workmanship Examples:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Over-stripped conductors with damaged insulation</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Untidy trunking or conduit runs</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Loose or poorly made terminations</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Inconsistent quality across the installation</span>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
-              Professional Standards:
-            </h4>
-            <ul className="text-ios-callout text-white space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Consistent cable runs and spacing</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Proper conductor preparation</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Secure, properly torqued terminations</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Attention to detail throughout</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <SectionRule />
 
-      {/* Real-world Failure Examples */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
-          Real-world Failure Examples
-        </h2>
-        <div className="space-y-3">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
-              Candidate A: Safe Isolation Fail
-            </h4>
-            <p className="text-ios-callout text-white">
+          {/* 2. Specification Failures */}
+          <ConceptBlock title="2. Not Following the Specification">
+            <p>
+              Even small deviations from the specification can cost significant marks. Assessors
+              check installations against drawings precisely:
+            </p>
+            <p>
+              <strong className="text-amber-400">Common Spec Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-amber-400/70">
+              <li>Using wrong cable size or type</li>
+              <li>Installing accessories at wrong heights</li>
+              <li>Poor identification of conductors</li>
+              <li>Incorrect cable routing methods</li>
+            </ul>
+            <p>
+              <strong className="text-green-400">Prevention Strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Read drawings carefully before starting</li>
+              <li>Double-check cable schedules</li>
+              <li>Measure and mark positions accurately</li>
+              <li>Follow routing exactly as shown</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck
+            id="specification-deviation"
+            question="If the drawing shows sockets at 300mm height and you install them at 400mm, will you lose marks?"
+            options={[
+              'No, if they still work properly',
+              'Yes, deviations from spec lose marks even if the circuit works',
+              'Only if the assessor notices',
+              'No, close enough is acceptable',
+            ]}
+            correctIndex={1}
+            explanation="Yes - deviations from specifications lose marks even if the circuit works. Precision is essential in following drawings."
+          />
+
+          <SectionRule />
+
+          {/* 3. Testing & Certification Errors */}
+          <ConceptBlock title="3. Inspection, Testing & Certification Errors">
+            <p>
+              NET emphasises mistakes in this area as a major failure cause. Testing must follow
+              exact procedures.
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Procedural Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Incorrect instrument setup or range selection</li>
+              <li>Skipping stages in the GN3 sequence</li>
+              <li>Wrong test lead connections</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Recording Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Recording results inaccurately</li>
+              <li>Writing "book answers" instead of measured values</li>
+              <li>Completing certificates incorrectly</li>
+            </ul>
+            <p>
+              <strong className="text-green-400">How to Avoid Testing Failures:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Memorise the GN3 testing sequence completely</li>
+              <li>Practice with the exact instruments you'll use</li>
+              <li>Always record actual measured values</li>
+              <li>Double-check certificate entries for accuracy</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck
+            id="testing-sequence"
+            question="Which document sets out the correct test sequence for AM2?"
+            options={[
+              'BS 7671 Wiring Regulations',
+              'IET Guidance Note 3 (GN3)',
+              'NET Assessment Manual',
+              'City & Guilds Guidelines',
+            ]}
+            correctIndex={1}
+            explanation="IET Guidance Note 3 (GN3) provides the step-by-step testing sequence that must be followed in the AM2."
+          />
+
+          <SectionRule />
+
+          {/* 4. Fault Diagnosis Mistakes */}
+          <ConceptBlock title="4. Fault Diagnosis Mistakes">
+            <p>
+              Fault finding requires precision in identification and clear explanation of
+              rectification methods:
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Common Fault-Finding Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Vague fault location (e.g., "lighting circuit" instead of precise terminal)</li>
+              <li>Misstating the fault type</li>
+              <li>Not stating rectification steps clearly</li>
+              <li>Skipping safe isolation before working on faulted circuit</li>
+            </ul>
+            <p>
+              <strong className="text-green-400">Successful Fault Diagnosis:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Precise location identification</li>
+              <li>Accurate fault type classification</li>
+              <li>Clear rectification methodology</li>
+              <li>Verification of repair effectiveness</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck
+            id="fault-diagnosis-requirements"
+            question="If you identify a fault but don't explain how to rectify it, do you get full marks?"
+            options={[
+              'Yes, finding the fault is enough',
+              'No, rectification method is part of the mark',
+              'Only if you find all other faults',
+              'Yes, if the location is precise',
+            ]}
+            correctIndex={1}
+            explanation="No - you must identify the location, type, and rectification method for each fault to achieve full marks."
+          />
+
+          <SectionRule />
+
+          {/* 5. Health & Safety Breaches */}
+          <ConceptBlock title="5. Health & Safety Breaches">
+            <p>
+              Safety violations can result in automatic failure regardless of technical competence:
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Critical Safety Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Poor or incomplete risk assessment</li>
+              <li>Unsafe use of tools and equipment</li>
+              <li>Not wearing required PPE</li>
+              <li>Leaving work area untidy or unsafe</li>
+            </ul>
+            <p>
+              <strong className="text-green-400">Safety Best Practices:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Complete thorough risk assessments</li>
+              <li>Maintain PPE discipline throughout</li>
+              <li>Keep work areas clean and organised</li>
+              <li>Be aware of hazards to others</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* 6. Time Management Failures */}
+          <ConceptBlock title="6. Time Management Failures">
+            <p>
+              Poor time management leads to rushed work, incomplete sections, or unsafe practices:
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Time Traps:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Rushing the composite installation</li>
+              <li>Spending too long on one fault</li>
+              <li>Leaving work incomplete</li>
+            </ul>
+            <p>
+              <strong className="text-amber-400">Warning Signs:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-amber-400/70">
+              <li>Skipping safety checks</li>
+              <li>Making careless mistakes</li>
+              <li>Incomplete testing</li>
+            </ul>
+            <p>
+              <strong className="text-green-400">Solutions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Plan time allocation carefully</li>
+              <li>Practice under pressure</li>
+              <li>Never sacrifice safety for speed</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck
+            id="time-pressure-choice"
+            question="If you're short of time, is it better to leave a section incomplete but safe, or rush it and risk unsafe work?"
+            options={[
+              'Rush it to complete everything',
+              'Leave safe - unsafe work can cause failure',
+              'Ask for extra time',
+              'Skip to the next section',
+            ]}
+            correctIndex={1}
+            explanation="Always prioritise safety. Leaving work incomplete but safe is better than rushing and creating unsafe conditions that could result in automatic failure."
+          />
+
+          <SectionRule />
+
+          {/* 7. Workmanship Issues */}
+          <ConceptBlock title="7. Neatness and Workmanship Issues">
+            <p>
+              Professional workmanship is assessed throughout the AM2. Poor standards can
+              significantly impact your score:
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Poor Workmanship Examples:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Over-stripped conductors with damaged insulation</li>
+              <li>Untidy trunking or conduit runs</li>
+              <li>Loose or poorly made terminations</li>
+              <li>Inconsistent quality across the installation</li>
+            </ul>
+            <p>
+              <strong className="text-green-400">Professional Standards:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Consistent cable runs and spacing</li>
+              <li>Proper conductor preparation</li>
+              <li>Secure, properly torqued terminations</li>
+              <li>Attention to detail throughout</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* Real-world Failure Examples */}
+          <ConceptBlock title="Real-world Failure Examples">
+            <p>
+              <strong className="text-elec-yellow">Candidate A: Safe Isolation Fail.</strong>{' '}
               Installed circuits correctly and completed all sections well, but failed to re-prove
               the tester during safe isolation. Result: Automatic fail despite otherwise competent
               performance.
             </p>
-          </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
-              Candidate B: Specification Deviation
-            </h4>
-            <p className="text-ios-callout text-white">
+            <p>
+              <strong className="text-elec-yellow">Candidate B: Specification Deviation.</strong>{' '}
               Completed installation neatly and safely but used 2.5mm cable where 4mm was specified
               on the drawing. Lost significant marks for not following specifications exactly.
             </p>
-          </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
-              Candidate C: Testing Procedure Error
-            </h4>
-            <p className="text-ios-callout text-white">
+            <p>
+              <strong className="text-elec-yellow">Candidate C: Testing Procedure Error.</strong>{' '}
               Rushed through testing section and wrote down "perfect" textbook values instead of
-              actual measurements. Assessor identified inconsistencies - marked as procedural fail.
+              actual measurements. Assessor identified inconsistencies — marked as procedural fail.
             </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          {/* Summary */}
+          <ConceptBlock title="Summary">
+            <p>
+              Candidates fail AM2 mainly due to seven key areas: unsafe isolation, not following
+              specifications, incorrect testing and certification, poor fault diagnosis, health
+              &amp; safety breaches, time management issues, and workmanship below professional
+              standards.
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Key Takeaway.</strong> Avoiding these errors
+              isn't about luck — it's about strict practice, sticking to procedures, and working to
+              professional standards every time. Learn from others' mistakes to ensure your own
+              success.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 132.15.201"
+            clause="Effective means, suitably placed for ready operation, shall be provided so that all voltage may be cut off from every installation, from every circuit thereof and from all equipment, as may be necessary to prevent or remove danger."
+            meaning={
+              <>
+                This is the rule behind every isolation step in AM2. The means must exist, must be
+                accessible, and must isolate <em>all</em> voltage. If your Section C isolation
+                doesn’t cut every live conductor, or you can’t reach the means in a hurry, that’s
+                the regulation you’ve breached — and it’s a critical fail.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 132.15.201."
+          />
+
+          <Scenario
+            title="The lamp test you didn’t do twice"
+            situation={
+              <>
+                You’re into Section C. You’ve clipped the proving unit, isolated the circuit, locked
+                off the breaker and posted the warning notice. You touch your two-pole tester to the
+                terminals and read zero volts. You crack on with the work.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop. Re-prove the tester on the proving unit (or a known live source){' '}
+                <em>after</em>
+                the dead test. If the tester has failed silently between the first prove and the
+                dead test, you’ve just declared a live circuit dead. The full sequence is: prove on
+                live → test the circuit dead → re-prove on live.
+              </>
+            }
+            whyItMatters={
+              <>
+                Skipping the second prove is the single most common AM2 failure NET reports.
+                Assessors will not give it back to you — re-proving is the procedure, not optional.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title="Treating the drawing as a suggestion"
+            whatHappens={
+              <>
+                You decide a different cable route looks neater. The circuit works fine, all tests
+                pass — but you’ve deviated from the spec. The assessor marks it as a deviation, and
+                you lose the criterion regardless of whether your version was technically valid.
+              </>
+            }
+            doInstead={
+              <>
+                Follow the drawing exactly. If you genuinely think it can’t be done as drawn, ask
+                the assessor before you cut a single piece of cable. They will either confirm the
+                spec or note an agreed deviation in writing.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'What single mistake fails the most candidates?',
+                answer:
+                  'NET’s figures put incorrect or incomplete safe isolation at the top — usually missing the second prove of the tester, or isolating without locking off.',
+              },
+              {
+                question: 'Can I appeal a fail?',
+                answer:
+                  'Yes — there’s a NET appeal process if you believe the marking was unfair. You’ll need specific grounds (assessor error, equipment fault, procedural breach by the centre). General "I disagree with the result" appeals don’t succeed.',
+              },
+              {
+                question: 'Is fault diagnosis really that hard?',
+                answer:
+                  'It’s not hard if you work it logically — visual inspection, then continuity, then IR, then live tests. Most fault-diagnosis fails are candidates jumping to live tests before they’ve eliminated dead faults.',
+              },
+              {
+                question: 'How strict are the time limits really?',
+                answer:
+                  'Strict. When the section clock stops, work stops — even if you’re mid-termination. Anything unfinished is marked as it stands. Practise to time before you sit the assessment.',
+              },
+              {
+                question: 'Will sloppy paperwork actually fail me?',
+                answer:
+                  'It can. A certificate with missing readings, wrong tick-boxes or unsigned declarations is a Not Yet Competent on certification. Falsifying readings is a critical fail.',
+              },
+              {
+                question: 'What’s the best way to prep for fault diagnosis?',
+                answer:
+                  'Build a mental flowchart: visual → continuity → IR → polarity → energise → live tests. Practise on a college rig with deliberately introduced faults until the sequence is automatic.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Safe isolation errors are the most common single cause of AM2 failure.',
+              'The full safe-isolation sequence ends with re-proving the tester — never skip it.',
+              'Follow the spec and drawings exactly. Functional but non-spec work still loses marks.',
+              'Test in the GN3 sequence: continuity → IR → polarity → Zs → RCD. Out of order = NYC.',
+              'Time runs out when the section clock stops — practise to time, not to perfection.',
+              'Fault diagnosis is logic, not luck. Work the dead checks before you energise.',
+              'Paperwork counts: blank readings, missing ticks and unsigned declarations all cost you.',
+              'Health and safety breaches and live working are critical fails — game over, regardless of installation quality.',
+            ]}
+          />
+
+          {/* Quiz Section */}
+          <Quiz questions={quizQuestions} title="AM2 Common Failures Quiz" />
+
+          {/* Navigation Footer */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module1/section3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Marking Criteria
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Module 2: Health & Safety
+              </div>
+            </button>
           </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Summary */}
-      <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Summary</h2>
-        <p className="text-ios-body text-white mb-4">
-          Candidates fail AM2 mainly due to seven key areas: unsafe isolation, not following
-          specifications, incorrect testing and certification, poor fault diagnosis, health & safety
-          breaches, time management issues, and workmanship below professional standards.
-        </p>
-        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-          <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">Key Takeaway:</p>
-          <p className="text-ios-callout text-white">
-            Avoiding these errors isn't about luck - it's about strict practice, sticking to
-            procedures, and working to professional standards every time. Learn from others'
-            mistakes to ensure your own success.
-          </p>
-        </div>
-      </AM2ContentCard>
-
-      {/* Quiz Section */}
-      <Quiz questions={quizQuestions} title="AM2 Common Failures Quiz" />
-
-      {/* Navigation Footer */}
-      <AM2NavigationFooter
-        prevHref="/study-centre/apprentice/am2/module1/section3"
-        prevLabel="Marking Criteria"
-        nextHref="/study-centre/apprentice/am2/module2"
-        nextLabel="Module 2: Health & Safety"
-        currentSection={4}
-        totalSections={4}
-      />
-    </AM2SectionLayout>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 

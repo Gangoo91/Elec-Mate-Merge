@@ -1,29 +1,33 @@
-import {
-  Clock,
-  CheckCircle,
-  AlertTriangle,
-  Target,
-  Settings,
-  BookOpen,
-  Timer,
-  Square,
-  Wrench,
-} from 'lucide-react';
+/**
+ * Module 3 · Section 6 — Managing time during installation
+ * AM2 day-prep — AM2 Phase B (composite installation: cable, containment, circuits, terminations)
+ * Pacing the install across the day so testing and paperwork still get the time they need.
+ */
+
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  TLDR,
+  RegsCallout,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+
+const TITLE = 'Managing Time During Installation | AM2 Module 3.6 | Elec-Mate';
+const DESCRIPTION =
+  'Pacing the AM2 composite install — staged time targets, when to push on, when to slow down and how to leave room for testing.';
 
 const AM2Module3Section6 = () => {
-  useSEO(
-    'Managing Time During Installation | AM2 Module 3 Section 6',
-    'Time management strategies, pacing techniques and scheduling for AM2 assessment success'
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const learningOutcomes = [
     'Break down the installation into clear stages with realistic time targets',
@@ -203,249 +207,172 @@ const AM2Module3Section6 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module3"
-      breadcrumbs={[
-        { label: 'AM2', href: '/study-centre/apprentice/am2' },
-        { label: 'Module 3', href: '/study-centre/apprentice/am2/module3' },
-        { label: 'Section 6' },
-      ]}
-    >
-      <AM2HeroSection
-        icon={Clock}
-        title="Managing Time During Installation"
-        description="Time management strategies, pacing techniques and scheduling for AM2 assessment success - complete professional installations within strict timeframes."
-        badge="Module 3 - Section 6"
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 3
+          </button>
 
-      <AM2CriticalWarning
-        title="CRITICAL: Time Management Determines AM2 Success"
-        message="The AM2 composite installation is long (around 8.5 hours) and intense. Time management is critical: you need to pace yourself so you finish all circuits to specification, without rushing and making safety or neatness errors. Many candidates fail not from lack of skill but from incomplete work. Assessors observe whether you can plan, organise, and complete a job on time, just as you'd be expected to do on-site. Rushing causes failures."
-      />
+          <PageHero
+            eyebrow="Module 3 · Section 6"
+            title="Managing Time During Installation"
+            description="Time management strategies, pacing techniques and scheduling for AM2 assessment success - complete professional installations within strict timeframes."
+            tone="yellow"
+          />
 
-      <AM2LearningOutcomes outcomes={learningOutcomes} />
+          <TLDR
+            points={[
+              'AM2 composite installation runs around 8.5 hours, fixed schedule, no extensions for any reason.',
+              'Phase plan: ~2 h marking out + containment, ~2 h cable pulling, ~2.5 h terminations, ~2 h testing + paperwork.',
+              'Set milestone times: containment by 11:00, cables by lunch, terminations by 15:00. Check the clock against milestones every hour.',
+              "Incomplete but safe beats finished but unsafe — every time. Unsafe = automatic fail. Incomplete = marks lost on what wasn't done.",
+              'Document and label as you go. Leaving paperwork to the last 15 minutes is how candidates fail the documentation section despite a passable install.',
+            ]}
+          />
 
-      {/* Why Time Management Matters */}
-      <AM2ContentCard title="1. Why Time Management Matters in AM2" icon={Timer}>
-        <div className="space-y-4">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">
-              Critical Impact on Assessment Outcome
-            </h4>
-            <ul className="space-y-2 text-sm text-white">
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
-                <div>
-                  <strong>Installation section heavily weighted in marking</strong>
-                  <p className="text-xs mt-1">
-                    The practical installation carries the highest mark allocation - incomplete work
-                    severely impacts overall score
-                  </p>
-                </div>
+          <CommonMistake
+            title="CRITICAL: Time Management Determines AM2 Success"
+            whatHappens="The AM2 composite installation is long (around 8.5 hours) and intense. Time management is critical: you need to pace yourself so you finish all circuits to specification, without rushing and making safety or neatness errors. Many candidates fail not from lack of skill but from incomplete work. Assessors observe whether you can plan, organise, and complete a job on time, just as you'd be expected to do on-site. Rushing causes failures."
+            doInstead="Break the day into phases with milestone checkpoints, document as you go, and never compromise safety to chase a deadline."
+          />
+
+          <LearningOutcomes outcomes={learningOutcomes} />
+
+          <ConceptBlock title="1. Why Time Management Matters in AM2">
+            <p>
+              <strong>Critical Impact on Assessment Outcome:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Installation section heavily weighted in marking.</strong> The practical
+                installation carries the highest mark allocation - incomplete work severely impacts
+                overall score.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
-                <div>
-                  <strong>Many candidates fail from incomplete work, not lack of skill</strong>
-                  <p className="text-xs mt-1">
-                    Technical competence is often present, but poor time management prevents
-                    completion
-                  </p>
-                </div>
+              <li>
+                <strong>Many candidates fail from incomplete work, not lack of skill.</strong>{' '}
+                Technical competence is often present, but poor time management prevents completion.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
-                <div>
-                  <strong>Rushing causes multiple failure points</strong>
-                  <p className="text-xs mt-1">
-                    Untidy workmanship, missed terminations, unsafe energisation - all lose marks or
-                    cause failure
-                  </p>
-                </div>
+              <li>
+                <strong>Rushing causes multiple failure points.</strong> Untidy workmanship, missed
+                terminations, unsafe energisation - all lose marks or cause failure.
               </li>
             </ul>
-          </div>
-
-          <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-4">
-            <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2">
-              Real-World Professional Expectations
-            </h4>
-            <ul className="space-y-1 text-sm text-orange-700 dark:text-elec-yellow">
+            <p>
+              <strong className="text-elec-yellow">Real-World Professional Expectations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                • <strong>Job completion within deadlines</strong> - Essential professional skill
+                <strong>Job completion within deadlines</strong> - Essential professional skill
               </li>
               <li>
-                • <strong>Quality maintained under pressure</strong> - Client expectations don't
+                <strong>Quality maintained under pressure</strong> - Client expectations don't
                 change
               </li>
               <li>
-                • <strong>Safety never compromised for speed</strong> - Legal and ethical
-                requirements
+                <strong>Safety never compromised for speed</strong> - Legal and ethical requirements
               </li>
               <li>
-                • <strong>Systematic approach to complex tasks</strong> - Professional competence
+                <strong>Systematic approach to complex tasks</strong> - Professional competence
                 demonstration
               </li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      <InlineCheck
-        id={quickCheckQuestions[0].id}
-        question={quickCheckQuestions[0].question}
-        options={quickCheckQuestions[0].options}
-        correctIndex={quickCheckQuestions[0].correctIndex}
-        explanation={quickCheckQuestions[0].explanation}
-      />
+          <InlineCheck
+            id={quickCheckQuestions[0].id}
+            question={quickCheckQuestions[0].question}
+            options={quickCheckQuestions[0].options}
+            correctIndex={quickCheckQuestions[0].correctIndex}
+            explanation={quickCheckQuestions[0].explanation}
+          />
 
-      {/* Typical Time Allocation */}
-      <AM2ContentCard title="2. Typical Time Allocation Guidance" icon={Target}>
-        <div className="space-y-4">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">
-              Recommended Phase Breakdown (8.5 hour total)
-            </h4>
-            <div className="space-y-3">
-              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3">
-                <div className="flex justify-between items-center mb-2">
-                  <h5 className="font-medium text-white">Phase 1: Marking Out & Containment</h5>
-                  <span className="text-sm font-medium text-elec-yellow dark:text-elec-yellow">
-                    ~2 hours
-                  </span>
-                </div>
-                <ul className="space-y-1 text-xs text-white">
-                  <li>• Reading specifications and drawings thoroughly</li>
-                  <li>• Marking out all accessory positions accurately</li>
-                  <li>• Installing trunking, conduit, and containment systems</li>
-                  <li>• Ensuring all measurements match specification exactly</li>
-                </ul>
-              </div>
-
-              <div className="bg-green-50 dark:bg-green-950/20 rounded p-3">
-                <div className="flex justify-between items-center mb-2">
-                  <h5 className="font-medium text-white">Phase 2: Cable Pulling & Dressing</h5>
-                  <span className="text-sm font-medium text-green-600 dark:text-green-400">
-                    ~2 hours
-                  </span>
-                </div>
-                <ul className="space-y-1 text-xs text-white">
-                  <li>• Running all cables through containment systems</li>
-                  <li>• Proper cable identification and labelling</li>
-                  <li>• Cable dressing and support installation</li>
-                  <li>• Initial cable preparation at termination points</li>
-                </ul>
-              </div>
-
-              <div className="bg-yellow-50 dark:bg-yellow-950/20 rounded p-3">
-                <div className="flex justify-between items-center mb-2">
-                  <h5 className="font-medium text-white">Phase 3: Terminations & Connections</h5>
-                  <span className="text-sm font-medium text-elec-yellow dark:text-elec-yellow">
-                    ~2.5 hours
-                  </span>
-                </div>
-                <ul className="space-y-1 text-xs text-white">
-                  <li>• All accessory terminations and connections</li>
-                  <li>• Distribution board wiring and labelling</li>
-                  <li>• CPC sleeving and conductor identification</li>
-                  <li>• Final connection verification and checking</li>
-                </ul>
-              </div>
-
-              <div className="bg-purple-50 dark:bg-purple-950/20 rounded p-3">
-                <div className="flex justify-between items-center mb-2">
-                  <h5 className="font-medium text-white">Phase 4: Testing & Documentation</h5>
-                  <span className="text-sm font-medium text-purple-600 dark:text-elec-yellow">
-                    ~2 hours
-                  </span>
-                </div>
-                <ul className="space-y-1 text-xs text-white">
-                  <li>• Complete electrical testing sequence</li>
-                  <li>• Recording all test results accurately</li>
-                  <li>• Final safety checks and verification</li>
-                  <li>• Paperwork completion for handover</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">Important Time Management Notes</h4>
-            <ul className="space-y-1 text-sm text-white">
-              <li>• Times vary between candidates - use as guidance only</li>
-              <li>• Must pace yourself to cover all essential tasks</li>
-              <li>• Allow buffer time for unexpected complications</li>
-              <li>• Quality standards must be maintained regardless of time pressure</li>
-              <li>• Regular progress checks against planned milestones essential</li>
+          <ConceptBlock title="2. Typical Time Allocation Guidance">
+            <p>
+              <strong>Recommended Phase Breakdown (8.5 hour total)</strong>
+            </p>
+            <p>
+              <strong>Phase 1: Marking Out & Containment (~2 hours):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reading specifications and drawings thoroughly</li>
+              <li>Marking out all accessory positions accurately</li>
+              <li>Installing trunking, conduit, and containment systems</li>
+              <li>Ensuring all measurements match specification exactly</li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+            <p>
+              <strong>Phase 2: Cable Pulling & Dressing (~2 hours):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Running all cables through containment systems</li>
+              <li>Proper cable identification and labelling</li>
+              <li>Cable dressing and support installation</li>
+              <li>Initial cable preparation at termination points</li>
+            </ul>
+            <p>
+              <strong>Phase 3: Terminations & Connections (~2.5 hours):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All accessory terminations and connections</li>
+              <li>Distribution board wiring and labelling</li>
+              <li>CPC sleeving and conductor identification</li>
+              <li>Final connection verification and checking</li>
+            </ul>
+            <p>
+              <strong>Phase 4: Testing & Documentation (~2 hours):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Complete electrical testing sequence</li>
+              <li>Recording all test results accurately</li>
+              <li>Final safety checks and verification</li>
+              <li>Paperwork completion for handover</li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Important Time Management Notes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Times vary between candidates - use as guidance only</li>
+              <li>Must pace yourself to cover all essential tasks</li>
+              <li>Allow buffer time for unexpected complications</li>
+              <li>Quality standards must be maintained regardless of time pressure</li>
+              <li>Regular progress checks against planned milestones essential</li>
+            </ul>
+          </ConceptBlock>
 
-      {/* Common Time-Related Mistakes */}
-      <AM2ContentCard title="3. Common Time-Related Mistakes" icon={AlertTriangle}>
-        <div className="space-y-4">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">Critical Time Management Errors</h4>
-            <ol className="space-y-2 text-sm text-white">
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">1.</span>
-                <div>
-                  <strong>Perfectionism on containment details</strong>
-                  <p className="text-xs mt-1">
-                    Spending too long making perfect bends in conduit/trunking, then running out of
-                    time for critical terminations
-                  </p>
-                </div>
+          <ConceptBlock title="3. Common Time-Related Mistakes">
+            <p>
+              <strong>Critical Time Management Errors:</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Perfectionism on containment details.</strong> Spending too long making
+                perfect bends in conduit/trunking, then running out of time for critical
+                terminations.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">2.</span>
-                <div>
-                  <strong>End-phase rushing syndrome</strong>
-                  <p className="text-xs mt-1">
-                    Rushing final stages leads to untidy DB wiring, missed CPC sleeving, exposed
-                    copper - causing failures
-                  </p>
-                </div>
+              <li>
+                <strong>End-phase rushing syndrome.</strong> Rushing final stages leads to untidy DB
+                wiring, missed CPC sleeving, exposed copper - causing failures.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">3.</span>
-                <div>
-                  <strong>Delayed documentation approach</strong>
-                  <p className="text-xs mt-1">
-                    Not recording test results during installation, leading to rushed and incomplete
-                    paperwork
-                  </p>
-                </div>
+              <li>
+                <strong>Delayed documentation approach.</strong> Not recording test results during
+                installation, leading to rushed and incomplete paperwork.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">4.</span>
-                <div>
-                  <strong>Single-problem fixation</strong>
-                  <p className="text-xs mt-1">
-                    Over-focusing on one tricky bend or fault instead of moving on and maintaining
-                    overall progress
-                  </p>
-                </div>
+              <li>
+                <strong>Single-problem fixation.</strong> Over-focusing on one tricky bend or fault
+                instead of moving on and maintaining overall progress.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[30px]">5.</span>
-                <div>
-                  <strong>No milestone monitoring</strong>
-                  <p className="text-xs mt-1">
-                    Working without time checkpoints, only realising time pressure when it's too
-                    late to recover
-                  </p>
-                </div>
+              <li>
+                <strong>No milestone monitoring.</strong> Working without time checkpoints, only
+                realising time pressure when it's too late to recover.
               </li>
             </ol>
-          </div>
-
-          <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-            <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">
-              Real Assessment Consequences
-            </h4>
-            <ul className="space-y-2 text-sm text-red-700 dark:text-elec-yellow">
+            <p>
+              <strong className="text-elec-yellow">Real Assessment Consequences:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
                 <strong>Incomplete circuits:</strong> Automatic mark loss for unfinished work, often
                 below pass threshold
@@ -463,378 +390,368 @@ const AM2Module3Section6 = () => {
                 normally competent areas
               </li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Assessor Expectations */}
-      <AM2ContentCard title="4. Assessor Expectations on Time Management" icon={Settings}>
-        <div className="space-y-4">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">
-              Professional Working Standards Expected
-            </h4>
-            <ul className="space-y-2 text-sm text-white">
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
-                <div>
-                  <strong>Steady, methodical work pace</strong>
-                  <p className="text-xs mt-1">
-                    Assessors expect consistent professional pace, not rushed panic or excessive
-                    slowness
-                  </p>
-                </div>
+          <ConceptBlock title="4. Assessor Expectations on Time Management">
+            <p>
+              <strong>Professional Working Standards Expected:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Steady, methodical work pace.</strong> Assessors expect consistent
+                professional pace, not rushed panic or excessive slowness.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
-                <div>
-                  <strong>Understanding of nervous impact</strong>
-                  <p className="text-xs mt-1">
-                    Assessors know nerves slow candidates down, but major incomplete sections still
-                    lose marks
-                  </p>
-                </div>
+              <li>
+                <strong>Understanding of nervous impact.</strong> Assessors know nerves slow
+                candidates down, but major incomplete sections still lose marks.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
-                <div>
-                  <strong>Completion within timeframe</strong>
-                  <p className="text-xs mt-1">
-                    Time runs out = assessment stops. Only completed work can be marked and credited
-                  </p>
-                </div>
+              <li>
+                <strong>Completion within timeframe.</strong> Time runs out = assessment stops. Only
+                completed work can be marked and credited.
               </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
-                <div>
-                  <strong>Safety priority maintained</strong>
-                  <p className="text-xs mt-1">
-                    No compromise on safety standards acceptable, regardless of time pressure
-                  </p>
-                </div>
+              <li>
+                <strong>Safety priority maintained.</strong> No compromise on safety standards
+                acceptable, regardless of time pressure.
               </li>
             </ul>
-          </div>
+            <p>
+              <strong className="text-elec-yellow">Assessment Reality Check:</strong>
+            </p>
+            <p>
+              <strong>Fixed Schedule:</strong> No extensions available regardless of circumstances
+              or reasons.
+            </p>
+            <p>
+              <strong>Completion Requirement:</strong> Unfinished work cannot be assessed or
+              credited towards pass mark.
+            </p>
+            <p>
+              <strong>Quality Expectations:</strong> Professional standards must be maintained
+              despite time constraints.
+            </p>
+            <p>
+              <strong>Real-World Simulation:</strong> Mirrors actual job site expectations for
+              deadline management.
+            </p>
+          </ConceptBlock>
 
-          <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg p-4">
-            <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-2">
-              Assessment Reality Check
-            </h4>
-            <div className="space-y-2 text-sm text-yellow-700 dark:text-yellow-300">
-              <p>
-                <strong>Fixed Schedule:</strong> No extensions available regardless of circumstances
-                or reasons
-              </p>
-              <p>
-                <strong>Completion Requirement:</strong> Unfinished work cannot be assessed or
-                credited towards pass mark
-              </p>
-              <p>
-                <strong>Quality Expectations:</strong> Professional standards must be maintained
-                despite time constraints
-              </p>
-              <p>
-                <strong>Real-World Simulation:</strong> Mirrors actual job site expectations for
-                deadline management
-              </p>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <InlineCheck
+            id={quickCheckQuestions[1].id}
+            question={quickCheckQuestions[1].question}
+            options={quickCheckQuestions[1].options}
+            correctIndex={quickCheckQuestions[1].correctIndex}
+            explanation={quickCheckQuestions[1].explanation}
+          />
 
-      <InlineCheck
-        id={quickCheckQuestions[1].id}
-        question={quickCheckQuestions[1].question}
-        options={quickCheckQuestions[1].options}
-        correctIndex={quickCheckQuestions[1].correctIndex}
-        explanation={quickCheckQuestions[1].explanation}
-      />
-
-      {/* Practical Strategies */}
-      <AM2ContentCard title="5. Practical Strategies for Time Management" icon={Wrench}>
-        <div className="space-y-4">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">Pre-Installation Planning Phase</h4>
-            <ol className="space-y-2 text-sm text-white">
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
-                <div>
-                  <strong>Detailed specification review (15-20 minutes)</strong>
-                  <p className="text-xs mt-1">
-                    Read specifications thoroughly, mark key requirements, identify potential
-                    challenges before starting
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
-                <div>
-                  <strong>Position marking and layout planning</strong>
-                  <p className="text-xs mt-1">
-                    Mark all accessory positions accurately, plan cable routes, visualise
-                    installation sequence
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
-                <div>
-                  <strong>Work sequence optimisation</strong>
-                  <p className="text-xs mt-1">
-                    Plan logical progression through phases, identify dependencies, prepare for
-                    efficient workflow
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">During Installation Strategies</h4>
-            <ol className="space-y-2 text-sm text-white" start={4}>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
-                <div>
-                  <strong>Milestone-based progress monitoring</strong>
-                  <p className="text-xs mt-1">
-                    Set specific time targets (containment complete by 11:00, cables pulled by
-                    lunch, terminations by 3:00)
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
-                <div>
-                  <strong>Professional standard focus</strong>
-                  <p className="text-xs mt-1">
-                    Work to consistent professional standard across all areas rather than seeking
-                    perfection in one area
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
-                <div>
-                  <strong>Continuous documentation approach</strong>
-                  <p className="text-xs mt-1">
-                    Record test results and complete labels circuit by circuit, not all at the end
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
-                <div>
-                  <strong>Quality verification checkpoints</strong>
-                  <p className="text-xs mt-1">
-                    30-second recheck saves 30-minute rework - verify before moving to next phase
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-2">
-                <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
-                <div>
-                  <strong>Stress management techniques</strong>
-                  <p className="text-xs mt-1">
-                    Stay calm under pressure - nervous candidates rush and make mistakes, breathe
-                    and work methodically
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">
-              Time Recovery Strategies
-            </h4>
-            <ul className="space-y-1 text-sm text-green-700 dark:text-green-300">
+          <ConceptBlock title="5. Practical Strategies for Time Management">
+            <p>
+              <strong>Pre-Installation Planning Phase:</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
               <li>
-                • <strong>Identify non-critical refinements</strong> - Focus on essential
-                requirements first
+                <strong>Detailed specification review (15-20 minutes).</strong> Read specifications
+                thoroughly, mark key requirements, identify potential challenges before starting.
               </li>
               <li>
-                • <strong>Prioritise safety-critical tasks</strong> - Never compromise on electrical
+                <strong>Position marking and layout planning.</strong> Mark all accessory positions
+                accurately, plan cable routes, visualise installation sequence.
+              </li>
+              <li>
+                <strong>Work sequence optimisation.</strong> Plan logical progression through
+                phases, identify dependencies, prepare for efficient workflow.
+              </li>
+            </ol>
+            <p>
+              <strong>During Installation Strategies:</strong>
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70" start={4}>
+              <li>
+                <strong>Milestone-based progress monitoring.</strong> Set specific time targets
+                (containment complete by 11:00, cables pulled by lunch, terminations by 3:00).
+              </li>
+              <li>
+                <strong>Professional standard focus.</strong> Work to consistent professional
+                standard across all areas rather than seeking perfection in one area.
+              </li>
+              <li>
+                <strong>Continuous documentation approach.</strong> Record test results and complete
+                labels circuit by circuit, not all at the end.
+              </li>
+              <li>
+                <strong>Quality verification checkpoints.</strong> 30-second recheck saves 30-minute
+                rework - verify before moving to next phase.
+              </li>
+              <li>
+                <strong>Stress management techniques.</strong> Stay calm under pressure - nervous
+                candidates rush and make mistakes, breathe and work methodically.
+              </li>
+            </ol>
+            <p>
+              <strong className="text-elec-yellow">Time Recovery Strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identify non-critical refinements</strong> - Focus on essential requirements
+                first
+              </li>
+              <li>
+                <strong>Prioritise safety-critical tasks</strong> - Never compromise on electrical
                 safety
               </li>
               <li>
-                • <strong>Streamline processes</strong> - Eliminate unnecessary steps while
+                <strong>Streamline processes</strong> - Eliminate unnecessary steps while
                 maintaining quality
               </li>
               <li>
-                • <strong>Maintain professional standards</strong> - Better to complete less work
+                <strong>Maintain professional standards</strong> - Better to complete less work
                 safely than rush dangerously
               </li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      <InlineCheck
-        id={quickCheckQuestions[2].id}
-        question={quickCheckQuestions[2].question}
-        options={quickCheckQuestions[2].options}
-        correctIndex={quickCheckQuestions[2].correctIndex}
-        explanation={quickCheckQuestions[2].explanation}
-      />
+          <InlineCheck
+            id={quickCheckQuestions[2].id}
+            question={quickCheckQuestions[2].question}
+            options={quickCheckQuestions[2].options}
+            correctIndex={quickCheckQuestions[2].correctIndex}
+            explanation={quickCheckQuestions[2].explanation}
+          />
 
-      {/* Real-World Examples */}
-      <AM2ContentCard title="6. Real-World Examples and Case Studies" icon={Square}>
-        <div className="space-y-4">
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">AM2 Assessment Case Studies</h4>
-            <div className="space-y-3">
-              <div className="bg-red-50 dark:bg-red-950/20 rounded p-3">
-                <h5 className="font-medium text-red-800 dark:text-red-200 mb-2">
-                  Failure Example 1: Perfectionist Approach
-                </h5>
-                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
-                  <strong>Scenario:</strong> Candidate spent 90 minutes perfecting a conduit bend,
-                  pursuing absolute perfection.
-                </p>
-                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
-                  <strong>Consequence:</strong> Ran out of time, left cooker circuit completely
-                  un-terminated.
-                </p>
-                <p className="text-sm text-red-700 dark:text-elec-yellow">
-                  <strong>Result:</strong> Failed section - incomplete critical circuit despite
-                  perfect containment.
-                </p>
-              </div>
+          <ConceptBlock title="6. Real-World Examples and Case Studies">
+            <p>
+              <strong className="text-elec-yellow">
+                Failure Example 1: Perfectionist Approach.
+              </strong>
+            </p>
+            <p>
+              <strong>Scenario:</strong> Candidate spent 90 minutes perfecting a conduit bend,
+              pursuing absolute perfection.
+            </p>
+            <p>
+              <strong>Consequence:</strong> Ran out of time, left cooker circuit completely
+              un-terminated.
+            </p>
+            <p>
+              <strong>Result:</strong> Failed section - incomplete critical circuit despite perfect
+              containment.
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Failure Example 2: Documentation Delay.</strong>
+            </p>
+            <p>
+              <strong>Scenario:</strong> Candidate completed installation but left only 5 minutes
+              for paperwork.
+            </p>
+            <p>
+              <strong>Consequence:</strong> Test sheets rushed, incomplete, several results missing.
+            </p>
+            <p>
+              <strong>Result:</strong> Failed paperwork section despite good practical work.
+            </p>
+            <p>
+              <strong className="text-elec-yellow">Success Example: Planned Approach.</strong>
+            </p>
+            <p>
+              <strong>Scenario:</strong> Candidate set personal time targets, monitored progress,
+              stayed calm throughout.
+            </p>
+            <p>
+              <strong>Execution:</strong> Completed all circuits neatly, documented as progress was
+              made.
+            </p>
+            <p>
+              <strong>Result:</strong> Passed first attempt with high marks across all sections.
+            </p>
+            <p>
+              <strong className="text-elec-yellow">
+                Real-World Professional Parallel — Industry Example: Contract Deadline Management.
+              </strong>{' '}
+              A contractor missed a crucial project deadline because they spent excessive time
+              reworking one cable run to absolute perfection.
+            </p>
+            <p>
+              <strong>Consequence:</strong> Client rejected the entire job due to delayed
+              completion, despite excellent quality work.
+            </p>
+            <p>
+              <strong>Lesson:</strong> Professional standards must be balanced with practical
+              deadline management - same principle applies in AM2.
+            </p>
+          </ConceptBlock>
 
-              <div className="bg-red-50 dark:bg-red-950/20 rounded p-3">
-                <h5 className="font-medium text-red-800 dark:text-red-200 mb-2">
-                  Failure Example 2: Documentation Delay
-                </h5>
-                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
-                  <strong>Scenario:</strong> Candidate completed installation but left only 5
-                  minutes for paperwork.
-                </p>
-                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
-                  <strong>Consequence:</strong> Test sheets rushed, incomplete, several results
-                  missing.
-                </p>
-                <p className="text-sm text-red-700 dark:text-elec-yellow">
-                  <strong>Result:</strong> Failed paperwork section despite good practical work.
-                </p>
-              </div>
-
-              <div className="bg-green-50 dark:bg-green-950/20 rounded p-3">
-                <h5 className="font-medium text-green-800 dark:text-green-200 mb-2">
-                  Success Example: Planned Approach
-                </h5>
-                <p className="text-sm text-green-700 dark:text-green-300 mb-2">
-                  <strong>Scenario:</strong> Candidate set personal time targets, monitored
-                  progress, stayed calm throughout.
-                </p>
-                <p className="text-sm text-green-700 dark:text-green-300 mb-2">
-                  <strong>Execution:</strong> Completed all circuits neatly, documented as progress
-                  was made.
-                </p>
-                <p className="text-sm text-green-700 dark:text-green-300">
-                  <strong>Result:</strong> Passed first attempt with high marks across all sections.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="border border-white/10 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">Real-World Professional Parallel</h4>
-            <div className="bg-orange-50 dark:bg-orange-950/20 rounded p-3">
-              <h5 className="font-medium text-orange-800 dark:text-orange-200 mb-2">
-                Industry Example: Contract Deadline Management
-              </h5>
-              <p className="text-sm text-orange-700 dark:text-elec-yellow mb-2">
-                A contractor missed a crucial project deadline because they spent excessive time
-                reworking one cable run to absolute perfection.
-              </p>
-              <p className="text-sm text-orange-700 dark:text-elec-yellow mb-2">
-                <strong>Consequence:</strong> Client rejected the entire job due to delayed
-                completion, despite excellent quality work.
-              </p>
-              <p className="text-sm text-orange-700 dark:text-elec-yellow">
-                <strong>Lesson:</strong> Professional standards must be balanced with practical
-                deadline management - same principle applies in AM2.
-              </p>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Summary and Key Takeaways */}
-      <AM2ContentCard title="Section Summary - Time Management Mastery" icon={CheckCircle}>
-        <div className="space-y-4">
-          <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
-            <h4 className="font-medium text-elec-yellow mb-2">
-              Golden Rule of AM2 Time Management
-            </h4>
-            <p className="text-sm text-white italic mb-3">
+          <ConceptBlock title="Section Summary - Time Management Mastery">
+            <p>
+              <strong className="text-elec-yellow">Golden Rule of AM2 Time Management:</strong>{' '}
               "Plan, pace, and deliver methodically. Incomplete but safe is better than unsafe.
-              Professional standards maintained throughout."
+              Professional standards maintained throughout." Time management in AM2 is about working
+              methodically, safely, and steadily to complete the whole installation within
+              professional standards.
             </p>
-            <p className="text-sm text-white">
-              Time management in AM2 is about working methodically, safely, and steadily to complete
-              the whole installation within professional standards.
+            <p>
+              <strong className="text-elec-yellow">What Assessors Want to See:</strong>
             </p>
-          </div>
-
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">
-              What Assessors Want to See
-            </h4>
-            <ul className="space-y-1 text-sm text-green-700 dark:text-green-300">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                • <strong>Planned, organised approach</strong> - Evidence of systematic working
+                <strong>Planned, organised approach</strong> - Evidence of systematic working
                 methods
               </li>
               <li>
-                • <strong>Professional standard across all circuits</strong> - Consistent quality
+                <strong>Professional standard across all circuits</strong> - Consistent quality
                 throughout
               </li>
               <li>
-                • <strong>Safety and neatness prioritised over speed</strong> - No compromises on
+                <strong>Safety and neatness prioritised over speed</strong> - No compromises on
                 standards
               </li>
               <li>
-                • <strong>Circuits finished, tested, and documented</strong> - Complete professional
+                <strong>Circuits finished, tested, and documented</strong> - Complete professional
                 handover
               </li>
             </ul>
-          </div>
-
-          <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg p-4">
-            <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-2">
-              Essential Success Strategies
-            </h4>
-            <ul className="space-y-1 text-sm text-yellow-700 dark:text-yellow-300">
-              <li>• Break installation into clear phases with time targets</li>
-              <li>• Monitor progress regularly against planned milestones</li>
-              <li>• Maintain professional standards under time pressure</li>
-              <li>• Document and label as you progress, not at the end</li>
-              <li>• Remember: professional competence includes deadline management</li>
+            <p>
+              <strong className="text-elec-yellow">Essential Success Strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Break installation into clear phases with time targets</li>
+              <li>Monitor progress regularly against planned milestones</li>
+              <li>Maintain professional standards under time pressure</li>
+              <li>Document and label as you progress, not at the end</li>
+              <li>Remember: professional competence includes deadline management</li>
             </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 134.1.4"
+            clause={
+              <>
+                "Every electrical joint and connection shall be of proper construction as regards
+                conductance, insulation, mechanical strength and protection."
+              </>
+            }
+            meaning={
+              <>
+                Time pressure is no defence against this clause. The assessor isn't going to forgive
+                a loose terminal or a missed CPC sleeve because you had ten minutes left. Build your
+                time plan around hitting Reg 134.1.4 across every joint — that means budgeting
+                enough time at the end for proper terminations, not rushing them.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 134.1.4."
+          />
+
+          <Scenario
+            title="It's 15:30 and you've got a cooker circuit untouched and paperwork to do"
+            situation={
+              <>
+                Hard deadline is 17:00. You've completed the ring, two radials, lighting and the
+                motor circuit — all tested. The cooker circuit is wired but not terminated at the
+                outlet plate, the cooker control switch isn't fitted, and your test schedule is
+                blank for three circuits. Other candidates around you look done.
+              </>
+            }
+            whatToDo={
+              <>
+                Triage: paperwork first. Sit down and fill in test results for the four completed
+                circuits (you've got the readings — they're in your meter or your notes). 25
+                minutes. Then attack the cooker: terminate at the outlet plate, fit the control
+                switch, run continuity + IR + polarity. 50 minutes. Last 15 minutes: final visual,
+                lid check, label check. You've completed five circuits cleanly with paperwork done —
+                better than six circuits with a blank test schedule.
+              </>
+            }
+            whyItMatters={
+              <>
+                Assessors mark only completed work. A circuit installed but un-terminated and
+                untested is worth almost nothing on the mark sheet — you've used the time without
+                banking the marks. Paperwork sits behind a different mark cap that's easy to fail if
+                you leave it. "Less work, finished and tested" beats "more work, half done" every
+                time.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'How strict is the AM2 cut-off — is there any leeway at all?',
+                answer:
+                  "None. The schedule is fixed and applies to everyone equally. When the timer hits zero, tools down — the assessor records what you've completed and what you haven't. Personal circumstances, equipment trouble, a difficult rig setup — none of these earn extensions. Plan as if there's a hard wall at the end of each phase.",
+              },
+              {
+                question: "What's a realistic milestone schedule for an 8.5-hour install?",
+                answer:
+                  "Roughly: marking out and reading the spec by 09:30; containment in by 11:00; cables pulled by 12:30 (lunch); accessories terminated by 14:30; DB completed by 15:30; testing + paperwork from 15:30 to 17:00. These are guidelines — adapt to your speed — but check progress against milestones every hour. If you're 30 minutes behind by lunch, you're going to be 90 minutes behind by 17:00 unless you change something.",
+              },
+              {
+                question: 'Should I do all the paperwork at the end or as I go?',
+                answer:
+                  'As you go. Record test readings circuit by circuit — continuity, IR, polarity, Zs — into your test schedule the moment you take them. The schedule of inspections you can fill in section by section as the install progresses. Trying to do all the paperwork in the last hour is how candidates fail the documentation section despite a clean install.',
+              },
+              {
+                question: "I'm a perfectionist — that's a strength, right?",
+                answer:
+                  'On AM2, only when balanced. Spending 90 minutes perfecting one conduit bend while a circuit is left un-terminated is a documented failure pattern. Aim for consistent professional standard across the whole install, not perfection in one spot. The mark scheme rewards completion of the spec to a workmanlike standard — not heroic detail in one corner.',
+              },
+              {
+                question:
+                  'What if I make a mistake and have to redo something — does the clock pause?',
+                answer:
+                  "No. Redo time comes out of your overall budget. Build buffer into your plan for it — assume you'll lose 30–45 minutes to mistakes, retests, or running back to the bench for a forgotten tool. If you don't lose it, you've got bonus paperwork time. If you do lose it, you've already absorbed it.",
+              },
+              {
+                question:
+                  "I'm running behind and stressed — what's the priority order if I have to cut something?",
+                answer:
+                  'Safety first, then completion, then neatness. Never cut: testing before energising, CPC sleeving, sheath into accessories, polarity at the DB. Can be deprioritised if absolutely necessary: aesthetic perfection on containment lids, label print quality (write neatly with permanent marker if you must), final cable dressing in the DB beyond "functional and safe". Don\'t cut tests. Ever.',
+              },
+            ]}
+          />
+
+          <KeyTakeaways
+            points={[
+              'AM2 install is around 8.5 hours, fixed deadline, no extensions. Plan accordingly.',
+              'Phase: marking out + containment (~2 h), cables (~2 h), terminations (~2.5 h), testing + paperwork (~2 h).',
+              'Set hourly milestones and check against the clock — falling 30 minutes behind by lunch usually means 90 minutes behind by 17:00.',
+              'Document and label as you go. Test readings into the schedule the moment you take them, not at the end.',
+              "Reg 134.1.4 doesn't bend for time pressure — proper construction at every joint, regardless of the clock.",
+              "Incomplete but safe is always better than complete but unsafe. Unsafe is automatic fail; incomplete just loses marks on what's missing.",
+            ]}
+          />
+
+          <ConceptBlock title="Knowledge Check - Time Management Strategies">
+            <p className="text-sm text-white mb-6">
+              Test your understanding of time management principles and strategies for AM2 success.
+              This quiz covers planning, pacing, and professional deadline management.
+            </p>
+
+            <Quiz questions={quizQuestions} title="Time Management Assessment" />
+          </ConceptBlock>
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module3/section5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Accuracy & Neatness
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">Module 4</div>
+            </button>
           </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Knowledge Check Quiz */}
-      <AM2ContentCard title="Knowledge Check - Time Management Strategies" icon={BookOpen}>
-        <p className="text-sm text-white mb-6">
-          Test your understanding of time management principles and strategies for AM2 success. This
-          quiz covers planning, pacing, and professional deadline management.
-        </p>
-
-        <Quiz questions={quizQuestions} title="Time Management Assessment" />
-      </AM2ContentCard>
-
-      <AM2NavigationFooter
-        previousHref="/study-centre/apprentice/am2/module3/section5"
-        previousLabel="Accuracy & Neatness"
-        nextHref="/study-centre/apprentice/am2/module4"
-        nextLabel="Module 4"
-        currentSection={6}
-        totalSections={6}
-      />
-    </AM2SectionLayout>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 

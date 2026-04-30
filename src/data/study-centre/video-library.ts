@@ -185,6 +185,21 @@ export const videos = {
     '2357 faults presentation — systematic tracing · Unit 303 LO4',
     ['4.5']
   ),
+
+  /* ── AM2 day-prep additions (Craig Wiltshire) ──────────────────────── */
+
+  // RAMS / risk assessment — for NVQ + AM2 paperwork
+  riskAssessmentNvq: lookup('asG-Bkv2_vc', 'Risk assessment for NVQ — AM2 paperwork prep', [
+    'M2S2',
+  ]),
+  // Containment vs clipping — AM2 install task choice
+  containmentVsClipping: lookup(
+    '5DdY6PzOznQ',
+    'Containment vs clipping — cable management on the AM2 rig',
+    ['M3S1']
+  ),
+  // AM2 / AM2E booking — Module 1 context
+  am2BookingRequirements: lookup('iTYYdLGZ-WA', 'AM2 and AM2E — when can you book it?', ['M1S1']),
 } as const satisfies Record<string, VideoLibraryEntry>;
 
 export type VideoKey = keyof typeof videos;

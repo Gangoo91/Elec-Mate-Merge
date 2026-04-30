@@ -1,31 +1,34 @@
-import {
-  Shield,
-  CheckCircle,
-  AlertTriangle,
-  Target,
-  Lightbulb,
-  Brain,
-  BookOpen,
-  Users,
-  Wrench,
-  Eye,
-  TestTube,
-} from 'lucide-react';
-import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
-import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
-import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
-import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
-import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
-import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+/**
+ * Module 7 · Section 3 — Safety-first approach
+ * AM2 day-prep — Cross-cutting exam strategy
+ * Visible safety behaviour the assessor can mark — and the unsafe practices that fail you on the spot.
+ */
+
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import useSEO from '@/hooks/useSEO';
+import { useNavigate } from 'react-router-dom';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  SectionRule,
+  LearningOutcomes,
+  TLDR,
+  KeyTakeaways,
+  FAQ,
+  Scenario,
+  CommonMistake,
+  RegsCallout,
+} from '@/components/study-centre/learning';
+
+const TITLE = 'Safety-first Approach | AM2 Module 7.3 | Elec-Mate';
+const DESCRIPTION =
+  'Showing the AM2 assessor you are safe — the visible behaviours that earn marks and the unsafe practices that fail you on the spot.';
 
 const AM2Module7Section3 = () => {
-  useSEO(
-    'Safety-first Approach | AM2 Module 7 Section 3',
-    "Show the Assessor You're Safe - Critical safety behaviors and instant fail errors in AM2"
-  );
+  const navigate = useNavigate();
+  useSEO(TITLE, DESCRIPTION);
 
   const quickCheckQuestions: Array<{
     id: string;
@@ -118,10 +121,15 @@ const AM2Module7Section3 = () => {
     {
       id: 4,
       question: 'What regulation requires safe working practices?',
-      options: ['BS 7671 (18th Edition)', 'GS38', 'Both BS 7671 and GS38', 'HSE guidelines only'],
+      options: [
+        'BS 7671 (current edition)',
+        'GS38',
+        'Both BS 7671 and GS38',
+        'HSE guidelines only',
+      ],
       correctAnswer: 2,
       explanation:
-        'Both BS 7671 (18th Edition) and GS38 require safe working practices and proper test equipment use.',
+        'Both BS 7671 (current edition — BS 7671:2018+A4:2026) and HSE GS38 require safe working practices and proper test equipment use.',
     },
     {
       id: 5,
@@ -207,619 +215,448 @@ const AM2Module7Section3 = () => {
   ];
 
   return (
-    <AM2SectionLayout
-      backHref="/study-centre/apprentice/am2/module7"
-      breadcrumbs={[
-        { label: 'AM2', href: '/study-centre/apprentice/am2' },
-        { label: 'Module 7', href: '/study-centre/apprentice/am2/module7' },
-        { label: 'Section 3' },
-      ]}
-    >
-      {/* Hero Section */}
-      <AM2HeroSection
-        icon={Shield}
-        title="Safety-first Approach - Show the Assessor You're Safe"
-        description="The AM2 is not just a test of technical skill - it is a test of whether you can be trusted to work safely in the electrical industry. Assessors are trained to watch for safe behaviour at all times, not only during specific tasks like isolation. If you show unsafe practice, it can result in instant failure, regardless of how well you complete the rest of the exam."
-        badge="Module 7 - Section 3"
-      />
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/am2/module7')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 7
+          </button>
 
-      {/* Critical Warning */}
-      <AM2CriticalWarning
-        title="CRITICAL: Safety is Everything in AM2"
-        message="Unsafe electricians put lives at risk - so unsafe behaviour equals instant failure. Safety behaviours must be demonstrated consistently throughout the entire exam, not just once. NET's primary objective is to prove you are safe to work unsupervised. Every action is being assessed for safety compliance."
-      />
+          <PageHero
+            eyebrow="Module 7 · Section 3"
+            title="Safety-first Approach - Show the Assessor You're Safe"
+            description="The AM2 is not just a test of technical skill - it is a test of whether you can be trusted to work safely in the electrical industry. Assessors are trained to watch for safe behaviour at all times, not only during specific tasks like isolation. If you show unsafe practice, it can result in instant failure, regardless of how well you complete the rest of the exam."
+            tone="yellow"
+          />
 
-      {/* Learning Outcomes */}
-      <AM2LearningOutcomes outcomes={learningOutcomes} />
+          <TLDR
+            points={[
+              'Assessors watch behaviour all day — PPE, tool selection, posture, the way you treat the rig.',
+              'Visible safety habits (locking off, posting warnings, narrating safe-isolation steps) score on every section.',
+              'Leaving the rig safe between tasks matters as much as the task itself — never walk away from exposed live parts.',
+              'Safety isn’t one section — it’s the thread running through the whole assessment.',
+            ]}
+          />
 
-      {/* Why Safety is Everything */}
-      <AM2ContentCard title="1. Why Safety is Everything in AM2" icon={Shield} accent>
-        <p className="text-ios-callout text-white mb-4">
-          NET's primary objective is to prove you are safe to work unsupervised:
-        </p>
+          <ConceptBlock title="Safety is Everything in AM2">
+            <p>
+              <strong className="text-red-300">Critical.</strong> Unsafe electricians put lives at
+              risk — so unsafe behaviour equals instant failure. Safety behaviours must be
+              demonstrated consistently throughout the entire exam, not just once. NET's primary
+              objective is to prove you are safe to work unsupervised. Every action is being
+              assessed for safety compliance.
+            </p>
+          </ConceptBlock>
 
-        <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4 mb-4">
-          <h4 className="text-ios-headline text-blue-400 mb-3">Key Safety Principles:</h4>
-          <ul className="text-ios-callout text-white space-y-1">
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400">•</span>
-              <span>NET's primary objective is to prove you are safe to work unsupervised</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400">•</span>
-              <span>Unsafe electricians put lives at risk - so unsafe behaviour = fail</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400">•</span>
-              <span>Safety behaviours must be demonstrated throughout the exam, not just once</span>
-            </li>
-          </ul>
-        </div>
+          <LearningOutcomes outcomes={learningOutcomes} />
 
-        <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-          <div className="flex items-start gap-3">
-            <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-            <div>
-              <h4 className="text-ios-headline text-green-400 mb-2">Remember:</h4>
-              <p className="text-ios-callout text-white">
-                Every action is being assessed for safety compliance. The assessor is constantly
-                evaluating whether you can be trusted to work safely without supervision.
-              </p>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <ConceptBlock title="Why Safety is Everything">
+            <p>NET's primary objective is to prove you are safe to work unsupervised:</p>
+            <p>
+              <strong className="text-blue-400">Key Safety Principles:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-blue-400/70">
+              <li>NET's primary objective is to prove you are safe to work unsupervised</li>
+              <li>Unsafe electricians put lives at risk — so unsafe behaviour = fail</li>
+              <li>Safety behaviours must be demonstrated throughout the exam, not just once</li>
+            </ul>
+            <p>
+              <strong className="text-green-400">Remember:</strong> Every action is being assessed
+              for safety compliance. The assessor is constantly evaluating whether you can be
+              trusted to work safely without supervision.
+            </p>
+          </ConceptBlock>
 
-      <InlineCheck
-        id={quickCheckQuestions[0].id}
-        question={quickCheckQuestions[0].question}
-        options={quickCheckQuestions[0].options}
-        correctIndex={quickCheckQuestions[0].correctIndex}
-        explanation={quickCheckQuestions[0].explanation}
-      />
+          <InlineCheck
+            id={quickCheckQuestions[0].id}
+            question={quickCheckQuestions[0].question}
+            options={quickCheckQuestions[0].options}
+            correctIndex={quickCheckQuestions[0].correctIndex}
+            explanation={quickCheckQuestions[0].explanation}
+          />
 
-      {/* Key Safety Behaviours */}
-      <AM2ContentCard title="2. Key Safety Behaviours Assessors Look For" icon={Eye}>
-        <p className="text-ios-callout text-white mb-6">
-          Assessors are trained to watch for these critical safety behaviours throughout your AM2
-          exam:
-        </p>
+          <ConceptBlock title="Key Safety Behaviours">
+            <p>
+              Assessors are trained to watch for these critical safety behaviours throughout your
+              AM2 exam:
+            </p>
+            <p>
+              <strong>1. Safe Isolation.</strong> Following the 10-step process, including
+              prove/re-prove. This is the foundation of electrical safety.
+            </p>
+            <p>
+              <strong className="text-blue-400">Critical Steps:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-blue-400/70">
+              <li>Select appropriate point of isolation</li>
+              <li>Secure isolation — lock off/remove fuses</li>
+              <li>Prove tester before use</li>
+              <li>Test circuit dead</li>
+              <li>Re-prove tester after testing</li>
+            </ul>
+            <p>
+              <strong>2. PPE and Tool Use.</strong> Correct PPE usage, proper tools, no makeshift
+              shortcuts, no damaged equipment.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Safety glasses when required</li>
+              <li>Insulated gloves where appropriate</li>
+              <li>GS38-compliant test equipment only</li>
+              <li>Right tool for the job, no improvisation</li>
+            </ul>
+            <p>
+              <strong>3. Work Area Management.</strong> Tidy workspace, no trailing leads or trip
+              hazards, organised approach.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>Keep walkways clear of tools and cables</li>
+              <li>Organise tools methodically on work surface</li>
+              <li>Coil test leads properly when not in use</li>
+              <li>Clean up as you go — shows professionalism</li>
+              <li>Position ladder safely with correct angle (1:4 ratio)</li>
+              <li>Secure cable drums and heavy equipment</li>
+            </ul>
+            <p>
+              <strong className="text-orange-400">Remember:</strong> Untidy work areas suggest poor
+              safety culture and can lead to accidents.
+            </p>
+          </ConceptBlock>
 
-        <div className="space-y-6">
-          {/* Strategy 1 */}
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-              1
-            </div>
-            <div className="flex-1">
-              <h5 className="text-ios-headline text-white mb-2">Safe Isolation</h5>
-              <p className="text-ios-callout text-white mb-3">
-                Following the 10-step process, including prove/re-prove. This is the foundation of
-                electrical safety.
-              </p>
-              <div className="bg-white/5 border border-blue-500/30 rounded-xl p-3">
-                <strong className="text-blue-400 text-ios-callout">Critical Steps:</strong>
-                <ul className="text-ios-callout text-white mt-2 space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <span>Select appropriate point of isolation</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <span>Secure isolation - lock off/remove fuses</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <span>Prove tester before use</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <span>Test circuit dead</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <span>Re-prove tester after testing</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <InlineCheck
+            id={quickCheckQuestions[1].id}
+            question={quickCheckQuestions[1].question}
+            options={quickCheckQuestions[1].options}
+            correctIndex={quickCheckQuestions[1].correctIndex}
+            explanation={quickCheckQuestions[1].explanation}
+          />
 
-          {/* Strategy 2 */}
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-              2
-            </div>
-            <div className="flex-1">
-              <h5 className="text-ios-headline text-white mb-2">PPE and Tool Use</h5>
-              <p className="text-ios-callout text-white mb-3">
-                Correct PPE usage, proper tools, no makeshift shortcuts, no damaged equipment.
-              </p>
-              <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
-                <ul className="text-ios-callout text-white space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Safety glasses when required</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Insulated gloves where appropriate</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>GS38-compliant test equipment only</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <span>Right tool for the job, no improvisation</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <ConceptBlock title="Instant Fail Errors">
+            <p>
+              These safety-critical errors result in immediate failure, regardless of performance
+              elsewhere:
+            </p>
+            <p>
+              <strong className="text-red-400">Critical Safety Errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-red-400/70">
+              <li>Skipping any step in safe isolation</li>
+              <li>Using unsafe test equipment (non-GS38 probes, taped leads)</li>
+              <li>Energising a circuit with exposed copper or missing CPCs</li>
+              <li>Bypassing protective devices</li>
+              <li>Failing to label or identify circuits, creating risk for others</li>
+              <li>Working recklessly — e.g., rushing in testing with live conductors exposed</li>
+            </ul>
+            <p>
+              <strong className="text-yellow-400">Warning:</strong> These errors are not negotiable.
+              Even if you complete everything else perfectly, any of these safety violations will
+              result in instant failure.
+            </p>
+          </ConceptBlock>
 
-          {/* Strategy 3 */}
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-              3
-            </div>
-            <div className="flex-1">
-              <h5 className="text-ios-headline text-white mb-2">Work Area Management</h5>
-              <p className="text-ios-callout text-white mb-3">
-                Tidy workspace, no trailing leads or trip hazards, organised approach.
-              </p>
-              <div className="bg-white/5 border border-orange-500/30 rounded-xl p-3">
-                <ul className="text-ios-callout text-white space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Keep walkways clear of tools and cables</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Organise tools methodically on work surface</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Coil test leads properly when not in use</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Clean up as you go - shows professionalism</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Position ladder safely with correct angle (1:4 ratio)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-400">•</span>
-                    <span>Secure cable drums and heavy equipment</span>
-                  </li>
-                </ul>
-                <div className="mt-3 p-2 bg-orange-500/10 rounded">
-                  <strong className="text-orange-400 text-ios-footnote">Remember:</strong>
-                  <p className="text-white text-ios-footnote mt-1">
-                    Untidy work areas suggest poor safety culture and can lead to accidents.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
+          <InlineCheck
+            id={quickCheckQuestions[2].id}
+            question={quickCheckQuestions[2].question}
+            options={quickCheckQuestions[2].options}
+            correctIndex={quickCheckQuestions[2].correctIndex}
+            explanation={quickCheckQuestions[2].explanation}
+          />
 
-      <InlineCheck
-        id={quickCheckQuestions[1].id}
-        question={quickCheckQuestions[1].question}
-        options={quickCheckQuestions[1].options}
-        correctIndex={quickCheckQuestions[1].correctIndex}
-        explanation={quickCheckQuestions[1].explanation}
-      />
-
-      {/* Instant Fail Errors */}
-      <AM2ContentCard title="3. 'Instant Fail' Safety Errors (NET Published)" icon={AlertTriangle}>
-        <p className="text-ios-callout text-white mb-6">
-          These safety-critical errors result in immediate failure, regardless of performance
-          elsewhere:
-        </p>
-
-        <div className="bg-white/5 border border-red-500/30 rounded-xl p-4 mb-4">
-          <h4 className="text-ios-headline text-red-400 mb-3">Critical Safety Errors:</h4>
-          <ul className="text-ios-callout text-white space-y-2">
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>Skipping any step in safe isolation</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>Using unsafe test equipment (non-GS38 probes, taped leads)</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>Energising a circuit with exposed copper or missing CPCs</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>Bypassing protective devices</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>Failing to label or identify circuits, creating risk for others</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-400">•</span>
-              <span>
-                Working recklessly - e.g., rushing in testing with live conductors exposed
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <div className="bg-white/5 border border-yellow-500/30 rounded-xl p-4">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-            <div>
-              <h4 className="text-ios-headline text-yellow-400 mb-2">Warning:</h4>
-              <p className="text-ios-callout text-white">
-                These errors are not negotiable. Even if you complete everything else perfectly, any
-                of these safety violations will result in instant failure.
-              </p>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      <InlineCheck
-        id={quickCheckQuestions[2].id}
-        question={quickCheckQuestions[2].question}
-        options={quickCheckQuestions[2].options}
-        correctIndex={quickCheckQuestions[2].correctIndex}
-        explanation={quickCheckQuestions[2].explanation}
-      />
-
-      {/* Showing the Assessor */}
-      <AM2ContentCard title="4. Showing the Assessor You Are Safe" icon={Target}>
-        <p className="text-ios-callout text-white mb-6">
-          It's not just about being safe - it's about making it clear to the assessor that safety is
-          your priority:
-        </p>
-
-        <div className="space-y-4">
-          <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-blue-400 mb-3">Visible Safety Practices:</h4>
-            <ul className="text-ios-callout text-white space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-blue-400">•</span>
-                <span>
-                  <strong className="text-white">Talk through steps:</strong> e.g., "I am now
-                  proving my tester on a known live source"
-                </span>
+          <ConceptBlock title="Showing the Assessor">
+            <p>
+              It's not just about being safe — it's about making it clear to the assessor that
+              safety is your priority:
+            </p>
+            <p>
+              <strong className="text-blue-400">Visible Safety Practices:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-blue-400/70">
+              <li>
+                <strong>Talk through steps:</strong> e.g., "I am now proving my tester on a known
+                live source"
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-400">•</span>
-                <span>
-                  <strong className="text-white">Double-check visibly:</strong> show that you
-                  re-sleeve CPCs, torque terminals, re-fit trunking lids
-                </span>
+              <li>
+                <strong>Double-check visibly:</strong> show that you re-sleeve CPCs, torque
+                terminals, re-fit trunking lids
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-400">•</span>
-                <span>
-                  <strong className="text-white">Label clearly:</strong> DBs, circuits, and
-                  accessories must all be identifiable
-                </span>
+              <li>
+                <strong>Label clearly:</strong> DBs, circuits, and accessories must all be
+                identifiable
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-400">•</span>
-                <span>
-                  <strong className="text-white">Keep order:</strong> tidy work area shows
-                  professionalism and reduces risks
-                </span>
+              <li>
+                <strong>Keep order:</strong> tidy work area shows professionalism and reduces risks
               </li>
             </ul>
-          </div>
+            <p>
+              <strong className="text-green-400">Professional Approach:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>Methodical, step-by-step approach to all tasks</li>
+              <li>Clear communication when explaining what you're doing</li>
+              <li>Immediate correction of any mistakes, done visibly</li>
+              <li>Consistent safety practices throughout the entire exam</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 mb-3">Professional Approach:</h4>
-            <ul className="text-ios-callout text-white space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>Methodical, step-by-step approach to all tasks</span>
+          <ConceptBlock title="Practical Guidance">
+            <p>
+              Think like you're on-site with a client or inspector watching — every action reflects
+              your professionalism:
+            </p>
+            <p>
+              <strong className="text-blue-400">Scenario: Beginning Any Task.</strong>{' '}
+              <strong>Do:</strong> check your test equipment is GS38-compliant, prove on known live
+              source. <strong>Say:</strong> "I'm checking my tester before use on this known live
+              source". <strong>Why:</strong> shows methodical approach and compliance with safety
+              standards.
+            </p>
+            <p>
+              <strong className="text-green-400">Scenario: Making Connections.</strong>{' '}
+              <strong>Do:</strong> connect CPCs first with proper sleeving, torque terminals to
+              spec. <strong>Say:</strong> "Connecting the CPC first for safety, using green/yellow
+              sleeving". <strong>Why:</strong> demonstrates understanding of safety hierarchy and BS
+              7671 compliance.
+            </p>
+            <p>
+              <strong className="text-purple-400">Scenario: Before Energising.</strong>{' '}
+              <strong>Do:</strong> double-check all connections, verify CPC continuity, check
+              polarity. <strong>Say:</strong> "Checking all connections secure before energising,
+              verifying CPC continuity". <strong>Why:</strong> prevents dangerous situations and
+              shows systematic approach.
+            </p>
+            <p>
+              <strong className="text-orange-400">Scenario: If You Make a Mistake.</strong>{' '}
+              <strong>Do:</strong> stop immediately, isolate if necessary, correct properly.{' '}
+              <strong>Say:</strong> "I need to isolate and correct this connection properly".{' '}
+              <strong>Why:</strong> shows honesty, safety-first mindset, and professional integrity.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-green-400/70">
+              <li>
+                <strong>Practise safe isolation</strong> until it is second nature
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>Clear communication when explaining what you're doing</span>
+              <li>
+                <strong>Always sleeve CPCs immediately</strong> — don't leave it until later
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>Immediate correction of any mistakes, done visibly</span>
+              <li>
+                <strong>Never cut corners</strong> on test probe safety — keep fingers behind
+                barriers
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">•</span>
-                <span>Consistent safety practices throughout the entire exam</span>
+              <li>
+                <strong>Ask yourself:</strong> "Is this safe for another electrician to touch right
+                now?"
               </li>
             </ul>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Practical Guidance */}
-      <AM2ContentCard title="5. Practical Guidance" icon={Lightbulb}>
-        <p className="text-ios-callout text-white mb-6">
-          Think like you're on-site with a client or inspector watching - every action reflects your
-          professionalism:
-        </p>
-
-        <div className="space-y-4">
-          {/* Scenario 1 */}
-          <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-blue-400 mb-3 flex items-center gap-2">
-              <Brain className="w-4 h-4" />
-              Scenario: Beginning Any Task
-            </h4>
-            <div className="text-ios-callout text-white space-y-2">
-              <p>
-                <strong className="text-white">Do:</strong> Check your test equipment is
-                GS38-compliant, prove on known live source
-              </p>
-              <p>
-                <strong className="text-white">Say:</strong> "I'm checking my tester before use on
-                this known live source"
-              </p>
-              <p>
-                <strong className="text-white">Why:</strong> Shows methodical approach and
-                compliance with safety standards
-              </p>
-            </div>
-          </div>
-
-          {/* Scenario 2 */}
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 mb-3 flex items-center gap-2">
-              <Wrench className="w-4 h-4" />
-              Scenario: Making Connections
-            </h4>
-            <div className="text-ios-callout text-white space-y-2">
-              <p>
-                <strong className="text-white">Do:</strong> Connect CPCs first with proper sleeving,
-                torque terminals to spec
-              </p>
-              <p>
-                <strong className="text-white">Say:</strong> "Connecting the CPC first for safety,
-                using green/yellow sleeving"
-              </p>
-              <p>
-                <strong className="text-white">Why:</strong> Demonstrates understanding of safety
-                hierarchy and BS 7671 compliance
-              </p>
-            </div>
-          </div>
-
-          {/* Scenario 3 */}
-          <div className="bg-white/5 border border-purple-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-purple-400 mb-3 flex items-center gap-2">
-              <TestTube className="w-4 h-4" />
-              Scenario: Before Energising
-            </h4>
-            <div className="text-ios-callout text-white space-y-2">
-              <p>
-                <strong className="text-white">Do:</strong> Double-check all connections, verify CPC
-                continuity, check polarity
-              </p>
-              <p>
-                <strong className="text-white">Say:</strong> "Checking all connections secure before
-                energising, verifying CPC continuity"
-              </p>
-              <p>
-                <strong className="text-white">Why:</strong> Prevents dangerous situations and shows
-                systematic approach
-              </p>
-            </div>
-          </div>
-
-          {/* Scenario 4 */}
-          <div className="bg-white/5 border border-orange-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-orange-400 mb-3 flex items-center gap-2">
-              <Users className="w-4 h-4" />
-              Scenario: If You Make a Mistake
-            </h4>
-            <div className="text-ios-callout text-white space-y-2">
-              <p>
-                <strong className="text-white">Do:</strong> Stop immediately, isolate if necessary,
-                correct properly
-              </p>
-              <p>
-                <strong className="text-white">Say:</strong> "I need to isolate and correct this
-                connection properly"
-              </p>
-              <p>
-                <strong className="text-white">Why:</strong> Shows honesty, safety-first mindset,
-                and professional integrity
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-4 mt-6">
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white">
-                <strong className="text-white">Practise safe isolation</strong> until it is second
-                nature
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white">
-                <strong className="text-white">Always sleeve CPCs immediately</strong> - don't leave
-                it until later
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white">
-                <strong className="text-white">Never cut corners</strong> on test probe safety -
-                keep fingers behind barriers
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white">
-                <strong className="text-white">Ask yourself:</strong> "Is this safe for another
-                electrician to touch right now?"
-              </p>
-            </div>
-          </div>
-        </div>
-      </AM2ContentCard>
-
-      {/* Real-world Examples */}
-      <AM2ContentCard title="6. Real-world Examples" icon={BookOpen}>
-        <div className="space-y-4">
-          <div className="border-l-4 border-red-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white">
-              <strong className="text-red-400">Example 1:</strong> Candidate skipped re-prove of
-              tester in safe isolation procedure - assessor stopped exam - fail.
+          <ConceptBlock title="Real-world Examples">
+            <p>
+              <strong className="text-red-400">Example 1.</strong> Candidate skipped re-prove of
+              tester in safe isolation procedure — assessor stopped exam — fail.
             </p>
-          </div>
-
-          <div className="border-l-4 border-red-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white">
-              <strong className="text-red-400">Example 2:</strong> Candidate completed installation
-              correctly but left bare copper exposed in a socket - unsafe workmanship - marks lost.
+            <p>
+              <strong className="text-red-400">Example 2.</strong> Candidate completed installation
+              correctly but left bare copper exposed in a socket — unsafe workmanship — marks lost.
             </p>
-          </div>
-
-          <div className="border-l-4 border-green-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white">
-              <strong className="text-green-400">Example 3:</strong> Candidate explained each
-              isolation step out loud, used GS38 leads correctly, and kept tidy work area - assessor
-              noted professionalism - passed.
+            <p>
+              <strong className="text-green-400">Example 3.</strong> Candidate explained each
+              isolation step out loud, used GS38 leads correctly, and kept tidy work area — assessor
+              noted professionalism — passed.
             </p>
-          </div>
-
-          <div className="border-l-4 border-yellow-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white">
-              <strong className="text-yellow-400">Example 4:</strong> In industry, an electrician
-              energised a circuit with no CPC - shock incident. Same behaviour in AM2 = instant
+            <p>
+              <strong className="text-yellow-400">Example 4.</strong> In industry, an electrician
+              energised a circuit with no CPC — shock incident. Same behaviour in AM2 = instant
               fail.
             </p>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* FAQs */}
-      <AM2ContentCard title="7. Frequently Asked Questions" icon={Brain}>
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-ios-headline text-white mb-2">
-              Q1: Do assessors allow small safety mistakes?
-            </h3>
-            <p className="text-ios-callout text-white">
-              No - safety errors are heavily penalised, and critical errors result in instant
-              failure. There are no "small" safety mistakes in electrical work.
+          <ConceptBlock title="Frequently Asked Questions">
+            <p>
+              <strong>Q1: Do assessors allow small safety mistakes?</strong> No — safety errors are
+              heavily penalised, and critical errors result in instant failure. There are no "small"
+              safety mistakes in electrical work.
             </p>
-          </div>
-
-          <div>
-            <h3 className="text-ios-headline text-white mb-2">
-              Q2: What if I realise I've made a safety error during the exam?
-            </h3>
-            <p className="text-ios-callout text-white">
-              Stop immediately, inform the assessor, isolate if necessary, and correct it properly.
+            <p>
+              <strong>Q2: What if I realise I've made a safety error during the exam?</strong> Stop
+              immediately, inform the assessor, isolate if necessary, and correct it properly.
               Honesty and immediate correction show professional integrity.
             </p>
-          </div>
-
-          <div>
-            <h3 className="text-ios-headline text-white mb-2">
-              Q3: Is it better to be slow and safe, or fast and efficient?
-            </h3>
-            <p className="text-ios-callout text-white">
-              Always slow and safe. Speed is never prioritised over safety in AM2. A methodical,
-              safe approach will always score higher than rushing.
+            <p>
+              <strong>Q3: Is it better to be slow and safe, or fast and efficient?</strong> Always
+              slow and safe. Speed is never prioritised over safety in AM2. A methodical, safe
+              approach will always score higher than rushing.
             </p>
-          </div>
-
-          <div>
-            <h3 className="text-ios-headline text-white mb-2">
-              Q4: Should I verbalise my safety steps?
-            </h3>
-            <p className="text-ios-callout text-white">
-              Yes! Talking through safety steps like "proving my tester on known live source"
-              clearly demonstrates your understanding to the assessor.
+            <p>
+              <strong>Q4: Should I verbalise my safety steps?</strong> Yes! Talking through safety
+              steps like "proving my tester on known live source" clearly demonstrates your
+              understanding to the assessor.
             </p>
-          </div>
-
-          <div>
-            <h3 className="text-ios-headline text-white mb-2">
-              Q5: What happens if my test equipment fails during the exam?
-            </h3>
-            <p className="text-ios-callout text-white">
-              Stop work immediately, inform the assessor, and request replacement equipment. Never
+            <p>
+              <strong>Q5: What happens if my test equipment fails during the exam?</strong> Stop
+              work immediately, inform the assessor, and request replacement equipment. Never
               continue with faulty or unsafe test equipment.
             </p>
-          </div>
-        </div>
-      </AM2ContentCard>
+          </ConceptBlock>
 
-      {/* Summary */}
-      <AM2ContentCard title="8. Summary" icon={CheckCircle}>
-        <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-          <p className="text-ios-callout text-white mb-4 font-medium">
-            In AM2, safety is the foundation of everything. You must:
-          </p>
-          <ul className="text-ios-callout text-white space-y-1">
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400">•</span>
-              <span>Follow safe isolation correctly</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400">•</span>
-              <span>Use PPE and tools properly</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400">•</span>
-              <span>Terminate and test safely with GS38 compliance</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400">•</span>
-              <span>Keep your work area tidy and circuits safe</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400">•</span>
-              <span>
+          <ConceptBlock title="Summary">
+            <p>In AM2, safety is the foundation of everything. You must:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-blue-400/70">
+              <li>Follow safe isolation correctly</li>
+              <li>Use PPE and tools properly</li>
+              <li>Terminate and test safely with GS38 compliance</li>
+              <li>Keep your work area tidy and circuits safe</li>
+              <li>
                 Show the assessor, clearly and confidently, that safety is always your first
                 priority
-              </span>
-            </li>
-          </ul>
-          <p className="text-ios-callout text-white mt-4 font-bold">Unsafe = fail. Safe = pass.</p>
-        </div>
-      </AM2ContentCard>
+              </li>
+            </ul>
+            <p>
+              <strong className="text-elec-yellow">Unsafe = fail. Safe = pass.</strong>
+            </p>
+          </ConceptBlock>
 
-      {/* Quiz Section */}
-      <Quiz questions={quizQuestions} title="Test Your Knowledge: Safety-first Approach" />
+          <SectionRule />
 
-      {/* Navigation Footer */}
-      <AM2NavigationFooter
-        previousHref="/study-centre/apprentice/am2/module7/section2"
-        previousLabel="Coping with Nerves"
-        nextHref="/study-centre/apprentice/am2/module7/section4"
-        nextLabel="Avoiding Common Mistakes"
-        currentSection={3}
-        totalSections={4}
-      />
-    </AM2SectionLayout>
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 642.1"
+            clause="Inspection shall precede testing and shall normally be done with that part of the installation under inspection disconnected from the supply."
+            meaning={
+              <>
+                Inspection happens dead, before testing. Energising before inspection is finished is
+                both a regulatory breach and an AM2 critical safety error. The visual walk-through
+                is where you find the obvious problems — exposed conductors, missing barriers,
+                untightened terminals — before any current flows.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 642.1."
+          />
+
+          <Scenario
+            title="Lunch break with the rig half-finished"
+            situation={
+              <>
+                It’s 12:30 on day one. You’re mid-task — consumer unit cover off, conductors
+                partially terminated, supply isolated and locked off. The assessor calls lunch. You
+                grab your jacket and head for the canteen.
+              </>
+            }
+            whatToDo={
+              <>
+                Before you walk away: replace the cover or post a clear warning, confirm the supply
+                is still isolated and your padlock is in place, leave a safe-condition note on the
+                rig. On site, leaving an uncovered consumer unit unattended is a serious H&S breach.
+                On AM2 it’s a marked criterion.
+              </>
+            }
+            whyItMatters={
+              <>
+                The assessor watches what you do at every transition — start of section, end of
+                section, lunch, comfort breaks. "Always leave the workplace safe" is in the marking
+                criteria, not just polite advice.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title="Treating safety as a Section C exercise only"
+            whatHappens={
+              <>
+                You ace safe isolation in Section C, but the rest of the day you’ve had safety
+                glasses on your head, gloves in your back pocket, and tools in places where someone
+                could walk into them. The assessor logs an H&S issue every couple of hours. By close
+                of play you’ve accumulated enough to fail on H&S.
+              </>
+            }
+            doInstead={
+              <>
+                Treat safety as a continuous behaviour, not a section. Glasses on whenever you’re
+                cutting, drilling or stripping. Tidy workspace at every break. PPE matched to the
+                task from your RAMS. Make safety visible.
+              </>
+            }
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Do assessors really watch all day, or only during scored tasks?',
+                answer:
+                  'All day. NET trains assessors to observe behaviour throughout — H&S is a cross-cutting criterion that applies from arrival to debrief.',
+              },
+              {
+                question: 'What counts as "leaving the rig safe"?',
+                answer:
+                  'Supply isolated and locked, covers in place or warning notices posted, no exposed live parts, tools off the floor, no trip hazards. Same standard as a real install at the end of the day.',
+              },
+              {
+                question: 'Should I narrate my safety steps out loud?',
+                answer:
+                  'Yes — for safe isolation especially. Talking through "proving tester live, switching off, locking off, posting notice, testing dead, re-proving live" makes it obvious to the assessor that you’ve followed the procedure.',
+              },
+              {
+                question: 'Is there a list of every "instant fail" safety error?',
+                answer:
+                  'NET publishes the critical-fail list in the candidate brief. The big ones: unsafe isolation, working live, energising without inspection, exposing others to danger, falsifying records.',
+              },
+              {
+                question:
+                  'What if the assessor seems to ignore my safety habits — am I wasting time?',
+                answer:
+                  'No. They’re trained not to react in the moment so candidates don’t game the marking. Keep going. The mark sheet records every safe behaviour they observe.',
+              },
+              {
+                question: 'How do I balance safety thoroughness with the time pressure?',
+                answer:
+                  'Build safety into your sequence. Posting a warning and locking off should add seconds, not minutes, once you’ve practised it. The candidates who run out of time aren’t the safe ones — they’re the ones who didn’t plan.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Safety is observed all day, not just in Section C. Every transition counts.',
+              'BS 7671 Reg 642.1: inspection before testing, dead before live. Get the order right.',
+              'Always leave the rig safe at breaks — covers on or warnings posted, supply locked off.',
+              'PPE matched to the task from your RAMS. Glasses, gloves, footwear — visible at all times.',
+              'Narrate safe-isolation steps out loud. The assessor needs to see the procedure.',
+              'Tidy workspace, tools off the floor, no trip hazards. Workmanship and safety overlap.',
+              'Critical-fail list is in the candidate brief — read it, memorise it.',
+              'Safety habits should add seconds, not minutes — that comes from practice.',
+            ]}
+          />
+
+          <Quiz questions={quizQuestions} title="Test Your Knowledge: Safety-first Approach" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module7/section2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Coping with Nerves
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/am2/module7/section4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Avoiding Common Mistakes
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
+    </div>
   );
 };
 
