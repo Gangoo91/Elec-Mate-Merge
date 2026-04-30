@@ -52,7 +52,11 @@ export interface SuggestedAction {
    often produces both — an OTJ entry (time + learning) and a portfolio
    item (competency evidence). Phase 3+ adds ILP goals. */
 
-export type ProposalKind = 'propose_otj_reflection' | 'propose_portfolio_item' | 'propose_ilp_goal';
+export type ProposalKind =
+  | 'propose_otj_reflection'
+  | 'propose_portfolio_item'
+  | 'propose_ilp_goal'
+  | 'propose_college_policy';
 
 /** Filed-state lives on the proposal itself so it survives reloads. Set
     by mark_notebook_proposal_filed RPC after the apprentice confirms. */
@@ -90,7 +94,22 @@ export interface IlpGoalProposal extends ProposalFiledState {
   target_date: string | null;
 }
 
-export type Proposal = OtjReflectionProposal | PortfolioItemProposal | IlpGoalProposal;
+export interface CollegePolicyProposal extends ProposalFiledState {
+  kind: 'propose_college_policy';
+  title: string;
+  description: string;
+  content_md: string;
+  category: string;
+  code: string | null;
+  owner_role: string | null;
+  requires_acknowledgement: boolean;
+}
+
+export type Proposal =
+  | OtjReflectionProposal
+  | PortfolioItemProposal
+  | IlpGoalProposal
+  | CollegePolicyProposal;
 
 export interface NotebookConversation {
   id: string;

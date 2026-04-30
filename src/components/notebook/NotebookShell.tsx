@@ -15,10 +15,12 @@ import {
   type OtjReflectionProposal,
   type PortfolioItemProposal,
   type IlpGoalProposal,
+  type CollegePolicyProposal,
 } from '@/hooks/useNotebook';
 import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
 import { FilePortfolioItemSheet } from '@/components/apprentice-hub/FilePortfolioItemSheet';
 import { ProposeIlpGoalSheet } from '@/components/apprentice-hub/ProposeIlpGoalSheet';
+import { FilePolicyDraftSheet } from '@/components/college/dialogs/FilePolicyDraftSheet';
 import { fmtRel } from '@/lib/format';
 
 /* ==========================================================================
@@ -218,6 +220,20 @@ export function NotebookShell({
       category: p.category,
       priority: p.priority,
       target_date: p.target_date,
+    };
+  }, [activeProposal]);
+
+  const policyPrefill = useMemo(() => {
+    const p = activeProposal?.proposal;
+    if (p?.kind !== 'propose_college_policy') return undefined;
+    return {
+      title: p.title,
+      description: p.description,
+      content_md: p.content_md,
+      category: p.category,
+      code: p.code,
+      owner_role: p.owner_role,
+      requires_acknowledgement: p.requires_acknowledgement,
     };
   }, [activeProposal]);
 
@@ -436,6 +452,20 @@ export function NotebookShell({
           if (!o) setActiveProposal(null);
         }}
         prefill={ilpPrefill}
+        onSubmitted={(insertedId) => {
+          if (activeProposal && insertedId && markProposalFiled) {
+            void markProposalFiled(activeProposal.messageId, activeProposal.index, insertedId);
+          }
+          setActiveProposal(null);
+        }}
+      />
+
+      <FilePolicyDraftSheet
+        open={activeProposal?.proposal.kind === 'propose_college_policy'}
+        onOpenChange={(o) => {
+          if (!o) setActiveProposal(null);
+        }}
+        prefill={policyPrefill}
         onSubmitted={(insertedId) => {
           if (activeProposal && insertedId && markProposalFiled) {
             void markProposalFiled(activeProposal.messageId, activeProposal.index, insertedId);
@@ -865,6 +895,9 @@ function ProposalPanel({
   if (proposal.kind === 'propose_ilp_goal') {
     return <IlpGoalProposalPanel proposal={proposal} filed={filed} onTap={onTap} />;
   }
+  if (proposal.kind === 'propose_college_policy') {
+    return <PolicyProposalPanel proposal={proposal} filed={filed} onTap={onTap} />;
+  }
   return null;
 }
 
@@ -1111,6 +1144,93 @@ function IlpGoalProposalPanel({
             className="shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-black bg-amber-300 hover:bg-amber-200 transition-colors touch-manipulation"
           >
             Review &amp; send →
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function PolicyProposalPanel({
+  proposal,
+  filed,
+  onTap,
+}: {
+  proposal: CollegePolicyProposal;
+  filed: boolean;
+  onTap: () => void;
+}) {
+  const wordCount = proposal.content_md.trim().split(/\s+/).length;
+  const ackLabel = proposal.requires_acknowledgement ? ' · staff ack' : '';
+  return (
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-2xl border px-3.5 py-3 transition-opacity',
+        filed
+          ? 'border-emerald-300/30 bg-emerald-500/[0.06]'
+          : 'border-amber-300/30 bg-gradient-to-br from-amber-500/[0.08] via-[hsl(0_0%_11%)] to-[hsl(0_0%_11%)]'
+      )}
+    >
+      <div
+        className={cn(
+          'absolute inset-x-0 top-0 h-px opacity-50',
+          filed ? 'bg-emerald-300' : 'bg-amber-300'
+        )}
+      />
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <div
+            className={cn(
+              'text-[10px] font-medium uppercase tracking-[0.22em]',
+              filed ? 'text-emerald-300' : 'text-amber-300'
+            )}
+          >
+            {filed
+              ? '✓ Saved as draft policy'
+              : `📜 Policy draft · ${proposal.category.replace(/_/g, ' ')} · ~${wordCount} words${ackLabel}`}
+          </div>
+          <div className="mt-1.5 text-[13.5px] font-semibold text-white leading-snug">
+            {proposal.title}
+          </div>
+          <p
+            className={cn(
+              'mt-1 text-[12.5px] leading-snug line-clamp-3',
+              filed ? 'text-white/65' : 'text-white/85'
+            )}
+          >
+            {proposal.description}
+          </p>
+          {!filed && (proposal.code || proposal.owner_role) && (
+            <div className="mt-2 flex items-center flex-wrap gap-1">
+              {proposal.code && (
+                <span className="inline-flex items-center h-5 px-1.5 rounded-md border border-white/[0.10] bg-white/[0.03] text-[10.5px] font-medium text-white/85 font-mono">
+                  {proposal.code}
+                </span>
+              )}
+              {proposal.owner_role && (
+                <span className="inline-flex items-center h-5 px-1.5 rounded-md border border-amber-300/30 bg-amber-500/[0.06] text-[10.5px] font-medium text-amber-200">
+                  {proposal.owner_role}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+        {filed ? (
+          <FiledPill
+            href={
+              proposal.filed_record_id
+                ? `/college/policies/${proposal.filed_record_id}`
+                : '/college/policies'
+            }
+            label="Open draft"
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={onTap}
+            className="shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-black bg-amber-300 hover:bg-amber-200 transition-colors touch-manipulation"
+          >
+            Review &amp; save →
           </button>
         )}
       </div>

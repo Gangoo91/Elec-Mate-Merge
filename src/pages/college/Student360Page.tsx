@@ -3,11 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  PageFrame,
-  LoadingState,
-  itemVariants,
-} from '@/components/college/primitives';
+import { PageFrame, LoadingState, itemVariants } from '@/components/college/primitives';
 import {
   useStudent360,
   type AcCoverageRow,
@@ -121,17 +117,23 @@ export default function Student360Page() {
         setOtjOpen(true);
         break;
       case 'review_portfolio':
-        document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document
+          .getElementById('portfolio')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         break;
       case 'edit_ilp':
       case 'add_ilp_goal':
         document.getElementById('ilp')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         break;
       case 'log_attendance':
-        document.getElementById('attendance')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document
+          .getElementById('attendance')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         break;
       case 'add_evidence':
-        document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document
+          .getElementById('portfolio')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         break;
       case 'escalate_safeguarding':
         openNote('safeguarding');
@@ -187,7 +189,9 @@ export default function Student360Page() {
               type="button"
               onClick={() => neighbors.prev && navigate(`/college/students/${neighbors.prev.id}`)}
               disabled={!neighbors.prev}
-              title={neighbors.prev ? `Previous: ${neighbors.prev.name} (⌘←)` : 'No previous learner'}
+              title={
+                neighbors.prev ? `Previous: ${neighbors.prev.name} (⌘←)` : 'No previous learner'
+              }
               className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-white/[0.04] border border-white/[0.10] text-white hover:bg-white/[0.10] disabled:opacity-30 disabled:cursor-not-allowed transition-colors touch-manipulation"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -245,6 +249,7 @@ export default function Student360Page() {
                         concern: () => openNote('concern'),
                         safeguarding: () => openNote('safeguarding'),
                         print: () => navigate(`/college/students/${core.id}/print`),
+                        evidence: () => navigate(`/college/students/${core.id}/evidence`),
                       })}
                     />
                   </div>
@@ -280,9 +285,17 @@ export default function Student360Page() {
                 <button
                   type="button"
                   onClick={() => navigate(`/college/ai-notebook?student=${core.id}`)}
-                  className="w-full text-left h-9 px-2 rounded-md text-[12px] font-semibold text-amber-300 hover:text-amber-200 hover:bg-white/[0.03] transition-colors touch-manipulation mb-2"
+                  className="w-full text-left h-9 px-2 rounded-md text-[12px] font-semibold text-amber-300 hover:text-amber-200 hover:bg-white/[0.03] transition-colors touch-manipulation"
                 >
                   Ask AI about {core.name.split(' ')[0]} →
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/college/students/${core.id}/evidence`)}
+                  className="w-full text-left h-9 px-2 rounded-md text-[12px] font-semibold text-purple-300 hover:text-purple-200 hover:bg-white/[0.03] transition-colors touch-manipulation mb-2"
+                  title="Inspector-ready evidence chain — Ofsted 'prove it' view"
+                >
+                  View evidence chain →
                 </button>
                 <NavLink href="#next-best">Next best</NavLink>
                 <NavLink href="#risk">Risk</NavLink>
@@ -320,16 +333,8 @@ export default function Student360Page() {
                 }}
                 computing={recomputingRisk}
               />
-              <SectionIlp
-                id="ilp"
-                studentName={core.name}
-                collegeStudentId={core.id}
-              />
-              <SectionCourseProgress
-                id="progress"
-                studentName={core.name}
-                userId={core.user_id}
-              />
+              <SectionIlp id="ilp" studentName={core.name} collegeStudentId={core.id} />
+              <SectionCourseProgress id="progress" studentName={core.name} userId={core.user_id} />
               <SectionCoverage
                 id="coverage"
                 rows={acCoverage}
@@ -348,11 +353,7 @@ export default function Student360Page() {
                 userId={core.user_id}
                 onAdd={() => setOtjOpen(true)}
               />
-              <SectionPortfolio
-                id="portfolio"
-                studentName={core.name}
-                userId={core.user_id}
-              />
+              <SectionPortfolio id="portfolio" studentName={core.name} userId={core.user_id} />
               <SectionObservations
                 id="observations"
                 studentId={core.id}
@@ -370,17 +371,9 @@ export default function Student360Page() {
                 userId={core.user_id}
                 collegeStudentId={core.id}
               />
-              <SectionAttendance
-                id="attendance"
-                rows={attendance}
-                loading={loading.attendance}
-              />
+              <SectionAttendance id="attendance" rows={attendance} loading={loading.attendance} />
               <SectionGrades id="grades" rows={grades} loading={loading.grades} />
-              <SectionNotes
-                id="notes"
-                notes={notes}
-                loading={loading.notes}
-              />
+              <SectionNotes id="notes" notes={notes} loading={loading.notes} />
             </div>
           </div>
         </>
@@ -392,15 +385,8 @@ export default function Student360Page() {
           <div className="grid grid-cols-4 gap-2">
             <MobileAction label="Message" onClick={() => setMessageOpen(true)} />
             <MobileAction label="Note" onClick={() => openNote('note')} />
-            <MobileAction
-              label="Observe"
-              onClick={() => setObservationOpen(true)}
-            />
-            <MobileAction
-              label="1-2-1"
-              onClick={() => openNote('one_to_one')}
-              primary
-            />
+            <MobileAction label="Observe" onClick={() => setObservationOpen(true)} />
+            <MobileAction label="1-2-1" onClick={() => openNote('one_to_one')} primary />
           </div>
         </div>
       )}
@@ -462,7 +448,9 @@ export default function Student360Page() {
           />
           <CreateQuizSheet
             open={quizOpen !== null}
-            onOpenChange={(o) => { if (!o) setQuizOpen(null); }}
+            onOpenChange={(o) => {
+              if (!o) setQuizOpen(null);
+            }}
             collegeStudentId={core.id}
             studentName={core.name}
             initialAcCodes={quizOpen?.acCodes}
@@ -506,6 +494,7 @@ type ActionHandlers = {
   concern: () => void;
   safeguarding: () => void;
   print: () => void;
+  evidence: () => void;
 };
 
 interface ActionGroup {
@@ -533,13 +522,14 @@ function groupedActionsForRole(
     concern: { label: 'Concern', onClick: handlers.concern, tone: 'amber' },
     safeguarding: { label: 'Safeguarding', onClick: handlers.safeguarding, tone: 'red' },
     print: { label: 'Print', onClick: handlers.print },
+    evidence: { label: 'Evidence', onClick: handlers.evidence },
   };
 
   // Group orders flex by role; the FIRST group is what the role most often uses.
   const recordGroup = ['observation', 'attendance', 'grade', 'quiz', 'uploadDoc'];
   const commGroup = ['oneToOne', 'note', 'message'];
   const flagGroup = ['praise', 'flag', 'concern', 'safeguarding'];
-  const utilGroup = ['print'];
+  const utilGroup = ['evidence', 'print'];
 
   // For DSL: safeguarding pulls into its own first-position single-pill group
   if (staffRole.isDsl) {
@@ -575,9 +565,7 @@ function ActionPillGroups({ groups }: { groups: ActionGroup[] }) {
     <div className="inline-flex items-center gap-2 whitespace-nowrap">
       {groups.map((group, i) => (
         <div key={group.label} className="inline-flex items-center gap-1">
-          {i > 0 && (
-            <span aria-hidden className="mx-1 inline-block h-4 w-px bg-white/[0.10]" />
-          )}
+          {i > 0 && <span aria-hidden className="mx-1 inline-block h-4 w-px bg-white/[0.10]" />}
           {group.items.map((a) => (
             <PillBtn key={a.label} label={a.label} onClick={a.onClick} tone={a.tone} />
           ))}
@@ -648,12 +636,48 @@ function orderedActionsForRole(
   // Build order based on role
   let order: string[];
   if (staffRole.isAssessor) {
-    order = ['observation', 'grade', 'attendance', 'message', 'note', 'oneToOne', 'praise', 'flag', 'concern', 'safeguarding', 'print'];
+    order = [
+      'observation',
+      'grade',
+      'attendance',
+      'message',
+      'note',
+      'oneToOne',
+      'praise',
+      'flag',
+      'concern',
+      'safeguarding',
+      'print',
+    ];
   } else if (staffRole.isIqa) {
-    order = ['observation', 'grade', 'attendance', 'note', 'message', 'oneToOne', 'flag', 'concern', 'praise', 'safeguarding', 'print'];
+    order = [
+      'observation',
+      'grade',
+      'attendance',
+      'note',
+      'message',
+      'oneToOne',
+      'flag',
+      'concern',
+      'praise',
+      'safeguarding',
+      'print',
+    ];
   } else {
     // Tutors / head_of_dept / unknown — pastoral-leaning order
-    order = ['oneToOne', 'note', 'message', 'attendance', 'grade', 'observation', 'praise', 'flag', 'concern', 'safeguarding', 'print'];
+    order = [
+      'oneToOne',
+      'note',
+      'message',
+      'attendance',
+      'grade',
+      'observation',
+      'praise',
+      'flag',
+      'concern',
+      'safeguarding',
+      'print',
+    ];
   }
 
   // Promote safeguarding to position 1 for DSL
@@ -805,9 +829,7 @@ function StatStrip({
   const attRate = useMemo(() => {
     const window = attendance.slice(0, 28);
     if (window.length === 0) return null;
-    const presentCount = window.filter(
-      (a) => a.status === 'present' || a.status === 'late'
-    ).length;
+    const presentCount = window.filter((a) => a.status === 'present' || a.status === 'late').length;
     return Math.round((presentCount / window.length) * 100);
   }, [attendance]);
 
@@ -825,9 +847,7 @@ function StatStrip({
     <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
       <StatCell
         label="Progress"
-        value={
-          typeof core.progress_percent === 'number' ? `${core.progress_percent}%` : '—'
-        }
+        value={typeof core.progress_percent === 'number' ? `${core.progress_percent}%` : '—'}
         href="#coverage"
       />
       <StatCell
@@ -935,7 +955,11 @@ function SectionRiskPanel({
           text="No risk score yet. Compute one now, or wait for the nightly run."
           action={
             onCompute
-              ? { label: computing ? 'Computing…' : 'Compute now', onClick: onCompute, disabled: computing }
+              ? {
+                  label: computing ? 'Computing…' : 'Compute now',
+                  onClick: onCompute,
+                  disabled: computing,
+                }
               : undefined
           }
         />
@@ -1002,11 +1026,7 @@ function SectionRiskPanel({
   );
 }
 
-function TrendSparkline({
-  history,
-}: {
-  history: { computed_at: string; score: number }[];
-}) {
+function TrendSparkline({ history }: { history: { computed_at: string; score: number }[] }) {
   if (history.length < 2) {
     return <div className="text-[11.5px] text-white/45">Not enough history yet.</div>;
   }
@@ -1039,11 +1059,7 @@ function TrendSparkline({
             cx={x}
             cy={y}
             r={i === history.length - 1 ? 2.5 : 1.5}
-            className={cn(
-              i === history.length - 1
-                ? 'fill-elec-yellow'
-                : 'fill-elec-yellow/60'
-            )}
+            className={cn(i === history.length - 1 ? 'fill-elec-yellow' : 'fill-elec-yellow/60')}
           />
         );
       })}
@@ -1184,9 +1200,7 @@ function AcCell({ row }: { row: AcCoverageRow }) {
         )}
       >
         <span className={cn('inline-block h-1.5 w-1.5 rounded-full', tone.dot)} />
-        <span className={cn('font-mono tabular-nums text-[11.5px]', tone.text)}>
-          {row.ac_code}
-        </span>
+        <span className={cn('font-mono tabular-nums text-[11.5px]', tone.text)}>{row.ac_code}</span>
         {row.evidence_count > 0 && (
           <span className="text-[10px] font-mono text-white/45 tabular-nums">
             ×{row.evidence_count}
@@ -1207,7 +1221,9 @@ function AcCell({ row }: { row: AcCoverageRow }) {
               detail: { unit_code: row.unit_code, ac_code: row.ac_code },
             })
           );
-          document.getElementById('quizzes')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document
+            .getElementById('quizzes')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           return;
         }
         window.dispatchEvent(
@@ -1224,9 +1240,7 @@ function AcCell({ row }: { row: AcCoverageRow }) {
       )}
     >
       <span className={cn('inline-block h-1.5 w-1.5 rounded-full', tone.dot)} />
-      <span className={cn('font-mono tabular-nums text-[11.5px]', tone.text)}>
-        {row.ac_code}
-      </span>
+      <span className={cn('font-mono tabular-nums text-[11.5px]', tone.text)}>{row.ac_code}</span>
       {row.evidence_count > 0 && (
         <span className="text-[10px] font-mono text-white/45 tabular-nums">
           ×{row.evidence_count}
@@ -1302,7 +1316,11 @@ function SectionAttendance({
     d.setUTCDate(monday.getUTCDate() + offset);
     const iso = d.toISOString().slice(0, 10);
     const row = rows.find((r) => r.date === iso);
-    return { date: iso, dayName: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'][offset], status: row?.status ?? null };
+    return {
+      date: iso,
+      dayName: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'][offset],
+      status: row?.status ?? null,
+    };
   });
 
   return (
@@ -1336,8 +1354,15 @@ function SectionAttendance({
                           )}
                           title={`${d.date} · ${d.status ?? 'no record'}`}
                         >
-                          <div className="text-[10px] font-semibold tracking-wider text-white/65">{d.dayName}</div>
-                          <div className={cn('text-[11px] font-medium capitalize tabular-nums leading-none mt-0.5', tone.text)}>
+                          <div className="text-[10px] font-semibold tracking-wider text-white/65">
+                            {d.dayName}
+                          </div>
+                          <div
+                            className={cn(
+                              'text-[11px] font-medium capitalize tabular-nums leading-none mt-0.5',
+                              tone.text
+                            )}
+                          >
                             {d.status ?? '—'}
                           </div>
                         </div>
@@ -1359,10 +1384,7 @@ function SectionAttendance({
                         <span
                           key={a.id}
                           title={`${a.date} · ${a.status}`}
-                          className={cn(
-                            'h-5 w-5 rounded-[3px]',
-                            attendanceTone(a.status).chip
-                          )}
+                          className={cn('h-5 w-5 rounded-[3px]', attendanceTone(a.status).chip)}
                         />
                       ))}
                   </div>
@@ -1555,7 +1577,13 @@ function RingStat({
     <div className="shrink-0 flex flex-col items-center">
       <div className="relative" style={{ width: size, height: size }}>
         <svg width={size} height={size} className="rotate-[-90deg]">
-          <circle cx={size / 2} cy={size / 2} r={r} className="stroke-white/[0.08] fill-none" strokeWidth="6" />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            className="stroke-white/[0.08] fill-none"
+            strokeWidth="6"
+          />
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -1584,15 +1612,7 @@ function RingStat({
    Grades
    ========================================================================== */
 
-function SectionGrades({
-  id,
-  rows,
-  loading,
-}: {
-  id: string;
-  rows: GradeRow[];
-  loading: boolean;
-}) {
+function SectionGrades({ id, rows, loading }: { id: string; rows: GradeRow[]; loading: boolean }) {
   // Grade analysis — distribution + predicted band + best per unit
   const analysis = useMemo(() => analyseGrades(rows), [rows]);
 
@@ -1620,7 +1640,12 @@ function SectionGrades({
                   Predicted EPA band
                 </div>
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className={cn('text-[28px] font-semibold tabular-nums leading-none', predictedBandColour(analysis.predicted))}>
+                  <span
+                    className={cn(
+                      'text-[28px] font-semibold tabular-nums leading-none',
+                      predictedBandColour(analysis.predicted)
+                    )}
+                  >
                     {analysis.predicted ?? '—'}
                   </span>
                   {analysis.predicted && (
@@ -1718,7 +1743,9 @@ function SectionGrades({
                       )}
                     </div>
                     {g.feedback && (
-                      <p className="mt-1.5 text-[11.5px] text-white/65 leading-snug line-clamp-2">{g.feedback}</p>
+                      <p className="mt-1.5 text-[11.5px] text-white/65 leading-snug line-clamp-2">
+                        {g.feedback}
+                      </p>
                     )}
                   </div>
                   <div className="flex flex-col items-end gap-1 flex-shrink-0">
@@ -1822,7 +1849,8 @@ function analyseGrades(rows: GradeRow[]): {
   if (sorted.length >= 4) {
     const mid = Math.floor(sorted.length / 2);
     const firstAvg = sorted.slice(0, mid).reduce((s, r) => s + (r.score ?? 0), 0) / mid;
-    const lastAvg = sorted.slice(mid).reduce((s, r) => s + (r.score ?? 0), 0) / (sorted.length - mid);
+    const lastAvg =
+      sorted.slice(mid).reduce((s, r) => s + (r.score ?? 0), 0) / (sorted.length - mid);
     const delta = lastAvg - firstAvg;
     trend = delta > 5 ? 'up' : delta < -5 ? 'down' : 'flat';
   }
@@ -1867,14 +1895,10 @@ function predictedBandColour(band: string | null): string {
 
 function gradeBadge(grade: string | null): string {
   const g = (grade ?? '').toLowerCase();
-  if (g === 'distinction')
-    return 'bg-emerald-500/[0.12] border-emerald-400/40 text-emerald-200';
-  if (g === 'merit')
-    return 'bg-amber-500/[0.10] border-amber-400/35 text-amber-200';
-  if (g === 'pass')
-    return 'bg-blue-500/[0.10] border-blue-400/30 text-blue-200';
-  if (g === 'fail')
-    return 'bg-red-500/[0.10] border-red-400/30 text-red-200';
+  if (g === 'distinction') return 'bg-emerald-500/[0.12] border-emerald-400/40 text-emerald-200';
+  if (g === 'merit') return 'bg-amber-500/[0.10] border-amber-400/35 text-amber-200';
+  if (g === 'pass') return 'bg-blue-500/[0.10] border-blue-400/30 text-blue-200';
+  if (g === 'fail') return 'bg-red-500/[0.10] border-red-400/30 text-red-200';
   return 'bg-white/[0.04] border-white/[0.10] text-white/55';
 }
 
@@ -1932,7 +1956,9 @@ function DistributionDonut({
         })}
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="text-[20px] font-semibold text-white tabular-nums leading-none">{total}</div>
+        <div className="text-[20px] font-semibold text-white tabular-nums leading-none">
+          {total}
+        </div>
         <div className="text-[9px] uppercase tracking-[0.16em] text-white/55 mt-1">grades</div>
       </div>
     </div>
@@ -1955,7 +1981,9 @@ function SectionNotes({
   const [filter, setFilter] = useState<'all' | 'flags' | 'actions'>('all');
   const filtered = useMemo(() => {
     if (filter === 'flags')
-      return notes.filter((n) => n.kind === 'flag' || n.kind === 'concern' || n.kind === 'safeguarding');
+      return notes.filter(
+        (n) => n.kind === 'flag' || n.kind === 'concern' || n.kind === 'safeguarding'
+      );
     if (filter === 'actions')
       return notes.filter((n) => n.action_required && !n.action_completed_at);
     return notes;
@@ -2057,9 +2085,7 @@ function NoteRow({ note }: { note: PastoralNote }) {
               })}
             </span>
           )}
-          {note.action_completed_at && (
-            <span className="text-emerald-300 ml-2">· done</span>
-          )}
+          {note.action_completed_at && <span className="text-emerald-300 ml-2">· done</span>}
         </div>
       )}
     </div>
@@ -2163,7 +2189,10 @@ function SectionSkeleton({
             </div>
             <div className="px-4 sm:px-5 py-4 flex flex-wrap gap-1.5">
               {Array.from({ length: u === 0 ? 12 : 18 }).map((_, i) => (
-                <div key={i} className="h-9 w-14 rounded-md bg-white/[0.04] border border-white/[0.06]" />
+                <div
+                  key={i}
+                  className="h-9 w-14 rounded-md bg-white/[0.04] border border-white/[0.06]"
+                />
               ))}
             </div>
           </div>
@@ -2174,7 +2203,9 @@ function SectionSkeleton({
 
   if (variant === 'attendance') {
     return (
-      <div className={cn(surface, 'px-5 sm:px-6 py-5 flex items-start gap-6 flex-wrap animate-pulse')}>
+      <div
+        className={cn(surface, 'px-5 sm:px-6 py-5 flex items-start gap-6 flex-wrap animate-pulse')}
+      >
         <div className="shrink-0 flex flex-col items-center">
           <div className="h-[88px] w-[88px] rounded-full border-4 border-white/[0.08]" />
           <SkelBar w="w-20" h="h-2" className="mt-2" />
@@ -2251,12 +2282,7 @@ function SkelBar({
   className?: string;
   style?: React.CSSProperties;
 }) {
-  return (
-    <div
-      className={cn('bg-white/[0.06] rounded-sm', w, h, className)}
-      style={style}
-    />
-  );
+  return <div className={cn('bg-white/[0.06] rounded-sm', w, h, className)} style={style} />;
 }
 
 function EmptyCard({

@@ -52,6 +52,13 @@ export function ComplianceDocsSection() {
           tone="purple"
           actions={
             <div className="flex items-center gap-3 flex-wrap justify-end">
+              <button
+                onClick={() => navigate('/college/compliance/ofsted')}
+                className="text-[12px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+                title="Live RAG snapshot across the four Ofsted EIF judgements"
+              >
+                Ofsted EIF lens
+              </button>
               {isVerifier && (
                 <button
                   onClick={() => navigate('/college/compliance/pack')}

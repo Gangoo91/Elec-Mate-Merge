@@ -97,7 +97,11 @@ interface RawAction {
 
 /* ───────────────────────── proposals (write-back) ─────────────────────── */
 
-type ProposalKind = 'propose_otj_reflection' | 'propose_portfolio_item' | 'propose_ilp_goal';
+type ProposalKind =
+  | 'propose_otj_reflection'
+  | 'propose_portfolio_item'
+  | 'propose_ilp_goal'
+  | 'propose_college_policy';
 
 /** Loose shape coming back from the structure tool. We accept fields per
     kind via optional props and validate downstream. */
@@ -118,6 +122,11 @@ interface RawProposal {
   acceptance_criteria?: string;
   priority?: string;
   target_date?: string;
+  // Policy-only
+  content_md?: string;
+  code?: string;
+  owner_role?: string;
+  requires_acknowledgement?: boolean;
 }
 
 interface OtjReflectionProposal {
@@ -149,7 +158,22 @@ interface IlpGoalProposal {
   target_date: string | null;
 }
 
-type Proposal = OtjReflectionProposal | PortfolioItemProposal | IlpGoalProposal;
+interface CollegePolicyProposal {
+  kind: 'propose_college_policy';
+  title: string;
+  description: string;
+  content_md: string;
+  category: string;
+  code: string | null;
+  owner_role: string | null;
+  requires_acknowledgement: boolean;
+}
+
+type Proposal =
+  | OtjReflectionProposal
+  | PortfolioItemProposal
+  | IlpGoalProposal
+  | CollegePolicyProposal;
 
 const ALLOWED_ACTIVITY_TYPES = new Set([
   'practical',
@@ -233,6 +257,63 @@ function resolveProposal(raw: RawProposal): Proposal | null {
       category,
       priority,
       target_date: targetDate,
+    };
+  }
+
+  if (raw?.kind === 'propose_college_policy') {
+    const title = raw.title?.trim().slice(0, 200);
+    const description = raw.description?.trim().slice(0, 600);
+    const contentMd = raw.content_md?.trim().slice(0, 30_000);
+    if (!title || !description || description.length < 30) return null;
+    if (!contentMd || contentMd.length < 200) return null;
+
+    const allowedCategories = new Set([
+      'safeguarding',
+      'prevent',
+      'edi',
+      'whistleblowing',
+      'complaints',
+      'code_of_conduct',
+      'acceptable_use',
+      'disciplinary',
+      'health_safety',
+      'gdpr',
+      'send',
+      'assessment',
+      'iqa',
+      'appeals',
+      'rarpa',
+      'apprenticeship',
+      'quality',
+      'other',
+    ]);
+    const category = raw.category && allowedCategories.has(raw.category) ? raw.category : 'other';
+
+    const allowedOwnerRoles = new Set([
+      'DSL',
+      'Prevent Lead',
+      'H&S Lead',
+      'Quality Nominee',
+      'Mental Health Lead',
+      'Principal',
+      'HR',
+    ]);
+    const ownerRole =
+      raw.owner_role && allowedOwnerRoles.has(raw.owner_role) ? raw.owner_role : null;
+
+    const code = raw.code?.trim().slice(0, 40) || null;
+    const requiresAck =
+      typeof raw.requires_acknowledgement === 'boolean' ? raw.requires_acknowledgement : false;
+
+    return {
+      kind: 'propose_college_policy',
+      title,
+      description,
+      content_md: contentMd,
+      category,
+      code,
+      owner_role: ownerRole,
+      requires_acknowledgement: requiresAck,
     };
   }
 
@@ -488,21 +569,22 @@ Action kinds and what target_id (if any) to pass:
 
 If you don't have a real target_id for an action that needs one, omit the action entirely — never make one up.
 
-Proposals (apprentice persona only — leave empty for tutor):
-Emit proposals ONLY when the apprentice has either:
-  (a) explicitly asked you to draft / write up a job, OR
-  (b) described a real piece of work they did with enough detail to draft from.
-If they're asking for an explanation, theory, or general advice — DO NOT emit a proposal. Empty array is the correct default.
+Proposals — persona-gated. Emit ONLY when the user has either:
+  (a) explicitly asked you to draft / write up a job, goal, or policy, OR
+  (b) described enough detail for you to draft from (a real piece of work, a real compliance need).
+For explanations, theory, or general advice — DO NOT emit a proposal. Empty array is the correct default.
 
-Three kinds:
+APPRENTICE persona — three kinds available (tutor-only kind is dropped server-side):
 1. propose_otj_reflection — off-the-job training entry. About TIME and LEARNING. Tutor-verified, counts toward ESFA hours.
 2. propose_portfolio_item — competency evidence. About WHAT THEY DID and WHICH ACs IT PROVES. Goes into their portfolio.
-3. propose_ilp_goal — a SMART learning goal sent to the tutor for review. About WHAT THEY WANT TO ACHIEVE NEXT. Different from the others — this is forward-looking, not a record of past work.
+3. propose_ilp_goal — a SMART learning goal sent to the tutor for review. Forward-looking — what they want to achieve next.
 
-Past work (something they already did): emit OTJ + portfolio together. Same first-person body is fine for both — they're complementary records, not duplicates.
-Past learning only (theory study, manufacturer training, shadowing without doing): just OTJ.
-Past evidence only (no time framing): just portfolio.
-Forward-looking — apprentice asks "help me set a goal" / "what should I work on" / mentions wanting to improve at X: propose_ilp_goal. Can stand alone, or accompany an OTJ/portfolio if they're filing a record AND setting a goal off the back of it.
+TUTOR persona — one kind available (apprentice-only kinds are dropped server-side):
+4. propose_college_policy — full college policy draft saved to the compliance vault as v1 draft. Tutor reviews, edits, then publishes.
+
+Past work the apprentice already did: emit OTJ + portfolio together. Same first-person body is fine for both — they're complementary records, not duplicates.
+Apprentice asks for a goal / wants to improve at X: propose_ilp_goal.
+Tutor asks for a policy / describes a compliance gap / mentions an Ofsted finding requiring a policy: propose_college_policy.
 
 OTJ proposal:
 - title: 4-10 words. Verb-led.
@@ -518,6 +600,18 @@ Portfolio proposal:
 - category: short tag like "Initial Verification — site work" or "Inspection & Testing".
 - assessment_criteria_met: up to 8 AC codes from the supplied AC catalogue. Use real codes only.
 - date_completed: YYYY-MM-DD. Defaults to today.
+
+ILP goal proposal:
+- title, description, acceptance_criteria, category, priority, target_date — see schema.
+
+College policy proposal (tutor only):
+- title: clear policy name, e.g. "Safeguarding & Child Protection Policy".
+- description: 1-2 sentence summary for the panel preview (50-200 chars).
+- content_md: THE ACTUAL POLICY. 800-3000 words, markdown. Include: Purpose, Scope, Definitions (where relevant), Roles & Responsibilities, Procedure / Process, Monitoring & Review, Related Policies. Use ## headings, numbered lists for procedures, plain English. Reference UK statutory frameworks where genuinely relevant (KCSIE 2024, Prevent Duty, GDPR / UK DPA 2018, ESFA Funding Rules, Ofsted EIF, Equality Act 2010). Don't pad — write the kind of policy a quality nominee would sign off.
+- category: pick from safeguarding / prevent / edi / whistleblowing / complaints / code_of_conduct / acceptable_use / disciplinary / health_safety / gdpr / send / assessment / iqa / appeals / rarpa / apprenticeship / quality / other.
+- code: optional short ref like "KCSIE-001".
+- owner_role: pick the named role most appropriate (DSL for safeguarding, Prevent Lead for Prevent, H&S Lead for health & safety, Quality Nominee for IQA, etc.). Omit if genuinely unclear.
+- requires_acknowledgement: true for any policy every staff member must read (safeguarding, Prevent, GDPR, code of conduct, acceptable use). False for purely procedural ones.
 
 If this is the FIRST turn, set title_suggestion to a 3-6 word title. Otherwise leave empty.
 
@@ -592,14 +686,19 @@ const STRUCTURE_TOOL = {
           type: 'array',
           maxItems: 3,
           description:
-            "Zero to three structured DRAFTS the apprentice can confirm to file. Three kinds available: propose_otj_reflection (off-the-job training entry — time + learning, ESFA-defensible), propose_portfolio_item (competency evidence — what they did against which ACs), and propose_ilp_goal (a SMART learning goal sent to the tutor for review). A real piece of work often produces both an OTJ entry and a portfolio item. An ILP goal is different — it's the apprentice asking the tutor to set them a learning target. Don't duplicate kinds. Apprentice persona only — leave empty for tutor persona.",
+            "Zero to three structured DRAFTS the user can confirm to file. Apprentice-only kinds: propose_otj_reflection (off-the-job training entry — time + learning, ESFA-defensible), propose_portfolio_item (competency evidence — what they did against which ACs), and propose_ilp_goal (a SMART learning goal sent to the tutor for review). Tutor-only kind: propose_college_policy (a full college policy draft saved to the compliance vault as v1 draft). The server enforces persona × kind — apprentice-only kinds are dropped on tutor turns and vice versa. Don't duplicate kinds.",
           items: {
             type: 'object',
             additionalProperties: false,
             properties: {
               kind: {
                 type: 'string',
-                enum: ['propose_otj_reflection', 'propose_portfolio_item', 'propose_ilp_goal'],
+                enum: [
+                  'propose_otj_reflection',
+                  'propose_portfolio_item',
+                  'propose_ilp_goal',
+                  'propose_college_policy',
+                ],
               },
               title: {
                 type: 'string',
@@ -677,6 +776,36 @@ const STRUCTURE_TOOL = {
                 type: 'string',
                 description:
                   'ILP goal only. ISO date (YYYY-MM-DD) the apprentice aims to hit by. Use a realistic 2-8 week horizon unless context suggests otherwise.',
+              },
+              // Policy-only
+              content_md: {
+                type: 'string',
+                description:
+                  'Policy only. The full policy body in markdown. 800-3000 words for a real policy. Include: purpose, scope, definitions, responsibilities, procedures, monitoring/review, related policies. Use ## headings, numbered lists for procedures, plain English. Reference UK statutory frameworks (Keeping Children Safe in Education, Prevent Duty, GDPR / UK DPA 2018, ESFA, Ofsted EIF) where appropriate. Description = the short summary on the chip; content_md = the actual policy text.',
+              },
+              code: {
+                type: 'string',
+                description:
+                  'Policy only. Optional short reference code, e.g. "KCSIE-001", "PREVENT", "EDI-001". 4-40 chars.',
+              },
+              owner_role: {
+                type: 'string',
+                description:
+                  'Policy only. The named role responsible for keeping the policy current.',
+                enum: [
+                  'DSL',
+                  'Prevent Lead',
+                  'H&S Lead',
+                  'Quality Nominee',
+                  'Mental Health Lead',
+                  'Principal',
+                  'HR',
+                ],
+              },
+              requires_acknowledgement: {
+                type: 'boolean',
+                description:
+                  'Policy only. True if every staff member must read & acknowledge this policy (most safeguarding / Prevent / GDPR / code-of-conduct policies). False for purely procedural ones.',
               },
             },
             required: ['kind', 'title', 'description'],
@@ -1247,22 +1376,28 @@ Deno.serve(async (req) => {
           if (resolvedActions.length >= 3) break;
         }
 
-        // Resolve proposals — apprentice persona only. Server validates +
+        // Resolve proposals — persona × kind gated. Server validates +
         // normalises shape so each confirm sheet is always given a clean
-        // draft. Up to 3 (one OTJ + one portfolio + one ILP goal — the
-        // theoretical max from a single rich turn).
+        // draft.  Apprentice persona: otj + portfolio + ilp goal.
+        // Tutor persona: college policy only.
+        const APPRENTICE_KINDS = new Set<ProposalKind>([
+          'propose_otj_reflection',
+          'propose_portfolio_item',
+          'propose_ilp_goal',
+        ]);
+        const TUTOR_KINDS = new Set<ProposalKind>(['propose_college_policy']);
+        const allowedKinds = body.persona === 'tutor' ? TUTOR_KINDS : APPRENTICE_KINDS;
+
         const resolvedProposals: Proposal[] = [];
-        if (body.persona === 'apprentice') {
-          const seenKinds = new Set<ProposalKind>();
-          for (const raw of structure.proposals ?? []) {
-            const p = resolveProposal(raw);
-            if (!p) continue;
-            // De-dup: only one of each kind per turn.
-            if (seenKinds.has(p.kind)) continue;
-            seenKinds.add(p.kind);
-            resolvedProposals.push(p);
-            if (resolvedProposals.length >= 3) break;
-          }
+        const seenKinds = new Set<ProposalKind>();
+        for (const raw of structure.proposals ?? []) {
+          if (!raw?.kind || !allowedKinds.has(raw.kind)) continue;
+          const p = resolveProposal(raw);
+          if (!p) continue;
+          if (seenKinds.has(p.kind)) continue;
+          seenKinds.add(p.kind);
+          resolvedProposals.push(p);
+          if (resolvedProposals.length >= 3) break;
         }
 
         // Persist assistant message.

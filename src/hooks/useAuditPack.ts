@@ -67,6 +67,23 @@ export interface PolicyWithAckLog extends PolicySummary {
   log: PolicyAckLogEntry[];
 }
 
+export type IqaVerdict = 'pending' | 'agree' | 'disagree' | 'refer';
+export type IqaSampleTargetKind = 'observation' | 'otj';
+
+export interface IqaSampleAuditRow {
+  id: string;
+  sampling_plan_id: string;
+  plan_period_start: string;
+  plan_period_end: string;
+  target_kind: IqaSampleTargetKind;
+  target_title: string | null;
+  target_date: string | null;
+  iqa_name_snapshot: string | null;
+  sampled_at: string;
+  verdict: IqaVerdict;
+  comments: string | null;
+}
+
 export interface AuditPackData {
   generated_at: string;
   college: AuditPackCollege | null;
@@ -87,6 +104,7 @@ export interface AuditPackData {
     is_quality_nominee: boolean;
     is_mental_health_lead: boolean;
   }[];
+  iqa_samples: IqaSampleAuditRow[];
   /** Aggregate counts across all SCR rows for the cover stats. */
   summary: {
     total_staff: number;
@@ -99,6 +117,13 @@ export interface AuditPackData {
     policies_live: number;
     policies_draft: number;
     policies_archived: number;
+    iqa_samples_total: number;
+    iqa_samples_observation: number;
+    iqa_samples_otj: number;
+    iqa_samples_agree: number;
+    iqa_samples_disagree: number;
+    iqa_samples_refer: number;
+    iqa_samples_pending: number;
   };
 }
 
@@ -211,7 +236,18 @@ export function useAuditPack() {
             .maybeSingle()
         : Promise.resolve({ data: null, error: null } as const);
 
-      const [scrRes, policiesRes, acksRes, staffRes, collegeRes] = await Promise.all([
+      // IQA samples query — pulls every IQA verdict on observation OR OTJ in
+      // this college. Implemented as a two-step lookup because RLS scopes
+      // sample rows via their parent plan's college_id, not directly on the
+      // sample row, so we resolve plan_ids first and filter by them.
+      const iqaPlansQuery = collegeId
+        ? supabase
+            .from('college_iqa_sampling')
+            .select('id, period_start, period_end, assessor_id, iqa_name_snapshot')
+            .eq('college_id', collegeId)
+        : Promise.resolve({ data: [], error: null } as const);
+
+      const [scrRes, policiesRes, acksRes, staffRes, collegeRes, iqaPlansRes] = await Promise.all([
         supabase.from('v_single_central_record').select(SCR_COLS),
         supabase
           .from('college_policies')
@@ -224,6 +260,7 @@ export function useAuditPack() {
           .order('acknowledged_at', { ascending: false }),
         staffQuery,
         collegeQuery,
+        iqaPlansQuery,
       ]);
 
       if (scrRes.error) throw scrRes.error;
@@ -298,7 +335,63 @@ export function useAuditPack() {
         };
       });
 
-      // 5. Summary stats
+      // 5. IQA samples — second-step query: now we have the plan ids,
+      //    fetch every sample row that targets either an observation or
+      //    an OTJ entry under one of OUR plans. Pre-existing IqaSamples
+      //    contains both observation and otj rows (mutually exclusive).
+      const rawPlans = (iqaPlansRes.data ?? []) as Array<{
+        id: string;
+        period_start: string;
+        period_end: string;
+        iqa_name_snapshot: string | null;
+      }>;
+      const planById = new Map(rawPlans.map((p) => [p.id, p]));
+      const planIds = rawPlans.map((p) => p.id);
+
+      let iqaSamples: IqaSampleAuditRow[] = [];
+      if (planIds.length > 0) {
+        const { data: samplesData, error: samplesErr } = await supabase
+          .from('college_iqa_samples')
+          .select(
+            'id, sampling_plan_id, observation_id, observation_title_snapshot, observation_date_snapshot, otj_id, otj_title_snapshot, otj_date_snapshot, iqa_name_snapshot, sampled_at, verdict, comments'
+          )
+          .in('sampling_plan_id', planIds)
+          .order('sampled_at', { ascending: false });
+        if (samplesErr) throw samplesErr;
+        const raw = (samplesData ?? []) as Array<{
+          id: string;
+          sampling_plan_id: string;
+          observation_id: string | null;
+          observation_title_snapshot: string | null;
+          observation_date_snapshot: string | null;
+          otj_id: string | null;
+          otj_title_snapshot: string | null;
+          otj_date_snapshot: string | null;
+          iqa_name_snapshot: string | null;
+          sampled_at: string;
+          verdict: IqaVerdict;
+          comments: string | null;
+        }>;
+        iqaSamples = raw.map((s) => {
+          const plan = planById.get(s.sampling_plan_id);
+          const isOtj = Boolean(s.otj_id);
+          return {
+            id: s.id,
+            sampling_plan_id: s.sampling_plan_id,
+            plan_period_start: plan?.period_start ?? '',
+            plan_period_end: plan?.period_end ?? '',
+            target_kind: isOtj ? 'otj' : 'observation',
+            target_title: isOtj ? s.otj_title_snapshot : s.observation_title_snapshot,
+            target_date: isOtj ? s.otj_date_snapshot : s.observation_date_snapshot,
+            iqa_name_snapshot: s.iqa_name_snapshot ?? plan?.iqa_name_snapshot ?? null,
+            sampled_at: s.sampled_at,
+            verdict: s.verdict,
+            comments: s.comments,
+          };
+        });
+      }
+
+      // 6. Summary stats
       const summary = {
         total_staff: rawStaff.length,
         total_scr_rows: scr.length,
@@ -310,6 +403,13 @@ export function useAuditPack() {
         policies_live: 0,
         policies_draft: 0,
         policies_archived: 0,
+        iqa_samples_total: iqaSamples.length,
+        iqa_samples_observation: iqaSamples.filter((s) => s.target_kind === 'observation').length,
+        iqa_samples_otj: iqaSamples.filter((s) => s.target_kind === 'otj').length,
+        iqa_samples_agree: iqaSamples.filter((s) => s.verdict === 'agree').length,
+        iqa_samples_disagree: iqaSamples.filter((s) => s.verdict === 'disagree').length,
+        iqa_samples_refer: iqaSamples.filter((s) => s.verdict === 'refer').length,
+        iqa_samples_pending: iqaSamples.filter((s) => s.verdict === 'pending').length,
       };
       for (const r of scr) {
         summary[r.computed_status] += 1;
@@ -347,6 +447,7 @@ export function useAuditPack() {
           is_quality_nominee: s.is_quality_nominee,
           is_mental_health_lead: s.is_mental_health_lead,
         })),
+        iqa_samples: iqaSamples,
         summary,
       });
     } catch (e) {

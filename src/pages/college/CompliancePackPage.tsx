@@ -7,6 +7,8 @@ import {
   type ScrRow,
   type PolicyWithAckLog,
   type PolicyAckLogEntry,
+  type IqaSampleAuditRow,
+  type IqaVerdict,
 } from '@/hooks/useAuditPack';
 
 /* ==========================================================================
@@ -114,6 +116,7 @@ export default function CompliancePackPage() {
           <PolicyAckPage key={p.id} policy={p} />
         ))}
       <StaffMatrixPage data={data} />
+      <IqaChainPage data={data} />
 
       {/* Print stylesheet */}
       <style>{printCss}</style>
@@ -603,6 +606,126 @@ function StaffMatrixPage({ data }: { data: AuditPackData }) {
         </tbody>
       </table>
     </section>
+  );
+}
+
+/* ──────────────────────────────────────────────────────── */
+
+const IQA_VERDICT_LABEL: Record<IqaVerdict, string> = {
+  pending: 'Awaiting verdict',
+  agree: 'Agree',
+  disagree: 'Disagree',
+  refer: 'Refer',
+};
+
+const IQA_VERDICT_DOT: Record<IqaVerdict, string> = {
+  pending: 'bg-amber-500',
+  agree: 'bg-emerald-500',
+  disagree: 'bg-red-500',
+  refer: 'bg-amber-600',
+};
+
+/** IqaChainPage — Section 5 of the audit pack.
+
+    Renders the IQA-checks-assessor chain: every observation + OTJ entry
+    sampled within active sampling plans, with the IQA's verdict + comments.
+    Exists so Ofsted/EQA can see the assessor → IQA verification loop in
+    one print. Empty state explains the gap so it can't read as
+    "we haven't done it" when there are simply no samples yet. */
+function IqaChainPage({ data }: { data: AuditPackData }) {
+  const samples = data.iqa_samples;
+  const s = data.summary;
+
+  if (samples.length === 0) {
+    return (
+      <section className="audit-page p-12 print-page-break">
+        <SectionHeader index={5} title="IQA verification chain" />
+        <p className="text-[12.5px] text-gray-700 max-w-prose">
+          No IQA samples in scope yet. Once an IQA opens a sampling plan and records verdicts on
+          observation or OTJ assessor decisions, every sample appears here with the verdict, IQA
+          name, sample date and comments. The chain is the Ofsted "prove it" evidence that the
+          assessor's decisions are being independently verified.
+        </p>
+      </section>
+    );
+  }
+
+  return (
+    <section className="audit-page p-12 print-page-break">
+      <SectionHeader index={5} title="IQA verification chain" />
+      <p className="text-[11.5px] text-gray-600 mb-4 max-w-prose">
+        Independent IQA verification of assessor decisions across observations and OTJ submissions.{' '}
+        {s.iqa_samples_total} {s.iqa_samples_total === 1 ? 'sample' : 'samples'} in scope —{' '}
+        {s.iqa_samples_observation} observation
+        {s.iqa_samples_observation === 1 ? '' : 's'}, {s.iqa_samples_otj} OTJ.
+      </p>
+
+      <div className="mb-6 grid grid-cols-4 gap-3">
+        <Tally label="Agree" value={s.iqa_samples_agree} tone="blue" />
+        <Tally label="Disagree" value={s.iqa_samples_disagree} tone="red" />
+        <Tally label="Refer" value={s.iqa_samples_refer} tone="amber" />
+        <Tally label="Pending" value={s.iqa_samples_pending} tone="purple" />
+      </div>
+
+      <table className="w-full border-collapse text-[10.5px]">
+        <thead>
+          <tr className="border-b-2 border-black">
+            <th className="py-2 pr-2 text-left font-semibold">Target</th>
+            <th className="py-2 pr-2 text-left font-semibold">Activity</th>
+            <th className="py-2 pr-2 text-left font-semibold">Activity date</th>
+            <th className="py-2 pr-2 text-left font-semibold">Sampled</th>
+            <th className="py-2 pr-2 text-left font-semibold">IQA</th>
+            <th className="py-2 pr-2 text-left font-semibold">Verdict</th>
+            <th className="py-2 text-left font-semibold">Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          {samples.map((row) => (
+            <IqaChainRow key={row.id} row={row} />
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
+}
+
+function IqaChainRow({ row }: { row: IqaSampleAuditRow }) {
+  return (
+    <tr className="border-b border-gray-200 align-top">
+      <td className="py-2 pr-2">
+        <span
+          className={cn(
+            'inline-flex items-center h-5 px-1.5 rounded-md border text-[9.5px] font-semibold uppercase tracking-[0.16em]',
+            row.target_kind === 'otj'
+              ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
+              : 'border-cyan-300 bg-cyan-50 text-cyan-800'
+          )}
+        >
+          {row.target_kind === 'otj' ? 'OTJ' : 'Observation'}
+        </span>
+      </td>
+      <td className="py-2 pr-2 text-black">
+        {row.target_title ?? <span className="text-gray-400">—</span>}
+      </td>
+      <td className="py-2 pr-2 text-gray-700 tabular-nums whitespace-nowrap">
+        {formatDate(row.target_date)}
+      </td>
+      <td className="py-2 pr-2 text-gray-700 tabular-nums whitespace-nowrap">
+        {formatDate(row.sampled_at)}
+      </td>
+      <td className="py-2 pr-2 text-gray-700">
+        {row.iqa_name_snapshot ?? <span className="text-gray-400">—</span>}
+      </td>
+      <td className="py-2 pr-2">
+        <span className="inline-flex items-center gap-1.5">
+          <span className={cn('h-2 w-2 rounded-full', IQA_VERDICT_DOT[row.verdict])} />
+          <span className="text-black font-medium">{IQA_VERDICT_LABEL[row.verdict]}</span>
+        </span>
+      </td>
+      <td className="py-2 text-gray-800 leading-snug">
+        {row.comments ? row.comments : <span className="text-gray-400">—</span>}
+      </td>
+    </tr>
   );
 }
 

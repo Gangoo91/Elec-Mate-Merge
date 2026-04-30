@@ -115,6 +115,9 @@ const Student360Page = lazy(() => import('@/pages/college/Student360Page'));
 const Learner360PrintPage = lazy(() => import('@/pages/college/Learner360PrintPage'));
 const PolicyDetailPage = lazy(() => import('@/pages/college/PolicyDetailPage'));
 const CompliancePackPage = lazy(() => import('@/pages/college/CompliancePackPage'));
+const OfstedEifPage = lazy(() => import('@/pages/college/OfstedEifPage'));
+const ComplianceHubPage = lazy(() => import('@/pages/college/ComplianceHubPage'));
+const EvidenceTimelinePage = lazy(() => import('@/pages/college/EvidenceTimelinePage'));
 const IqaDashboardPage = lazy(() => import('@/pages/college/IqaDashboardPage'));
 const IqaSamplingPlanPage = lazy(() => import('@/pages/college/IqaSamplingPlanPage'));
 const CollegeOtjPage = lazy(() => import('@/pages/college/CollegeOtjPage'));
@@ -1932,6 +1935,18 @@ const AppRouter = () => {
             }
           />
 
+          {/* People Hub — full evidence chain (Ofsted "prove it" view) */}
+          <Route
+            path="college/students/:id/evidence"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <EvidenceTimelinePage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
           {/* Compliance — institution policy detail */}
           <Route
             path="college/policies/:id"
@@ -1944,13 +1959,37 @@ const AppRouter = () => {
             }
           />
 
-          {/* Compliance — Ofsted-ready audit pack (printable) */}
+          {/* Compliance Hub parent — tabbed front door */}
+          <Route
+            path="college/compliance"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <ComplianceHubPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Compliance — Ofsted-ready audit pack (printable, standalone) */}
           <Route
             path="college/compliance/pack"
             element={
               <LazyRoute>
                 <CollegeGuard>
                   <CompliancePackPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Compliance — Ofsted EIF live RAG lens (standalone) */}
+          <Route
+            path="college/compliance/ofsted"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <OfstedEifPage />
                 </CollegeGuard>
               </LazyRoute>
             }
