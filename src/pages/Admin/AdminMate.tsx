@@ -54,6 +54,11 @@ interface MateUser {
   errors_24h: number;
   error_rate_24h: number;
   rag_calls_24h: number;
+  minutes_saved_24h: number;
+  minutes_saved_7d: number;
+  cost_24h: number;
+  cost_7d: number;
+  cost_30d: number;
 }
 
 interface MateHealth {
@@ -67,6 +72,11 @@ interface MateHealth {
     error_rate_24h: number;
     rag_calls_24h: number;
     rag_share_24h: number;
+    minutes_saved_24h: number;
+    minutes_saved_7d: number;
+    cost_24h: number;
+    cost_7d: number;
+    cost_30d: number;
     generated_at: string;
   };
   users: MateUser[];
@@ -77,6 +87,19 @@ interface MateHealth {
     count: number;
     users_affected: number;
     last_seen: string;
+  }[];
+  tool_reliability_7d: {
+    tool: string;
+    calls: number;
+    successes: number;
+    failures: number;
+    success_rate: number;
+    p50_ms: number;
+    p95_ms: number;
+    users: number;
+    last_error: string | null;
+    last_error_at: string | null;
+    last_seen: string | null;
   }[];
 }
 
@@ -131,6 +154,23 @@ function lastSeenAge(lastSeenAt: string | null): number {
 function ragShare(u: MateUser): number {
   if (u.tool_calls_24h === 0) return 1; // ignore inactive users for "low RAG" detection
   return u.rag_calls_24h / u.tool_calls_24h;
+}
+
+function formatMinutes(mins: number): { value: string; suffix: string } {
+  if (mins <= 0) return { value: '0', suffix: 'm' };
+  if (mins < 60) return { value: String(Math.round(mins)), suffix: 'm' };
+  const hours = mins / 60;
+  if (hours < 10) return { value: hours.toFixed(1), suffix: 'h' };
+  if (hours < 100) return { value: String(Math.round(hours)), suffix: 'h' };
+  const days = hours / 24;
+  return { value: days.toFixed(1), suffix: 'd' };
+}
+
+function formatUsd(usd: number): string {
+  if (usd <= 0) return '$0';
+  if (usd < 10) return `$${usd.toFixed(2)}`;
+  if (usd < 1000) return `$${usd.toFixed(0)}`;
+  return `$${(usd / 1000).toFixed(1)}k`;
 }
 
 export default function AdminMate() {
@@ -221,7 +261,7 @@ export default function AdminMate() {
     );
   }
 
-  const { summary, top_tools_24h, top_errors_24h } = data;
+  const { summary, top_errors_24h, tool_reliability_7d } = data;
   const ragPct = Math.round(summary.rag_share_24h * 100);
   const errorPct = Math.round(summary.error_rate_24h * 100);
 
@@ -290,27 +330,42 @@ export default function AdminMate() {
         />
 
         <StatStrip
-          columns={4}
-          stats={[
-            {
-              label: 'Agents',
-              value: <AnimatedCounter value={summary.total_agents} />,
-            },
-            {
-              label: 'Active 24h',
-              value: <AnimatedCounter value={summary.active_24h} />,
-              tone: 'green',
-            },
-            {
-              label: 'Active 7d',
-              value: <AnimatedCounter value={summary.active_7d} />,
-              tone: 'blue',
-            },
-            {
-              label: 'Calls 7d',
-              value: <AnimatedCounter value={summary.tool_calls_7d} />,
-            },
-          ]}
+          columns={5}
+          stats={(() => {
+            const t = formatMinutes(summary.minutes_saved_7d);
+            return [
+              {
+                label: 'Agents',
+                value: <AnimatedCounter value={summary.total_agents} />,
+              },
+              {
+                label: 'Active 24h',
+                value: <AnimatedCounter value={summary.active_24h} />,
+                tone: 'green',
+              },
+              {
+                label: 'Time saved 7d',
+                value: (
+                  <span>
+                    {t.value}
+                    <span className="text-[0.55em] font-medium ml-0.5">{t.suffix}</span>
+                  </span>
+                ),
+                sub: 'Fleet',
+                accent: true,
+              },
+              {
+                label: 'Calls 7d',
+                value: <AnimatedCounter value={summary.tool_calls_7d} />,
+              },
+              {
+                label: 'Spend 30d',
+                value: formatUsd(summary.cost_30d),
+                sub: `${formatUsd(summary.cost_7d)} last 7d`,
+                tone: 'purple',
+              },
+            ];
+          })()}
         />
 
         <Divider label="Agents" />
@@ -378,6 +433,15 @@ export default function AdminMate() {
                           {' · '}
                         </span>
                         <span className="tabular-nums">{u.tool_calls_24h} calls</span>
+                        {u.minutes_saved_7d > 0 && (
+                          <span className="tabular-nums text-emerald-300/80">
+                            {' · '}
+                            {(() => {
+                              const t = formatMinutes(u.minutes_saved_7d);
+                              return `${t.value}${t.suffix} saved 7d`;
+                            })()}
+                          </span>
+                        )}
                         {u.errors_24h > 0 && (
                           <span className="tabular-nums text-red-400">
                             {' · '}
@@ -421,32 +485,67 @@ export default function AdminMate() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ListCard>
             <ListCardHeader
-              tone="cyan"
-              title="Top tools — 24h"
+              tone={tool_reliability_7d.some((t) => t.success_rate < 0.95) ? 'amber' : 'emerald'}
+              title="Tool reliability — 7d"
               meta={
                 <span className="text-[11px] text-white tabular-nums">
-                  {top_tools_24h.length} distinct
+                  {tool_reliability_7d.length} tools ·{' '}
+                  {tool_reliability_7d.filter((t) => t.failures > 0).length} with errors
                 </span>
               }
             />
-            {top_tools_24h.length === 0 ? (
+            {tool_reliability_7d.length === 0 ? (
               <EmptyState
-                title="No tool calls in the last 24h"
-                description="Activity will show up here as agents handle messages."
+                title="No tool calls in the last 7d"
+                description="Reliability stats will appear here as agents work."
               />
             ) : (
               <ListBody>
-                {top_tools_24h.map((t) => (
-                  <ListRow
-                    key={t.tool}
-                    title={t.tool}
-                    trailing={
-                      <span className="text-[13px] font-semibold tabular-nums text-white">
-                        {t.count}
-                      </span>
-                    }
-                  />
-                ))}
+                {tool_reliability_7d.map((t) => {
+                  const pct = Math.round(t.success_rate * 100);
+                  const tone: Tone =
+                    t.success_rate >= 0.99 ? 'emerald' : t.success_rate >= 0.95 ? 'amber' : 'red';
+                  const slowTone: Tone | undefined =
+                    t.p95_ms > 5000 ? 'red' : t.p95_ms > 2000 ? 'amber' : undefined;
+                  return (
+                    <ListRow
+                      key={t.tool}
+                      accent={t.failures > 0 ? tone : undefined}
+                      title={
+                        <span className="truncate">
+                          {t.tool}
+                          {t.failures > 0 && t.last_error && (
+                            <span className="text-red-400/80 hidden md:inline">
+                              {' · '}
+                              {t.last_error.slice(0, 60)}
+                            </span>
+                          )}
+                        </span>
+                      }
+                      subtitle={
+                        <span className="tabular-nums">
+                          {t.calls} call{t.calls === 1 ? '' : 's'} · {t.users} user
+                          {t.users === 1 ? '' : 's'} · p95{' '}
+                          <span
+                            className={cn(
+                              slowTone === 'red' && 'text-red-400',
+                              slowTone === 'amber' && 'text-amber-400'
+                            )}
+                          >
+                            {t.p95_ms}ms
+                          </span>
+                          {t.failures > 0 && (
+                            <>
+                              {' · '}
+                              <span className="text-red-400">{t.failures} fail</span>
+                            </>
+                          )}
+                        </span>
+                      }
+                      trailing={<Pill tone={tone}>{pct}%</Pill>}
+                    />
+                  );
+                })}
               </ListBody>
             )}
           </ListCard>

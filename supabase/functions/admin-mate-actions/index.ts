@@ -71,12 +71,14 @@ serve(async (req) => {
     // Confirm target exists
     const { data: target, error: targetErr } = await supabase
       .from('profiles')
-      .select(
-        'id, full_name, role, email, business_ai_enabled, agent_status, agent_whatsapp_number'
-      )
+      .select('id, full_name, role, business_ai_enabled, agent_status, agent_whatsapp_number')
       .eq('id', user_id)
       .single();
     if (targetErr || !target) throw new ValidationError('Target user not found');
+
+    // email lives on auth.users, not profiles
+    const { data: authUser } = await supabase.auth.admin.getUserById(user_id);
+    const targetEmail = authUser?.user?.email ?? '';
 
     if (action === 'rotate_jwt') {
       if (!target.business_ai_enabled) {
@@ -89,7 +91,7 @@ serve(async (req) => {
       const expiresAt = Math.floor(Date.now() / 1000) + JWT_EXPIRY_DAYS * 24 * 60 * 60;
       const payload = buildAgentJwtPayload({
         userId: user_id,
-        email: target.email ?? '',
+        email: targetEmail,
         userRole: target.role ?? 'electrician',
         expiresAt,
       });

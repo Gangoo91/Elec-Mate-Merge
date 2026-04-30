@@ -75,6 +75,15 @@ interface MateUserDetail {
     rag_calls_7d: number;
     rag_share_24h: number;
     rag_share_7d: number;
+    minutes_saved_24h: number;
+    minutes_saved_7d: number;
+    cost_24h: number;
+    cost_7d: number;
+    cost_30d: number;
+    input_tokens_30d: number;
+    output_tokens_30d: number;
+    cache_read_tokens_30d: number;
+    cache_write_tokens_30d: number;
     distinct_tools_7d: number;
   };
   tool_breakdown: { tool: string; count: number }[];
@@ -104,6 +113,29 @@ function jwtLabel(expiresAt: string | null) {
   if (days < 0) return 'Expired';
   if (days === 0) return 'Today';
   return `${days}d`;
+}
+
+function formatMinutes(mins: number): { value: string; suffix: string } {
+  if (mins <= 0) return { value: '0', suffix: 'm' };
+  if (mins < 60) return { value: String(Math.round(mins)), suffix: 'm' };
+  const hours = mins / 60;
+  if (hours < 10) return { value: hours.toFixed(1), suffix: 'h' };
+  if (hours < 100) return { value: String(Math.round(hours)), suffix: 'h' };
+  const days = hours / 24;
+  return { value: days.toFixed(1), suffix: 'd' };
+}
+
+function formatUsd(usd: number): string {
+  if (usd <= 0) return '$0';
+  if (usd < 10) return `$${usd.toFixed(2)}`;
+  if (usd < 1000) return `$${usd.toFixed(0)}`;
+  return `$${(usd / 1000).toFixed(1)}k`;
+}
+
+function formatTokens(n: number): string {
+  if (n < 1000) return String(n);
+  if (n < 1_000_000) return `${(n / 1000).toFixed(1)}k`;
+  return `${(n / 1_000_000).toFixed(2)}M`;
 }
 
 type PendingAction = 'pause' | 'rotate' | null;
@@ -334,33 +366,91 @@ export default function AdminMateUser() {
 
         <StatStrip
           columns={4}
-          stats={[
-            {
-              label: 'Calls 7d',
-              value: <AnimatedCounter value={summary.tool_calls_7d} />,
-            },
-            {
-              label: 'Errors 7d',
-              value: <AnimatedCounter value={summary.errors_7d} />,
-              tone: summary.errors_7d > 0 ? 'red' : 'emerald',
-            },
-            {
-              label: 'RAG 7d',
-              value: <AnimatedCounter value={Math.round(summary.rag_share_7d * 100)} suffix="%" />,
-              tone:
-                summary.rag_share_7d >= 0.6
-                  ? 'emerald'
-                  : summary.rag_share_7d >= 0.3
-                    ? 'amber'
-                    : 'red',
-            },
-            {
-              label: 'Tools',
-              value: <AnimatedCounter value={summary.distinct_tools_7d} />,
-              tone: 'cyan',
-            },
-          ]}
+          stats={(() => {
+            const t = formatMinutes(summary.minutes_saved_7d);
+            return [
+              {
+                label: 'Time saved 7d',
+                value: (
+                  <span>
+                    {t.value}
+                    <span className="text-[0.55em] font-medium ml-0.5">{t.suffix}</span>
+                  </span>
+                ),
+                accent: true,
+              },
+              {
+                label: 'Calls 7d',
+                value: <AnimatedCounter value={summary.tool_calls_7d} />,
+              },
+              {
+                label: 'RAG 7d',
+                value: (
+                  <AnimatedCounter value={Math.round(summary.rag_share_7d * 100)} suffix="%" />
+                ),
+                tone:
+                  summary.rag_share_7d >= 0.6
+                    ? 'emerald'
+                    : summary.rag_share_7d >= 0.3
+                      ? 'amber'
+                      : 'red',
+              },
+              {
+                label: 'Errors 7d',
+                value: <AnimatedCounter value={summary.errors_7d} />,
+                tone: summary.errors_7d > 0 ? 'red' : 'emerald',
+              },
+            ];
+          })()}
         />
+
+        <Divider label="Spend" />
+
+        <ListCard>
+          <ListCardHeader
+            tone="purple"
+            title="Token spend — last 30d"
+            meta={
+              <span className="text-[11px] text-white tabular-nums">
+                {formatUsd(summary.cost_30d)} total · {formatUsd(summary.cost_7d)} last 7d
+              </span>
+            }
+          />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06]">
+            <div className="bg-[hsl(0_0%_12%)] px-4 py-4">
+              <div className="text-[10px] text-white/60 font-medium uppercase tracking-[0.14em]">
+                Input
+              </div>
+              <div className="mt-1.5 text-[18px] font-semibold text-white tabular-nums">
+                {formatTokens(summary.input_tokens_30d)}
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_12%)] px-4 py-4">
+              <div className="text-[10px] text-white/60 font-medium uppercase tracking-[0.14em]">
+                Output
+              </div>
+              <div className="mt-1.5 text-[18px] font-semibold text-white tabular-nums">
+                {formatTokens(summary.output_tokens_30d)}
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_12%)] px-4 py-4">
+              <div className="text-[10px] text-white/60 font-medium uppercase tracking-[0.14em]">
+                Cache read
+              </div>
+              <div className="mt-1.5 text-[18px] font-semibold text-emerald-300 tabular-nums">
+                {formatTokens(summary.cache_read_tokens_30d)}
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_12%)] px-4 py-4">
+              <div className="text-[10px] text-white/60 font-medium uppercase tracking-[0.14em]">
+                Cache write
+              </div>
+              <div className="mt-1.5 text-[18px] font-semibold text-white tabular-nums">
+                {formatTokens(summary.cache_write_tokens_30d)}
+              </div>
+            </div>
+          </div>
+        </ListCard>
 
         <Divider label="Tools" />
 
