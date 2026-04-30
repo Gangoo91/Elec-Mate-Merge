@@ -94,7 +94,7 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = 
             {greeting()}
             {firstName ? `, ${firstName}` : ''}.
           </h1>
-          <p className="mt-2 text-[13px] sm:text-[14px] text-white/85 leading-snug max-w-2xl">
+          <p className="mt-2 text-[13px] sm:text-[14px] text-white leading-snug max-w-2xl">
             Here's your day in one screen — classes, inbox, at-risk learners and what's due this
             week. Type any inspector question into the search bar to land on the evidence chain in
             seconds.
@@ -183,10 +183,7 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = 
       </motion.div>
 
       {loading && !data && (
-        <motion.div
-          variants={itemVariants}
-          className="py-10 text-center text-[12.5px] text-white/55"
-        >
+        <motion.div variants={itemVariants} className="py-10 text-center text-[12.5px] text-white">
           Loading your day…
         </motion.div>
       )}
@@ -351,9 +348,7 @@ function KpiCard({
         className
       )}
     >
-      <div className="text-[9.5px] font-medium uppercase tracking-[0.22em] text-white/65">
-        {label}
-      </div>
+      <div className="text-[9.5px] font-medium uppercase tracking-[0.22em] text-white">{label}</div>
       <div
         className={cn(
           'mt-1 text-[28px] sm:text-[32px] font-bold tabular-nums leading-none',
@@ -398,7 +393,7 @@ function GroupedSection({
         </h2>
       </div>
       {empty ? (
-        <div className="px-4 sm:px-5 py-6 text-[12.5px] text-white/65 leading-snug">
+        <div className="px-4 sm:px-5 py-6 text-[12.5px] text-white leading-snug">
           {emptyHint ?? 'Nothing here right now.'}
         </div>
       ) : (
@@ -408,10 +403,10 @@ function GroupedSection({
             .map((g) => (
               <div key={g.key}>
                 <div className="px-4 sm:px-5 py-2 bg-white/[0.02] border-b border-white/[0.04] flex items-center gap-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/65">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                     {g.label}
                   </span>
-                  <span className="text-[10px] tabular-nums text-white/45">{g.count}</span>
+                  <span className="text-[10px] tabular-nums text-white">{g.count}</span>
                 </div>
                 <ul className="divide-y divide-white/[0.05]">{g.items}</ul>
               </div>
@@ -452,7 +447,7 @@ function Section({
         </h2>
       </div>
       {empty ? (
-        <div className="px-4 sm:px-5 py-6 text-[12.5px] text-white/65 leading-snug">
+        <div className="px-4 sm:px-5 py-6 text-[12.5px] text-white leading-snug">
           {emptyHint ?? 'Nothing here right now.'}
         </div>
       ) : (
@@ -479,14 +474,14 @@ function LessonRow({ lesson, onOpen }: { lesson: TodayLesson; onOpen: () => void
         </div>
         <div className="min-w-0 flex-1">
           <div className="text-[13.5px] font-medium text-white truncate">{lesson.title}</div>
-          <div className="mt-0.5 text-[11.5px] text-white/65 tabular-nums">
+          <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
             {lesson.cohort_name ?? '—'}
             {dur}
             {lesson.is_mine && ' · yours'}
             {lesson.status && lesson.status !== 'ready' && ` · ${lesson.status}`}
           </div>
         </div>
-        <span className="text-white/40 text-[14px] shrink-0">→</span>
+        <span className="text-white text-[14px] shrink-0">→</span>
       </button>
     </li>
   );
@@ -506,7 +501,7 @@ function OtjRow({ otj, onOpen }: { otj: TodayOtjPending; onOpen: () => void }) {
         </span>
         <div className="min-w-0 flex-1">
           <div className="text-[13px] font-medium text-white truncate">{otj.title}</div>
-          <div className="mt-0.5 text-[11.5px] text-white/65 tabular-nums">
+          <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
             {otj.student_name ?? '—'}
             {otj.cohort_name ? ` · ${otj.cohort_name}` : ''}
             {' · '}
@@ -514,7 +509,7 @@ function OtjRow({ otj, onOpen }: { otj: TodayOtjPending; onOpen: () => void }) {
             {formatDate(otj.activity_date)}
           </div>
         </div>
-        <span className="text-white/40 text-[14px] shrink-0">→</span>
+        <span className="text-white text-[14px] shrink-0">→</span>
       </button>
     </li>
   );
@@ -535,7 +530,7 @@ function CommentRow({ comment, onOpen }: { comment: TodayPortfolioComment; onOpe
           <div className="text-[12.5px] text-white leading-snug line-clamp-2">
             {comment.content}
           </div>
-          <div className="mt-0.5 text-[11px] text-white/55 tabular-nums">
+          <div className="mt-0.5 text-[11px] text-white tabular-nums">
             {comment.student_name ?? 'Apprentice'}
             {comment.cohort_name ? ` · ${comment.cohort_name}` : ''}
             {' · '}
@@ -544,7 +539,7 @@ function CommentRow({ comment, onOpen }: { comment: TodayPortfolioComment; onOpe
             {formatRel(comment.created_at)}
           </div>
         </div>
-        <span className="text-white/40 text-[14px] shrink-0">→</span>
+        <span className="text-white text-[14px] shrink-0">→</span>
       </button>
     </li>
   );
@@ -563,13 +558,13 @@ function IqaRow({ sample, onOpen }: { sample: TodayIqaPending; onOpen: () => voi
         </span>
         <div className="min-w-0 flex-1">
           <div className="text-[13px] font-medium text-white truncate">{sample.target_title}</div>
-          <div className="mt-0.5 text-[11px] text-white/55 tabular-nums">
+          <div className="mt-0.5 text-[11px] text-white tabular-nums">
             {sample.target_kind === 'otj' ? 'OTJ entry' : 'Observation'} · sampled{' '}
             {formatRel(sample.sampled_at)}
             {sample.iqa_name_snapshot ? ` · ${sample.iqa_name_snapshot}` : ''}
           </div>
         </div>
-        <span className="text-white/40 text-[14px] shrink-0">→</span>
+        <span className="text-white text-[14px] shrink-0">→</span>
       </button>
     </li>
   );
@@ -604,12 +599,10 @@ function AtRiskRow({
             >
               {row.level}
             </span>
-            {row.cohort_name && (
-              <span className="text-[11px] text-white/55">· {row.cohort_name}</span>
-            )}
+            {row.cohort_name && <span className="text-[11px] text-white">· {row.cohort_name}</span>}
           </div>
           {row.top_factor && (
-            <div className="mt-0.5 text-[11.5px] text-white/65 leading-snug">{row.top_factor}</div>
+            <div className="mt-0.5 text-[11.5px] text-white leading-snug">{row.top_factor}</div>
           )}
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
@@ -634,11 +627,11 @@ function UpcomingRow({ upcoming, onOpen }: { upcoming: TodayUpcomingDate; onOpen
         onClick={onOpen}
         className="w-full flex items-center gap-3 px-4 sm:px-5 py-3 hover:bg-white/[0.02] transition-colors touch-manipulation text-left"
       >
-        <div className="shrink-0 w-16 text-[12px] text-white/65 tabular-nums">
+        <div className="shrink-0 w-16 text-[12px] text-white tabular-nums">
           {formatDate(upcoming.date)}
         </div>
         <div className="min-w-0 flex-1 text-[13px] text-white truncate">{upcoming.title}</div>
-        <span className="text-white/40 text-[14px] shrink-0">→</span>
+        <span className="text-white text-[14px] shrink-0">→</span>
       </button>
     </li>
   );

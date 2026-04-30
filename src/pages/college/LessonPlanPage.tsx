@@ -24,6 +24,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { ScheduleLessonDialog } from '@/components/college/dialogs/ScheduleLessonDialog';
+import { LessonRegisterSheet } from '@/components/college/sheets/LessonRegisterSheet';
 import { useLessonResources } from '@/hooks/useResourceLinks';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -73,8 +74,7 @@ export default function LessonPlanPage() {
       unit_code,
       ac_codes: acsStr.split(','),
       session_length_mins: Number(search.get('len') ?? '90'),
-      delivery_mode:
-        (search.get('mode') as GenerateLessonInput['delivery_mode']) ?? 'classroom',
+      delivery_mode: (search.get('mode') as GenerateLessonInput['delivery_mode']) ?? 'classroom',
       include_homework: search.get('hw') !== '0',
       include_differentiation: search.get('diff') !== '0',
       include_hs: search.get('hs') !== '0',
@@ -103,7 +103,7 @@ export default function LessonPlanPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isNew]);
 
-  const plan = isNew ? gen.result?.plan ?? null : saved.plan;
+  const plan = isNew ? (gen.result?.plan ?? null) : saved.plan;
   const loading = isNew ? gen.loading : saved.loading;
   const error = isNew ? gen.error : saved.error;
   const brief = isNew ? gen.briefText : (saved.plan?.tutor_brief_markdown ?? '');
@@ -142,10 +142,7 @@ export default function LessonPlanPage() {
             Generation failed
           </div>
           <p className="text-[13.5px] text-white leading-relaxed break-words">{error}</p>
-          <PrimaryButton
-            onClick={() => window.location.reload()}
-            className="mt-5"
-          >
+          <PrimaryButton onClick={() => window.location.reload()} className="mt-5">
             Try again
           </PrimaryButton>
         </motion.div>
@@ -196,7 +193,10 @@ function StreamingView({
   const activeIdx = useMemo(() => {
     if (planComplete && briefComplete) return PHASES.length - 1;
     if (planBytes > 0 || brief.length > 0) return 3;
-    return Math.max(0, PHASES.findIndex((p) => p.id === phase));
+    return Math.max(
+      0,
+      PHASES.findIndex((p) => p.id === phase)
+    );
   }, [phase, brief.length, planBytes, briefComplete, planComplete]);
 
   const extractedTitle = useMemo(() => {
@@ -216,8 +216,8 @@ function StreamingView({
           {extractedTitle || 'Composing your lesson plan…'}
         </h1>
         <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
-          Grounded in BS 7671:2018+A4:2026, Guidance Note 3 and the On-Site Guide. Sarah
-          is drafting the tutor's briefing and structuring the session plan in parallel.
+          Grounded in BS 7671:2018+A4:2026, Guidance Note 3 and the On-Site Guide. Sarah is drafting
+          the tutor's briefing and structuring the session plan in parallel.
         </p>
       </motion.div>
 
@@ -226,13 +226,9 @@ function StreamingView({
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-px bg-white/[0.06]">
             {PHASES.map((p, i) => {
-              const state =
-                i < activeIdx ? 'done' : i === activeIdx ? 'active' : 'pending';
+              const state = i < activeIdx ? 'done' : i === activeIdx ? 'active' : 'pending';
               return (
-                <div
-                  key={p.id}
-                  className="bg-[hsl(0_0%_12%)] px-4 py-3.5 sm:px-5 sm:py-4"
-                >
+                <div key={p.id} className="bg-[hsl(0_0%_12%)] px-4 py-3.5 sm:px-5 sm:py-4">
                   <div className="flex items-center gap-2">
                     <StepDot state={state} />
                     <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white tabular-nums">
@@ -284,9 +280,7 @@ function StreamingView({
                 )}
               </>
             )}
-            {!ragPreview && (meta?.facets_used as number) && (
-              <span>Loading references…</span>
-            )}
+            {!ragPreview && (meta?.facets_used as number) && <span>Loading references…</span>}
           </div>
         </div>
       </motion.div>
@@ -343,17 +337,12 @@ function StreamingView({
         <div
           className={cn(
             'bg-[hsl(0_0%_12%)] border rounded-2xl px-6 py-5 sm:px-8 sm:py-6',
-            phase === 'plan_retrying'
-              ? 'border-amber-500/30'
-              : 'border-white/[0.06]'
+            phase === 'plan_retrying' ? 'border-amber-500/30' : 'border-white/[0.06]'
           )}
         >
           <div className="flex items-center gap-3">
             {planComplete ? (
-              <span
-                className="inline-block h-3 w-3 rounded-full bg-elec-yellow"
-                aria-hidden
-              />
+              <span className="inline-block h-3 w-3 rounded-full bg-elec-yellow" aria-hidden />
             ) : (
               <div
                 className={cn(
@@ -398,9 +387,7 @@ function StreamingView({
 
 function StepDot({ state }: { state: 'pending' | 'active' | 'done' }) {
   if (state === 'done') {
-    return (
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow" aria-hidden />
-    );
+    return <span className="inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow" aria-hidden />;
   }
   if (state === 'active') {
     return (
@@ -410,9 +397,7 @@ function StepDot({ state }: { state: 'pending' | 'active' | 'done' }) {
       />
     );
   }
-  return (
-    <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/20" aria-hidden />
-  );
+  return <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/20" aria-hidden />;
 }
 
 /* ==========================================================================
@@ -420,19 +405,19 @@ function StepDot({ state }: { state: 'pending' | 'active' | 'done' }) {
    ========================================================================== */
 
 function normaliseBriefMarkdown(raw: string): string {
-  return raw
-    .replace(/\r\n/g, '\n')
-    // Ensure blank line before every heading
-    .replace(/([^\n])\n(#{1,3}\s)/g, '$1\n\n$2')
-    // Ensure blank line after every heading
-    .replace(/(^|\n)(#{1,3} [^\n]+)\n(?!\n)/g, '$1$2\n\n')
-    // Double-newline between sentence-boundaries joined by single newline
-    .replace(/([.!?])\n(?!\n|[-*\d#]|\s*$)/g, '$1\n\n');
+  return (
+    raw
+      .replace(/\r\n/g, '\n')
+      // Ensure blank line before every heading
+      .replace(/([^\n])\n(#{1,3}\s)/g, '$1\n\n$2')
+      // Ensure blank line after every heading
+      .replace(/(^|\n)(#{1,3} [^\n]+)\n(?!\n)/g, '$1$2\n\n')
+      // Double-newline between sentence-boundaries joined by single newline
+      .replace(/([.!?])\n(?!\n|[-*\d#]|\s*$)/g, '$1\n\n')
+  );
 }
 
-function parseBriefSections(
-  md: string
-): Array<{ title: string | null; body: string }> {
+function parseBriefSections(md: string): Array<{ title: string | null; body: string }> {
   const parts: Array<{ title: string | null; body: string }> = [];
   const lines = md.split('\n');
   let cur: { title: string | null; body: string } = { title: null, body: '' };
@@ -478,8 +463,7 @@ const BriefChapter = memo(function BriefChapterInner({
   body: string;
   showCaret?: boolean;
 }) {
-  const numeralLabel =
-    chapterNumber !== null ? String(chapterNumber).padStart(2, '0') : null;
+  const numeralLabel = chapterNumber !== null ? String(chapterNumber).padStart(2, '0') : null;
 
   // Preamble before the first H2: plain prose, no numeral rail.
   if (!title) {
@@ -538,13 +522,7 @@ const BriefChapter = memo(function BriefChapterInner({
   );
 });
 
-const MarkdownBriefInner = ({
-  text,
-  isStreaming,
-}: {
-  text: string;
-  isStreaming?: boolean;
-}) => {
+const MarkdownBriefInner = ({ text, isStreaming }: { text: string; isStreaming?: boolean }) => {
   const sections = useMemo(() => {
     const normalised = normaliseBriefMarkdown(text);
     return parseBriefSections(normalised);
@@ -605,10 +583,7 @@ function PlanView({
   const { toast } = useToast();
 
   // Persist an accepted refinement to the plan row's content JSON
-  const applyRefinement = async (
-    key: RefinableSectionKey,
-    value: unknown
-  ): Promise<boolean> => {
+  const applyRefinement = async (key: RefinableSectionKey, value: unknown): Promise<boolean> => {
     if (!lessonId) return false;
     try {
       const next: GeneratedLessonPlan = { ...plan, [key]: value };
@@ -642,13 +617,10 @@ function PlanView({
     list.push({ id: 'session', label: 'Session plan' });
     if (brief) list.push({ id: 'briefing', label: "Tutor's briefing" });
     if (plan.analogies?.length) list.push({ id: 'analogies', label: 'Analogies' });
-    if (plan.misconceptions?.length)
-      list.push({ id: 'misconceptions', label: 'Misconceptions' });
+    if (plan.misconceptions?.length) list.push({ id: 'misconceptions', label: 'Misconceptions' });
     if (plan.board_work?.length) list.push({ id: 'boardwork', label: 'Board-work' });
-    if (plan.worked_examples?.length)
-      list.push({ id: 'worked', label: 'Worked examples' });
-    if (plan.cold_call_questions?.length)
-      list.push({ id: 'coldcall', label: 'Cold-call' });
+    if (plan.worked_examples?.length) list.push({ id: 'worked', label: 'Worked examples' });
+    if (plan.cold_call_questions?.length) list.push({ id: 'coldcall', label: 'Cold-call' });
     if (plan.exit_ticket?.length) list.push({ id: 'exit', label: 'Exit ticket' });
     if (plan.vocabulary?.length) list.push({ id: 'vocab', label: 'Vocabulary' });
     if (plan.differentiation) list.push({ id: 'diff', label: 'Differentiation' });
@@ -662,9 +634,7 @@ function PlanView({
   return (
     <motion.div variants={itemVariants} className="relative">
       {/* Real action rail — only shown for persisted plans with a real UUID */}
-      {lessonId && UUID_RE.test(lessonId) && (
-        <PlanActionBar lessonId={lessonId} plan={plan} />
-      )}
+      {lessonId && UUID_RE.test(lessonId) && <PlanActionBar lessonId={lessonId} plan={plan} />}
 
       {/* Flight-plan cover */}
       <Cover plan={plan} lessonId={lessonId} a4Count={a4Count} />
@@ -694,10 +664,7 @@ function PlanView({
           <Section id="goals" eyebrow="Outcomes" title="What apprentices will master">
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
               {plan.learning_objectives?.map((o, i) => (
-                <div
-                  key={i}
-                  className="px-5 sm:px-7 py-5 sm:py-6 flex items-start gap-5"
-                >
+                <div key={i} className="px-5 sm:px-7 py-5 sm:py-6 flex items-start gap-5">
                   <div className="shrink-0 w-9 h-9 rounded-full border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center">
                     <span className="text-[12px] font-mono tabular-nums text-elec-yellow">
                       {String(i + 1).padStart(2, '0')}
@@ -750,9 +717,7 @@ function PlanView({
           {plan.a4_change_summary && (
             <Section id="a4" eyebrow="What's new" title="BS 7671 Amendment 4:2026">
               <div className="rounded-2xl border border-amber-500/30 bg-amber-500/[0.05] px-6 py-6 sm:px-7 sm:py-7">
-                <p className="text-[14px] text-white leading-relaxed">
-                  {plan.a4_change_summary}
-                </p>
+                <p className="text-[14px] text-white leading-relaxed">{plan.a4_change_summary}</p>
               </div>
             </Section>
           )}
@@ -763,16 +728,10 @@ function PlanView({
           </Section>
 
           {/* Session plan */}
-          <Section
-            id="session"
-            eyebrow={`${plan.duration_mins} minutes`}
-            title="The session"
-          >
+          <Section id="session" eyebrow={`${plan.duration_mins} minutes`} title="The session">
             <div className="space-y-3">
               {(() => {
-                const facetLookup = new Map(
-                  (plan.cited_facets ?? []).map((c) => [c.facet_id, c])
-                );
+                const facetLookup = new Map((plan.cited_facets ?? []).map((c) => [c.facet_id, c]));
                 let clockCursor = 0;
                 return plan.activities?.map((a, i) => {
                   const startMin = clockCursor;
@@ -865,17 +824,13 @@ function PlanView({
                       <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300/85 mb-2">
                         Apprentice believes
                       </div>
-                      <div className="text-[13.5px] text-white leading-relaxed">
-                        {m.belief}
-                      </div>
+                      <div className="text-[13.5px] text-white leading-relaxed">{m.belief}</div>
                     </div>
                     <div>
                       <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-300/85 mb-2">
                         Correction
                       </div>
-                      <div className="text-[13.5px] text-white leading-relaxed">
-                        {m.correction}
-                      </div>
+                      <div className="text-[13.5px] text-white leading-relaxed">{m.correction}</div>
                     </div>
                   </div>
                 ))}
@@ -950,9 +905,7 @@ function PlanView({
                       <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
                         Scenario {String(i + 1).padStart(2, '0')}
                       </div>
-                      <div className="text-[14px] text-white leading-relaxed">
-                        {w.scenario}
-                      </div>
+                      <div className="text-[14px] text-white leading-relaxed">{w.scenario}</div>
                     </div>
                     <ol className="px-5 sm:px-7 py-5 space-y-2.5">
                       {w.working?.map((step, si) => (
@@ -960,9 +913,7 @@ function PlanView({
                           <span className="text-[11px] font-mono tabular-nums text-elec-yellow mt-1 shrink-0 w-5">
                             {si + 1}
                           </span>
-                          <span className="text-[13.5px] text-white leading-relaxed">
-                            {step}
-                          </span>
+                          <span className="text-[13.5px] text-white leading-relaxed">{step}</span>
                         </li>
                       ))}
                     </ol>
@@ -1070,9 +1021,7 @@ function PlanView({
                     className="px-5 sm:px-7 py-4 grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-2 sm:gap-8"
                   >
                     <div className="text-[13.5px] font-semibold text-white">{v.term}</div>
-                    <div className="text-[13px] text-white leading-relaxed">
-                      {v.definition}
-                    </div>
+                    <div className="text-[13px] text-white leading-relaxed">{v.definition}</div>
                   </div>
                 ))}
               </div>
@@ -1109,26 +1058,20 @@ function PlanView({
                         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300/85 mb-2">
                           Risk
                         </div>
-                        <div className="text-[13.5px] text-white leading-relaxed">
-                          {h.risk}
-                        </div>
+                        <div className="text-[13.5px] text-white leading-relaxed">{h.risk}</div>
                       </div>
                       <div className="px-5 sm:px-6 py-4 md:border-r border-white/[0.06] border-t md:border-t-0 border-white/[0.06]">
                         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-300/85 mb-2">
                           Control
                         </div>
-                        <div className="text-[13.5px] text-white leading-relaxed">
-                          {h.control}
-                        </div>
+                        <div className="text-[13.5px] text-white leading-relaxed">{h.control}</div>
                       </div>
                       {h.reg_ref && (
                         <div className="px-5 sm:px-6 py-4 border-t md:border-t-0 border-white/[0.06] md:min-w-[160px]">
                           <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
                             Reg ref
                           </div>
-                          <div className="text-[12px] font-mono text-elec-yellow">
-                            {h.reg_ref}
-                          </div>
+                          <div className="text-[12px] font-mono text-elec-yellow">{h.reg_ref}</div>
                         </div>
                       )}
                     </div>
@@ -1232,9 +1175,7 @@ function PlanView({
                       </div>
                       <BloomBadge level={s.bloom_level as BloomLevel} />
                     </div>
-                    <p className="mt-2.5 text-[13.5px] text-white leading-relaxed">
-                      {s.task}
-                    </p>
+                    <p className="mt-2.5 text-[13.5px] text-white leading-relaxed">{s.task}</p>
                     <div className="mt-3 pt-3 border-t border-white/[0.06] text-[11.5px] text-white leading-relaxed">
                       <span className="text-white font-medium">For · </span>
                       {s.target_learner}
@@ -1266,15 +1207,11 @@ function PlanView({
                       {ip.activity_ref && (
                         <>
                           <span className="text-white/25 text-[10px]">·</span>
-                          <span className="text-[10.5px] text-white">
-                            {ip.activity_ref}
-                          </span>
+                          <span className="text-[10.5px] text-white">{ip.activity_ref}</span>
                         </>
                       )}
                     </div>
-                    <p className="mt-1.5 text-[13.5px] text-white leading-relaxed">
-                      {ip.strategy}
-                    </p>
+                    <p className="mt-1.5 text-[13.5px] text-white leading-relaxed">{ip.strategy}</p>
                   </div>
                 ))}
               </div>
@@ -1326,17 +1263,13 @@ function PlanView({
           )}
 
           {/* Attached resources — from the Materials library */}
-          {lessonId && UUID_RE.test(lessonId) && (
-            <AttachedResourcesSection lessonId={lessonId} />
-          )}
+          {lessonId && UUID_RE.test(lessonId) && <AttachedResourcesSection lessonId={lessonId} />}
 
           {/* Next lesson */}
           {plan.next_lesson_hint && (
             <Section id="next" eyebrow="Scheme of work" title="Suggested next lesson">
               <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
-                <p className="text-[13.5px] text-white leading-relaxed">
-                  {plan.next_lesson_hint}
-                </p>
+                <p className="text-[13.5px] text-white leading-relaxed">{plan.next_lesson_hint}</p>
               </div>
             </Section>
           )}
@@ -1367,6 +1300,7 @@ function PlanActionBar({
   const [status, setStatus] = useState<string>('draft');
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
   const [scheduleMeta, setScheduleMeta] = useState<{
     scheduled_date: string | null;
     scheduled_start_time: string | null;
@@ -1502,9 +1436,7 @@ function PlanActionBar({
       onStatusChange?.(next);
       toast({
         title: isReady ? 'Marked as draft' : 'Marked as ready',
-        description: isReady
-          ? 'This plan is back in drafts.'
-          : 'This plan is ready to teach.',
+        description: isReady ? 'This plan is back in drafts.' : 'This plan is ready to teach.',
       });
     } catch (e) {
       toast({
@@ -1523,10 +1455,7 @@ function PlanActionBar({
       // Remove children first (in case cascade isn't configured)
       await supabase.from('lesson_plan_ac_mapping').delete().eq('lesson_plan_id', lessonId);
       await supabase.from('lesson_regulation_refs').delete().eq('lesson_plan_id', lessonId);
-      const { error } = await supabase
-        .from('college_lesson_plans')
-        .delete()
-        .eq('id', lessonId);
+      const { error } = await supabase.from('college_lesson_plans').delete().eq('id', lessonId);
       if (error) throw error;
       toast({ title: 'Plan deleted' });
       navigate('/college');
@@ -1549,9 +1478,7 @@ function PlanActionBar({
 
   const statusLabel = isReady ? 'Ready to teach' : 'Draft';
   const statusDot = isReady ? 'bg-emerald-400' : 'bg-amber-400';
-  const isScheduled = Boolean(
-    scheduleMeta?.scheduled_date && scheduleMeta?.scheduled_start_time
-  );
+  const isScheduled = Boolean(scheduleMeta?.scheduled_date && scheduleMeta?.scheduled_start_time);
   const scheduleSummary =
     isScheduled && scheduleMeta
       ? `${new Date(scheduleMeta.scheduled_date as string).toLocaleDateString('en-GB', {
@@ -1583,6 +1510,9 @@ function PlanActionBar({
               onClick={() => navigate(`/college/lessons/${lessonId}/deliver`)}
               primary
             />
+            {scheduleMeta?.cohort_id && (
+              <ActionBtn label="Register" onClick={() => setRegisterOpen(true)} accent />
+            )}
             <ActionBtn
               label={isScheduled ? 'Reschedule' : 'Schedule'}
               onClick={() => setScheduleOpen(true)}
@@ -1593,17 +1523,9 @@ function PlanActionBar({
               onClick={handleMarkReady}
               loading={busy === 'ready'}
             />
-            <ActionBtn
-              label="Duplicate"
-              onClick={handleDuplicate}
-              loading={busy === 'duplicate'}
-            />
+            <ActionBtn label="Duplicate" onClick={handleDuplicate} loading={busy === 'duplicate'} />
             <ActionBtn label="Print" onClick={handlePrint} />
-            <ActionBtn
-              label="Delete"
-              onClick={() => setConfirmDelete(true)}
-              destructive
-            />
+            <ActionBtn label="Delete" onClick={() => setConfirmDelete(true)} destructive />
           </div>
         </div>
       </div>
@@ -1617,6 +1539,16 @@ function PlanActionBar({
         initialCohortId={scheduleMeta?.cohort_id ?? null}
         onScheduled={refreshSchedule}
       />
+
+      {scheduleMeta?.cohort_id && (
+        <LessonRegisterSheet
+          open={registerOpen}
+          onOpenChange={setRegisterOpen}
+          cohortId={scheduleMeta.cohort_id}
+          lessonTitle={plan.title}
+          date={scheduleMeta.scheduled_date ?? undefined}
+        />
+      )}
 
       <ConfirmationDialog
         open={confirmDelete}
@@ -1699,48 +1631,26 @@ function Cover({
 
       <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
         <CoverCell label="Duration" value={`${plan.duration_mins} min`} />
-        <CoverCell
-          label="Objectives"
-          value={`${plan.learning_objectives?.length ?? 0}`}
-        />
-        <CoverCell
-          label="Activities"
-          value={`${plan.activities?.length ?? 0}`}
-        />
+        <CoverCell label="Objectives" value={`${plan.learning_objectives?.length ?? 0}`} />
+        <CoverCell label="Activities" value={`${plan.activities?.length ?? 0}`} />
         <CoverCell
           label={a4Count > 0 ? 'A4:2026 changes' : 'Citations'}
-          value={
-            a4Count > 0
-              ? `${a4Count}`
-              : `${plan.cited_facets?.length ?? 0}`
-          }
+          value={a4Count > 0 ? `${a4Count}` : `${plan.cited_facets?.length ?? 0}`}
           accent={a4Count > 0 ? 'amber' : undefined}
         />
       </div>
 
       {lessonId && (
-        <div className="mt-4 text-[10px] font-mono text-white">
-          {lessonId.slice(0, 8)}
-        </div>
+        <div className="mt-4 text-[10px] font-mono text-white">{lessonId.slice(0, 8)}</div>
       )}
     </div>
   );
 }
 
-function CoverCell({
-  label,
-  value,
-  accent,
-}: {
-  label: string;
-  value: string;
-  accent?: 'amber';
-}) {
+function CoverCell({ label, value, accent }: { label: string; value: string; accent?: 'amber' }) {
   return (
     <div className="bg-[hsl(0_0%_12%)] px-5 py-5 sm:px-6 sm:py-6">
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {label}
-      </div>
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{label}</div>
       <div
         className={cn(
           'mt-2.5 text-3xl sm:text-4xl font-semibold tabular-nums tracking-tight leading-none',
@@ -1767,13 +1677,7 @@ const PHASE_TONE: Record<GeneratedActivity['phase'], string> = {
   plenary: 'bg-amber-400/75',
 };
 
-function Timeline({
-  activities,
-  total,
-}: {
-  activities: GeneratedActivity[];
-  total: number;
-}) {
+function Timeline({ activities, total }: { activities: GeneratedActivity[]; total: number }) {
   if (!activities.length || total <= 0) return null;
   let cursor = 0;
   return (
@@ -1794,9 +1698,7 @@ function Timeline({
               <span className="text-[10px] font-mono tabular-nums text-black/75 px-1 truncate">
                 {a.time_mins}m
               </span>
-              {left > 0 && (
-                <span className="absolute left-0 top-0 bottom-0 w-px bg-black/30" />
-              )}
+              {left > 0 && <span className="absolute left-0 top-0 bottom-0 w-px bg-black/30" />}
             </div>
           );
         })}
@@ -1883,9 +1785,7 @@ function ActivityCard({
               <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
                 Student focus
               </div>
-              <div className="text-[13px] text-white leading-relaxed">
-                {a.student_focus}
-              </div>
+              <div className="text-[13px] text-white leading-relaxed">{a.student_focus}</div>
             </div>
           )}
 
@@ -1991,9 +1891,7 @@ function Section({
    * button is placed in the header and the draft panel is rendered full-width
    * between the header and the section body.
    */
-  refine?:
-    | React.ReactNode
-    | { button: React.ReactNode; draft: React.ReactNode | null };
+  refine?: React.ReactNode | { button: React.ReactNode; draft: React.ReactNode | null };
 }) {
   const hasSplit =
     refine !== null &&
@@ -2003,9 +1901,7 @@ function Section({
   const button = hasSplit
     ? (refine as { button: React.ReactNode }).button
     : (refine as React.ReactNode);
-  const draft = hasSplit
-    ? (refine as { draft: React.ReactNode | null }).draft
-    : null;
+  const draft = hasSplit ? (refine as { draft: React.ReactNode | null }).draft : null;
 
   return (
     <section id={id} className="scroll-mt-6 group">
@@ -2014,9 +1910,7 @@ function Section({
         {button && <div className="no-print shrink-0">{button}</div>}
       </div>
       {draft && <div className="mt-5 no-print">{draft}</div>}
-      <div className={cn('mt-5', draft && 'opacity-60 transition-opacity')}>
-        {children}
-      </div>
+      <div className={cn('mt-5', draft && 'opacity-60 transition-opacity')}>{children}</div>
     </section>
   );
 }
@@ -2043,27 +1937,42 @@ function SectionEyebrow({ eyebrow, title }: { eyebrow?: string; title: string })
 const REFINE_PRESETS: Record<string, { label: string; instruction: string }[]> = {
   default: [
     { label: 'Shorter', instruction: 'Make this section shorter and tighter. Cut filler.' },
-    { label: 'More detail', instruction: 'Expand with more concrete detail and specific examples.' },
+    {
+      label: 'More detail',
+      instruction: 'Expand with more concrete detail and specific examples.',
+    },
     { label: 'Simpler', instruction: 'Simplify the language for Level 2 apprentices.' },
     { label: 'Harder', instruction: 'Raise the challenge — Level 3 / HND depth.' },
-    { label: 'More practical', instruction: 'Lean into practical, hands-on content rather than theory.' },
+    {
+      label: 'More practical',
+      instruction: 'Lean into practical, hands-on content rather than theory.',
+    },
     { label: 'Add an example', instruction: 'Add one more concrete worked example.' },
   ],
   cold_call_questions: [
     { label: 'Harder', instruction: 'Make the questions harder — push into analyse and evaluate.' },
     { label: 'Simpler', instruction: 'Simpler questions for early apprentices.' },
     { label: 'Add 3 more', instruction: 'Add three more questions covering different ACs.' },
-    { label: 'More scenario-based', instruction: 'Convert questions into scenario-based prompts from real jobs.' },
+    {
+      label: 'More scenario-based',
+      instruction: 'Convert questions into scenario-based prompts from real jobs.',
+    },
   ],
   vocabulary: [
     { label: 'Add 5 more', instruction: 'Add five more essential terms for this topic.' },
     { label: 'Simpler definitions', instruction: 'Simpler one-line definitions for apprentices.' },
-    { label: 'Focus on A4:2026', instruction: 'Emphasise terms new or changed in BS 7671 Amendment 4:2026.' },
+    {
+      label: 'Focus on A4:2026',
+      instruction: 'Emphasise terms new or changed in BS 7671 Amendment 4:2026.',
+    },
   ],
   tutor_brief_markdown: [
     { label: 'Shorter', instruction: 'Tighten the whole briefing by about a third.' },
     { label: 'More analogies', instruction: 'Add richer analogies throughout the briefing.' },
-    { label: 'Deeper subject knowledge', instruction: 'Go deeper on the physics / regulatory reasoning.' },
+    {
+      label: 'Deeper subject knowledge',
+      instruction: 'Go deeper on the physics / regulatory reasoning.',
+    },
     { label: 'More warmth', instruction: 'Warmer, more colleague-to-colleague tone.' },
   ],
 };
@@ -2194,9 +2103,7 @@ function useSectionRefine({
             </div>
           </div>
           {refine.error && (
-            <div className="text-[11.5px] text-red-300 leading-relaxed">
-              {refine.error}
-            </div>
+            <div className="text-[11.5px] text-red-300 leading-relaxed">{refine.error}</div>
           )}
         </div>
       )}
@@ -2230,10 +2137,7 @@ function useSectionRefine({
         )}
       </div>
       <div className="text-[13px] text-white">
-        {renderPreview(
-          refine.value ?? refine.streamText,
-          refine.loading && refine.value === null
-        )}
+        {renderPreview(refine.value ?? refine.streamText, refine.loading && refine.value === null)}
       </div>
     </div>
   ) : null;
@@ -2294,14 +2198,8 @@ function DiffBox({ label, items }: { label: string; items: string[] }) {
       </div>
       <ul className="space-y-1.5">
         {(items ?? []).map((it, i) => (
-          <li
-            key={i}
-            className="flex items-start gap-3 text-[13.5px] text-white leading-relaxed"
-          >
-            <span
-              className="mt-[9px] h-1 w-1 rounded-full bg-white/55 shrink-0"
-              aria-hidden
-            />
+          <li key={i} className="flex items-start gap-3 text-[13.5px] text-white leading-relaxed">
+            <span className="mt-[9px] h-1 w-1 rounded-full bg-white/55 shrink-0" aria-hidden />
             <span className="flex-1">{it}</span>
           </li>
         ))}
@@ -2336,7 +2234,7 @@ function RagSourceCard({
   // Dedupe: keep first occurrence per reg_number (or per topic when no reg).
   const seen = new Set<string>();
   const dedup = facets.filter((f) => {
-    const key = f.reg_number ?? `t:${f.primary_topic ?? ''}` ?? `f:${f.facet_id}`;
+    const key = f.reg_number ?? (f.primary_topic ? `t:${f.primary_topic}` : `f:${f.facet_id}`);
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -2436,9 +2334,7 @@ function RegReferenceTile({
       )}
 
       {regNumber && topic && (
-        <div className="mt-1.5 text-[11.5px] text-white/65 leading-snug line-clamp-2">
-          {topic}
-        </div>
+        <div className="mt-1.5 text-[11.5px] text-white/65 leading-snug line-clamp-2">{topic}</div>
       )}
 
       {citationNote && (
@@ -2472,10 +2368,7 @@ function renderAnalogiesPreview(v: unknown, isStreaming: boolean) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
       {items?.map((a, i) => (
-        <div
-          key={i}
-          className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-4 py-4"
-        >
+        <div key={i} className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-4 py-4">
           <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/90">
             {a.name}
           </div>
@@ -2521,10 +2414,7 @@ function renderBoardWorkPreview(v: unknown, isStreaming: boolean) {
   return (
     <div className="space-y-2.5">
       {items?.map((b, i) => (
-        <div
-          key={i}
-          className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-4 py-4"
-        >
+        <div key={i} className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-4 py-4">
           <div className="text-[13.5px] font-semibold text-white">{b.title}</div>
           <p className="mt-1 text-[12.5px] text-white leading-relaxed">{b.description}</p>
           {b.labels?.length > 0 && (
@@ -2613,13 +2503,8 @@ function renderExitTicketPreview(v: unknown, isStreaming: boolean) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
       {items?.map((e, i) => (
-        <div
-          key={i}
-          className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-4 py-4"
-        >
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white mb-1.5">
-            Q{i + 1}
-          </div>
+        <div key={i} className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-4 py-4">
+          <div className="text-[10px] uppercase tracking-[0.18em] text-white mb-1.5">Q{i + 1}</div>
           <div className="text-[12.5px] text-white font-medium leading-relaxed">{e.question}</div>
           <div className="mt-2 pt-2 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
             <span className="text-elec-yellow/90 font-medium">Answer · </span>
@@ -2666,9 +2551,7 @@ function renderBritishValuesPreview(v: unknown, isStreaming: boolean) {
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300/85 shrink-0 w-28 pt-0.5">
             {britishValueLabel(bv.value)}
           </span>
-          <span className="text-[12.5px] text-white leading-snug flex-1">
-            {bv.how_embedded}
-          </span>
+          <span className="text-[12.5px] text-white leading-snug flex-1">{bv.how_embedded}</span>
         </div>
       ))}
     </div>
@@ -2725,10 +2608,7 @@ function renderVocabularyPreview(v: unknown, isStreaming: boolean) {
   return (
     <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl divide-y divide-white/[0.06]">
       {items?.map((w, i) => (
-        <div
-          key={i}
-          className="px-4 py-3 grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-1 sm:gap-5"
-        >
+        <div key={i} className="px-4 py-3 grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-1 sm:gap-5">
           <div className="text-[12.5px] font-semibold text-white">{w.term}</div>
           <div className="text-[12px] text-white leading-relaxed">{w.definition}</div>
         </div>
@@ -2759,17 +2639,10 @@ function RegChip({ citation }: { citation: GeneratedCitation }) {
       <span className="text-[10px] font-medium uppercase tracking-[0.14em] opacity-75">
         {sourceShort}
       </span>
-      <span
-        className={cn(
-          'font-mono tabular-nums',
-          a4 ? 'text-amber-200' : 'text-elec-yellow'
-        )}
-      >
+      <span className={cn('font-mono tabular-nums', a4 ? 'text-amber-200' : 'text-elec-yellow')}>
         {label}
       </span>
-      {a4 && (
-        <span className="text-[9px] font-medium uppercase tracking-wide">A4</span>
-      )}
+      {a4 && <span className="text-[9px] font-medium uppercase tracking-wide">A4</span>}
     </span>
   );
 }

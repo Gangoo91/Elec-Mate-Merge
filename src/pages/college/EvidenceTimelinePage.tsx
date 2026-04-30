@@ -60,7 +60,7 @@ const KIND_META: Record<EvidenceKind, { label: string; tone: string; dot: string
   },
   message: {
     label: 'Message',
-    tone: 'border-white/[0.10] text-white/85 bg-white/[0.03]',
+    tone: 'border-white/[0.10] text-white bg-white/[0.03]',
     dot: 'bg-white/40',
   },
   epa: {
@@ -70,7 +70,7 @@ const KIND_META: Record<EvidenceKind, { label: string; tone: string; dot: string
   },
   attendance: {
     label: 'Attendance',
-    tone: 'border-white/[0.10] text-white/85 bg-white/[0.03]',
+    tone: 'border-white/[0.10] text-white bg-white/[0.03]',
     dot: 'bg-white/40',
   },
   iqa: {
@@ -140,7 +140,7 @@ export default function EvidenceTimelinePage() {
       <motion.button
         onClick={() => navigate(`/college/students/${id}`)}
         whileTap={{ scale: 0.97 }}
-        className="inline-flex items-center gap-1 -ml-1 h-9 px-2 rounded-lg text-[13px] font-medium text-white/85 hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation print:hidden"
+        className="inline-flex items-center gap-1 -ml-1 h-9 px-2 rounded-lg text-[13px] font-medium text-white hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation print:hidden"
       >
         <ChevronLeft className="h-4 w-4" />
         Back to learner
@@ -155,14 +155,14 @@ export default function EvidenceTimelinePage() {
           actions={
             <div className="flex items-center gap-3 flex-wrap justify-end print:hidden">
               {generated && (
-                <span className="text-[11px] text-white/55 whitespace-nowrap">
+                <span className="text-[11px] text-white whitespace-nowrap">
                   Generated {generated}
                 </span>
               )}
               <button
                 onClick={refresh}
                 disabled={loading}
-                className="text-[12px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation disabled:opacity-50 whitespace-nowrap"
+                className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation disabled:opacity-50 whitespace-nowrap"
               >
                 {loading ? 'Refreshing…' : 'Refresh'}
               </button>
@@ -187,10 +187,7 @@ export default function EvidenceTimelinePage() {
       )}
 
       {loading && !data && (
-        <motion.div
-          variants={itemVariants}
-          className="py-10 text-center text-[12.5px] text-white/55"
-        >
+        <motion.div variants={itemVariants} className="py-10 text-center text-[12.5px] text-white">
           Loading evidence chain…
         </motion.div>
       )}
@@ -208,7 +205,7 @@ export default function EvidenceTimelinePage() {
             className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-3 py-3 print:hidden"
           >
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/55 mr-1">
+              <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white mr-1">
                 Window
               </span>
               {WINDOWS.map((w) => (
@@ -219,7 +216,7 @@ export default function EvidenceTimelinePage() {
                     'inline-flex items-center h-7 px-2.5 rounded-md text-[11px] font-semibold transition-colors touch-manipulation',
                     windowDays === w.key
                       ? 'bg-elec-yellow text-black'
-                      : 'border border-white/[0.10] text-white/85 hover:bg-white/[0.04]'
+                      : 'border border-white/[0.10] text-white hover:bg-white/[0.04]'
                   )}
                 >
                   {w.label}
@@ -227,7 +224,7 @@ export default function EvidenceTimelinePage() {
               ))}
             </div>
             <div className="mt-2 flex items-start gap-2">
-              <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/55 shrink-0 pt-1.5">
+              <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white shrink-0 pt-1.5">
                 Kind
               </span>
               {/* 10 chips wrap into a 3-row mess on phones. Horizontal-scroll
@@ -252,7 +249,7 @@ export default function EvidenceTimelinePage() {
                         'inline-flex items-center shrink-0 gap-1.5 h-7 px-2.5 rounded-md text-[11px] font-semibold transition-colors touch-manipulation snap-start',
                         kindFilter === k.key
                           ? 'bg-elec-yellow text-black'
-                          : 'border border-white/[0.10] text-white/85 hover:bg-white/[0.04]'
+                          : 'border border-white/[0.10] text-white hover:bg-white/[0.04]'
                       )}
                     >
                       {k.label}
@@ -270,7 +267,7 @@ export default function EvidenceTimelinePage() {
             className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden"
           >
             {filtered.length === 0 ? (
-              <div className="py-10 text-center text-[12.5px] text-white/55">
+              <div className="py-10 text-center text-[12.5px] text-white">
                 No evidence in this window. Try widening the window or kind filter.
               </div>
             ) : (
@@ -287,7 +284,7 @@ export default function EvidenceTimelinePage() {
           {/* Footer summary */}
           <motion.div
             variants={itemVariants}
-            className="text-[10.5px] uppercase tracking-[0.22em] text-white/40 text-center"
+            className="text-[10.5px] uppercase tracking-[0.22em] text-white text-center"
           >
             {filtered.length} events · cited from learner record · Ofsted-ready
           </motion.div>
@@ -318,7 +315,7 @@ function TimelineRow({ event, onTap }: { event: EvidenceEvent; onTap: () => void
           >
             {meta.label}
           </span>
-          <time className="text-[11px] text-white/55 tabular-nums">
+          <time className="text-[11px] text-white tabular-nums">
             {new Date(event.occurred_at).toLocaleDateString('en-GB', {
               day: 'numeric',
               month: 'short',
@@ -329,7 +326,7 @@ function TimelineRow({ event, onTap }: { event: EvidenceEvent; onTap: () => void
         <div className="mt-1 text-[14px] font-semibold text-white tracking-tight leading-snug">
           {event.title}
         </div>
-        <div className="mt-0.5 text-[12.5px] text-white/85 leading-snug">{event.summary}</div>
+        <div className="mt-0.5 text-[12.5px] text-white leading-snug">{event.summary}</div>
         {event.ac_codes && event.ac_codes.length > 0 && (
           <div className="mt-1.5 flex items-center flex-wrap gap-1">
             {event.ac_codes.slice(0, 8).map((ac) => (
@@ -343,7 +340,7 @@ function TimelineRow({ event, onTap }: { event: EvidenceEvent; onTap: () => void
           </div>
         )}
       </div>
-      <span className="text-white/40 text-[14px] shrink-0 mt-1.5 print:hidden" aria-hidden="true">
+      <span className="text-white text-[14px] shrink-0 mt-1.5 print:hidden" aria-hidden="true">
         →
       </span>
     </button>

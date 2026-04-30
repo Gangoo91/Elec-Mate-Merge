@@ -191,7 +191,7 @@ export default function IqaSamplingPlanPage() {
       <motion.div variants={itemVariants}>
         <button
           onClick={() => navigate(-1)}
-          className="text-[12px] font-medium text-white/65 hover:text-white transition-colors no-print"
+          className="text-[12px] font-medium text-white hover:text-white transition-colors no-print"
         >
           ← Back to IQA
         </button>
@@ -203,19 +203,19 @@ export default function IqaSamplingPlanPage() {
         </div>
         <h1 className="mt-2 text-[28px] sm:text-[36px] font-semibold text-white tracking-tight leading-tight">
           {plan.qualification_code ?? 'All qualifications'}
-          {plan.unit_code && <span className="text-white/55 font-medium"> · {plan.unit_code}</span>}
+          {plan.unit_code && <span className="text-white font-medium"> · {plan.unit_code}</span>}
         </h1>
         <div className="mt-3 flex items-center flex-wrap gap-x-3 gap-y-1.5 text-[12px]">
           <Pill tone={onTrack ? 'green' : 'amber'}>{onTrack ? 'On track' : 'Catching up'}</Pill>
-          <span className="text-white/65 tabular-nums">Target {target}%</span>
-          <span className="text-white/25">·</span>
-          <span className="text-white/65 tabular-nums">
+          <span className="text-white tabular-nums">Target {target}%</span>
+          <span className="text-white">·</span>
+          <span className="text-white tabular-nums">
             {formatDate(plan.period_start)} → {formatDate(plan.period_end)}
           </span>
           {plan.iqa_name_snapshot && (
             <>
-              <span className="text-white/25">·</span>
-              <span className="text-white/65">
+              <span className="text-white">·</span>
+              <span className="text-white">
                 IQA: <span className="text-white">{plan.iqa_name_snapshot}</span>
               </span>
             </>
@@ -227,17 +227,17 @@ export default function IqaSamplingPlanPage() {
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
           <div className="flex items-end justify-between gap-3 flex-wrap">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Sample progress
               </div>
               <div className="mt-1 text-[24px] font-semibold tabular-nums text-white">
                 {samples.length}
-                <span className="text-white/40 text-[16px]"> / {total}</span>
-                <span className="ml-2 text-[14px] font-medium text-white/55">{sampledPct}%</span>
+                <span className="text-white text-[16px]"> / {total}</span>
+                <span className="ml-2 text-[14px] font-medium text-white">{sampledPct}%</span>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55">Verdicts</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white">Verdicts</div>
               <div className="mt-1 flex items-center gap-2 text-[11.5px] tabular-nums">
                 <VerdictTally
                   label="Agree"
@@ -269,7 +269,7 @@ export default function IqaSamplingPlanPage() {
             />
           </div>
           {plan.notes && (
-            <p className="mt-3 pt-3 border-t border-white/[0.06] text-[12px] text-white/75 leading-relaxed">
+            <p className="mt-3 pt-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
               {plan.notes}
             </p>
           )}
@@ -279,7 +279,7 @@ export default function IqaSamplingPlanPage() {
       {/* Samples — already in scope */}
       <motion.section variants={itemVariants} className="space-y-3">
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             In scope
           </div>
           <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
@@ -288,7 +288,7 @@ export default function IqaSamplingPlanPage() {
         </div>
         {samples.length === 0 ? (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
-            <p className="text-[12.5px] text-white/65 max-w-md leading-relaxed">
+            <p className="text-[12.5px] text-white max-w-md leading-relaxed">
               Nothing sampled yet. Pick observations from the list below to add them to your sample,
               then mark each with a verdict.
             </p>
@@ -335,7 +335,7 @@ export default function IqaSamplingPlanPage() {
       {/* Eligible — pickable */}
       <motion.section variants={itemVariants} className="space-y-3">
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Available
           </div>
           <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
@@ -344,7 +344,7 @@ export default function IqaSamplingPlanPage() {
         </div>
         {eligible.length === 0 ? (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
-            <p className="text-[12.5px] text-white/65 max-w-md leading-relaxed">
+            <p className="text-[12.5px] text-white max-w-md leading-relaxed">
               No eligible observations in this period
               {plan.assessor_id ? ' for this assessor' : ''}
               {plan.qualification_code ? ` on ${plan.qualification_code}` : ''}. Either widen the
@@ -365,20 +365,20 @@ export default function IqaSamplingPlanPage() {
           plan's period and (when set) verified by the plan's assessor. */}
       <motion.section variants={itemVariants} className="space-y-3">
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Available · OTJ
           </div>
           <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
             Eligible OTJ entries · {eligibleOtj.length}
           </h2>
-          <p className="mt-1 text-[12px] text-white/65 leading-relaxed max-w-2xl">
+          <p className="mt-1 text-[12px] text-white leading-relaxed max-w-2xl">
             Assessor-verified OTJ submissions in this period. Sample to confirm the assessor's
             verdict was sound — agree, disagree or refer with comments.
           </p>
         </div>
         {eligibleOtj.length === 0 ? (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
-            <p className="text-[12.5px] text-white/65 max-w-md leading-relaxed">
+            <p className="text-[12.5px] text-white max-w-md leading-relaxed">
               No assessor-verified OTJ entries in this period
               {plan.assessor_id ? ' for this assessor' : ''}. They appear here once the assessor
               signs off submissions.
@@ -419,7 +419,7 @@ function VerdictTally({
 }) {
   const colour =
     n === 0
-      ? 'text-white/35'
+      ? 'text-white'
       : tone === 'emerald'
         ? 'text-emerald-300'
         : tone === 'red'
@@ -430,7 +430,7 @@ function VerdictTally({
   return (
     <span className="inline-flex items-center gap-1">
       <span className={cn('font-semibold', colour)}>{n}</span>
-      <span className="text-white/55">{label}</span>
+      <span className="text-white">{label}</span>
     </span>
   );
 }
@@ -468,13 +468,13 @@ function SampleCard({
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
             <Pill tone={verdictTone}>{VERDICT_LABEL[sample.verdict]}</Pill>
-            <span className="text-[11px] text-white/55 tabular-nums">
+            <span className="text-[11px] text-white tabular-nums">
               Sampled {formatDate(sample.sampled_at)}
             </span>
             {sample.iqa_name_snapshot && (
               <>
-                <span className="text-white/25">·</span>
-                <span className="text-[11px] text-white/65">by {sample.iqa_name_snapshot}</span>
+                <span className="text-white">·</span>
+                <span className="text-[11px] text-white">by {sample.iqa_name_snapshot}</span>
               </>
             )}
           </div>
@@ -495,7 +495,7 @@ function SampleCard({
                 : (sample.observation_title_snapshot ?? 'Observation')}
             </span>
           </h3>
-          <div className="mt-0.5 text-[11px] text-white/55 tabular-nums">
+          <div className="mt-0.5 text-[11px] text-white tabular-nums">
             {sample.otj_id ? 'Activity' : 'Observed'}{' '}
             {formatDate(
               sample.otj_id ? sample.otj_date_snapshot : sample.observation_date_snapshot
@@ -521,7 +521,7 @@ function SampleCard({
                     : tone === 'red'
                       ? 'bg-red-500/[0.12] border-red-500/40 text-red-200'
                       : 'bg-amber-500/[0.12] border-amber-500/40 text-amber-200'
-                  : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white/70 hover:text-white hover:border-white/[0.18]'
+                  : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white hover:text-white hover:border-white/[0.18]'
               )}
             >
               {VERDICT_LABEL[v]}
@@ -532,14 +532,14 @@ function SampleCard({
         <button
           type="button"
           onClick={onViewEvidence}
-          className="h-8 px-3 rounded-full bg-[hsl(0_0%_14%)] border border-white/[0.08] text-[11.5px] font-medium text-white/80 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation"
+          className="h-8 px-3 rounded-full bg-[hsl(0_0%_14%)] border border-white/[0.08] text-[11.5px] font-medium text-white hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation"
         >
           View evidence
         </button>
         <button
           type="button"
           onClick={onRemove}
-          className="h-8 px-3 rounded-full text-[11.5px] font-medium text-white/55 hover:text-red-300 hover:bg-red-500/[0.06] transition-colors touch-manipulation"
+          className="h-8 px-3 rounded-full text-[11.5px] font-medium text-white hover:text-red-300 hover:bg-red-500/[0.06] transition-colors touch-manipulation"
         >
           Remove
         </button>
@@ -562,7 +562,7 @@ function SampleCard({
                   setComments(sample.comments ?? '');
                   setEditing(false);
                 }}
-                className="h-7 px-3 rounded-full text-[11px] font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
+                className="h-7 px-3 rounded-full text-[11px] font-medium text-white hover:text-white transition-colors touch-manipulation"
               >
                 Cancel
               </button>
@@ -579,7 +579,7 @@ function SampleCard({
           <button
             type="button"
             onClick={() => setEditing(true)}
-            className="text-left w-full text-[12px] text-white/85 leading-relaxed hover:bg-white/[0.02] -mx-2 px-2 py-1 rounded-md transition-colors"
+            className="text-left w-full text-[12px] text-white leading-relaxed hover:bg-white/[0.02] -mx-2 px-2 py-1 rounded-md transition-colors"
           >
             {sample.comments}
           </button>
@@ -587,7 +587,7 @@ function SampleCard({
           <button
             type="button"
             onClick={() => setEditing(true)}
-            className="text-[11.5px] font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
+            className="text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
           >
             Add verdict comment →
           </button>
@@ -611,19 +611,19 @@ function EligibleOtjRow({ otj, onAdd }: { otj: EligibleOtjEntry; onAdd: () => vo
           </span>
           <span className="truncate">{otj.title}</span>
         </div>
-        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white/55 tabular-nums">
+        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white tabular-nums">
           <span>{formatDate(otj.activity_date)}</span>
-          <span className="text-white/25">·</span>
+          <span className="text-white">·</span>
           <span>{hours}</span>
           {otj.verified_at && (
             <>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span className="capitalize">verified {formatDate(otj.verified_at)}</span>
             </>
           )}
           {unitCount > 0 && (
             <>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span>
                 {unitCount} unit{unitCount === 1 ? '' : 's'}
               </span>
@@ -650,29 +650,29 @@ function EligibleRow({ obs, onAdd }: { obs: EligibleObservation; onAdd: () => vo
     <div className="px-5 sm:px-6 py-3.5 flex items-start gap-3 flex-wrap">
       <div className="min-w-0 flex-1">
         <div className="text-[13px] font-medium text-white truncate">{obs.activity_title}</div>
-        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white/55 tabular-nums">
+        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white tabular-nums">
           <span>{formatDate(obs.observed_at)}</span>
           {obs.student_name_snapshot && (
             <>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span className="truncate max-w-[160px]">{obs.student_name_snapshot}</span>
             </>
           )}
           {obs.assessor_name_snapshot && (
             <>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span className="truncate max-w-[160px]">Assessor: {obs.assessor_name_snapshot}</span>
             </>
           )}
           {obs.outcome && (
             <>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span className="capitalize">{obs.outcome.replace(/_/g, ' ')}</span>
             </>
           )}
           {acsCount > 0 && (
             <>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span>
                 {acsCount} AC{acsCount === 1 ? '' : 's'}
               </span>

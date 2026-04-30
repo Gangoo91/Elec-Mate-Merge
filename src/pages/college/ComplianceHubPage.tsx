@@ -63,7 +63,7 @@ export default function ComplianceHubPage() {
         <motion.button
           onClick={() => navigate('/college')}
           whileTap={{ scale: 0.97 }}
-          className="inline-flex items-center gap-1 -ml-1 h-9 px-2 rounded-lg text-[13px] font-medium text-white/85 hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
+          className="inline-flex items-center gap-1 -ml-1 h-9 px-2 rounded-lg text-[13px] font-medium text-white hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
         >
           <ChevronLeft className="h-4 w-4" />
           Back to College
@@ -103,7 +103,7 @@ export default function ComplianceHubPage() {
                   <span
                     className={cn(
                       'text-[9.5px] font-medium uppercase tracking-[0.22em] leading-none',
-                      isActive ? 'text-purple-300' : 'text-white/55'
+                      isActive ? 'text-purple-300' : 'text-white'
                     )}
                   >
                     {t.eyebrow}
@@ -111,7 +111,7 @@ export default function ComplianceHubPage() {
                   <span
                     className={cn(
                       'mt-1 text-[13px] font-semibold leading-none',
-                      isActive ? 'text-white' : 'text-white/85'
+                      isActive ? 'text-white' : 'text-white'
                     )}
                   >
                     {t.label}
@@ -134,9 +134,7 @@ export default function ComplianceHubPage() {
         {activeTab === 'eif' && (
           <Suspense
             fallback={
-              <div className="py-10 text-center text-[12.5px] text-white/55">
-                Loading Ofsted EIF…
-              </div>
+              <div className="py-10 text-center text-[12.5px] text-white">Loading Ofsted EIF…</div>
             }
           >
             <OfstedEifPage />
@@ -162,7 +160,7 @@ function AuditPackPanel() {
         <h2 className="mt-2 text-[20px] sm:text-[24px] font-semibold text-white tracking-tight">
           Generate the inspector-ready audit pack
         </h2>
-        <p className="mt-2 text-[13px] text-white/85 leading-relaxed">
+        <p className="mt-2 text-[13px] text-white leading-relaxed">
           The audit pack assembles your Single Central Record, live policies, per-policy
           acknowledgement log, staff matrix and current compliance summary into a single print-ready
           bundle. Opens on its own page so the print stylesheet renders cleanly.
@@ -176,7 +174,7 @@ function AuditPackPanel() {
           </button>
           <button
             onClick={() => navigate('/college/compliance/pack?auto=1')}
-            className="inline-flex items-center h-11 px-4 rounded-xl text-[13px] font-medium text-white/85 hover:text-white border border-white/[0.10] hover:bg-white/[0.04] transition-colors touch-manipulation"
+            className="inline-flex items-center h-11 px-4 rounded-xl text-[13px] font-medium text-white hover:text-white border border-white/[0.10] hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
             Auto-print on load
           </button>

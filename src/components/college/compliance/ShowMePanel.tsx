@@ -35,7 +35,7 @@ const KIND_TONE: Record<SearchEvidenceKind, string> = {
   observation: 'border-cyan-300/30 text-cyan-200 bg-cyan-500/[0.06]',
   otj: 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.06]',
   note: 'border-purple-300/30 text-purple-200 bg-purple-500/[0.06]',
-  message: 'border-white/[0.10] text-white/85 bg-white/[0.03]',
+  message: 'border-white/[0.10] text-white bg-white/[0.03]',
   epa: 'border-rose-300/30 text-rose-200 bg-rose-500/[0.06]',
   iqa: 'border-yellow-300/30 text-yellow-200 bg-yellow-500/[0.06]',
 };
@@ -71,31 +71,33 @@ export function ShowMePanel() {
 
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
-      <div className="px-4 sm:px-5 py-4 border-b border-white/[0.06]">
+      <div className="px-4 sm:px-5 py-3.5 sm:py-4 border-b border-white/[0.06]">
         <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-purple-300" aria-hidden="true" />
+          <Sparkles className="h-3.5 w-3.5 text-purple-300" aria-hidden="true" />
           <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
             Inspector "show me" search
           </span>
         </div>
-        <h2 className="mt-1.5 text-[16px] sm:text-[18px] font-semibold text-white tracking-tight">
-          Type any Ofsted-style question — get the evidence chain in seconds
+        <h2 className="mt-1.5 text-[15px] sm:text-[18px] font-semibold text-white tracking-tight leading-snug">
+          Ofsted-style question → evidence chain in seconds
         </h2>
-        <p className="mt-1 text-[12px] text-white/85 leading-snug">
-          E.g. "show me struggling learners and our response" or "how do we evidence British
-          Values". Hits real learner data, scoped to your college.
+        <p className="mt-1 text-[12px] text-white leading-snug">
+          Hits real learner data, scoped to your college.
         </p>
 
+        {/* Search row — stacks vertically on mobile (full-width input then
+            full-width submit) so the placeholder never truncates. Side-by-
+            side from sm: where there's room. */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
           }}
-          className="mt-3 flex items-center gap-2"
+          className="mt-3 flex flex-col sm:flex-row gap-2"
         >
           <div className="flex-1 relative">
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none"
+              className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none"
               aria-hidden="true"
             />
             <input
@@ -113,7 +115,7 @@ export function ShowMePanel() {
                   }
                 }
               }}
-              placeholder="Ask anything… (Esc to clear)"
+              placeholder="Ask anything…"
               aria-label="Inspector evidence search — type a natural-language question"
               autoComplete="off"
               spellCheck={false}
@@ -125,9 +127,9 @@ export function ShowMePanel() {
             type="submit"
             disabled={loading || draft.trim().length < 3}
             className={cn(
-              'inline-flex items-center h-11 px-4 rounded-xl text-[13px] font-semibold text-black transition-colors touch-manipulation',
+              'inline-flex items-center justify-center h-11 px-4 rounded-xl text-[13px] font-semibold text-black transition-colors touch-manipulation shrink-0',
               loading || draft.trim().length < 3
-                ? 'bg-white/[0.05] text-white/40'
+                ? 'bg-white/[0.05] text-white'
                 : 'bg-purple-300 hover:bg-purple-200'
             )}
           >
@@ -136,20 +138,28 @@ export function ShowMePanel() {
         </form>
 
         {!result && !loading && (
-          <div className="mt-3 flex items-center flex-wrap gap-1.5">
-            {PROMPTS.map((p) => (
-              <button
-                key={p}
-                type="button"
-                onClick={() => {
-                  setDraft(p);
-                  handleSubmit(p);
-                }}
-                className="inline-flex items-center h-7 px-2.5 rounded-full text-[11.5px] font-medium border border-white/[0.10] text-white/85 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.18] transition-colors touch-manipulation"
-              >
-                {p}
-              </button>
-            ))}
+          <div className="mt-3">
+            <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-2">
+              Try
+            </div>
+            {/* Prompts — 2-up grid on mobile so we use the full width
+                rather than leaving a long ribbon of dead space to the
+                right of each chip; flex-wrap on tablet+. */}
+            <div className="grid grid-cols-1 sm:flex sm:flex-wrap gap-1.5">
+              {PROMPTS.map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => {
+                    setDraft(p);
+                    handleSubmit(p);
+                  }}
+                  className="text-left sm:text-center inline-flex items-center sm:h-7 min-h-[36px] sm:min-h-0 px-3 sm:px-2.5 rounded-xl sm:rounded-full text-[12px] sm:text-[11.5px] font-medium border border-white/[0.10] text-white bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.18] transition-colors touch-manipulation"
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -173,7 +183,7 @@ export function ShowMePanel() {
       )}
 
       {loading && !result && (
-        <div className="px-4 sm:px-5 py-6 text-center text-[12.5px] text-white/55">
+        <div className="px-4 sm:px-5 py-6 text-center text-[12.5px] text-white">
           Interpreting question + scanning evidence…
         </div>
       )}
@@ -200,7 +210,7 @@ function ResultsPanel({
             Interpreted as
           </div>
           <div className="mt-1 text-[13px] text-white leading-snug">{result.interpretation}</div>
-          <div className="mt-1 text-[11px] text-white/55">You typed: "{lastQuery}"</div>
+          <div className="mt-1 text-[11px] text-white">You typed: "{lastQuery}"</div>
           <div className="mt-2 flex items-center flex-wrap gap-1.5">
             <FilterChip label={`Focus · ${focusShort(result.focus)}`} tone="purple" />
             {result.risk_filter !== 'any' && (
@@ -217,7 +227,7 @@ function ResultsPanel({
           type="button"
           onClick={onReset}
           disabled={loading}
-          className="text-[12px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation disabled:opacity-50 whitespace-nowrap"
+          className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation disabled:opacity-50 whitespace-nowrap"
         >
           Clear ×
         </button>
@@ -225,7 +235,7 @@ function ResultsPanel({
 
       {result.matches.length === 0 ? (
         <div className="px-4 sm:px-5 py-10 text-center">
-          <p className="text-[13px] text-white/85 leading-relaxed max-w-md mx-auto">
+          <p className="text-[13px] text-white leading-relaxed max-w-md mx-auto">
             No learners match this question right now. That's not a gap — try widening the window
             (rephrase as "in the last year") or asking a different angle.
           </p>
@@ -248,7 +258,7 @@ type ChipTone = 'purple' | 'amber' | 'white';
 const CHIP_TONE: Record<ChipTone, string> = {
   purple: 'border-purple-300/30 text-purple-200 bg-purple-500/[0.06]',
   amber: 'border-amber-300/30 text-amber-200 bg-amber-500/[0.06]',
-  white: 'border-white/[0.10] text-white/85 bg-white/[0.03]',
+  white: 'border-white/[0.10] text-white bg-white/[0.03]',
 };
 
 function FilterChip({ label, tone }: { label: string; tone: ChipTone }) {
@@ -302,13 +312,13 @@ function MatchRow({ match }: { match: SearchMatch }) {
         <div className="min-w-0 flex-1 flex items-center flex-wrap gap-2">
           <span className="text-[14px] font-semibold text-white">{match.learner_name}</span>
           {match.cohort_name && (
-            <span className="text-[11px] text-white/55">· {match.cohort_name}</span>
+            <span className="text-[11px] text-white">· {match.cohort_name}</span>
           )}
           {match.risk_level && (
             <span
               className={cn(
                 'inline-flex items-center h-5 px-1.5 rounded-md border text-[10.5px] font-semibold uppercase tracking-[0.16em]',
-                RISK_TONE[match.risk_level] ?? 'border-white/[0.10] text-white/85 bg-white/[0.03]'
+                RISK_TONE[match.risk_level] ?? 'border-white/[0.10] text-white bg-white/[0.03]'
               )}
             >
               {match.risk_level}
@@ -322,7 +332,7 @@ function MatchRow({ match }: { match: SearchMatch }) {
         {match.evidence.map((ev, i) => (
           <div
             key={`${match.learner_id}-${i}`}
-            className="flex items-start gap-2 text-[12px] text-white/85 leading-snug"
+            className="flex items-start gap-2 text-[12px] text-white leading-snug"
           >
             <span
               className={cn(
@@ -333,8 +343,8 @@ function MatchRow({ match }: { match: SearchMatch }) {
               {KIND_LABEL[ev.kind]}
             </span>
             <span className="text-white font-medium">{ev.title}</span>
-            <span className="text-white/65">— {ev.summary}</span>
-            <time className="text-white/40 tabular-nums shrink-0 ml-auto">
+            <span className="text-white">— {ev.summary}</span>
+            <time className="text-white tabular-nums shrink-0 ml-auto">
               {new Date(ev.occurred_at).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'short',

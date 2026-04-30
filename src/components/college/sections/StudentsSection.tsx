@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { AddStudentDialog } from '@/components/college/dialogs/AddStudentDialog';
+import { BulkAddStudentsSheet } from '@/components/college/dialogs/BulkAddStudentsSheet';
 import { StudentDetailSheet } from '@/components/college/sheets/StudentDetailSheet';
 import { EditStudentSheet } from '@/components/college/sheets/EditStudentSheet';
 import { WithdrawStudentDialog } from '@/components/college/dialogs/WithdrawStudentDialog';
@@ -38,6 +39,7 @@ export function StudentsSection() {
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
   const [addStudentOpen, setAddStudentOpen] = useState(false);
+  const [bulkAddOpen, setBulkAddOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<CollegeStudent | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -159,12 +161,21 @@ export function StudentsSection() {
           description={`${activeCount} active student${activeCount === 1 ? '' : 's'} enrolled.`}
           tone="yellow"
           actions={
-            <button
-              onClick={() => setAddStudentOpen(true)}
-              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-            >
-              Enrol student →
-            </button>
+            <div className="flex items-center gap-3 flex-wrap justify-end">
+              <button
+                onClick={() => setBulkAddOpen(true)}
+                className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+                title="Paste a list or drop a CSV to enrol many learners at once"
+              >
+                Bulk enrol
+              </button>
+              <button
+                onClick={() => setAddStudentOpen(true)}
+                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+              >
+                Enrol student →
+              </button>
+            </div>
           }
         />
       </motion.div>
@@ -236,9 +247,9 @@ export function StudentsSection() {
                 {filteredStudents.map((student) => {
                   const attendanceRate = getAttendanceRate(student.id);
                   const progressPercent = student.progress_percent ?? 0;
-                  const isAtRisk =
-                    student.risk_level === 'High' || student.risk_level === 'Medium';
-                  const isCritical = student.risk_level === 'Critical' || student.risk_level === 'High';
+                  const isAtRisk = student.risk_level === 'High' || student.risk_level === 'Medium';
+                  const isCritical =
+                    student.risk_level === 'Critical' || student.risk_level === 'High';
                   const isSelected = selectedIds.has(student.id);
 
                   const attendanceTone =
@@ -253,9 +264,7 @@ export function StudentsSection() {
                       key={student.id}
                       className={cn(
                         'relative group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-5 transition-colors',
-                        isSelected
-                          ? 'bg-elec-yellow/[0.06]'
-                          : 'hover:bg-[hsl(0_0%_14%)]'
+                        isSelected ? 'bg-elec-yellow/[0.06]' : 'hover:bg-[hsl(0_0%_14%)]'
                       )}
                       onTouchStart={() => startLongPress(student.id)}
                       onTouchEnd={cancelLongPress}
@@ -338,15 +347,11 @@ export function StudentsSection() {
                             {student.name}
                           </span>
                           {isAtRisk && (
-                            <Pill tone={isCritical ? 'red' : 'amber'}>
-                              {student.risk_level}
-                            </Pill>
+                            <Pill tone={isCritical ? 'red' : 'amber'}>{student.risk_level}</Pill>
                           )}
                         </div>
                         <div className="mt-0.5 text-[11.5px] text-white truncate tabular-nums">
-                          {student.uln
-                            ? `ULN · ${student.uln}`
-                            : getCohortName(student.cohort_id)}
+                          {student.uln ? `ULN · ${student.uln}` : getCohortName(student.cohort_id)}
                         </div>
 
                         {/* Progress + meta — single responsive line */}
@@ -409,9 +414,7 @@ export function StudentsSection() {
                               onClick={(e) => e.stopPropagation()}
                               className="h-9 w-9 rounded-full flex items-center justify-center text-white hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
                             >
-                              <span className="text-[15px] font-semibold tracking-[0.12em]">
-                                ⋯
-                              </span>
+                              <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
                             </button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent
@@ -516,6 +519,7 @@ export function StudentsSection() {
       )}
 
       <AddStudentDialog open={addStudentOpen} onOpenChange={setAddStudentOpen} />
+      <BulkAddStudentsSheet open={bulkAddOpen} onOpenChange={setBulkAddOpen} />
       <StudentDetailSheet
         student={selectedStudent}
         open={detailOpen}

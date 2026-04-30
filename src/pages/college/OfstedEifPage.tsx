@@ -37,7 +37,7 @@ const RAG_BADGE: Record<RagStatus, string> = {
   red: 'border-rose-300/30 text-rose-200 bg-rose-500/[0.10]',
   amber: 'border-amber-300/30 text-amber-200 bg-amber-500/[0.10]',
   green: 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.10]',
-  grey: 'border-white/[0.10] text-white/65 bg-white/[0.04]',
+  grey: 'border-white/[0.10] text-white bg-white/[0.04]',
 };
 
 export default function OfstedEifPage() {
@@ -64,14 +64,14 @@ export default function OfstedEifPage() {
           actions={
             <div className="flex items-center gap-3 flex-wrap justify-end">
               {generated && (
-                <span className="text-[11px] text-white/55 whitespace-nowrap">
+                <span className="text-[11px] text-white whitespace-nowrap">
                   Generated {generated}
                 </span>
               )}
               <button
                 onClick={refresh}
                 disabled={loading}
-                className="text-[12px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation disabled:opacity-50 whitespace-nowrap"
+                className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation disabled:opacity-50 whitespace-nowrap"
               >
                 {loading ? 'Refreshing…' : 'Refresh'}
               </button>
@@ -96,10 +96,7 @@ export default function OfstedEifPage() {
       )}
 
       {loading && !data && (
-        <motion.div
-          variants={itemVariants}
-          className="py-10 text-center text-[12.5px] text-white/55"
-        >
+        <motion.div variants={itemVariants} className="py-10 text-center text-[12.5px] text-white">
           Loading signals…
         </motion.div>
       )}
@@ -147,7 +144,7 @@ function JudgementCard({ judgement }: { judgement: JudgementSignal }) {
             {RAG_LABEL[judgement.rag]}
           </span>
         </div>
-        <p className="mt-2 text-[12.5px] text-white/85 leading-snug">{judgement.summary}</p>
+        <p className="mt-2 text-[12.5px] text-white leading-snug">{judgement.summary}</p>
       </div>
 
       <ul className="divide-y divide-white/[0.05]">
@@ -175,10 +172,10 @@ function JudgementCard({ judgement }: { judgement: JudgementSignal }) {
                   <div className="text-[12.5px] font-medium text-white leading-snug">
                     {row.label}
                   </div>
-                  <div className="mt-0.5 text-[11.5px] text-white/65 tabular-nums">{row.value}</div>
+                  <div className="mt-0.5 text-[11.5px] text-white tabular-nums">{row.value}</div>
                 </div>
                 {clickable && (
-                  <span className="text-white/40 text-[14px] shrink-0" aria-hidden="true">
+                  <span className="text-white text-[14px] shrink-0" aria-hidden="true">
                     →
                   </span>
                 )}
@@ -190,14 +187,14 @@ function JudgementCard({ judgement }: { judgement: JudgementSignal }) {
 
       {judgement.gaps.length > 0 && (
         <div className="px-4 sm:px-5 py-3 border-t border-white/[0.06] bg-white/[0.01]">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
             Known gaps
           </div>
           <ul className="mt-1.5 space-y-1">
             {judgement.gaps.map((g, i) => (
               <li
                 key={`${judgement.key}-gap-${i}`}
-                className="flex items-start gap-2 text-[11.5px] text-white/65 leading-snug"
+                className="flex items-start gap-2 text-[11.5px] text-white leading-snug"
               >
                 <span className="text-rose-300/80 mt-0.5">•</span>
                 <span>{g}</span>
