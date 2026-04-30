@@ -6,12 +6,14 @@
  * primitives so the whole product feels like one designer's hand.
  *
  * Flow:
- *   00 · VERDICT       — huge display sentence, "is the business OK?"
- *   01 · TODAY         — what to do today (overdue, drafts, expiring, etc.)
- *   02 · THIS MONTH    — slim StatStrip of headline numbers
- *   03 · YOUR HUBS     — editorial HubCards with live signals
+ *   ——   GREETING      — "Hello, Andrew." + verdict line + CTA pill
+ *   01 · THIS MONTH    — calm monochrome stat strip (every cell clickable)
+ *   02 · YOUR HUBS     — monochrome hub cards (incl. Mate teaser + Bring a Mate referral)
+ *   03 · TODAY         — what to do today (overdue, drafts, expiring, etc.)
  *   04 · MOMENTUM      — newspaper-style closer
  *
+ * Single accent: elec-yellow on arrows / one stat cell when relevant.
+ * No multi-colour tone gradients — restraint is the whole point.
  * Apprentice and electrician roles each see their own variant.
  */
 
@@ -21,7 +23,6 @@ import { motion } from 'framer-motion';
 
 import { DashboardContainer } from '@/components/dashboard/DashboardContainer';
 import TrialBanner from '@/components/dashboard/TrialBanner';
-import ReferralBanner from '@/components/referrals/ReferralBanner';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
 
 import { VerdictHero } from '@/components/dashboard/editorial/VerdictHero';
@@ -144,11 +145,9 @@ const Dashboard = () => {
               shared dashboard context the parent provider mounts. */}
           <EditorialDashboard />
 
-          {/* Trial / referral promos — kept but slimmed below the fold */}
-          <div className="space-y-4">
-            <TrialBanner />
-            <ReferralBanner />
-          </div>
+          {/* Trial banner only — referral now lives inside the editorial flow
+              as section 05 (BringAMate), gated to first 7 days. */}
+          <TrialBanner />
 
           {/* Footer spacing for mobile nav */}
           <div className="h-4 sm:h-6" />
@@ -170,7 +169,7 @@ export default Dashboard;
  * Verdict → Today → This Month → Hubs → Momentum.
  */
 function EditorialDashboard() {
-  const { eyebrow, verdict, sub, tone, cta, queueItems, isLoading, role } = useDashboardVerdict();
+  const { eyebrow, greeting, verdict, cta, queueItems, isLoading, role } = useDashboardVerdict();
 
   const todayLabel = role === 'apprentice' ? "TODAY'S TRAINING" : 'TODAY';
   const todayEmpty =
@@ -182,15 +181,14 @@ function EditorialDashboard() {
     <div className="space-y-12 sm:space-y-16">
       <VerdictHero
         eyebrow={eyebrow}
+        greeting={greeting}
         verdict={verdict}
-        sub={sub}
-        tone={tone}
         cta={cta}
         isLoading={isLoading}
       />
-      <TodayQueue number="01" label={todayLabel} items={queueItems} emptyMessage={todayEmpty} />
-      <HeadlineStats number="02" label="THIS MONTH" />
-      <EditorialHubGrid number="03" label="YOUR HUBS" />
+      <HeadlineStats number="01" label="THIS MONTH" />
+      <EditorialHubGrid number="02" label="YOUR HUBS" />
+      <TodayQueue number="03" label={todayLabel} items={queueItems} emptyMessage={todayEmpty} />
       <MomentumStrip number="04" label="MOMENTUM" />
     </div>
   );

@@ -2,20 +2,19 @@
  * useDashboardVerdict
  *
  * Role-aware data layer for the editorial dashboard hero. Computes:
- * - `verdict`: the headline sentence ("You're owed £6,105." / "Day 12 — keep going.")
- * - `sub`: the supporting line under the verdict
+ * - `eyebrow`: contextual eyebrow ("Thursday · 30 Apr · Afternoon")
+ * - `greeting`: warm display headline ("Hello, Andrew.")
+ * - `verdict`: supporting line under the greeting (the actual signal — money,
+ *    streak, etc., in a quieter weight than the greeting)
  * - `cta`: optional primary action attached to the verdict
  * - `queueItems`: the prioritised "what to do today" rows
- * - `eyebrow`: contextual eyebrow ("Thursday · 30 April · Good afternoon")
  *
- * Reads from the shared dashboard context so it doesn't double-fetch. Apprentice
- * and electrician roles each get their own verdict logic; falls back to the
- * electrician path for any unknown role for now.
+ * Reads from the shared dashboard context so it doesn't double-fetch.
+ * Apprentice and electrician roles each get their own verdict logic.
  */
 import { useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSharedDashboardData } from './useDashboardData';
-import type { Tone } from '@/components/college/primitives';
 
 export interface VerdictCta {
   label: string;
@@ -28,7 +27,6 @@ export interface QueueItem {
   subtitle?: string;
   trailing?: string;
   href: string;
-  tone?: Tone;
 }
 
 export interface DashboardVerdict {
@@ -109,7 +107,6 @@ export function useDashboardVerdict(): DashboardVerdict {
               : 'Start a streak with one section',
           trailing: '5 min',
           href: '/study-centre/apprentice',
-          tone: 'amber',
         });
       }
 
@@ -118,7 +115,6 @@ export function useDashboardVerdict(): DashboardVerdict {
         title: "Log today's training hours",
         subtitle: 'OTJ time counts toward your apprenticeship',
         href: '/apprentice-hub/otj',
-        tone: 'blue',
       });
 
       queueItems.push({
@@ -126,7 +122,6 @@ export function useDashboardVerdict(): DashboardVerdict {
         title: "Add today's portfolio evidence",
         subtitle: 'Photo, reflection, or task — 60 seconds',
         href: '/apprentice-hub/portfolio',
-        tone: 'purple',
       });
 
       queueItems.push({
@@ -134,14 +129,12 @@ export function useDashboardVerdict(): DashboardVerdict {
         title: 'Site diary entry',
         subtitle: 'What you did, what you learned',
         href: '/apprentice-hub/site-diary',
-        tone: 'cyan',
       });
 
       return {
         eyebrow,
+        greeting,
         verdict,
-        sub,
-        tone,
         cta,
         queueItems,
         isLoading: data.isLoading,
@@ -163,42 +156,29 @@ export function useDashboardVerdict(): DashboardVerdict {
     const { expiringSoon: incompleteCerts } = data.certificates;
 
     let verdict: string;
-    let sub: string;
-    let tone: Tone;
     let cta: VerdictCta | undefined;
 
     if (overdueValue > 0) {
-      verdict = `You're owed ${GBP_FULL(overdueValue)}.`;
-      sub = `${overdueInvoices} overdue invoice${overdueInvoices > 1 ? 's' : ''} · chase before the weekend.`;
-      tone = 'red';
+      verdict = `You have ${overdueInvoices} overdue invoice${overdueInvoices > 1 ? 's' : ''} worth ${GBP_FULL(overdueValue)} — worth chasing before the weekend.`;
       cta = { label: 'View overdue', href: '/electrician/invoices?filter=overdue' };
     } else if (pendingQuotes > 0) {
-      verdict = `${pendingQuotes} quote${pendingQuotes > 1 ? 's' : ''} waiting on a reply.`;
-      sub = `${formattedQuoteValue} pipeline — a nudge today turns into payment next week.`;
-      tone = 'amber';
+      verdict = `${pendingQuotes} quote${pendingQuotes > 1 ? 's' : ''} waiting on a reply, ${formattedQuoteValue} pipeline. A nudge today turns into payment next week.`;
       cta = { label: 'Follow up', href: '/electrician/quotes' };
     } else if (incompleteCerts > 0) {
-      verdict = `${incompleteCerts} cert${incompleteCerts > 1 ? 's' : ''} need finishing.`;
-      sub = 'Drafts and in-progress reports — close them out so you can invoice.';
-      tone = 'yellow';
+      verdict = `${incompleteCerts} certificate${incompleteCerts > 1 ? 's' : ''} need finishing — drafts and in-progress reports waiting to be closed out.`;
       cta = {
         label: 'Open certificates',
         href: '/electrician/inspection-testing?section=my-reports',
       };
     } else if (activeJobs > 0) {
-      verdict = `${activeJobs} job${activeJobs > 1 ? 's' : ''} running.`;
-      sub = 'No fires today — the books are clear, certs are up, invoices paid.';
-      tone = 'emerald';
+      verdict = `${activeJobs} job${activeJobs > 1 ? 's' : ''} on the books — and nothing overdue, certs all closed out.`;
       cta = { label: 'Open jobs', href: '/electrician/jobs' };
     } else if (unpaidInvoices > 0) {
-      verdict = `${unpaidInvoices} invoice${unpaidInvoices > 1 ? 's' : ''} out for payment.`;
-      sub = 'Nothing overdue yet — keep an eye on it.';
-      tone = 'blue';
+      verdict = `${unpaidInvoices} invoice${unpaidInvoices > 1 ? 's' : ''} out for payment, nothing overdue yet.`;
       cta = { label: 'View invoices', href: '/electrician/invoices' };
     } else {
-      verdict = 'All clear today.';
-      sub = 'Nothing overdue, every cert closed out. Use the calm to push a quote out.';
-      tone = 'emerald';
+      verdict =
+        'All clear today — nothing overdue, every cert closed out. Use the calm to push a quote out.';
       cta = { label: 'New quote', href: '/electrician/quotes/new' };
     }
 
@@ -206,8 +186,6 @@ export function useDashboardVerdict(): DashboardVerdict {
     const queueItems: QueueItem[] = [];
 
     for (const action of data.actions.slice(0, 4)) {
-      const itemTone: Tone =
-        action.type === 'urgent' ? 'red' : action.type === 'warning' ? 'amber' : 'blue';
       const trailing =
         typeof action.metadata?.amount === 'number'
           ? GBP(action.metadata.amount as number)
@@ -220,7 +198,6 @@ export function useDashboardVerdict(): DashboardVerdict {
         subtitle: action.description,
         trailing,
         href: action.path,
-        tone: itemTone,
       });
     }
 
@@ -230,7 +207,6 @@ export function useDashboardVerdict(): DashboardVerdict {
         title: 'Send a quote today',
         subtitle: 'Pipeline grows when you push, not when you wait',
         href: '/electrician/quotes/new',
-        tone: 'yellow',
       });
       if (activeQuotes > 0) {
         queueItems.push({
@@ -239,16 +215,14 @@ export function useDashboardVerdict(): DashboardVerdict {
           subtitle: 'Review and follow up on open quotes',
           trailing: formattedQuoteValue,
           href: '/electrician/quotes',
-          tone: 'blue',
         });
       }
     }
 
     return {
       eyebrow,
+      greeting,
       verdict,
-      sub,
-      tone,
       cta,
       queueItems,
       isLoading: data.isLoading,

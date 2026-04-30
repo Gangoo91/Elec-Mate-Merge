@@ -1,22 +1,15 @@
 /**
  * TodayQueue — numbered "what to do today" list.
  *
- * Composes from college editorial primitives. Each row is a tone-accented
- * action a user can fire from the dashboard without thinking. Items are
- * generated upstream by `useDashboardVerdict` from existing dashboard data
- * (overdue invoices, idle drafts, expiring certs, study streak nudges) — no
- * new schema, no new endpoints.
+ * Pure monochrome rows on a single hairline-bordered card. The only colour
+ * is the elec-yellow arrow on the right of each row — same restraint rule
+ * as the rest of the dashboard.
  */
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-import {
-  Eyebrow,
-  ListCard,
-  ListRow,
-  containerVariants,
-  itemVariants,
-} from '@/components/college/primitives';
+import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import type { QueueItem } from '@/hooks/useDashboardVerdict';
 
 interface TodayQueueProps {
@@ -27,7 +20,7 @@ interface TodayQueueProps {
 }
 
 export function TodayQueue({
-  number = '01',
+  number = '02',
   label = 'TODAY',
   items,
   emptyMessage = "You're all caught up.",
@@ -54,33 +47,40 @@ export function TodayQueue({
 
       <motion.div variants={itemVariants}>
         {items.length === 0 ? (
-          <ListCard>
-            <div className="px-5 sm:px-6 py-8 text-center">
-              <p className="text-[14px] text-white/70">{emptyMessage}</p>
-            </div>
-          </ListCard>
+          <div className="relative rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] px-5 sm:px-6 py-8 text-center overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0" />
+            <p className="text-[14px] text-white/60">{emptyMessage}</p>
+          </div>
         ) : (
-          <ListCard>
-            {items.map((item) => (
-              <ListRow
+          <div className="relative rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.05] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
+            {items.map((item, i) => (
+              <button
                 key={item.id}
-                accent={item.tone}
-                title={item.title}
-                subtitle={item.subtitle}
                 onClick={() => navigate(item.href)}
-                trailing={
-                  item.trailing ? (
-                    <span className="inline-flex items-center gap-2 text-[12px] text-white/70 tabular-nums">
-                      <span>{item.trailing}</span>
-                      <span className="text-elec-yellow/70">→</span>
-                    </span>
-                  ) : (
-                    <span className="text-elec-yellow/70 text-[15px]">→</span>
-                  )
-                }
-              />
+                className="group relative w-full flex items-center gap-4 px-5 sm:px-7 py-4 sm:py-5 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+              >
+                {/* Numbered eyebrow — yellow, tabular, signature anchor */}
+                <span className="text-[10px] font-medium tracking-[0.18em] text-elec-yellow/70 tabular-nums shrink-0 w-7">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[14px] sm:text-[15px] font-medium text-white truncate">
+                    {item.title}
+                  </div>
+                  {item.subtitle && (
+                    <div className="mt-0.5 text-[12px] text-white/55 truncate">{item.subtitle}</div>
+                  )}
+                </div>
+                {item.trailing && (
+                  <span className="text-[13px] font-medium text-white tabular-nums shrink-0">
+                    {item.trailing}
+                  </span>
+                )}
+                <ArrowRight className="h-4 w-4 text-elec-yellow group-hover:translate-x-0.5 transition-transform shrink-0" />
+              </button>
             ))}
-          </ListCard>
+          </div>
         )}
       </motion.div>
     </motion.section>
