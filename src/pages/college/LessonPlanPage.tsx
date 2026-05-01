@@ -1510,6 +1510,11 @@ function PlanActionBar({
               onClick={() => navigate(`/college/lessons/${lessonId}/deliver`)}
               primary
             />
+            <ActionBtn
+              label="Slides"
+              onClick={() => navigate(`/college/lessons/${lessonId}/slides`)}
+              accent
+            />
             {scheduleMeta?.cohort_id && (
               <ActionBtn label="Register" onClick={() => setRegisterOpen(true)} accent />
             )}
