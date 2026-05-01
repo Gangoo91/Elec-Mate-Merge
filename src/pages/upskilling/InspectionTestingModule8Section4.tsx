@@ -449,10 +449,10 @@ const InspectionTestingModule8Section4 = () => {
               <text x="150" y="220" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
                 Designer No 2: Signature**
               </text>
-              <text x="150" y="245" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="8">
+              <text x="150" y="245" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="9">
                 **where mutual
               </text>
-              <text x="150" y="258" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="8">
+              <text x="150" y="258" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="9">
                 responsibility for design
               </text>
 
@@ -903,7 +903,7 @@ const InspectionTestingModule8Section4 = () => {
                 <text x="110" y="76" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
                   Person ordering work
                 </text>
-                <text x="110" y="88" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+                <text x="110" y="88" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                   → Reg 644.4 recipient
                 </text>
               </g>
@@ -990,7 +990,7 @@ const InspectionTestingModule8Section4 = () => {
                 <text x="680" y="76" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
                   Recommended interval
                 </text>
-                <text x="680" y="88" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+                <text x="680" y="88" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                   → Reg 644.4 / 651-652
                 </text>
               </g>

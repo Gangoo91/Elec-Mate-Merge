@@ -604,7 +604,7 @@ const InspectionTestingModule6Section5 = () => {
                     y="197"
                     textAnchor="middle"
                     fill="rgba(255,255,255,0.5)"
-                    fontSize="8"
+                    fontSize="9"
                   >
                     {c.circuit}
                   </text>

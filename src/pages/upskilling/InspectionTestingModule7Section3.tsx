@@ -430,7 +430,7 @@ const InspectionTestingModule7Section3 = () => {
               >
                 Tester: "1-2-3" / CW
               </text>
-              <text x="180" y="342" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="180" y="342" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 Pre-energisation: PASS
               </text>
 
@@ -533,7 +533,7 @@ const InspectionTestingModule7Section3 = () => {
               >
                 Tester: "1-3-2" / ACW
               </text>
-              <text x="600" y="342" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="600" y="342" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 Reg 643.9 FAIL — correct before energising load
               </text>
             </svg>

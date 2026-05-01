@@ -483,7 +483,7 @@ const InspectionTestingModule4Section3 = () => {
               >
                 MCB
               </text>
-              <text x="90" y="124" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="8">
+              <text x="90" y="124" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
                 (CLOSED)
               </text>
 
@@ -795,7 +795,7 @@ const InspectionTestingModule4Section3 = () => {
                 y="125"
                 textAnchor="middle"
                 fill="#FBBF24"
-                fontSize="8"
+                fontSize="9"
                 fontWeight="bold"
               >
                 L–N LINK

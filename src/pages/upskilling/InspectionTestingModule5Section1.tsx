@@ -399,7 +399,7 @@ const InspectionTestingModule5Section1 = () => {
               <text x="80" y="232" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
                 11 kV / 400 V
               </text>
-              <text x="80" y="246" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="80" y="246" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 star point
               </text>
               <circle cx="80" cy="260" r="3" fill="#FBBF24" />
@@ -443,11 +443,11 @@ const InspectionTestingModule5Section1 = () => {
                 (origin of installation)
               </text>
               <circle cx="340" cy="240" r="3" fill="#EF4444" />
-              <text x="334" y="253" textAnchor="end" fill="#EF4444" fontSize="8">
+              <text x="334" y="253" textAnchor="end" fill="#EF4444" fontSize="9">
                 L
               </text>
               <circle cx="340" cy="265" r="3" fill="#3B82F6" />
-              <text x="334" y="270" textAnchor="end" fill="#3B82F6" fontSize="8">
+              <text x="334" y="270" textAnchor="end" fill="#3B82F6" fontSize="9">
                 PEN
               </text>
 
@@ -506,7 +506,7 @@ const InspectionTestingModule5Section1 = () => {
                 strokeWidth="2"
                 strokeDasharray="3,2"
               />
-              <text x="618" y="285" textAnchor="start" fill="#FBBF24" fontSize="8">
+              <text x="618" y="285" textAnchor="start" fill="#FBBF24" fontSize="9">
                 N–PE link
               </text>
 
@@ -568,7 +568,7 @@ const InspectionTestingModule5Section1 = () => {
               >
                 Exposed-c-p
               </text>
-              <text x="600" y="378" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="600" y="378" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 (fault: L → enclosure)
               </text>
               <text
@@ -626,7 +626,7 @@ const InspectionTestingModule5Section1 = () => {
                 stroke="rgba(255,255,255,0.5)"
                 strokeWidth="1"
               />
-              <text x="80" y="340" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="80" y="340" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 source earthing
               </text>
 

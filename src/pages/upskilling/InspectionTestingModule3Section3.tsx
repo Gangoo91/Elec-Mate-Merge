@@ -473,7 +473,7 @@ const InspectionTestingModule3Section3 = () => {
               <text x="400" y="234" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
                 Main Earthing Terminal
               </text>
-              <text x="400" y="248" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="8">
+              <text x="400" y="248" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="9">
                 Reg 542.4.1
               </text>
 
@@ -562,7 +562,7 @@ const InspectionTestingModule3Section3 = () => {
               <text x="200" y="135" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
                 ≤ 600 mm
               </text>
-              <text x="200" y="148" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="8">
+              <text x="200" y="148" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
                 Reg 544.1.2
               </text>
 
@@ -611,7 +611,7 @@ const InspectionTestingModule3Section3 = () => {
               <text x="600" y="135" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
                 ≤ 600 mm
               </text>
-              <text x="600" y="148" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="8">
+              <text x="600" y="148" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
                 Reg 544.1.2
               </text>
 

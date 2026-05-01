@@ -562,7 +562,7 @@ const InspectionTestingModule7Section1 = () => {
                 y="163"
                 textAnchor="middle"
                 fill="#FBBF24"
-                fontSize="8"
+                fontSize="9"
                 fontWeight="bold"
               >
                 L–CPC LINK
@@ -599,20 +599,20 @@ const InspectionTestingModule7Section1 = () => {
               >
                 SWITCH
               </text>
-              <text x="430" y="115" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">
+              <text x="430" y="115" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">
                 (single-pole)
               </text>
               {/* Line in / switch wire out */}
               <circle cx="395" cy="135" r="3" fill="#EF4444" />
-              <text x="395" y="150" textAnchor="middle" fill="#EF4444" fontSize="8">
+              <text x="395" y="150" textAnchor="middle" fill="#EF4444" fontSize="9">
                 Line
               </text>
               <circle cx="465" cy="135" r="3" fill="#FBBF24" />
-              <text x="465" y="150" textAnchor="middle" fill="#FBBF24" fontSize="8">
+              <text x="465" y="150" textAnchor="middle" fill="#FBBF24" fontSize="9">
                 Sw L
               </text>
               <circle cx="430" cy="220" r="3" fill="#22C55E" />
-              <text x="430" y="232" textAnchor="middle" fill="#22C55E" fontSize="8">
+              <text x="430" y="232" textAnchor="middle" fill="#22C55E" fontSize="9">
                 CPC
               </text>
 
@@ -641,23 +641,23 @@ const InspectionTestingModule7Section1 = () => {
               >
                 CEILING ROSE
               </text>
-              <text x="675" y="115" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">
+              <text x="675" y="115" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">
                 (lamp removed)
               </text>
               <circle cx="620" cy="135" r="3" fill="#FBBF24" />
-              <text x="620" y="148" textAnchor="middle" fill="#FBBF24" fontSize="8">
+              <text x="620" y="148" textAnchor="middle" fill="#FBBF24" fontSize="9">
                 Sw L
               </text>
               <circle cx="675" cy="135" r="3" fill="#3B82F6" />
-              <text x="675" y="148" textAnchor="middle" fill="#3B82F6" fontSize="8">
+              <text x="675" y="148" textAnchor="middle" fill="#3B82F6" fontSize="9">
                 N
               </text>
               <circle cx="730" cy="135" r="3" fill="#EF4444" />
-              <text x="730" y="148" textAnchor="middle" fill="#EF4444" fontSize="8">
+              <text x="730" y="148" textAnchor="middle" fill="#EF4444" fontSize="9">
                 Perm L
               </text>
               <circle cx="675" cy="220" r="3" fill="#22C55E" />
-              <text x="675" y="232" textAnchor="middle" fill="#22C55E" fontSize="8">
+              <text x="675" y="232" textAnchor="middle" fill="#22C55E" fontSize="9">
                 CPC
               </text>
 

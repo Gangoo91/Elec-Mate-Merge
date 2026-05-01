@@ -512,17 +512,17 @@ const InspectionTestingModule5Section4 = () => {
                 CSA
               </text>
               <rect
-                x="320"
-                y="78"
-                width="55"
-                height="26"
+                x="318"
+                y="76"
+                width="60"
+                height="30"
                 fill="rgba(251,191,36,0.18)"
                 stroke="#FBBF24"
                 strokeWidth="1.2"
               />
               <text
-                x="347"
-                y="93"
+                x="348"
+                y="89"
                 textAnchor="middle"
                 fill="#FBBF24"
                 fontSize="9"
@@ -531,14 +531,14 @@ const InspectionTestingModule5Section4 = () => {
                 Max Zs
               </text>
               <text
-                x="347"
+                x="348"
                 y="101"
                 textAnchor="middle"
                 fill="#FBBF24"
-                fontSize="7"
+                fontSize="9"
                 fontWeight="bold"
               >
-                (Ω) — A4 NEW
+                (Ω) A4
               </text>
 
               {/* Sample rows */}
@@ -677,10 +677,10 @@ const InspectionTestingModule5Section4 = () => {
                 0.69
               </text>
 
-              <text x="40" y="265" fill="rgba(255,255,255,0.45)" fontSize="8" fontStyle="italic">
+              <text x="40" y="265" fill="rgba(255,255,255,0.45)" fontSize="9" fontStyle="italic">
                 * design value tightened below
               </text>
-              <text x="40" y="278" fill="rgba(255,255,255,0.45)" fontSize="8" fontStyle="italic">
+              <text x="40" y="278" fill="rgba(255,255,255,0.45)" fontSize="9" fontStyle="italic">
                 Table 41.3 raw (long cable run)
               </text>
 
@@ -766,17 +766,17 @@ const InspectionTestingModule5Section4 = () => {
                 IR
               </text>
               <rect
-                x="610"
-                y="78"
-                width="60"
-                height="26"
+                x="608"
+                y="76"
+                width="64"
+                height="30"
                 fill="rgba(34,197,94,0.12)"
                 stroke="#22C55E"
                 strokeWidth="1.2"
               />
               <text
                 x="640"
-                y="93"
+                y="89"
                 textAnchor="middle"
                 fill="#22C55E"
                 fontSize="9"
@@ -784,7 +784,7 @@ const InspectionTestingModule5Section4 = () => {
               >
                 Zs (Ω)
               </text>
-              <text x="640" y="101" textAnchor="middle" fill="#22C55E" fontSize="7">
+              <text x="640" y="101" textAnchor="middle" fill="#22C55E" fontSize="9">
                 measured
               </text>
               <text x="710" y="95" fill="rgba(255,255,255,0.65)" fontSize="9">

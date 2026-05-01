@@ -503,7 +503,7 @@ const InspectionTestingModule2Section5 = () => {
                 y="132"
                 textAnchor="middle"
                 fill="#FBBF24"
-                fontSize="8.5"
+                fontSize="9"
                 fontStyle="italic"
               >
                 anti-islanding ≠ isolation
@@ -553,7 +553,7 @@ const InspectionTestingModule2Section5 = () => {
                 y="132"
                 textAnchor="middle"
                 fill="#F87171"
-                fontSize="8.5"
+                fontSize="9"
                 fontStyle="italic"
               >
                 changeover ≠ isolation
@@ -600,7 +600,7 @@ const InspectionTestingModule2Section5 = () => {
                 y="298"
                 textAnchor="middle"
                 fill="#60A5FA"
-                fontSize="8.5"
+                fontSize="9"
                 fontStyle="italic"
               >
                 BYPASS ≠ OFF
@@ -647,7 +647,7 @@ const InspectionTestingModule2Section5 = () => {
                 y="298"
                 textAnchor="middle"
                 fill="#4ADE80"
-                fontSize="8.5"
+                fontSize="9"
                 fontStyle="italic"
               >
                 Reg 722 PEN restrictions
@@ -691,7 +691,7 @@ const InspectionTestingModule2Section5 = () => {
                 y="436"
                 textAnchor="middle"
                 fill="#C084FC"
-                fontSize="8.5"
+                fontSize="9"
                 fontStyle="italic"
               >
                 a battery is a generator AND a load

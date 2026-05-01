@@ -1,740 +1,794 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  LearningOutcomes,
+  ContentEyebrow,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Frequency of Inspection and Testing - PAT Testing Module 1';
-const DESCRIPTION =
-  'Learn how to determine appropriate PAT testing frequencies based on risk assessment, equipment type, environment, and usage patterns for optimal safety and efficiency.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'frequency-factors',
-    question: 'What factors influence PAT testing frequency?',
+    id: 'patm1-s4-no-statutory',
+    question:
+      'Which statement most accurately reflects the legal position on PAT testing frequency?',
     options: [
-      'Only the equipment age',
-      'Usage, environment, equipment class, and previous fault history',
-      "Just the manufacturer's recommendations",
-      'Only legal requirements',
+      'Annual testing is mandatory under EAWR.',
+      'There is no statutory frequency. HSG107 §10 and IET CoP §7 / Table 7.1 require frequency to be set by risk assessment, taking into account equipment type, environment, user, and history.',
+      'Quarterly testing is mandatory on construction sites under PUWER.',
+      'Frequency is set by the manufacturer of the equipment.',
     ],
     correctIndex: 1,
     explanation:
-      "PAT frequency depends on multiple factors including how often equipment is used, the environment it's used in, the equipment class, and any history of faults.",
+      'HSG107 §10 is unambiguous: there is no statutory frequency. IET CoP Table 7.1 publishes initial starting frequencies which the duty-holder revises based on inspection/test history. Selling fixed annual cycles as the law is one of the most common compliance misrepresentations.',
   },
   {
-    id: 'drill-vs-pc',
-    question: 'Would a drill used daily need more or less frequent testing than a PC?',
+    id: 'patm1-s4-tablefactors',
+    question:
+      'IET CoP §7 lists the four primary inputs to a PAT frequency decision. Which set is correct?',
     options: [
-      "Less frequent - it's more robust",
-      "Same frequency - they're both electrical",
-      'More frequent - higher usage and risk',
-      'No testing needed for tools',
-    ],
-    correctIndex: 2,
-    explanation:
-      'A drill used daily would need more frequent testing than a PC due to higher usage, more physical stress, and typically harsher working environments.',
-  },
-  {
-    id: 'guidance-provider',
-    question: 'Who provides testing frequency guidance in the UK?',
-    options: [
-      'Only equipment manufacturers',
-      'HSE and IET Code of Practice',
-      'Local councils',
-      'Insurance companies only',
+      'Cost, customer preference, manufacturer recommendation, label colour.',
+      'Equipment type and class; environment / location; type of user (skill, behaviour); historical record of test failures and defects.',
+      'Voltage, current, frequency, IP rating.',
+      'Geographic region, building age, building height, fire-rating.',
     ],
     correctIndex: 1,
     explanation:
-      'The HSE (Health and Safety Executive) and IET (Institution of Engineering and Technology) Code of Practice provide official guidance on PAT testing frequencies.',
+      'IET CoP §7 names these four factors. They are the inputs that must drive frequency. Cost is a constraint; customer preference is irrelevant to the legal duty; manufacturer recommendation is a starting input but not the determinant.',
   },
   {
-    id: 'annual-review',
-    question: 'Why should records be reviewed annually?',
+    id: 'patm1-s4-revise',
+    question:
+      'A PAT regime ran for 24 months at quarterly frequency on construction-site hand tools. Defect rate is consistently 1-2 % per cycle, and failed items show wear consistent with the 3-month interval. What does HSG107 / IET CoP say about the frequency?',
     options: [
-      "It's a legal requirement",
-      'To adjust testing intervals based on performance and fault trends',
-      'To satisfy insurance companies',
-      'Only for audit purposes',
+      'It must remain quarterly indefinitely.',
+      'The duty-holder reviews the frequency. A consistently low and stable defect rate is evidence the interval is appropriate or could potentially be extended; a rising defect rate would justify shortening it. The review is the active duty — sticking with the original frequency without review is itself a defect in the programme.',
+      'The frequency should automatically halve.',
+      'Frequency reviews are advisory only.',
     ],
     correctIndex: 1,
     explanation:
-      'Annual review of PAT records allows you to adjust testing intervals based on actual performance, fault trends, and changing usage patterns to optimise your testing programme.',
+      'HSG107 §11 and IET CoP §7.4 frame frequency-setting as iterative. The first cycle uses Table 7.1 starting points; subsequent cycles revise based on data. A duty-holder who has not reviewed frequencies in 24 months has not run the programme HSG107 describes — they have run a calendar.',
+  },
+  {
+    id: 'patm1-s4-event',
+    question:
+      'A workplace flood damages stock and equipment on the ground floor. The cleanup takes a week. What does PUWER Reg 6 require for the affected portable equipment?',
+    options: [
+      'Continue the existing schedule.',
+      'PUWER Reg 6 specifies inspection "each time exceptional circumstances which are liable to jeopardise the safety of the work equipment have occurred". The flood is exactly such a circumstance — the affected equipment requires a triggered formal visual + combined inspection-and-test before being returned to service, regardless of the calendar interval.',
+      'Wait until the next quarterly inspection.',
+      'Test only equipment that visibly got wet.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Reg 6 is event-driven as well as interval-driven. Floods, fires, mechanical incidents (forklift crush), thermal events, near-misses — all trigger out-of-cycle inspection. The fact that an item "looks dry" is not a substitute for the test, because dry-looking insulation can have absorbed moisture that lowers IR.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: 'What factors influence PAT testing frequency?',
+    question:
+      'IET CoP Table 7.1 publishes starting frequencies for inspection and testing. Which is the most accurate description of how Table 7.1 should be used?',
     options: [
-      'Only the equipment age',
-      'Usage, environment, equipment class, and previous fault history',
-      "Just the manufacturer's recommendations",
-      'Only legal requirements',
+      'It is a mandatory minimum schedule.',
+      'It is a starting suggestion for the first cycle of a new programme. The duty-holder reviews and revises based on the inspection/test history (defects found, near-misses, environment changes). Table 7.1 is explicitly framed as initial guidance, not a fixed rule.',
+      'It applies only to public-sector duty-holders.',
+      'It overrides any risk assessment.',
     ],
     correctAnswer: 1,
     explanation:
-      "PAT frequency depends on multiple factors including how often equipment is used, the environment it's used in, the equipment class, and any history of faults.",
+      'IET CoP §7.1-7.4 frames Table 7.1 as initial starting frequencies. The duty-holder is required to review and revise. Treating Table 7.1 as a fixed rule misses the active-management requirement of HSG107 §11.',
   },
   {
     id: 2,
-    question: 'Would a drill used daily need more or less frequent testing than a PC?',
+    question:
+      'Which environment does IET CoP Table 7.1 typically suggest the SHORTEST starting frequencies for hand-held equipment?',
     options: [
-      "Less frequent - it's more robust",
-      "Same frequency - they're both electrical",
-      'More frequent - higher usage and risk',
-      'No testing needed for tools',
+      'Office (low-risk, indoor, dry).',
+      'Construction site, outdoors, wet/dirty environments — typically 1-3 months for hand-held equipment combined inspection-and-test, with formal visual at shorter intervals.',
+      'Hospital wards.',
+      'Educational settings.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'A drill used daily would need more frequent testing than a PC due to higher usage, more physical stress, and typically harsher working environments.',
+      'Construction and similar harsh environments have the highest defect rates and the shortest starting frequencies. The IET CoP recognises this with substantially shorter intervals than the office environment. The frequency reflects the risk-of-deterioration profile.',
   },
   {
     id: 3,
-    question: 'Who provides testing frequency guidance in the UK?',
+    question:
+      'A duty-holder argues for ANNUAL testing of hand-held tools on construction sites. What is the legal exposure?',
     options: [
-      'Only equipment manufacturers',
-      'HSE and IET Code of Practice',
-      'Local councils',
-      'Insurance companies only',
+      'No exposure — annual testing is industry norm.',
+      'Significant. IET CoP Table 7.1 starting frequencies for hand-held tools on construction are typically much shorter than annual. A duty-holder applying annual frequencies to a higher-risk environment must be able to evidence the risk-assessment reasoning that justifies the longer interval — and absent that, the position is indefensible against HSG107 §10-11 and the Edwards balancing test.',
+      'Annual testing on construction sites is mandatory.',
+      'Frequency is irrelevant if visual checks are done.',
     ],
     correctAnswer: 1,
     explanation:
-      'The HSE (Health and Safety Executive) and IET (Institution of Engineering and Technology) Code of Practice provide official guidance on PAT testing frequencies.',
+      'The construction environment is one of the highest-defect-rate categories in HSE incident data. Long intervals require substantially stronger justification than the IET CoP starting points. A flat annual regime applied to mixed environments fails the equipment-environment-matching test that HSE inspections look for.',
   },
   {
     id: 4,
-    question: 'Why should records be reviewed annually?',
+    question:
+      'PUWER 1998 Reg 6(1)(b) requires inspection of work equipment "exposed to conditions causing deterioration which is liable to result in dangerous situations". Independent of any IET CoP guidance, what does Reg 6(1)(b) impose?',
     options: [
-      "It's a legal requirement",
-      'To adjust testing intervals based on performance and fault trends',
-      'To satisfy insurance companies',
-      'Only for audit purposes',
+      'Nothing additional — IET CoP frequencies are sufficient.',
+      'A statutory duty to inspect at suitable intervals, where "suitable" is judged against the specific deteriorating conditions. Reg 6 frequencies must be defendable on the facts of the work equipment and its environment, separately from any guidance frequency.',
+      'Annual inspection only.',
+      'Reg 6 does not apply to electrical equipment.',
     ],
     correctAnswer: 1,
     explanation:
-      'Annual review of PAT records allows you to adjust testing intervals based on actual performance, fault trends, and changing usage patterns to optimise your testing programme.',
+      'PUWER Reg 6 is a statutory duty in its own right. The IET CoP starting frequencies are useful but they are not the legal test — the legal test is "suitable intervals" judged on the conditions. A frequency that satisfies IET CoP but fails Reg 6(1)(b) on the facts of the case can still be a contravention.',
   },
   {
     id: 5,
-    question: 'Can testing intervals be reduced over time?',
+    question:
+      'A duty-holder reviews 18 months of PAT data. The defect rate on extension leads is 8 %, while on hand-held tools in the same environment it is 1 %. What does the data suggest about frequency?',
     options: [
-      'No, they must always increase',
-      'Only with manufacturer approval',
-      'Yes, if equipment proves reliable and usage decreases',
-      'Never, intervals are fixed',
+      'Both should be tested together.',
+      'The extension-lead frequency is too long — they are deteriorating faster than the inspection interval catches. Either shorten the lead test cycle or replace the worst-affected leads with a more robust spec. The hand-tool frequency is appropriate or could potentially be extended.',
+      'Defect rate is irrelevant to frequency.',
+      'Increase the hand-tool frequency to match.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Testing intervals can be adjusted based on performance data. If equipment proves reliable and usage patterns change, intervals may be extended with proper risk assessment.',
+      'IET CoP §7.4 and HSG107 §11 use defect rate as one of the primary signals for frequency adjustment. Different categories within the same environment can warrant different frequencies — and the data is the defendable basis for the difference.',
   },
   {
     id: 6,
-    question: 'What is the typical testing interval for handheld tools on construction sites?',
-    options: ['Annually', 'Every 6 months', 'Every 3 months', 'Every 2 years'],
-    correctAnswer: 2,
+    question:
+      'IET CoP §7 distinguishes between "formal visual inspection" frequency and "combined inspection-and-test" frequency. How are they typically related?',
+    options: [
+      'They are the same.',
+      'Formal visual frequency is typically MORE FREQUENT than combined inspection-and-test frequency. The visual is faster, cheaper, catches the bulk of defects (flex damage, plug damage), and serves as an early warning between full electrical tests.',
+      'Formal visual is less frequent.',
+      'Combined test is monthly; formal visual is annual.',
+    ],
+    correctAnswer: 1,
     explanation:
-      'Construction site equipment typically requires testing every 3 months due to harsh conditions, frequent movement, and high risk of damage.',
+      'The economy of the four-pillar HSG107 model rests on stratification: user checks daily, formal visual at shorter intervals, combined inspection-and-test at the longer (and more expensive) interval. This catches the high-prevalence defects without over-testing.',
   },
   {
     id: 7,
-    question: 'Which environment typically requires the LEAST frequent testing?',
-    options: ['Commercial kitchen', 'Construction site', 'Office environment', 'School workshop'],
-    correctAnswer: 2,
+    question:
+      'A workplace had a previous PAT history of consistent 100 % pass rates over 3 years on annual cycles for office equipment. Should the frequency be reduced to 18-month or 24-month?',
+    options: [
+      'Yes, mechanically.',
+      'Possibly, but the decision must be deliberate, recorded, and supported. HSG107 §11 and IET CoP §7.4 explicitly contemplate extending intervals where the data supports it — but a 100 % pass rate may also indicate the test methodology is not catching defects (the "false confidence" risk). Consider tightening the formal visual depth before extending the combined-test cycle.',
+      'No — all frequencies must be permanent.',
+      'Yes, automatically — duty-holders cannot test more often than necessary.',
+    ],
+    correctAnswer: 1,
     explanation:
-      'Office environments are typically low risk with controlled conditions, allowing longer testing intervals (up to 4 years for some IT equipment).',
+      'Extending frequencies is permitted by guidance but must be evidence-based. A 100 % pass rate over three years is one signal. Verifying that the visual inspection is rigorous and the test sequence is being applied correctly is the prerequisite — extending intervals on the back of insufficient testing would fail the Edwards balancing test if a defect later emerged.',
   },
   {
     id: 8,
-    question: 'What should trigger an increase in testing frequency?',
+    question:
+      'Equipment is moved from one site to another during a refurbishment. What does PUWER Reg 6(1)(a) say about its inspection?',
     options: [
-      'Equipment passing all tests consistently',
-      'Equipment failures or damage being reported',
-      'Reduction in staff numbers',
-      'Budget increases',
+      'No additional inspection needed.',
+      'PUWER Reg 6(1)(a) requires inspection of work equipment after assembly at a new site or in a new location, before being put into service, where its safety depends on installation conditions. Equipment relocated during refurb falls under this trigger and should be formal-visual inspected at minimum before re-energisation.',
+      'Only equipment that is bolted down is in scope.',
+      'The receiving site is automatically responsible.',
     ],
     correctAnswer: 1,
     explanation:
-      'Equipment failures, damage reports, or changes to harsher conditions should trigger more frequent testing to prevent safety incidents.',
+      'Reg 6(1)(a) is event-triggered. Relocation is an opportunity for damage and an installation-condition change. The IET CoP §10 advice on triggered formal visual at relocation aligns with the Reg 6(1)(a) statutory duty.',
   },
   {
     id: 9,
-    question: 'How does equipment class affect testing frequency?',
+    question: 'How does the IET CoP treat newly-purchased equipment in respect of frequency?',
     options: [
-      'Class II equipment always needs more frequent testing',
-      'Class I equipment may need more frequent testing due to earthing requirements',
-      "Equipment class doesn't affect frequency",
-      'Only Class III equipment needs regular testing',
+      'New equipment is exempt for the first 12 months.',
+      'IET CoP §7.5 advises a formal visual inspection upon entry to service to confirm the item is undamaged and the markings match the procurement spec. The first combined inspection-and-test follows the Table 7.1 starting frequency for the equipment category and environment. New equipment is NOT exempt.',
+      'New equipment requires immediate combined inspection-and-test.',
+      'Frequency starts only after the warranty expires.',
     ],
     correctAnswer: 1,
     explanation:
-      'Class I equipment relies on earthing for protection and may need more frequent testing to ensure earth continuity is maintained, especially in harsh environments.',
+      'A formal visual at entry-to-service catches damage in transit, mis-shipped items, or counterfeit goods — and starts the asset register entry. The first combined test follows the standard cycle. The "exempt for 12 months" position is a sales argument, not a CoP position.',
   },
   {
     id: 10,
-    question: 'What is the recommended approach to setting initial testing frequencies?',
+    question: 'Why does HSG107 §10 explicitly warn against unnecessarily frequent testing?',
     options: [
-      'Always use the longest intervals allowed',
-      'Start conservative and adjust based on results',
-      'Copy what other organisations do',
-      'Only test when equipment appears damaged',
+      'Cost.',
+      'Excessive disconnect/reconnect cycles introduce wear at plug terminations and accessories; mechanical handling damages flexes; and routine over-testing produces a volume of data that obscures the defects that matter. The result is that an over-frequent regime can paradoxically reduce safety while increasing cost.',
+      'Carbon footprint.',
+      'Insurance reasons.',
     ],
     correctAnswer: 1,
     explanation:
-      'Best practice is to start with conservative (shorter) intervals and gradually extend them for equipment that consistently passes tests, based on documented evidence.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'Does the law specify exact testing frequencies?',
-    answer:
-      "No, UK legislation doesn't specify exact frequencies. The IET Code of Practice provides guidance, but frequencies should be determined by risk assessment considering equipment type, usage, environment, and fault history.",
-  },
-  {
-    question: 'Can I test all equipment at the same frequency?',
-    answer:
-      "While simpler administratively, this approach isn't recommended. Different equipment types and environments carry different risks. A risk-based approach is more effective - test high-risk items more frequently and low-risk items less often.",
-  },
-  {
-    question: 'What if equipment consistently passes tests?',
-    answer:
-      'If equipment consistently passes over several testing cycles with no signs of deterioration, you may consider extending the testing interval. Document your reasoning and maintain records to support any frequency changes.',
-  },
-  {
-    question: 'How do I handle equipment that moves between environments?',
-    answer:
-      'Equipment should be tested based on its highest-risk usage. If a drill is used both in offices and on construction sites, apply the construction site frequency (typically 3 months).',
-  },
-  {
-    question: 'Should new equipment be tested before first use?',
-    answer:
-      'Yes, new equipment should undergo visual inspection and, ideally, electrical testing before being put into service. This establishes a baseline and verifies the equipment was not damaged in transit.',
-  },
-  {
-    question: 'What records should I keep for frequency decisions?',
-    answer:
-      'Document your risk assessment, the factors considered, frequencies assigned to each equipment type, and any adjustments made over time. Include the rationale for any changes and review dates.',
+      'HSG107 §10 is one of the rare HSE guidance points that argues against doing more. The Edwards balancing test cuts both ways: in this niche, the cost-of-precaution side includes the additional risks the precaution itself introduces. Selling more-frequent-than-necessary testing is not just expensive; it is contrary to HSE guidance.',
   },
 ];
 
 const PATTestingModule1Section4 = () => {
-  useSEO(TITLE, DESCRIPTION);
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'Frequency of inspection and testing | PAT Module 1.4 | Elec-Mate',
+    description:
+      'IET CoP §7 / Table 7.1 starting frequencies, HSG107 §10-11 risk-based intervals, PUWER Reg 6 suitable intervals, defect-rate review, and event-triggered inspection — how to set, record and revise PAT frequencies that survive HSE scrutiny.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/pat-testing-module-1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/pat-testing-module-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Module 1
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1 Section 4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Frequency of Inspection and Testing
-          </h1>
-          <p className="text-white">
-            Determining appropriate testing intervals based on risk assessment
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1 · Section 4"
+            title="Frequency of inspection and testing"
+            description="The most-misunderstood part of PAT. There is no statutory frequency — only the duty to inspect at suitable intervals, set by risk assessment, reviewed against history, and recorded. IET CoP Table 7.1 is a starting point, not a rule."
+            tone="yellow"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>No fixed rule:</strong> Frequency depends on risk
-              </li>
-              <li>
-                <strong>Key factors:</strong> Usage, environment, equipment type
-              </li>
-              <li>
-                <strong>Guidance:</strong> IET Code of Practice
-              </li>
-              <li>
-                <strong>Review:</strong> Adjust based on results annually
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Spot:</strong> High-risk = more frequent testing
-              </li>
-              <li>
-                <strong>Use:</strong> Risk assessment to determine intervals
-              </li>
-              <li>
-                <strong>Apply:</strong> Review and adjust based on data
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'There is no statutory frequency. HSG107 §10 is explicit. IET CoP Table 7.1 publishes initial starting frequencies as a suggestion for the first cycle only.',
+              'Frequency is driven by four factors (IET CoP §7): equipment type and class; environment / location; type of user; history of defects.',
+              'Table 7.1 stratifies frequency by equipment category (hand-held, portable, movable, stationary, fixed, IT, leads) AND by environment (office, school, industrial, construction, hire). Hand-held in construction has the shortest cycle; stationary in office the longest.',
+              'Formal visual inspections are typically more frequent than combined inspection-and-test, because they are faster, cheaper, and catch the bulk of defects (flex / plug / casing).',
+              'Frequencies must be REVIEWED against defect-rate data. A duty-holder who has not adjusted frequencies in 24+ months has run a calendar, not a programme.',
+              'PUWER Reg 6 is event-triggered too: floods, fires, mechanical incidents, refurbishments, and exceptional circumstances trigger out-of-cycle inspection regardless of the calendar.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Understand risk-based testing frequency principles',
-              'Learn typical intervals for different environments',
-              'Know how to classify high, medium, and low risk equipment',
-              'Explore record-keeping and review cycles',
-              'Apply IET Code of Practice guidance',
-              'Adjust frequencies based on performance data',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <LearningOutcomes
+            outcomes={[
+              'Cite IET CoP §7 and Table 7.1 as the starting reference for PAT frequency, and explain why Table 7.1 is initial guidance, not a fixed rule',
+              'List the four factors driving frequency under IET CoP §7 (equipment, environment, user, history) and apply them to any equipment / environment combination',
+              'Distinguish formal-visual frequency from combined inspection-and-test frequency, and explain why they are typically different',
+              'Set defendable frequencies for office, school, industrial and construction environments, using Table 7.1 starting frequencies as the first cycle benchmark',
+              'Use defect-rate data to review and revise frequencies, with a documented reasoning trail that survives HSE scrutiny',
+              'Identify PUWER Reg 6 event triggers (installation conditions, exceptional circumstances) that require out-of-cycle inspection regardless of the calendar',
+              'Explain HSG107 §10 — why over-frequent testing can paradoxically reduce safety — and apply the Edwards balancing test to a frequency proposal',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Risk-Based Approach */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Risk-Based Testing Frequency
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The legal position — there is no statutory frequency</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why there is no fixed interval in any UK statute"
+            plainEnglish="No UK statute mandates a specific PAT testing interval. EAWR Reg 4(2) requires maintenance 'as may be necessary to prevent danger'. PUWER Reg 6 requires inspection 'at suitable intervals'. HSWA s.2 requires safety 'so far as is reasonably practicable'. None of these has a number — and that is by design, because a fixed interval would always be wrong for some equipment and right for none."
+            onSite="When a client asks for the legally-required interval, the legally-correct answer is: there is no fixed interval. The intervals you set are the duty-holder choice, justified by risk assessment, with the IET CoP and HSG107 as guidance benchmarks."
+          >
             <p>
-              Not every appliance needs testing yearly — it depends on risk. Getting the frequency
-              right ensures safety while avoiding unnecessary testing that wastes time and
-              resources.
+              The reason for the deliberate absence of fixed frequencies is the diversity of
+              equipment and environments. A 13 A IEC lead in a quiet office sees barely any
+              mechanical handling and lives in a benign environment; a 13 A IEC lead in a hire shop
+              sees thousands of plug cycles per year and rough handling. A fixed annual frequency
+              would over-test the office lead (introducing wear at terminations and creating false
+              confidence) and under-test the hire lead (missing real defects). HSE and IET have both
+              consistently rejected fixed frequencies for that reason.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Factors that determine testing frequency:
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Equipment type:</strong> Handheld tools vs stationary equipment
-                </li>
-                <li>
-                  <strong>Environment:</strong> Office vs construction site vs kitchen
-                </li>
-                <li>
-                  <strong>Usage intensity:</strong> Daily use vs occasional use
-                </li>
-                <li>
-                  <strong>Equipment class:</strong> Class I (earthed) vs Class II (double insulated)
-                </li>
-                <li>
-                  <strong>Fault history:</strong> Previous failures or damage
-                </li>
-                <li>
-                  <strong>User competence:</strong> Trained operators vs general public
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Environment-Based Frequencies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Environment-Based Testing Frequencies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow mb-2">
-                  Office Environment (Low Risk)
-                </p>
-                <p className="text-xs text-white mb-2">Controlled conditions, trained users</p>
-                <ul className="text-sm text-white space-y-0.5">
-                  <li>Handheld: 2 years</li>
-                  <li>Portable: 2 years</li>
-                  <li>IT Equipment: 4 years</li>
-                  <li>Stationary: 5 years</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow mb-2">
-                  Schools/Hotels (Medium Risk)
-                </p>
-                <p className="text-xs text-white mb-2">Heavy usage, varied users</p>
-                <ul className="text-sm text-white space-y-0.5">
-                  <li>Handheld: 12 months</li>
-                  <li>Portable: 12 months</li>
-                  <li>IT Equipment: 2 years</li>
-                  <li>Kitchen: 6 months</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow mb-2">
-                  Commercial Kitchen (High Risk)
-                </p>
-                <p className="text-xs text-white mb-2">Harsh conditions, heat, moisture</p>
-                <ul className="text-sm text-white space-y-0.5">
-                  <li>Handheld: 6 months</li>
-                  <li>Portable: 6 months</li>
-                  <li>Fixed heating: 12 months</li>
-                  <li>Refrigeration: 12 months</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow mb-2">
-                  Construction Site (Very High Risk)
-                </p>
-                <p className="text-xs text-white mb-2">Extreme conditions, frequent movement</p>
-                <ul className="text-sm text-white space-y-0.5">
-                  <li>Handheld: 3 months</li>
-                  <li>Portable: 3 months</li>
-                  <li>Extension leads: 3 months</li>
-                  <li>Site lighting: 3 months</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: IET Guidance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            IET Code of Practice Guidance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The IET Code of Practice for In-Service Inspection and Testing provides comprehensive
-              guidance on testing frequencies. These are recommendations, not legal requirements —
-              you can adjust based on your specific risk assessment.
+              The duty-holder framing is therefore not "what does the law require" but "what does
+              risk assessment justify, with what evidence, reviewable when the data tells me to
+              revise it". That framing is the defendable answer to any HSE inspector or claim.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 overflow-x-auto">
-              <table className="w-full text-sm">
+          <RegsCallout
+            source="HSE HSG107 (4th Edition) · paragraph 10"
+            clause={
+              <>
+                There is no statutory requirement for the testing of electrical equipment to take
+                place at fixed intervals. The frequency of inspection and testing should be
+                determined by the duty-holder, taking into account the type of equipment, how often
+                and how it is used, and the environment in which it is used.
+              </>
+            }
+            meaning="The single most important paragraph in HSG107 on frequency. It is the rebuttal to fixed-annual sales pitches, the support for risk-based intervals, and the framing that drives every IET CoP §7 decision."
+          />
+
+          <ConceptBlock
+            title="The four factors of IET CoP §7"
+            plainEnglish="IET CoP §7 lists four factors that drive frequency. They are not optional inputs — they are the evidential basis for any defendable frequency. Document each, score it (formally or informally), and the result is the starting frequency. Then revise based on outcome data."
+          >
+            <p>The four factors:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Equipment type and class.</strong> Hand-held equipment is at higher risk
+                than stationary; Class I depends on a working CPC and so the consequence of a fault
+                is touch-voltage and disconnection-time risk; Class II depends on insulation
+                integrity. Different equipment categories have different risk profiles and deserve
+                different intervals.
+              </li>
+              <li>
+                <strong>Environment / location.</strong> The classic Table 7.1 axis. Office / school
+                / industrial / construction / hire / wet rooms. Each environment has its own
+                deterioration rate.
+              </li>
+              <li>
+                <strong>Type of user.</strong> The IT manager who is the only user of a single
+                desktop is a different risk than a multi-user open-plan staff kitchen. Trained site
+                operatives following a tool inspection routine are a different risk from temporary
+                agency staff with no induction.
+              </li>
+              <li>
+                <strong>History of defects.</strong> Past test results, defects found at user
+                checks, near-misses, equipment-specific failure modes. The single most important
+                input on the second cycle and beyond.
+              </li>
+            </ol>
+            <p>
+              The first cycle of a new programme draws frequency from Table 7.1 because the history
+              input is empty. From the second cycle on, history dominates: the data tells you
+              whether the original frequency was too short (consistent low defect rate, room to
+              extend), too long (rising defect rate, must shorten), or appropriate (steady,
+              defendable rate).
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[0].id}
+            question={inlineChecks[0].question}
+            options={inlineChecks[0].options}
+            correctIndex={inlineChecks[0].correctIndex}
+            explanation={inlineChecks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>IET CoP Table 7.1 — starting frequencies</ContentEyebrow>
+
+          <ConceptBlock
+            title="What Table 7.1 actually publishes"
+            plainEnglish="IET CoP Table 7.1 cross-references equipment categories (hand-held, portable, movable / transportable, stationary, fixed, IT equipment, extension leads / multi-way adaptors) against environments (commercial / public / school / industrial / construction / hire / equipment used outdoors / hotel / office). Each cell gives a starting frequency for formal visual inspection AND combined inspection-and-test."
+            onSite="The starting frequencies in Table 7.1 are typical orders of magnitude — months for hand-held in construction, years for stationary in office. The exact numbers vary across editions of the CoP and against environment specifics; consult the live edition."
+          >
+            <p>Indicative pattern (consult IET CoP 5th Ed, 2020 Table 7.1 for exact figures):</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-[13.5px] my-2">
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="text-left py-2 px-3 text-elec-yellow font-medium">
-                      Equipment Type
-                    </th>
-                    <th className="text-left py-2 px-3 text-elec-yellow font-medium">Office</th>
-                    <th className="text-left py-2 px-3 text-elec-yellow font-medium">School</th>
-                    <th className="text-left py-2 px-3 text-elec-yellow font-medium">Kitchen</th>
-                    <th className="text-left py-2 px-3 text-elec-yellow font-medium">Site</th>
+                  <tr className="border-b border-white/15">
+                    <th className="text-left text-white/80 py-2">Equipment</th>
+                    <th className="text-left text-white/80 py-2">Office / low-risk indoor</th>
+                    <th className="text-left text-white/80 py-2">Industrial</th>
+                    <th className="text-left text-white/80 py-2">Construction / hire</th>
                   </tr>
                 </thead>
-                <tbody className="text-white">
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 px-3 font-medium">Handheld</td>
-                    <td className="py-2 px-3">2 years</td>
-                    <td className="py-2 px-3">12 months</td>
-                    <td className="py-2 px-3">6 months</td>
-                    <td className="py-2 px-3">3 months</td>
+                <tbody className="text-white/95">
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>Hand-held</strong>
+                    </td>
+                    <td>FV ~12 m / I&amp;T ~24 m</td>
+                    <td>FV ~6 m / I&amp;T ~12 m</td>
+                    <td>FV ~1 m / I&amp;T ~3 m</td>
                   </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 px-3 font-medium">Portable</td>
-                    <td className="py-2 px-3">2 years</td>
-                    <td className="py-2 px-3">12 months</td>
-                    <td className="py-2 px-3">6 months</td>
-                    <td className="py-2 px-3">3 months</td>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>Portable / movable</strong>
+                    </td>
+                    <td>FV ~24 m / I&amp;T ~48 m</td>
+                    <td>FV ~6 m / I&amp;T ~12 m</td>
+                    <td>FV ~3 m / I&amp;T ~6 m</td>
                   </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 px-3 font-medium">IT Equipment</td>
-                    <td className="py-2 px-3">4 years</td>
-                    <td className="py-2 px-3">2 years</td>
-                    <td className="py-2 px-3">12 months</td>
-                    <td className="py-2 px-3">6 months</td>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>Stationary</strong>
+                    </td>
+                    <td>FV ~24 m / I&amp;T ~48 m</td>
+                    <td>FV ~12 m / I&amp;T ~24 m</td>
+                    <td>FV ~6 m / I&amp;T ~12 m</td>
                   </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 px-3 font-medium">Extension Leads</td>
-                    <td className="py-2 px-3">2 years</td>
-                    <td className="py-2 px-3">12 months</td>
-                    <td className="py-2 px-3">6 months</td>
-                    <td className="py-2 px-3">3 months</td>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>Fixed equipment</strong>
+                    </td>
+                    <td>FV ~24 m / I&amp;T ~48 m</td>
+                    <td>FV ~12 m / I&amp;T ~24 m</td>
+                    <td>FV ~6 m / I&amp;T ~12 m</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>IT equipment</strong>
+                    </td>
+                    <td>FV ~24 m / I&amp;T ~48 m</td>
+                    <td>FV ~12 m / I&amp;T ~24 m</td>
+                    <td>n/a typically</td>
                   </tr>
                   <tr>
-                    <td className="py-2 px-3 font-medium">Stationary</td>
-                    <td className="py-2 px-3">5 years</td>
-                    <td className="py-2 px-3">2 years</td>
-                    <td className="py-2 px-3">12 months</td>
-                    <td className="py-2 px-3">6 months</td>
+                    <td className="py-2">
+                      <strong>Extension leads / adaptors</strong>
+                    </td>
+                    <td>FV ~12 m / I&amp;T ~24 m</td>
+                    <td>FV ~6 m / I&amp;T ~12 m</td>
+                    <td>FV ~1 m / I&amp;T ~3 m</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>
-        </section>
+            <p>
+              FV = formal visual inspection; I&amp;T = combined inspection-and-test. These are
+              indicative of the magnitude — refer to IET CoP 5th Ed Table 7.1 for the precise
+              numbers, which the duty-holder should be using as the first-cycle starting point and
+              then revising against history.
+            </p>
+            <p>Two pattern observations matter:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Formal visual is always more frequent than combined I&amp;T.</strong> The
+                visual catches the high-prevalence defects fast and cheap; the combined test catches
+                the rest at a longer cycle.
+              </li>
+              <li>
+                <strong>Hand-held + harsh environment = shortest interval.</strong> Hand-held tools
+                on construction sites have the highest defect rate of any combination, and the
+                shortest starting frequency reflects that.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <RegsCallout
+            source="IET Code of Practice (5th Ed, 2020) · §7.4"
+            clause={
+              <>
+                The frequency of inspection and testing should be determined by the duty-holder and
+                reviewed in the light of experience. Initial frequencies given in Table 7.1 may be
+                used as a starting point, but should be amended by the duty-holder taking into
+                account the actual results of previous inspections and tests.
+              </>
+            }
+            meaning="Two duties: set initial frequencies (Table 7.1 is the reference); review and revise based on actual results. Both duties must be visible in the records — a programme that uses Table 7.1 as the static rule is incomplete."
+          />
 
-        {/* Section 4: Risk Factors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Risk Factors Affecting Frequency
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-white mb-2">
-                  Factors that INCREASE frequency:
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Harsh environments (dust, moisture, heat)</li>
-                  <li>Heavy usage or frequent movement</li>
-                  <li>Previous fault history</li>
-                  <li>High-risk equipment types</li>
-                  <li>Equipment age and condition</li>
-                  <li>Untrained or careless users</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-white mb-2">
-                  Factors that may DECREASE frequency:
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Controlled, clean environments</li>
-                  <li>Infrequent use or fixed positioning</li>
-                  <li>Excellent maintenance records</li>
-                  <li>Double insulated equipment</li>
-                  <li>Comprehensive user training</li>
-                  <li>Consistent test passes</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="The construction-site freelance"
+            situation="A small electrical contractor sets PAT frequency on their hand-held tools (drills, breakers, grinders, jigsaws) at annual cycles, using a generic 'PAT' contractor on calendar dates. After 3 years they look at the data: pass rate is 100 %, no defects ever recorded. They consider extending to 24-month cycles."
+            whatToDo="Pause before extending. Two questions: (1) Is the formal visual rigorous enough to find the wear that hand-held tools accumulate? Frequent flex damage at strain reliefs is a typical hand-held defect — if the test never finds one, the test methodology may be inadequate, not the tools perfect. (2) Are user-level damages being reported? If users are repairing or replacing damaged equipment off-record, the PAT data does not see the defects. Investigate before extending. The defendable position may be to KEEP the annual cycle (or shorten it to match IET CoP construction starting frequencies) AND to re-train the formal-visual depth — not extend."
+            whyItMatters="A 100 % pass rate over 3 years can mean the regime is well-matched OR that the regime is missing defects. The two interpretations have opposite implications for frequency. The duty-holder must investigate which is true before acting on the data."
+          />
 
-        {/* Section 5: Record Keeping and Review */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Record Keeping and Review Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Essential Records to Maintain
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Equipment register with unique identifiers</li>
-                  <li>Test dates and results for each item</li>
-                  <li>Fault history and repair records</li>
-                  <li>User feedback and incident reports</li>
-                  <li>Environmental condition changes</li>
-                  <li>Tester qualifications and calibration</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Annual Review Process
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Analyse failure rates by equipment type</li>
-                  <li>Review environmental risk assessments</li>
-                  <li>Assess usage pattern changes</li>
-                  <li>Compare costs vs safety benefits</li>
-                  <li>Update testing frequencies as needed</li>
-                  <li>Document decisions and rationale</li>
-                </ul>
-              </div>
-            </div>
+          <CommonMistake
+            title="Setting frequency from Table 7.1 then ignoring it"
+            whatHappens="The duty-holder sets initial frequencies from Table 7.1 in year 1, then runs the same calendar for years 2-5 without review. Defect rate climbs from 1 % to 7 % over four years (cable ageing, equipment ageing, environment changes), but no review is documented. After an incident, the records show the duty-holder saw the rising defect rate and did not act on it — the worst possible position under HSG107 §11."
+            doInstead="Build frequency review into the programme. Annual review of defect-rate data per equipment category and environment. Document the review, document any frequency changes, document the reasoning. The review is itself the evidence that distinguishes a programme from a calendar."
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm font-medium text-elec-yellow mb-2">Best Practice Tip:</p>
-              <p className="text-sm text-white">
-                Start with conservative frequencies and gradually extend intervals for equipment
-                that consistently passes tests. Always document your reasoning and ensure changes
-                are based on solid evidence, not just cost reduction.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck
+            id={inlineChecks[1].id}
+            question={inlineChecks[1].question}
+            options={inlineChecks[1].options}
+            correctIndex={inlineChecks[1].correctIndex}
+            explanation={inlineChecks[1].explanation}
+          />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 6: Real World Scenario */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Real World Scenario
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                Case Study: Warehouse Testing Optimisation
-              </p>
-              <div className="space-y-3 text-sm text-white">
-                <p>
-                  <strong>Situation:</strong> A warehouse reduced PAT frequency for fixed printers
-                  but increased checks on handheld power tools used daily.
-                </p>
-                <p>
-                  <strong>Results:</strong> This reduced overall testing costs by 30% while
-                  improving safety focus on high-risk equipment.
-                </p>
-                <p>
-                  <strong>The Lesson:</strong> Risk-based frequency adjustment is about smart
-                  resource allocation — testing the right equipment at the right intervals, not
-                  testing everything equally.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ContentEyebrow>Defect-rate review and revision</ContentEyebrow>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Setting Frequencies
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Start with IET Code of Practice recommendations as baseline</li>
-                <li>Assess specific risks for your environment and equipment</li>
-                <li>Consider user competence and supervision levels</li>
-                <li>Document your risk assessment and reasoning</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Reviewing Frequencies
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Review annually or after significant changes</li>
-                <li>Look for patterns in test results and failures</li>
-                <li>Consider any changes in environment or usage</li>
-                <li>Adjust intervals based on evidence, not assumptions</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>One size fits all</strong> — different equipment needs different
-                  frequencies
-                </li>
-                <li>
-                  <strong>Extending without evidence</strong> — only extend intervals based on
-                  consistent pass results
-                </li>
-                <li>
-                  <strong>Ignoring environment changes</strong> — reassess when conditions change
-                </li>
-                <li>
-                  <strong>Poor documentation</strong> — always record your frequency decisions and
-                  reasoning
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Frequencies</p>
-                <ul className="space-y-0.5">
-                  <li>Construction site tools: 3 months</li>
-                  <li>Kitchen appliances: 6 months</li>
-                  <li>Office portable: 2 years</li>
-                  <li>Office IT: 4 years</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Principles</p>
-                <ul className="space-y-0.5">
-                  <li>Higher risk = more frequent testing</li>
-                  <li>Review and adjust annually</li>
-                  <li>Document all decisions</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="What defect-rate data tells you about frequency"
+            plainEnglish="The defect rate per inspection cycle is the primary diagnostic for whether the cycle is appropriate. A consistently low rate suggests the cycle is fine or could potentially be extended; a rising rate suggests it should shorten; an extremely low rate over years either confirms the regime or warns the test methodology may not be catching defects."
           >
-            <Link to="/electrician/upskilling/pat-testing-module-1-section-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous Section
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
+            <p>
+              IET CoP §7.4 and HSG107 §11 align on the principle. The data signals to listen for:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Stable low rate (1-3 % per cycle).</strong> Cycle appropriate. Maintain;
+                consider extending in low-risk environments after at least 2 cycles of consistent
+                data.
+              </li>
+              <li>
+                <strong>Rising rate.</strong> Cycle is too long for the conditions. Shorten,
+                investigate cause (equipment ageing, environment change, user behaviour, supply
+                changes), and address the cause where possible.
+              </li>
+              <li>
+                <strong>Stable moderate rate (5-10 %).</strong> Consider whether (a) the cycle is
+                appropriate and the rate reflects environment, or (b) shortening would reduce
+                user-facing defects substantially. Cost-of-precaution analysis per Edwards.
+              </li>
+              <li>
+                <strong>Stable extremely low or zero rate over 3+ cycles.</strong> Two
+                interpretations: either the regime is well-matched (defendable, may extend) or the
+                methodology is missing defects (not defendable; investigate first). The
+                test-methodology audit is the defendable next step.
+              </li>
+              <li>
+                <strong>Spike then return to baseline.</strong> Suggests an event-driven cause
+                (refurb, batch of new equipment, user-behaviour change). Investigate the spike,
+                document, return cycle to normal.
+              </li>
+            </ul>
+            <p>
+              The review process — defect-rate analysis, reasoning, documented frequency decision —
+              is itself the artefact that satisfies HSG107 §11. Without it, the duty of "review in
+              the light of experience" has not been discharged.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="The false-confidence risk and HSG107 §10"
+            plainEnglish="HSG107 §10 makes a counter-intuitive argument: testing more often than necessary can REDUCE safety. Excessive disconnect/reconnect cycles wear plug terminations and accessories. Mechanical handling damages flexes. Routine over-testing also produces a flood of pass results that obscures the rare defect — and trains everyone to ignore the data."
           >
-            <Link to="/electrician/upskilling/pat-testing-module-1-section-5">
-              Next Section
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+            <p>The mechanism:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                Each plug-out / plug-in cycle adds wear at the strain relief, the cord grip, and the
+                plug pins. A 2-month cycle on an office IEC lead introduces 60 such cycles across 10
+                years that would not have happened on a 12-month cycle.
+              </li>
+              <li>
+                Each handling event is an opportunity for damage — drops, kinks, twists at the
+                strain relief.
+              </li>
+              <li>
+                Pass-result fatigue: when 99 % of items pass, the inspector\'s attention drops on
+                the 1 % that fail. The data drowns the signal.
+              </li>
+              <li>
+                The Edwards balancing test cuts both ways: more testing increases cost AND
+                introduces wear. If the marginal benefit (catching defects) is lower than the
+                marginal cost (introducing defects), more testing makes things worse.
+              </li>
+            </ul>
+            <p>
+              This is the rare HSE position that is not "do more". HSG107 §10 is one of the most
+              under-quoted paragraphs in the regime — and one of the most useful when defending a
+              risk-based interval against a client who wants quarterly testing for everything.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="HSE HSG107 (4th Edition) · paragraph 10 (continued)"
+            clause={
+              <>
+                Testing too frequently can be wasteful and can lead to the unnecessary handling of
+                equipment, including the disconnection of equipment, which can increase the risk of
+                damage and danger.
+              </>
+            }
+            meaning="The under-quoted half of HSG107 §10. Over-testing is wasteful AND can be unsafe. The defendable frequency is the one that catches the defects that matter without introducing new ones."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Event-triggered inspection — beyond the calendar</ContentEyebrow>
+
+          <ConceptBlock
+            title="PUWER Reg 6(1)(a) and 6(2) — when the calendar does not bind"
+            plainEnglish="PUWER Reg 6 mandates inspection on certain triggers regardless of the calendar interval. New installations or relocations (Reg 6(1)(a)) and exceptional circumstances liable to compromise safety (Reg 6(2)) both trigger inspection independent of the cycle."
+          >
+            <p>Common Reg 6 triggers in PAT context:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>New equipment entering service</strong> — formal visual + record entry,
+                before first use.
+              </li>
+              <li>
+                <strong>Equipment relocated to a new site</strong> — formal visual at minimum before
+                re-energisation; combined inspection-and-test if the relocation involves significant
+                handling or change of environment.
+              </li>
+              <li>
+                <strong>Floods, fires, water ingress</strong> — affected equipment requires
+                triggered inspection. "It looks dry" is not an acceptable substitute; absorbed
+                moisture lowers IR and is invisible.
+              </li>
+              <li>
+                <strong>Mechanical incidents</strong> — forklift crush, dropped from height, impact
+                damage. Affected equipment is out of service until inspected.
+              </li>
+              <li>
+                <strong>Thermal events</strong> — overheating reported by user, distinctive smell,
+                discolouration. Trigger inspection; do not return to service on user assurance.
+              </li>
+              <li>
+                <strong>Near-misses</strong> — RCD operated on the circuit, MCB tripped without
+                obvious cause, tingling reported by user. Investigate and trigger inspection of the
+                equipment in the loop.
+              </li>
+              <li>
+                <strong>Refurbishment / construction works in the area</strong> — equipment in
+                affected zones may have been moved, damaged, or had ingress without the duty-holder
+                seeing it. Risk-assess and trigger as appropriate.
+              </li>
+            </ul>
+            <p>
+              The duty-holder programme should explicitly call out event-triggered inspection in the
+              procedures, because relying on the calendar alone fails Reg 6 in any incident
+              involving an exceptional circumstance.
+            </p>
+          </ConceptBlock>
+
+          <Scenario
+            title="The post-flood return-to-service question"
+            situation="A small commercial unit has a flood overnight (mains water leak, not foul). The cleanup takes a weekend. On Monday morning the duty-holder needs to bring the office back online: kettles, microwave, IT, lighting, photocopier. The previous PAT was 4 months ago, all passed."
+            whatToDo="Triggered formal visual + combined inspection-and-test of all affected equipment before re-energisation, regardless of the calendar interval. PUWER Reg 6(1)(b) trigger ('exceptional circumstances which are liable to jeopardise the safety of the work equipment'). The IR test in particular is critical: water that appears to have evaporated can leave residual conductive paths through paper insulation, hygroscopic plastics, and dust. A 'dry-looking' microwave can have low IR. Document the triggered inspection and the readings; resume normal cycle after."
+            whyItMatters="Skipping the triggered inspection is one of the most common Reg 6 contraventions identified in HSE post-incident inspections. The 'but I had a recent PAT' defence does not survive Reg 6(1)(b) — the calendar interval is the cycle frequency, not a substitute for event-driven inspection."
+          />
+
+          <InlineCheck
+            id={inlineChecks[2].id}
+            question={inlineChecks[2].question}
+            options={inlineChecks[2].options}
+            correctIndex={inlineChecks[2].correctIndex}
+            explanation={inlineChecks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Setting and defending a frequency</ContentEyebrow>
+
+          <ConceptBlock
+            title="The defendable frequency package"
+            plainEnglish="A frequency that survives HSE scrutiny is not a number on a calendar — it is the number, plus the reasoning behind it, plus the data backing the reasoning, plus the review schedule that revises it. All four elements are needed for the position to be defendable."
+          >
+            <p>The four-element package:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>The number.</strong> The actual interval per equipment category and
+                environment.
+              </li>
+              <li>
+                <strong>The reasoning.</strong> Reference to IET CoP Table 7.1 starting points, plus
+                any deviation justified by the four factors (equipment, environment, user, history).
+                One paragraph per category-environment pair is sufficient.
+              </li>
+              <li>
+                <strong>The data.</strong> Defect-rate from previous cycles, near-miss reports,
+                user-check findings. On a new programme: a placeholder noting that data will drive
+                subsequent revision.
+              </li>
+              <li>
+                <strong>The review schedule.</strong> When the frequencies will be reviewed (e.g.
+                annually) and what data will trigger ad-hoc review (e.g. defect-rate above 5 %, an
+                incident, an environment change).
+              </li>
+            </ol>
+            <p>
+              Each of these four is short. The whole package for a typical small employer is a page
+              or two. The point is that they exist, are dated, are signed off, and are
+              version-controlled — not that they are voluminous.
+            </p>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Selling 'annual everything' as a turn-key compliance package"
+            whatHappens="A PAT contractor offers a package: 'Annual PAT testing of every item, fully compliant with EAWR, BS 7671 and HSG107'. The duty-holder buys it. After an incident, the duty-holder discovers (a) HSG107 §10 explicitly argues against fixed annual cycles for low-risk equipment, (b) construction-site hand tools should have been on much shorter cycles, (c) wet-room equipment should have been on much shorter cycles still, and (d) the contractor has no risk assessment, no defect-rate review, no event-trigger procedure. The package is a calendar, not a programme."
+            doInstead="Run risk-based, environment-stratified frequencies from the start. Office Class II IT on the longer end of Table 7.1. Construction hand-held on the shorter end. Wet-rooms on shorter still. Document the reasoning. Review against defect data. Build event triggers into the procedure. Sell that as the package — and price it accordingly. The fixed-annual approach is a false economy and a legal exposure."
+          />
+
+          <InlineCheck
+            id={inlineChecks[3].id}
+            question={inlineChecks[3].question}
+            options={inlineChecks[3].options}
+            correctIndex={inlineChecks[3].correctIndex}
+            explanation={inlineChecks[3].explanation}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="What to remember on site"
+            points={[
+              'There is no statutory frequency. HSG107 §10 is explicit. IET CoP Table 7.1 publishes initial starting frequencies as suggestion for the first cycle.',
+              'Four factors drive frequency (IET CoP §7): equipment type and class; environment; user; history of defects.',
+              'Hand-held in construction = shortest interval. Stationary in office = longest. Match equipment to environment from Table 7.1, then revise on data.',
+              'Formal visual is always more frequent than combined inspection-and-test. The visual catches the bulk of defects fast and cheap.',
+              'Frequencies must be REVIEWED, typically annually, against defect-rate data. A duty-holder who has not reviewed in 24+ months has run a calendar, not a programme.',
+              'PUWER Reg 6 is event-triggered. Floods, fires, mechanical incidents, refurbishment, near-misses all trigger out-of-cycle inspection regardless of the calendar.',
+              'Over-testing can REDUCE safety (HSG107 §10) — wear at terminations, mechanical handling, false confidence. The Edwards balancing test cuts both ways.',
+              'A defendable frequency is a number + reasoning + data + review schedule. Each element is short. All four are needed.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'How often should I PAT test office equipment?',
+                answer:
+                  'There is no fixed answer. IET CoP Table 7.1 starting frequencies for office / low-risk indoor are typically in the 24-48 month range for combined inspection-and-test, with formal visual at shorter intervals. Adjust based on the four factors (equipment class, environment specifics, users, defect history). Review annually against defect data.',
+              },
+              {
+                question: 'Are construction-site PAT intervals shorter than office?',
+                answer:
+                  'Yes. Construction is one of the harshest environments — frequent mechanical handling, dust and water ingress, temporary distribution arrangements, contractor turnover. IET CoP Table 7.1 shows substantially shorter starting frequencies, typically months rather than years for hand-held equipment combined inspection-and-test. Setting an annual cycle for construction hand-tools without a strong risk-assessment reason is indefensible.',
+              },
+              {
+                question: 'Do I need to test new equipment before first use?',
+                answer:
+                  'Formal visual inspection on entry to service is the IET CoP §7.5 advice — it catches transit damage, mis-shipped items, or counterfeit goods, and starts the asset register entry. The first combined inspection-and-test follows the standard cycle for the equipment / environment. New equipment is not exempt from the regime; the formal visual is the entry-to-service hygiene step.',
+              },
+              {
+                question: 'Can I extend my PAT intervals if I have a clean defect history?',
+                answer:
+                  'Possibly, but with caution. IET CoP §7.4 and HSG107 §11 explicitly contemplate extending intervals where the data supports it. Two prerequisites: (a) the data must come from a rigorous methodology — a 100 % pass rate from a superficial test means nothing; and (b) the extension must be reviewed against subsequent data. Extending intervals on the back of a thin testing methodology is not defendable.',
+              },
+              {
+                question: 'What do I do after a flood / fire / mechanical incident?',
+                answer:
+                  'PUWER Reg 6(1)(b) triggers an out-of-cycle inspection of all affected equipment before return to service, regardless of the calendar interval. Combined inspection-and-test, IR test in particular (residual moisture is invisible and lowers IR). Document the triggered inspection separately from the routine cycle. The "but it was tested 4 months ago" defence does not survive Reg 6(1)(b).',
+              },
+              {
+                question: 'Is HSG107 a legal requirement, or is it just guidance?',
+                answer:
+                  'It is HSE guidance, not law. Following HSG107 generally demonstrates compliance with EAWR Reg 4(2). Diverging from it is permissible if the alternative produces equivalent or better risk control, but the duty-holder must show the reasoning. Diverging without evidence is the opposite of defensible.',
+              },
+              {
+                question: 'Why does HSG107 warn AGAINST testing too often?',
+                answer:
+                  'HSG107 §10 (continued) is explicit: testing too frequently can be wasteful and lead to unnecessary handling, including disconnection, which can increase risk of damage and danger. Plug terminations wear with each cycle. Flexes are damaged by handling. Pass-result fatigue obscures the rare defect. The Edwards balancing test cuts both ways — over-testing is not automatically safer.',
+              },
+              {
+                question:
+                  'How is frequency for portable RCDs different from frequency for the equipment they protect?',
+                answer:
+                  'IET CoP §7 / Chapter 14 treats portable RCDs as separate items, with their own combined inspection-and-test cycle that includes a trip-time test at I&Delta;n. Frequencies typically follow the same Table 7.1 logic for the environment, but the RCD function specifically should be tested every cycle, not just visual-checked. A failed portable RCD silently removes a layer of protection.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Knowledge check</ContentEyebrow>
+          <Quiz
+            title="Frequency of inspection and testing — Module 1.4"
+            questions={quizQuestions}
+          />
+
+          {/* Bottom navigation grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/pat-testing-module-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 1
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/pat-testing-module-1-section-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                1.5 User checks vs formal inspection
+              </div>
+            </button>
+          </div>
+
+          <div className="hidden">
+            <Activity />
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

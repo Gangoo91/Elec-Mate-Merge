@@ -561,7 +561,7 @@ const InspectionTestingModule3Section4 = () => {
               >
                 BASIN TAPS
               </text>
-              <text x="370" y="237" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="8">
+              <text x="370" y="237" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
                 copper pipework
               </text>
               <circle cx="318" cy="207" r="4" fill="#FBBF24" />
@@ -623,7 +623,7 @@ const InspectionTestingModule3Section4 = () => {
               >
                 SHAVER / FCU
               </text>
-              <text x="660" y="237" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="8">
+              <text x="660" y="237" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
                 CPC of circuit
               </text>
               <circle cx="608" cy="207" r="4" fill="#FBBF24" />

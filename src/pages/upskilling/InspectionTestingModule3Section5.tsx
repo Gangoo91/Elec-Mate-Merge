@@ -509,7 +509,7 @@ const InspectionTestingModule3Section5 = () => {
               >
                 V
               </text>
-              <text x="240" y="215" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+              <text x="240" y="215" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
                 hi-Z
               </text>
 
@@ -534,7 +534,7 @@ const InspectionTestingModule3Section5 = () => {
               >
                 NULL BLOCK
               </text>
-              <text x="130" y="278" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+              <text x="130" y="278" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
                 R_disp = R_meas − R_lead
               </text>
 
@@ -559,7 +559,7 @@ const InspectionTestingModule3Section5 = () => {
               >
                 0.18 Ω
               </text>
-              <text x="300" y="282" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="300" y="282" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 LCD display
               </text>
 

@@ -559,7 +559,7 @@ const InspectionTestingModule8Section2 = () => {
               <text x="80" y="255" fill="rgba(255,255,255,0.85)" fontSize="9">
                 SPD Type 2 — at incomer
               </text>
-              <text x="80" y="270" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="80" y="270" fill="rgba(255,255,255,0.5)" fontSize="9">
                 (Domestic — also recorded on EIC per A4:2026 exception)
               </text>
 
@@ -594,10 +594,10 @@ const InspectionTestingModule8Section2 = () => {
               >
                 IMPORTANT
               </text>
-              <text x="590" y="152" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="8">
+              <text x="590" y="152" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="9">
                 This installation should be periodically inspected and
               </text>
-              <text x="590" y="164" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="8">
+              <text x="590" y="164" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="9">
                 tested and a report on its condition obtained.
               </text>
               <text x="450" y="184" fill="rgba(255,255,255,0.85)" fontSize="9">
@@ -628,10 +628,10 @@ const InspectionTestingModule8Section2 = () => {
               >
                 3 · RCD TEST NOTICE (Reg 514.12.2)
               </text>
-              <text x="590" y="250" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="8">
+              <text x="590" y="250" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="9">
                 Protected by a device which automatically switches
               </text>
-              <text x="590" y="262" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="8">
+              <text x="590" y="262" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="9">
                 off the supply if a fault develops.
               </text>
               <text
@@ -644,7 +644,7 @@ const InspectionTestingModule8Section2 = () => {
               >
                 Test six-monthly by pressing the test button.
               </text>
-              <text x="590" y="294" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="590" y="294" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 If the device does not operate, seek expert advice.
               </text>
 
@@ -689,7 +689,7 @@ const InspectionTestingModule8Section2 = () => {
               >
                 OF ISOLATION
               </text>
-              <text x="230" y="384" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="230" y="384" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 A4:2026 wording — replaces older &ldquo;consumer&rsquo;s isolator&rdquo;
               </text>
 
@@ -727,7 +727,7 @@ const InspectionTestingModule8Section2 = () => {
               <text x="590" y="374" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="9">
                 Type 2 SPD at incomer — Disconnect before IR test
               </text>
-              <text x="590" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="590" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 (Domestic exception applies if recorded on EIC + Appx 6 guidance issued)
               </text>
 

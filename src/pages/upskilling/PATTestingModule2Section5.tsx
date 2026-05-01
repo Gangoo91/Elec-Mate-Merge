@@ -1,49 +1,77 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  LearningOutcomes,
+  ContentEyebrow,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Identifying Appliance Class by Markings and Labels - PAT Testing Course';
-const DESCRIPTION =
-  'Learn to identify electrical appliance classes through visual inspection of markings, symbols, rating plates, and construction features. Essential for PAT testing.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'm2s5-qc1',
-    question: 'What symbol indicates a Class II (double insulated) appliance?',
-    options: [
-      'A circle with an earth symbol inside',
-      'Two concentric squares (square within a square)',
-      'A triangle with a lightning bolt',
-      "The letters 'CI' in a box",
-    ],
-    correctIndex: 1,
-    explanation:
-      'The Class II symbol is two concentric squares - a smaller square inside a larger square. This internationally recognised symbol indicates the appliance relies on double or reinforced insulation for protection rather than an earth connection.',
-  },
-  {
-    id: 'm2s5-qc2',
-    question: 'Where would you typically find the rating plate on an appliance?',
-    options: [
-      'Always on the front panel',
-      'On the power cord itself',
-      'On the base, rear, or inside a cover/door',
-      'Stamped into the plug pins',
-    ],
-    correctIndex: 2,
-    explanation:
-      'Rating plates are typically located on the base, rear panel, or inside an access cover/door of the appliance. They contain essential information including voltage, current/wattage, and class markings.',
-  },
-  {
-    id: 'm2s5-qc3',
+    id: 'patm2-s5-doublesquare',
     question:
-      'If an appliance has a three-core cable but no Class II symbol, what class is it most likely?',
-    options: ['Class 0', 'Class I', 'Class II', 'Class III'],
+      'You see a double-square symbol (a square nested inside another square) on a rating plate. What does it indicate?',
+    options: [
+      'Class I.',
+      "Class II — protection by double or reinforced insulation. The symbol is mandated by BS EN 61140 / BS EN 60335-1 Annex A for Class II equipment, and is the inspector's primary visual cue to apply Class II test methodology (IR test on accessible conductive parts, no PE-continuity).",
+      'Class III.',
+      'IP rating.',
+    ],
     correctIndex: 1,
     explanation:
-      'A three-core cable (live, neutral, earth) without the Class II double-square symbol indicates a Class I appliance. Class I appliances rely on earthing for protection and require an earth continuity test during PAT testing.',
+      'The double-square is one of the most distinctive safety symbols in electrical equipment marking. Recognising it triggers the Class II test sequence; missing it triggers Class I testing on what may be Class II equipment, which is a methodology error.',
+  },
+  {
+    id: 'patm2-s5-classI-marking',
+    question: 'Class I equipment is marked how, distinctively?',
+    options: [
+      'Always with a Roman numeral I.',
+      'There is no required distinctive symbol for Class I equipment in BS EN 61140. The class is inferred from the construction (CPC connection at the supply, exposed conductive parts bonded to a protective conductor) and from the absence of the Class II or Class III symbols. Equipment with a 3-pin plug whose CPC is genuinely terminated to internal earth and bonded to accessible parts is Class I.',
+      'With a triangle.',
+      'With a star.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'BS EN 61140 / BS EN 60335-1 Annex A mandates symbols for Class II and Class III but does not mandate a distinctive Class I symbol. Class I is the "default for mains-bonded equipment" — identified by construction signals rather than a specific mark.',
+  },
+  {
+    id: 'patm2-s5-multimarks',
+    question:
+      'Equipment shows BOTH a Class II symbol AND a "do not earth" symbol. What is the implication?',
+    options: [
+      'Conflicting markings — reject.',
+      'The combined marking emphasises that the equipment is Class II and explicitly should not have a protective earth applied. Some Class II equipment (typically older or industrial Class II tools) carries a "do not earth" marking specifically to warn against well-meaning modifications. Apply Class II testing; do not earth-bond the equipment.',
+      'Apply Class I and Class II tests both.',
+      'Treat as Class 0.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Symbols can stack to convey emphasis or specific warnings. Class II + "do not earth" is a coherent statement, not a contradiction. The equipment is Class II; the additional warning is to deter modification.',
+  },
+  {
+    id: 'patm2-s5-illegible',
+    question:
+      'Equipment markings are partially illegible due to wear. The double-square symbol is just visible; the manufacturer name and rating are gone. The construction is consistent with Class II (no exposed metal accessible parts, plastic casing, no CPC terminal). What is the response?',
+    options: [
+      'Reject the equipment.',
+      'Treat as Class II based on the visible symbol and consistent construction. Log the marking degradation as a recordable defect — the rating plate may need replacement (manufacturer can usually supply, or a referenced documentation page) for full PUWER Reg 6(3) record completeness. Apply Class II tests, document the marking issue, and decide based on test results.',
+      'Treat as Class I to be safe.',
+      'Apply both Class I and II.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'A degraded marking is a defect to remediate, not an automatic equipment rejection. Where the visible class indicator is consistent with the construction, the class is established and testing proceeds. The marking defect goes into the defect log for follow-up.',
   },
 ];
 
@@ -51,730 +79,768 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      "What does the Class II symbol (double square) indicate about an appliance's safety features?",
+      'Which standard governs the marking of class symbols on electrical equipment for protection against electric shock?',
     options: [
-      'It has a fused plug',
-      'It relies on double or reinforced insulation instead of earthing',
-      'It operates at extra-low voltage',
-      'It has been PAT tested',
+      'BS 7671 only.',
+      'BS EN 61140 (over-arching, "Protection against electric shock — Common aspects for installation and equipment") and BS EN 60335-1 Annex A (specifically for household and similar appliances). Together they prescribe the symbol shapes, the placement, and the meaning of class markings on the rating plate.',
+      'IET CoP only.',
+      'PUWER 1998.',
     ],
     correctAnswer: 1,
     explanation:
-      'The double square symbol indicates the appliance uses double or reinforced insulation as its primary protection method, eliminating the need for an earth connection.',
+      'BS EN 61140 sets the over-arching framework; BS EN 60335 series gives appliance-specific requirements. Both standards align on the class symbols. The IET CoP and PUWER reference these standards rather than duplicating them.',
   },
   {
     id: 2,
-    question: 'Which information is NOT typically found on an appliance rating plate?',
+    question: 'The Class II "double-square" symbol consists of:',
     options: [
-      'Voltage rating',
-      'Power consumption (watts)',
-      'Date of next PAT test',
-      'Manufacturer name or logo',
+      'A single filled square.',
+      'Two concentric squares — a smaller square nested inside a larger one, both unfilled (just outline). Sometimes referred to as the "square within a square" or "double box".',
+      'Two diamonds.',
+      'A triangle inside a square.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'The date of next PAT test is added by the tester after inspection, not by the manufacturer on the original rating plate.',
+      "The double-square is iconic and unambiguous. Two concentric outlined squares. Once seen, easily recognised. It is one of the inspector's primary cues for Class II identification.",
   },
   {
     id: 3,
-    question: 'What does CE marking on an appliance indicate?',
+    question: 'Class III SELV equipment is typically marked with which symbol?',
     options: [
-      'The appliance has passed PAT testing',
-      'The appliance conforms to relevant EU safety directives',
-      'The appliance is Class II',
-      'The appliance was made in Europe',
+      'A double-square.',
+      'A Roman numeral III enclosed in a diamond shape. Often accompanied by additional markings indicating the rated SELV voltage (e.g. "12 V" or "24 V") and sometimes a stylised safety isolating transformer symbol indicating compatible supply.',
+      'A circle with a slash.',
+      'A triangle.',
     ],
     correctAnswer: 1,
     explanation:
-      'CE marking indicates conformity with relevant EU safety directives. It does not indicate PAT test status, appliance class, or country of manufacture.',
+      'The Roman III in a diamond is the canonical Class III marking. Together with the SELV voltage rating, it tells the inspector to apply the Class III methodology (verify supply, formal visual + functional check on the equipment).',
   },
   {
     id: 4,
-    question: 'How can you identify a Class III appliance from its construction?',
+    question:
+      'Which information is REQUIRED on a rating plate per BS EN 60335-1 (and equivalent appliance standards)?',
     options: [
-      'It has a metal case with earth terminal',
-      'It uses a standard 13A plug',
-      'It operates from a SELV supply (typically via transformer or USB)',
-      'It has double insulation throughout',
+      'Just the manufacturer.',
+      'Manufacturer / brand; model / type; serial number (where required); rated voltage; rated current OR rated power; rated frequency; class symbol where applicable; IP rating where applicable; conformance markings (CE / UKCA, etc.); applicable standards reference.',
+      'Just voltage and current.',
+      'Just the class symbol.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Class III appliances operate at Safety Extra-Low Voltage (SELV), typically powered via a transformer, USB connection, or battery. This safe voltage level provides the protection.',
+      'The rating plate is a structured set of mandatory information. Each element is required for compliance. A plate missing required elements is itself a defect — the equipment may be safe, but the records and traceability evidence is incomplete.',
   },
   {
     id: 5,
-    question: 'If the rating plate is missing or illegible, what should you do?',
+    question:
+      'A piece of equipment has no visible class symbol, but a 3-pin BS 1363 plug with the CPC clearly terminated to a metal internal earth point. The metal casing is bonded. What is the class?',
     options: [
-      'Assume it is Class I and test accordingly',
-      'Pass it without testing',
-      'Fail the appliance until properly identified',
-      'Test it as Class II to be safe',
+      'Cannot be determined.',
+      'Class I — inferred from construction. The CPC is genuinely connected to the protective bonding network of the equipment, which IS the Class I architecture. BS EN 61140 does not mandate a distinctive Class I symbol; Class I is identified by construction signals plus the absence of Class II or Class III markings.',
+      'Class II.',
+      'Class III.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'If you cannot determine the appliance class with reasonable certainty, the appliance should be failed and removed from service until proper documentation is obtained.',
+      'Class I equipment is often identifiable from construction alone — CPC connection, bonded accessible parts, no double-insulation symbol. The absence of a Class I symbol is normal and not a defect. Apply Class I tests.',
   },
   {
     id: 6,
-    question: 'What colour is typically used for the earth core in UK flex?',
-    options: ['Blue', 'Brown', 'Green and yellow striped', 'Black'],
-    correctAnswer: 2,
+    question: 'IP rating markings (e.g. IP44, IP54) tell the inspector what?',
+    options: [
+      'The class.',
+      "The ingress protection rating — the equipment's rated resistance to solids (first digit) and to water (second digit). IP44 means protected against solid objects > 1 mm and against splashing water. The IP rating drives where the equipment can be used safely (kitchens, outdoors, washdown environments) and what conditions of use are within its design intent. NOT directly related to the protective class against electric shock.",
+      'The voltage rating.',
+      'The certification authority.',
+    ],
+    correctAnswer: 1,
     explanation:
-      'The earth conductor in UK flexible cables is identified by green and yellow stripes. Brown is live and blue is neutral.',
+      'IP rating and protective class are independent attributes. A piece of equipment can be Class II, IP54 — meaning double insulation AND protection against splashing water. Both attributes are read from the rating plate and both inform the formal visual inspection (is the equipment used in conditions consistent with its IP rating?).',
   },
   {
     id: 7,
-    question:
-      'A laptop charger with a two-core cable and the double square symbol is classified as:',
-    options: ['Class I', 'Class II', 'Class III', 'Class 0'],
+    question: 'The CE / UKCA mark on a rating plate indicates what?',
+    options: [
+      'The class.',
+      'Conformity assessment — the manufacturer declares the equipment conforms to relevant European (CE) or UK (UKCA) regulations including, for electrical equipment, the Low Voltage Directive / Regulations and the Electromagnetic Compatibility Directive / Regulations. The CE / UKCA mark is the evidence of standards conformance; the class symbol indicates the specific protective architecture.',
+      'The class is II.',
+      'The voltage rating.',
+    ],
     correctAnswer: 1,
     explanation:
-      'The double square symbol and two-core cable both indicate Class II. The charger uses double insulation for protection rather than an earth connection.',
+      'CE and UKCA are conformity declarations, not class indicators. Equipment can be CE-marked at any class (I, II, III). The marks are read alongside the class symbol; both are needed for a complete compliance picture.',
   },
   {
     id: 8,
-    question: 'What does UKCA marking indicate on electrical equipment?',
+    question:
+      'Equipment shows the double-square Class II symbol, the IPX5 rating, the CE mark, and the rating "230 V ~ 50 Hz, 1500 W". What can the inspector conclude?',
     options: [
-      'UK Class A safety rating',
-      'Conformity with UK product regulations (post-Brexit equivalent of CE)',
-      'United Kingdom Consumer Approved',
-      'The appliance is British-made',
+      'Test as Class I.',
+      'Class II construction (apply Class II IR test or substitute leakage). IPX5 means rated against water jets — consistent with use in wet / kitchen / outdoor environments. CE-marked. Mains-powered at 230 V, single-phase, drawing up to 6.5 A. Plenty of information to drive the test sequence and the formal-visual environment check (is the equipment being used in conditions consistent with IPX5?).',
+      'Test as Class III.',
+      'Reject the equipment.',
     ],
     correctAnswer: 1,
     explanation:
-      "UKCA (UK Conformity Assessed) is the UK's post-Brexit equivalent of CE marking, indicating conformity with UK product regulations.",
+      'A complete rating plate gives the inspector everything needed: class drives the test method, IP rating drives the environment check, voltage / current / power drive the load test and any acceptance-value calculations. Every element of the plate informs the inspection.',
   },
   {
     id: 9,
-    question: 'Which construction feature would suggest an appliance is Class I?',
+    question: 'A "do not earth" symbol on Class II equipment is typically what shape?',
     options: [
-      'Fully plastic enclosure with no visible screws',
-      'Metal casing with an earth terminal or three-core cable',
-      'Powered via USB cable only',
-      'Sealed unit with no user-accessible parts',
+      'A triangle.',
+      'A symbol of an earth connection (the standard earth-pin shape — three horizontal lines decreasing in length) inside a circle with a diagonal slash through it. The "no earth" interpretation is universal across electrical safety markings.',
+      'A square.',
+      'A pentagon.',
     ],
     correctAnswer: 1,
     explanation:
-      'Metal casing with an earth terminal or three-core cable indicates Class I construction. The earthing provides fault protection for the metal parts.',
+      'The "no earth" symbol is a circle-and-slash over the earth pictogram. Common on industrial Class II tools where the temptation to add an earth wire (or where modifications are foreseeable) needs explicit warning.',
   },
   {
     id: 10,
-    question: 'When inspecting a moulded plug, what markings should be present?',
+    question:
+      'Why is correct class identification at the rating-plate stage non-negotiable for PAT?',
     options: [
-      "Only the manufacturer's logo",
-      'BS 1363 approval mark and fuse rating',
-      'The PAT test due date',
-      'The appliance serial number',
+      'It is a paperwork issue.',
+      'Because the class drives every test method that follows. Class I = test the CPC. Class II = test the insulation. Class III = test the supply. Mis-classification means the wrong test is applied, the actual protective architecture is not verified, and defects in it become invisible to the test. The class identification is the first, foundational step of the formal inspection.',
+      'For administrative reasons.',
+      'It is optional.',
     ],
     correctAnswer: 1,
     explanation:
-      'Moulded plugs should display the BS 1363 approval mark (or equivalent) and the fuse rating. These indicate compliance with UK plug standards.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'What if an appliance has both a metal case AND the Class II symbol?',
-    answer:
-      "This is valid - some Class II appliances have decorative metal parts or metal cases that are isolated from internal components by double insulation. The Class II symbol takes precedence. However, verify the metal parts are indeed isolated and not connected to any internal components. When in doubt, consult the manufacturer's documentation.",
-  },
-  {
-    question: 'Can I trust the class marking on very old appliances?',
-    answer:
-      "Approach with caution. Older appliances may have been modified, had cables replaced incorrectly, or standards may have changed. Always verify the marking against the physical construction - check cable type, look for earth connections, and examine the insulation. If there's any doubt, treat it as requiring further investigation before testing.",
-  },
-  {
-    question: "What's the difference between CE and UKCA markings?",
-    answer:
-      'CE (Conformité Européenne) indicates conformity with EU safety directives and is required for products sold in EU/EEA countries. UKCA (UK Conformity Assessed) is the UK equivalent introduced after Brexit, required for products placed on the GB market. Both indicate the product meets essential safety requirements, but neither is a PAT test pass.',
-  },
-  {
-    question:
-      "How do I identify Class III appliances when they often don't have a specific symbol?",
-    answer:
-      'Class III appliances operate at Safety Extra-Low Voltage (SELV), typically under 50V AC. Look for: connection via a transformer or USB, very low voltage ratings on the rating plate (e.g., 5V, 12V, 24V), or specific SELV/PELV markings. Common examples include phone charger outputs, LED strip controllers, and battery-operated items with chargers.',
-  },
-  {
-    question: 'What should I do if the only marking visible is a foreign language?',
-    answer:
-      "The class symbols are internationally standardised and don't require language knowledge - look for the double square (Class II) or other pictorial symbols. Voltage and wattage numbers are universal. If you cannot determine the class from symbols and construction, the appliance should be failed until proper documentation is obtained.",
-  },
-  {
-    question: "Are there any appliances that don't fit standard class categories?",
-    answer:
-      "Some specialist equipment may have unique requirements. IT equipment often follows different standards (IEC 62368-1). Medical equipment has its own classification system. Industrial equipment may have additional markings. For non-standard equipment, consult the manufacturer's documentation or relevant industry-specific guidance.",
+      'Class drives the test. Class drives the acceptance values. Class drives the pass/fail interpretation. Get class wrong and everything downstream is wrong. Reading the rating plate, identifying the class, and selecting the matching test sequence is the foundational step of every formal inspection.',
   },
 ];
 
 const PATTestingModule2Section5 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'Identifying class by markings and labels | PAT Module 2.5 | Elec-Mate',
+    description:
+      'Reading the rating plate. BS EN 61140 / BS EN 60335-1 Annex A class symbols (Class I, Class II double-square, Class III SELV diamond), IP ratings, CE / UKCA marks, and how the rating plate drives the test sequence.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/pat-testing-module-2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/pat-testing-module-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
+            <ArrowLeft className="h-4 w-4" /> Module 2
+          </button>
+
+          <PageHero
+            eyebrow="Module 2 · Section 5"
+            title="Identifying appliance class by markings and labels"
+            description="Reading the rating plate. BS EN 61140 and BS EN 60335-1 Annex A prescribe the class symbols. The plate also carries IP rating, voltage, current, frequency, conformance marks. Every element informs the inspection."
+            tone="yellow"
+          />
+
+          <TLDR
+            points={[
+              'BS EN 61140 and BS EN 60335-1 Annex A prescribe the class marking symbols on rating plates.',
+              'Class II = double-square (a square within a square). Distinctive, unambiguous, universally recognised.',
+              'Class III SELV = Roman numeral III in a diamond, often with rated SELV voltage alongside.',
+              'Class I has NO mandated distinctive symbol — it is identified by construction signals (CPC connection at supply, bonded accessible parts) plus the ABSENCE of Class II or Class III markings.',
+              'The rating plate must also carry: manufacturer, model, serial / batch where required, rated voltage, rated current or power, rated frequency, IP rating where applicable, CE / UKCA conformance marks.',
+              'IP rating (e.g. IP44, IP54) is independent of class. It indicates ingress protection against solids and water — drives the formal-visual environment check, not the test sequence.',
+              'A degraded / illegible rating plate is a recordable defect. Where construction signals confirm class, testing proceeds and the marking issue is logged for remediation.',
+              'Mis-classifying at the rating-plate stage is the single most common methodology error — every subsequent test is then aimed at the wrong protective architecture.',
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Cite BS EN 61140 and BS EN 60335-1 Annex A as the standards that prescribe class markings on equipment',
+              'Recognise the BS EN 61140 Class II double-square symbol on sight and use it to drive the test sequence',
+              'Recognise the BS EN 61140 Class III SELV symbol (Roman III in diamond) and the implications for test methodology',
+              'Identify Class I equipment by construction signals (CPC connection, bonded accessible parts) where no class symbol is provided',
+              'Read additional rating-plate elements — IP rating, voltage, current, frequency, conformance marks — and explain how each informs the inspection',
+              'Resolve degraded / illegible markings — log as recordable defect, identify class from construction signals where possible, escalate where not',
+              'Use the rating-plate as the entry point for every formal inspection, recognising that class identification is the foundation of the test',
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>What the rating plate must contain</ContentEyebrow>
+
+          <ConceptBlock
+            title="The mandatory rating-plate elements"
+            plainEnglish="A rating plate is a structured set of mandatory information. BS EN 60335-1 Annex A and equivalent appliance standards prescribe what must be present. Each element informs a different part of the inspection — class drives the test, IP rating drives the environment check, voltage / current drive the load test."
+            onSite="Read the rating plate first. Before any instrument test, before any visual inspection of the body, READ THE PLATE. The plate is the equipment\'s self-disclosure of its safety case; the inspection verifies what the plate claims."
+          >
+            <p>Mandatory rating-plate elements (per BS EN 60335-1 Annex A and equivalents):</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Manufacturer / brand name.</strong> Identifies the responsible undertaking.
+                Required for traceability.
+              </li>
+              <li>
+                <strong>Model / type designation.</strong> Specific product identification. Required
+                for cross-referencing manufacturer documentation, recall lists, parts.
+              </li>
+              <li>
+                <strong>Serial / batch number</strong> where the standard requires it (most consumer
+                and industrial equipment). Required for individual unit traceability.
+              </li>
+              <li>
+                <strong>Rated voltage</strong> (e.g. "230 V ~"). The supply voltage the equipment is
+                designed for. Single-phase or three-phase indication where relevant.
+              </li>
+              <li>
+                <strong>Rated current OR rated power</strong> (sometimes both). E.g. "1500 W" or
+                "6.5 A". Drives the load-test acceptance and any fuse-rating cross-check at the
+                plug.
+              </li>
+              <li>
+                <strong>Rated frequency</strong> (e.g. "50 Hz" or "50/60 Hz"). Most UK equipment is
+                50 Hz; some equipment imported or repaired with international parts may be 50/60 Hz.
+              </li>
+              <li>
+                <strong>Class symbol where applicable.</strong> Class II double-square or Class III
+                diamond. Class I has no mandated distinctive symbol.
+              </li>
+              <li>
+                <strong>IP rating where applicable</strong> (e.g. "IP44"). Ingress protection
+                against solids and water.
+              </li>
+              <li>
+                <strong>Conformance markings.</strong> CE / UKCA marks indicating regulatory
+                conformity. Sometimes additional standards references (BS EN 60335-2-X for
+                appliance-specific standards).
+              </li>
+              <li>
+                <strong>Applicable standards reference</strong> where required (e.g. specific BS EN
+                reference for the appliance category).
+              </li>
+              <li>
+                <strong>Date of manufacture or year code</strong> on much equipment, to support
+                age-driven risk assessment.
+              </li>
+            </ul>
+            <p>
+              The plate is dense by necessity. Each element answers a specific inspection question.
+              Reading the plate fluently is one of the practical skills that distinguishes
+              experienced inspectors.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS EN 60335-1:2012+A2:2019 · Annex A (Marking of appliances)"
+            clause={
+              <>
+                Appliances shall be marked with the manufacturer\'s name, trade mark or
+                identification mark; the model or type reference; the rated voltage or rated voltage
+                range in volts; the symbol for nature of supply (~ for ac); the rated power input or
+                rated current; the rated frequency in hertz; the class of protection against
+                electric shock (where applicable); the IP rating (where applicable); and any other
+                markings required by the relevant clauses.
+              </>
+            }
+            meaning="The standard prescribes WHAT must be on the plate. The 'where applicable' qualifications are deliberate — Class I has no required class symbol because the construction itself is the indicator; IP rating is mandatory only on equipment claiming a specific ingress protection. The standard is a minimum; many manufacturers add date codes, batch numbers, and additional information."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The class symbols</ContentEyebrow>
+
+          <ConceptBlock
+            title="Class II — the double square"
+            plainEnglish="Two concentric squares — a smaller square nested inside a larger one — both unfilled (just outline). The most distinctive class symbol. Mandated by BS EN 61140 and BS EN 60335-1 Annex A for all Class II equipment. Once seen, easily recognised."
+          >
+            <p>Visual characteristics:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>Two concentric squares, outlined (not filled).</li>
+              <li>The inner square is centred within the outer square.</li>
+              <li>The size is proportional to the rating plate but consistently visible.</li>
+              <li>
+                Usually placed near the manufacturer information or the rating data, in a clearly
+                visible position.
+              </li>
+              <li>
+                Sometimes accompanied by additional warnings ("do not earth", "double insulated",
+                etc.) to emphasise the Class II construction.
+              </li>
+            </ul>
+            <p>Where to look:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                The rating plate is usually on the underside of the equipment, on the rear, or under
+                a battery cover.
+              </li>
+              <li>
+                For appliances with detachable parts (e.g. kettles with detachable bases), the plate
+                may be on the base, the kettle body, or both.
+              </li>
+              <li>For hand tools, often on the side of the body, behind the trigger area.</li>
+              <li>For IT equipment / power supplies, on the underside or rear of the unit.</li>
+            </ul>
+            <p>
+              Inspectors should make rating-plate examination an explicit step in their formal
+              visual workflow. Some plates are weathered, dirty, or partly obscured — clean gently
+              if needed and use a torch / phone light. The double-square symbol is robust even on
+              degraded plates.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Class III — the SELV diamond"
+            plainEnglish="A Roman numeral III enclosed in a diamond shape. Indicates Class III equipment intended for connection to a SELV supply. Sometimes accompanied by a stylised safety isolating transformer symbol indicating the type of supply expected."
+          >
+            <p>Visual characteristics:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                A Roman III (three vertical lines, sometimes with serifs) inside a diamond outline.
+              </li>
+              <li>
+                Often accompanied by the rated SELV voltage (e.g. "12 V", "24 V", "12 V dc") placed
+                alongside.
+              </li>
+              <li>
+                On equipment that requires a specific safety isolating transformer source, the
+                stylised "transformer" symbol (a representation of two windings with double-line
+                separation) may be present.
+              </li>
+            </ul>
+            <p>
+              The Class III SELV symbol on equipment tells the inspector to (a) verify the supply is
+              genuinely SELV, (b) apply the Class III methodology (formal visual + functional check
+              on the SELV equipment), and (c) NOT apply 500 V dc IR or PE-continuity tests to the
+              SELV side.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Class I — identified by construction"
+            plainEnglish="There is no required distinctive symbol for Class I equipment in BS EN 61140. Class I is identified by construction signals: a CPC connection at the supply (the green-and-yellow conductor terminates to the equipment\'s internal earth point), bonded accessible conductive parts, and the ABSENCE of Class II or Class III markings."
+          >
+            <p>Construction signals for Class I:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                Three-conductor flex with green-and-yellow CPC, terminating to an internal earth
+                point on the equipment.
+              </li>
+              <li>
+                Metal casing or accessible conductive parts that are bonded to the internal earth
+                point.
+              </li>
+              <li>
+                A 3-pin plug whose CPC is genuinely connected (not just a token connection for
+                socket-shutter operation).
+              </li>
+              <li>No double-square symbol on the rating plate.</li>
+              <li>No Class III SELV symbol on the rating plate.</li>
+            </ul>
+            <p>
+              The construction-based identification works because Class I is the "default" for
+              mains-bonded equipment with metal accessible parts. If the equipment has a functional
+              CPC bonded to its accessible parts, it IS Class I — regardless of whether anyone
+              explicitly marked it as such. The risk is the equipment that LOOKS Class I (3-pin
+              plug, metal casing) but actually has Class II construction internally; this is where
+              the rating plate becomes decisive.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[0].id}
+            question={inlineChecks[0].question}
+            options={inlineChecks[0].options}
+            correctIndex={inlineChecks[0].correctIndex}
+            explanation={inlineChecks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>IP rating, conformance marks, and other indicators</ContentEyebrow>
+
+          <ConceptBlock
+            title="IP rating — independent of class"
+            plainEnglish="The IP (Ingress Protection) rating tells you what the equipment is rated to keep out. Two digits: the first is solid-particle ingress protection; the second is water ingress protection. IP44 means 'protected against solid objects > 1 mm AND against splashing water'. The IP rating is independent of the protective class against electric shock."
+          >
+            <p>Common IP ratings encountered in PAT:</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-[13.5px] my-2">
+                <thead>
+                  <tr className="border-b border-white/15">
+                    <th className="text-left text-white/80 py-2">Rating</th>
+                    <th className="text-left text-white/80 py-2">Solid (1st digit)</th>
+                    <th className="text-left text-white/80 py-2">Water (2nd digit)</th>
+                    <th className="text-left text-white/80 py-2">Typical use</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/95">
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>IP20</strong>
+                    </td>
+                    <td>Fingers (≥ 12.5 mm)</td>
+                    <td>None</td>
+                    <td>Indoor general use</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>IP44</strong>
+                    </td>
+                    <td>1 mm wires</td>
+                    <td>Splashing water</td>
+                    <td>Bathrooms, kitchens, outdoor sheltered</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>IP54</strong>
+                    </td>
+                    <td>Dust ingress limited</td>
+                    <td>Splashing water</td>
+                    <td>Industrial / outdoor</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>IP55</strong>
+                    </td>
+                    <td>Dust ingress limited</td>
+                    <td>Water jets</td>
+                    <td>Heavy-duty outdoor / washdown</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>IP65</strong>
+                    </td>
+                    <td>Dust-tight</td>
+                    <td>Water jets</td>
+                    <td>Outdoor / washdown / industrial</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2">
+                      <strong>IP67</strong>
+                    </td>
+                    <td>Dust-tight</td>
+                    <td>Temporary immersion</td>
+                    <td>Wet / submerged use</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              The IP rating drives the formal-visual environment check: is the equipment being used
+              in conditions consistent with its IP rating? An IP20 fan heater used outside in a
+              rain-exposed location is misuse — the inspection flags it regardless of any electrical
+              defect. An IP65 industrial drill used outdoors is correctly applied. The IP rating is
+              one of the four factors driving frequency under IET CoP §7 (environment).
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="CE / UKCA conformance marks"
+            plainEnglish="The CE mark (and UKCA from 2021) indicate the manufacturer declares the equipment conforms to relevant European or UK regulations — for electrical equipment, primarily the Low Voltage and Electromagnetic Compatibility regulations. The marks are the gateway to legal placement on the market; equipment without them was not lawfully placed on the UK market and is a procurement defect."
+          >
+            <p>The conformance landscape:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>CE mark</strong> — European Conformity. Required for products placed on the
+                EU market and (until 2024 / staged transition) on the UK market for many product
+                categories.
+              </li>
+              <li>
+                <strong>UKCA mark</strong> — UK Conformity Assessed. The post-Brexit replacement for
+                CE on goods placed on the UK market for many product categories. Transition
+                arrangements vary; many manufacturers continue to use CE on UK-market goods where
+                permitted.
+              </li>
+              <li>
+                <strong>UKNI mark</strong> — for goods placed on the Northern Ireland market
+                requiring UK conformity assessment by a UK Notified Body.
+              </li>
+              <li>
+                <strong>Standards reference (e.g. "BS EN 60335-2-3")</strong> — the specific
+                appliance standard the manufacturer declares conformity with. The appliance-specific
+                second-tier standards (the "-2-" series under BS EN 60335) are often the operational
+                reference for manufacturer test-house verification.
+              </li>
+            </ul>
+            <p>
+              For PAT, the conformance marks are evidence of the equipment\'s legitimate market
+              entry. Their absence is a procurement defect (equipment may not be safe; equipment may
+              be counterfeit; equipment may pre-date current standards). A well-marked plate with
+              current conformance is a positive starting position; a missing plate or missing marks
+              is a flag for further investigation.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[1].id}
+            question={inlineChecks[1].question}
+            options={inlineChecks[1].options}
+            correctIndex={inlineChecks[1].correctIndex}
+            explanation={inlineChecks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Reading the plate in practice</ContentEyebrow>
+
+          <ConceptBlock
+            title="A worked example — the kitchen fan oven"
+            plainEnglish="Walk through a typical rating plate to see how every element informs the inspection. The plate is the equipment\'s safety self-disclosure; the inspection verifies what the plate claims."
+            onSite="Build rating-plate reading into your formal-visual workflow. Two minutes spent reading the plate properly saves later confusion and is the foundation of correct test-method selection."
+          >
+            <p>Example plate on a 1.8 kW kitchen fan oven (built-in unit):</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Manufacturer:</strong> Acme Appliances Ltd
+              </li>
+              <li>
+                <strong>Model:</strong> FO-1800-X
+              </li>
+              <li>
+                <strong>Serial:</strong> SN-2024-001234
+              </li>
+              <li>
+                <strong>Rated voltage:</strong> 230 V ~ (single-phase ac)
+              </li>
+              <li>
+                <strong>Rated power:</strong> 1800 W
+              </li>
+              <li>
+                <strong>Rated frequency:</strong> 50 Hz
+              </li>
+              <li>
+                <strong>Class symbol:</strong> (none visible) — Class I, inferred from construction
+                (3-conductor supply with bonded metal chassis)
+              </li>
+              <li>
+                <strong>IP rating:</strong> IPX4 — protected against splashing water
+              </li>
+              <li>
+                <strong>Conformance:</strong> CE mark, UKCA mark
+              </li>
+              <li>
+                <strong>Standards:</strong> BS EN 60335-2-6 (appliance standard for cooking ranges)
+              </li>
+              <li>
+                <strong>Date code:</strong> 2024
+              </li>
+            </ul>
+            <p>From this plate, the inspector deduces:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Class I.</strong> Apply Class I PAT methodology — PE-continuity test
+                (acceptance 0.1 Ω + flex contribution), IR test live to earth pin (≥ 1 MΩ),
+                functional / load test.
+              </li>
+              <li>
+                <strong>1800 W at 230 V ≈ 7.8 A.</strong> The equipment\'s plug should be fitted
+                with a 13 A fuse (next standard size up from the 7.8 A operating current, per IET
+                CoP §10 / BS 1362). Check the fuse rating at formal visual.
+              </li>
+              <li>
+                <strong>IPX4</strong> rated. Acceptable for use in a kitchen environment with
+                splashing water; verify the equipment is sited in such an environment and the seals
+                / gaskets are intact.
+              </li>
+              <li>
+                <strong>2024 date code.</strong> Equipment is new; first PAT cycle uses Table 7.1
+                starting frequency (light commercial / kitchen — typically annual to bi-annual for
+                stationary cooking appliances).
+              </li>
+              <li>
+                <strong>BS EN 60335-2-6</strong> conformance. Manufacturer test-house verification
+                done for cooking-range-specific safety case. Reference the appliance standard for
+                any acceptance values not in the IET CoP.
+              </li>
+            </ol>
+            <p>
+              Each plate element drives a specific inspection action. Reading the plate competently
+              is reading the inspection plan.
+            </p>
+          </ConceptBlock>
+
+          <Scenario
+            title="The unmarked import"
+            situation="An import warehouse receives a consignment of small heaters. The rating plates carry only the manufacturer name (in Chinese characters) and the rating '230 V 50 Hz 2000 W'. No class symbol. No IP rating. No CE / UKCA marks. No BS EN reference. The duty-holder asks the inspector to PAT-test the items so they can be put into staff-area service."
+            whatToDo="Refuse the test until the conformance question is resolved. Equipment without CE / UKCA marking has not been lawfully placed on the UK market. Class cannot be reliably determined from construction without further investigation, and in the absence of conformance marks the equipment could be counterfeit, pre-standard, or actively non-compliant. The defendable response: withdraw, refer to procurement, treat as a supply-chain compliance issue rather than a PAT issue. Do not commission. The legal exposure of putting unmarked equipment into service is on the duty-holder regardless of whether subsequent PAT testing produces passing readings."
+            whyItMatters="A passing PAT reading is not the same as a complete safety case. Conformance marks are part of the safety case. Equipment without them is a procurement issue first, a PAT issue only if and when conformance is established. The PAT inspector\'s role includes flagging plate-completeness defects, not just running tests on whatever is presented."
+          />
+
+          <CommonMistake
+            title="Skipping rating-plate examination at formal visual"
+            whatHappens="The inspector goes straight to the instrument test, plugging the equipment into the PAT tester and selecting Class I or Class II based on a quick glance at the plug. The Class II symbol on the rating plate (placed on the underside, not visible without lifting the equipment) is missed. The inspector applies Class I tests; the PE-continuity reading is 'open' because there is no CPC; the inspector either logs a fail or notes no-CPC and moves on without applying Class II IR. The actual Class II protective measure is never verified."
+            doInstead="Make rating-plate examination an explicit checklist step. Lift the equipment, find the plate, READ it. Two minutes of plate reading saves later confusion and ensures the test methodology matches the equipment construction. The plate is the equipment\'s self-disclosure of its protective architecture; the inspection verifies what the plate claims."
+          />
+
+          <CommonMistake
+            title="Treating an illegible plate as automatic equipment rejection"
+            whatHappens="The inspector finds equipment whose rating plate is partly weathered. The Class II symbol is just visible; the rating data is illegible. The inspector marks the equipment as fail / withdraw. In fact, the visible class symbol plus consistent construction (plastic casing, no CPC terminal, no exposed accessible metal in the safety sense) confirms Class II, and the equipment can be tested. The rating-data illegibility is a recordable defect to remediate, not a basis for blanket rejection."
+            doInstead="Use the visible signals plus the construction to establish class. Where the visible class indicator is consistent with construction, the class is established. Test accordingly. Log the marking degradation as a recordable defect — the rating plate may need replacement (manufacturer-supplied or from the original documentation) for full PUWER Reg 6(3) record completeness. Decide based on test results."
+          />
+
+          <InlineCheck
+            id={inlineChecks[2].id}
+            question={inlineChecks[2].question}
+            options={inlineChecks[2].options}
+            correctIndex={inlineChecks[2].correctIndex}
+            explanation={inlineChecks[2].explanation}
+          />
+
+          <InlineCheck
+            id={inlineChecks[3].id}
+            question={inlineChecks[3].question}
+            options={inlineChecks[3].options}
+            correctIndex={inlineChecks[3].correctIndex}
+            explanation={inlineChecks[3].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Class identification — the foundation</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why class identification is non-negotiable"
+            plainEnglish="Module 2 has set out three protective architectures (Class I, II, III) and one non-accepted historic class (Class 0). Each has a distinct test methodology in the IET CoP. The class identification, anchored on the rating-plate signals, is the foundation of every test that follows. Get class wrong, and every subsequent test is mis-aimed."
+          >
+            <p>The class-identification workflow:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>Locate the rating plate. (If absent or illegible, escalate.)</li>
+              <li>
+                Look for the Class II double-square symbol. If present and construction is
+                consistent with Class II, classify as Class II.
+              </li>
+              <li>
+                Look for the Class III SELV diamond / III-in-diamond symbol. If present, classify as
+                Class III.
+              </li>
+              <li>
+                If neither symbol is present, examine construction: is there a CPC connection at the
+                supply, with the CPC terminating to an internal earth point bonded to accessible
+                conductive parts? If yes, classify as Class I. If no, escalate (could be Class II
+                without explicit marking, or Class 0 — both require further investigation).
+              </li>
+              <li>
+                Verify class against any equipment-specific manufacturer documentation if available.
+              </li>
+              <li>
+                Apply the matching IET CoP test sequence. Class I = PE-continuity + IR. Class II =
+                IR (or substitute leakage). Class III = supply verification + functional check.
+              </li>
+              <li>
+                Record class on the test record alongside the test results. The class is part of the
+                equipment\'s register entry and the per-cycle record.
+              </li>
+            </ol>
+            <p>
+              Module 3 will cover the test methods in detail. Module 4 will cover acceptance values
+              and frequencies. Module 5 will cover records and certification. All three build on the
+              class identification established here in Module 2. The rating plate is where every
+              formal inspection starts.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="What to remember on site"
+            points={[
+              'BS EN 61140 + BS EN 60335-1 Annex A prescribe the class symbols. Read them on the rating plate.',
+              'Class II = double-square (square within a square). Distinctive, unambiguous.',
+              'Class III SELV = Roman III in a diamond. Often with rated SELV voltage alongside.',
+              'Class I has NO mandated distinctive symbol. Identified by construction (CPC + bonded accessible parts) plus absence of Class II / III markings.',
+              'Rating plate also carries: manufacturer, model, serial, voltage, current / power, frequency, IP rating, CE / UKCA marks, applicable standards.',
+              'IP rating is independent of class. Drives the environment check (is equipment used in conditions consistent with its rating?).',
+              'CE / UKCA marks are conformance evidence. Their absence is a procurement defect — equipment may not have been lawfully placed on the UK market.',
+              'Illegible plate is a recordable defect. Where construction signals confirm class, testing proceeds and the plate issue is logged for remediation.',
+              'Rating-plate examination is an explicit step in the formal visual. Two minutes of plate reading sets up the entire test sequence.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Is the Class I marking required on equipment rating plates?',
+                answer:
+                  'No. BS EN 61140 / BS EN 60335-1 Annex A do not mandate a distinctive Class I symbol. Class I is identified by construction signals (CPC connection at supply, bonded accessible parts) plus the absence of Class II or Class III markings. Many manufacturers do not explicitly mark Class I; some use a "Class I" text marking voluntarily.',
+              },
+              {
+                question: 'What does the double-square symbol mean?',
+                answer:
+                  "Class II — protection by double or reinforced insulation. The symbol is two concentric squares (a smaller square nested inside a larger one), both unfilled. It is the inspector's primary visual cue to apply Class II test methodology: IR test on accessible conductive parts (acceptance ≥ 2 MΩ at 500 V dc), no PE-continuity test (no CPC by design).",
+              },
+              {
+                question: 'What does the IP rating tell me?',
+                answer:
+                  'Ingress Protection rating — first digit is solid-particle ingress (0-6, with 6 meaning dust-tight); second digit is water ingress (0-9, with higher numbers meaning more water exposure). IP44 = protected against 1 mm objects and splashing water. The rating tells you the conditions the equipment is designed for, which drives the formal-visual environment check (is it being used in conditions consistent with its rating?).',
+              },
+              {
+                question: 'CE mark and UKCA mark — what do they signify?',
+                answer:
+                  'Conformity declarations. The manufacturer (or importer) declares the equipment conforms to relevant regulations — for electrical equipment, primarily the Low Voltage Regulations and the Electromagnetic Compatibility Regulations. CE is the European Conformity mark; UKCA is the UK Conformity Assessed mark introduced post-Brexit. Both are gateways to lawful market placement; equipment without them is a procurement defect.',
+              },
+              {
+                question: 'I cannot find the rating plate on a piece of equipment — what do I do?',
+                answer:
+                  'Look harder. Plates are often on undersides, rears, behind battery covers, or inside removable compartments. Use a torch / phone light and gently move the equipment to access concealed surfaces. If the plate is genuinely absent (lost / damaged / never present), escalate to manufacturer documentation if available, or treat as a procurement / records defect — the equipment may need plate replacement before being put into service.',
+              },
+              {
+                question: 'What if the rating plate is partly illegible?',
+                answer:
+                  'Use the visible signals to establish what you can. If the class symbol is visible and consistent with construction, class is established. Log the illegibility as a recordable defect for follow-up. Significant illegibility (e.g. only manufacturer name visible, no class / rating data) escalates to plate replacement or equipment withdrawal until the safety case can be reconstructed from documentation.',
+              },
+              {
+                question:
+                  'A piece of equipment shows the Class II double-square AND a 3-pin BS 1363 plug — which class is it?',
+                answer:
+                  'Class II. The class symbol on the rating plate takes precedence. The 3-pin plug is required to operate UK socket-outlet shutters (BS 1363 design); the third pin may or may not be electrically connected internally. The construction is what matters, and the plate marking is the authoritative class indicator. Apply Class II test methodology.',
+              },
+              {
+                question: 'How does class identification connect to the rest of the PAT regime?',
+                answer:
+                  "It is the foundation. Class drives the test method (Module 3 will cover methods in detail). Class drives the acceptance values (Module 4 covers acceptance values per class). Class drives the records (Module 5 covers what records each class requires). Mis-classifying at the rating-plate stage propagates through every subsequent step — the wrong tests are applied, the wrong acceptance values are checked, and the actual protective architecture is never verified. Rating-plate reading is the inspector's first analytical step.",
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Knowledge check</ContentEyebrow>
+          <Quiz title="Identifying class by markings — Module 2.5" questions={quizQuestions} />
+
+          {/* Bottom navigation grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/pat-testing-module-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 2
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/pat-testing-module-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Module 3 — Test methods
+              </div>
+            </button>
+          </div>
+
+          <div className="hidden">
+            <Activity />
+          </div>
+        </PageFrame>
       </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title Header */}
-        <header className="mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2 Section 5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Identifying Appliance Class by Markings and Labels
-          </h1>
-          <p className="text-white">
-            Reading rating plates, symbols, and construction clues for accurate class identification
-          </p>
-        </header>
-
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Class II Symbol:</strong> Two concentric squares
-              </li>
-              <li>
-                <strong>Class I Indicator:</strong> Three-core cable with earth
-              </li>
-              <li>
-                <strong>Class III:</strong> SELV supply, under 50V AC
-              </li>
-              <li>
-                <strong>Key Location:</strong> Rating plate on base/rear
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Spot:</strong> Check rating plate BEFORE any testing
-              </li>
-              <li>
-                <strong>Use:</strong> Class determines which tests to perform
-              </li>
-              <li>
-                <strong>Critical:</strong> Wrong class = wrong tests = invalid results
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Recognise Class I, II, and III symbols instantly',
-              'Locate and read appliance rating plates correctly',
-              'Understand CE and UKCA marking meanings',
-              'Identify appliance class from construction features',
-              'Handle missing or unclear markings professionally',
-              'Apply knowledge to real PAT testing scenarios',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 01: Class Identification Symbols */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Class Identification Symbols
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Electrical appliance classes each have internationally standardised symbols that
-              appear on rating plates and documentation. Being able to recognise these instantly is
-              fundamental to correct PAT testing.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">The Three Main Class Symbols:</p>
-              <ul className="text-sm text-white space-y-3 ml-4">
-                <li>
-                  <strong>Class I - Earth Symbol:</strong> May show the earth symbol (three
-                  horizontal lines decreasing in length). Often identified by three-core cable with
-                  earth connection rather than a specific symbol. Relies on earthing for protection.
-                </li>
-                <li>
-                  <strong>Class II - Double Square:</strong> Two concentric squares - a smaller
-                  square centred inside a larger square. This is the most important symbol to
-                  recognise. Indicates double or reinforced insulation - NO earth connection
-                  required or present.
-                </li>
-                <li>
-                  <strong>Class III - Roman Numeral or SELV:</strong> May show Roman numeral III or
-                  SELV marking, but often identified by very low voltage rating (under 50V AC) and
-                  connection method (transformer, USB, battery). Safety Extra-Low Voltage operation.
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white">
-                <strong>Critical Point:</strong> The Class II double square symbol is the most
-                critical to recognise. If you miss it and perform earth continuity testing on a
-                Class II appliance, you'll get a fail reading (open circuit) even though the
-                appliance is perfectly safe. This wastes time and can lead to incorrectly condemning
-                good equipment.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 02: Reading Rating Plates */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Reading Rating Plates
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              The rating plate (or nameplate) is your primary source of information about an
-              appliance. It contains essential data required for both identification and testing
-              purposes.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Where to Find Rating Plates:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Base or underside</strong> - Most common location for small appliances
-                </li>
-                <li>
-                  <strong>Rear panel</strong> - Common on larger appliances, monitors, computers
-                </li>
-                <li>
-                  <strong>Inside door or cover</strong> - Fridges, washing machines, dishwashers
-                </li>
-                <li>
-                  <strong>Near the cable entry point</strong> - Often found on power tools
-                </li>
-                <li>
-                  <strong>On a separate label</strong> - Some modern appliances use adhesive labels
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Information Typically Found on Rating Plates:
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Electrical Ratings:</strong> Voltage (e.g., 230V~), frequency (50Hz),
-                  power (W or kW), current (A)
-                </li>
-                <li>
-                  <strong>Identification:</strong> Manufacturer name/logo, model number, serial
-                  number, class symbol
-                </li>
-                <li>
-                  <strong>Compliance Marks:</strong> CE marking, UKCA marking, BSI Kitemark (if
-                  applicable)
-                </li>
-                <li>
-                  <strong>Additional Info:</strong> IP rating, country of manufacture, date codes,
-                  special warnings
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              For PAT testing purposes, the most critical information is the{' '}
-              <strong>class symbol</strong>, <strong>voltage rating</strong>, and{' '}
-              <strong>power consumption</strong>. The power rating helps determine appropriate fuse
-              sizing, while the class determines which tests to perform.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 03: CE and UKCA Markings */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Understanding CE and UKCA Markings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Compliance markings indicate that a product meets regulatory safety requirements.
-              Understanding these helps assess whether equipment has been properly manufactured to
-              safety standards.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                CE Marking (Conformité Européenne):
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Required for products sold in EU/EEA markets</li>
-                <li>Indicates compliance with relevant EU safety directives</li>
-                <li>Self-declared by manufacturer (not necessarily third-party tested)</li>
-                <li>Still valid on UK market during transition period</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                UKCA Marking (UK Conformity Assessed):
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Required for products sold in Great Britain (post-Brexit)</li>
-                <li>UK equivalent of CE marking</li>
-                <li>Same technical requirements as CE</li>
-                <li>Becoming mandatory for new products on GB market</li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white">
-                <strong>Important:</strong> CE/UKCA marking does NOT mean the appliance has been PAT
-                tested, does NOT guarantee it's currently safe, does NOT replace regular inspection
-                and testing, and does NOT indicate the appliance class.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Beware of Fake CE Marks:</p>
-              <p className="text-sm text-white ml-4">
-                Some imported products bear "China Export" marks that look similar to CE but have
-                different letter spacing. The genuine CE mark has specific proportions - the letters
-                should be at least 5mm high and have a particular spacing ratio. If equipment
-                appears substandard despite bearing a CE mark, treat it with caution.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 04: Identifying Class from Construction */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Identifying Class from Construction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              When rating plate symbols are unclear or missing, the physical construction of an
-              appliance provides strong clues about its class. Learning to read these construction
-              features is an essential backup identification method.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Class I Construction Features:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Three-core cable</strong> - Contains green/yellow earth conductor
-                </li>
-                <li>
-                  <strong>Metal casing or exposed metal parts</strong> - Connected to earth for
-                  safety
-                </li>
-                <li>
-                  <strong>Earth terminal visible</strong> - Often marked with earth symbol
-                </li>
-                <li>
-                  <strong>Three-pin plug</strong> - With earth pin connected (not just present)
-                </li>
-                <li>
-                  <em>
-                    Examples: Kettles with metal bodies, toasters, desktop computers, monitors with
-                    metal stands
-                  </em>
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Class II Construction Features:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Two-core cable</strong> - Only live (brown) and neutral (blue)
-                </li>
-                <li>
-                  <strong>Fully plastic/insulated enclosure</strong> - No exposed metal parts
-                </li>
-                <li>
-                  <strong>No earth terminal or connection</strong> - Earth not required
-                </li>
-                <li>
-                  <strong>Double-square symbol present</strong> - On rating plate or moulded into
-                  case
-                </li>
-                <li>
-                  <em>
-                    Examples: Phone chargers, laptop power supplies, plastic-bodied power tools,
-                    hair dryers
-                  </em>
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Class III Construction Features:
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Very low voltage operation</strong> - Under 50V AC or 120V DC ripple-free
-                </li>
-                <li>
-                  <strong>Powered via transformer</strong> - Separate power supply unit
-                </li>
-                <li>
-                  <strong>USB powered</strong> - 5V DC from computer or charger
-                </li>
-                <li>
-                  <strong>Battery operated</strong> - Often with charging capability
-                </li>
-                <li>
-                  <em>
-                    Examples: Laptop (the laptop itself, not charger), desk lamps with transformers,
-                    USB devices, LED strip lights
-                  </em>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 05: Handling Unclear Markings */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Handling Missing or Unclear Markings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              In the real world, you'll encounter appliances with damaged, faded, or missing rating
-              plates. Knowing how to handle these situations professionally is essential for safe
-              and compliant PAT testing.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Decision Tree for Unclear Markings:
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Step 1:</strong> Can you find any rating plate? Check all surfaces, inside
-                  doors, under covers, near cable entry
-                </li>
-                <li>
-                  <strong>Step 2:</strong> Is the Class II symbol visible anywhere? Check moulded
-                  plastic, printed labels, embossed markings
-                </li>
-                <li>
-                  <strong>Step 3:</strong> Check the cable - two core or three core? Two core (no
-                  earth) suggests Class II; three core suggests Class I
-                </li>
-                <li>
-                  <strong>Step 4:</strong> Examine the construction. Metal case with earth terminal
-                  = Class I; Fully plastic = likely Class II
-                </li>
-                <li>
-                  <strong>Step 5:</strong> Still unsure? Look up the model online - manufacturer
-                  websites often have specifications and manuals
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white">
-                <strong>When to Fail:</strong> If you cannot determine the class with reasonable
-                certainty, the appliance should be failed and removed from service until
-                manufacturer documentation is obtained, a replacement rating plate is fitted, or the
-                appliance is replaced.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Common Scenarios:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Faded/worn rating plate:</strong> Try photographing with flash at an angle
-                  - raised text may become visible. Use torch at low angle to highlight embossed
-                  markings.
-                </li>
-                <li>
-                  <strong>Rating plate painted over:</strong> May indicate previous refurbishment.
-                  Look for model numbers elsewhere (moulded into case, separate serial plate).
-                </li>
-                <li>
-                  <strong>Foreign appliance with unfamiliar markings:</strong> Class symbols are
-                  international standards. Focus on finding the double-square or checking
-                  cable/construction.
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              <strong>Documentation is key:</strong> Whatever your decision, document it clearly in
-              your test records. Note why you classified the appliance as you did, or why you failed
-              it. This protects both you and your client if questions arise later.
-            </p>
-          </div>
-        </section>
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Best Practice Tips</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Always identify the class BEFORE starting any electrical tests</li>
-                <li>Keep a torch handy for inspecting rating plates in dark locations</li>
-                <li>Take photos of rating plates for your records - useful for future reference</li>
-                <li>
-                  If testing many items of the same model, verify the first one thoroughly then
-                  spot-check others
-                </li>
-                <li>Build familiarity with common appliances in your testing environment</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Assuming all plastic appliances are Class II</strong> — some have internal
-                  earth connections
-                </li>
-                <li>
-                  <strong>Testing Class II appliances for earth continuity</strong> — will always
-                  show fail/open circuit
-                </li>
-                <li>
-                  <strong>Ignoring the cable type</strong> — when the rating plate is unclear, the
-                  cable provides vital clues
-                </li>
-                <li>
-                  <strong>Not checking if cables have been replaced</strong> — wrong cable type may
-                  have been fitted
-                </li>
-                <li>
-                  <strong>Relying solely on plug type</strong> — some Class II appliances use 3-pin
-                  plugs (earth not connected)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Quick Reference Card */}
-        <section className="mb-10">
-          <div className="mt-6 p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">
-              Quick Reference: Class Identification
-            </h3>
-            <div className="grid sm:grid-cols-3 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Class I Features</p>
-                <ul className="space-y-0.5">
-                  <li>Three-core cable (L, N, E)</li>
-                  <li>Earth symbol or terminal</li>
-                  <li>Metal casing connected to earth</li>
-                  <li>230V mains operation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Class II Features</p>
-                <ul className="space-y-0.5">
-                  <li>Two-core cable (L, N only)</li>
-                  <li>Double square symbol</li>
-                  <li>No earth connection</li>
-                  <li>Double/reinforced insulation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Class III Features</p>
-                <ul className="space-y-0.5">
-                  <li>SELV/PELV marking</li>
-                  <li>Under 50V AC operation</li>
-                  <li>Transformer or USB powered</li>
-                  <li>Low voltage connection</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Bottom Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/pat-testing-module-2-section-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous Section
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/pat-testing-module-3">
-              Next: Module 3
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
     </div>
   );
 };

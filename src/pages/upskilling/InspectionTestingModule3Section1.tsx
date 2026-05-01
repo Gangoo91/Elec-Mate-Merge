@@ -527,7 +527,7 @@ const InspectionTestingModule3Section1 = () => {
                 y="163"
                 textAnchor="middle"
                 fill="#FBBF24"
-                fontSize="8"
+                fontSize="9"
                 fontWeight="bold"
               >
                 LINK
@@ -585,7 +585,7 @@ const InspectionTestingModule3Section1 = () => {
                 stroke="#EF4444"
                 strokeWidth="1"
               />
-              <text x="540" y="134" textAnchor="middle" fill="#EF4444" fontSize="8">
+              <text x="540" y="134" textAnchor="middle" fill="#EF4444" fontSize="9">
                 L
               </text>
               <rect
@@ -598,7 +598,7 @@ const InspectionTestingModule3Section1 = () => {
                 stroke="#3B82F6"
                 strokeWidth="1"
               />
-              <text x="575" y="134" textAnchor="middle" fill="#3B82F6" fontSize="8">
+              <text x="575" y="134" textAnchor="middle" fill="#3B82F6" fontSize="9">
                 N
               </text>
               <rect
@@ -611,7 +611,7 @@ const InspectionTestingModule3Section1 = () => {
                 stroke="#22C55E"
                 strokeWidth="1"
               />
-              <text x="558" y="159" textAnchor="middle" fill="#22C55E" fontSize="8">
+              <text x="558" y="159" textAnchor="middle" fill="#22C55E" fontSize="9">
                 E
               </text>
 
@@ -802,7 +802,7 @@ const InspectionTestingModule3Section1 = () => {
                 >
                   R2 = 0.74 Ω ⚠
                 </text>
-                <text x="460" y="108" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+                <text x="460" y="108" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                   (active test point)
                 </text>
               </g>
@@ -867,11 +867,11 @@ const InspectionTestingModule3Section1 = () => {
               </text>
               {/* Two terminal dots on the meter */}
               <circle cx="400" cy="265" r="4" fill="#FBBF24" />
-              <text x="400" y="278" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="400" y="278" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 to MET
               </text>
               <circle cx="520" cy="265" r="4" fill="#22C55E" />
-              <text x="520" y="278" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="520" y="278" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 probe
               </text>
 

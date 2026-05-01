@@ -589,7 +589,7 @@ const InspectionTestingModule5Section3 = () => {
               >
                 ⚠ DISCONNECTED
               </text>
-              <text x="305" y="190" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="305" y="190" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 main earthing conductor
               </text>
               <line x1="335" y1="170" x2="328" y2="165" stroke="#FBBF24" strokeWidth="1.5" />

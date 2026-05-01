@@ -361,7 +361,7 @@ const InspectionTestingModule7Section2 = () => {
                   y="92"
                   textAnchor="middle"
                   fill="#EF4444"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   IN (L)
@@ -373,7 +373,7 @@ const InspectionTestingModule7Section2 = () => {
                   y="92"
                   textAnchor="middle"
                   fill="#FBBF24"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   OUT (Sw L)
@@ -408,7 +408,7 @@ const InspectionTestingModule7Section2 = () => {
                 </text>
                 {/* CPC */}
                 <circle cx="115" cy="180" r="3" fill="#22C55E" />
-                <text x="115" y="172" textAnchor="middle" fill="#22C55E" fontSize="8">
+                <text x="115" y="172" textAnchor="middle" fill="#22C55E" fontSize="9">
                   CPC
                 </text>
                 {/* Test reading */}
@@ -417,7 +417,7 @@ const InspectionTestingModule7Section2 = () => {
                   y="195"
                   textAnchor="middle"
                   fill="#FBBF24"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   IN→CPC: continuous · OUT→CPC: open (OFF) / continuous (ON)
@@ -455,7 +455,7 @@ const InspectionTestingModule7Section2 = () => {
                   y="92"
                   textAnchor="middle"
                   fill="#EF4444"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   IN (L)
@@ -484,7 +484,7 @@ const InspectionTestingModule7Section2 = () => {
                   y="103"
                   textAnchor="middle"
                   fill="#FBBF24"
-                  fontSize="7"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   FUSE
@@ -503,21 +503,21 @@ const InspectionTestingModule7Section2 = () => {
                   y="92"
                   textAnchor="middle"
                   fill="#FBBF24"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   LOAD
                 </text>
                 {/* Neutral through */}
                 <circle cx="245" cy="140" r="3" fill="#3B82F6" />
-                <text x="245" y="155" textAnchor="middle" fill="#3B82F6" fontSize="8">
+                <text x="245" y="155" textAnchor="middle" fill="#3B82F6" fontSize="9">
                   N
                 </text>
                 <line x1="245" y1="140" x2="365" y2="140" stroke="#3B82F6" strokeWidth="1.5" />
                 <circle cx="365" cy="140" r="3" fill="#3B82F6" />
                 {/* CPC */}
                 <circle cx="305" cy="180" r="3" fill="#22C55E" />
-                <text x="305" y="172" textAnchor="middle" fill="#22C55E" fontSize="8">
+                <text x="305" y="172" textAnchor="middle" fill="#22C55E" fontSize="9">
                   CPC
                 </text>
                 <text
@@ -525,7 +525,7 @@ const InspectionTestingModule7Section2 = () => {
                   y="195"
                   textAnchor="middle"
                   fill="#FBBF24"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   Fuse out: LOAD→CPC open · Fuse in: continuous
@@ -571,7 +571,7 @@ const InspectionTestingModule7Section2 = () => {
                   y="89"
                   textAnchor="middle"
                   fill="#22C55E"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   E
@@ -590,12 +590,12 @@ const InspectionTestingModule7Section2 = () => {
                   y="139"
                   textAnchor="middle"
                   fill="#3B82F6"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   N
                 </text>
-                <text x="450" y="158" textAnchor="middle" fill="#3B82F6" fontSize="7">
+                <text x="450" y="158" textAnchor="middle" fill="#3B82F6" fontSize="9">
                   LEFT
                 </text>
                 {/* Line right */}
@@ -612,12 +612,12 @@ const InspectionTestingModule7Section2 = () => {
                   y="139"
                   textAnchor="middle"
                   fill="#EF4444"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   L
                 </text>
-                <text x="540" y="158" textAnchor="middle" fill="#EF4444" fontSize="7">
+                <text x="540" y="158" textAnchor="middle" fill="#EF4444" fontSize="9">
                   RIGHT
                 </text>
                 <text
@@ -625,12 +625,12 @@ const InspectionTestingModule7Section2 = () => {
                   y="185"
                   textAnchor="middle"
                   fill="#FBBF24"
-                  fontSize="8"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   L (right) → CPC: continuous · N (left) → CPC: open
                 </text>
-                <text x="495" y="197" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="7">
+                <text x="495" y="197" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                   test at the socket-back, before cover goes on
                 </text>
               </g>
@@ -662,21 +662,21 @@ const InspectionTestingModule7Section2 = () => {
                 </text>
                 {/* Permanent L bank */}
                 <circle cx="625" cy="95" r="4" fill="#EF4444" />
-                <text x="625" y="87" textAnchor="middle" fill="#EF4444" fontSize="7">
+                <text x="625" y="87" textAnchor="middle" fill="#EF4444" fontSize="9">
                   Perm L in
                 </text>
                 <circle cx="650" cy="95" r="4" fill="#EF4444" />
-                <text x="650" y="87" textAnchor="middle" fill="#EF4444" fontSize="7">
+                <text x="650" y="87" textAnchor="middle" fill="#EF4444" fontSize="9">
                   Perm L out
                 </text>
                 {/* Neutral bank */}
                 <circle cx="690" cy="95" r="4" fill="#3B82F6" />
-                <text x="690" y="87" textAnchor="middle" fill="#3B82F6" fontSize="7">
+                <text x="690" y="87" textAnchor="middle" fill="#3B82F6" fontSize="9">
                   N
                 </text>
                 {/* Switched L to lampholder */}
                 <circle cx="730" cy="95" r="4" fill="#FBBF24" />
-                <text x="730" y="87" textAnchor="middle" fill="#FBBF24" fontSize="7">
+                <text x="730" y="87" textAnchor="middle" fill="#FBBF24" fontSize="9">
                   Sw L
                 </text>
                 {/* Lampholder */}
@@ -688,7 +688,7 @@ const InspectionTestingModule7Section2 = () => {
                   stroke="rgba(251,191,36,0.4)"
                   strokeWidth="1.5"
                 />
-                <text x="690" y="148" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+                <text x="690" y="148" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
                   lamp
                 </text>
                 <line
@@ -705,7 +705,7 @@ const InspectionTestingModule7Section2 = () => {
                   y="180"
                   textAnchor="middle"
                   fill="#FBBF24"
-                  fontSize="7"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   Perm L: always continuous
@@ -715,7 +715,7 @@ const InspectionTestingModule7Section2 = () => {
                   y="192"
                   textAnchor="middle"
                   fill="#FBBF24"
-                  fontSize="7"
+                  fontSize="9"
                   fontWeight="bold"
                 >
                   Sw L: open (sw OFF) / continuous (sw ON)
@@ -829,7 +829,7 @@ const InspectionTestingModule7Section2 = () => {
                 y="350"
                 textAnchor="middle"
                 fill="#FBBF24"
-                fontSize="8"
+                fontSize="9"
                 fontWeight="bold"
               >
                 L–CPC LINK
@@ -872,7 +872,7 @@ const InspectionTestingModule7Section2 = () => {
               >
                 Continuous = pass at this point
               </text>
-              <text x="385" y="378" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="385" y="378" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 Open = polarity flag — investigate before energising
               </text>
 
@@ -915,7 +915,7 @@ const InspectionTestingModule7Section2 = () => {
               <text x="525" y="378" fill="#FBBF24" fontSize="9" fontWeight="bold">
                 One tick per circuit on the schedule.
               </text>
-              <text x="525" y="402" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="525" y="402" fill="rgba(255,255,255,0.5)" fontSize="9">
                 Anything else = stop, isolate, investigate.
               </text>
             </svg>

@@ -493,7 +493,7 @@ const InspectionTestingModule5Section2 = () => {
               <text x="80" y="100" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
                 Supply
               </text>
-              <text x="80" y="115" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="80" y="115" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 (Uo)
               </text>
               <circle cx="80" cy="128" r="3" fill="#EF4444" />
@@ -632,7 +632,7 @@ const InspectionTestingModule5Section2 = () => {
               <text x="510" y="100" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
                 Supply
               </text>
-              <text x="510" y="115" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="510" y="115" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 (Uo)
               </text>
               <circle cx="510" cy="128" r="3" fill="#EF4444" />

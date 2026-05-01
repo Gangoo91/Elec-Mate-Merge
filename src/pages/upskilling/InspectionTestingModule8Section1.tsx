@@ -574,7 +574,7 @@ const InspectionTestingModule8Section1 = () => {
               >
                 MAIN SW
               </text>
-              <text x="120" y="156" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+              <text x="120" y="156" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
                 100 A DP
               </text>
 
@@ -598,7 +598,7 @@ const InspectionTestingModule8Section1 = () => {
               >
                 SPD
               </text>
-              <text x="200" y="156" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+              <text x="200" y="156" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
                 Type 2
               </text>
 
@@ -632,7 +632,7 @@ const InspectionTestingModule8Section1 = () => {
               >
                 RCBO
               </text>
-              <text x="270" y="164" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="7">
+              <text x="270" y="164" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
                 Lights
               </text>
 
@@ -656,10 +656,10 @@ const InspectionTestingModule8Section1 = () => {
               >
                 RCBO
               </text>
-              <text x="340" y="152" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+              <text x="340" y="152" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
                 30 mA
               </text>
-              <text x="340" y="164" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="7">
+              <text x="340" y="164" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
                 Sockets
               </text>
 
@@ -676,7 +676,7 @@ const InspectionTestingModule8Section1 = () => {
               <text x="405" y="142" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
                 MCB
               </text>
-              <text x="405" y="156" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="405" y="156" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 32 A
               </text>
 
@@ -693,7 +693,7 @@ const InspectionTestingModule8Section1 = () => {
               <text x="465" y="142" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
                 MCB
               </text>
-              <text x="465" y="156" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="8">
+              <text x="465" y="156" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
                 16 A
               </text>
 

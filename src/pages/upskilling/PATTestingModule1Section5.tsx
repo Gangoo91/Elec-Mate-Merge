@@ -1,741 +1,859 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  LearningOutcomes,
+  ContentEyebrow,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'PAT Testing Implementation and Best Practices - PAT Testing Module 1';
-const DESCRIPTION =
-  'Learn how to implement an effective PAT testing programme, including planning, testing processes, record keeping, staff training, and handling failed equipment.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'pat-components',
-    question: 'What are the two main components of PAT testing?',
+    id: 'patm1-s5-pillars',
+    question:
+      'HSG107 sets out a hierarchy of inspection activities for portable equipment. Which is the correct ordering, by frequency?',
     options: [
-      'Visual inspection and user training',
-      'Visual inspection and electrical testing',
-      'Electrical testing and documentation',
-      'Documentation and user training',
+      'Combined inspection-and-test, then formal visual, then user check.',
+      'User check (every use, by the user), then formal visual inspection (periodic, by competent person, no dismantling), then combined inspection-and-test (less frequent, with electrical instrument readings).',
+      'Formal visual is the most frequent.',
+      'They run at the same frequency.',
     ],
     correctIndex: 1,
     explanation:
-      'PAT testing consists of visual inspection (checking for obvious damage) and electrical testing (measuring safety parameters like earth continuity and insulation resistance).',
+      'HSG107 §27-44 and IET CoP §10-14 are clear: user checks are the highest-frequency, lowest-cost activity. Formal visual is periodic. Combined inspection-and-test is the least frequent but most thorough. The hierarchy is the economic logic of the whole regime.',
   },
   {
-    id: 'visual-inspection',
-    question: 'What should you check during visual inspection?',
+    id: 'patm1-s5-userscope',
+    question:
+      'A user checks a kettle before plugging it in. Which of the following is OUTSIDE the scope of a user check?',
     options: [
-      'Only the plug and cable',
-      'Just the equipment casing',
-      'Cable, plug, equipment casing, and any obvious damage',
-      'Only internal components',
+      'Looking at the flex for visible damage along its length.',
+      'Looking at the plug top for cracks, discolouration, signs of overheating.',
+      'Removing the bottom plate of the kettle to inspect internal terminations.',
+      'Smelling for burnt insulation around the plug.',
     ],
     correctIndex: 2,
     explanation:
-      'Visual inspection should cover the entire appliance including cable condition, plug integrity, equipment casing, and any signs of damage, overheating, or wear.',
+      'User checks are external and tactile. Removing covers escalates to formal-visual or combined inspection-and-test territory and requires competence. IET CoP §10 frames user checks as "look at it before you plug it in" — visible, smellable, no tools.',
   },
   {
-    id: 'who-can-test',
-    question: 'Who can perform PAT testing?',
+    id: 'patm1-s5-recordable',
+    question: 'How is the user-check pillar typically recorded for compliance purposes?',
     options: [
-      'Only qualified electricians',
-      'Anyone with basic training and competence',
-      'Only the equipment manufacturer',
-      'Only certified PAT testing companies',
+      'Every user check is recorded against every item, every time.',
+      'The training and the route to report defects are recorded (toolbox talk attendance, fault-report system records, equipment-out-of-service tags). Individual user checks themselves are not typically recorded item-by-item — the system that supports the check is.',
+      'User checks are not recorded.',
+      'Only failed user checks are recorded.',
     ],
     correctIndex: 1,
     explanation:
-      'PAT testing can be performed by competent persons with adequate training, not necessarily qualified electricians, though they must understand the equipment and testing procedures.',
+      'HSG107 §27-30 and IET CoP §10 frame the user-check evidence as the system, not the daily transactional records. What is recorded: training delivery, fault-reporting routes, defective-item tags / withdrawals, defects reported and acted on. What is not recorded: the visual moment of every user with every item.',
   },
   {
-    id: 'failed-equipment',
-    question: 'What happens if equipment fails PAT testing?',
+    id: 'patm1-s5-flow',
+    question:
+      'During a formal visual, the inspector finds a hairline crack in the plug body. The kettle still works and the user has been using it. Which next step is correct?',
     options: [
-      'It can continue to be used with caution',
-      'It must be removed from service immediately',
-      'It can be used for one more month',
-      'Only the failed test needs to be repeated',
+      'Apply a pass-label and note the crack in comments for next cycle.',
+      'Withdraw the kettle from service immediately, tag it as out-of-service, log the defect, and either replace the plug top (and re-test) or replace the kettle. Cracked plug bodies are a Reg 4(2) defect — they expose live conductors and are not "monitor and review".',
+      'Apply tape over the crack and continue.',
+      'Test the kettle electrically and decide based on the readings.',
     ],
     correctIndex: 1,
     explanation:
-      'Equipment that fails PAT testing must be removed from service immediately to prevent potential electrical hazards. It can only be returned to service after repair and successful retesting.',
+      'IET CoP §14 and HSG107 §40 are explicit: visible plug damage is an immediate withdrawal-from-service criterion. The electrical test does not redeem a visible safety defect. The defect-and-action log is the documentary trail.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: 'What are the two main components of PAT testing?',
+    question: 'What is the primary purpose of the user-check pillar of an HSG107 PAT regime?',
     options: [
-      'Visual inspection and user training',
-      'Visual inspection and electrical testing',
-      'Electrical testing and documentation',
-      'Documentation and user training',
+      'To replace formal inspection.',
+      'To catch high-prevalence visible defects (flex damage, plug damage, signs of overheating, signs of misuse) at the highest possible frequency, before equipment is energised. The user is the only person who sees the equipment every time it is plugged in.',
+      'To document combined inspection-and-test results.',
+      'To enable the user to perform electrical testing.',
     ],
     correctAnswer: 1,
     explanation:
-      'PAT testing consists of visual inspection (checking for obvious damage) and electrical testing (measuring safety parameters like earth continuity and insulation resistance).',
+      'The user-check pillar exists because no formal inspection regime, however frequent, can match the cadence of every-use observation by the user. HSG107 §27-30 and IET CoP §10 build on this: user checks catch the bulk of preventable defects between formal cycles.',
   },
   {
     id: 2,
-    question: 'What should you check during visual inspection?',
+    question:
+      'What does a competent person, performing a formal visual inspection per IET CoP §14, look at that a user typically does not?',
     options: [
-      'Only the plug and cable',
-      'Just the equipment casing',
-      'Cable, plug, equipment casing, and any obvious damage',
-      'Only internal components',
+      'Nothing different.',
+      'Systematic check of: flex full length (including hidden runs), plug fuse rating against equipment rating, secure cord grip with no exposed cores, in-line connectors / FCUs / transformers, equipment casing including back / underside, switches and indicators operating as intended, environmental signs of misuse or ingress, equipment markings (class symbol, voltage, current, IP rating). This is rigorous, structured, and not what a user does in passing.',
+      'Internal components after removing covers.',
+      'Only the equipment markings.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Visual inspection should cover the entire appliance including cable condition, plug integrity, equipment casing, and any signs of damage, overheating, or wear.',
+      'The formal visual is the systematic version of what the user does intuitively. IET CoP §14 expressly does NOT include dismantling — that escalates to combined inspection-and-test. The depth difference is rigour and coverage, not invasiveness.',
   },
   {
     id: 3,
-    question: 'Who can perform PAT testing?',
+    question: 'A combined inspection-and-test adds what to the formal visual?',
     options: [
-      'Only qualified electricians',
-      'Anyone with basic training and competence',
-      'Only the equipment manufacturer',
-      'Only certified PAT testing companies',
+      'A different visual checklist.',
+      'Electrical instrument testing — protective-conductor continuity, insulation resistance (or substitute leakage), polarity (where relevant), and a functional / load test — recorded as numerical readings against IET CoP Chapter 14 acceptance criteria.',
+      'Only a load test.',
+      'Removal of covers for internal inspection.',
     ],
     correctAnswer: 1,
     explanation:
-      'PAT testing can be performed by competent persons with adequate training, not necessarily qualified electricians, though they must understand the equipment and testing procedures.',
+      'The combined inspection-and-test is "formal visual + instrument tests + records of numerical readings". It catches defects the visual cannot — open or high-resistance CPCs, insulation degradation, leakage above acceptable limits — and produces the numerical evidence that backs the EAWR / PUWER record.',
   },
   {
     id: 4,
-    question: 'What happens if equipment fails PAT testing?',
+    question:
+      'A user receives no training on what to check before plugging in equipment, and there is no system for reporting defects. Which legal duties have failed?',
     options: [
-      'It can continue to be used with caution',
-      'It must be removed from service immediately',
-      'It can be used for one more month',
-      'Only the failed test needs to be repeated',
+      'None — user checks are advisory.',
+      'HSWA s.2(2)(c) (information / instruction / training); HSWA s.2(2)(a) (safe systems of work); EAWR Reg 4(2) read with HSG107 (the maintenance regime requires the user-check pillar); and PUWER Reg 8 (information / instruction). Multiple failures.',
+      'Only HSG107.',
+      'Only EAWR.',
     ],
     correctAnswer: 1,
     explanation:
-      'Equipment that fails PAT testing must be removed from service immediately to prevent potential electrical hazards. It can only be returned to service after repair and successful retesting.',
+      'The user-check pillar is the cheapest, most frequent line of defence — and the one that depends entirely on the employer providing training and a defect-reporting route. Skipping it does not just fail the IET CoP framework; it fails several statutory duties simultaneously.',
   },
   {
     id: 5,
-    question: 'How should PAT testing results be recorded?',
+    question:
+      'Why does HSG107 advise that the user is the "first line of defence" against electrical danger?',
     options: [
-      'Mental notes are sufficient',
-      'Simple pass/fail labels only',
-      'Detailed records with dates, results, and equipment identification',
-      'Only failed tests need recording',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'Comprehensive records should include equipment identification, test dates, detailed results, tester identity, and any remedial actions taken.',
-  },
-  {
-    id: 6,
-    question: 'What is the first phase of implementing a PAT programme?',
-    options: [
-      'Buying testing equipment',
-      'Training staff',
-      'Equipment audit and risk assessment',
-      'Testing all equipment immediately',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'The first phase is assessment - conducting an equipment audit, risk assessing each area, defining testing frequencies, and creating an equipment register.',
-  },
-  {
-    id: 7,
-    question: 'Which of these is an essential component of PAT tester training?',
-    options: [
-      'How to repair failed equipment',
-      'Understanding electrical safety principles and test interpretation',
-      'Only how to use the testing equipment',
-      'Legal qualifications in electrical installation',
+      'To shift legal responsibility to the user.',
+      'Because the user has the highest-frequency contact with the equipment — daily, repeated, often the only direct interaction. A defect that develops between formal inspections will, if visible at all, first be visible to the user. The cadence economics make the user the only practical first line.',
+      'Because users are required by law to be electrical competent.',
+      'Because formal inspections are too expensive.',
     ],
     correctAnswer: 1,
     explanation:
-      'Essential training includes understanding electrical safety principles, equipment classification, testing equipment operation, and interpreting test results correctly.',
+      'It is a cadence argument, not a responsibility-shifting one. HSWA s.7 imposes a user duty to take reasonable care, but the employer retains the s.2 duty to set the system up. The "first line of defence" framing is about temporal proximity to defects — only the user sees the equipment every time.',
+  },
+  {
+    id: 6,
+    question:
+      'IET CoP §14 states the formal visual inspection should NOT require dismantling. Why is that constraint important?',
+    options: [
+      'To save time.',
+      'To keep the formal visual at a competence threshold that is achievable by trained but not necessarily instrument-qualified staff, and to keep the inspection non-invasive (so it does not itself become a source of damage). Inspections requiring dismantling escalate to combined inspection-and-test or to maintenance.',
+      'Because dismantling is illegal.',
+      'To match the user check.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The rule keeps the formal visual a discrete inspection step, not a maintenance activity. Items that need dismantling enter combined inspection-and-test or planned maintenance, with the appropriate competence threshold (EAWR Reg 16) and record requirement.',
+  },
+  {
+    id: 7,
+    question:
+      'A user reports a fault-tingling sensation when touching a metal-cased Class I appliance. What is the correct sequence?',
+    options: [
+      'Continue to use it; report at next formal inspection.',
+      'Withdraw immediately, tag out-of-service, isolate at the source, perform a triggered combined inspection-and-test (PE-continuity test critical) AND investigate the supply-side circuit (RCD operation, Zs at the socket, polarity). A "tingle" is a strong indicator of CPC failure or polarity reversal — both safety-critical.',
+      'Test electrically only when convenient.',
+      'Tighten the plug and continue.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A user-reported tingle on a Class I item is a near-miss. Both equipment-side and supply-side investigation are warranted (PUWER Reg 6 trigger and EAWR Reg 4(2)). Asking the user to continue is itself an HSWA s.2 breach.',
   },
   {
     id: 8,
-    question: 'What should be done with failed equipment that cannot be repaired?',
+    question: 'What records support the user-check pillar in an HSG107 audit?',
     options: [
-      'Return it to the manufacturer',
-      "Store it in case it's needed later",
-      'Dispose of it safely and update records',
-      'Use it only for non-critical tasks',
+      'A daily user-check log per item.',
+      'The supporting system records: training delivery (toolbox talks with attendance), the fault-reporting system (sticker / email / app, with retained records of reports made and actions taken), out-of-service tagging procedure, and equipment-withdrawal log. The user-check moment itself is not transactionally recorded.',
+      'There are no records.',
+      'A signed weekly register.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Equipment that cannot be economically repaired should be disposed of safely (following WEEE regulations) and records updated to remove it from the equipment register.',
+      'HSG107 frames user-check evidence as the SYSTEM that enables and enforces it, not the per-event log. Trying to log every user check is impractical and reduces the user check from a continuous awareness activity to a transactional checkbox.',
   },
   {
     id: 9,
-    question: 'How often should PAT testing competency be reassessed?',
+    question:
+      'A formal visual finds the equipment fully compliant; a combined inspection-and-test the same day shows IR of 0.4 MΩ on a Class I item with a 2 kW heating element. What is the correct interpretation?',
     options: [
-      'Only at initial training',
-      'Every 5 years minimum',
-      'Regularly, with ongoing development',
-      'Never, once trained always competent',
+      'The visual passed, so the item is safe.',
+      'The IR reading fails the IET CoP §15 acceptance for Class I equipment with a heating element rated ≥ 3 kW (typically ≥ 1 MΩ or as set out in IET CoP). For < 3 kW heaters the IET CoP acceptance is also typically ≥ 1 MΩ. 0.4 MΩ is below acceptance — fail. The item is withdrawn from service, defect investigated, repair and re-test. The visual cannot redeem an IR fail because the visual cannot see insulation breakdown.',
+      'Average the two and decide.',
+      'The IR test is optional if the visual passes.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Competency should be regularly assessed and maintained through ongoing training, updates on regulatory changes, and practical skills evaluation.',
+      'Each pillar catches different defects. The visual catches what is visible; the combined inspection-and-test catches the invisible (IR breakdown, CPC integrity, leakage). A "pass" requires all the relevant pillars to pass on their own terms.',
   },
   {
     id: 10,
-    question: 'What is a common implementation pitfall to avoid?',
+    question:
+      'A duty-holder argues they do not need a formal user-check programme because their workforce is "experienced and sensible". What is the legal weakness?',
     options: [
-      'Starting with conservative testing frequencies',
-      'Training multiple staff members',
-      'Treating PAT as a one-size-fits-all solution',
-      'Maintaining detailed records',
+      'No weakness — experienced staff are sufficient.',
+      'HSWA s.2(2)(c) requires INFORMATION, INSTRUCTION, TRAINING and SUPERVISION — not assumption of competence. The defendable position is a documented programme: induction content, refresher training, defect-reporting procedure, supervised use of the procedure. "Experienced and sensible" is a description, not a system.',
+      'It is a defence.',
+      'Sensibility is presumed under EAWR.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'A common pitfall is treating PAT as one-size-fits-all rather than adapting the programme to specific equipment types, environments, and risk levels.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'Do I need formal qualifications to do PAT testing?',
-    answer:
-      "No formal qualifications are legally required, but testers must be 'competent' - meaning they have sufficient training, knowledge, and experience. Most employers require completion of a recognised PAT testing course and ongoing competency assessment.",
-  },
-  {
-    question: 'What equipment do I need to start PAT testing?',
-    answer:
-      'At minimum, you need a PAT tester (combined or separate instruments), test labels or tags, a means of recording results, and appropriate PPE. More comprehensive programmes may include barcode scanners, database software, and calibration equipment.',
-  },
-  {
-    question: 'How long does it take to test one appliance?',
-    answer:
-      'A typical appliance takes 2-5 minutes including visual inspection, electrical tests, labelling, and recording. Complex equipment or those requiring repair assessment take longer. Experienced testers can process 100-150 items per day.',
-  },
-  {
-    question: 'Can we use in-house staff or should we outsource?',
-    answer:
-      'Both options are valid. In-house testing offers flexibility and lower per-test costs but requires training investment. Outsourcing provides expertise and equipment without capital outlay. Many organisations use a hybrid approach - in-house for routine testing and contractors for specialist equipment.',
-  },
-  {
-    question: 'What happens if equipment is damaged between tests?',
-    answer:
-      'Users should report damage immediately, and equipment should be removed from service until inspected. User awareness training is essential - staff should know how to identify obvious damage and the importance of reporting it rather than continuing to use faulty equipment.',
-  },
-  {
-    question: "How do we handle equipment that's always in use?",
-    answer:
-      'Schedule testing during downtime, maintenance windows, or shift changes. For critical equipment, have spare units available or plan testing during annual shutdowns. Some organisations use portable testers that can be brought to equipment locations.',
+      'The "they know what to do" framing fails s.2(2)(c) and is a common HSE finding in incident investigations. A workforce that is in fact experienced and sensible needs a system to record the fact and evidence it. The system is the artefact; the experience is the input.',
   },
 ];
 
 const PATTestingModule1Section5 = () => {
-  useSEO(TITLE, DESCRIPTION);
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'User checks vs formal inspection and testing | PAT Module 1.5 | Elec-Mate',
+    description:
+      'The three-tier hierarchy of HSG107: user checks every use, formal visual at periodic intervals, combined inspection-and-test at the longer cycle. The cadence economics of the regime, what each tier catches, and what records it produces.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/pat-testing-module-1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/pat-testing-module-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
+            <ArrowLeft className="h-4 w-4" /> Module 1
+          </button>
+
+          <PageHero
+            eyebrow="Module 1 · Section 5"
+            title="User checks vs formal inspection and testing"
+            description="The three-tier hierarchy of HSG107. User checks every use; formal visual at periodic intervals; combined inspection-and-test at the longer cycle. Each tier catches different defects, runs at a different cadence, and produces different records."
+            tone="yellow"
+          />
+
+          <TLDR
+            points={[
+              'HSG107 sets a three-tier hierarchy: user checks (every use, by the user), formal visual inspection (periodic, by competent person, no dismantling), combined inspection-and-test (less frequent, with instrument readings).',
+              'User checks catch the bulk of high-prevalence visible defects — flex damage, plug damage, signs of overheating, signs of misuse — before equipment is energised. They run at the highest cadence, by the only person who is there every time.',
+              'Formal visual is the rigorous, structured external inspection. IET CoP §14 lists what is checked; the rule is no dismantling. Catches what users miss in the rush of daily use.',
+              'Combined inspection-and-test adds electrical instrument testing — PE-continuity, IR / leakage, polarity, functional — with numerical readings against IET CoP Chapter 14 acceptance criteria. Catches the invisible defects.',
+              'Each tier produces different records. User-check evidence = the SYSTEM (training, reporting routes, withdrawal procedure). Formal visual = checklist results. Combined inspection-and-test = numerical readings + pass/fail.',
+              'All three tiers are required. Skipping any tier creates a class of defect the regime no longer catches.',
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Describe the three-tier hierarchy of HSG107: user check, formal visual, combined inspection-and-test, with cadence and competence requirements for each',
+              'List what a user check covers and what it explicitly does NOT cover (no dismantling, no instrument)',
+              'Apply the IET CoP §14 formal-visual checklist to any equipment item (flex, plug, casing, controls, environment, markings)',
+              'Explain how the combined inspection-and-test extends the formal visual with PE-continuity, IR, polarity, and functional readings',
+              'Identify the records each tier produces — system records for user checks, structured findings for formal visual, numerical readings for combined inspection-and-test',
+              'Defend a programme against the "we do PAT, we don\'t need user checks" framing by reference to HSWA s.2(2)(c), HSG107 §27-30, and the cadence economics',
+              'Recognise the defects each tier catches that the others cannot — and the danger of skipping any tier',
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The three-tier hierarchy</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why three tiers — the cadence economics"
+            plainEnglish="No single inspection activity, however thorough, runs at the cadence needed to catch defects on equipment in daily use. The three-tier hierarchy is an economic answer: cheap, fast, frequent at the front (user checks) and rare, deep, expensive at the back (combined inspection-and-test). Each tier is calibrated to the defects it can catch."
+            onSite="When designing a PAT programme, think of the three tiers as filters in series. The user catches the obvious. The formal visual catches what the user missed. The combined test catches what the eye cannot see. A defect missed by all three tiers is rare; a defect missed by any one tier is common."
+          >
+            <p>The cadence economics:</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-[13.5px] my-2">
+                <thead>
+                  <tr className="border-b border-white/15">
+                    <th className="text-left text-white/80 py-2">Tier</th>
+                    <th className="text-left text-white/80 py-2">Cadence</th>
+                    <th className="text-left text-white/80 py-2">Performed by</th>
+                    <th className="text-left text-white/80 py-2">Cost per event</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/95">
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>User check</strong>
+                    </td>
+                    <td>Every use (≥ daily for daily-use items)</td>
+                    <td>The user</td>
+                    <td>Negligible</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">
+                      <strong>Formal visual</strong>
+                    </td>
+                    <td>Periodic (months to years per Table 7.1)</td>
+                    <td>Trained competent person</td>
+                    <td>Minutes per item</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2">
+                      <strong>Combined inspection-and-test</strong>
+                    </td>
+                    <td>Periodic, longer than formal visual</td>
+                    <td>Competent person with instrument</td>
+                    <td>Several minutes per item with paperwork</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              The economics work because the cheapest, most frequent activity catches the
+              highest-prevalence defects. If user checks did not exist, the formal-visual cycle
+              would have to be daily for every item — an impossible expense. If the combined
+              inspection-and-test did not exist, hidden defects in CPC continuity and insulation
+              would be invisible.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="HSE HSG107 (4th Edition) · paragraph 27"
+            clause={
+              <>
+                A simple user check is the first line of defence in maintaining the safety of
+                portable electrical equipment. It is intended to identify obvious damage or
+                deterioration, and is carried out by the user before each use of the equipment.
+              </>
+            }
+            meaning="HSG107 names the user check the 'first line of defence' — a deliberate framing. It is the cheapest, fastest, most frequent layer, and the only one that runs every time. Skipping it does not just leave a gap; it cedes the cadence economics that make the rest of the regime affordable."
+          />
+
+          <ConceptBlock
+            title="Tier 1 — the user check"
+            plainEnglish="The user looks at the equipment before plugging it in. Visible flex damage, cracked or burnt plug, signs of overheating, equipment that has tripped a protective device, equipment used in a way that does not match its intended use — all are reasons to take it out of service and report. The check takes seconds; the cumulative protection is enormous."
+          >
+            <p>What the user is trained to look for (IET CoP §10, HSG107 §27-30):</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                Damage to the cable sheath — cuts, abrasion, exposed inner cores, kinks at the
+                strain relief.
+              </li>
+              <li>Cracked, broken, burned or discoloured plug body.</li>
+              <li>
+                Loose plug pins; pins that show heat marks; the plug is hot to the touch in use.
+              </li>
+              <li>
+                Signs of overheating on the equipment casing or on the cable near the equipment
+                entry.
+              </li>
+              <li>Distinctive smell of burnt insulation or hot plastic.</li>
+              <li>Cord-grip not engaged — visible inner cores at the cord entry of the plug.</li>
+              <li>Equipment that has tripped a circuit and been reset without diagnosis.</li>
+              <li>
+                Equipment used outside its intended environment — outdoor equipment used indoors
+                against the rating, equipment used in wet conditions when not rated for it.
+              </li>
+              <li>
+                Visible or audible signs of misuse — broken switch, missing screws, cracked casing.
+              </li>
+            </ul>
+            <p>
+              The user check is not a formal procedure with a clipboard. It is the
+              trained-into-habit of looking at the equipment before plugging it in, and the
+              trained-into-habit of taking it out of service if something is wrong. The system
+              around it — training, reporting, tagging, withdrawal — is what the duty-holder
+              records.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Tier 2 — the formal visual inspection"
+            plainEnglish="A trained competent person systematically inspects the equipment. Externally only — no covers off — but rigorous and structured. Catches the defects the user did not notice in the rush of use. IET CoP §14 lists what is checked; the result is a recorded pass / fail / conditional with any defects logged."
+          >
+            <p>The IET CoP §14 formal-visual checklist:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Flex / cable along its full length</strong> — including the entry to the
+                equipment and to the plug. Run the cable through your hand if necessary to feel for
+                hidden damage.
+              </li>
+              <li>
+                <strong>Plug</strong> — pins (corrosion, wear, heat damage); fuse rating against
+                equipment rating; secure cord grip with no exposed cores at the cord entry; secure
+                terminations under the cover.
+              </li>
+              <li>
+                <strong>In-line connectors, switches, FCUs, transformers</strong> — any device in
+                the supply path between the plug and the equipment. Each is its own check point.
+              </li>
+              <li>
+                <strong>Equipment casing</strong> — including back, underside, and any access panel.
+                Cracks, melted areas, evidence of impact damage.
+              </li>
+              <li>
+                <strong>Switches, indicators, controls</strong> — operate as intended, securely
+                fixed, no broken parts.
+              </li>
+              <li>
+                <strong>Environmental signs of misuse</strong> — dust ingress on a non-IP-rated
+                unit, water ingress on a non-IP-rated unit, equipment sited where its rating is
+                exceeded.
+              </li>
+              <li>
+                <strong>Equipment markings</strong> — class symbol present and legible, voltage,
+                current, IP rating, manufacturer. Missing markings are a defect; type-tested status
+                cannot be verified without them.
+              </li>
+            </ol>
+            <p>
+              The IET CoP §14 constraint that the inspection does not require dismantling is the
+              boundary that distinguishes formal visual from combined inspection-and-test or
+              maintenance. The formal visual is rigorous external; cracking covers takes you to a
+              different competence threshold and a different record requirement.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="IET Code of Practice (5th Ed, 2020) · §14"
+            clause={
+              <>
+                A formal visual inspection should be carried out at intervals which are appropriate
+                to the type of equipment and the environment in which it is used. The formal visual
+                inspection should be carried out by a person who is competent to do so. The
+                inspection should not require the dismantling of the equipment.
+              </>
+            }
+            meaning="The formal visual is appropriate-interval, competent-person, no-dismantling. The three constraints together define the activity. Anything outside them — daily check, untrained inspector, dismantling — is a different tier of activity with a different competence requirement and a different record."
+          />
+
+          <InlineCheck
+            id={inlineChecks[0].id}
+            question={inlineChecks[0].question}
+            options={inlineChecks[0].options}
+            correctIndex={inlineChecks[0].correctIndex}
+            explanation={inlineChecks[0].explanation}
+          />
+
+          <ConceptBlock
+            title="Tier 3 — combined inspection and test"
+            plainEnglish="The competent person performs the formal visual AND connects an instrument to verify protective-conductor continuity, insulation resistance (or substitute leakage), polarity (where relevant), and a functional / load test. Numerical readings are recorded against IET CoP Chapter 14 acceptance criteria. This is what most clients picture when they hear PAT."
+          >
+            <p>The instrument-test sequence (full detail in Module 3 / 4):</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>PE continuity (Class I only).</strong> Measured between the earth pin of the
+                plug and any accessible conductive part. Acceptance values per IET CoP §15.4 / Table
+                15.1 — depend on flex length and conductor csa. Typically &le; 0.1 Ω + 1 mΩ/m of
+                flex.
+              </li>
+              <li>
+                <strong>Insulation resistance.</strong> 500 V dc test between live conductors (line
+                + neutral together) and earth (Class I) or any accessible conductive part (Class
+                II). Acceptance &ge; 1 MΩ for most equipment; tighter for high-power heating
+                elements per IET CoP §15.5.
+              </li>
+              <li>
+                <strong>Touch current / substitute leakage / PE leakage.</strong> Alternative or
+                supplementary tests depending on equipment type and instrument capability.
+              </li>
+              <li>
+                <strong>Polarity.</strong> For IEC leads and any lead with its own connector body,
+                verify that line is on the line pin and neutral on the neutral pin.
+              </li>
+              <li>
+                <strong>Functional / load test.</strong> Verify the equipment energises, operates as
+                intended, and does not draw anomalous current.
+              </li>
+            </ol>
+            <p>
+              The combined inspection-and-test catches defects that are invisible: degraded CPCs
+              that pass a buzzer but fail under load, insulation that has absorbed moisture and
+              fails at 500 V, polarity-reversed leads that defeat fuse protection on equipment whose
+              fuse is in the line conductor. None of these is detectable by the user or by the
+              formal visual.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>What records each tier produces</ContentEyebrow>
+
+          <ConceptBlock
+            title="Tier 1 records — the system, not the event"
+            plainEnglish="User-check evidence is the system that enables and supports user checks: training delivered, reporting routes available, defective-item tagging procedure, withdrawal log. The individual user-check moment is not transactionally recorded — that would convert continuous awareness into a checkbox and reduce its effectiveness."
+          >
+            <p>The user-check system records:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Induction content</strong> covering equipment users are expected to check,
+                what to check for, and what to do if a defect is found.
+              </li>
+              <li>
+                <strong>Toolbox-talk attendance</strong> with topic, date, signed attendance.
+              </li>
+              <li>
+                <strong>Refresher training cadence</strong> (e.g. annual, after incident, on
+                equipment changes) — recorded.
+              </li>
+              <li>
+                <strong>Defect-reporting route</strong> — sticker with phone number, internal email
+                address, in-app fault report, supervisor contact. Whichever the duty-holder chooses,
+                it is documented and accessible.
+              </li>
+              <li>
+                <strong>Defect / fault report log</strong> — what was reported, by whom, when, what
+                was done about it, when the equipment came back into service (if at all).
+              </li>
+              <li>
+                <strong>Out-of-service tagging procedure</strong> — high-visibility tags, lockout
+                where appropriate, equipment movement to a "do not use" zone.
+              </li>
+            </ul>
+            <p>
+              Together these records are the evidence the user-check pillar exists and runs. After
+              an incident, the question "did you have a system that supports user checks?" is
+              answered by these records — not by individual transactional logs.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Tier 2 records — formal visual outcomes"
+            plainEnglish="A formal visual produces a structured record per item: equipment ID, date, inspector, the items in the §14 checklist that were verified, any defects found, action taken, and the result (pass / fail / conditional). This is per-item per-cycle data."
+          >
+            <p>The formal visual record:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>Equipment ID and description (linked to register).</li>
+              <li>Date of inspection.</li>
+              <li>Inspector identity (name + competence reference).</li>
+              <li>Each §14 checklist item — pass / not applicable / fail with detail.</li>
+              <li>Any defects found, photographed where useful, described.</li>
+              <li>Action taken — pass into service, withdraw, repair, replace.</li>
+              <li>Re-test result if action was repair.</li>
+              <li>Overall result of the cycle for the item.</li>
+            </ul>
+            <p>
+              The formal visual record satisfies PUWER Reg 6(3) for the visual side of the
+              inspection. Trended over time, it is the data that drives frequency review under IET
+              CoP §7.4.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Tier 3 records — numerical readings"
+            plainEnglish="The combined inspection-and-test record is the formal visual record + the instrument readings. PE-continuity in ohms, IR in megohms, leakage in milliamps, RCD trip times in milliseconds (for portable RCDs). Each reading recorded against the acceptance value from IET CoP Chapter 14."
+          >
+            <p>The combined inspection-and-test record:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>All formal visual items as above.</li>
+              <li>Instrument used + calibration reference / date.</li>
+              <li>PE-continuity reading (Ω) vs acceptance value.</li>
+              <li>IR reading (MΩ) vs acceptance value.</li>
+              <li>Leakage / touch current reading where applicable, vs acceptance.</li>
+              <li>Polarity result for IEC leads / cordsets.</li>
+              <li>Functional test result.</li>
+              <li>Trip-time result for portable RCDs.</li>
+              <li>Pass / fail / conditional + any conditions noted.</li>
+            </ul>
+            <p>
+              The numerical readings ARE the EAWR Reg 4(2) evidence. A combined-test record without
+              numerical readings is not a record — it is a claim. A modern multifunction PAT
+              instrument prints / exports the readings directly, which is why instruments with
+              stored data are the practical default.
+            </p>
+          </ConceptBlock>
+
+          <Scenario
+            title="The PAT-only, no-user-checks facility"
+            situation="A facility runs an annual PAT testing programme covering all portable equipment. Defects are found at each annual visit. There is no user-check programme — no training, no reporting route, no out-of-service procedure. Between cycles, equipment is in continuous use without any defect-detection mechanism. After a shock incident from a flex damaged 4 months into a cycle, the duty-holder argues their PAT regime was complete."
+            whatToDo="The PAT regime as described is not complete. HSG107 §27-30 makes user checks the first line of defence. HSWA s.2(2)(c) requires information / instruction / training. PUWER Reg 8 requires information about safety. Without a user-check pillar, defects between annual cycles have no detection mechanism. Build the user-check pillar: induction content, toolbox talks, defect-reporting route, withdrawal procedure. Backdate where possible (training records, system implementation date). The annual PAT remains; the user-check pillar fills the cadence gap."
+            whyItMatters="HSE incident investigations frequently identify 'PAT was up to date but no user-check system' as a contributory failure. The annual PAT looks like compliance; the missing user-check pillar is the structural gap that lets defects develop between cycles undetected. Both pillars are needed."
+          />
+
+          <CommonMistake
+            title="Treating user checks as optional once formal PAT is running"
+            whatHappens="A duty-holder commissions a thorough annual PAT regime and considers user training redundant. Six months into the cycle, a kettle\'s flex is damaged when it falls off a shelf. No formal mechanism exists for the user to take it out of service or report. They use it. A trip to the line conductor at the damaged section causes a shock injury. The PAT records show the kettle was tested and passed at the start of the cycle."
+            doInstead="The annual PAT was correct; the absence of a user-check pillar was the structural defect. Restoration: implement the user-check programme — written guidance on what users are expected to check, communication route to report defects, tagging and withdrawal procedure. The user-check pillar is not optional, even (especially) where formal PAT is rigorous."
+          />
+
+          <CommonMistake
+            title="Using 'experienced staff' as a substitute for training"
+            whatHappens="The duty-holder argues training is not needed because the staff are experienced. Instead of inducting new starters or refreshing existing staff on what to check, no formal user-check guidance exists. After an incident involving a long-serving employee using equipment with visible flex damage, the HSE finds (a) no training records, (b) no defect-reporting procedure, (c) no documented user-check expectation. The 'experienced staff' argument fails HSWA s.2(2)(c) and the prosecution proceeds."
+            doInstead="HSWA s.2(2)(c) requires INFORMATION, INSTRUCTION, TRAINING and SUPERVISION — not assumption of competence. Document an induction. Document refresher cadence. Document the defect-reporting route. Document the out-of-service procedure. The system is the artefact; experience of the staff is an input that strengthens it, not replaces it."
+          />
+
+          <InlineCheck
+            id={inlineChecks[1].id}
+            question={inlineChecks[1].question}
+            options={inlineChecks[1].options}
+            correctIndex={inlineChecks[1].correctIndex}
+            explanation={inlineChecks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>What each tier catches that the others cannot</ContentEyebrow>
+
+          <ConceptBlock
+            title="The defect-detection map"
+            plainEnglish="Each tier catches defects the others cannot — that is the design of the regime. Knowing which tier catches what is the basis for understanding why all three are needed and why skipping any one creates a class of unfindable defects."
+          >
+            <p>Defect detection across tiers:</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-[13.5px] my-2">
+                <thead>
+                  <tr className="border-b border-white/15">
+                    <th className="text-left text-white/80 py-2">Defect</th>
+                    <th className="text-center text-white/80 py-2">User check</th>
+                    <th className="text-center text-white/80 py-2">Formal visual</th>
+                    <th className="text-center text-white/80 py-2">Combined I&amp;T</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/95">
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">Cut / abraded flex (visible)</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">Cracked plug body</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">Wrong fuse rating</td>
+                    <td className="text-center text-amber-300">Maybe</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">Loose CPC at plug terminal</td>
+                    <td className="text-center text-red-300">No</td>
+                    <td className="text-center text-amber-300">Sometimes</td>
+                    <td className="text-center text-emerald-300">Yes (PE-continuity reading)</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">IR breakdown (moisture absorption)</td>
+                    <td className="text-center text-red-300">No</td>
+                    <td className="text-center text-red-300">No</td>
+                    <td className="text-center text-emerald-300">Yes (IR test)</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">Polarity-reversed IEC lead</td>
+                    <td className="text-center text-red-300">No</td>
+                    <td className="text-center text-red-300">No</td>
+                    <td className="text-center text-emerald-300">Yes (polarity test)</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">Equipment in environment outside its rating</td>
+                    <td className="text-center text-amber-300">Maybe</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">Burned plug pin (overheating)</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                    <td className="text-center text-emerald-300">Yes</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2">Equipment recently dropped</td>
+                    <td className="text-center text-emerald-300">Yes (if user knows)</td>
+                    <td className="text-center text-amber-300">Maybe (visible damage)</td>
+                    <td className="text-center text-amber-300">Maybe (functional anomaly)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2">Failed portable RCD trip mechanism</td>
+                    <td className="text-center text-red-300">No</td>
+                    <td className="text-center text-red-300">No</td>
+                    <td className="text-center text-emerald-300">Yes (RCD trip-time test)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Two patterns emerge. Visible defects are caught at multiple tiers — redundancy is
+              good. Invisible defects (CPC integrity, IR breakdown, polarity, RCD function) are
+              caught only by the combined inspection-and-test — there is no redundancy. The user
+              check and formal visual are the cadence layer; the combined inspection-and-test is the
+              depth layer.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[2].id}
+            question={inlineChecks[2].question}
+            options={inlineChecks[2].options}
+            correctIndex={inlineChecks[2].correctIndex}
+            explanation={inlineChecks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The defect found — what happens next</ContentEyebrow>
+
+          <ConceptBlock
+            title="The withdrawal-and-action workflow"
+            plainEnglish="A defect found at any tier triggers the same workflow: withdraw immediately, tag, log, decide repair / replace / dispose, action it, re-test where repair is the chosen path, document. The decision tree is the same regardless of which tier found the defect — though the urgency varies with severity."
+          >
+            <p>The standard workflow:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Withdraw immediately.</strong> Equipment is unplugged, isolated, and
+                physically removed from service.
+              </li>
+              <li>
+                <strong>Tag visibly.</strong> "Do not use — defect" tag, dated, with reporter ID.
+                Tagging prevents another user picking it up.
+              </li>
+              <li>
+                <strong>Log the defect.</strong> Equipment ID, date, defect description, who found
+                it (user / inspector), tier (user check / formal visual / combined I&amp;T).
+              </li>
+              <li>
+                <strong>Triage.</strong> Severity assessment. Some defects are immediate fail
+                (broken plug, cut flex). Some allow controlled use under supervision (rare; case by
+                case).
+              </li>
+              <li>
+                <strong>Decide.</strong> Repair (and re-test); replace; dispose / scrap (with
+                evidence of disposal). The decision is recorded.
+              </li>
+              <li>
+                <strong>Action.</strong> The chosen path is followed. Repair-then-re-test: the
+                re-test is a full combined inspection-and-test of the affected components, with
+                numerical readings. Replacement: new item enters the register with formal visual at
+                entry to service.
+              </li>
+              <li>
+                <strong>Document.</strong> All of the above as part of the equipment\'s test
+                history. The defect — repair — re-test sequence is one of the most important
+                evidence streams in any subsequent investigation.
+              </li>
+            </ol>
+            <p>
+              The workflow is the same regardless of which tier found the defect. The user-check
+              tier is connected to the formal-visual / combined-test tier by the defect-reporting
+              system; that connection is what makes the regime function.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[3].id}
+            question={inlineChecks[3].question}
+            options={inlineChecks[3].options}
+            correctIndex={inlineChecks[3].correctIndex}
+            explanation={inlineChecks[3].explanation}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="What to remember on site"
+            points={[
+              'Three tiers in series: user check (every use), formal visual (periodic), combined inspection-and-test (less frequent, with instrument readings). All three are required.',
+              'User checks are the first line of defence (HSG107 §27). They run at the only cadence that catches defects between formal cycles. Skipping the user-check pillar is a structural gap.',
+              'Formal visual = rigorous external inspection by a competent person, no dismantling, against the IET CoP §14 checklist. Catches what users miss in daily use.',
+              'Combined inspection-and-test adds PE-continuity, IR, polarity, functional / RCD readings — numerical evidence against IET CoP Chapter 14 acceptance values. Catches the invisible defects.',
+              'Records differ by tier. User-check evidence = the SYSTEM (training, reporting, withdrawal). Formal visual = structured findings. Combined I&T = numerical readings.',
+              'Each tier catches defects the others cannot. Visible defects are redundantly caught (good). Invisible defects (CPC, IR, polarity, RCD function) are caught only by the combined test (no redundancy).',
+              '"Experienced staff" is not a substitute for HSWA s.2(2)(c) information / instruction / training. The system is the artefact; experience is an input.',
+              'Defect found = withdraw, tag, log, decide, action, re-test, document. Same workflow at every tier. The connection between tiers (defect reporting) is what makes the regime function.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Are user checks legally required, or just guidance?',
+                answer:
+                  'They are the practical means of discharging several statutory duties. HSWA s.2(2)(c) requires information / instruction / training. HSWA s.7 requires the user to take reasonable care and co-operate. PUWER Reg 8 requires information about safety. EAWR Reg 4(2) requires maintenance to prevent danger — and HSG107 §27-30 names the user check as the first line of defence in discharging that duty. Skipping user checks fails multiple statutory duties simultaneously.',
+              },
+              {
+                question: 'Should I record every user check?',
+                answer:
+                  'No. Recording the system that enables user checks is what the duty-holder evidences: training delivery, defect-reporting route, defect log, withdrawal procedure. Recording each user check per item per use would convert continuous awareness into a transactional checkbox and reduce its effectiveness. HSG107 frames user-check evidence as the system, not the per-event log.',
+              },
+              {
+                question: 'What is the difference between a formal visual and a user check?',
+                answer:
+                  'Cadence and rigour. The user check happens before every use, by the user, looking at the obvious — flex, plug, casing, smell. The formal visual happens periodically, by a trained competent person, working through the IET CoP §14 structured checklist — flex along its full length, fuse rating, cord grip engagement, in-line connectors, casing, controls, environment, markings. Both are external (no dismantling); the formal visual is systematic where the user check is intuitive.',
+              },
+              {
+                question: 'Does the combined inspection-and-test replace the formal visual?',
+                answer:
+                  'No, it includes it. The combined inspection-and-test is the formal visual + electrical instrument tests + numerical readings. The visual side of the combined test is the same checklist as a stand-alone formal visual. The reason both exist as separate tiers is cadence: the formal visual happens more frequently than the combined test, because it is faster and cheaper.',
+              },
+              {
+                question: 'Who is competent to perform a formal visual inspection?',
+                answer:
+                  'Per EAWR Reg 16 and IET CoP §13, a person with knowledge, training and experience to undertake the work safely. There is no fixed qualification; in practice, basic competence is achieved by trained internal staff (with documented induction and supervised practice) for low-risk environments, escalating to qualified inspectors (e.g. C&G 2377-22 plus relevant experience) for harsh / industrial environments.',
+              },
+              {
+                question:
+                  'My contractor only does the combined inspection-and-test — do I need to set up the user-check programme separately?',
+                answer:
+                  'Yes. The contractor performs the formal visual + combined test at the cycle. The user-check programme is a duty-holder responsibility — induction content, toolbox talks, defect-reporting route, withdrawal procedure. The contractor cannot run the user-check pillar; it depends on the daily-life of your staff with their equipment.',
+              },
+              {
+                question: 'A user reports a defect — what is the right way to handle it?',
+                answer:
+                  'Withdraw immediately, tag visibly, log the defect, decide repair / replace / dispose, action it, re-test where repair, document. The defect-and-action trail is one of the most important evidence streams. HSG107 §22-25 names this as a key part of the defendable record.',
+              },
+              {
+                question: 'What if a user is using equipment with a visible defect?',
+                answer:
+                  'The duty-holder asks (a) why was the user not aware of the user-check expectation (training failure under HSWA s.2(2)(c))? (b) why was there no clear out-of-service tagging available to them? (c) is the defect-reporting route inaccessible? Address the systemic cause. Where the user knew and continued anyway, address as HSWA s.7 — typically a competence / disciplinary matter, with appropriate documentation. Both routes are part of programme integrity.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Knowledge check</ContentEyebrow>
+          <Quiz title="User checks vs formal inspection — Module 1.5" questions={quizQuestions} />
+
+          {/* Bottom navigation grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/pat-testing-module-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 1
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/pat-testing-module-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Module 2 — Appliance classes
+              </div>
+            </button>
+          </div>
+
+          <div className="hidden">
+            <Activity />
+          </div>
+        </PageFrame>
       </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1 Section 5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            PAT Testing Implementation and Best Practices
-          </h1>
-          <p className="text-white">Building an effective and sustainable PAT testing programme</p>
-        </header>
-
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Two stages:</strong> Visual inspection + electrical testing
-              </li>
-              <li>
-                <strong>Competence:</strong> Training required, not just qualifications
-              </li>
-              <li>
-                <strong>Failed items:</strong> Remove from service immediately
-              </li>
-              <li>
-                <strong>Records:</strong> Essential for compliance and improvement
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Spot:</strong> Damage, wear, overheating signs
-              </li>
-              <li>
-                <strong>Use:</strong> Systematic approach for consistent results
-              </li>
-              <li>
-                <strong>Apply:</strong> Clear procedures and documentation
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Plan and implement a PAT testing programme',
-              'Understand the complete testing process',
-              'Develop effective record-keeping systems',
-              'Train staff and manage ongoing competence',
-              'Handle failed equipment and remedial actions',
-              'Optimise costs while maintaining safety standards',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Complete Testing Process */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Complete Testing Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Understanding PAT testing theory is one thing — implementing it effectively is
-              another. A successful programme combines visual inspection with electrical testing in
-              a systematic approach.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Visual Inspection</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Check cable for cuts, nicks, or damage</li>
-                  <li>Inspect plug for cracks or loose connections</li>
-                  <li>Examine equipment casing for damage</li>
-                  <li>Look for signs of overheating or burning</li>
-                  <li>Verify appropriate fuse rating</li>
-                  <li>Check strain relief and cable entry</li>
-                  <li>Assess general cleanliness and condition</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Electrical Testing</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Earth continuity test (Class I equipment)</li>
-                  <li>Insulation resistance test (all equipment)</li>
-                  <li>Earth leakage test (if applicable)</li>
-                  <li>Functional checks and operation tests</li>
-                  <li>Load testing for extension leads</li>
-                  <li>Polarity checks where relevant</li>
-                  <li>RCD operation tests (portable RCDs)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Visual Inspection Detail */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Visual Inspection in Detail
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Visual inspection is critical — it catches approximately 95% of faults. A thorough
-              visual check should be performed before any electrical testing.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">What to look for:</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-1">Cable Condition</p>
-                  <ul className="text-sm text-white space-y-0.5">
-                    <li>Cuts, nicks, or exposed conductors</li>
-                    <li>Kinks, tight bends, or strain damage</li>
-                    <li>Signs of crushing or abrasion</li>
-                    <li>Damage from heat or chemicals</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-1">Plug Condition</p>
-                  <ul className="text-sm text-white space-y-0.5">
-                    <li>Cracked or damaged casing</li>
-                    <li>Burn marks or discolouration</li>
-                    <li>Bent or damaged pins</li>
-                    <li>Correctly rated fuse fitted</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-1">Equipment Casing</p>
-                  <ul className="text-sm text-white space-y-0.5">
-                    <li>Cracks or breaks in housing</li>
-                    <li>Missing screws or covers</li>
-                    <li>Signs of tampering or repair</li>
-                    <li>Contamination (dust, liquids)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-1">Warning Signs</p>
-                  <ul className="text-sm text-white space-y-0.5">
-                    <li>Burn marks or scorch marks</li>
-                    <li>Melted plastic</li>
-                    <li>Unusual odours</li>
-                    <li>Loose or rattling parts</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Implementation Planning */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Implementation Planning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow mb-2">Phase 1: Assessment</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Conduct equipment audit</li>
-                  <li>Risk assess each area</li>
-                  <li>Define testing frequencies</li>
-                  <li>Identify resource requirements</li>
-                  <li>Create equipment register</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow mb-2">Phase 2: Setup</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Acquire testing equipment</li>
-                  <li>Train competent persons</li>
-                  <li>Develop procedures and forms</li>
-                  <li>Create labelling system</li>
-                  <li>Set up record keeping</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow mb-2">Phase 3: Operation</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Begin systematic testing</li>
-                  <li>Monitor and review results</li>
-                  <li>Handle failed equipment</li>
-                  <li>Update records continuously</li>
-                  <li>Annual programme review</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Staff Training and Competency */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Staff Training and Competency
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Technical Knowledge Required
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Electrical safety principles</li>
-                  <li>Equipment classification systems</li>
-                  <li>Testing equipment operation</li>
-                  <li>Interpreting test results</li>
-                  <li>Common faults and failures</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Practical Skills Required
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Visual inspection techniques</li>
-                  <li>Safe testing procedures</li>
-                  <li>Record keeping and documentation</li>
-                  <li>Equipment labelling systems</li>
-                  <li>Handling failed equipment</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-3 rounded bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-1">Initial Training</p>
-                <p className="text-xs text-white">
-                  2-3 days formal course covering legal requirements, testing theory, hands-on
-                  practice, and assessment
-                </p>
-              </div>
-              <div className="p-3 rounded bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-1">Ongoing Development</p>
-                <p className="text-xs text-white">
-                  Regular updates on regulatory changes, new equipment types, improved techniques,
-                  and incident learning
-                </p>
-              </div>
-              <div className="p-3 rounded bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-1">Competency Assessment</p>
-                <p className="text-xs text-white">
-                  Regular evaluation of technical knowledge, practical skills, record accuracy, and
-                  safety compliance
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 5: Handling Failed Equipment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Handling Failed Equipment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                When equipment fails PAT testing:
-              </p>
-              <ol className="text-sm text-white space-y-2 ml-4">
-                <li>
-                  <strong>1. Immediately remove from service</strong> — disconnect and isolate the
-                  equipment
-                </li>
-                <li>
-                  <strong>2. Apply a FAIL label</strong> — clearly mark as unsafe, including date
-                  and reason
-                </li>
-                <li>
-                  <strong>3. Inform the user</strong> — explain why equipment cannot be used
-                </li>
-                <li>
-                  <strong>4. Assess for repair</strong> — determine if economically viable to repair
-                </li>
-                <li>
-                  <strong>5. Repair or dispose</strong> — repair by competent person or safely
-                  dispose
-                </li>
-                <li>
-                  <strong>6. Retest after repair</strong> — must pass all tests before returning to
-                  service
-                </li>
-                <li>
-                  <strong>7. Update records</strong> — document all actions taken
-                </li>
-              </ol>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical:</strong> Never allow failed equipment to be used, even temporarily.
-              The risks far outweigh any operational inconvenience.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Section 6: Best Practices */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Implementation Best Practices
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-white mb-2">Success Factors</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Senior management commitment and support</li>
-                  <li>Clear policies and procedures documented</li>
-                  <li>Adequate resources allocated for the programme</li>
-                  <li>Regular training and competency updates</li>
-                  <li>Integration with other safety management systems</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-white mb-2">Common Pitfalls to Avoid</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Treating PAT as a one-size-fits-all solution</li>
-                  <li>Inadequate competency training for testers</li>
-                  <li>Poor record keeping and tracking systems</li>
-                  <li>Focusing on compliance rather than safety outcomes</li>
-                  <li>Insufficient budget planning for ongoing costs</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Setting Up a Programme
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Start with a comprehensive equipment audit</li>
-                <li>Involve stakeholders from all departments</li>
-                <li>Set realistic timelines for implementation</li>
-                <li>Plan for both initial testing and ongoing maintenance</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Conducting Tests
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Always complete visual inspection first</li>
-                <li>Follow a consistent testing sequence</li>
-                <li>Record results immediately — don't rely on memory</li>
-                <li>Apply labels and update records before moving to next item</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Skipping visual inspection</strong> — it catches 95% of faults
-                </li>
-                <li>
-                  <strong>Rushing through tests</strong> — thoroughness prevents accidents
-                </li>
-                <li>
-                  <strong>Poor labelling</strong> — clear labels prevent confusion
-                </li>
-                <li>
-                  <strong>Delayed record updates</strong> — update immediately for accuracy
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Testing Process</p>
-                <ul className="space-y-0.5">
-                  <li>1. Visual inspection first</li>
-                  <li>2. Electrical tests (earth, insulation)</li>
-                  <li>3. Label with result and date</li>
-                  <li>4. Update records immediately</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Failed Equipment</p>
-                <ul className="space-y-0.5">
-                  <li>Remove from service immediately</li>
-                  <li>Apply FAIL label clearly</li>
-                  <li>Repair or dispose safely</li>
-                  <li>Retest before returning to use</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/pat-testing-module-1-section-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous Section
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/pat-testing-module-1">
-              Complete Module
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
     </div>
   );
 };

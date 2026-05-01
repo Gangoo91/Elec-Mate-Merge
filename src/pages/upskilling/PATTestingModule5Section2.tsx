@@ -1,706 +1,857 @@
-import {
-  ArrowLeft,
-  FileText,
-  CheckCircle,
-  Scale,
-  Clock,
-  Shield,
-  AlertTriangle,
-  Zap,
-  HelpCircle,
-  ClipboardList,
-  ChevronRight,
-  ChevronLeft,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  LearningOutcomes,
+  ContentEyebrow,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Test Record Keeping & Legal Requirements - PAT Testing Course';
-const DESCRIPTION =
-  'Master PAT test record keeping, understand legal obligations under HASAWA and EAWR, and learn best practices for maintaining compliant documentation.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'm5s2-qc1',
-    question: 'How long should PAT test records typically be retained?',
-    options: ['1 year', '3 years', 'At least 5 years or equipment lifetime', 'Until next test'],
-    correctIndex: 2,
-    explanation:
-      'Records should be kept for at least 5 years or the lifetime of the equipment, whichever is longer, to demonstrate ongoing compliance.',
-  },
-  {
-    id: 'm5s2-qc2',
+    id: 'patm5-s2-min-record',
     question:
-      'What legislation requires employers to maintain electrical equipment in a safe condition?',
+      'A test record contains: "Kettle — passed — 12 Jan 2026". Is this an acceptable in-service test record under HSG107?',
     options: [
-      'HASAWA 1974 & EAWR 1989',
-      'Building Regulations 2010',
-      'COSHH Regulations',
-      'Manual Handling Regulations',
+      'Yes — pass + date is the legal minimum.',
+      'No — there is no asset ID, no location, no tester ID, no class, no numerical test results. HSG107 paragraph 70 expects a record that lets the test be reconstructed and audited. "Passed" with no readings cannot be defended as evidence of test.',
+      'Yes, provided the company logo is on the page.',
+      'Only if it is countersigned.',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
-      'The Health and Safety at Work Act 1974 and Electricity at Work Regulations 1989 require employers to ensure electrical equipment safety.',
+      'HSG107 paragraph 70 and IET CoP 5th Ed. Chapter 16 expect the record to contain enough information to identify the item, the tester, the test conducted, the actual results (numerical where applicable), and the date. "Passed" alone is not a record — it is a claim with no audit trail.',
   },
   {
-    id: 'm5s2-qc3',
-    question: 'What must be included in a PAT test record as a minimum?',
+    id: 'patm5-s2-retention',
+    question:
+      'A piece of equipment is disposed of in 2026. How long should its PAT records be retained, in line with normal in-service inspection practice?',
     options: [
-      'Just pass/fail',
-      'Equipment description and result only',
-      'Asset ID, date, tester, results, and outcome',
-      'Manufacturer name only',
+      'Records can be deleted on disposal.',
+      'Typically 6 years post-disposal — aligned with the Limitation Act 1980 contract / negligence claim window — and longer where the equipment was involved in an HSE-relevant incident or in regulated environments where extended retention applies.',
+      '12 months.',
+      'Indefinitely — never delete.',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
-      'Minimum records include asset identification, test date, tester identity, all test results with values, and the overall pass/fail outcome.',
+      'Under the Limitation Act 1980 a personal injury or negligence claim can be brought up to 6 years from the cause of action (3 years for personal injury, but with extensions for date of knowledge). Industry practice is to retain PAT records for at least 6 years post-disposal as the "reasonably practicable" defence requires the records still to exist when a claim arises.',
+  },
+  {
+    id: 'patm5-s2-pat-vs-sotr',
+    question:
+      'A PAT record and a Schedule of Test Results (SoTR) on an EICR — what is the relationship?',
+    options: [
+      'They are the same document.',
+      'They are different. PAT records cover individual portable appliances (asset, results per item). The SoTR is part of the EIC/EICR for the fixed installation and records the circuit-level test results (Zs, R1+R2, RCD trip times). They live in different regulatory regimes — IET CoP / HSG107 / EAWR vs BS 7671.',
+      'PAT records replace the SoTR if both are done on the same day.',
+      'Only the SoTR is legally required; PAT records are optional.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'PAT records are about appliances and lead-fed equipment and sit under the IET CoP / HSG107 framework. The Schedule of Test Results on an EIC/EICR is about the fixed installation circuits and sits under BS 7671. They are separate documents covering separate scopes; conflating them is a common audit failure.',
+  },
+  {
+    id: 'patm5-s2-defence',
+    question:
+      'A duty holder is investigated after an electric shock incident. The PAT records produced show only "all equipment passed — annual test" on a single line. What is the legal exposure?',
+    options: [
+      'None — the test was carried out and recorded.',
+      'High — the record cannot demonstrate which items were tested, by whom, with which instrument, with which results. The "reasonably practicable" defence in HSAW Sec 2 requires evidence the duty holder can produce; an unspecific record is barely defensible.',
+      'Low — pass is pass.',
+      'Only if the incident involved a fatality.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'HSAW 1974 Sec 2 requires the employer to ensure the safety of employees "so far as is reasonably practicable". Demonstrating that requires records that identify what was done, when, by whom and with what result. A summary line is not the record HSE or a court will look for.',
   },
 ];
 
 const quizQuestions = [
   {
+    id: 1,
     question:
-      'Under the Electricity at Work Regulations 1989, who has a duty to maintain electrical equipment safely?',
+      'HSG107 paragraph 70 lists the minimum information a PAT record should contain. Which set best matches it?',
     options: [
-      'Only qualified electricians',
-      'Equipment manufacturers only',
-      'Duty holders including employers and employees',
-      'Local authorities',
-    ],
-    correctAnswer: 2,
-  },
-  {
-    question: 'What is the primary purpose of maintaining PAT test records?',
-    options: [
-      'To increase company profits',
-      'To demonstrate due diligence and compliance',
-      'To keep testers busy',
-      'To satisfy customers only',
+      'Pass/fail and date only',
+      'Asset identification, equipment type/class, location, name of tester, date of test, test results (including numerical values where applicable), retest interval, and the result (pass/fail)',
+      'Manufacturer, model, serial number',
+      'Cost and depreciation',
     ],
     correctAnswer: 1,
+    explanation:
+      'HSG107 paragraph 70 and IET CoP 5th Ed. Chapter 16 between them list this set: asset ID, type/class, location, tester, date, results (numerical), retest interval, and pass/fail. The numerical values are what distinguish a record from a claim.',
   },
   {
-    question: 'Which document provides guidance on PAT testing but is NOT legally binding?',
-    options: ['HASAWA 1974', 'EAWR 1989', 'IET Code of Practice', 'All are legally binding'],
-    correctAnswer: 2,
-  },
-  {
-    question: 'What information should be recorded about the person conducting PAT tests?',
+    id: 2,
+    question:
+      'EAWR 1989 Reg 4(2) requires "all systems shall be maintained so as to prevent, so far as is reasonably practicable, danger". How does this give rise to the record-keeping duty for PAT?',
     options: [
-      'Just their first name',
-      'Name, qualifications, and signature/ID',
-      "Nothing - it's not required",
-      'Their age only',
+      'It does not — records are voluntary',
+      'Maintenance is unverifiable without records. To demonstrate compliance with Reg 4(2) you have to produce evidence the maintenance has been done — that evidence is the record. HSE and case law treat absent records as absent maintenance.',
+      'The regulation explicitly mandates records',
+      'Records only matter for fixed wiring',
     ],
     correctAnswer: 1,
+    explanation:
+      'EAWR Reg 4(2) does not explicitly demand records, but the implicit duty is unavoidable: a duty holder cannot demonstrate "so far as is reasonably practicable" without contemporaneous evidence. HSG107 makes the implicit explicit — records are how the duty is demonstrated.',
   },
   {
-    question: 'In the event of an accident involving electrical equipment, records should be:',
+    id: 3,
+    question:
+      'Why does "the equipment passed" without numerical results fail the HSE\'s expectation of a useful record?',
     options: [
-      'Destroyed immediately',
-      'Kept indefinitely or as advised by legal counsel',
-      'Kept for 6 months only',
-      'Not relevant to investigations',
+      'It does not — pass is sufficient',
+      'A pass with no numerical readings cannot be re-examined later. If the item subsequently fails or causes an incident, there is no way to show whether earlier readings were trending towards failure or whether the test was even genuine. The numerical values are the audit trail.',
+      'It only fails for industrial equipment',
+      'It is acceptable provided a company seal is on the document',
     ],
     correctAnswer: 1,
+    explanation:
+      'Numerical readings (insulation resistance in MΩ, earth continuity in Ω, leakage in mA) are what let a future investigator confirm the test was conducted properly. A bare "pass" cannot be retested or trended.',
   },
   {
-    question: "What does 'due diligence' mean in the context of PAT testing?",
+    id: 4,
+    question:
+      'Industry practice (driven by Limitation Act 1980 considerations) for retaining PAT records is:',
     options: [
-      'Testing as fast as possible',
-      'Taking all reasonable steps to ensure safety',
-      'Only testing new equipment',
-      'Avoiding documentation',
+      '6 months',
+      '6 years post-disposal of the equipment, longer where an incident has occurred or where regulated environments require it',
+      'Until the next test only',
+      'Indefinitely with no review',
     ],
     correctAnswer: 1,
+    explanation:
+      "The Limitation Act 1980 sets the standard claim window at 6 years (with longer where a claimant's date of knowledge is later, and 3 years for personal injury). Industry practice is to retain records 6 years post-disposal so the records exist if a claim is brought. Some sectors (healthcare, education, regulated industries) require longer.",
   },
   {
-    question: 'Electronic PAT record systems should include which security feature?',
+    id: 5,
+    question:
+      'A PAT record and the BS 7671 Schedule of Test Results (SoTR) on an EIC — what is the right way to think about them?',
     options: [
-      'No backup needed',
-      'Audit trail and data protection',
-      'Open access to everyone',
-      'Manual entry only',
+      'They are the same document',
+      'Different scopes, different regimes. PAT records are for portable / lead-fed equipment under IET CoP / HSG107 / EAWR. The SoTR records circuit-level fixed-installation test results under BS 7671. They live alongside each other but are not interchangeable.',
+      'PAT records replace SoTRs',
+      'SoTRs replace PAT records',
     ],
     correctAnswer: 1,
+    explanation:
+      'PAT covers the appliance side; the Schedule of Test Results on an EIC/EICR covers the fixed installation. They are produced by different processes and answer different questions. Treating them as substitutes is a common audit failure.',
   },
   {
-    question: 'What happens to PAT records when equipment is disposed of?',
+    id: 6,
+    question:
+      'Which of the following items belongs in a PAT test record but not on the equipment label?',
     options: [
-      'Delete immediately',
-      'Retain for defined period showing disposal date',
-      'Transfer to new owner only',
-      'Records not needed for disposed equipment',
+      'Asset ID',
+      'Numerical test values: insulation resistance in MΩ, earth continuity in Ω, leakage current in mA, and the test instrument used / its calibration date',
+      'Retest date',
+      'Tester ID',
     ],
     correctAnswer: 1,
+    explanation:
+      'The label is a summary; the record is the detail. Numerical readings, instrument identification and calibration status live in the record. The label carries the headline status (pass/fail + dates + IDs).',
   },
   {
-    question: 'Which Regulation specifically addresses electrical equipment maintenance?',
+    id: 7,
+    question:
+      'Under HSAW 1974 Section 2, what is the relationship between PAT records and the "reasonably practicable" defence?',
     options: [
-      'Regulation 4 of EAWR',
-      'Regulation 1 of HASAWA',
-      'Building Regulation Part P',
-      'Fire Safety Order',
-    ],
-    correctAnswer: 0,
-  },
-  {
-    question: 'What constitutes a legally defensible PAT testing regime?',
-    options: [
-      'Testing every 3 months regardless of risk',
-      'Risk-based intervals with comprehensive records',
-      'No formal records needed if equipment looks safe',
-      'Verbal confirmation only',
+      'No relationship',
+      'The records are the evidence. "Reasonably practicable" requires the duty holder to demonstrate they have done what was reasonable to manage risk; PAT records are the contemporaneous evidence of one of those risk-management actions. Without records, the defence is undermined.',
+      'Records only matter in court',
+      'Section 2 does not apply to electrical equipment',
     ],
     correctAnswer: 1,
-  },
-];
-
-const faqs = [
-  {
-    question: 'Is PAT testing a legal requirement?',
-    answer:
-      "PAT testing itself isn't specifically mandated by law, but the Electricity at Work Regulations 1989 require electrical equipment to be maintained to prevent danger. PAT testing is a recognised method of demonstrating compliance with this duty.",
+    explanation:
+      'HSAW Sec 2(1) places the "reasonably practicable" duty on every employer. Discharge requires evidence; PAT records are part of that evidence. HSE will ask for them in any investigation.',
   },
   {
-    question: 'Can I keep PAT records electronically?',
-    answer:
-      'Yes, electronic records are acceptable and often preferred. They should be secure, backed up regularly, and include audit trails. The system should allow easy retrieval of historical data and generation of reports.',
+    id: 8,
+    question:
+      'GDPR / Data Protection Act 2018 — when do PAT records become a data-protection concern?',
+    options: [
+      'Never',
+      'When the asset register or PAT record carries personal data — e.g. a personal asset ID linked to a named employee, or an asset assigned to a home address. The register then becomes a personal data processing activity and needs a lawful basis, retention rules, and access controls.',
+      'Only when records are shared externally',
+      'Only on cloud storage',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A PAT record itself is not personal data, but the asset register often is — particularly where an asset is assigned to a named user, located at a home address (homeworkers), or where the tester ID is identifiable. Treat the register as a personal data processing activity and apply DPA 2018 / UK GDPR principles.',
   },
   {
-    question: 'Who can access PAT test records?',
-    answer:
-      'Records should be accessible to relevant duty holders, HSE inspectors, insurance companies, and auditors. Access should be controlled under GDPR principles if personal data is included.',
+    id: 9,
+    question:
+      'A PAT instrument provides automatic data logging. What is the procedural advantage of using it instead of paper records?',
+    options: [
+      'It is faster',
+      "It captures numerical results, time-stamps and instrument ID automatically, removing transcription error. The record can be exported to the asset register or test-management system without manual re-keying. Crucially, the instrument's calibration history is also linked, providing the audit chain.",
+      'It is required by HSG107',
+      'It removes the need for a competent person',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "The procedural advantage is record fidelity: the meter writes numerical readings the same way every time, links them to a specific test, and ties them to the instrument's own calibration record. Paper records lose data to transcription. The competent-person duty does not change — automatic logging records what the competent person tested, it does not replace them.",
   },
   {
-    question: "What if I can't find historical PAT records?",
-    answer:
-      'Missing records represent a compliance gap. Immediately test all equipment without records and establish proper record-keeping systems. Document the gap and actions taken to address it.',
-  },
-  {
-    question: "Do contractors' equipment records need to be kept?",
-    answer:
-      "Yes, you should verify contractors' equipment is tested and may need to retain copies of their test certificates while they work on your premises. This demonstrates your due diligence.",
-  },
-  {
-    question: 'How do records help in accident investigations?',
-    answer:
-      'Records demonstrate your testing regime, equipment condition history, and compliance efforts. They can prove reasonable precautions were taken, which is crucial for legal defence and insurance claims.',
+    id: 10,
+    question:
+      'When a PAT record is challenged in an HSE investigation, what makes the difference between a defensible record and an indefensible one?',
+    options: [
+      'How thick the file is',
+      'Specificity. A defensible record identifies the item (asset ID), the tester (named, identifiable), the date (precise, not "during 2026"), the instrument (model + calibration), the readings (numerical), and the result (pass/fail). An indefensible record is a summary or a tick-box without backing detail.',
+      'Whether the record is on letterhead',
+      'The number of signatures',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The defensibility test is: can a third party reconstruct the test from the record? If yes, the record is doing its job. If the record is "all equipment passed", the answer is no — and the "reasonably practicable" defence under HSAW Sec 2 is undermined.',
   },
 ];
 
 const PATTestingModule5Section2 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'PAT records and legal requirements | PAT Module 5.2 | Elec-Mate',
+    description:
+      'HSG107 + IET CoP 5th Ed. Ch 16 + EAWR Reg 4(2) + HSAW Sec 2: minimum record set, why "passed" is not a record, retention periods (Limitation Act 1980 6 years), GDPR for asset registers, and PAT vs Schedule of Test Results.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/pat-testing-module-5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/pat-testing-module-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Module 5
+          </button>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8 pb-24">
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-elec-yellow/10">
-              <FileText className="h-6 w-6 text-elec-yellow" />
-            </div>
-            <span className="text-elec-yellow/80 text-sm font-medium">Module 5 - Section 2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
-            Test Record Keeping & Legal Requirements
-          </h1>
-          <p className="text-white text-base">
-            Understanding your legal obligations and maintaining comprehensive records for
-            compliance and protection
-          </p>
-          <div className="flex items-center gap-4 text-sm text-white">
-            <span className="flex items-center gap-1">
-              <Clock className="h-4 w-4" /> 15 min read
-            </span>
-          </div>
-        </div>
+          <PageHero
+            eyebrow="Module 5 · Section 2"
+            title="Test record keeping and legal requirements"
+            description="The record is what discharges the EAWR and HSAW duty. Minimum data set under HSG107, why numerical readings matter, retention under the Limitation Act 1980, and GDPR for asset registers."
+            tone="yellow"
+          />
 
-        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="text-sm text-white space-y-1">
-            <li>- PAT testing demonstrates compliance with HASAWA 1974 and EAWR 1989</li>
-            <li>
-              - Records must include asset ID, test date, tester details, all results, and outcomes
-            </li>
-            <li>- Retain records for minimum 5 years or equipment lifetime</li>
-            <li>- Electronic systems with backups are recommended</li>
-          </ul>
-        </div>
+          <TLDR
+            points={[
+              'HSG107 paragraph 70 + IET CoP 5th Ed. Chapter 16 set the minimum useful record: asset ID, equipment type/class, location, tester, date, retest interval, numerical test results, and pass/fail. "Passed" alone is not a record.',
+              'EAWR 1989 Reg 4(2) creates the implicit record duty. The regulation requires maintenance "so far as is reasonably practicable to prevent danger" — which is unverifiable without records.',
+              'HSAW 1974 Section 2 makes records the evidence of the "reasonably practicable" defence. HSE and a court will both ask for them in any investigation.',
+              'Retention: 6 years post-disposal is industry practice, anchored to the Limitation Act 1980 claim window. Longer for HSE-relevant incidents or regulated environments.',
+              'PAT records and the Schedule of Test Results (SoTR) on an EIC/EICR are different documents covering different scopes. Do not conflate.',
+              'Asset registers carrying personal data (assignee names, home addresses) are subject to UK GDPR / Data Protection Act 2018 — apply lawful basis, retention rules and access controls.',
+            ]}
+          />
 
-        <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-            <CheckCircle className="h-5 w-5 text-green-400" /> Learning Outcomes
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Understand the legal framework governing PAT testing',
-              'Identify minimum record-keeping requirements',
-              'Implement compliant documentation systems',
-              'Recognise duty holder responsibilities',
-              'Apply records for accident investigation defence',
-              'Maintain data security and retention policies',
-            ].map((outcome, i) => (
-              <div key={i} className="flex items-start gap-2 text-white text-sm">
-                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs flex items-center justify-center font-medium">
-                  {i + 1}
-                </span>
-                {outcome}
-              </div>
-            ))}
-          </div>
-        </div>
+          <LearningOutcomes
+            outcomes={[
+              'List the minimum data fields HSG107 + IET CoP 5th Ed. Chapter 16 expect on a PAT record and explain why each is non-negotiable',
+              'Trace the legal chain from EAWR Reg 4(2) and HSAW Sec 2 to the practical duty to keep records',
+              'State the standard retention period for PAT records and justify it from the Limitation Act 1980',
+              'Distinguish a PAT record from a BS 7671 Schedule of Test Results and explain why the two are not interchangeable',
+              'Identify when an asset register engages UK GDPR / Data Protection Act 2018 and apply the appropriate controls',
+              'Defend a PAT record against an HSE / insurer challenge — specificity, numerical results, and traceability to a competent person',
+            ]}
+          />
 
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Legal Framework
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>What the record has to contain</ContentEyebrow>
+
+          <ConceptBlock
+            title="HSG107 paragraph 70 — the minimum useful record"
+            plainEnglish="The record has to let any third party reconstruct what was tested, by whom, when, with what instrument, and what was found. Anything less and the record is a claim, not evidence."
+            onSite="If your test sheet has a tick-box for pass/fail and no field for actual readings, change the test sheet. The numerical readings are the load-bearing part."
+          >
             <p>
-              Understanding the legal framework is essential for any PAT tester. While PAT testing
-              itself isn't explicitly required by law, it serves as a practical method of complying
-              with broader electrical safety legislation.
+              HSG107 paragraph 70 and IET CoP 5th Ed. Chapter 16 list, between them, the data the
+              record must carry:
             </p>
-
-            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-red-400 mb-2">
-                Health and Safety at Work Act 1974
-              </h4>
-              <p className="text-white text-sm mb-3">
-                Section 2 places a general duty on employers to ensure, so far as is reasonably
-                practicable, the health, safety and welfare of employees. This includes providing
-                safe equipment.
-              </p>
-              <ul className="text-white text-sm space-y-1">
-                <li>- Section 2(1): General duty to employees</li>
-                <li>- Section 2(2)(a): Safe plant and systems of work</li>
-                <li>- Section 3: Duty to non-employees (visitors, contractors)</li>
-                <li>- Section 7: Employee duties to cooperate</li>
-              </ul>
-            </div>
-
-            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-400 mb-2">
-                Electricity at Work Regulations 1989 (EAWR)
-              </h4>
-              <p className="text-white text-sm mb-3">
-                These regulations specifically address electrical safety. Regulation 4(2) is
-                particularly relevant:
-              </p>
-              <blockquote className="text-white text-sm italic border-l-2 border-blue-500 pl-4 mb-3">
-                "As may be necessary to prevent danger, all systems shall be maintained so as to
-                prevent, so far as is reasonably practicable, such danger."
-              </blockquote>
-              <ul className="text-white text-sm space-y-1">
-                <li>- Regulation 4(2): Maintenance to prevent danger</li>
-                <li>- Regulation 4(3): Work on equipment must be safe</li>
-                <li>- Applies to all work activities</li>
-                <li>- Criminal sanctions for non-compliance</li>
-              </ul>
-            </div>
-
-            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-              <h4 className="font-semibold text-elec-yellow mb-3">Key Legal Concepts</h4>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h5 className="text-white font-medium mb-1">Reasonably Practicable</h5>
-                  <p className="text-white">
-                    Balancing risk reduction against cost, time and effort. You must do what's
-                    reasonable, not impossible.
-                  </p>
-                </div>
-                <div>
-                  <h5 className="text-white font-medium mb-1">Due Diligence</h5>
-                  <p className="text-white">
-                    Taking all reasonable steps to prevent harm. Records demonstrate you've
-                    exercised due diligence.
-                  </p>
-                </div>
-                <div>
-                  <h5 className="text-white font-medium mb-1">Duty Holder</h5>
-                  <p className="text-white">
-                    Person(s) responsible for electrical safety - typically employers,
-                    self-employed, or premises controllers.
-                  </p>
-                </div>
-                <div>
-                  <h5 className="text-white font-medium mb-1">Competent Person</h5>
-                  <p className="text-white">
-                    Someone with suitable training, knowledge and experience to conduct PAT testing
-                    safely.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Minimum Record Requirements
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Asset identification</strong> — the unique asset ID linking the record to
+                the physical item.
+              </li>
+              <li>
+                <strong>Equipment description and class</strong> — what the item is (e.g. kettle,
+                drill, IEC lead) and its construction class (Class I, Class II, Class III).
+              </li>
+              <li>
+                <strong>Location</strong> — where the item lives. Vital for periodic site visits and
+                for identifying which user / department is responsible.
+              </li>
+              <li>
+                <strong>Date of test</strong> — calendar date, not just month/year.
+              </li>
+              <li>
+                <strong>Tester identification</strong> — named, identifiable competent person.
+              </li>
+              <li>
+                <strong>Test instrument used and its calibration date</strong> — links the numerical
+                readings to a calibrated instrument. A reading from an out-of-calibration meter is
+                not evidence.
+              </li>
+              <li>
+                <strong>Numerical test results</strong> — earth continuity in ohms, insulation
+                resistance in megohms, leakage current in milliamps, polarity, and any specific
+                tests carried out (e.g. functional check, flex check). For visual-only inspections,
+                the visual checks recorded.
+              </li>
+              <li>
+                <strong>Pass/fail result</strong> — and where fail, the failure mode.
+              </li>
+              <li>
+                <strong>Retest interval / next test date</strong> — the planned interval.
+              </li>
+              <li>
+                <strong>Comments</strong> — anything not covered by the structured fields:
+                substitutions, deferred tests, equipment found defective and quarantined, repair
+                history.
+              </li>
+            </ul>
             <p>
-              The IET Code of Practice provides guidance on what should be recorded. While the
-              Regulations don't specify exact record formats, maintaining comprehensive records
-              demonstrates compliance and supports due diligence.
+              The numerical readings are not optional. A &ldquo;pass&rdquo; with no readings cannot
+              be reconstructed: a future investigator has no way to know whether the item was
+              borderline, whether the tester actually carried out the tests, or whether the
+              instrument was even working. Numerical readings are the audit trail.
             </p>
+          </ConceptBlock>
 
-            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-              <h4 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
-                <ClipboardList className="h-5 w-5" /> Essential Record Elements
-              </h4>
-              <div className="space-y-3">
-                <div className="border-l-2 border-elec-yellow pl-3">
-                  <h5 className="font-medium text-white">Equipment Identification</h5>
-                  <ul className="text-white text-sm mt-1 space-y-1">
-                    <li>- Unique asset ID number</li>
-                    <li>- Equipment description/type</li>
-                    <li>- Manufacturer and model</li>
-                    <li>- Serial number (if available)</li>
-                    <li>- Location/department</li>
-                  </ul>
-                </div>
-                <div className="border-l-2 border-elec-yellow pl-3">
-                  <h5 className="font-medium text-white">Test Information</h5>
-                  <ul className="text-white text-sm mt-1 space-y-1">
-                    <li>- Date of test</li>
-                    <li>- Tester name and signature/ID</li>
-                    <li>- Test equipment used (with calibration date)</li>
-                    <li>- Tests performed</li>
-                    <li>- Actual test readings/values</li>
-                  </ul>
-                </div>
-                <div className="border-l-2 border-elec-yellow pl-3">
-                  <h5 className="font-medium text-white">Results and Actions</h5>
-                  <ul className="text-white text-sm mt-1 space-y-1">
-                    <li>- Pass/Fail outcome</li>
-                    <li>- Next test due date</li>
-                    <li>- Remedial actions required</li>
-                    <li>- Any observations or notes</li>
-                    <li>- Equipment class (I, II, or III)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <RegsCallout
+            source="HSG107 (Maintaining portable electric equipment, 4th Edition) · paragraph 70"
+            clause={
+              <>
+                Records of inspection and testing should be kept where this helps to demonstrate
+                compliance with the Electricity at Work Regulations 1989. The records should include
+                the equipment identification, type and condition, the date of any inspection or
+                test, the name of the person carrying out the inspection or test, and the results.
+              </>
+            }
+            meaning="HSG107 sets the practical minimum. The fields are intentionally aligned to what an HSE inspector would ask for in an investigation — not just to demonstrate that testing happened, but to identify what was tested, by whom, when, and with what result. Records less detailed than this make the EAWR Reg 4(2) defence harder, not easier."
+          />
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                <h4 className="font-semibold text-green-400 mb-2">Good Practice</h4>
-                <ul className="text-white text-sm space-y-1">
-                  <li>- Record actual test values, not just pass/fail</li>
-                  <li>- Include equipment photographs</li>
-                  <li>- Document any repairs made</li>
-                  <li>- Note condition observations</li>
-                  <li>- Track equipment history over time</li>
-                </ul>
-              </div>
-              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                <h4 className="font-semibold text-red-400 mb-2">Poor Practice</h4>
-                <ul className="text-white text-sm space-y-1">
-                  <li>- Recording only pass/fail status</li>
-                  <li>- Missing tester identification</li>
-                  <li>- No equipment serial numbers</li>
-                  <li>- Inconsistent dating formats</li>
-                  <li>- Illegible handwritten records</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Record Keeping Systems
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
+          <ConceptBlock
+            title="Why &ldquo;passed&rdquo; is a claim, not a record"
+            plainEnglish="A bare 'passed' is the conclusion the tester reached, but with no underlying data. Without the underlying data, the conclusion cannot be independently verified, and it cannot be defended in an investigation."
+          >
             <p>
-              Records can be maintained in various formats, from paper-based systems to
-              sophisticated software. The key is consistency, accessibility, and security.
+              The HSE pattern in workplace electrical-injury investigations is consistent: when an
+              incident occurs, the records are requested, examined, and used to assess whether the
+              duty holder met the &ldquo;so far as is reasonably practicable&rdquo; standard. The
+              records that survive that scrutiny are the ones with numerical readings against the
+              actual asset, on the actual date, by a named tester, on a calibrated instrument.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">Paper-Based Systems</h4>
-                <div className="space-y-2 text-sm">
-                  <p className="text-green-400 font-medium">Advantages:</p>
-                  <ul className="text-white space-y-1">
-                    <li>- Low initial cost</li>
-                    <li>- No technical knowledge required</li>
-                    <li>- Immediate hard copy evidence</li>
-                  </ul>
-                  <p className="text-red-400 font-medium mt-2">Disadvantages:</p>
-                  <ul className="text-white space-y-1">
-                    <li>- Difficult to search and analyse</li>
-                    <li>- Risk of loss or damage</li>
-                    <li>- Storage space requirements</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">Electronic Systems</h4>
-                <div className="space-y-2 text-sm">
-                  <p className="text-green-400 font-medium">Advantages:</p>
-                  <ul className="text-white space-y-1">
-                    <li>- Easy searching and reporting</li>
-                    <li>- Automatic reminders for retests</li>
-                    <li>- Integration with PAT testers</li>
-                    <li>- Cloud backup options</li>
-                  </ul>
-                  <p className="text-red-400 font-medium mt-2">Disadvantages:</p>
-                  <ul className="text-white space-y-1">
-                    <li>- Initial setup costs</li>
-                    <li>- Training requirements</li>
-                    <li>- Data security considerations</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-400 mb-2">Electronic System Requirements</h4>
-              <div className="grid sm:grid-cols-2 gap-3 text-sm">
-                <div>
-                  <h5 className="font-medium text-white">Security Features</h5>
-                  <ul className="text-white mt-1 space-y-1">
-                    <li>- User authentication and access control</li>
-                    <li>- Audit trail of changes</li>
-                    <li>- Regular automated backups</li>
-                    <li>- Encryption of sensitive data</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-medium text-white">Functionality</h5>
-                  <ul className="text-white mt-1 space-y-1">
-                    <li>- Report generation capability</li>
-                    <li>- Retest scheduling and alerts</li>
-                    <li>- Barcode/QR code integration</li>
-                    <li>- Export options (PDF, CSV)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Record Retention and Disposal
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
             <p>
-              How long you keep records and how you dispose of them properly are important
-              considerations for compliance and legal protection.
+              Records that fail the scrutiny share a pattern: tick-box pass/fail with no readings,
+              tester identified only as a company name, instrument identification missing, asset ID
+              absent, dates given as a month or year. Each missing field is a fact the duty holder
+              cannot now produce — and the absent fact is read against them.
             </p>
+          </ConceptBlock>
 
-            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-              <h4 className="font-semibold text-elec-yellow mb-2">Recommended Retention Periods</h4>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-white">Active equipment records</span>
-                  <span className="text-white font-medium">Lifetime of equipment + 5 years</span>
-                </div>
-                <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-white">Disposed equipment records</span>
-                  <span className="text-white font-medium">5 years from disposal date</span>
-                </div>
-                <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-white">Records following an incident</span>
-                  <span className="text-white font-medium">Indefinitely / as advised by legal</span>
-                </div>
-                <div className="flex justify-between items-start">
-                  <span className="text-white">Calibration certificates</span>
-                  <span className="text-white font-medium">5 years minimum</span>
-                </div>
-              </div>
-            </div>
+          <CommonMistake
+            title="Recording &ldquo;all equipment passed&rdquo; on a single line for a session"
+            whatHappens="A small office is PAT tested. The test sheet has one line: 'All equipment passed annual test — 12 Jan 2026 — A. Moore'. Eight months later there is an electric shock incident on a kettle in the staff room. The HSE investigator asks for the test record for that kettle. There is no asset ID, no readings, no instrument record. The record is treated as 'no record', the duty holder cannot demonstrate maintenance for that specific item, and EAWR Reg 4(2) compliance becomes difficult to argue."
+            doInstead="One line per item, with the full data set: asset ID, item description and class, location, test date, tester, instrument and calibration, numerical readings, pass/fail. A modern PAT instrument or test-management app does this automatically — there is no time saving in collapsing the record. Defensibility lives in the line-per-item detail."
+          />
 
-            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-red-400 mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5" /> Important Warning
-              </h4>
-              <p className="text-white text-sm">
-                Never destroy records following an accident or incident, or when legal action is
-                anticipated. Such destruction could be viewed as spoliation of evidence and may
-                result in adverse legal consequences.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck
+            id={inlineChecks[0].id}
+            question={inlineChecks[0].question}
+            options={inlineChecks[0].options}
+            correctIndex={inlineChecks[0].correctIndex}
+            explanation={inlineChecks[0].explanation}
+          />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Records as Legal Defence
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
+          <ContentEyebrow>The legal chain — EAWR, HSAW and the implicit record duty</ContentEyebrow>
+
+          <ConceptBlock
+            title="EAWR 1989 Reg 4(2) — maintenance &ldquo;so far as is reasonably practicable&rdquo;"
+            plainEnglish="The Electricity at Work Regulations require that electrical systems are maintained as far as is reasonably practicable to prevent danger. The regulation does not say 'keep records' — but you cannot demonstrate the maintenance happened without them."
+            onSite="When HSE asks 'how do you know the kettle was safe?', the answer has to be evidence. The record is the evidence."
+          >
             <p>
-              In the event of an incident or HSE investigation, your records serve as crucial
-              evidence that you took reasonable steps to ensure safety.
+              EAWR 1989 Reg 4(2) is short. It places a duty: &ldquo;As may be necessary to prevent
+              danger, all systems shall be maintained so as to prevent, so far as is reasonably
+              practicable, such danger.&rdquo; The phrase &ldquo;so far as is reasonably
+              practicable&rdquo; is the load-bearing one — it requires the duty holder to weigh up
+              the risk and the cost/effort of mitigation, and to act where the risk-cost balance
+              favours action.
             </p>
+            <p>
+              The regulation does not explicitly mandate records. The implicit duty is unavoidable:
+              demonstrating that maintenance has been done &ldquo;so far as is reasonably
+              practicable&rdquo; requires evidence. Without records, the duty holder cannot evidence
+              the maintenance, and HSE / a court will treat the absence of records as the absence of
+              maintenance unless there is some other compelling evidence (which there rarely is).
+              This is why HSG107 — published by HSE itself — frames record-keeping as the practical
+              way the EAWR duty is discharged.
+            </p>
+          </ConceptBlock>
 
-            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-              <h4 className="font-semibold text-elec-yellow mb-3">What Records Demonstrate</h4>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div className="space-y-2">
-                  <div className="flex items-start gap-2">
-                    <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">Systematic approach to electrical safety</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">Risk-based testing frequency</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">Competent persons conducting tests</span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-start gap-2">
-                    <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">Proper calibrated equipment used</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">Failed equipment was removed from service</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">Ongoing compliance and improvement</span>
-                  </div>
-                </div>
-              </div>
+          <RegsCallout
+            source="Electricity at Work Regulations 1989 · Regulation 4(2)"
+            clause={
+              <>
+                As may be necessary to prevent danger, all systems shall be maintained so as to
+                prevent, so far as is reasonably practicable, such danger.
+              </>
+            }
+            meaning="The duty is on maintenance, not on records — but records are the only practical way to demonstrate the duty has been discharged. HSG107 makes this explicit: keep records to demonstrate compliance with EAWR. The regulation is short; the evidential burden it implies is large."
+          />
+
+          <RegsCallout
+            source="Health and Safety at Work etc. Act 1974 · Section 2(1)"
+            clause={
+              <>
+                It shall be the duty of every employer to ensure, so far as is reasonably
+                practicable, the health, safety and welfare at work of all his employees.
+              </>
+            }
+            meaning="The umbrella duty. Every more specific regulation — EAWR, PUWER, HSG107 guidance — sits beneath this. 'Reasonably practicable' is the legal test; PAT records are part of how the test is satisfied for electrical equipment safety."
+          />
+
+          <ConceptBlock
+            title="HSAW Section 2 and the &ldquo;reasonably practicable&rdquo; defence"
+            plainEnglish="When HSE prosecute or investigate, the legal question is whether the employer did everything reasonably practicable to manage the risk. The PAT records are the contemporaneous evidence the employer points to. Without them, the defence is much weaker."
+          >
+            <p>
+              In HSE investigations and Health and Safety at Work prosecutions, the &ldquo;so far as
+              is reasonably practicable&rdquo; phrase is interpreted by reference to the evidence
+              the duty holder can produce. The case law tradition (going back to{' '}
+              <em>Edwards v National Coal Board</em>) treats the duty as discharged when the cost
+              and effort of further measures would be grossly disproportionate to the risk averted.
+              That is a question of evidence: what did the employer actually do, when, with what
+              care.
+            </p>
+            <p>For PAT, the evidence is:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>The records.</strong> Test results, dates, testers, instruments, outcomes.
+              </li>
+              <li>
+                <strong>The competent-person regime.</strong> Who is testing, what training and
+                certification they hold, how they are managed.
+              </li>
+              <li>
+                <strong>The test-frequency policy.</strong> What intervals are set, how they were
+                arrived at, how they are reviewed in light of failure rates.
+              </li>
+              <li>
+                <strong>The fault-handling response.</strong> What happened when items failed — the
+                quarantine, repair, retest, or disposal.
+              </li>
+            </ul>
+            <p>
+              Each of those four lives in records. A regime that has policies but no records, or
+              records that are summaries without detail, looks like a regime that has the vocabulary
+              of compliance without the substance.
+            </p>
+          </ConceptBlock>
+
+          <Scenario
+            title="A shock incident and an HSE request for records"
+            situation="An employee receives a 230 V shock from a kettle in a staff room. They are off work for two weeks. HSE investigates. They ask for the PAT records for that kettle. The duty holder produces a printed sheet that says 'Office equipment — annual PAT — passed — 14 Jun 2026 — Test Co Ltd'. There is no asset ID on the kettle and no per-item record."
+            whatToDo="The duty holder is now in a difficult position. They cannot show that the specific kettle was tested. They cannot produce numerical readings. They cannot identify the tester by name. They cannot confirm which instrument was used or its calibration status. The HSE investigator has nothing to verify against. The 'reasonably practicable' defence is effectively unavailable on the kettle specifically — even if the wider regime is documented, the per-item evidence is absent."
+            whyItMatters="The point of recordkeeping is not bureaucratic — it is evidential. When a single item causes an incident, the record for THAT item is what is requested, examined, and weighed. A regime-level summary does not protect a specific item. The lesson is per-item recordkeeping, every time, with the full HSG107 paragraph 70 data set."
+          />
+
+          <RegsCallout
+            source="HSE INDG236 (Maintaining portable electric equipment in low-risk environments) · introductory section"
+            clause={
+              <>
+                The dutyholder needs to keep maintenance records to satisfy themselves that the
+                maintenance is being carried out, but more importantly to provide an audit trail
+                that the work has been done. Records can also be useful in formulating the
+                appropriate frequency for re-inspection or retesting.
+              </>
+            }
+            meaning="HSE\'s own consolidated guidance for low-risk environments treats records as the audit trail and as the data feeding interval review. Even in low-risk contexts where formal testing may be limited, the record is what HSE expects to see."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Retention — how long records have to live</ContentEyebrow>
+
+          <ConceptBlock
+            title="6 years post-disposal — the Limitation Act 1980 anchor"
+            plainEnglish="Under the Limitation Act 1980, civil claims (contract, tort, negligence) generally have to be brought within 6 years of the cause of action. Personal injury is shorter (3 years) but with extensions for late knowledge. Industry practice is to keep PAT records for 6 years post-disposal — by which point most claim windows have closed."
+            onSite="Do not delete PAT records when an item is disposed of. The 6-year clock starts from disposal (or, more precisely, from the latest event that could give rise to a claim). Keep the asset register row marked 'disposed' rather than deleting it."
+          >
+            <p>The Limitation Act 1980 sets default time limits for civil claims:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Contract claims (Section 5):</strong> 6 years from breach.
+              </li>
+              <li>
+                <strong>Tort claims (Section 2):</strong> 6 years from damage.
+              </li>
+              <li>
+                <strong>Personal injury (Section 11):</strong> 3 years, but extendable from
+                &ldquo;date of knowledge&rdquo; — so a claim can run later than 3 years post-event
+                where the injury was not initially apparent.
+              </li>
+              <li>
+                <strong>Latent damage (Section 14A):</strong> the date-of-knowledge extension
+                applies, with a long-stop of 15 years.
+              </li>
+            </ul>
+            <p>
+              The practical industry standard for PAT records is{' '}
+              <strong>6 years post-disposal of the equipment</strong>. This covers the most common
+              civil-claim windows and aligns with the broader retention periods used by insurers.
+              For some sectors (healthcare, education involving children, regulated industries)
+              longer retention is required — healthcare records, for example, can require retention
+              until the patient reaches a specific age. Check sector-specific guidance.
+            </p>
+            <p>
+              Equipment that has been involved in an HSE-relevant incident gets longer retention.
+              The records of the incident, the prior testing, the post-incident testing and any
+              corrective action are the evidential file for any subsequent prosecution or claim, and
+              should be retained until the matter is fully concluded plus the relevant limitation
+              period. This can mean 10+ years.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Limitation Act 1980 · Section 5 (simple contract) and Section 2 (tort)"
+            clause={
+              <>
+                An action founded on simple contract shall not be brought after the expiration of
+                six years from the date on which the cause of action accrued. (Section 5) An action
+                founded on tort shall not be brought after the expiration of six years from the date
+                on which the cause of action accrued. (Section 2)
+              </>
+            }
+            meaning="The 6-year limitation under sections 2 and 5 is the anchor for industry-standard PAT record retention. PAT records are kept for at least 6 years post-disposal so that, if a claim is brought within the limitation window, the evidential record still exists."
+          />
+
+          <CommonMistake
+            title="Deleting records when an item is disposed of"
+            whatHappens="A drill is disposed of after a failed earth continuity test. The asset register row is deleted to keep the register tidy. Two years later, an ex-employee brings a claim relating to a shock they received from the same drill before disposal. The duty holder has no record of when the drill was tested, what its history was, or when it was withdrawn from service."
+            doInstead="Mark the asset register row 'DISPOSED' with the disposal date; do not delete it. Retain the test history under that row for at least 6 years post-disposal, longer where the item was involved in an incident. The register grows over time — that is fine; storage is cheap and the evidential value of the history is high."
+          />
+
+          <InlineCheck
+            id={inlineChecks[1].id}
+            question={inlineChecks[1].question}
+            options={inlineChecks[1].options}
+            correctIndex={inlineChecks[1].correctIndex}
+            explanation={inlineChecks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>
+            PAT records vs Schedule of Test Results — different documents
+          </ContentEyebrow>
+
+          <ConceptBlock
+            title="The PAT record and the BS 7671 SoTR sit in different regulatory regimes"
+            plainEnglish="A PAT record is about appliances and lead-fed equipment under the IET CoP / HSG107 / EAWR framework. The Schedule of Test Results (SoTR) on an EIC or EICR is about the fixed installation circuits under BS 7671. They cover different scopes and do not substitute for each other."
+            onSite="When an EICR is produced for a building, that document does not cover the kettle in the staff room. When a PAT round is done on the appliances, that record does not cover the cooker circuit. Both are needed."
+          >
+            <p>The two documents differ in several material ways:</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-[13.5px] my-2">
+                <thead>
+                  <tr className="border-b border-white/15">
+                    <th className="text-left text-white/80 py-2">Aspect</th>
+                    <th className="text-left text-white/80 py-2">PAT record</th>
+                    <th className="text-left text-white/80 py-2">SoTR (BS 7671)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/95">
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2 font-semibold">Regulatory regime</td>
+                    <td className="py-2">EAWR / HSAW / HSG107 / IET CoP 5th Ed.</td>
+                    <td className="py-2">BS 7671 / EAWR / HSAW</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2 font-semibold">Scope</td>
+                    <td className="py-2">Portable / lead-fed appliances and equipment</td>
+                    <td className="py-2">Fixed-wiring circuits in the installation</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2 font-semibold">Unit of record</td>
+                    <td className="py-2">One row per asset</td>
+                    <td className="py-2">One row per circuit</td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2 font-semibold">Test results</td>
+                    <td className="py-2">
+                      Earth continuity (Ω), insulation resistance (MΩ), leakage (mA), polarity
+                    </td>
+                    <td className="py-2">
+                      Zs (Ω), R1+R2 (Ω), insulation resistance (MΩ), RCD trip times (ms)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="py-2 font-semibold">Frequency</td>
+                    <td className="py-2">Risk-based (IET CoP Table 7.1) — months to years</td>
+                    <td className="py-2">Periodic inspection — typically 5 years (domestic)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 font-semibold">Document family</td>
+                    <td className="py-2">Asset register + per-item test record</td>
+                    <td className="py-2">EIC (new work) or EICR (periodic)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <p>
+              Conflating the two is a common audit failure. An EICR for a building is not evidence
+              that the printers, kettles and fan heaters in the building have been tested. A PAT
+              round is not evidence that the cooker circuit has been verified. The two documents
+              live alongside each other and are produced by separate processes.
+            </p>
+          </ConceptBlock>
 
-            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-400 mb-2">Investigation Scenarios</h4>
-              <div className="space-y-3 text-sm">
-                <div>
-                  <h5 className="font-medium text-white">HSE Investigation</h5>
-                  <p className="text-white mt-1">
-                    Inspectors will examine your testing regime, records, and competency. Good
-                    records showing a systematic approach demonstrate compliance with Regulation 4
-                    of EAWR.
-                  </p>
-                </div>
-                <div>
-                  <h5 className="font-medium text-white">Insurance Claim</h5>
-                  <p className="text-white mt-1">
-                    Insurers may require evidence of maintenance and testing. Claims can be denied
-                    if you cannot demonstrate reasonable care through documented testing.
-                  </p>
-                </div>
-                <div>
-                  <h5 className="font-medium text-white">Civil Action</h5>
-                  <p className="text-white mt-1">
-                    In personal injury claims, records help demonstrate the foreseeability of the
-                    hazard and the reasonable steps taken to prevent harm.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          <InlineCheck
+            id={inlineChecks[2].id}
+            question={inlineChecks[2].question}
+            options={inlineChecks[2].options}
+            correctIndex={inlineChecks[2].correctIndex}
+            explanation={inlineChecks[2].explanation}
+          />
 
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-elec-yellow" /> Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        <section className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-          <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-            <Zap className="h-5 w-5 text-elec-yellow" /> Quick Reference: Record Keeping Checklist
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4 text-sm">
-            <div className="bg-black/20 rounded-lg p-4">
-              <h4 className="text-elec-yellow font-semibold mb-2">For Each Test Record</h4>
-              <ul className="text-white space-y-1">
-                <li>- Asset ID number</li>
-                <li>- Equipment description</li>
-                <li>- Test date</li>
-                <li>- Tester name/ID</li>
-                <li>- All test values</li>
-                <li>- Pass/Fail outcome</li>
-                <li>- Next test date</li>
-              </ul>
-            </div>
-            <div className="bg-black/20 rounded-lg p-4">
-              <h4 className="text-elec-yellow font-semibold mb-2">System Requirements</h4>
-              <ul className="text-white space-y-1">
-                <li>- Regular backups</li>
-                <li>- Access controls</li>
-                <li>- Audit trail</li>
-                <li>- 5+ year retention</li>
-                <li>- Report capability</li>
-                <li>- Retest reminders</li>
-                <li>- Disposal tracking</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ContentEyebrow>Asset registers, personal data and UK GDPR</ContentEyebrow>
 
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold text-white">Module 5.2 Quiz</h2>
-          <p className="text-white">
-            Test your understanding of record keeping and legal requirements.
-          </p>
-          <Quiz questions={quizQuestions} moduleId="pat-m5s2" />
-        </section>
+          <ConceptBlock
+            title="When a PAT record or asset register engages UK GDPR / Data Protection Act 2018"
+            plainEnglish="A pure test record (asset ID, location 'Office 2', test results) is not personal data. As soon as the record links to a named individual — assignee, homeworker home address, identifiable tester — UK GDPR / DPA 2018 apply, and the asset register becomes a personal-data processing activity."
+            onSite="If your asset register includes a 'assigned to' column with names, or location data that is a home address, it is a data-protection record. Apply lawful basis, retention rules, and access controls — same as any HR or employee data."
+          >
+            <p>
+              UK GDPR and the Data Protection Act 2018 apply when personal data is processed.
+              Personal data is any information relating to an identified or identifiable natural
+              person. PAT records cross into personal data territory in several common ways:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Assignee data:</strong> the asset register includes &ldquo;assigned
+                to&rdquo; columns with named employees. The register now combines employee data with
+                equipment data — the employee is identifiable.
+              </li>
+              <li>
+                <strong>Home addresses:</strong> for homeworkers, the &ldquo;location&rdquo; field
+                is the employee&rsquo;s home address. Home addresses are personal data and are
+                considered relatively sensitive.
+              </li>
+              <li>
+                <strong>Tester identification:</strong> tester names, signatures, qualifications.
+                Personal data, though often handled under contract / employment basis.
+              </li>
+              <li>
+                <strong>Audit trail of who used / signed for equipment:</strong> any history that
+                links equipment events to named users.
+              </li>
+            </ul>
+            <p>Where the register is personal data, the duty holder must:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                Identify a <strong>lawful basis</strong> for processing (typically Article 6(1)(c) —
+                legal obligation under EAWR — or Article 6(1)(f) — legitimate interests for
+                workplace safety).
+              </li>
+              <li>
+                Apply <strong>retention rules</strong> consistent with the lawful basis. The
+                Limitation Act 1980 anchor (6 years post-disposal) is generally compatible.
+              </li>
+              <li>
+                Apply <strong>access controls</strong>. The register should not be openly
+                accessible; access is restricted to people who need it for the safety-management
+                purpose.
+              </li>
+              <li>
+                Handle <strong>subject access requests</strong>. If an employee asks what data
+                relates to them in the register, that has to be supplied within the standard 1
+                month.
+              </li>
+              <li>
+                Apply <strong>data minimisation</strong>. Do not include personal data fields you do
+                not need. If location is enough, do not also record an assignee unless the assignee
+                data has a purpose.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-white/10">
-          <Link to="/electrician/upskilling/pat-testing-module-5-section-1" className="flex-1">
-            <Button
-              variant="outline"
-              className="w-full min-h-[48px] border-white/20 text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]"
+          <CommonMistake
+            title="Storing the asset register in a spreadsheet shared on a public folder"
+            whatHappens="The asset register is in an Excel workbook on a shared drive accessible to all employees. The register includes home addresses for homeworkers. An employee browses the register and sees the home addresses of colleagues. The duty holder has now leaked personal data — a UK GDPR breach reportable to the ICO if it meets the threshold."
+            doInstead="Store the asset register in a system with role-based access. Only people with a safety-management or estates-management role need access; restrict accordingly. Do not include personal data fields that are not necessary. If you need a homeworker location, consider recording it as 'Homeworking — UK' rather than the full address, and hold the address only in the HR system under separate controls."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Practical recordkeeping — what good looks like</ContentEyebrow>
+
+          <ConceptBlock
+            title="A defensible PAT record system, end-to-end"
+            plainEnglish="The system has to do five things: capture the right data, keep it for the right period, link it to the right people, restrict access appropriately, and produce records on demand."
+          >
+            <p>The five elements:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>A PAT instrument that logs numerical results.</strong> Modern instruments
+                store a record per test with date, time, instrument ID, and the readings. Choose an
+                instrument with reliable export to your test-management system.
+              </li>
+              <li>
+                <strong>A test-management system or spreadsheet with structured fields.</strong> The
+                HSG107 paragraph 70 fields, one row per asset, exportable to PDF or print for an HSE
+                request.
+              </li>
+              <li>
+                <strong>An asset register with status flags.</strong> Active / disposed / under
+                repair / quarantined. Disposed rows retained for the limitation period; not deleted.
+              </li>
+              <li>
+                <strong>A retention policy.</strong> Documented: typically 6 years post-disposal,
+                with extensions for incident-relevant items and sector-specific requirements.
+              </li>
+              <li>
+                <strong>Access controls.</strong> Role-based, with a clear list of who can read /
+                edit / export the register. Privacy notice if personal data is in the register.
+              </li>
+            </ol>
+            <p>
+              When HSE turn up after an incident, what they want is the per-item record produced
+              within minutes. A system that requires a developer to extract the data, or a manual
+              search through paper files, is a system that will fail under pressure.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[3].id}
+            question={inlineChecks[3].question}
+            options={inlineChecks[3].options}
+            correctIndex={inlineChecks[3].correctIndex}
+            explanation={inlineChecks[3].explanation}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="What to remember on site"
+            points={[
+              'HSG107 paragraph 70 + IET CoP 5th Ed. Chapter 16: minimum record is asset ID, type/class, location, date, tester, instrument + calibration, numerical results, pass/fail, retest interval, and comments.',
+              'Numerical readings are not optional — without them, the record cannot be reconstructed and the "reasonably practicable" defence weakens.',
+              'EAWR Reg 4(2) creates the implicit record duty by demanding maintenance "so far as is reasonably practicable to prevent danger" — unverifiable without records.',
+              'HSAW 1974 Section 2 makes the records the evidence of the defence. HSE will request them after any incident.',
+              'Retention: 6 years post-disposal is industry practice, anchored to the Limitation Act 1980. Longer where the equipment was incident-involved or in regulated environments.',
+              'PAT records cover appliances; the BS 7671 Schedule of Test Results covers the fixed installation. Both are needed; one does not replace the other.',
+              'When the asset register includes personal data (assignees, home addresses, identifiable testers), UK GDPR / DPA 2018 apply — lawful basis, retention, access controls, subject access.',
+              'Defensibility test: can a third party reconstruct what was tested, when, by whom, with what instrument, and what the numerical readings were? If yes, the record works.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Is keeping PAT records actually a legal requirement?',
+                answer:
+                  'No regulation explicitly says "keep PAT records". The duty is implicit: EAWR Reg 4(2) requires maintenance "so far as is reasonably practicable to prevent danger", and HSAW 1974 Sec 2 places the umbrella employer duty. Discharging both requires evidence that maintenance has been done — that evidence is the record. HSG107 — published by HSE — frames record-keeping as the practical way the EAWR duty is demonstrated.',
+              },
+              {
+                question: 'How long do I have to keep PAT records?',
+                answer:
+                  'Industry practice is 6 years post-disposal of the equipment, anchored to the Limitation Act 1980 default civil-claim window. For equipment involved in an HSE-relevant incident, retain for the duration of any investigation/proceedings plus the limitation period. Some sectors (healthcare, education, regulated industries) require longer; check sector guidance. Do not delete records simply because the equipment has been disposed of.',
+              },
+              {
+                question:
+                  'A PAT instrument prints a thermal label and stores the result. Is that the record, or do I need to copy it elsewhere?',
+                answer:
+                  'The instrument log is part of the record. Best practice is to export the instrument data into a test-management system or asset register that holds the wider context (location, asset description, retest interval, history). Thermal labels fade over time — the record should not depend on the legibility of a thermal print after years on a shelf. Export to a durable format (CSV, database, PDF) and back up.',
+              },
+              {
+                question:
+                  'A subcontractor tested some kit on our site. They keep the records. Are we OK?',
+                answer:
+                  'No — the duty is on the duty holder (typically the employer / occupier responsible for the equipment), not on the subcontractor. You must be able to produce the records on request. Either receive copies from the subcontractor (preferred) or have a contractual right of access that can be exercised on short notice. "The subcontractor has them" is not an answer to an HSE request.',
+              },
+              {
+                question:
+                  'Is there a difference between PAT records and the Schedule of Test Results on my EIC?',
+                answer:
+                  'Yes, they are different documents. PAT records cover portable / lead-fed equipment under IET CoP 5th Ed. + HSG107. The Schedule of Test Results on an EIC or EICR is part of the fixed-wiring inspection under BS 7671. Different scopes, different test sequences, different retention paths. An EICR does not constitute PAT evidence; PAT records do not constitute fixed-wiring evidence.',
+              },
+              {
+                question:
+                  'Our asset register includes employee names. Is that a data-protection problem?',
+                answer:
+                  "Potentially yes. Where the register links equipment to identifiable individuals, UK GDPR / DPA 2018 apply. Identify a lawful basis (typically legal obligation under EAWR or legitimate interests), apply retention rules consistent with that basis, restrict access role-based, handle subject access requests, and minimise data fields. If a homeworker's home address is in the register, treat it as sensitive and consider whether you need it at full granularity.",
+              },
+              {
+                question: 'A user defaces or removes a label. Is the record now invalid?',
+                answer:
+                  'The label is a visible flag at the equipment; the record is the audit trail. The record is unaffected by label damage. The label gets re-applied at the next inspection (or sooner if discovered) and the asset register notes any deliberate interference. For environments where label tampering is a risk (hire fleets, shared equipment), use destructible / tamper-evident labels so the interference is visible at the next inspection.',
+              },
+              {
+                question:
+                  "I'm a small contractor doing PAT for a client. What records do I leave with them?",
+                answer:
+                  'A complete asset register / test report covering all items tested, with the HSG107 paragraph 70 data set per item. A summary of the testing carried out, the standards used (typically IET CoP 5th Ed.), the instrument(s) used and calibration date, and a list of any failures and the action taken. Keep your own copy too — typically 6 years post-disposal of the equipment, or 6 years post-test if the items are not under your ongoing care.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Knowledge check</ContentEyebrow>
+          <Quiz title="PAT records and legal requirements — Module 5.2" questions={quizQuestions} />
+
+          {/* Bottom navigation grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/pat-testing-module-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
             >
-              <ChevronLeft className="h-4 w-4" /> Previous: PAT Labels
-            </Button>
-          </Link>
-          <Link to="/electrician/upskilling/pat-testing-module-5-section-3" className="flex-1">
-            <Button className="w-full min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 touch-manipulation active:scale-[0.98]">
-              Next: Asset Register Management <ChevronRight className="h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 5
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/pat-testing-module-5-section-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                5.3 Asset register creation and management
+              </div>
+            </button>
+          </div>
+
+          <div className="hidden">
+            <Activity />
+          </div>
+        </PageFrame>
       </div>
     </div>
   );
