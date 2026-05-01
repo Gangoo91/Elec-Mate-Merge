@@ -1528,7 +1528,7 @@
             <input
               type="checkbox"
               id="satisfactory"
-              {% if declarations.satisfactory_for_continued_use == 'yes' or declarations.satisfactory_for_continued_use == 'yes-with-observations' %}checked{% endif %}
+              {% if declarations.overall_assessment == 'satisfactory' %}checked{% endif %}
             />
             <label for="satisfactory" class="satisfactory">SATISFACTORY</label>
           </div>
@@ -1536,7 +1536,7 @@
             <input
               type="checkbox"
               id="unsatisfactory"
-              {% if declarations.satisfactory_for_continued_use == 'no' %}checked{% endif %}
+              {% if declarations.overall_assessment == 'unsatisfactory' %}checked{% endif %}
             />
             <label for="unsatisfactory" class="unsatisfactory">UNSATISFACTORY</label>
           </div>
@@ -2649,20 +2649,20 @@
           >
           <div class="final-assessment-options">
             <div
-              class="final-assessment-option {% if declarations.satisfactory_for_continued_use == 'yes' or declarations.satisfactory_for_continued_use == 'yes-with-observations' %}satisfactory-selected{% endif %}"
+              class="final-assessment-option {% if declarations.overall_assessment == 'satisfactory' %}satisfactory-selected{% endif %}"
             >
               <input
                 type="checkbox"
-                {% if declarations.satisfactory_for_continued_use == 'yes' or declarations.satisfactory_for_continued_use == 'yes-with-observations' %}checked{% endif %}
+                {% if declarations.overall_assessment == 'satisfactory' %}checked{% endif %}
               />
               <span class="option-label satisfactory-label">SATISFACTORY</span>
             </div>
             <div
-              class="final-assessment-option {% if declarations.satisfactory_for_continued_use == 'no' %}unsatisfactory-selected{% endif %}"
+              class="final-assessment-option {% if declarations.overall_assessment == 'unsatisfactory' %}unsatisfactory-selected{% endif %}"
             >
               <input
                 type="checkbox"
-                {% if declarations.satisfactory_for_continued_use == 'no' %}checked{% endif %}
+                {% if declarations.overall_assessment == 'unsatisfactory' %}checked{% endif %}
               />
               <span class="option-label unsatisfactory-label">UNSATISFACTORY</span>
             </div>
