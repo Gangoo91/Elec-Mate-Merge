@@ -14,6 +14,7 @@ import { useReportId } from '@/hooks/useReportId';
 import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
+import { joinQualifications } from '@/utils/inspectorQualifications';
 import { draftStorage } from '@/utils/draftStorage';
 import {
   validateLoadedData,
@@ -373,7 +374,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       setFormData((prev) => ({
         ...prev,
         inspectorName: defaultProfile.name,
-        inspectorQualifications: defaultProfile.qualifications.join(', '),
+        inspectorQualifications: joinQualifications(defaultProfile.qualifications),
         inspectorSignature: defaultProfile.signatureData || '',
         registrationScheme: defaultProfile.registrationScheme || '',
         registrationNumber: defaultProfile.registrationNumber || '',

@@ -26,6 +26,7 @@ import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import FormField from '@/components/ui/FormField';
 import { INSPECTOR_QUALIFICATIONS } from '@/constants/inspectorQualifications';
+import { joinQualifications, parseQualifications } from '@/utils/inspectorQualifications';
 
 interface EICRInspectorDetailsProps {
   formData: any;
@@ -82,21 +83,20 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     }
   }, [isInitialMount]);
 
-  // Parse qualifications from form data
+  // Parse qualifications from form data. Uses parseQualifications which
+  // splits newline-delimited values (new format) and falls back to greedy
+  // canonical matching for legacy comma-joined values — heals records
+  // corrupted by qualification names containing literal commas.
   useEffect(() => {
     if (formData.inspectorQualifications) {
-      const quals = formData.inspectorQualifications
-        .split(',')
-        .map((q: string) => q.trim())
-        .filter((q: string) => q);
-      setSelectedQualifications(quals);
+      setSelectedQualifications(parseQualifications(formData.inspectorQualifications));
     }
   }, [formData.inspectorQualifications]);
 
   const handleProfileSelect = (profile: InspectorProfile) => {
     haptic.success();
     onUpdate('inspectorName', profile.name);
-    onUpdate('inspectorQualifications', profile.qualifications.join(', '));
+    onUpdate('inspectorQualifications', joinQualifications(profile.qualifications));
     onUpdate('inspectorSignature', profile.signatureData || '');
     onUpdate('registrationScheme', profile.registrationScheme || '');
     onUpdate('registrationNumber', profile.registrationNumber || '');
@@ -120,7 +120,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       ? selectedQualifications.filter((q) => q !== qualification)
       : [...selectedQualifications, qualification];
     setSelectedQualifications(updated);
-    onUpdate('inspectorQualifications', updated.join(', '));
+    onUpdate('inspectorQualifications', joinQualifications(updated));
   };
 
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -191,7 +191,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       ? companyProfile.inspector_qualifications
       : inspectorProfile?.qualifications;
     if (qualifications?.length) {
-      onUpdate('inspectorQualifications', qualifications.join(', '));
+      onUpdate('inspectorQualifications', joinQualifications(qualifications));
       setSelectedQualifications(qualifications);
       loadedItems.push('Qualifications');
     }
