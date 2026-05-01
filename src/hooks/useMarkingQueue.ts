@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -57,6 +57,7 @@ export interface MarkingQueueStats {
 
 export function useMarkingQueue() {
   const { user } = useAuth();
+  const channelId = useId();
   const [items, setItems] = useState<MarkingQueueItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -263,7 +264,7 @@ export function useMarkingQueue() {
   useEffect(() => {
     if (!user) return;
     const ch = supabase
-      .channel(`marking_queue:${user.id}`)
+      .channel(`marking_queue:${user.id}:${channelId}`)
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'tutor_quiz_attempts' },
@@ -278,7 +279,7 @@ export function useMarkingQueue() {
     return () => {
       supabase.removeChannel(ch);
     };
-  }, [user, load]);
+  }, [user, load, channelId]);
 
   const stats: MarkingQueueStats = useMemo(() => {
     const awaiting_review = items.filter((i) => i.status === 'awaiting_review').length;

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -45,6 +45,7 @@ import { CurriculumStatusBadge } from '@/components/college/ui/CurriculumStatusB
 export default function Student360Page() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const data = useStudent360(id ?? null);
 
   const [noteOpen, setNoteOpen] = useState(false);
@@ -56,6 +57,36 @@ export default function Student360Page() {
   const [gradeOpen, setGradeOpen] = useState(false);
   const [quizOpen, setQuizOpen] = useState<{ acCodes?: string[] } | null>(null);
   const [uploadDocOpen, setUploadDocOpen] = useState(false);
+
+  // Hash-scroll: when arriving at /college/students/:id#section (e.g. from
+  // the unified inbox or notification bell), scroll to the named section
+  // once the data has loaded and the section's DOM node exists. Retries a
+  // few times so we don't miss it if data lands later than the first paint.
+  // Special-case `#messages` — there's no inline messages section, so open
+  // the StudentMessageSheet instead of fruitlessly searching for a node.
+  useEffect(() => {
+    const hash = location.hash.replace(/^#/, '');
+    if (!hash) return;
+    if (hash === 'messages') {
+      setMessageOpen(true);
+      return;
+    }
+    let attempts = 0;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const tryScroll = () => {
+      const el = document.getElementById(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      attempts += 1;
+      if (attempts < 12) timer = setTimeout(tryScroll, 250);
+    };
+    tryScroll();
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [location.hash, data.loading.core]);
 
   // Listen for "quiz:suggest-from-ac" events from AC chips (shift-click) or
   // weak-AC bulk action — opens CreateQuizSheet pre-filled with the AC codes.

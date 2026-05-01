@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 /* ==========================================================================
@@ -43,6 +43,7 @@ export interface InboxStats {
 }
 
 export function useUnifiedInbox() {
+  const channelId = useId();
   const [items, setItems] = useState<InboxItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -276,6 +277,37 @@ export function useUnifiedInbox() {
   useEffect(() => {
     void fetch();
   }, [fetch]);
+
+  // Realtime — bump the inbox when any of its sources change. Cheap because
+  // each change just retriggers fetch() which is already a parallel batch.
+  useEffect(() => {
+    const ch = supabase
+      .channel(`unified_inbox:${channelId}`)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'portfolio_comments' },
+        () => void fetch()
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'college_otj_entries' },
+        () => void fetch()
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'college_iqa_samples' },
+        () => void fetch()
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'college_conversations' },
+        () => void fetch()
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(ch);
+    };
+  }, [fetch, channelId]);
 
   const stats: InboxStats = useMemo(() => {
     const portfolio = items.filter((i) => i.kind === 'portfolio').length;
