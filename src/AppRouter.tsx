@@ -121,6 +121,7 @@ const OfstedEifPage = lazy(() => import('@/pages/college/OfstedEifPage'));
 const ComplianceHubPage = lazy(() => import('@/pages/college/ComplianceHubPage'));
 const EvidenceTimelinePage = lazy(() => import('@/pages/college/EvidenceTimelinePage'));
 const TutorTodayPage = lazy(() => import('@/pages/college/TutorTodayPage'));
+const MarkingQueuePage = lazy(() => import('@/pages/college/MarkingQueuePage'));
 const IqaDashboardPage = lazy(() => import('@/pages/college/IqaDashboardPage'));
 const IqaSamplingPlanPage = lazy(() => import('@/pages/college/IqaSamplingPlanPage'));
 const CollegeOtjPage = lazy(() => import('@/pages/college/CollegeOtjPage'));
@@ -1985,6 +1986,18 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <TutorTodayPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Marking copilot — cross-quiz marking queue */}
+          <Route
+            path="college/marking"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <MarkingQueuePage />
                 </CollegeGuard>
               </LazyRoute>
             }

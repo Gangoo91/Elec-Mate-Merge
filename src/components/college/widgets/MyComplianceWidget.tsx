@@ -47,10 +47,19 @@ export function MyComplianceWidget() {
   }
 
   const { name, totals, percent, needsAction, awaitingVerification, nextExpiry } = summary;
+  // Setup-pending = no evidence anywhere yet (everything missing). This is
+  // an *action* state, not a neutral one — show in amber so it reads as
+  // "do this" rather than "info".
+  const allMissing =
+    totals.total > 0 &&
+    totals.valid === 0 &&
+    totals.expiring === 0 &&
+    totals.expired === 0 &&
+    totals.missing === totals.total;
   const tone = needsAction
     ? totals.expired > 0
       ? ('red' as const)
-      : ('blue' as const)
+      : ('amber' as const)
     : awaitingVerification
       ? ('purple' as const)
       : totals.expiring > 0
@@ -113,40 +122,64 @@ export function MyComplianceWidget() {
           <Ring percent={percent} tone={tone} />
         </div>
 
-        <div
-          className={cn(
-            'mt-4 grid gap-px bg-white/[0.04] border border-white/[0.06] rounded-xl overflow-hidden',
-            totals.pending_verification > 0
-              ? 'grid-cols-2 sm:grid-cols-5'
-              : 'grid-cols-2 sm:grid-cols-4'
-          )}
-        >
-          <Cell value={totals.valid + totals.expiring} label="In date" tone="emerald" />
-          <Cell value={totals.expiring} label="Expiring" tone="amber" />
-          <Cell value={totals.expired} label="Expired" tone="red" />
-          <Cell value={totals.missing} label="Missing" tone="blue" />
-          {totals.pending_verification > 0 && (
-            <Cell value={totals.pending_verification} label="Pending" tone="purple" />
-          )}
-        </div>
-
-        <div className="mt-3 flex items-center justify-between gap-3 text-[11.5px]">
-          <div className="text-white/65 truncate">
-            {nextExpiry && totals.expiring > 0 ? (
-              <>
-                <span className="text-white/45">Next expiry: </span>
-                <span className="text-amber-300 font-medium">{formatExpiry(nextExpiry)}</span>
-              </>
-            ) : needsAction ? (
-              <span>Open vault to upload missing evidence.</span>
-            ) : (
-              <span>You're fully covered — keep CPD ticking over.</span>
+        {allMissing ? (
+          // Fresh vault — every cell would be 0 except Missing. Replace the
+          // 4-zero grid with a focused amber CTA so the screen has one
+          // clear next action instead of three quiet zeros.
+          <div className="mt-4 rounded-xl border border-amber-500/25 bg-amber-500/[0.06] px-4 py-3.5 flex items-center gap-3">
+            <div className="shrink-0 h-9 w-9 rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-300 font-semibold text-[13px] tabular-nums">
+              {totals.missing}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[13px] font-semibold text-white leading-tight">
+                {totals.missing} document{totals.missing === 1 ? '' : 's'} to upload
+              </div>
+              <div className="mt-0.5 text-[11.5px] text-white leading-snug">
+                DBS, ID, qualifications — start your vault.
+              </div>
+            </div>
+            <span className="shrink-0 inline-flex items-center h-9 px-3.5 rounded-lg bg-amber-400 text-black text-[12px] font-semibold group-hover:bg-amber-300 transition-colors">
+              Upload →
+            </span>
+          </div>
+        ) : (
+          <div
+            className={cn(
+              'mt-4 grid gap-px bg-white/[0.04] border border-white/[0.06] rounded-xl overflow-hidden',
+              totals.pending_verification > 0
+                ? 'grid-cols-2 sm:grid-cols-5'
+                : 'grid-cols-2 sm:grid-cols-4'
+            )}
+          >
+            <Cell value={totals.valid + totals.expiring} label="In date" tone="emerald" />
+            <Cell value={totals.expiring} label="Expiring" tone="amber" />
+            <Cell value={totals.expired} label="Expired" tone="red" />
+            <Cell value={totals.missing} label="Missing" tone="blue" />
+            {totals.pending_verification > 0 && (
+              <Cell value={totals.pending_verification} label="Pending" tone="purple" />
             )}
           </div>
-          <span className="shrink-0 text-[12px] font-medium text-white/55 group-hover:text-white transition-colors">
-            Open →
-          </span>
-        </div>
+        )}
+
+        {!allMissing && (
+          <div className="mt-3 flex items-center justify-between gap-3 text-[11.5px]">
+            <div className="text-white truncate">
+              {nextExpiry && totals.expiring > 0 ? (
+                <>
+                  <span className="text-white">Next expiry: </span>
+                  <span className="text-amber-300 font-medium">{formatExpiry(nextExpiry)}</span>
+                </>
+              ) : needsAction ? (
+                <span>Open vault to upload missing evidence.</span>
+              ) : (
+                <span>You're fully covered — keep CPD ticking over.</span>
+              )}
+            </div>
+            <span className="shrink-0 text-[12px] font-medium text-white group-hover:text-white transition-colors">
+              Open →
+            </span>
+          </div>
+        )}
       </button>
 
       <StaffComplianceDrawer open={open} onOpenChange={setOpen} staffId={summary.staffId} />

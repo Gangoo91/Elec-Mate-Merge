@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useComplianceLeads, type LeadStaff, type LeadRoleKey } from '@/hooks/useComplianceLeads';
@@ -64,6 +65,7 @@ const ROLES: RoleDef[] = [
 ];
 
 export function ComplianceLeadsWidget() {
+  const navigate = useNavigate();
   const { leads, loading } = useComplianceLeads();
   const [openStaffId, setOpenStaffId] = useState<string | null>(null);
 
@@ -97,16 +99,31 @@ export function ComplianceLeadsWidget() {
               Your safeguarding & compliance leads
             </div>
           </div>
-          <div className="px-5 sm:px-6 py-6">
+          <div className="px-5 sm:px-6 py-5">
             <p className="text-[12.5px] text-white leading-relaxed max-w-prose">
-              No leads assigned yet. Open a staff member from{' '}
-              <span className="font-medium text-white">People → Tutors</span> and toggle the right
-              roles (DSL, Prevent, H&amp;S etc.) inside their compliance vault.
+              No leads assigned yet. Open a staff member's compliance vault and toggle the right
+              roles (DSL, Prevent, H&amp;S etc.).
             </p>
             <p className="mt-2 text-[11.5px] text-amber-300/85 leading-relaxed">
               DSL is statutory — every UK FE college needs at least one named Designated
               Safeguarding Lead.
             </p>
+            <div className="mt-4 flex items-center gap-2 flex-wrap">
+              <button
+                type="button"
+                onClick={() => navigate('/college?section=tutors')}
+                className="h-10 px-4 rounded-lg bg-amber-400 hover:bg-amber-300 active:bg-amber-300 text-black text-[12.5px] font-semibold transition-colors touch-manipulation"
+              >
+                Assign leads →
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/college?section=tutors')}
+                className="h-10 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12.5px] font-medium transition-colors touch-manipulation"
+              >
+                Open Tutors
+              </button>
+            </div>
           </div>
         </div>
         <StaffComplianceDrawer
