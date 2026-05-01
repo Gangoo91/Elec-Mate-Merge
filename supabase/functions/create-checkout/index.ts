@@ -28,10 +28,17 @@ serve(async (req) => {
     const body = await req.json();
     const { priceId, mode, planId, offerCode, referralCode } = body;
 
-    // Plans that should NOT get a 7-day free trial (charge immediately)
-    const NO_TRIAL_PLANS = ['business-ai', 'employer'];
+    // Per-plan trial duration in days. 0 = charge immediately, no trial.
+    // Mate (business-ai) gets a 3-day trial; electrician/apprentice keep 7.
+    // Employer plans charge immediately.
     const planBase = planId ? planId.replace(/-(monthly|yearly|annual)$/, '') : '';
-    const isNoTrialPlan = NO_TRIAL_PLANS.includes(planBase);
+    const trialDaysFor = (p: string): number => {
+      if (p === 'business-ai') return 3;
+      if (p === 'employer') return 0;
+      return 7;
+    };
+    const trialDays = trialDaysFor(planBase);
+    const isNoTrialPlan = trialDays === 0;
 
     // Founder pricing: first 100 Mate subscribers get the "mate_founder"
     // Stripe coupon (25% off forever — £39.99→£29.99, £399.99→£299.99).
@@ -311,14 +318,15 @@ serve(async (req) => {
       billing_address_collection: 'auto',
       // If we have a specific discount to apply, use that; otherwise allow manual promo codes
       ...(discounts ? { discounts } : { allow_promotion_codes: true }),
-      // Add 7-day free trial for subscription mode (skip for Business AI / Employer)
+      // Free trial duration is per-plan: Mate=3, electrician/apprentice=7, employer=0.
       ...(mode === 'subscription'
         ? {
             subscription_data: {
-              ...(isNoTrialPlan ? {} : { trial_period_days: 7 }),
+              ...(trialDays > 0 ? { trial_period_days: trialDays } : {}),
               metadata: {
                 userId: user.id,
                 planId: planId,
+                ...(trialDays > 0 ? { trial_days: String(trialDays) } : {}),
                 ...(isFounderCheckout ? { mate_founder: 'true' } : {}),
               },
             },

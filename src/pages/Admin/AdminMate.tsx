@@ -420,10 +420,18 @@ export default function AdminMate() {
                 const errPct = Math.round(u.error_rate_24h * 100);
                 const lowRag = u.tool_calls_24h > 0 && ragShare(u) < 0.3;
                 const jwtT = jwtTone(u.jwt_expires_at);
-                const jwtUrgent = jwtT === 'red' || jwtT === 'orange';
+                const jwtMissing = !u.jwt_expires_at;
+                const jwtCritical = jwtT === 'red';
+                const rowAccent: Tone | undefined =
+                  jwtCritical || u.errors_24h > 0
+                    ? 'red'
+                    : jwtT === 'orange' || lowRag
+                      ? 'orange'
+                      : undefined;
                 return (
                   <ListRow
                     key={u.user_id}
+                    accent={rowAccent}
                     lead={<Avatar initials={getInitials(u.full_name)} />}
                     title={<span className="truncate">{u.full_name ?? 'Unknown'}</span>}
                     subtitle={
@@ -448,6 +456,12 @@ export default function AdminMate() {
                             {u.errors_24h} err
                           </span>
                         )}
+                        {jwtMissing && (
+                          <span className="tabular-nums text-red-400">
+                            {' · '}
+                            no JWT
+                          </span>
+                        )}
                         <span className="tabular-nums text-white/70">
                           {' · '}
                           {lastSeen}
@@ -457,16 +471,17 @@ export default function AdminMate() {
                     trailing={
                       <>
                         <Pill tone={statusTone(u.agent_status)}>{u.agent_status ?? '—'}</Pill>
-                        <Pill tone={jwtT} className={cn(!jwtUrgent && 'hidden md:inline-flex')}>
-                          JWT {jwtLabel(u.jwt_expires_at)}
+                        {/* JWT pill — desktop only; on mobile the red row accent + "no JWT" subtitle text already convey it */}
+                        <Pill tone={jwtT} className="hidden md:inline-flex">
+                          {jwtLabel(u.jwt_expires_at)}
                         </Pill>
                         {errPct >= 5 && (
-                          <Pill tone="red" className="hidden sm:inline-flex">
+                          <Pill tone="red" className="hidden lg:inline-flex">
                             {errPct}%
                           </Pill>
                         )}
                         {lowRag && (
-                          <Pill tone="amber" className="hidden md:inline-flex">
+                          <Pill tone="amber" className="hidden lg:inline-flex">
                             Low RAG
                           </Pill>
                         )}

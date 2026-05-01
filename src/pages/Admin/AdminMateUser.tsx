@@ -292,9 +292,7 @@ export default function AdminMateUser() {
               <Pill tone={statusTone(profile.agent_status)}>
                 {profile.agent_status ?? 'unknown'}
               </Pill>
-              <Pill tone={jwtTone(profile.jwt_expires_at)}>
-                JWT {jwtLabel(profile.jwt_expires_at)}
-              </Pill>
+              <Pill tone={jwtTone(profile.jwt_expires_at)}>{jwtLabel(profile.jwt_expires_at)}</Pill>
               <span className="text-[11px] text-white/70 tabular-nums">Since {provisioned}</span>
             </div>
           }

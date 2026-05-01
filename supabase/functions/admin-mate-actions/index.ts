@@ -112,6 +112,16 @@ serve(async (req) => {
       );
       if (upsertErr) throw new Error(`Failed to store new JWT: ${upsertErr.message}`);
 
+      // If the user was stuck in 'provisioning' (e.g. legacy half-completed provision)
+      // a successful JWT rotation means the agent is now fully alive — flip to 'active'.
+      // Don't override 'paused' — that's a deliberate admin state.
+      if (target.agent_status === 'provisioning' || target.agent_status === 'inactive') {
+        await supabase
+          .from('profiles')
+          .update({ agent_status: 'active', agent_health_status: 'healthy' })
+          .eq('id', user_id);
+      }
+
       await supabase.from('agent_action_log').insert({
         user_id,
         action_type: 'jwt_rotated',

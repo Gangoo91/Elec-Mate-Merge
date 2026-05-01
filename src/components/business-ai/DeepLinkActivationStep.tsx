@@ -49,66 +49,69 @@ export function DeepLinkActivationStep({ onActivated }: DeepLinkActivationStepPr
   const [now, setNow] = useState(() => Date.now());
   const pollingRef = useRef<number | null>(null);
 
-  const fetchCode = useCallback(async (regenerate: boolean) => {
-    setError(null);
-    if (regenerate) {
-      setRegenerating(true);
-    } else {
-      setLoading(true);
-    }
-
-    try {
-      const { data, error: fnErr } = await supabase.functions.invoke<WaCodeResponse>(
-        'generate-wa-code',
-        {
-          body: regenerate ? { regenerate: true } : {},
-        }
-      );
-
-      if (fnErr) throw new Error(fnErr.message);
-      if (data?.error) throw new Error(data.error);
-
-      if (data?.already_active) {
-        // The user is already linked — the parent will swap to the dashboard
-        // as soon as the next profile fetch lands.
-        if (user && fetchProfile) {
-          await fetchProfile(user.id);
-        }
-        onActivated();
-        return;
+  const fetchCode = useCallback(
+    async (regenerate: boolean) => {
+      setError(null);
+      if (regenerate) {
+        setRegenerating(true);
+      } else {
+        setLoading(true);
       }
 
-      if (!data?.code || !data.deeplink) {
-        throw new Error('Activation link unavailable. Please try again.');
+      try {
+        const { data, error: fnErr } = await supabase.functions.invoke<WaCodeResponse>(
+          'generate-wa-code',
+          {
+            body: regenerate ? { regenerate: true } : {},
+          }
+        );
+
+        if (fnErr) throw new Error(fnErr.message);
+        if (data?.error) throw new Error(data.error);
+
+        if (data?.already_active) {
+          // The user is already linked — the parent will swap to the dashboard
+          // as soon as the next profile fetch lands.
+          if (user && fetchProfile) {
+            await fetchProfile(user.id);
+          }
+          onActivated();
+          return;
+        }
+
+        if (!data?.code || !data.deeplink) {
+          throw new Error('Activation link unavailable. Please try again.');
+        }
+        setCode(data.code);
+        setDeeplink(data.deeplink);
+        setExpiresAt(data.expires_at ?? null);
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : 'Could not get an activation link';
+        setError(msg);
+        toast({ title: 'Activation link unavailable', description: msg, variant: 'destructive' });
+      } finally {
+        setLoading(false);
+        setRegenerating(false);
       }
-      setCode(data.code);
-      setDeeplink(data.deeplink);
-      setExpiresAt(data.expires_at ?? null);
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : 'Could not get an activation link';
-      setError(msg);
-      toast({ title: 'Activation link unavailable', description: msg, variant: 'destructive' });
-    } finally {
-      setLoading(false);
-      setRegenerating(false);
-    }
-  }, [toast, user, fetchProfile, onActivated]);
+    },
+    [toast, user, fetchProfile, onActivated]
+  );
 
   // Initial fetch
   useEffect(() => {
     fetchCode(false);
   }, [fetchCode]);
 
-  // Poll for agent_status flipping to 'active'
+  // Poll for the agent being fully ready (status=active AND JWT minted).
+  // verify-agent-active also auto-mints the JWT if the VPS flow left a gap,
+  // so users never get stuck in the "WhatsApp linked but agent silent" state.
   useEffect(() => {
     if (!user) return;
     const tick = async () => {
-      const { data, error: profileErr } = await supabase
-        .from('profiles')
-        .select('agent_status')
-        .eq('id', user.id)
-        .maybeSingle();
-      if (!profileErr && data?.agent_status === 'active') {
+      const { data, error: fnErr } = await supabase.functions.invoke<{
+        ready?: boolean;
+      }>('verify-agent-active', { body: {} });
+      if (!fnErr && data?.ready) {
         if (fetchProfile) {
           await fetchProfile(user.id);
         }
@@ -233,7 +236,8 @@ export function DeepLinkActivationStep({ onActivated }: DeepLinkActivationStepPr
                     Or scan
                   </div>
                   <p className="text-sm text-white leading-snug">
-                    On a desktop? Scan with your phone — it'll open WhatsApp on the device that has it.
+                    On a desktop? Scan with your phone — it'll open WhatsApp on the device that has
+                    it.
                   </p>
                 </div>
               </div>

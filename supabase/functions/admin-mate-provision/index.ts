@@ -104,13 +104,15 @@ Deno.serve(async (req) => {
     }
     steps.push({ step: 'profile.update', ok: true });
 
-    // STEP 2 — phone routing
+    // STEP 2 — phone routing.
+    // owner_type CHECK constraint only allows 'electrician' or 'client'; for an agent owner
+    // we always use 'electrician' regardless of the profile role since the routing is
+    // about who owns the inbound WhatsApp number, not the user's job role.
     const { error: routingErr } = await supabaseAdmin.from('phone_number_routing').upsert(
       {
         phone_number: phone,
-        owner_type: 'user',
+        owner_type: 'electrician',
         user_id,
-        updated_at: now,
       },
       { onConflict: 'phone_number' }
     );
@@ -120,18 +122,53 @@ Deno.serve(async (req) => {
     }
     steps.push({ step: 'phone_routing.upsert', ok: true });
 
-    // STEP 3 — call VPS provisioning endpoint
-    const vpsUrl = Deno.env.get('VPS_MCP_URL') ?? 'https://agent.elec-mate.com';
     const vpsKey = Deno.env.get('VPS_API_KEY');
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
     if (!vpsKey) {
       steps.push({
-        step: 'vps.provision',
+        step: 'config',
         ok: false,
         detail: 'VPS_API_KEY not configured',
       });
       return json({ ok: false, steps, error: 'VPS_API_KEY not configured' }, 500);
     }
 
+    // STEP 3 — Mint JWT via provision-agent-vps.
+    // Important: this happens BEFORE the VPS workspace call. The VPS
+    // /api/provision-agent endpoint only creates the OpenClaw workspace +
+    // bindings — it does not mint a JWT. The canonical user-side flow
+    // (wa-onboarding → provision-business-ai) mints the JWT first; we mirror
+    // that order so a workspace is never created for a user who failed JWT
+    // minting (which would leave a silent half-provisioned state).
+    // provision-agent-vps is idempotent — returns the existing JWT if one is
+    // already live for this user.
+    try {
+      const r = await fetch(`${supabaseUrl}/functions/v1/provision-agent-vps`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-VPS-API-Key': vpsKey,
+        },
+        body: JSON.stringify({ user_id }),
+      });
+      const text = await r.text();
+      if (!r.ok) {
+        steps.push({
+          step: 'jwt.mint',
+          ok: false,
+          detail: `HTTP ${r.status} — ${text.slice(0, 200)}`,
+        });
+        return json({ ok: false, steps, error: `JWT mint failed: ${text.slice(0, 200)}` }, 502);
+      }
+      steps.push({ step: 'jwt.mint', ok: true });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      steps.push({ step: 'jwt.mint', ok: false, detail: msg });
+      return json({ ok: false, steps, error: msg }, 502);
+    }
+
+    // STEP 4 — Create OpenClaw workspace + bindings on the VPS.
+    const vpsUrl = Deno.env.get('VPS_MCP_URL') ?? 'https://agent.elec-mate.com';
     let vpsResponse: unknown = null;
     try {
       const r = await fetch(`${vpsUrl.replace(/\/$/, '')}/api/provision-agent`, {
@@ -168,7 +205,7 @@ Deno.serve(async (req) => {
       return json({ ok: false, steps, error: msg }, 502);
     }
 
-    // STEP 4 — log to agent_action_log so the admin dashboard sees this
+    // STEP 5 — log to agent_action_log so the admin dashboard sees this
     await supabaseAdmin.from('agent_action_log').insert({
       user_id,
       action_type: 'agent_provisioned',
