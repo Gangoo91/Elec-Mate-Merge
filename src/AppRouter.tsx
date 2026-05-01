@@ -122,6 +122,7 @@ const ComplianceHubPage = lazy(() => import('@/pages/college/ComplianceHubPage')
 const EvidenceTimelinePage = lazy(() => import('@/pages/college/EvidenceTimelinePage'));
 const TutorTodayPage = lazy(() => import('@/pages/college/TutorTodayPage'));
 const MarkingQueuePage = lazy(() => import('@/pages/college/MarkingQueuePage'));
+const UnifiedInboxPage = lazy(() => import('@/pages/college/UnifiedInboxPage'));
 const IqaDashboardPage = lazy(() => import('@/pages/college/IqaDashboardPage'));
 const IqaSamplingPlanPage = lazy(() => import('@/pages/college/IqaSamplingPlanPage'));
 const CollegeOtjPage = lazy(() => import('@/pages/college/CollegeOtjPage'));
@@ -1998,6 +1999,18 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <MarkingQueuePage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Unified inbox — all comments / OTJ / IQA / messages in one place */}
+          <Route
+            path="college/inbox"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <UnifiedInboxPage />
                 </CollegeGuard>
               </LazyRoute>
             }

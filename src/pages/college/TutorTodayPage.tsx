@@ -12,6 +12,7 @@ import {
 } from '@/hooks/useTutorToday';
 import { ShowMePanel } from '@/components/college/compliance/ShowMePanel';
 import { useMarkingQueue } from '@/hooks/useMarkingQueue';
+import { useUnifiedInbox } from '@/hooks/useUnifiedInbox';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
@@ -76,6 +77,7 @@ export default function TutorTodayPage() {
 export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = {}) {
   const { data, loading, error, refresh } = useTutorToday();
   const { stats: markingStats } = useMarkingQueue();
+  const { stats: inboxStats } = useUnifiedInbox();
   const navigate = useNavigate();
 
   const firstName = data?.core.staff_name?.split(' ')[0] ?? null;
@@ -179,37 +181,71 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = 
         </div>
       </motion.div>
 
-      {/* Marking copilot callout — shows only when there's outstanding work
-          for the tutor (AI graded but not signed off, or backlog awaiting AI). */}
-      {markingStats.total_pending > 0 && (
+      {/* Action callouts — Inbox + Marking when there's pending work.
+          Side-by-side on desktop, stacked on mobile. */}
+      {(inboxStats.total > 0 || markingStats.total_pending > 0) && (
         <motion.div variants={itemVariants}>
-          <button
-            type="button"
-            onClick={() => navigate('/college/marking')}
-            className="group w-full text-left bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)] active:bg-[hsl(0_0%_14%)] border border-amber-500/25 hover:border-amber-500/40 rounded-2xl px-4 sm:px-5 py-4 transition-colors touch-manipulation"
-          >
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="shrink-0 h-11 w-11 rounded-full bg-amber-500/[0.12] border border-amber-500/30 flex items-center justify-center text-amber-300 font-semibold text-[15px] tabular-nums">
-                {markingStats.total_pending}
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-amber-300">
-                  Marking copilot
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {inboxStats.total > 0 && (
+              <button
+                type="button"
+                onClick={() => navigate('/college/inbox')}
+                className="group text-left bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)] active:bg-[hsl(0_0%_14%)] border border-blue-500/25 hover:border-blue-500/40 rounded-2xl px-4 sm:px-5 py-4 transition-colors touch-manipulation"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="shrink-0 h-11 w-11 rounded-full bg-blue-500/[0.12] border border-blue-500/30 flex items-center justify-center text-blue-300 font-semibold text-[15px] tabular-nums">
+                    {inboxStats.total}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-blue-300">
+                      Inbox
+                    </div>
+                    <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight leading-tight">
+                      {inboxStats.total} item{inboxStats.total === 1 ? '' : 's'} need attention
+                    </div>
+                    <div className="mt-1 text-[11.5px] text-white">
+                      {[
+                        inboxStats.portfolio > 0 &&
+                          `${inboxStats.portfolio} comment${inboxStats.portfolio === 1 ? '' : 's'}`,
+                        inboxStats.otj > 0 && `${inboxStats.otj} OTJ`,
+                        inboxStats.iqa > 0 && `${inboxStats.iqa} IQA`,
+                        inboxStats.message > 0 &&
+                          `${inboxStats.message} message${inboxStats.message === 1 ? '' : 's'}`,
+                      ]
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight leading-tight">
-                  {markingStats.awaiting_review > 0
-                    ? `${markingStats.awaiting_review} attempt${markingStats.awaiting_review === 1 ? '' : 's'} ready for sign-off`
-                    : `${markingStats.awaiting_ai} attempt${markingStats.awaiting_ai === 1 ? '' : 's'} grading in progress`}
+              </button>
+            )}
+            {markingStats.total_pending > 0 && (
+              <button
+                type="button"
+                onClick={() => navigate('/college/marking')}
+                className="group text-left bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)] active:bg-[hsl(0_0%_14%)] border border-amber-500/25 hover:border-amber-500/40 rounded-2xl px-4 sm:px-5 py-4 transition-colors touch-manipulation"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="shrink-0 h-11 w-11 rounded-full bg-amber-500/[0.12] border border-amber-500/30 flex items-center justify-center text-amber-300 font-semibold text-[15px] tabular-nums">
+                    {markingStats.total_pending}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-amber-300">
+                      Marking copilot
+                    </div>
+                    <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight leading-tight">
+                      {markingStats.awaiting_review > 0
+                        ? `${markingStats.awaiting_review} attempt${markingStats.awaiting_review === 1 ? '' : 's'} ready for sign-off`
+                        : `${markingStats.awaiting_ai} attempt${markingStats.awaiting_ai === 1 ? '' : 's'} grading in progress`}
+                    </div>
+                    <div className="mt-1 text-[11.5px] text-white">
+                      AI has pre-scored. Tap to review and approve.
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-1 text-[11.5px] text-white">
-                  AI has pre-scored. Tap to review and approve.
-                </div>
-              </div>
-              <span className="shrink-0 inline-flex items-center h-9 px-3.5 rounded-lg bg-amber-400 text-black text-[12px] font-semibold group-hover:bg-amber-300 transition-colors">
-                Open queue →
-              </span>
-            </div>
-          </button>
+              </button>
+            )}
+          </div>
         </motion.div>
       )}
 
