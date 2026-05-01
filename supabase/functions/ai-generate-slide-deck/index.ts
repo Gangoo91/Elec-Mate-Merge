@@ -18,15 +18,22 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'authorization, content-type, apikey',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, x-request-id, x-supabase-api-version, apikey, content-type',
 };
 
 const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
-const MAX_TOKENS = 12_000;
-const FACET_CONTENT_CLIP = 320;
+const MAX_TOKENS = 22_000;
+const FACET_CONTENT_CLIP = 480;
 
 interface Body {
   lesson_plan_id: string;
+  /** Override slide count target; defaults to 14 when absent. */
+  slide_count?: number;
+  /** Tone register — academic, practical, gen_z. Defaults to practical. */
+  tone?: 'academic' | 'practical' | 'gen_z';
+  /** Depth — overview (light), standard (default), deep_dive (rich). */
+  depth?: 'overview' | 'standard' | 'deep_dive';
 }
 
 interface PlanRow {
@@ -49,22 +56,57 @@ interface FacetRow {
   facet_content: string | null;
 }
 
-const SYSTEM_PROMPT = `You are SARAH WHITAKER — a UK FE electrical lecturer with 25 years' experience. British English only. C&G 2365/2357/2391, EAL L3 600/5, IQA-qualified.
+const SYSTEM_PROMPT = `You are SARAH WHITAKER — a UK FE electrical lecturer with 25 years' experience. British English only. C&G 2365/2357/2391, EAL L3 600/5, IQA-qualified. You write classroom-ready slide decks tutors actually use, not generic Smartscreen filler.
 
-You build the slide deck that drives a 1.5–3 hour classroom lesson. Tutors compare your decks to Smartscreen and choose yours every time because:
-- The opener hooks (cold-call prompt or scenario), not just a title
-- Objectives are written in learner voice ("By the end of this you'll...")
-- Activities have explicit time + group size + what success looks like
-- Regulation cites carry the clause snippet so the slide makes sense without lookup
-- Worked examples show the working, not just the answer
-- The plenary closes the loop with a check-for-understanding question, not "any questions?"
+You build the slide deck that drives a 1.5–3 hour classroom lesson. Your decks beat Smartscreen because they are SUBSTANTIVE — every slide carries enough material that a tutor unfamiliar with the topic could deliver it cold.
+
+DEPTH — non-negotiable per slide kind:
+- "concept" / "image_concept": body is 2–4 sentences (60–140 words), plus 2–4 key terms with one-sentence definitions
+- "reg_cite": the 'clause' field carries the actual regulation wording (50–120 words, paraphrased only if the original is verbose); 'why_it_matters' is 40–80 words explaining the real-world consequence with a concrete UK installation example
+- "activity": 'instruction' is a complete task brief (60–140 words) — what learners do, the materials/tools they need, what to produce, what to hand in. 'success_criteria' names the observable behaviour: "all four learners can show working that arrives within ±5% of the published value"
+- "worked_example": 5–8 'solution_steps' each carrying a brief reasoning clause, not just the calculation
+- "misconception": 'belief' is 1–2 sentences in the learner's voice. 'correction' is 2–4 sentences with the regulatory or technical evidence and why the misconception is plausible
+- "summary": 5–7 takeaway bullets, each a complete sentence (15–30 words), not single-word reminders
+- "plenary": 'body' is 60–100 words framing the close; 'exit_ticket' is a precise question with the response format ("In one sentence, name the regulation reference that limits voltage drop on a final circuit")
+- "speaker_notes": REQUIRED on every slide, 2–4 sentences (40–80 words). What the tutor SAYS off-slide, including a Q-and-A prompt and a confidence-check cue
+- "check_understanding": 4–6 numbered questions at distinct Bloom levels — recall, apply, analyse — with at least one that requires citing a regulation number
+- "starter": 'body' is the hook scenario (40–80 words, vivid), 'questions' are 3–5 cold-call prompts that escalate from recall to opinion
+
+VARY THE LAYOUTS. A great deck does not have 18 identical heading-plus-bullets slides. Use the right kind for the moment:
+- "title": opening slide
+- "starter": cold-call prompt or scenario hook
+- "pull_quote": the headline reg cite for the lesson, big and bold
+- "big_stat": one number that makes the point land (e.g. "30 mA — the trip threshold of an RCD on a TT system supplying 230V outdoor sockets")
+- "two_column": side-by-side comparison (TT vs TN-S, RCBO vs MCB+RCD, Megger insulation test on dead vs live)
+- "image_concept": concept that benefits from a real photograph
+- "diagram_caption": diagram/schematic is the focus
+- "concept": text alone carries the idea
+- "reg_cite": specific clause with reg number, clause text, why it matters
+- "activity": tutor- or learner-led task with timing + group + success criteria
+- "worked_example": numerical/stepwise problem with full working
+- "check_understanding": numbered questions
+- "misconception": belief vs correction, paired
+- "summary": end-of-section recap
+- "plenary": closer with exit ticket
+
+IMAGE PROMPTS — your single biggest quality lever. Bad prompt: "an electrician testing a circuit". Good prompt:
+"Close-up of a calloused hand pressing the test button on a yellow Megger MFT1741 multifunction tester resting on the open lid of a Hager consumer unit. RCBO labels visible but text unreadable. T+E cable terminations in the background slightly out of focus. Workshop, soft daylight from a high window, gentle shadow on the tester. Composition: tester occupies left third, generous negative space top-right. Mood: focused, mid-action, candid not posed."
+
+Format every image_prompt this way: subject (close-up of …) + specific tool/brand + UK installation context + lighting note + composition note. 60–120 words each. Specify NO faces, NO text/logos legible.
+
+DIAGRAM SLIDES — populate 'diagram_kind' with one of: ring_final, radial, lighting_final, distribution_board, voltage_drop_curve, equipotential_bonding, earthing_arrangement, three_phase, RCD_discrimination. The front-end renders these as SVG; you describe them, the renderer draws them.
+
+PLENARY MUST BE A Q-OF-THE-DAY: the final slide's 'exit_ticket' is a SHORT MCQ-able question that could be re-published as a one-question quiz. Include 4 plausible options inline in 'body' as A/B/C/D.
 
 Hard rules:
 1. Call the submit_slide_deck tool exactly once with the full deck.
 2. Cite ONLY facets supplied in CONTEXT. Never invent regulation numbers.
-3. 12–18 slides total. Tight. Each slide is one idea.
-4. UK English. No emojis. No colour names. No font sizes. Plain text only — the front-end renders the layout.
-5. Activity timings must add up roughly to the lesson duration.`;
+3. Target slide count is supplied (default 14). 12–24 acceptable range.
+4. Use AT LEAST 5 different slide kinds across the deck. AT LEAST 4 slides should have an image_prompt.
+5. EVERY slide must have a 'speaker_notes' field with 40–80 words.
+6. UK English. No emojis. Plain text only — the front-end renders typography and layout.
+7. Activity timings must add up roughly to the lesson duration.
+8. Tone register is supplied — academic (formal, IET-paper voice), practical (Sarah-on-site, default), gen_z (punchy, contemporary references, still rigorous).`;
 
 const SLIDE_DECK_SCHEMA = {
   type: 'object',
@@ -88,6 +130,11 @@ const SLIDE_DECK_SCHEMA = {
               'objectives',
               'concept',
               'reg_cite',
+              'pull_quote',
+              'big_stat',
+              'two_column',
+              'image_concept',
+              'diagram_caption',
               'activity',
               'worked_example',
               'check_understanding',
@@ -96,19 +143,12 @@ const SLIDE_DECK_SCHEMA = {
               'plenary',
             ],
           },
-          // Common — most slides have these
           heading: { type: 'string' },
           eyebrow: { type: 'string' },
           body: { type: 'string' },
-          // Title-specific
           subtitle: { type: 'string' },
           duration_label: { type: 'string' },
-          // Bullets-style slides (objectives, summary, takeaways)
-          bullets: {
-            type: 'array',
-            items: { type: 'string' },
-          },
-          // Concept slide — supports key terms callout
+          bullets: { type: 'array', items: { type: 'string' } },
           key_terms: {
             type: 'array',
             items: {
@@ -121,11 +161,9 @@ const SLIDE_DECK_SCHEMA = {
               },
             },
           },
-          // Reg cite slide
           reg_number: { type: 'string' },
           clause: { type: 'string' },
           why_it_matters: { type: 'string' },
-          // Activity slide
           instruction: { type: 'string' },
           time_minutes: { type: 'integer', minimum: 1, maximum: 90 },
           group_size: {
@@ -133,24 +171,53 @@ const SLIDE_DECK_SCHEMA = {
             enum: ['individual', 'pairs', 'small_group', 'whole_class'],
           },
           success_criteria: { type: 'string' },
-          // Worked example
           problem: { type: 'string' },
-          solution_steps: {
-            type: 'array',
-            items: { type: 'string' },
-          },
-          // Check understanding
-          questions: {
-            type: 'array',
-            items: { type: 'string' },
-          },
-          // Misconception
+          solution_steps: { type: 'array', items: { type: 'string' } },
+          questions: { type: 'array', items: { type: 'string' } },
           belief: { type: 'string' },
           correction: { type: 'string' },
-          // Plenary exit ticket
           exit_ticket: { type: 'string' },
-          // Speaker notes — what the tutor says off-slide
           speaker_notes: { type: 'string' },
+          // Big-stat layout — one number, large, with caption
+          stat_value: { type: 'string' },
+          stat_caption: { type: 'string' },
+          stat_source: { type: 'string' },
+          // Two-column comparison
+          left_heading: { type: 'string' },
+          left_body: { type: 'string' },
+          left_bullets: { type: 'array', items: { type: 'string' } },
+          right_heading: { type: 'string' },
+          right_body: { type: 'string' },
+          right_bullets: { type: 'array', items: { type: 'string' } },
+          // Pull-quote layout — for hero reg cites or hero-quoted sentences
+          quote: { type: 'string' },
+          attribution: { type: 'string' },
+          // Image-driven slides — front-end fans out generation per slide
+          image_prompt: { type: 'string' },
+          image_caption: { type: 'string' },
+          // Diagram slides — kind dictates which SVG template to render
+          diagram_kind: {
+            type: 'string',
+            enum: [
+              'ring_final',
+              'radial',
+              'lighting_final',
+              'distribution_board',
+              'voltage_drop_curve',
+              'equipotential_bonding',
+              'earthing_arrangement',
+              'three_phase',
+              'RCD_discrimination',
+            ],
+          },
+          diagram_caption: { type: 'string' },
+          // AC mapping — which assessment criteria this slide covers, so
+          // the front-end can render an "Maps to" chip and the deck doubles
+          // as Ofsted-ready coverage evidence.
+          slide_acs: {
+            type: 'array',
+            items: { type: 'string' },
+          },
         },
       },
     },
@@ -163,7 +230,14 @@ function sanitiseFacet(s: string | null): string {
   return trimmed.replace(/\s+/g, ' ');
 }
 
-function buildContext(plan: PlanRow, acs: AcRow[], facets: FacetRow[]): string {
+function buildContext(
+  plan: PlanRow,
+  acs: AcRow[],
+  facets: FacetRow[],
+  slideCount: number,
+  tone: string,
+  depth: string
+): string {
   const acsBlock = acs.length
     ? acs.map((a) => `- ${a.ac_code}: ${a.ac_text ?? ''}`.trim()).join('\n')
     : '(no AC mappings — generic deck)';
@@ -198,9 +272,26 @@ function buildContext(plan: PlanRow, acs: AcRow[], facets: FacetRow[]): string {
     fragments.push(`STRUCTURE (raw):\n${JSON.stringify(activities).slice(0, 2400)}`);
   }
 
+  const toneNote =
+    tone === 'academic'
+      ? 'Tone: ACADEMIC — formal, IET-paper voice, neutral register, full sentences.'
+      : tone === 'gen_z'
+        ? "Tone: GEN-Z — punchy, short sentences, contemporary references where natural, but technical rigour intact. Don't dumb the regulations down."
+        : 'Tone: PRACTICAL — Sarah-on-site voice, direct, warm, concrete examples from real installations.';
+  const depthNote =
+    depth === 'overview'
+      ? 'Depth: OVERVIEW — keep total content lighter, suitable for an introduction or revision lesson.'
+      : depth === 'deep_dive'
+        ? 'Depth: DEEP DIVE — push every slide to the deeper end of the per-kind word counts. Add rich speaker notes. Include at least one stretch-and-challenge prompt in an activity slide.'
+        : 'Depth: STANDARD — meet the per-kind word count guidance.';
+
   return `LESSON: "${plan.title}" (${plan.duration_minutes ?? 90} min)
 
-TARGET ASSESSMENT CRITERIA:
+TARGET SLIDE COUNT: ${slideCount} (12–24 acceptable range)
+${toneNote}
+${depthNote}
+
+TARGET ASSESSMENT CRITERIA — populate slide_acs on each substantive slide with the AC code(s) it covers:
 ${acsBlock}
 
 CONTEXT — cite ONLY these facets:
@@ -315,7 +406,10 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    const userPrompt = buildContext(planRow, acs, facets);
+    const slideCount = Math.max(8, Math.min(24, body.slide_count ?? 14));
+    const tone = body.tone ?? 'practical';
+    const depth = body.depth ?? 'standard';
+    const userPrompt = buildContext(planRow, acs, facets, slideCount, tone, depth);
 
     const openaiResp = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
