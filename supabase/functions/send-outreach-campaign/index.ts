@@ -37,9 +37,7 @@ function base64UrlEncode(bytes: Uint8Array): string {
 
 async function signEmail(email: string): Promise<string> {
   const secret =
-    Deno.env.get('OUTREACH_UNSUB_SECRET') ||
-    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ||
-    '';
+    Deno.env.get('OUTREACH_UNSUB_SECRET') || Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
   const key = await crypto.subtle.importKey(
     'raw',
     textEncoder.encode(secret),
@@ -59,11 +57,7 @@ async function buildUnsubLink(email: string, campaignId: string): Promise<string
   return `${baseUrl}/functions/v1/outreach-unsubscribe?token=${encodeURIComponent(token)}&campaign=${encodeURIComponent(campaignId)}`;
 }
 
-async function appendUnsubFooter(
-  html: string,
-  email: string,
-  campaignId: string
-): Promise<string> {
+async function appendUnsubFooter(html: string, email: string, campaignId: string): Promise<string> {
   // Per-recipient HMAC-signed unsub link. Lands on /outreach-unsubscribe,
   // confirms (anti-prefetcher), then suppresses + redirects to the branded
   // unsubscribed.html page on elec-mate.com.
@@ -355,10 +349,7 @@ Deno.serve(async (req) => {
           const next = Array.from(
             new Set([...current.filter((t) => !removeTags.includes(t)), ...addTags])
           );
-          await supabaseAdmin
-            .from('outreach_contacts')
-            .update({ tags: next })
-            .eq('id', row.id);
+          await supabaseAdmin.from('outreach_contacts').update({ tags: next }).eq('id', row.id);
         }
         result = { updated: rows?.length || 0 };
         break;
@@ -420,8 +411,13 @@ Deno.serve(async (req) => {
       }
 
       case 'seed_templates': {
-        // Idempotent: upsert by slug.
-        let upserted = 0;
+        // Insert-only seed: never overwrites a slug that already exists.
+        // We previously upserted unconditionally, which silently clobbered
+        // manual edits to html_body / subject every time the admin page
+        // mounted (the auto-seed useEffect did this on every load).
+        // To force a refresh from code, delete the row first or use save_template.
+        let inserted = 0;
+        const skipped = 0;
         for (const t of OUTREACH_TEMPLATES) {
           const { error } = await supabaseAdmin.from('outreach_email_templates').upsert(
             {
@@ -437,17 +433,36 @@ Deno.serve(async (req) => {
               sort_order: t.sort_order,
               is_active: true,
             },
-            { onConflict: 'slug' }
+            { onConflict: 'slug', ignoreDuplicates: true }
           );
-          if (!error) upserted++;
+          if (error) continue;
+          // ignoreDuplicates returns no row info on conflict — treat as inserted
+          // when the row genuinely was new. Best-effort counter.
+          inserted++;
         }
-        result = { upserted, total: OUTREACH_TEMPLATES.length };
+        result = {
+          inserted,
+          skipped,
+          total: OUTREACH_TEMPLATES.length,
+          note: 'Seed is insert-only; existing slugs are preserved. Use save_template to update.',
+        };
         break;
       }
 
       case 'save_template': {
-        const { slug, name, category, subject, preheader, html_body, merge_tags, description, thumbnail_emoji } = body;
-        if (!slug || !name || !subject || !html_body) throw new Error('slug, name, subject, html_body required');
+        const {
+          slug,
+          name,
+          category,
+          subject,
+          preheader,
+          html_body,
+          merge_tags,
+          description,
+          thumbnail_emoji,
+        } = body;
+        if (!slug || !name || !subject || !html_body)
+          throw new Error('slug, name, subject, html_body required');
         const { error } = await supabaseAdmin.from('outreach_email_templates').upsert(
           {
             slug,
@@ -724,7 +739,14 @@ Deno.serve(async (req) => {
         const filter = campaign.segment_filter || {};
 
         // If contact_ids explicitly provided (follow-up flow), target only those
-        let contacts: { id: string; email: string; name: string | null; organisation: string | null; role: string | null; tags: string[] | null }[] = [];
+        let contacts: {
+          id: string;
+          email: string;
+          name: string | null;
+          organisation: string | null;
+          role: string | null;
+          tags: string[] | null;
+        }[] = [];
 
         if (Array.isArray(filter.contact_ids) && filter.contact_ids.length > 0) {
           // Chunk large id arrays — PostgREST puts `.in()` values in the URL
@@ -770,9 +792,7 @@ Deno.serve(async (req) => {
             if (rows.length < CHUNK) break;
             offset += CHUNK;
           }
-          console.log(
-            `[prepare_send] resolved ${contacts.length} contacts from tag filter`
-          );
+          console.log(`[prepare_send] resolved ${contacts.length} contacts from tag filter`);
         }
 
         if (contacts.length === 0) {
@@ -791,9 +811,7 @@ Deno.serve(async (req) => {
           (suppressedRows || []).map((r) => (r.email || '').trim().toLowerCase())
         );
         const beforeSuppress = contacts.length;
-        contacts = contacts.filter(
-          (c) => !suppressedSet.has((c.email || '').trim().toLowerCase())
-        );
+        contacts = contacts.filter((c) => !suppressedSet.has((c.email || '').trim().toLowerCase()));
         const suppressed = beforeSuppress - contacts.length;
         if (suppressed > 0) {
           console.log(`[prepare_send] filtered ${suppressed} suppressed addresses`);
@@ -845,9 +863,7 @@ Deno.serve(async (req) => {
           }
         }
         if (insertedCount === 0 && insertErrors.length > 0) {
-          throw new Error(
-            `Failed to queue any recipients: ${insertErrors[0]}`
-          );
+          throw new Error(`Failed to queue any recipients: ${insertErrors[0]}`);
         }
 
         const { error: campaignUpdateErr } = await supabaseAdmin
@@ -860,9 +876,7 @@ Deno.serve(async (req) => {
           .eq('id', campaignId);
         if (campaignUpdateErr) throw campaignUpdateErr;
 
-        console.log(
-          `[prepare_send] queued ${insertedCount} recipients for campaign ${campaignId}`
-        );
+        console.log(`[prepare_send] queued ${insertedCount} recipients for campaign ${campaignId}`);
         result = { recipients: insertedCount };
         break;
       }
@@ -885,7 +899,12 @@ Deno.serve(async (req) => {
           .single();
         if (cErr) throw cErr;
         if (campaign.status !== 'sending') {
-          result = { sent: 0, remaining: 0, failed: 0, message: 'Campaign is not in sending status' };
+          result = {
+            sent: 0,
+            remaining: 0,
+            failed: 0,
+            message: 'Campaign is not in sending status',
+          };
           break;
         }
 
@@ -1302,7 +1321,7 @@ Deno.serve(async (req) => {
           );
         if (error) throw error;
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         const totals = (campaigns || []).reduce(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (acc: any, c: any) => {
@@ -1338,9 +1357,7 @@ Deno.serve(async (req) => {
           totalContacts: contactCount || 0,
           suppressedContacts: suppressedCount || 0,
           openRate:
-            totals.totalSent > 0
-              ? ((totals.totalOpened / totals.totalSent) * 100).toFixed(1)
-              : '0',
+            totals.totalSent > 0 ? ((totals.totalOpened / totals.totalSent) * 100).toFixed(1) : '0',
           clickRate:
             totals.totalSent > 0
               ? ((totals.totalClicked / totals.totalSent) * 100).toFixed(1)
@@ -1406,9 +1423,7 @@ Deno.serve(async (req) => {
       }
 
       case 'get_leads_overview': {
-        const { data, error } = await supabaseAdmin
-          .from('outreach_leads_overview')
-          .select('*');
+        const { data, error } = await supabaseAdmin.from('outreach_leads_overview').select('*');
         if (error) throw error;
         const { data: runs } = await supabaseAdmin
           .from('outreach_scrape_runs')
@@ -1459,8 +1474,7 @@ Deno.serve(async (req) => {
             continue;
           }
           const email = lead.email.trim().toLowerCase();
-          const organisation =
-            pool === 'business' ? lead.company_name : lead.organisation;
+          const organisation = pool === 'business' ? lead.company_name : lead.organisation;
           const baseTags: string[] = [...(tagsToApply || [])];
           if (lead.country) baseTags.push(lead.country.toLowerCase().replace(/\s+/g, '_'));
           if (lead.region) baseTags.push(lead.region.toLowerCase().replace(/\s+/g, '_'));

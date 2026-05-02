@@ -26,7 +26,18 @@ cleanupOutdatedCaches();
 // All navigation requests serve the precached index.html (standard SPA pattern).
 // This ensures ANY route works offline — not just previously visited URLs.
 // New deploys are picked up via SW update (autoUpdate + PWAUpdatePrompt).
-registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')));
+//
+// Denylist: standalone .html files in public/ are real static pages
+// (for-colleges.html, unsubscribed.html, og-image-generator.html) — NOT
+// routes the SPA renders. If we let the SW intercept them, PWA-installed
+// users get the SPA shell + AuthGuard redirect instead of the static page,
+// which silently breaks email CTAs. Match: any path ending in `.html` that
+// isn't `/index.html`.
+registerRoute(
+  new NavigationRoute(createHandlerBoundToURL('/index.html'), {
+    denylist: [/\.html(?:\?.*)?$/i],
+  })
+);
 
 // ─── Workbox: Runtime Caching ────────────────────────────────────
 

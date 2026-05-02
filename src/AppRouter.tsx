@@ -507,9 +507,21 @@ const AppRouter = () => {
         />
         {/* College outreach landing — CTA target from cold-pitch email.
             Form posts into Brevo list 9 (warm college leads) via the
-            college-request-info edge fn. */}
+            college-request-info edge fn.
+            Both /for-colleges and /for-colleges.html resolve to this
+            component. The .html alias exists so PWA-installed users whose
+            service worker intercepts the navigation still see the form,
+            even though the static public/for-colleges.html is canonical. */}
         <Route
           path="/for-colleges"
+          element={
+            <LazyRoute>
+              <ForCollegesPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/for-colleges.html"
           element={
             <LazyRoute>
               <ForCollegesPage />

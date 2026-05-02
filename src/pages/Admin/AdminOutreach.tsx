@@ -67,6 +67,12 @@ interface CollegeCampaign {
   started_at: string | null;
   completed_at: string | null;
   created_at: string;
+  // Extra fields used by the picker — `select *` returns these from get_campaigns.
+  html_body?: string;
+  preheader?: string | null;
+  from_name?: string;
+  from_email?: string;
+  reply_to?: string | null;
 }
 
 const POOL_TAG = 'education_pool';
@@ -199,8 +205,7 @@ function parseCsvRows(raw: string): Array<{
       : col('organization') >= 0
         ? col('organization')
         : col('college');
-  const iRole =
-    col('role') >= 0 ? col('role') : col('title') >= 0 ? col('title') : col('position');
+  const iRole = col('role') >= 0 ? col('role') : col('title') >= 0 ? col('title') : col('position');
   const iTags = col('tags');
 
   return dataLines
@@ -243,13 +248,24 @@ export default function AdminOutreach() {
     campaignName: string;
   }>({ running: false, sent: 0, remaining: 0, failed: 0, campaignName: '' });
 
-  useEffect(() => {
-    callOutreach('seed_templates').catch((err) => {
-      console.warn('Template seed failed (non-fatal):', err);
-    });
-  }, []);
+  // Picked campaign — what gets sent on Send Test + Bulk Send. Persists across
+  // reloads so a half-built selection is never quietly forgotten right before
+  // a 1k send. Default chosen below from the most recent draft.
+  const [selectedCampaignId, setSelectedCampaignId] = useState<string | null>(
+    () => localStorage.getItem('admin-outreach-selected-campaign') || null
+  );
 
-  const { data: contactsData, isLoading: contactsLoading, isFetching, refetch } = useQuery({
+  // Auto-seeding the template table on mount kept overwriting in-place edits
+  // with the stale hardcoded copy in _shared/outreach-templates.ts. We now
+  // pick a saved campaign instead, so seed has nothing to clobber.
+  // (Manual seed is still available via the templates UI if needed.)
+
+  const {
+    data: contactsData,
+    isLoading: contactsLoading,
+    isFetching,
+    refetch,
+  } = useQuery({
     queryKey: ['college-outreach-contacts', search],
     queryFn: async () => {
       const filter: Record<string, unknown> = { limit: 15000, tag: POOL_TAG };
@@ -316,6 +332,31 @@ export default function AdminOutreach() {
     },
     staleTime: 30 * 1000,
   });
+
+  // Drafts only — finished campaigns aren't reusable as a source.
+  const draftCampaigns = useMemo(
+    () => (campaigns || []).filter((c) => c.status === 'draft' && !!c.html_body),
+    [campaigns]
+  );
+
+  const selectedCampaign = useMemo(
+    () => draftCampaigns.find((c) => c.id === selectedCampaignId) || null,
+    [draftCampaigns, selectedCampaignId]
+  );
+
+  // Auto-pick the most recent draft when nothing is selected, or when the
+  // saved selection no longer exists (e.g. campaign deleted/sent).
+  useEffect(() => {
+    if (!draftCampaigns.length) return;
+    if (selectedCampaignId && draftCampaigns.some((c) => c.id === selectedCampaignId)) return;
+    setSelectedCampaignId(draftCampaigns[0].id);
+  }, [draftCampaigns, selectedCampaignId]);
+
+  useEffect(() => {
+    if (selectedCampaignId) {
+      localStorage.setItem('admin-outreach-selected-campaign', selectedCampaignId);
+    }
+  }, [selectedCampaignId]);
 
   const importMutation = useMutation({
     mutationFn: async () => {
@@ -399,6 +440,14 @@ export default function AdminOutreach() {
 
   async function createAndRunCampaign(ids: string[]) {
     if (ids.length === 0) return;
+    if (!selectedCampaign || !selectedCampaign.html_body) {
+      toast({
+        title: 'Pick a campaign first',
+        description: 'Use the Campaign picker above to choose what gets sent.',
+        variant: 'warning',
+      });
+      return;
+    }
     try {
       setBatchProgress({
         running: true,
@@ -407,7 +456,6 @@ export default function AdminOutreach() {
         failed: 0,
         campaignName: '',
       });
-      const tpl = await ensureTemplate();
 
       const name = `College — ${new Date().toLocaleDateString('en-GB', {
         day: '2-digit',
@@ -420,15 +468,16 @@ export default function AdminOutreach() {
         ? { tags: [POOL_TAG] }
         : { contact_ids: ids };
 
+      // Clone the picked draft into a new campaign for THIS send so the
+      // source draft stays reusable for future sends.
       const { campaign } = await callOutreach<{ campaign: { id: string } }>('create_campaign', {
         name,
-        subject: tpl.subject,
-        html_body: tpl.html_body,
-        preheader: tpl.preheader,
-        template_slug: COLLEGE_TEMPLATE_SLUG,
-        from_name: 'Andrew from Elec-Mate',
-        from_email: 'founder@elec-mate.com',
-        reply_to: 'founder@elec-mate.com',
+        subject: selectedCampaign.subject,
+        html_body: selectedCampaign.html_body,
+        preheader: selectedCampaign.preheader || null,
+        from_name: selectedCampaign.from_name || 'Andrew from Elec-Mate',
+        from_email: selectedCampaign.from_email || 'founder@elec-mate.com',
+        reply_to: selectedCampaign.reply_to || 'founder@elec-mate.com',
         segment_filter: segmentFilter,
       });
 
@@ -495,22 +544,28 @@ export default function AdminOutreach() {
 
   async function sendTest() {
     if (!testEmail) return;
-    try {
-      const tpl = await ensureTemplate();
-      const { campaign } = await callOutreach<{ campaign: { id: string } }>('create_campaign', {
-        name: `College — TEST ${Date.now()}`,
-        subject: tpl.subject,
-        html_body: tpl.html_body,
-        preheader: tpl.preheader,
-        template_slug: COLLEGE_TEMPLATE_SLUG,
-        from_name: 'Andrew from Elec-Mate',
-        from_email: 'founder@elec-mate.com',
-        reply_to: 'founder@elec-mate.com',
-        segment_filter: {},
+    if (!selectedCampaign) {
+      toast({
+        title: 'Pick a campaign first',
+        description: 'Use the Campaign picker above to choose what gets sent.',
+        variant: 'warning',
       });
-      await callOutreach('send_test', { campaignId: campaign.id, testEmail });
+      return;
+    }
+    try {
+      // Send the test against the selected draft campaign directly — no
+      // cloning, no template lookup. Whatever is in the picker is what
+      // hits your inbox, period.
+      await callOutreach('send_test', {
+        campaignId: selectedCampaign.id,
+        testEmail,
+      });
       haptic.success();
-      toast({ title: 'Test sent — check your inbox', variant: 'success' });
+      toast({
+        title: 'Test sent — check your inbox',
+        description: `"${selectedCampaign.subject}"`,
+        variant: 'success',
+      });
       setTestEmail('');
     } catch (err) {
       haptic.error();
@@ -612,6 +667,60 @@ export default function AdminOutreach() {
         <ListCard>
           <ListCardHeader
             tone="yellow"
+            title="Campaign to send"
+            meta={
+              selectedCampaign ? (
+                <Pill tone="emerald">{selectedCampaign.status}</Pill>
+              ) : (
+                <Pill tone="red">none picked</Pill>
+              )
+            }
+          />
+          <div className="px-5 sm:px-6 py-5 space-y-3">
+            <p className="text-[12.5px] text-white leading-relaxed">
+              Pick a draft. This is what Send Test <strong className="text-elec-yellow">and</strong>{' '}
+              the bulk send will use. Subject preview shown below.
+            </p>
+            <select
+              value={selectedCampaignId || ''}
+              onChange={(e) => setSelectedCampaignId(e.target.value || null)}
+              className="h-11 w-full text-base touch-manipulation bg-elec-gray border border-white/30 rounded-lg px-3 text-white focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+            >
+              {draftCampaigns.length === 0 && (
+                <option value="">No draft campaigns — create one first</option>
+              )}
+              {draftCampaigns.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+            {selectedCampaign && (
+              <div className="rounded-lg bg-black/40 border border-white/10 p-3 space-y-1.5">
+                <p className="text-[11px] uppercase tracking-wider text-elec-yellow font-bold">
+                  Subject
+                </p>
+                <p className="text-sm text-white font-semibold leading-snug">
+                  {selectedCampaign.subject}
+                </p>
+                {selectedCampaign.preheader && (
+                  <p className="text-[12px] text-white/70 leading-snug pt-1 border-t border-white/10 mt-2">
+                    <span className="text-elec-yellow font-semibold">Preview: </span>
+                    {selectedCampaign.preheader}
+                  </p>
+                )}
+                <p className="text-[11px] text-white/50 pt-1">
+                  From: {selectedCampaign.from_name || 'Andrew from Elec-Mate'} &middot;{' '}
+                  {selectedCampaign.from_email || 'founder@elec-mate.com'}
+                </p>
+              </div>
+            )}
+          </div>
+        </ListCard>
+
+        <ListCard>
+          <ListCardHeader
+            tone="yellow"
             title="Send yourself a test"
             meta={<Pill tone="yellow">preview</Pill>}
           />
@@ -661,7 +770,8 @@ export default function AdminOutreach() {
                   style={{
                     width: `${
                       batchProgress.sent + batchProgress.remaining > 0
-                        ? (batchProgress.sent / (batchProgress.sent + batchProgress.remaining)) * 100
+                        ? (batchProgress.sent / (batchProgress.sent + batchProgress.remaining)) *
+                          100
                         : 0
                     }%`,
                   }}
@@ -744,9 +854,7 @@ export default function AdminOutreach() {
                 <div className="px-4 sm:px-5 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
                     <Checkbox
-                      checked={
-                        sendableIds.length > 0 && selectedIds.size === sendableIds.length
-                      }
+                      checked={sendableIds.length > 0 && selectedIds.size === sendableIds.length}
                       onCheckedChange={toggleAll}
                       disabled={batchProgress.running}
                       className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black shrink-0"
@@ -838,12 +946,8 @@ export default function AdminOutreach() {
                         trailing={
                           <>
                             {c.is_suppressed && <Pill tone="red">Suppressed</Pill>}
-                            {srcLabel && !c.is_suppressed && (
-                              <Pill tone="yellow">{srcLabel}</Pill>
-                            )}
-                            {c.total_opens > 0 && (
-                              <Pill tone="emerald">{c.total_opens} open</Pill>
-                            )}
+                            {srcLabel && !c.is_suppressed && <Pill tone="yellow">{srcLabel}</Pill>}
+                            {c.total_opens > 0 && <Pill tone="emerald">{c.total_opens} open</Pill>}
                             {c.total_clicks > 0 && (
                               <Pill tone="purple">{c.total_clicks} click</Pill>
                             )}
@@ -902,7 +1006,10 @@ export default function AdminOutreach() {
         )}
 
         <Sheet open={importOpen} onOpenChange={setImportOpen}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]">
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-10 h-1 rounded-full bg-white/20" />
@@ -918,10 +1025,14 @@ export default function AdminOutreach() {
                   <Eyebrow>Ingest rules</Eyebrow>
                   <p className="mt-2 text-[12px] text-white leading-relaxed">
                     Imported contacts are auto-tagged with{' '}
-                    <code className="bg-black/40 px-1 py-0.5 rounded text-white">education_pool</code>{' '}
+                    <code className="bg-black/40 px-1 py-0.5 rounded text-white">
+                      education_pool
+                    </code>{' '}
                     and{' '}
-                    <code className="bg-black/40 px-1 py-0.5 rounded text-white">source:csv_import</code>,
-                    so they show up here alongside scraped leads. contact_type defaults to{' '}
+                    <code className="bg-black/40 px-1 py-0.5 rounded text-white">
+                      source:csv_import
+                    </code>
+                    , so they show up here alongside scraped leads. contact_type defaults to{' '}
                     <code className="bg-black/40 px-1 py-0.5 rounded text-white">college</code> to
                     match the ingest pipeline.
                   </p>
@@ -932,8 +1043,8 @@ export default function AdminOutreach() {
                   <p className="text-[12px] text-white leading-relaxed">
                     Header row optional. Accepts columns: <code>email</code>, <code>name</code>,{' '}
                     <code>organisation</code> (or college), <code>role</code> (or title),{' '}
-                    <code>tags</code> (semicolon-separated). If no header, first column assumed to be
-                    email.
+                    <code>tags</code> (semicolon-separated). If no header, first column assumed to
+                    be email.
                   </p>
                   <Textarea
                     value={csvText}
@@ -965,10 +1076,7 @@ apprenticeships@leeds.ac.uk,Jane Smith,Leeds City College,Apprenticeship Coordin
           </SheetContent>
         </Sheet>
 
-        <AlertDialog
-          open={!!confirmSend}
-          onOpenChange={(open) => !open && setConfirmSend(null)}
-        >
+        <AlertDialog open={!!confirmSend} onOpenChange={(open) => !open && setConfirmSend(null)}>
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6 bg-[hsl(0_0%_10%)] border border-white/[0.06]">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight text-white">

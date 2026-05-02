@@ -45,7 +45,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!assets/|llms\\.txt|llms-full\\.txt|robots\\.txt|sitemap.*\\.xml|\\.well-known/).*)",
+      "source": "/((?!assets/|llms\\.txt|llms-full\\.txt|robots\\.txt|sitemap.*\\.xml|\\.well-known/|.*\\.html$).*)",
       "destination": "/index.html"
     }
   ]

@@ -3,105 +3,152 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="dark" />
     <meta name="robots" content="noindex,nofollow" />
-    <title>Elec-Mate for Colleges · Request a walkthrough</title>
+    <title>Elec-Mate for Colleges · Register your interest</title>
+    <meta name="description" content="Register your interest in Elec-Mate's College Hub — a tutor 360 dashboard, smart portfolio, EPA readiness, IQA workflow, and audit-ready evidence for UK FE colleges." />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <style>
-      :root { color-scheme: dark light; }
+      :root {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: #0a0a0a;
+        --panel-2: #111113;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-strong: rgba(255, 255, 255, 0.18);
+        --text: #f4f4f5;
+        --text-dim: #a1a1aa;
+        --text-faint: #71717a;
+        --yellow: #fbbf24;
+        --yellow-2: #f59e0b;
+        --green: #22c55e;
+        --rose: #fb7185;
+      }
       * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
       body {
-        margin: 0;
         min-height: 100vh;
-        padding: 28px 18px 60px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        background: #000;
-        color: #f4f4f5;
+        background:
+          radial-gradient(1100px 600px at 50% -200px, rgba(251, 191, 36, 0.16), transparent 60%),
+          radial-gradient(900px 500px at 90% 10%, rgba(99, 102, 241, 0.10), transparent 60%),
+          var(--bg);
+        color: var(--text);
         line-height: 1.55;
         -webkit-font-smoothing: antialiased;
+        -webkit-text-size-adjust: 100%;
       }
-      .wrap { max-width: 560px; margin: 0 auto; }
+      .wrap { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
+
+      /* HERO */
+      header.hero { text-align: center; padding-top: 8px; }
       .logo {
-        display: block;
-        margin: 0 auto 22px;
-        width: 72px;
-        height: 72px;
-        border-radius: 16px;
+        display: inline-block;
+        width: 76px; height: 76px;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(251, 191, 36, 0.18);
+      }
+      .badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 6px 12px;
+        margin-top: 22px;
+        border-radius: 999px;
+        background: rgba(251, 191, 36, 0.10);
+        border: 1px solid rgba(251, 191, 36, 0.30);
+        font-size: 11px; font-weight: 700;
+        color: var(--yellow);
+        text-transform: uppercase; letter-spacing: 1.3px;
+      }
+      .badge .pulse {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: var(--yellow);
+        box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6);
+        animation: pulse 1.6s infinite;
+      }
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.55); }
+        70% { box-shadow: 0 0 0 8px rgba(251, 191, 36, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
       }
       h1 {
-        margin: 0 0 10px;
-        font-size: 28px;
+        margin: 18px 0 14px;
+        font-size: clamp(30px, 5vw, 42px);
         font-weight: 800;
-        letter-spacing: -0.5px;
-        color: #ffffff;
-        text-align: center;
-        line-height: 1.18;
+        letter-spacing: -0.8px;
+        color: #fff;
+        line-height: 1.1;
       }
-      .accent { color: #fbbf24; }
-      .lede {
-        margin: 0 0 28px;
-        font-size: 15px;
-        color: #d4d4d8;
-        text-align: center;
-        line-height: 1.6;
-      }
-      form {
-        background: #0a0a0a;
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 18px;
-        padding: 24px 22px;
-      }
-      label {
-        display: block;
-        font-size: 12px;
-        font-weight: 700;
-        color: #fbbf24;
-        text-transform: uppercase;
-        letter-spacing: 1.2px;
-        margin: 0 0 8px;
-      }
-      .field { margin-bottom: 18px; }
-      .req::after {
-        content: ' *';
-        color: #fb7185;
-        font-weight: 700;
-      }
-      input, textarea, select {
-        width: 100%;
-        padding: 13px 14px;
-        font-size: 16px;
-        font-family: inherit;
-        background: #18181b;
-        color: #f4f4f5;
-        border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 10px;
-        outline: none;
-        transition: border-color .12s;
-      }
-      input:focus, textarea:focus, select:focus {
-        border-color: #fbbf24;
-      }
-      textarea {
-        min-height: 90px;
-        resize: vertical;
-      }
-      .row { display: flex; gap: 12px; }
-      .row > .field { flex: 1; }
-      button {
-        width: 100%;
-        padding: 16px 24px;
-        font-size: 16px;
-        font-weight: 700;
-        font-family: inherit;
-        color: #000;
+      h1 .accent {
         background: linear-gradient(135deg, #fbbf24, #f59e0b);
-        border: 0;
-        border-radius: 12px;
-        cursor: pointer;
-        margin-top: 6px;
-        box-shadow: 0 4px 18px rgba(251,191,36,0.22);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
-      button:disabled { opacity: 0.5; cursor: not-allowed; }
-      .ok, .err {
+      .lede {
+        margin: 0 auto 28px;
+        max-width: 520px;
+        font-size: 16px;
+        color: var(--text-dim);
+        line-height: 1.65;
+      }
+
+      /* VALUE PROPS */
+      .props {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin: 0 0 32px;
+      }
+      .prop {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+        text-align: left;
+      }
+      .prop .ico {
+        width: 32px; height: 32px;
+        border-radius: 9px;
+        background: rgba(251, 191, 36, 0.12);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      .prop h3 { margin: 0 0 4px; font-size: 13px; font-weight: 700; color: #fff; }
+      .prop p { margin: 0; font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+      @media (max-width: 600px) {
+        .props { grid-template-columns: 1fr; }
+      }
+
+      /* FORM CARD */
+      .card {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 28px;
+        box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6);
+      }
+      .card-head {
+        display: flex; align-items: center; gap: 10px;
+        margin-bottom: 4px;
+      }
+      .card-head .dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: var(--yellow);
+      }
+      .card-head h2 {
+        margin: 0;
+        font-size: 18px; font-weight: 700; color: #fff;
+        letter-spacing: -0.2px;
+      }
+      .card-sub {
+        margin: 0 0 22px;
+        font-size: 13px; color: var(--text-dim);
+      }
+
+      /* ALERTS */
+      .alert {
         margin: 0 0 18px;
         padding: 14px 16px;
         border-radius: 12px;
@@ -109,78 +156,220 @@
         line-height: 1.5;
         display: none;
       }
-      .ok { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
-      .err { background: rgba(244,63,94,0.12); border: 1px solid rgba(244,63,94,0.3); color: #fda4af; }
-      .ok.show, .err.show { display: block; }
-      .footer {
-        margin-top: 22px;
+      .alert.show { display: block; }
+      .alert.ok {
+        background: rgba(34, 197, 94, 0.10);
+        border: 1px solid rgba(34, 197, 94, 0.32);
+        color: #86efac;
+      }
+      .alert.ok strong { color: #fff; }
+      .alert.err {
+        background: rgba(244, 63, 94, 0.08);
+        border: 1px solid rgba(244, 63, 94, 0.30);
+        color: #fda4af;
+      }
+      .alert a { color: inherit; text-decoration: underline; }
+
+      /* SUCCESS STATE (replaces the form) */
+      .success {
+        display: none;
+        text-align: center;
+        padding: 8px 0 4px;
+      }
+      .success.show { display: block; }
+      .success .check {
+        width: 60px; height: 60px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #22c55e, #15803d);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 30px; color: #000;
+        box-shadow: 0 10px 32px rgba(34, 197, 94, 0.32);
+      }
+      .success h3 { margin: 0 0 8px; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
+      .success p { margin: 0 0 6px; font-size: 14px; color: var(--text-dim); }
+      .success .what-next { margin-top: 18px; padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); text-align: left; font-size: 13px; color: var(--text); line-height: 1.6; }
+      .success .what-next b { color: var(--yellow); }
+
+      /* FORM FIELDS */
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      @media (max-width: 540px) { .grid { grid-template-columns: 1fr; } }
+      .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+      label {
+        font-size: 11px; font-weight: 700;
+        color: var(--yellow);
+        text-transform: uppercase; letter-spacing: 1.2px;
+      }
+      .req::after { content: ' *'; color: var(--rose); font-weight: 800; }
+      input, textarea, select {
+        width: 100%;
+        padding: 13px 14px;
+        font-size: 16px;
+        font-family: inherit;
+        background: rgba(0, 0, 0, 0.4);
+        color: var(--text);
+        border: 1px solid var(--border-strong);
+        border-radius: 11px;
+        outline: none;
+        transition: border-color .14s, background .14s, box-shadow .14s;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      input:focus, textarea:focus, select:focus {
+        border-color: var(--yellow);
+        background: rgba(0, 0, 0, 0.55);
+        box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.14);
+      }
+      input::placeholder, textarea::placeholder { color: var(--text-faint); }
+      select {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'><path d='M3 4.5L6 7.5L9 4.5' stroke='%23a1a1aa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 36px;
+      }
+      textarea { min-height: 96px; resize: vertical; }
+      .hint { font-size: 11px; color: var(--text-faint); margin-top: 4px; }
+
+      /* SUBMIT */
+      .submit-row { margin-top: 8px; }
+      button {
+        width: 100%;
+        padding: 16px 24px;
+        font-size: 16px; font-weight: 700; font-family: inherit;
+        color: #000;
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        border: 0; border-radius: 13px;
+        cursor: pointer;
+        box-shadow: 0 10px 28px rgba(251, 191, 36, 0.28);
+        transition: transform .12s ease, box-shadow .14s ease, opacity .14s;
+        position: relative;
+      }
+      button:hover { transform: translateY(-1px); box-shadow: 0 14px 36px rgba(251, 191, 36, 0.36); }
+      button:active { transform: translateY(0); }
+      button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: 0 6px 18px rgba(251, 191, 36, 0.16); }
+      .small { margin-top: 12px; text-align: center; font-size: 12px; color: var(--text-faint); }
+      .small a { color: var(--text-dim); text-decoration: underline; }
+
+      /* FOOTER */
+      footer {
+        margin-top: 28px;
         text-align: center;
         font-size: 12px;
-        color: #71717a;
+        color: var(--text-faint);
       }
-      .footer a { color: #a1a1aa; text-decoration: underline; }
-      @media (prefers-color-scheme: light) {
-        body { background: #fafafa; color: #18181b; }
-        h1 { color: #18181b; }
-        .lede { color: #52525b; }
-        form { background: #ffffff; border-color: #e4e4e7; }
-        input, textarea, select { background: #fafafa; color: #18181b; border-color: #e4e4e7; }
-        .footer { color: #a1a1aa; }
-        .footer a { color: #52525b; }
+      footer a { color: var(--text-dim); text-decoration: underline; }
+      footer .row { margin: 0 0 6px; }
+
+      /* SPINNER */
+      .spinner {
+        display: inline-block;
+        width: 14px; height: 14px;
+        border: 2px solid rgba(0, 0, 0, 0.25);
+        border-top-color: #000;
+        border-radius: 50%;
+        margin-right: 8px;
+        vertical-align: -2px;
+        animation: spin 0.6s linear infinite;
       }
+      @keyframes spin { to { transform: rotate(360deg); } }
     </style>
   </head>
   <body>
     <main class="wrap">
-      <img class="logo" src="https://www.elec-mate.com/images/elec-mate-logo-512.png" alt="Elec-Mate" width="72" height="72" />
-      <h1>Elec-Mate <span class="accent">for Colleges</span></h1>
-      <p class="lede">Drop your details and we&apos;ll come back to you with a walkthrough of the College Hub on your real cohort data, plus a demo account to click around.</p>
+      <header class="hero">
+        <img class="logo" src="https://www.elec-mate.com/images/elec-mate-logo-512.png" alt="Elec-Mate" width="76" height="76" />
+        <div class="badge"><span class="pulse"></span>Built with UK FE colleges</div>
+        <h1>The College Hub, on your <span class="accent">real cohort data</span>.</h1>
+        <p class="lede">Drop your details and we&apos;ll book you a 15-minute walkthrough &mdash; tailored to your apprentices, your KSBs, your IQA cycle. Plus a demo account so you can click around first.</p>
+      </header>
 
-      <div id="ok" class="ok">Thanks — we&apos;ve got your details and will be in touch shortly. Anything urgent, email <a href="mailto:founder@elec-mate.com" style="color:#86efac;text-decoration:underline">founder@elec-mate.com</a>.</div>
-      <div id="err" class="err">Something went wrong sending that. Email <a href="mailto:founder@elec-mate.com" style="color:#fda4af;text-decoration:underline">founder@elec-mate.com</a> directly and we&apos;ll come back to you the same day.</div>
+      <section class="props" aria-label="What you&apos;ll see">
+        <div class="prop">
+          <div class="ico">&#x1F4F8;</div>
+          <h3>Smart portfolio</h3>
+          <p>Apprentice photos auto-mapped to LOs and ACs across all 9 quals.</p>
+        </div>
+        <div class="prop">
+          <div class="ico">&#x1F393;</div>
+          <h3>Tutor 360</h3>
+          <p>EPA readiness, AC matrix, attendance, OTJ &mdash; one screen.</p>
+        </div>
+        <div class="prop">
+          <div class="ico">&#x2714;&#xFE0F;</div>
+          <h3>Audit-ready</h3>
+          <p>Full IQA flow, signed-off evidence, ESFA CSV export.</p>
+        </div>
+      </section>
 
-      <form id="lead-form" novalidate>
-        <div class="field">
-          <label class="req" for="name">Name</label>
-          <input type="text" id="name" name="name" autocomplete="name" required maxlength="120" />
+      <div class="card">
+        <div class="card-head">
+          <span class="dot" aria-hidden="true"></span>
+          <h2>Register your interest</h2>
         </div>
-        <div class="field">
-          <label class="req" for="email">Work email</label>
-          <input type="email" id="email" name="email" autocomplete="email" required maxlength="160" />
+        <p class="card-sub">Andrew (founder) replies the same day. Usually within an hour.</p>
+
+        <div id="ok" class="alert ok"><strong>Got it.</strong> Andrew will be in touch shortly &mdash; usually the same day.</div>
+        <div id="err" class="alert err">Something went wrong sending that. Email <a href="mailto:founder@elec-mate.com">founder@elec-mate.com</a> directly and we&apos;ll come back to you the same day.</div>
+
+        <div id="success" class="success">
+          <div class="check">&#10003;</div>
+          <h3>You&apos;re on the list.</h3>
+          <p>Andrew will be in touch within the day at the email you provided.</p>
+          <div class="what-next">
+            <b>What happens next:</b> a short reply from Andrew with a 15-minute Teams link, plus a demo account so you can click around the College Hub before the walkthrough.
+          </div>
         </div>
-        <div class="field">
-          <label class="req" for="college">College / training provider</label>
-          <input type="text" id="college" name="college" autocomplete="organization" required maxlength="160" />
-        </div>
-        <div class="row">
+
+        <form id="lead-form" novalidate>
           <div class="field">
-            <label for="role">Role</label>
-            <select id="role" name="role">
-              <option value="">Select&hellip;</option>
-              <option>Tutor</option>
-              <option>Lead Tutor / Curriculum Lead</option>
-              <option>Head of Department</option>
-              <option>Assessor</option>
-              <option>IQA</option>
-              <option>Principal / SLT</option>
-              <option>Apprenticeship Manager</option>
-              <option>Quality / Compliance</option>
-              <option>Other</option>
-            </select>
+            <label class="req" for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required maxlength="120" placeholder="First and last name" />
           </div>
           <div class="field">
-            <label for="phone">Phone (optional)</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="40" />
+            <label class="req" for="email">Work email</label>
+            <input type="email" id="email" name="email" autocomplete="email" required maxlength="160" placeholder="you@yourcollege.ac.uk" />
           </div>
-        </div>
-        <div class="field">
-          <label for="message">Anything we should know? (optional)</label>
-          <textarea id="message" name="message" maxlength="1500" placeholder="e.g. cohort size, qualification, current pain points"></textarea>
-        </div>
-        <button id="submit" type="submit">Request a walkthrough &rarr;</button>
-      </form>
+          <div class="field">
+            <label class="req" for="college">College / training provider</label>
+            <input type="text" id="college" name="college" autocomplete="organization" required maxlength="160" placeholder="e.g. Burnley College" />
+          </div>
+          <div class="grid">
+            <div class="field">
+              <label for="role">Role</label>
+              <select id="role" name="role">
+                <option value="">Select&hellip;</option>
+                <option>Tutor</option>
+                <option>Lead Tutor / Curriculum Lead</option>
+                <option>Head of Department</option>
+                <option>Assessor</option>
+                <option>IQA</option>
+                <option>Principal / SLT</option>
+                <option>Apprenticeship Manager</option>
+                <option>Quality / Compliance</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="40" placeholder="Optional" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">Anything we should know?</label>
+            <textarea id="message" name="message" maxlength="1500" placeholder="Cohort size, qualifications, current pain points&hellip; optional, but useful."></textarea>
+            <span class="hint">We&apos;ll only use this to make the walkthrough relevant. No spam, no list selling.</span>
+          </div>
+          <div class="submit-row">
+            <button id="submit" type="submit">Register your interest &rarr;</button>
+            <p class="small">Or just email <a href="mailto:founder@elec-mate.com">founder@elec-mate.com</a> directly &mdash; goes straight to Andrew.</p>
+          </div>
+        </form>
+      </div>
 
-      <p class="footer">Elec-Mate Ltd &middot; United Kingdom &middot; <a href="https://www.elec-mate.com">elec-mate.com</a></p>
+      <footer>
+        <p class="row">Elec-Mate Ltd &middot; United Kingdom &middot; <a href="https://www.elec-mate.com">elec-mate.com</a></p>
+        <p class="row">No spam. We&apos;ll only contact you about your walkthrough request.</p>
+      </footer>
     </main>
 
     <script>
@@ -189,8 +378,8 @@
         var btn = document.getElementById('submit');
         var ok = document.getElementById('ok');
         var err = document.getElementById('err');
+        var success = document.getElementById('success');
 
-        // Read UTM params off the URL and pass them through.
         function readUtm() {
           var p = new URLSearchParams(window.location.search);
           var utm = {};
@@ -217,13 +406,13 @@
           };
 
           if (!data.name || !data.email || !data.college) {
-            err.textContent = 'Please fill in your name, email and college.';
+            err.innerHTML = 'Please fill in your name, work email and college.';
             err.classList.add('show');
             return;
           }
 
           btn.disabled = true;
-          btn.textContent = 'Sending\u2026';
+          btn.innerHTML = '<span class="spinner"></span>Sending&hellip;';
 
           try {
             var res = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/college-request-info', {
@@ -235,14 +424,14 @@
             var json = await res.json();
             if (!json.ok) throw new Error(json.error || 'Submit failed');
 
-            ok.classList.add('show');
-            form.reset();
+            // Replace the form with a celebratory success state.
+            form.style.display = 'none';
+            success.classList.add('show');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } catch (e2) {
             err.classList.add('show');
-          } finally {
             btn.disabled = false;
-            btn.textContent = 'Request a walkthrough \u2192';
+            btn.innerHTML = 'Register your interest \u2192';
           }
         });
       })();
