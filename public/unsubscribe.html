@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Unsubscribe · Elec-Mate</title>
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        display: flex; align-items: center; justify-content: center;
+        padding: 24px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: #000;
+        color: #f4f4f5;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      .card {
+        width: 100%; max-width: 480px;
+        background: #0a0a0a;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 40px 32px;
+        text-align: center;
+      }
+      .logo { width: 72px; height: 72px; border-radius: 16px; margin: 0 auto 22px; display: block; }
+      h1 { margin: 0 0 14px; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.2px; }
+      p { margin: 0 0 18px; font-size: 15px; color: #d4d4d8; line-height: 1.6; }
+      strong { color: #fff; }
+      button {
+        width: 100%;
+        padding: 16px 28px;
+        font-size: 15px; font-weight: 700; font-family: inherit;
+        color: #000;
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        border: 0; border-radius: 12px;
+        cursor: pointer;
+        margin-top: 8px;
+      }
+      button:disabled { opacity: 0.6; cursor: not-allowed; }
+      .ghost {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 10px 16px;
+        font-size: 13px;
+        color: #a1a1aa;
+        text-decoration: none;
+      }
+      .err {
+        display: none;
+        margin: 0 0 16px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: rgba(244,63,94,0.08);
+        border: 1px solid rgba(244,63,94,0.30);
+        color: #fda4af;
+        font-size: 13px;
+      }
+      .err.show { display: block; }
+      .meta { margin-top: 22px; font-size: 12px; color: #71717a; }
+      .meta a { color: #a1a1aa; }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <img class="logo" src="/images/elec-mate-logo-512.png" alt="Elec-Mate" width="72" height="72" />
+      <h1>Unsubscribe from Elec-Mate?</h1>
+      <p>We&apos;ll stop sending outreach emails to <strong id="email-display">your address</strong>.</p>
+
+      <div id="err" class="err">Something went wrong. Email <a href="mailto:founder@elec-mate.com" style="color:#fda4af">founder@elec-mate.com</a> and we&apos;ll remove you manually.</div>
+
+      <button id="confirm-btn" type="button">Yes, unsubscribe me</button>
+      <a class="ghost" href="https://www.elec-mate.com">No &mdash; take me to elec-mate.com</a>
+
+      <p class="meta">&copy; 2026 Elec-Mate Ltd &middot; United Kingdom</p>
+    </main>
+
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var token = params.get('token') || '';
+        var campaign = params.get('campaign') || '';
+        var btn = document.getElementById('confirm-btn');
+        var err = document.getElementById('err');
+        var emailDisplay = document.getElementById('email-display');
+
+        // Decode email from token payload (base64url before the dot) so the
+        // user can SEE which address they're unsubscribing — purely cosmetic,
+        // the server re-verifies.
+        try {
+          var payload = token.split('.')[0];
+          if (payload) {
+            var b64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+            while (b64.length % 4) b64 += '=';
+            var decoded = atob(b64);
+            if (decoded && decoded.indexOf('@') > 0) {
+              emailDisplay.textContent = decoded;
+            }
+          }
+        } catch (e) { /* fine, leave default */ }
+
+        if (!token) {
+          err.textContent = 'Missing or invalid unsubscribe link.';
+          err.classList.add('show');
+          btn.disabled = true;
+          return;
+        }
+
+        btn.addEventListener('click', async function () {
+          btn.disabled = true;
+          btn.textContent = 'Unsubscribing\u2026';
+          err.classList.remove('show');
+
+          var url = 'https://jtwygbeceundfgnkirof.supabase.co/functions/v1/outreach-unsubscribe'
+            + '?token=' + encodeURIComponent(token)
+            + (campaign ? '&campaign=' + encodeURIComponent(campaign) : '');
+
+          try {
+            var res = await fetch(url, { method: 'POST', body: '' });
+            // POST returns 302 to /unsubscribed.html — fetch follows redirects
+            // by default, so a 200 ok response means the chain completed.
+            if (!res.ok && res.status !== 302) throw new Error('HTTP ' + res.status);
+            // Hard navigate to the branded confirmation page.
+            var emailParam = emailDisplay.textContent && emailDisplay.textContent.indexOf('@') > 0
+              ? '?email=' + encodeURIComponent(emailDisplay.textContent)
+              : '';
+            window.location.href = '/unsubscribed.html' + emailParam;
+          } catch (e2) {
+            err.classList.add('show');
+            btn.disabled = false;
+            btn.textContent = 'Yes, unsubscribe me';
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

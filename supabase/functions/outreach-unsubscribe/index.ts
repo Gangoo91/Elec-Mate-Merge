@@ -27,11 +27,7 @@ const corsHeaders = {
 const textEncoder = new TextEncoder();
 
 function getSecret(): string {
-  return (
-    Deno.env.get('OUTREACH_UNSUB_SECRET') ||
-    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ||
-    ''
-  );
+  return Deno.env.get('OUTREACH_UNSUB_SECRET') || Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
 }
 
 function base64UrlEncode(bytes: Uint8Array): string {
@@ -41,7 +37,8 @@ function base64UrlEncode(bytes: Uint8Array): string {
 }
 
 function base64UrlDecodeToBytes(input: string): Uint8Array {
-  const padded = input.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - (input.length % 4)) % 4);
+  const padded =
+    input.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - (input.length % 4)) % 4);
   const bin = atob(padded);
   const out = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
@@ -109,7 +106,12 @@ function tryLegacyToken(token: string): string | null {
 async function suppressEmail(
   supabase: ReturnType<typeof createClient>,
   email: string,
-  meta: { campaign_id?: string | null; method: string; user_agent?: string | null; ip?: string | null }
+  meta: {
+    campaign_id?: string | null;
+    method: string;
+    user_agent?: string | null;
+    ip?: string | null;
+  }
 ) {
   // 1. email_suppressions — the cross-system source of truth.
   await supabase.from('email_suppressions').upsert(
@@ -184,40 +186,56 @@ Deno.serve(async (req) => {
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
-    // Both GET and POST suppress immediately — single-click unsubscribe,
-    // matching the winback flow. Lands users on the branded
-    // unsubscribed.html on the marketing site instead of an inline page.
-    // (Per-recipient HMAC token already proves intent — anti-prefetcher
-    // confirm step traded for UX consistency with the rest of the app.)
-    let method = req.method === 'POST' ? 'rfc8058_one_click' : 'link_click';
+    // GET = show confirm page (no suppression). POST = actually suppress.
+    // Why: B2B mail goes through Mimecast/Proofpoint/Defender etc., and
+    // every one of them auto-fetches every URL in incoming mail to scan
+    // for malware — including unsubscribe links. The previous one-click
+    // GET-suppress flow caused 580+ false unsubs on a single send. The
+    // confirm-page interstitial neutralises the prefetcher (it lands on a
+    // page, doesn't auto-submit) while still being one extra click for
+    // a real human.
     if (req.method === 'POST') {
+      // RFC 8058 one-click clients (Gmail, Yahoo native button) POST with
+      // List-Unsubscribe=One-Click in the body. Confirmation form POST is
+      // a real user clicking the button on our confirm page.
+      let method = 'confirmation_form';
       try {
         const body = await req.text();
-        if (!body.includes('List-Unsubscribe=One-Click')) method = 'confirmation_form';
+        if (body.includes('List-Unsubscribe=One-Click')) method = 'rfc8058_one_click';
       } catch {
-        // fall through with rfc8058_one_click
+        method = 'rfc8058_one_click';
       }
+
+      await suppressEmail(supabase, email, {
+        campaign_id: campaignId,
+        method,
+        user_agent: userAgent,
+        ip,
+      });
+
+      console.log(
+        `[unsub] suppressed ${email} via ${method}${campaignId ? ` (campaign ${campaignId})` : ''}`
+      );
+
+      if (method === 'rfc8058_one_click') {
+        return new Response('OK', { status: 200, headers: corsHeaders });
+      }
+      const redirectUrl = `https://www.elec-mate.com/unsubscribed.html?email=${encodeURIComponent(email)}`;
+      return new Response(null, {
+        status: 302,
+        headers: { ...corsHeaders, Location: redirectUrl, 'Cache-Control': 'no-store' },
+      });
     }
 
-    await suppressEmail(supabase, email, {
-      campaign_id: campaignId,
-      method,
-      user_agent: userAgent,
-      ip,
-    });
-
-    console.log(`[unsub] suppressed ${email} via ${method}${campaignId ? ` (campaign ${campaignId})` : ''}`);
-
-    // RFC 8058 one-click clients ignore the body — 200 OK is enough.
-    if (method === 'rfc8058_one_click') {
-      return new Response('OK', { status: 200, headers: corsHeaders });
-    }
-
-    // Browser GET / form POST: redirect to the branded confirmation page.
-    const redirectUrl = `https://www.elec-mate.com/unsubscribed.html?email=${encodeURIComponent(email)}`;
+    // GET = redirect to the static confirm page on elec-mate.com.
+    // Pure HTML hosted on Vercel — no Supabase content-sniff bug, renders
+    // identically in every client. Bots that auto-fetch the URL land on a
+    // page (no JS execution = no auto-suppress). Real users click the
+    // "Yes, unsubscribe me" button which POSTs back here.
+    const confirmUrl = `https://www.elec-mate.com/unsubscribe.html?token=${encodeURIComponent(token)}${campaignId ? `&campaign=${encodeURIComponent(campaignId)}` : ''}`;
     return new Response(null, {
       status: 302,
-      headers: { ...corsHeaders, Location: redirectUrl, 'Cache-Control': 'no-store' },
+      headers: { ...corsHeaders, Location: confirmUrl, 'Cache-Control': 'no-store' },
     });
   } catch (err) {
     console.error('[unsub] error:', err instanceof Error ? err.message : err);
@@ -229,7 +247,17 @@ Deno.serve(async (req) => {
 function htmlResponse(html: string, status: number) {
   return new Response(html, {
     status,
-    headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' },
+    headers: {
+      ...corsHeaders,
+      'Content-Type': 'text/html; charset=utf-8',
+      // Without nosniff, some browsers + Gmail / Outlook iOS in-app webviews
+      // content-sniff *.supabase.co function responses and render them as
+      // plain text or offer a .txt download. nosniff forces the declared
+      // text/html content-type to win.
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'Cache-Control': 'no-store',
+    },
   });
 }
 
