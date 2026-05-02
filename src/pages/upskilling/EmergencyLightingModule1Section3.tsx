@@ -79,8 +79,7 @@ const inlineChecks = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      'What is the difference between MAINTAINED and NON-MAINTAINED emergency luminaires?',
+    question: 'What is the difference between MAINTAINED and NON-MAINTAINED emergency luminaires?',
     options: [
       'Maintained = bigger, non-maintained = smaller.',
       'Maintained = always lit (under both normal mains and on emergency battery), suitable for exit signs and areas where the sign or luminaire must be visible all the time. Non-maintained = lit ONLY on mains failure, suitable for areas where normal mains lighting provides illumination during occupancy and the emergency luminaire stays dark unless the mains fails. The choice is driven by whether the luminaire needs to be visible when the mains is on.',
@@ -93,8 +92,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'A SUSTAINED (or COMBINED) emergency luminaire is best described as:',
+    question: 'A SUSTAINED (or COMBINED) emergency luminaire is best described as:',
     options: [
       'A luminaire with two batteries.',
       'A luminaire that lasts for 12 hours.',
@@ -103,7 +101,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Sustained / combined luminaires are common in modern multi-functional fittings. The architecture allows the building lighting controls (DALI, dimming, scenes) to operate the normal lamp without affecting the emergency lamp\'s readiness. On mains failure the normal lamp goes off; the emergency lamp comes on automatically.',
+      "Sustained / combined luminaires are common in modern multi-functional fittings. The architecture allows the building lighting controls (DALI, dimming, scenes) to operate the normal lamp without affecting the emergency lamp's readiness. On mains failure the normal lamp goes off; the emergency lamp comes on automatically.",
   },
   {
     id: 3,
@@ -125,7 +123,7 @@ const quizQuestions = [
       'BS EN 50171 covers central power supply systems for emergency lighting. What is its scope and significance?',
     options: [
       'It covers consumer-grade UPS only.',
-      'BS EN 50171 specifies the requirements for central power supply systems intended to feed emergency safety services — including emergency lighting central battery systems. Covers performance, monitoring, testing, charging, environmental conditions and labelling. Required where a central battery system is installed; the system must comply with the standard\'s electrical, mechanical and operational requirements. Differs from BS EN 50172 (which covers the lighting system as a whole) and from BS EN 60598-2-22 (which covers the luminaire product).',
+      "BS EN 50171 specifies the requirements for central power supply systems intended to feed emergency safety services — including emergency lighting central battery systems. Covers performance, monitoring, testing, charging, environmental conditions and labelling. Required where a central battery system is installed; the system must comply with the standard's electrical, mechanical and operational requirements. Differs from BS EN 50172 (which covers the lighting system as a whole) and from BS EN 60598-2-22 (which covers the luminaire product).",
       'It is for solar PV systems.',
       'It is withdrawn.',
     ],
@@ -139,7 +137,7 @@ const quizQuestions = [
       'A datacentre operator wants emergency lighting that supports CONTINUED operation during the controlled fail-over to back-up power generation (a process taking up to 90 seconds before the generator stabilises). What category of emergency lighting is this, and is it within the scope of BS 5266-1:2025?',
     options: [
       'Escape route lighting.',
-      'STANDBY LIGHTING — illumination provided to enable normal activities to continue substantially unchanged during failure of the normal supply. This category was explicitly added to the scope of BS 5266-1:2025 (it was not in the 2016 edition\'s scope as a fully-recognised category). Allows the operator to continue monitoring screens, reading status displays, and managing the fail-over without the disruption of darkness. Levels and duration set by the operational requirement, not the safety case.',
+      "STANDBY LIGHTING — illumination provided to enable normal activities to continue substantially unchanged during failure of the normal supply. This category was explicitly added to the scope of BS 5266-1:2025 (it was not in the 2016 edition's scope as a fully-recognised category). Allows the operator to continue monitoring screens, reading status displays, and managing the fail-over without the disruption of darkness. Levels and duration set by the operational requirement, not the safety case.",
       'Anti-panic only.',
       'Not within BS 5266-1 scope at all.',
     ],
@@ -149,8 +147,7 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question:
-      'Switch-on time for ESCAPE ROUTE lighting per BS EN 1838:2024 is:',
+    question: 'Switch-on time for ESCAPE ROUTE lighting per BS EN 1838:2024 is:',
     options: [
       '50% of full output within 5 s, full output within 60 s. The reason: human dark adaptation gives some residual visibility after a sudden mains failure, so the lamp does not need to be at full output instantaneously. 5 s for 50% (enough to begin escape) and 60 s for full output (escape sustained at full level) is calibrated to human visual response. The high-risk task category has a stricter ≤ 0.5 s requirement because operators with hazardous equipment cannot tolerate even short outages.',
       'Instantaneous (within 100 ms).',
@@ -163,8 +160,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question:
-      'In a HYBRID emergency lighting system, the architecture is:',
+    question: 'In a HYBRID emergency lighting system, the architecture is:',
     options: [
       'Half LED, half fluorescent.',
       'Some luminaires self-contained (each with its own battery) and other luminaires fed from a central battery — a mix-and-match approach where the design uses the most cost-effective architecture for each location. Common where a central battery serves a large open-plan area or critical zone (datacentre racks, theatre auditorium) while the rest of the building is on self-contained for distributed escape and anti-panic. The two architectures coexist in the same building, served by the same maintenance regime.',
@@ -191,8 +187,7 @@ const quizQuestions = [
   },
   {
     id: 9,
-    question:
-      'BS EN 60598-2-22 is the product standard that applies specifically to:',
+    question: 'BS EN 60598-2-22 is the product standard that applies specifically to:',
     options: [
       'Wiring accessories.',
       'Cable insulation.',
@@ -286,44 +281,42 @@ const EmergencyLightingModule1Section3 = () => {
               <li>
                 <strong>Escape route lighting.</strong> 1 lx minimum across the full width of the
                 escape route at floor level, with edge exclusions per BS EN 1838:2024 (outer 0.5 m
-                on routes > 2 m, outer ¼ width on routes ≤ 2 m). The 2024 update replaces the
-                2013 centre-line + central-band wording. Switch-on 50 % within 5 s, full within
-                60 s. Standard 3-hour duration. For corridors, staircases and any defined escape
-                path.
+                on routes &gt; 2 m, outer ¼ width on routes ≤ 2 m). The 2024 update replaces the
+                2013 centre-line + central-band wording. Switch-on 50 % within 5 s, full within 60
+                s. Standard 3-hour duration. For corridors, staircases and any defined escape path.
               </li>
               <li>
-                <strong>Open-area / anti-panic lighting.</strong> 0.5 lx minimum across the
-                floor (excluding 0.5 m perimeter strip). Maximum 40:1 ratio of brightest to
-                darkest point. Switch-on 50% within 5 s, full within 60 s. Standard 3-hour
-                duration. For rooms &gt; 60 m² OR &gt; 10 occupants regardless of size.
+                <strong>Open-area / anti-panic lighting.</strong> 0.5 lx minimum across the floor
+                (excluding 0.5 m perimeter strip). Maximum 40:1 ratio of brightest to darkest point.
+                Switch-on 50% within 5 s, full within 60 s. Standard 3-hour duration. For rooms &gt;
+                60 m² OR &gt; 10 occupants regardless of size.
               </li>
               <li>
                 <strong>High-risk task area lighting.</strong> 15 lx OR 10% of normal task
                 illuminance, whichever is greater. Maximum 10:1 ratio (tighter than anti-panic).
-                Switch-on within 0.5 s — effectively instantaneous. Duration to meet
-                safe-shutdown procedure plus margin (often a few minutes; can be longer).
-                NEW in 2025: ≥ 2 separate circuits, ≤ 20 luminaires per fault. For workstations
-                with hazardous machinery or processes that must be safely shut down.
+                Switch-on within 0.5 s — effectively instantaneous. Duration to meet safe-shutdown
+                procedure plus margin (often a few minutes; can be longer). NEW in 2025: ≥ 2
+                separate circuits, ≤ 20 luminaires per fault. For workstations with hazardous
+                machinery or processes that must be safely shut down.
               </li>
               <li>
                 <strong>Standby lighting.</strong> NEW in 2025 BS 5266-1 scope. Illumination
-                allowing normal activity to continue during mains failure. Levels and duration
-                set by the operational requirement, not the safety case. For datacentres,
-                broadcast studios, operating theatres, broadcast control rooms, areas where the
-                activity must continue.
+                allowing normal activity to continue during mains failure. Levels and duration set
+                by the operational requirement, not the safety case. For datacentres, broadcast
+                studios, operating theatres, broadcast control rooms, areas where the activity must
+                continue.
               </li>
               <li>
-                <strong>Local-area lighting.</strong> NEW formal recognition in BS EN 1838:2024.
-                For occupants permitted (or required) to remain during a mains-failure event.
-                Levels per the 2024 EN application; sits between escape and anti-panic in
-                concept. For care home bedrooms, hospital wards at night, hotel guest rooms in
-                some configurations.
+                <strong>Local-area lighting.</strong> NEW formal recognition in BS EN 1838:2024. For
+                occupants permitted (or required) to remain during a mains-failure event. Levels per
+                the 2024 EN application; sits between escape and anti-panic in concept. For care
+                home bedrooms, hospital wards at night, hotel guest rooms in some configurations.
               </li>
             </ul>
             <p>
-              The category is the design output for each space. A schedule mapping every space
-              to its category(ies) is the design brief; the luminaire layout, supply, and
-              controls are then engineered to deliver the categories selected.
+              The category is the design output for each space. A schedule mapping every space to
+              its category(ies) is the design brief; the luminaire layout, supply, and controls are
+              then engineered to deliver the categories selected.
             </p>
           </ConceptBlock>
 
@@ -331,17 +324,17 @@ const EmergencyLightingModule1Section3 = () => {
             source="BS EN 1838:2024 · Clauses 4.2, 4.3, 4.4, 4.5 (Categories of emergency lighting)"
             clause={
               <>
-                Emergency lighting is provided to enable the safe egress of persons in the
-                event of failure of the normal supply. It comprises emergency escape lighting
-                — including escape route lighting, open area (anti-panic) lighting and
-                high-risk task area lighting — and (where required) local-area lighting for
-                occupants permitted to remain during the period of failure. Escape route
-                lighting shall achieve not less than 1 lx across the full width of the route at
-                floor level, with permitted edge exclusions of 0.5 m on routes wider than 2 m
-                and ¼ width on routes 2 m or narrower. Open area lighting shall achieve not less
-                than 0.5 lx throughout the empty core area. High-risk task area lighting shall
-                achieve not less than 10 % of the required maintained illuminance for the task,
-                but in no case less than 15 lx, with a switch-on time of 0.5 s.
+                Emergency lighting is provided to enable the safe egress of persons in the event of
+                failure of the normal supply. It comprises emergency escape lighting — including
+                escape route lighting, open area (anti-panic) lighting and high-risk task area
+                lighting — and (where required) local-area lighting for occupants permitted to
+                remain during the period of failure. Escape route lighting shall achieve not less
+                than 1 lx across the full width of the route at floor level, with permitted edge
+                exclusions of 0.5 m on routes wider than 2 m and ¼ width on routes 2 m or narrower.
+                Open area lighting shall achieve not less than 0.5 lx throughout the empty core
+                area. High-risk task area lighting shall achieve not less than 10 % of the required
+                maintained illuminance for the task, but in no case less than 15 lx, with a
+                switch-on time of 0.5 s.
               </>
             }
             meaning="The 2024 EN locks in the four-category core (escape, open-area, high-risk, plus the new local-area recognition) and the illuminance levels (1 lx, 0.5 lx, 15 lx). The 2025 BS 5266-1 layer adds standby as a fifth category for premises where normal activity must continue. Together they cover the full functional spectrum a designer needs to address."
@@ -370,114 +363,553 @@ const EmergencyLightingModule1Section3 = () => {
               aria-label="Comparison panel showing the five emergency lighting categories — escape route, anti-panic, high-risk task, standby, and local-area — with their illuminance level, switch-on time, ratio, and primary application. Each category is shown as a coloured panel labelled with the BS EN 1838:2024 / BS 5266-1:2025 reference."
             >
               {/* Header */}
-              <rect x="20" y="20" width="780" height="44" rx="8" fill="rgba(168,85,247,0.06)" stroke="rgba(168,85,247,0.4)" strokeWidth="1.4" />
-              <text x="410" y="42" textAnchor="middle" fill="#A855F7" fontSize="11" fontWeight="bold">FIVE FUNCTIONAL CATEGORIES OF EMERGENCY LIGHTING</text>
-              <text x="410" y="56" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9.5">BS EN 1838:2024 + BS 5266-1:2025 — illuminance · switch-on · application</text>
+              <rect
+                x="20"
+                y="20"
+                width="780"
+                height="44"
+                rx="8"
+                fill="rgba(168,85,247,0.06)"
+                stroke="rgba(168,85,247,0.4)"
+                strokeWidth="1.4"
+              />
+              <text
+                x="410"
+                y="42"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                FIVE FUNCTIONAL CATEGORIES OF EMERGENCY LIGHTING
+              </text>
+              <text x="410" y="56" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9.5">
+                BS EN 1838:2024 + BS 5266-1:2025 — illuminance · switch-on · application
+              </text>
 
               {/* 5 columns */}
               <g>
-                <rect x="20" y="78" width="152" height="280" rx="8" fill="rgba(251,191,36,0.06)" stroke="#FBBF24" strokeWidth="1.4" />
-                <text x="96" y="100" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">1 · Escape route</text>
-                <text x="96" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Level: 1 lx full width</text>
-                <text x="96" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">+ edge exclusions</text>
-                <text x="96" y="146" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">(2024 EN update)</text>
-                <text x="96" y="166" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Switch-on:</text>
-                <text x="96" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">50% in 5 s</text>
-                <text x="96" y="190" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">100% in 60 s</text>
-                <text x="96" y="210" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Ratio: 40:1</text>
-                <text x="96" y="230" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Duration: 3 hr</text>
-                <text x="96" y="260" textAnchor="middle" fill="rgba(251,191,36,0.85)" fontSize="9.5" fontWeight="bold">Application:</text>
-                <text x="96" y="276" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Corridors,</text>
-                <text x="96" y="288" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">stairs, exits,</text>
-                <text x="96" y="300" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">defined escape</text>
-                <text x="96" y="312" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">paths</text>
-                <text x="96" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">BS EN 1838 §4.3</text>
-                <text x="96" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">BS 5266-1 §5</text>
+                <rect
+                  x="20"
+                  y="78"
+                  width="152"
+                  height="280"
+                  rx="8"
+                  fill="rgba(251,191,36,0.06)"
+                  stroke="#FBBF24"
+                  strokeWidth="1.4"
+                />
+                <text
+                  x="96"
+                  y="100"
+                  textAnchor="middle"
+                  fill="#FBBF24"
+                  fontSize="11"
+                  fontWeight="bold"
+                >
+                  1 · Escape route
+                </text>
+                <text x="96" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Level: 1 lx full width
+                </text>
+                <text x="96" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  + edge exclusions
+                </text>
+                <text x="96" y="146" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  (2024 EN update)
+                </text>
+                <text x="96" y="166" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                  Switch-on:
+                </text>
+                <text x="96" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                  50% in 5 s
+                </text>
+                <text x="96" y="190" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                  100% in 60 s
+                </text>
+                <text x="96" y="210" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                  Ratio: 40:1
+                </text>
+                <text x="96" y="230" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                  Duration: 3 hr
+                </text>
+                <text
+                  x="96"
+                  y="260"
+                  textAnchor="middle"
+                  fill="rgba(251,191,36,0.85)"
+                  fontSize="9.5"
+                  fontWeight="bold"
+                >
+                  Application:
+                </text>
+                <text x="96" y="276" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Corridors,
+                </text>
+                <text x="96" y="288" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  stairs, exits,
+                </text>
+                <text x="96" y="300" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  defined escape
+                </text>
+                <text x="96" y="312" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  paths
+                </text>
+                <text x="96" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  BS EN 1838 §4.3
+                </text>
+                <text x="96" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  BS 5266-1 §5
+                </text>
               </g>
 
               <g>
-                <rect x="180" y="78" width="152" height="280" rx="8" fill="rgba(34,211,238,0.06)" stroke="#22D3EE" strokeWidth="1.4" />
-                <text x="256" y="100" textAnchor="middle" fill="#22D3EE" fontSize="11" fontWeight="bold">2 · Anti-panic</text>
-                <text x="256" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Level: 0.5 lx</text>
-                <text x="256" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">across floor area</text>
-                <text x="256" y="146" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">(0.5 m perimeter)</text>
-                <text x="256" y="166" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Switch-on:</text>
-                <text x="256" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">50% in 5 s</text>
-                <text x="256" y="190" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">100% in 60 s</text>
-                <text x="256" y="210" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Ratio: 40:1</text>
-                <text x="256" y="230" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Duration: 3 hr</text>
-                <text x="256" y="260" textAnchor="middle" fill="rgba(34,211,238,0.85)" fontSize="9.5" fontWeight="bold">Application:</text>
-                <text x="256" y="276" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Open areas</text>
-                <text x="256" y="288" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">&gt; 60 m² OR</text>
-                <text x="256" y="300" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">&gt; 10 occupants</text>
-                <text x="256" y="312" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">assembly halls</text>
-                <text x="256" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">BS EN 1838 §4.2</text>
-                <text x="256" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">BS 5266-1 §4.2</text>
+                <rect
+                  x="180"
+                  y="78"
+                  width="152"
+                  height="280"
+                  rx="8"
+                  fill="rgba(34,211,238,0.06)"
+                  stroke="#22D3EE"
+                  strokeWidth="1.4"
+                />
+                <text
+                  x="256"
+                  y="100"
+                  textAnchor="middle"
+                  fill="#22D3EE"
+                  fontSize="11"
+                  fontWeight="bold"
+                >
+                  2 · Anti-panic
+                </text>
+                <text x="256" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Level: 0.5 lx
+                </text>
+                <text x="256" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  across floor area
+                </text>
+                <text x="256" y="146" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  (0.5 m perimeter)
+                </text>
+                <text
+                  x="256"
+                  y="166"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Switch-on:
+                </text>
+                <text
+                  x="256"
+                  y="178"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  50% in 5 s
+                </text>
+                <text
+                  x="256"
+                  y="190"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  100% in 60 s
+                </text>
+                <text
+                  x="256"
+                  y="210"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Ratio: 40:1
+                </text>
+                <text
+                  x="256"
+                  y="230"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Duration: 3 hr
+                </text>
+                <text
+                  x="256"
+                  y="260"
+                  textAnchor="middle"
+                  fill="rgba(34,211,238,0.85)"
+                  fontSize="9.5"
+                  fontWeight="bold"
+                >
+                  Application:
+                </text>
+                <text x="256" y="276" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Open areas
+                </text>
+                <text x="256" y="288" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  &gt; 60 m² OR
+                </text>
+                <text x="256" y="300" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  &gt; 10 occupants
+                </text>
+                <text x="256" y="312" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  assembly halls
+                </text>
+                <text x="256" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  BS EN 1838 §4.2
+                </text>
+                <text x="256" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  BS 5266-1 §4.2
+                </text>
               </g>
 
               <g>
-                <rect x="340" y="78" width="152" height="280" rx="8" fill="rgba(239,68,68,0.06)" stroke="#EF4444" strokeWidth="1.4" />
-                <text x="416" y="100" textAnchor="middle" fill="#EF4444" fontSize="11" fontWeight="bold">3 · High-risk</text>
-                <text x="416" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Level: 15 lx OR</text>
-                <text x="416" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">10% of task,</text>
-                <text x="416" y="146" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">whichever higher</text>
-                <text x="416" y="166" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Switch-on:</text>
-                <text x="416" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">≤ 0.5 s</text>
-                <text x="416" y="190" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">(instantaneous)</text>
-                <text x="416" y="210" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Ratio: 10:1</text>
-                <text x="416" y="230" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Duration: task + margin</text>
-                <text x="416" y="260" textAnchor="middle" fill="rgba(239,68,68,0.85)" fontSize="9.5" fontWeight="bold">Application:</text>
-                <text x="416" y="276" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Hazardous</text>
-                <text x="416" y="288" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">machinery,</text>
-                <text x="416" y="300" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">presses, reactors,</text>
-                <text x="416" y="312" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">surgical theatre</text>
-                <text x="416" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">BS EN 1838 §4.4</text>
-                <text x="416" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">2025 NEW segmentation</text>
+                <rect
+                  x="340"
+                  y="78"
+                  width="152"
+                  height="280"
+                  rx="8"
+                  fill="rgba(239,68,68,0.06)"
+                  stroke="#EF4444"
+                  strokeWidth="1.4"
+                />
+                <text
+                  x="416"
+                  y="100"
+                  textAnchor="middle"
+                  fill="#EF4444"
+                  fontSize="11"
+                  fontWeight="bold"
+                >
+                  3 · High-risk
+                </text>
+                <text x="416" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Level: 15 lx OR
+                </text>
+                <text x="416" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  10% of task,
+                </text>
+                <text x="416" y="146" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  whichever higher
+                </text>
+                <text
+                  x="416"
+                  y="166"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Switch-on:
+                </text>
+                <text
+                  x="416"
+                  y="178"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  ≤ 0.5 s
+                </text>
+                <text
+                  x="416"
+                  y="190"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  (instantaneous)
+                </text>
+                <text
+                  x="416"
+                  y="210"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Ratio: 10:1
+                </text>
+                <text
+                  x="416"
+                  y="230"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Duration: task + margin
+                </text>
+                <text
+                  x="416"
+                  y="260"
+                  textAnchor="middle"
+                  fill="rgba(239,68,68,0.85)"
+                  fontSize="9.5"
+                  fontWeight="bold"
+                >
+                  Application:
+                </text>
+                <text x="416" y="276" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Hazardous
+                </text>
+                <text x="416" y="288" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  machinery,
+                </text>
+                <text x="416" y="300" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  presses, reactors,
+                </text>
+                <text x="416" y="312" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  surgical theatre
+                </text>
+                <text x="416" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  BS EN 1838 §4.4
+                </text>
+                <text x="416" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  2025 NEW segmentation
+                </text>
               </g>
 
               <g>
-                <rect x="500" y="78" width="152" height="280" rx="8" fill="rgba(168,85,247,0.06)" stroke="#A855F7" strokeWidth="1.4" />
-                <text x="576" y="100" textAnchor="middle" fill="#A855F7" fontSize="11" fontWeight="bold">4 · Standby</text>
-                <text x="576" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Level: per task</text>
-                <text x="576" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">requirement</text>
-                <text x="576" y="146" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">(application-specific)</text>
-                <text x="576" y="166" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Switch-on:</text>
-                <text x="576" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">per operation</text>
-                <text x="576" y="190" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">(often instant)</text>
-                <text x="576" y="210" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Ratio: per task</text>
-                <text x="576" y="230" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Duration: per fail-over</text>
-                <text x="576" y="260" textAnchor="middle" fill="rgba(168,85,247,0.85)" fontSize="9.5" fontWeight="bold">Application:</text>
-                <text x="576" y="276" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Datacentres,</text>
-                <text x="576" y="288" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">broadcast studios,</text>
-                <text x="576" y="300" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">operating theatres</text>
-                <text x="576" y="312" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">— continued ops</text>
-                <text x="576" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">2025 NEW in scope</text>
-                <text x="576" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">BS 5266-1 §1</text>
+                <rect
+                  x="500"
+                  y="78"
+                  width="152"
+                  height="280"
+                  rx="8"
+                  fill="rgba(168,85,247,0.06)"
+                  stroke="#A855F7"
+                  strokeWidth="1.4"
+                />
+                <text
+                  x="576"
+                  y="100"
+                  textAnchor="middle"
+                  fill="#A855F7"
+                  fontSize="11"
+                  fontWeight="bold"
+                >
+                  4 · Standby
+                </text>
+                <text x="576" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Level: per task
+                </text>
+                <text x="576" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  requirement
+                </text>
+                <text
+                  x="576"
+                  y="146"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  (application-specific)
+                </text>
+                <text
+                  x="576"
+                  y="166"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Switch-on:
+                </text>
+                <text
+                  x="576"
+                  y="178"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  per operation
+                </text>
+                <text
+                  x="576"
+                  y="190"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  (often instant)
+                </text>
+                <text
+                  x="576"
+                  y="210"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Ratio: per task
+                </text>
+                <text
+                  x="576"
+                  y="230"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Duration: per fail-over
+                </text>
+                <text
+                  x="576"
+                  y="260"
+                  textAnchor="middle"
+                  fill="rgba(168,85,247,0.85)"
+                  fontSize="9.5"
+                  fontWeight="bold"
+                >
+                  Application:
+                </text>
+                <text x="576" y="276" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Datacentres,
+                </text>
+                <text x="576" y="288" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  broadcast studios,
+                </text>
+                <text x="576" y="300" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  operating theatres
+                </text>
+                <text x="576" y="312" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  — continued ops
+                </text>
+                <text x="576" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  2025 NEW in scope
+                </text>
+                <text x="576" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  BS 5266-1 §1
+                </text>
               </g>
 
               <g>
-                <rect x="660" y="78" width="138" height="280" rx="8" fill="rgba(34,197,94,0.06)" stroke="#22C55E" strokeWidth="1.4" />
-                <text x="729" y="100" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">5 · Local-area</text>
-                <text x="729" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Level: per</text>
-                <text x="729" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">2024 EN</text>
-                <text x="729" y="146" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">application</text>
-                <text x="729" y="166" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Switch-on:</text>
-                <text x="729" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">5 s typical</text>
-                <text x="729" y="198" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Duration: 3 hr</text>
-                <text x="729" y="218" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">+ as required</text>
-                <text x="729" y="246" textAnchor="middle" fill="rgba(34,197,94,0.85)" fontSize="9.5" fontWeight="bold">Application:</text>
-                <text x="729" y="262" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Care home</text>
-                <text x="729" y="274" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">bedrooms,</text>
-                <text x="729" y="286" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">hospital wards,</text>
-                <text x="729" y="298" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">remain-in-place</text>
-                <text x="729" y="310" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">scenarios</text>
-                <text x="729" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">2024 NEW</text>
-                <text x="729" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">BS EN 1838 §4.5</text>
+                <rect
+                  x="660"
+                  y="78"
+                  width="138"
+                  height="280"
+                  rx="8"
+                  fill="rgba(34,197,94,0.06)"
+                  stroke="#22C55E"
+                  strokeWidth="1.4"
+                />
+                <text
+                  x="729"
+                  y="100"
+                  textAnchor="middle"
+                  fill="#22C55E"
+                  fontSize="11"
+                  fontWeight="bold"
+                >
+                  5 · Local-area
+                </text>
+                <text x="729" y="118" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Level: per
+                </text>
+                <text x="729" y="132" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  2024 EN
+                </text>
+                <text
+                  x="729"
+                  y="146"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  application
+                </text>
+                <text
+                  x="729"
+                  y="166"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Switch-on:
+                </text>
+                <text
+                  x="729"
+                  y="178"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  5 s typical
+                </text>
+                <text
+                  x="729"
+                  y="198"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Duration: 3 hr
+                </text>
+                <text
+                  x="729"
+                  y="218"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  + as required
+                </text>
+                <text
+                  x="729"
+                  y="246"
+                  textAnchor="middle"
+                  fill="rgba(34,197,94,0.85)"
+                  fontSize="9.5"
+                  fontWeight="bold"
+                >
+                  Application:
+                </text>
+                <text x="729" y="262" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Care home
+                </text>
+                <text x="729" y="274" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  bedrooms,
+                </text>
+                <text x="729" y="286" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  hospital wards,
+                </text>
+                <text x="729" y="298" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  remain-in-place
+                </text>
+                <text x="729" y="310" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  scenarios
+                </text>
+                <text x="729" y="332" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  2024 NEW
+                </text>
+                <text x="729" y="346" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                  BS EN 1838 §4.5
+                </text>
               </g>
 
               {/* Footer note */}
-              <rect x="20" y="378" width="780" height="32" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-              <text x="410" y="398" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9.5">Each space may need ONE category, or a COMBINATION layered together — e.g. press floor needs high-risk + escape + anti-panic</text>
+              <rect
+                x="20"
+                y="378"
+                width="780"
+                height="32"
+                rx="6"
+                fill="rgba(255,255,255,0.04)"
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth="1"
+              />
+              <text
+                x="410"
+                y="398"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.65)"
+                fontSize="9.5"
+              >
+                Each space may need ONE category, or a COMBINATION layered together — e.g. press
+                floor needs high-risk + escape + anti-panic
+              </text>
             </svg>
           </div>
 
@@ -493,39 +925,38 @@ const EmergencyLightingModule1Section3 = () => {
             <p>The three modes side by side:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Maintained.</strong> The lamp is illuminated under normal mains supply
-                AND on emergency battery supply. The lamp never goes off (except when manually
-                isolated for service). Used where the luminaire must be visible at all times —
-                exit signs, way-finding signs, refuge identification signs, point-of-emphasis
-                indicators in places of assembly, healthcare, education. The slight extra
-                running cost is justified by continuous visibility.
+                <strong>Maintained.</strong> The lamp is illuminated under normal mains supply AND
+                on emergency battery supply. The lamp never goes off (except when manually isolated
+                for service). Used where the luminaire must be visible at all times — exit signs,
+                way-finding signs, refuge identification signs, point-of-emphasis indicators in
+                places of assembly, healthcare, education. The slight extra running cost is
+                justified by continuous visibility.
               </li>
               <li>
                 <strong>Non-maintained.</strong> The lamp is OFF under normal mains supply (the
                 battery is being held in float-charge state; the electronics monitor mains
-                presence). On loss of mains, the lamp automatically illuminates from the
-                battery. Used for general escape and anti-panic illumination of areas that have
-                their own normal lighting and where the emergency luminaire would be redundant
-                during normal occupancy. The dominant mode for general escape illumination —
-                cheaper to run, simpler to commission.
+                presence). On loss of mains, the lamp automatically illuminates from the battery.
+                Used for general escape and anti-panic illumination of areas that have their own
+                normal lighting and where the emergency luminaire would be redundant during normal
+                occupancy. The dominant mode for general escape illumination — cheaper to run,
+                simpler to commission.
               </li>
               <li>
-                <strong>Sustained / combined.</strong> The luminaire houses TWO independent
-                light sources — a normal lamp (operated from mains for general illumination)
-                AND a separate emergency lamp (operated from battery on mains failure). The two
-                are independent: the normal lamp can be controlled by DALI / dimming / scene
-                switching without affecting the emergency lamp's readiness. On mains failure
-                the normal lamp goes off; the emergency lamp comes on. Used in modern
-                multi-functional fittings, particularly where the same physical fitting must
-                serve both general lighting and emergency lighting roles in a controlled
-                lighting design.
+                <strong>Sustained / combined.</strong> The luminaire houses TWO independent light
+                sources — a normal lamp (operated from mains for general illumination) AND a
+                separate emergency lamp (operated from battery on mains failure). The two are
+                independent: the normal lamp can be controlled by DALI / dimming / scene switching
+                without affecting the emergency lamp's readiness. On mains failure the normal lamp
+                goes off; the emergency lamp comes on. Used in modern multi-functional fittings,
+                particularly where the same physical fitting must serve both general lighting and
+                emergency lighting roles in a controlled lighting design.
               </li>
             </ul>
             <p>
-              The data sheet for any compliant luminaire states the mode (typically symbol
-              codes). On site, the rating-plate label states it. In the design schedule, every
-              luminaire is listed with its category (function) AND its mode (operation).
-              Confusion between the two is a common source of audit findings.
+              The data sheet for any compliant luminaire states the mode (typically symbol codes).
+              On site, the rating-plate label states it. In the design schedule, every luminaire is
+              listed with its category (function) AND its mode (operation). Confusion between the
+              two is a common source of audit findings.
             </p>
           </ConceptBlock>
 
@@ -536,50 +967,54 @@ const EmergencyLightingModule1Section3 = () => {
             <p>Mode-selection rules of thumb:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Exit signs in places of assembly, sleeping accommodation, healthcare,
-                education, retail, hospitality.</strong> MAINTAINED. The pictogram must be
-                visible at all times so occupants know where the exit is, including under
-                normal-supply darkness (e.g. cinema during a feature). Without continuous
-                illumination of the sign, the directional cue is lost.
+                <strong>
+                  Exit signs in places of assembly, sleeping accommodation, healthcare, education,
+                  retail, hospitality.
+                </strong>{' '}
+                MAINTAINED. The pictogram must be visible at all times so occupants know where the
+                exit is, including under normal-supply darkness (e.g. cinema during a feature).
+                Without continuous illumination of the sign, the directional cue is lost.
               </li>
               <li>
-                <strong>Exit signs in industrial premises with stable lighting and a known
-                regular workforce.</strong> Sometimes NON-MAINTAINED. The workforce knows the
-                exits from training and signage; the sign only needs to illuminate on actual
-                emergency. This is a niche application; default is maintained for any
-                non-trivial occupancy.
+                <strong>
+                  Exit signs in industrial premises with stable lighting and a known regular
+                  workforce.
+                </strong>{' '}
+                Sometimes NON-MAINTAINED. The workforce knows the exits from training and signage;
+                the sign only needs to illuminate on actual emergency. This is a niche application;
+                default is maintained for any non-trivial occupancy.
               </li>
               <li>
                 <strong>General escape route lighting in corridors and stairs.</strong>
-                NON-MAINTAINED. The corridor has its own normal lighting; the emergency
-                luminaire only needs to fire when the mains fails. Saves running cost, reduces
-                visual distraction.
+                NON-MAINTAINED. The corridor has its own normal lighting; the emergency luminaire
+                only needs to fire when the mains fails. Saves running cost, reduces visual
+                distraction.
               </li>
               <li>
                 <strong>Anti-panic in open assembly areas.</strong> Usually NON-MAINTAINED. The
-                normal lighting of the assembly area provides general illumination; the
-                emergency luminaires are dark unless the mains fails.
+                normal lighting of the assembly area provides general illumination; the emergency
+                luminaires are dark unless the mains fails.
               </li>
               <li>
                 <strong>High-risk task workstation lighting.</strong> Either NON-MAINTAINED or
-                SUSTAINED depending on whether the workstation has its own normal task light.
-                If the workstation already has dedicated task lighting (e.g. a printing-press
-                control desk light), the emergency luminaire is non-maintained. If the same
-                fitting must serve normal task duty AND emergency duty, sustained is
-                appropriate.
+                SUSTAINED depending on whether the workstation has its own normal task light. If the
+                workstation already has dedicated task lighting (e.g. a printing-press control desk
+                light), the emergency luminaire is non-maintained. If the same fitting must serve
+                normal task duty AND emergency duty, sustained is appropriate.
               </li>
               <li>
-                <strong>Multifunctional architectural fittings (modern offices, hotel
-                lobbies).</strong> SUSTAINED. The fitting provides normal general lighting
-                under DALI / scene / dimming control, plus a dedicated emergency lamp held in
-                standby. The design preserves architectural intent without compromising
-                emergency readiness.
+                <strong>
+                  Multifunctional architectural fittings (modern offices, hotel lobbies).
+                </strong>{' '}
+                SUSTAINED. The fitting provides normal general lighting under DALI / scene / dimming
+                control, plus a dedicated emergency lamp held in standby. The design preserves
+                architectural intent without compromising emergency readiness.
               </li>
               <li>
-                <strong>Standby lighting in datacentre / theatre / surgical
-                theatre.</strong> Usually SUSTAINED or specialist multi-source. The
-                requirement is continued operation; the same fitting must provide normal
-                operating lighting AND emergency continuation. Bespoke design.
+                <strong>Standby lighting in datacentre / theatre / surgical theatre.</strong>{' '}
+                Usually SUSTAINED or specialist multi-source. The requirement is continued
+                operation; the same fitting must provide normal operating lighting AND emergency
+                continuation. Bespoke design.
               </li>
             </ul>
           </ConceptBlock>
@@ -589,12 +1024,12 @@ const EmergencyLightingModule1Section3 = () => {
             clause={
               <>
                 Luminaires for emergency lighting shall be marked to indicate their type of
-                operation, as follows: type "X0" — non-maintained luminaire, the lamp
-                operates only in the emergency operation mode; type "X1" — maintained
-                luminaire, the lamp is in operation in both the normal mode and the emergency
-                operation mode; type "C" — combined luminaire, with one or more lamps for
-                normal supply and one or more separate lamps for emergency supply; with
-                rating-plate symbology indicating the mode and emergency duration.
+                operation, as follows: type "X0" — non-maintained luminaire, the lamp operates only
+                in the emergency operation mode; type "X1" — maintained luminaire, the lamp is in
+                operation in both the normal mode and the emergency operation mode; type "C" —
+                combined luminaire, with one or more lamps for normal supply and one or more
+                separate lamps for emergency supply; with rating-plate symbology indicating the mode
+                and emergency duration.
               </>
             }
             meaning="The product standard codifies the modes. Every emergency luminaire data sheet uses these classifications. The rating plate shows the symbols. On audit, cross-check the schedule against the rating plates: the mode declared in the design must match the mode of the installed product."
@@ -610,7 +1045,9 @@ const EmergencyLightingModule1Section3 = () => {
 
           <SectionRule />
 
-          <ContentEyebrow>System architectures — self-contained, central battery, hybrid</ContentEyebrow>
+          <ContentEyebrow>
+            System architectures — self-contained, central battery, hybrid
+          </ContentEyebrow>
 
           <ConceptBlock
             title="Self-contained — distributed batteries"
@@ -620,33 +1057,31 @@ const EmergencyLightingModule1Section3 = () => {
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
                 <strong>Advantages.</strong> Low install cost (no central plant, no dedicated
-                emergency distribution); high fault tolerance (failure of one battery affects
-                only one luminaire); easy to extend (add a new luminaire to any existing
-                lighting circuit); standardised products from many manufacturers; simple test
-                — most products have an integral self-test feature; suits small to medium
-                installations.
+                emergency distribution); high fault tolerance (failure of one battery affects only
+                one luminaire); easy to extend (add a new luminaire to any existing lighting
+                circuit); standardised products from many manufacturers; simple test — most products
+                have an integral self-test feature; suits small to medium installations.
               </li>
               <li>
                 <strong>Limitations.</strong> Many small batteries (each requiring periodic
-                replacement); battery cost adds up over a building lifetime; battery technology
-                is typically Li-ion or NiMH with finite life (4-7 years typical); maintenance
-                requires access to every luminaire (test buttons or self-test); not ideal where
-                centralised testing or specialist battery technology is required (very large
-                installations, life-safety critical hospitals).
+                replacement); battery cost adds up over a building lifetime; battery technology is
+                typically Li-ion or NiMH with finite life (4-7 years typical); maintenance requires
+                access to every luminaire (test buttons or self-test); not ideal where centralised
+                testing or specialist battery technology is required (very large installations,
+                life-safety critical hospitals).
               </li>
               <li>
-                <strong>Battery technology.</strong> Modern self-contained luminaires use
-                lithium iron phosphate (LiFePO₄) or lithium-ion. Older NiCd / NiMH still in
-                service. Battery life typically 4-7 years for modern Li chemistry; replacement
-                cost plus labour is the dominant lifecycle cost.
+                <strong>Battery technology.</strong> Modern self-contained luminaires use lithium
+                iron phosphate (LiFePO₄) or lithium-ion. Older NiCd / NiMH still in service. Battery
+                life typically 4-7 years for modern Li chemistry; replacement cost plus labour is
+                the dominant lifecycle cost.
               </li>
               <li>
                 <strong>Self-test capability.</strong> Modern self-contained luminaires
-                automatically perform monthly functional tests and annual full-duration tests
-                (where the product supports it). The luminaire reports status via integral LED
-                indicator or via wireless / DALI / KNX integration. Reduces manual testing
-                burden but does not eliminate the need for site verification per BS EN
-                50172:2024.
+                automatically perform monthly functional tests and annual full-duration tests (where
+                the product supports it). The luminaire reports status via integral LED indicator or
+                via wireless / DALI / KNX integration. Reduces manual testing burden but does not
+                eliminate the need for site verification per BS EN 50172:2024.
               </li>
             </ul>
           </ConceptBlock>
@@ -658,32 +1093,31 @@ const EmergencyLightingModule1Section3 = () => {
             <p>The advantages and limitations of central battery:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Advantages.</strong> Centralised battery maintenance (one plant location
-                for all replacement work); larger battery capacity supports longer durations
-                (4 hours, 8 hours, 24 hours where needed); specialist battery chemistry
-                possible (sealed lead-acid, NiCd, modern Li); centralised testing and reporting;
-                simpler luminaires (no internal electronics); known long life of well-maintained
-                battery (10+ years for VRLA).
+                <strong>Advantages.</strong> Centralised battery maintenance (one plant location for
+                all replacement work); larger battery capacity supports longer durations (4 hours, 8
+                hours, 24 hours where needed); specialist battery chemistry possible (sealed
+                lead-acid, NiCd, modern Li); centralised testing and reporting; simpler luminaires
+                (no internal electronics); known long life of well-maintained battery (10+ years for
+                VRLA).
               </li>
               <li>
-                <strong>Limitations.</strong> Higher install cost (dedicated emergency
-                distribution, fire-rated cable, plant room, BMS integration); single point of
-                failure (battery, charger, or supply distribution failure can affect many
-                luminaires unless segmentation is designed in); requires plant-room space;
-                requires specialist commissioning and maintenance.
+                <strong>Limitations.</strong> Higher install cost (dedicated emergency distribution,
+                fire-rated cable, plant room, BMS integration); single point of failure (battery,
+                charger, or supply distribution failure can affect many luminaires unless
+                segmentation is designed in); requires plant-room space; requires specialist
+                commissioning and maintenance.
               </li>
               <li>
-                <strong>BS EN 50171.</strong> The product standard for central battery
-                equipment. Specifies performance, monitoring, testing, charging, environmental
-                conditions, labelling. Required for any central battery system; the
-                manufacturer's declaration of compliance is part of the project handover.
+                <strong>BS EN 50171.</strong> The product standard for central battery equipment.
+                Specifies performance, monitoring, testing, charging, environmental conditions,
+                labelling. Required for any central battery system; the manufacturer's declaration
+                of compliance is part of the project handover.
               </li>
               <li>
                 <strong>Typical applications.</strong> Hospitals (where IPS / UPS and central
-                battery overlap for life-safety services), large datacentres, theatres and
-                cinemas (where central feeding the auditorium luminaires is convenient), large
-                shopping centres / airports (where centralisation supports building-management
-                integration).
+                battery overlap for life-safety services), large datacentres, theatres and cinemas
+                (where central feeding the auditorium luminaires is convenient), large shopping
+                centres / airports (where centralisation supports building-management integration).
               </li>
             </ul>
           </ConceptBlock>
@@ -696,34 +1130,31 @@ const EmergencyLightingModule1Section3 = () => {
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
                 <strong>Mixed-scale building.</strong> A hospital with a large auditorium plus
-                hundreds of distributed wards and corridors. Central battery for the
-                auditorium; self-contained for the wards.
+                hundreds of distributed wards and corridors. Central battery for the auditorium;
+                self-contained for the wards.
               </li>
               <li>
-                <strong>Specialist zone within general building.</strong> A corporate
-                headquarters with a datacentre on one floor. Central battery for the datacentre
-                (longer duration, BMS integration); self-contained for the rest of the
-                building.
+                <strong>Specialist zone within general building.</strong> A corporate headquarters
+                with a datacentre on one floor. Central battery for the datacentre (longer duration,
+                BMS integration); self-contained for the rest of the building.
               </li>
               <li>
-                <strong>Phased upgrade.</strong> A building originally fitted with central
-                battery is being extended; the extension is fitted with self-contained for
-                cost reasons; the existing central battery serves the original areas. The two
-                architectures coexist within the same maintenance regime.
+                <strong>Phased upgrade.</strong> A building originally fitted with central battery
+                is being extended; the extension is fitted with self-contained for cost reasons; the
+                existing central battery serves the original areas. The two architectures coexist
+                within the same maintenance regime.
               </li>
               <li>
-                <strong>Standby + escape combination.</strong> A datacentre needs standby
-                lighting in the rack rooms (central battery preferred, longer duration, BMS
-                integration); the rest of the building has escape and anti-panic provisions
-                served by self-contained.
+                <strong>Standby + escape combination.</strong> A datacentre needs standby lighting
+                in the rack rooms (central battery preferred, longer duration, BMS integration); the
+                rest of the building has escape and anti-panic provisions served by self-contained.
               </li>
             </ul>
             <p>
-              The maintenance regime is the most common stumbling-block on hybrid sites.
-              Make sure the contractor has the competence and equipment to test and maintain
-              both architectures; make sure the documentation clearly identifies which
-              luminaires belong to which architecture; make sure the photometric verification
-              cycle covers both.
+              The maintenance regime is the most common stumbling-block on hybrid sites. Make sure
+              the contractor has the competence and equipment to test and maintain both
+              architectures; make sure the documentation clearly identifies which luminaires belong
+              to which architecture; make sure the photometric verification cycle covers both.
             </p>
           </ConceptBlock>
 
@@ -731,15 +1162,14 @@ const EmergencyLightingModule1Section3 = () => {
             source="BS 5266-1:2025 · Clause 6 (Wiring and electrical supplies)"
             clause={
               <>
-                Emergency lighting installations may be of self-contained type (where each
-                luminaire incorporates its own battery), central battery type (where one or
-                more central battery installations supply all emergency luminaires through a
-                dedicated emergency-supply distribution complying with BS EN 50171), or a
-                combination of these. The selection of architecture shall be based on the
-                risk assessment, the size and complexity of the premises, the maintenance
-                regime, and the duration required. For high-risk task areas, the emergency
-                supply shall be divided across at least two separate circuits, with each
-                circuit fault-isolated to no more than 20 luminaires.
+                Emergency lighting installations may be of self-contained type (where each luminaire
+                incorporates its own battery), central battery type (where one or more central
+                battery installations supply all emergency luminaires through a dedicated
+                emergency-supply distribution complying with BS EN 50171), or a combination of
+                these. The selection of architecture shall be based on the risk assessment, the size
+                and complexity of the premises, the maintenance regime, and the duration required.
+                For high-risk task areas, the emergency supply shall be divided across at least two
+                separate circuits, with each circuit fault-isolated to no more than 20 luminaires.
               </>
             }
             meaning="The 2025 edition codifies the architecture options and adds the segmentation rule for high-risk areas. Designers have full flexibility within the architecture choice — driven by the risk assessment and the practical considerations — but must document the choice and justify it. The high-risk segmentation rule is non-negotiable for new designs and retrofit / re-fit work after 31 October 2025."
@@ -755,7 +1185,9 @@ const EmergencyLightingModule1Section3 = () => {
 
           <SectionRule />
 
-          <ContentEyebrow>Switch-on times, durations, ratios — performance requirements</ContentEyebrow>
+          <ContentEyebrow>
+            Switch-on times, durations, ratios — performance requirements
+          </ContentEyebrow>
 
           <ConceptBlock
             title="Switch-on times by category"
@@ -764,36 +1196,35 @@ const EmergencyLightingModule1Section3 = () => {
             <p>BS EN 1838:2024 switch-on requirements:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Escape route.</strong> 50% of required illuminance within 5 s; 100%
-                within 60 s. The escape begins on partial illumination and the 1 lx target is
-                reached within a minute of mains failure.
+                <strong>Escape route.</strong> 50% of required illuminance within 5 s; 100% within
+                60 s. The escape begins on partial illumination and the 1 lx target is reached
+                within a minute of mains failure.
               </li>
               <li>
-                <strong>Anti-panic.</strong> Same as escape — 50% within 5 s; 100% within 60 s.
-                The room is illuminated to half-strength quickly enough to prevent the panic
-                response, then to full anti-panic level within a minute.
+                <strong>Anti-panic.</strong> Same as escape — 50% within 5 s; 100% within 60 s. The
+                room is illuminated to half-strength quickly enough to prevent the panic response,
+                then to full anti-panic level within a minute.
               </li>
               <li>
-                <strong>High-risk task.</strong> 100% within 0.5 s — effectively instantaneous.
-                The operator does not lose sight of the controls. The fastest of the
-                categories; designed against the operator's response window for hazardous
-                machinery.
+                <strong>High-risk task.</strong> 100% within 0.5 s — effectively instantaneous. The
+                operator does not lose sight of the controls. The fastest of the categories;
+                designed against the operator's response window for hazardous machinery.
               </li>
               <li>
                 <strong>Standby.</strong> Per operational requirement — often instantaneous
-                (datacentre fail-over, theatre transitions), sometimes longer where the
-                standby system itself takes time to start (generator).
+                (datacentre fail-over, theatre transitions), sometimes longer where the standby
+                system itself takes time to start (generator).
               </li>
               <li>
-                <strong>Local-area.</strong> Typically 5 s response is adequate — the occupant
-                is not evacuating, and 5 s is short enough that the resident or patient is not
-                left in extended darkness.
+                <strong>Local-area.</strong> Typically 5 s response is adequate — the occupant is
+                not evacuating, and 5 s is short enough that the resident or patient is not left in
+                extended darkness.
               </li>
             </ul>
             <p>
               Switch-on time is part of the luminaire product specification and is verified at
-              commissioning. A self-contained luminaire with degraded electronics may have a
-              longer switch-on than rated; the test verifies it meets the BS EN 1838 target.
+              commissioning. A self-contained luminaire with degraded electronics may have a longer
+              switch-on than rated; the test verifies it meets the BS EN 1838 target.
             </p>
           </ConceptBlock>
 
@@ -805,28 +1236,26 @@ const EmergencyLightingModule1Section3 = () => {
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
                 <strong>Standard 3 hours.</strong> Default for most UK premises — places of
-                assembly, sleeping accommodation, healthcare, education, retail, hospitality,
-                most workplaces. Annual full-discharge tests verify the system runs for 3 hours
-                at the required illuminance.
+                assembly, sleeping accommodation, healthcare, education, retail, hospitality, most
+                workplaces. Annual full-discharge tests verify the system runs for 3 hours at the
+                required illuminance.
               </li>
               <li>
                 <strong>1 hour permitted.</strong> Limited circumstances — small premises with
-                simple evacuation routes, immediate evacuation possible, no overnight
-                occupancy. Even where 1 hour is permitted, modern designs commonly adopt 3
-                hours because the cost difference is small and the safety margin is real.
+                simple evacuation routes, immediate evacuation possible, no overnight occupancy.
+                Even where 1 hour is permitted, modern designs commonly adopt 3 hours because the
+                cost difference is small and the safety margin is real.
               </li>
               <li>
-                <strong>Longer durations.</strong> Hospitals (where assisted evacuation may
-                take longer), care homes (similar), premises with phased evacuation strategy,
-                some high-rise residential, premises where the local authority or insurer
-                requires more. Up to 24 hours is occasionally seen for life-critical
-                healthcare.
+                <strong>Longer durations.</strong> Hospitals (where assisted evacuation may take
+                longer), care homes (similar), premises with phased evacuation strategy, some
+                high-rise residential, premises where the local authority or insurer requires more.
+                Up to 24 hours is occasionally seen for life-critical healthcare.
               </li>
               <li>
                 <strong>Standby-specific.</strong> Standby lighting duration matched to the
-                operational fail-over time plus margin. Datacentre fail-over of 90 s plus
-                margin = typical 3-5 minutes standby duration if generator-backed; longer if
-                battery-only.
+                operational fail-over time plus margin. Datacentre fail-over of 90 s plus margin =
+                typical 3-5 minutes standby duration if generator-backed; longer if battery-only.
               </li>
             </ul>
             <p>
@@ -880,40 +1309,38 @@ const EmergencyLightingModule1Section3 = () => {
                 <strong>Lithium iron phosphate (LiFePO₄).</strong> Modern default for new
                 self-contained products. Long cycle life (1500-3000 cycles), thermal stability,
                 shallow discharge tolerance, low maintenance. Typical service life 5-7 years.
-                Specific energy moderate but adequate for the small capacities needed (1-2 hr at
-                a few watts). Most major manufacturers have transitioned to LiFePO₄ as the
-                default chemistry for new product launches.
+                Specific energy moderate but adequate for the small capacities needed (1-2 hr at a
+                few watts). Most major manufacturers have transitioned to LiFePO₄ as the default
+                chemistry for new product launches.
               </li>
               <li>
-                <strong>Lithium-ion.</strong> Some products still use Li-ion (typically
-                NMC/LCO chemistry). Higher specific energy than LiFePO₄ but shorter cycle life
-                and stricter charging / temperature management. Service life 4-6 years.
+                <strong>Lithium-ion.</strong> Some products still use Li-ion (typically NMC/LCO
+                chemistry). Higher specific energy than LiFePO₄ but shorter cycle life and stricter
+                charging / temperature management. Service life 4-6 years.
               </li>
               <li>
-                <strong>Nickel-metal hydride (NiMH).</strong> Common in 2010s products. Service
-                life 3-5 years. Increasingly replaced by lithium chemistries on new product
-                launches. Existing installations come up for battery replacement at 3-5 year
-                intervals.
+                <strong>Nickel-metal hydride (NiMH).</strong> Common in 2010s products. Service life
+                3-5 years. Increasingly replaced by lithium chemistries on new product launches.
+                Existing installations come up for battery replacement at 3-5 year intervals.
               </li>
               <li>
-                <strong>Nickel-cadmium (NiCd).</strong> Legacy technology. Long service life
-                (8-10 years) but environmental and charging-behaviour disadvantages. Cadmium
-                recycling regulated. Phased out for most new products; existing installations
-                still in service in older buildings.
+                <strong>Nickel-cadmium (NiCd).</strong> Legacy technology. Long service life (8-10
+                years) but environmental and charging-behaviour disadvantages. Cadmium recycling
+                regulated. Phased out for most new products; existing installations still in service
+                in older buildings.
               </li>
               <li>
-                <strong>Sealed lead-acid (VRLA).</strong> Used in central battery systems
-                rather than self-contained. Long life when well-maintained (8-10+ years), high
-                capacity, well-understood chemistry. Specialist maintenance required.
+                <strong>Sealed lead-acid (VRLA).</strong> Used in central battery systems rather
+                than self-contained. Long life when well-maintained (8-10+ years), high capacity,
+                well-understood chemistry. Specialist maintenance required.
               </li>
             </ul>
             <p>
-              When specifying a new self-contained system, the chemistry choice typically
-              follows the product line — most current major-brand luminaires use LiFePO₄. The
-              data sheet states it. The replacement cycle and procurement plan can then be
-              built around the stated service life. Battery replacement labour is a substantial
-              proportion of lifecycle cost; design for accessible mounting positions reduces
-              future cost.
+              When specifying a new self-contained system, the chemistry choice typically follows
+              the product line — most current major-brand luminaires use LiFePO₄. The data sheet
+              states it. The replacement cycle and procurement plan can then be built around the
+              stated service life. Battery replacement labour is a substantial proportion of
+              lifecycle cost; design for accessible mounting positions reduces future cost.
             </p>
           </ConceptBlock>
 
@@ -924,34 +1351,34 @@ const EmergencyLightingModule1Section3 = () => {
             <p>Integration trends:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>DALI EM (IEC 62386-202).</strong> The dominant addressable protocol
-                for emergency lighting. Each luminaire on the DALI bus has its own address;
-                the central controller initiates monthly functional and annual full-discharge
-                tests, collects results, raises alerts on failure. Reduces manual testing
-                burden; documentation is the system log rather than a paper book.
+                <strong>DALI EM (IEC 62386-202).</strong> The dominant addressable protocol for
+                emergency lighting. Each luminaire on the DALI bus has its own address; the central
+                controller initiates monthly functional and annual full-discharge tests, collects
+                results, raises alerts on failure. Reduces manual testing burden; documentation is
+                the system log rather than a paper book.
               </li>
               <li>
-                <strong>Wireless self-test.</strong> Each luminaire performs its own scheduled
-                tests using internal electronics; results are reported wirelessly (often via
-                a low-power 2.4 GHz mesh) to a central gateway. No bus-cabling cost; suits
-                retrofit. The gateway pushes results to a web portal or BMS.
+                <strong>Wireless self-test.</strong> Each luminaire performs its own scheduled tests
+                using internal electronics; results are reported wirelessly (often via a low-power
+                2.4 GHz mesh) to a central gateway. No bus-cabling cost; suits retrofit. The gateway
+                pushes results to a web portal or BMS.
               </li>
               <li>
-                <strong>BMS integration.</strong> Modbus, BACnet, KNX. The emergency-lighting
-                test results feed into the building management system; the FM contractor sees
-                a single pane of glass. Useful for large estates managed centrally.
+                <strong>BMS integration.</strong> Modbus, BACnet, KNX. The emergency-lighting test
+                results feed into the building management system; the FM contractor sees a single
+                pane of glass. Useful for large estates managed centrally.
               </li>
               <li>
                 <strong>Cybersecurity.</strong> Wireless / connected products bring a small
-                cybersecurity surface. Ensure products have current firmware update support
-                and appropriate authentication on the management portal. Standards evolving in
-                this space.
+                cybersecurity surface. Ensure products have current firmware update support and
+                appropriate authentication on the management portal. Standards evolving in this
+                space.
               </li>
               <li>
-                <strong>Commissioning effort.</strong> Addressable / connected systems require
-                more commissioning effort than standard self-contained — bus address mapping,
-                test schedule configuration, gateway setup. Cost premium during commissioning;
-                lifetime saving in test labour can recover this.
+                <strong>Commissioning effort.</strong> Addressable / connected systems require more
+                commissioning effort than standard self-contained — bus address mapping, test
+                schedule configuration, gateway setup. Cost premium during commissioning; lifetime
+                saving in test labour can recover this.
               </li>
             </ul>
           </ConceptBlock>
@@ -975,8 +1402,7 @@ const EmergencyLightingModule1Section3 = () => {
           <FAQ
             items={[
               {
-                question:
-                  'Is self-contained always cheaper than central battery?',
+                question: 'Is self-contained always cheaper than central battery?',
                 answer:
                   'Lower install cost almost always (no central plant, no dedicated emergency distribution). Lifetime cost depends on the maintenance regime: distributed batteries replaced individually adds labour; centralised replacement on a planned schedule can be more efficient. For routine commercial small-to-medium installations (offices, retail, hospitality up to a few hundred luminaires), self-contained typically wins on both install and lifecycle. For large institutional sites (hospitals, datacentres, theatres, transport hubs), central battery often wins on lifecycle through centralised maintenance.',
               },
@@ -993,10 +1419,9 @@ const EmergencyLightingModule1Section3 = () => {
                   'Self-contained LED luminaires throughout. Maintained mode at exit signs (so the running-man pictogram is always visible). Non-maintained mode along the escape route corridors. Standard 3-hour duration. Modern LED self-contained units cost £40-100 each in product cost; install cost adds typically £40-80 per point. For a small office (10-15 points), total project cost is often £1500-£3000 including documentation. The lifetime cost is dominated by battery replacement at 5-7 year intervals plus annual maintenance — typically £200-400 per year for a small-office scale system.',
               },
               {
-                question:
-                  'Is sustained / combined operation widely used in modern fittings?',
+                question: 'Is sustained / combined operation widely used in modern fittings?',
                 answer:
-                  'Yes — particularly in modern multi-functional architectural fittings where the same physical luminaire provides general lighting (DALI / scene controlled) and emergency lighting. The two light sources inside the housing are independent; the normal lamp can be at any output (or off) under building lighting controls without affecting the emergency lamp\'s readiness. Common in hotels, restaurants, modern offices with sophisticated lighting design.',
+                  "Yes — particularly in modern multi-functional architectural fittings where the same physical luminaire provides general lighting (DALI / scene controlled) and emergency lighting. The two light sources inside the housing are independent; the normal lamp can be at any output (or off) under building lighting controls without affecting the emergency lamp's readiness. Common in hotels, restaurants, modern offices with sophisticated lighting design.",
               },
               {
                 question:
@@ -1017,8 +1442,7 @@ const EmergencyLightingModule1Section3 = () => {
                   'Use Ex-rated emergency luminaires certified for the applicable zone (typically Ex d, Ex e, or Ex i variants). The product must comply with both BS EN 60598-2-22 (emergency lighting product standard) AND the IECEx / ATEX certification for the hazardous area. Ex-rated emergency lights are available from specialist manufacturers; cost premium is significant. The rest of the BS 5266-1 / BS EN 1838 design framework applies as normal — escape, anti-panic, high-risk, etc. — but the products are zone-rated.',
               },
               {
-                question:
-                  'My client wants wireless self-test — is this BS 5266 compliant?',
+                question: 'My client wants wireless self-test — is this BS 5266 compliant?',
                 answer:
                   'Yes — BS 5266-1:2025 and BS EN 50172:2024 do not mandate any particular test mechanism. The standards specify the test schedule (daily / monthly / annual / 5-year). How the tests are executed is a system-design choice. Wireless self-test where the luminaire performs its own scheduled tests and reports wirelessly is fully compliant provided the test logs are retained and accessible per BS EN 50172:2024 §6. Many large estates now use addressable / wireless systems to reduce manual test burden.',
               },

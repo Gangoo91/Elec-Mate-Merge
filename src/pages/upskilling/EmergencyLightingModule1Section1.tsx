@@ -201,7 +201,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'RRO 2005 Article 32(8) imposes personal liability on directors / managers / officers where corporate failures are due to their consent, connivance or neglect. The responsible person bears the primary duty. Engaging a competent contractor is good practice and supports the responsible person\'s defence, but does not displace the legal duty. Liability is not transferred by signing a service contract.',
+      "RRO 2005 Article 32(8) imposes personal liability on directors / managers / officers where corporate failures are due to their consent, connivance or neglect. The responsible person bears the primary duty. Engaging a competent contractor is good practice and supports the responsible person's defence, but does not displace the legal duty. Liability is not transferred by signing a service contract.",
   },
   {
     id: 10,
@@ -254,7 +254,7 @@ const EmergencyLightingModule1Section1 = () => {
               'Workplace (Health, Safety and Welfare) Regulations 1992 Reg 8 requires emergency lighting wherever lighting failure would put workers at risk. HSAW Act 1974 imposes the underlying general duty of care.',
               'BS 5266-1:2025 is the British Standard. It is a Code of Practice — recommendatory, not statute — but following it is the standard route to demonstrating compliance with the RRO.',
               'The 2025 edition broadened the scope to escape + local-area + standby lighting, EXCLUDED borrowed light from design provision, introduced a 5-year photometric verification requirement, and imposed segmentation rules for high-risk areas (≥2 circuits, ≤20 luminaires per fault).',
-              'Penalties for failure are real. RRO Art 32: unlimited fine and/or 2 years\' custodial. Officers of bodies corporate are personally liable under Art 32(8). Insurer cover voids on non-compliance. Civil liability follows.',
+              "Penalties for failure are real. RRO Art 32: unlimited fine and/or 2 years' custodial. Officers of bodies corporate are personally liable under Art 32(8). Insurer cover voids on non-compliance. Civil liability follows.",
             ]}
           />
 
@@ -280,15 +280,13 @@ const EmergencyLightingModule1Section1 = () => {
             plainEnglish="Emergency lighting is the automatic illumination that comes on when the normal mains lighting fails. Its job is to give occupants enough light, for long enough, to do whatever they need to do safely while the mains is out. BS 5266-1:2025 identifies four distinct functions, each with its own performance requirement."
             onSite="Walk a premises in your head before designing. What will the occupants actually need to DO if the lights go out? Find the exit? Calm down and re-orient? Shut down a press before leaving? Carry on operating an X-ray machine? Each function maps to a different category and a different illuminance level."
           >
-            <p>
-              The four functions BS 5266-1:2025 recognises:
-            </p>
+            <p>The four functions BS 5266-1:2025 recognises:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Escape route lighting.</strong> The illumination of the defined escape
-                route — corridors, staircases, fire-exit doors. Per BS EN 1838:2024 the minimum is
-                1 lx measured at floor level across the FULL WIDTH of the escape route, with edge
-                exclusions (outer 0.5 m on routes > 2 m, outer ¼ width on routes ≤ 2 m). The 2024
+                <strong>Escape route lighting.</strong> The illumination of the defined escape route
+                — corridors, staircases, fire-exit doors. Per BS EN 1838:2024 the minimum is 1 lx
+                measured at floor level across the FULL WIDTH of the escape route, with edge
+                exclusions (outer 0.5 m on routes &gt; 2 m, outer ¼ width on routes ≤ 2 m). The 2024
                 edition replaces the 2013 centre-line + central-band wording. Provides the
                 navigational cue for occupants moving from where they are to outside the building.
               </li>
@@ -320,9 +318,9 @@ const EmergencyLightingModule1Section1 = () => {
             <p>
               A fifth category, <strong>local-area lighting</strong>, is recognised by BS EN
               1838:2024. It addresses areas where occupants are permitted (or required) to remain
-              during a mains-failure event — not escaping, not operating a hazardous process,
-              simply remaining safely in place. Care home bedrooms, hospital wards at night.
-              Levels per the 2024 EN.
+              during a mains-failure event — not escaping, not operating a hazardous process, simply
+              remaining safely in place. Care home bedrooms, hospital wards at night. Levels per the
+              2024 EN.
             </p>
           </ConceptBlock>
 
@@ -331,12 +329,12 @@ const EmergencyLightingModule1Section1 = () => {
             clause={
               <>
                 The function of emergency escape lighting is to provide automatically lighting of
-                sufficient duration and intensity to enable persons to leave the premises safely
-                in the event of failure of the normal supply, including where required (a) the
-                illumination of escape routes, (b) the illumination of open areas to prevent
-                panic, (c) the illumination of high-risk task areas to enable controlled
-                shutdown, and (d) where required for the use of the premises, the provision of
-                standby lighting to allow normal activities to continue.
+                sufficient duration and intensity to enable persons to leave the premises safely in
+                the event of failure of the normal supply, including where required (a) the
+                illumination of escape routes, (b) the illumination of open areas to prevent panic,
+                (c) the illumination of high-risk task areas to enable controlled shutdown, and (d)
+                where required for the use of the premises, the provision of standby lighting to
+                allow normal activities to continue.
               </>
             }
             meaning="The four-function model is now codified in the standard's general principles. A design that addresses only escape routes, ignoring anti-panic and high-risk task and standby where they apply, does not deliver the standard's intent. The risk assessment is what tells you which functions apply."
@@ -350,15 +348,15 @@ const EmergencyLightingModule1Section1 = () => {
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
                 Escape route lighting solves <em>navigation</em> — does the occupant know which way
-                to go? 1 lx is the level at which the human eye can read directional signs and
-                see floor obstacles in a familiar route.
+                to go? 1 lx is the level at which the human eye can read directional signs and see
+                floor obstacles in a familiar route.
               </li>
               <li>
                 Anti-panic lighting solves <em>spatial comprehension</em> — does the occupant
-                understand the shape of the room they are in? In a dark open area, the brain
-                cannot resolve where walls and exits are. Even if specific paths are illuminated,
-                the surrounding darkness produces panic. 0.5 lx across the area, with a bounded
-                contrast ratio (40:1), keeps the geometry legible.
+                understand the shape of the room they are in? In a dark open area, the brain cannot
+                resolve where walls and exits are. Even if specific paths are illuminated, the
+                surrounding darkness produces panic. 0.5 lx across the area, with a bounded contrast
+                ratio (40:1), keeps the geometry legible.
               </li>
               <li>
                 High-risk task lighting solves <em>continued operation safely</em> — can the
@@ -368,16 +366,16 @@ const EmergencyLightingModule1Section1 = () => {
               </li>
               <li>
                 Standby lighting solves <em>continuity of activity</em> — can the activity itself
-                continue? Different from any of the above. Surgical operations cannot be paused
-                for 3 hours of mains failure; they must continue. Standby illuminance is set
-                against task performance, not safe egress.
+                continue? Different from any of the above. Surgical operations cannot be paused for
+                3 hours of mains failure; they must continue. Standby illuminance is set against
+                task performance, not safe egress.
               </li>
             </ul>
             <p>
-              The competent designer maps each space in the premises against the four functions
-              and provides the appropriate combination. Most spaces need at most one or two; some
-              spaces — a hospital theatre with adjoining recovery and corridor — need three or
-              four overlaid.
+              The competent designer maps each space in the premises against the four functions and
+              provides the appropriate combination. Most spaces need at most one or two; some spaces
+              — a hospital theatre with adjoining recovery and corridor — need three or four
+              overlaid.
             </p>
           </ConceptBlock>
 
@@ -404,85 +402,473 @@ const EmergencyLightingModule1Section1 = () => {
               aria-label="The Regulatory Reform (Fire Safety) Order 2005 duty chain. The responsible person carries Article 9 (risk assessment), Article 11 (arrangements), Article 14 (escape routes including emergency lighting), and Article 17 (maintenance). These flow downward to the technical standards BS 5266-1:2025, BS EN 1838:2024 and BS EN 50172:2024 which deliver the engineering compliance, with sanction under Article 32 for failure."
             >
               {/* Legal layer */}
-              <rect x="20" y="20" width="780" height="80" rx="10" fill="rgba(168,85,247,0.06)" stroke="#A855F7" strokeWidth="1.6" />
-              <text x="410" y="42" textAnchor="middle" fill="#A855F7" fontSize="11" fontWeight="bold">LEGAL DUTY · Regulatory Reform (Fire Safety) Order 2005</text>
-              <text x="410" y="58" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="9.5">Responsible person — employer / owner / occupier / person with control of the premises</text>
-              <text x="410" y="74" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Duty cannot be discharged by appointing a contractor; engagement supports compliance, does not transfer it</text>
-              <text x="410" y="90" textAnchor="middle" fill="rgba(168,85,247,0.85)" fontSize="9.5" fontWeight="bold">Articles 9 · 11 · 14 · 17 · 32</text>
+              <rect
+                x="20"
+                y="20"
+                width="780"
+                height="80"
+                rx="10"
+                fill="rgba(168,85,247,0.06)"
+                stroke="#A855F7"
+                strokeWidth="1.6"
+              />
+              <text
+                x="410"
+                y="42"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                LEGAL DUTY · Regulatory Reform (Fire Safety) Order 2005
+              </text>
+              <text x="410" y="58" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="9.5">
+                Responsible person — employer / owner / occupier / person with control of the
+                premises
+              </text>
+              <text x="410" y="74" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                Duty cannot be discharged by appointing a contractor; engagement supports
+                compliance, does not transfer it
+              </text>
+              <text
+                x="410"
+                y="90"
+                textAnchor="middle"
+                fill="rgba(168,85,247,0.85)"
+                fontSize="9.5"
+                fontWeight="bold"
+              >
+                Articles 9 · 11 · 14 · 17 · 32
+              </text>
 
               {/* Article boxes (4 across) */}
               <g>
-                <rect x="32" y="120" width="180" height="62" rx="8" fill="rgba(34,211,238,0.06)" stroke="#22D3EE" strokeWidth="1.4" />
-                <text x="122" y="138" textAnchor="middle" fill="#22D3EE" fontSize="10" fontWeight="bold">Art 9 — Risk assessment</text>
-                <text x="122" y="153" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Suitable + sufficient</text>
-                <text x="122" y="166" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Recorded if 5+ employees</text>
-                <text x="122" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Drives the design brief</text>
+                <rect
+                  x="32"
+                  y="120"
+                  width="180"
+                  height="62"
+                  rx="8"
+                  fill="rgba(34,211,238,0.06)"
+                  stroke="#22D3EE"
+                  strokeWidth="1.4"
+                />
+                <text
+                  x="122"
+                  y="138"
+                  textAnchor="middle"
+                  fill="#22D3EE"
+                  fontSize="10"
+                  fontWeight="bold"
+                >
+                  Art 9 — Risk assessment
+                </text>
+                <text x="122" y="153" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Suitable + sufficient
+                </text>
+                <text
+                  x="122"
+                  y="166"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Recorded if 5+ employees
+                </text>
+                <text
+                  x="122"
+                  y="178"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Drives the design brief
+                </text>
               </g>
               <g>
-                <rect x="222" y="120" width="180" height="62" rx="8" fill="rgba(34,211,238,0.06)" stroke="#22D3EE" strokeWidth="1.4" />
-                <text x="312" y="138" textAnchor="middle" fill="#22D3EE" fontSize="10" fontWeight="bold">Art 11 — Arrangements</text>
-                <text x="312" y="153" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Planning · organisation</text>
-                <text x="312" y="166" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Control · monitoring</text>
-                <text x="312" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Review of measures</text>
+                <rect
+                  x="222"
+                  y="120"
+                  width="180"
+                  height="62"
+                  rx="8"
+                  fill="rgba(34,211,238,0.06)"
+                  stroke="#22D3EE"
+                  strokeWidth="1.4"
+                />
+                <text
+                  x="312"
+                  y="138"
+                  textAnchor="middle"
+                  fill="#22D3EE"
+                  fontSize="10"
+                  fontWeight="bold"
+                >
+                  Art 11 — Arrangements
+                </text>
+                <text x="312" y="153" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Planning · organisation
+                </text>
+                <text
+                  x="312"
+                  y="166"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Control · monitoring
+                </text>
+                <text
+                  x="312"
+                  y="178"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Review of measures
+                </text>
               </g>
               <g>
-                <rect x="412" y="120" width="180" height="62" rx="8" fill="rgba(251,191,36,0.06)" stroke="#FBBF24" strokeWidth="1.4" />
-                <text x="502" y="138" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">Art 14 — Routes &amp; exits</text>
-                <text x="502" y="153" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Emergency lighting where</text>
-                <text x="502" y="166" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">natural light insufficient</text>
-                <text x="502" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Direct lighting requirement</text>
+                <rect
+                  x="412"
+                  y="120"
+                  width="180"
+                  height="62"
+                  rx="8"
+                  fill="rgba(251,191,36,0.06)"
+                  stroke="#FBBF24"
+                  strokeWidth="1.4"
+                />
+                <text
+                  x="502"
+                  y="138"
+                  textAnchor="middle"
+                  fill="#FBBF24"
+                  fontSize="10"
+                  fontWeight="bold"
+                >
+                  Art 14 — Routes &amp; exits
+                </text>
+                <text x="502" y="153" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Emergency lighting where
+                </text>
+                <text x="502" y="166" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  natural light insufficient
+                </text>
+                <text
+                  x="502"
+                  y="178"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Direct lighting requirement
+                </text>
               </g>
               <g>
-                <rect x="602" y="120" width="180" height="62" rx="8" fill="rgba(34,211,238,0.06)" stroke="#22D3EE" strokeWidth="1.4" />
-                <text x="692" y="138" textAnchor="middle" fill="#22D3EE" fontSize="10" fontWeight="bold">Art 17 — Maintenance</text>
-                <text x="692" y="153" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Equipment kept in</text>
-                <text x="692" y="166" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">good repair · efficient working</text>
-                <text x="692" y="178" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">order — competent person</text>
+                <rect
+                  x="602"
+                  y="120"
+                  width="180"
+                  height="62"
+                  rx="8"
+                  fill="rgba(34,211,238,0.06)"
+                  stroke="#22D3EE"
+                  strokeWidth="1.4"
+                />
+                <text
+                  x="692"
+                  y="138"
+                  textAnchor="middle"
+                  fill="#22D3EE"
+                  fontSize="10"
+                  fontWeight="bold"
+                >
+                  Art 17 — Maintenance
+                </text>
+                <text x="692" y="153" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  Equipment kept in
+                </text>
+                <text x="692" y="166" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                  good repair · efficient working
+                </text>
+                <text
+                  x="692"
+                  y="178"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  order — competent person
+                </text>
               </g>
 
               {/* Connector arrows downward */}
-              <line x1="122" y1="184" x2="122" y2="220" stroke="rgba(255,255,255,0.35)" strokeWidth="1.4" />
+              <line
+                x1="122"
+                y1="184"
+                x2="122"
+                y2="220"
+                stroke="rgba(255,255,255,0.35)"
+                strokeWidth="1.4"
+              />
               <polygon points="122,220 118,212 126,212" fill="rgba(255,255,255,0.55)" />
-              <line x1="312" y1="184" x2="312" y2="220" stroke="rgba(255,255,255,0.35)" strokeWidth="1.4" />
+              <line
+                x1="312"
+                y1="184"
+                x2="312"
+                y2="220"
+                stroke="rgba(255,255,255,0.35)"
+                strokeWidth="1.4"
+              />
               <polygon points="312,220 308,212 316,212" fill="rgba(255,255,255,0.55)" />
-              <line x1="502" y1="184" x2="502" y2="220" stroke="rgba(255,255,255,0.35)" strokeWidth="1.4" />
+              <line
+                x1="502"
+                y1="184"
+                x2="502"
+                y2="220"
+                stroke="rgba(255,255,255,0.35)"
+                strokeWidth="1.4"
+              />
               <polygon points="502,220 498,212 506,212" fill="rgba(255,255,255,0.55)" />
-              <line x1="692" y1="184" x2="692" y2="220" stroke="rgba(255,255,255,0.35)" strokeWidth="1.4" />
+              <line
+                x1="692"
+                y1="184"
+                x2="692"
+                y2="220"
+                stroke="rgba(255,255,255,0.35)"
+                strokeWidth="1.4"
+              />
               <polygon points="692,220 688,212 696,212" fill="rgba(255,255,255,0.55)" />
 
               {/* Standards layer */}
-              <rect x="20" y="226" width="780" height="116" rx="10" fill="rgba(34,197,94,0.05)" stroke="#22C55E" strokeWidth="1.6" />
-              <text x="410" y="246" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">TECHNICAL STANDARDS · the engineering route to compliance</text>
+              <rect
+                x="20"
+                y="226"
+                width="780"
+                height="116"
+                rx="10"
+                fill="rgba(34,197,94,0.05)"
+                stroke="#22C55E"
+                strokeWidth="1.6"
+              />
+              <text
+                x="410"
+                y="246"
+                textAnchor="middle"
+                fill="#22C55E"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                TECHNICAL STANDARDS · the engineering route to compliance
+              </text>
 
               <g>
-                <rect x="40" y="256" width="240" height="76" rx="8" fill="rgba(34,197,94,0.05)" stroke="rgba(34,197,94,0.5)" strokeWidth="1.2" />
-                <text x="160" y="272" textAnchor="middle" fill="#86EFAC" fontSize="10" fontWeight="bold">BS 5266-1:2025</text>
-                <text x="160" y="286" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="9">UK Code of Practice — design,</text>
-                <text x="160" y="299" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="9">install, commission, maintain,</text>
-                <text x="160" y="312" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="9">verify (incl. 5-yr photometric)</text>
-                <text x="160" y="325" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Effective 31 Oct 2025</text>
+                <rect
+                  x="40"
+                  y="256"
+                  width="240"
+                  height="76"
+                  rx="8"
+                  fill="rgba(34,197,94,0.05)"
+                  stroke="rgba(34,197,94,0.5)"
+                  strokeWidth="1.2"
+                />
+                <text
+                  x="160"
+                  y="272"
+                  textAnchor="middle"
+                  fill="#86EFAC"
+                  fontSize="10"
+                  fontWeight="bold"
+                >
+                  BS 5266-1:2025
+                </text>
+                <text
+                  x="160"
+                  y="286"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.72)"
+                  fontSize="9"
+                >
+                  UK Code of Practice — design,
+                </text>
+                <text
+                  x="160"
+                  y="299"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.72)"
+                  fontSize="9"
+                >
+                  install, commission, maintain,
+                </text>
+                <text
+                  x="160"
+                  y="312"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.72)"
+                  fontSize="9"
+                >
+                  verify (incl. 5-yr photometric)
+                </text>
+                <text
+                  x="160"
+                  y="325"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Effective 31 Oct 2025
+                </text>
               </g>
               <g>
-                <rect x="290" y="256" width="240" height="76" rx="8" fill="rgba(34,197,94,0.05)" stroke="rgba(34,197,94,0.5)" strokeWidth="1.2" />
-                <text x="410" y="272" textAnchor="middle" fill="#86EFAC" fontSize="10" fontWeight="bold">BS EN 1838:2024</text>
-                <text x="410" y="286" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="9">Lighting applications —</text>
-                <text x="410" y="299" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="9">illuminance levels (1 lx, 0.5 lx,</text>
-                <text x="410" y="312" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="9">15 lx) + 2024 full-width rule</text>
-                <text x="410" y="325" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Local-area lighting (NEW)</text>
+                <rect
+                  x="290"
+                  y="256"
+                  width="240"
+                  height="76"
+                  rx="8"
+                  fill="rgba(34,197,94,0.05)"
+                  stroke="rgba(34,197,94,0.5)"
+                  strokeWidth="1.2"
+                />
+                <text
+                  x="410"
+                  y="272"
+                  textAnchor="middle"
+                  fill="#86EFAC"
+                  fontSize="10"
+                  fontWeight="bold"
+                >
+                  BS EN 1838:2024
+                </text>
+                <text
+                  x="410"
+                  y="286"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.72)"
+                  fontSize="9"
+                >
+                  Lighting applications —
+                </text>
+                <text
+                  x="410"
+                  y="299"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.72)"
+                  fontSize="9"
+                >
+                  illuminance levels (1 lx, 0.5 lx,
+                </text>
+                <text
+                  x="410"
+                  y="312"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.72)"
+                  fontSize="9"
+                >
+                  15 lx) + 2024 full-width rule
+                </text>
+                <text
+                  x="410"
+                  y="325"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  Local-area lighting (NEW)
+                </text>
               </g>
               <g>
-                <rect x="540" y="256" width="240" height="76" rx="8" fill="rgba(34,197,94,0.05)" stroke="rgba(34,197,94,0.5)" strokeWidth="1.2" />
-                <text x="660" y="272" textAnchor="middle" fill="#86EFAC" fontSize="10" fontWeight="bold">BS EN 50172:2024</text>
-                <text x="660" y="286" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="9">Emergency escape lighting</text>
-                <text x="660" y="299" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="9">systems — testing regime</text>
-                <text x="660" y="312" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="9">(daily / monthly / annual)</text>
-                <text x="660" y="325" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">+ 5-year photometric (2024)</text>
+                <rect
+                  x="540"
+                  y="256"
+                  width="240"
+                  height="76"
+                  rx="8"
+                  fill="rgba(34,197,94,0.05)"
+                  stroke="rgba(34,197,94,0.5)"
+                  strokeWidth="1.2"
+                />
+                <text
+                  x="660"
+                  y="272"
+                  textAnchor="middle"
+                  fill="#86EFAC"
+                  fontSize="10"
+                  fontWeight="bold"
+                >
+                  BS EN 50172:2024
+                </text>
+                <text
+                  x="660"
+                  y="286"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.72)"
+                  fontSize="9"
+                >
+                  Emergency escape lighting
+                </text>
+                <text
+                  x="660"
+                  y="299"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.72)"
+                  fontSize="9"
+                >
+                  systems — testing regime
+                </text>
+                <text
+                  x="660"
+                  y="312"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.72)"
+                  fontSize="9"
+                >
+                  (daily / monthly / annual)
+                </text>
+                <text
+                  x="660"
+                  y="325"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.55)"
+                  fontSize="9"
+                >
+                  + 5-year photometric (2024)
+                </text>
               </g>
 
               {/* Sanction strip — separated from standards layer */}
-              <rect x="20" y="356" width="780" height="48" rx="8" fill="rgba(239,68,68,0.06)" stroke="rgba(239,68,68,0.4)" strokeWidth="1.4" />
-              <text x="410" y="376" textAnchor="middle" fill="#EF4444" fontSize="11" fontWeight="bold">⚠ SANCTION · RRO Article 32</text>
-              <text x="410" y="392" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9.5">Tier 1 summary fine · Tier 2 unlimited fine + custodial up to 2 years · Officer personal liability under Art 32(8)</text>
+              <rect
+                x="20"
+                y="356"
+                width="780"
+                height="48"
+                rx="8"
+                fill="rgba(239,68,68,0.06)"
+                stroke="rgba(239,68,68,0.4)"
+                strokeWidth="1.4"
+              />
+              <text
+                x="410"
+                y="376"
+                textAnchor="middle"
+                fill="#EF4444"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                ⚠ SANCTION · RRO Article 32
+              </text>
+              <text
+                x="410"
+                y="392"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.65)"
+                fontSize="9.5"
+              >
+                Tier 1 summary fine · Tier 2 unlimited fine + custodial up to 2 years · Officer
+                personal liability under Art 32(8)
+              </text>
             </svg>
           </div>
 
@@ -504,18 +890,18 @@ const EmergencyLightingModule1Section1 = () => {
               <li>
                 In relation to any premises not falling within paragraph (a) above —{' '}
                 <strong>the person who has control of the premises</strong> (as occupier or
-                otherwise) in connection with the carrying on by them of a trade, business or
-                other undertaking (for profit or not); or, if there is no such person,{' '}
+                otherwise) in connection with the carrying on by them of a trade, business or other
+                undertaking (for profit or not); or, if there is no such person,{' '}
                 <strong>the owner</strong>.
               </li>
             </ul>
             <p>
-              Two practical consequences. First, the duty is real and personal — directors,
-              partners and senior managers can find themselves named in proceedings under Art
-              32(8) where the corporate failure was due to their consent, connivance or neglect.
-              Second, multiple responsible persons can co-exist within one building (an HMO with
-              communal landlord plus individual tenants; a shopping centre with the centre
-              landlord plus each unit operator) and must cooperate (Art 22).
+              Two practical consequences. First, the duty is real and personal — directors, partners
+              and senior managers can find themselves named in proceedings under Art 32(8) where the
+              corporate failure was due to their consent, connivance or neglect. Second, multiple
+              responsible persons can co-exist within one building (an HMO with communal landlord
+              plus individual tenants; a shopping centre with the centre landlord plus each unit
+              operator) and must cooperate (Art 22).
             </p>
           </ConceptBlock>
 
@@ -524,11 +910,14 @@ const EmergencyLightingModule1Section1 = () => {
             clause={
               <>
                 Where necessary in order to safeguard the safety of relevant persons, the
-                responsible person must ensure that — (a) emergency routes and exits are kept
-                clear at all times; (b) the routes and exits lead as directly as possible to a
-                place of safety; (h) <strong>emergency routes and exits requiring illumination
-                are provided with emergency lighting of adequate intensity</strong> in case the
-                lighting fails.
+                responsible person must ensure that — (a) emergency routes and exits are kept clear
+                at all times; (b) the routes and exits lead as directly as possible to a place of
+                safety; (h){' '}
+                <strong>
+                  emergency routes and exits requiring illumination are provided with emergency
+                  lighting of adequate intensity
+                </strong>{' '}
+                in case the lighting fails.
               </>
             }
             meaning="Article 14(2)(h) is the explicit emergency-lighting hook. 'Where necessary' is determined by the Article 9 risk assessment. 'Adequate intensity' is delivered through the technical standards (BS 5266-1:2025 + BS EN 1838:2024). The duty is on the responsible person; the technical standards are the delivery vehicle."
@@ -542,37 +931,37 @@ const EmergencyLightingModule1Section1 = () => {
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
                 <strong>Competent person.</strong> The maintenance must be carried out by a person
-                competent to do it. For emergency lighting, that means a person with the
-                electrical and EL-specific training to operate the test facilities, interpret
-                discharge readings, identify and rectify faults, and (for the photometric survey)
-                operate a calibrated luxmeter against the BS EN 1838 levels.
+                competent to do it. For emergency lighting, that means a person with the electrical
+                and EL-specific training to operate the test facilities, interpret discharge
+                readings, identify and rectify faults, and (for the photometric survey) operate a
+                calibrated luxmeter against the BS EN 1838 levels.
               </li>
               <li>
                 <strong>Documented regime.</strong> Tests carried out, dates, results, defects
                 found, defects rectified, signature, identity of tester. The log book per BS EN
-                50172:2024 §6 is the legal record. A clean log is part of the responsible
-                person's defence.
+                50172:2024 §6 is the legal record. A clean log is part of the responsible person's
+                defence.
               </li>
               <li>
-                <strong>Action on defects.</strong> Article 17 requires "efficient working order
-                and good repair". A defect identified by a test that is not rectified breaks the
-                duty. The defect, the date identified, the date rectified, and the corrective
-                action all go into the log.
+                <strong>Action on defects.</strong> Article 17 requires "efficient working order and
+                good repair". A defect identified by a test that is not rectified breaks the duty.
+                The defect, the date identified, the date rectified, and the corrective action all
+                go into the log.
               </li>
               <li>
                 <strong>Periodic re-verification.</strong> The system that worked at commissioning
                 may not work after 10 years of lumen depreciation, dirt, decoration changes, and
                 room layout shifts. The 5-year photometric survey (NEW in 2025) is the periodic
-                re-verification that closes the gap between annual functional checks and actual
-                site illuminance.
+                re-verification that closes the gap between annual functional checks and actual site
+                illuminance.
               </li>
             </ul>
             <p>
-              Together, Articles 9, 11, 14, 17 and 32 form the legal architecture. Article 9
-              tells the responsible person to assess; Article 11 tells them to plan, organise and
-              monitor; Article 14 tells them to provide emergency lighting; Article 17 tells them
-              to maintain it; Article 32 tells them what happens if they don't. The technical
-              standards fill in the engineering detail.
+              Together, Articles 9, 11, 14, 17 and 32 form the legal architecture. Article 9 tells
+              the responsible person to assess; Article 11 tells them to plan, organise and monitor;
+              Article 14 tells them to provide emergency lighting; Article 17 tells them to maintain
+              it; Article 32 tells them what happens if they don't. The technical standards fill in
+              the engineering detail.
             </p>
           </ConceptBlock>
 
@@ -580,13 +969,13 @@ const EmergencyLightingModule1Section1 = () => {
             source="Regulatory Reform (Fire Safety) Order 2005 · Article 32 (Offences)"
             clause={
               <>
-                It is an offence for any responsible person or any other person mentioned in
-                article 5(3) to — (a) fail to comply with any requirement or prohibition imposed
-                by articles 8 to 22 and 38 (other than article 9(7)) where that failure places
-                one or more relevant persons at risk of death or serious injury in case of fire.
-                A person guilty of an offence under paragraph (1) is liable — (a) on summary
-                conviction, to a fine; (b) on conviction on indictment, to a fine, or to
-                imprisonment for a term not exceeding two years, or to both.
+                It is an offence for any responsible person or any other person mentioned in article
+                5(3) to — (a) fail to comply with any requirement or prohibition imposed by articles
+                8 to 22 and 38 (other than article 9(7)) where that failure places one or more
+                relevant persons at risk of death or serious injury in case of fire. A person guilty
+                of an offence under paragraph (1) is liable — (a) on summary conviction, to a fine;
+                (b) on conviction on indictment, to a fine, or to imprisonment for a term not
+                exceeding two years, or to both.
               </>
             }
             meaning="Article 32 is the criminal sanction. Tier-1 (general failures) is summary; Tier-2 (failures placing relevant persons at risk of death or serious injury) carries unlimited fine on indictment plus up to 2 years' custodial. Article 32(8) extends personal liability to officers of bodies corporate where the failure was due to their consent, connivance or neglect. This is not a regulatory comfort blanket — it is criminal law."
@@ -621,7 +1010,9 @@ const EmergencyLightingModule1Section1 = () => {
 
           <SectionRule />
 
-          <ContentEyebrow>Workplace Regulations 1992, HSAW 1974, and Approved Document B</ContentEyebrow>
+          <ContentEyebrow>
+            Workplace Regulations 1992, HSAW 1974, and Approved Document B
+          </ContentEyebrow>
 
           <ConceptBlock
             title="Workplace (Health, Safety and Welfare) Regulations 1992 Reg 8"
@@ -635,31 +1026,29 @@ const EmergencyLightingModule1Section1 = () => {
                 well as the working zones themselves.
               </li>
               <li>
-                <strong>Particularly exposed to danger.</strong> The risk test. Operating
-                machinery, working at height, working with hazardous substances, working alone
-                without fixed-link communications — all candidates. The test is whether sudden
-                lighting failure creates a real safety risk as distinct from inconvenience.
+                <strong>Particularly exposed to danger.</strong> The risk test. Operating machinery,
+                working at height, working with hazardous substances, working alone without
+                fixed-link communications — all candidates. The test is whether sudden lighting
+                failure creates a real safety risk as distinct from inconvenience.
               </li>
               <li>
                 <strong>In the event of failure of artificial lighting.</strong> The contemplated
                 event is mains failure of the artificial lighting that the workplace depends on.
-                Daylight-only premises with no artificial lighting in the working hours are
-                outside the trigger; premises with daylight that are also used outside daylight
-                hours are inside.
+                Daylight-only premises with no artificial lighting in the working hours are outside
+                the trigger; premises with daylight that are also used outside daylight hours are
+                inside.
               </li>
               <li>
-                <strong>Suitable and sufficient.</strong> The level and duration must be
-                appropriate to the risk. A small office: minimal escape lighting may be
-                sufficient. A printing press: high-risk task lighting is needed so the press can
-                be safely shut down. The Reg 8 duty links to BS 5266-1:2025 as the technical
-                delivery route.
+                <strong>Suitable and sufficient.</strong> The level and duration must be appropriate
+                to the risk. A small office: minimal escape lighting may be sufficient. A printing
+                press: high-risk task lighting is needed so the press can be safely shut down. The
+                Reg 8 duty links to BS 5266-1:2025 as the technical delivery route.
               </li>
             </ul>
             <p>
-              Reg 8 does NOT have a 5-employee threshold. It applies to every workplace within
-              scope of the Regulations. The MHSWR 1999 5-employee record threshold relates only
-              to the requirement that the risk assessment is written down, not to the substantive
-              duties.
+              Reg 8 does NOT have a 5-employee threshold. It applies to every workplace within scope
+              of the Regulations. The MHSWR 1999 5-employee record threshold relates only to the
+              requirement that the risk assessment is written down, not to the substantive duties.
             </p>
           </ConceptBlock>
 
@@ -672,19 +1061,17 @@ const EmergencyLightingModule1Section1 = () => {
               <li>
                 <strong>Section 2.</strong> General duty to employees — health, safety and welfare
                 so far as is reasonably practicable. Where lighting failure creates a workplace
-                risk, providing emergency lighting is reasonably practicable in almost all
-                premises.
+                risk, providing emergency lighting is reasonably practicable in almost all premises.
               </li>
               <li>
                 <strong>Section 3.</strong> Duty to non-employees — visitors, contractors, members
-                of the public. Important in retail, hospitality, healthcare, education — where
-                the people at risk are not on the employer's payroll.
+                of the public. Important in retail, hospitality, healthcare, education — where the
+                people at risk are not on the employer's payroll.
               </li>
               <li>
                 <strong>Section 7.</strong> Duty on employees — a separate stream. Employees must
-                cooperate with the employer to enable compliance. Includes responding to
-                emergency lighting test arrangements, not blocking luminaires with stock,
-                reporting defects.
+                cooperate with the employer to enable compliance. Includes responding to emergency
+                lighting test arrangements, not blocking luminaires with stock, reporting defects.
               </li>
               <li>
                 <strong>Sections 33 / 36 / 37.</strong> Offences and penalties. Body-corporate
@@ -693,10 +1080,10 @@ const EmergencyLightingModule1Section1 = () => {
               </li>
             </ul>
             <p>
-              In practice an emergency-lighting compliance failure typically attracts charges
-              under the RRO (which is the specific fire-safety statute) rather than HSAW (the
-              general duty). But HSAW operates in parallel. A failure at scale may attract
-              charges under both regimes.
+              In practice an emergency-lighting compliance failure typically attracts charges under
+              the RRO (which is the specific fire-safety statute) rather than HSAW (the general
+              duty). But HSAW operates in parallel. A failure at scale may attract charges under
+              both regimes.
             </p>
           </ConceptBlock>
 
@@ -705,12 +1092,11 @@ const EmergencyLightingModule1Section1 = () => {
             clause={
               <>
                 Escape routes should have lighting which provides illumination of suitable
-                intensity, considered against the risks identified. Areas listed in Table 5.1
-                should have emergency escape lighting, including (a) escape routes through
-                internal corridors and staircases, (b) underground or windowless accommodation,
-                (c) places of assembly, (d) parts of premises used for sleeping accommodation,
-                (e) escape routes serving high-risk areas. Emergency lighting should comply with
-                BS 5266-1.
+                intensity, considered against the risks identified. Areas listed in Table 5.1 should
+                have emergency escape lighting, including (a) escape routes through internal
+                corridors and staircases, (b) underground or windowless accommodation, (c) places of
+                assembly, (d) parts of premises used for sleeping accommodation, (e) escape routes
+                serving high-risk areas. Emergency lighting should comply with BS 5266-1.
               </>
             }
             meaning="Approved Document B is statutory guidance under the Building Regulations — it is the practical means of compliance for new build and material alteration. Cl. 5 provides the starter checklist of premises that need emergency lighting. Adopting BS 5266-1 satisfies the technical performance criteria. The list is not exhaustive — the risk assessment may identify other areas that need it."
@@ -739,8 +1125,8 @@ const EmergencyLightingModule1Section1 = () => {
                 large public areas. Open-area / anti-panic lighting typically required.
               </li>
               <li>
-                Sleeping accommodation — hotels, hostels, halls of residence, care homes,
-                hospitals. Often longer duration / different colour temperature considerations.
+                Sleeping accommodation — hotels, hostels, halls of residence, care homes, hospitals.
+                Often longer duration / different colour temperature considerations.
               </li>
               <li>
                 Escape routes serving high-risk areas — the route from the high-risk task area to
@@ -749,23 +1135,23 @@ const EmergencyLightingModule1Section1 = () => {
               </li>
               <li>
                 Lift cars (cross-reference BS EN 81-20 / 81-50) — for occupant trapped in a lift
-                during mains failure to be reassured, see the controls, and be located by the
-                rescue team.
+                during mains failure to be reassured, see the controls, and be located by the rescue
+                team.
               </li>
               <li>
                 Toilets / sanitary rooms above a certain size (typically &gt; 8 m²) or where the
                 escape route involves multiple turns.
               </li>
               <li>
-                Plant rooms and switchgear rooms — for safe egress and for emergency intervention
-                by an attending engineer.
+                Plant rooms and switchgear rooms — for safe egress and for emergency intervention by
+                an attending engineer.
               </li>
             </ul>
             <p>
               The list is the starter checklist, not the entire job. The risk assessment may
-              identify other rooms — a workshop with overhead crane, a chemical store, a
-              datacentre rack room — where the local circumstances put EL on the list even
-              though Approved Document B does not explicitly mention them.
+              identify other rooms — a workshop with overhead crane, a chemical store, a datacentre
+              rack room — where the local circumstances put EL on the list even though Approved
+              Document B does not explicitly mention them.
             </p>
           </ConceptBlock>
 
@@ -790,8 +1176,8 @@ const EmergencyLightingModule1Section1 = () => {
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
                 <strong>Section 1 — Scope.</strong> Covers escape lighting (escape route +
-                anti-panic + high-risk task), local-area lighting, AND standby lighting.
-                Borrowed light is excluded as a source of design provision.
+                anti-panic + high-risk task), local-area lighting, AND standby lighting. Borrowed
+                light is excluded as a source of design provision.
               </li>
               <li>
                 <strong>Section 2 — Normative references.</strong> Calls up BS EN 1838:2024 for
@@ -800,21 +1186,20 @@ const EmergencyLightingModule1Section1 = () => {
                 BS 7671 for the electrical installation.
               </li>
               <li>
-                <strong>Section 3 — Terms and definitions.</strong> Critical terms — escape
-                route, open area, high-risk task area, local area, standby lighting, points of
-                emphasis, contour limits, maintained / non-maintained / sustained luminaires.
+                <strong>Section 3 — Terms and definitions.</strong> Critical terms — escape route,
+                open area, high-risk task area, local area, standby lighting, points of emphasis,
+                contour limits, maintained / non-maintained / sustained luminaires.
               </li>
               <li>
-                <strong>Section 4 — General principles.</strong> Function (the four purposes
-                above), system architecture (self-contained / central battery / hybrid), design
-                approach (risk-driven), durations.
+                <strong>Section 4 — General principles.</strong> Function (the four purposes above),
+                system architecture (self-contained / central battery / hybrid), design approach
+                (risk-driven), durations.
               </li>
               <li>
                 <strong>Section 5 — Design.</strong> Calculation methods, points of emphasis (at
-                each exit, change of direction, intersection of corridors, every staircase,
-                outside each final exit, near each fire alarm call point and firefighting
-                equipment, near first-aid post, change of floor level), illuminance distribution
-                rules.
+                each exit, change of direction, intersection of corridors, every staircase, outside
+                each final exit, near each fire alarm call point and firefighting equipment, near
+                first-aid post, change of floor level), illuminance distribution rules.
               </li>
               <li>
                 <strong>Section 6 — Wiring and electrical supplies.</strong> NEW in 2025: high-risk
@@ -828,8 +1213,8 @@ const EmergencyLightingModule1Section1 = () => {
               </li>
               <li>
                 <strong>Section 8 — Inspection, servicing, testing.</strong> Aligns with BS EN
-                50172:2024 — daily visual checks (central battery), monthly functional tests,
-                annual full-duration tests, NEW 5-year photometric verification.
+                50172:2024 — daily visual checks (central battery), monthly functional tests, annual
+                full-duration tests, NEW 5-year photometric verification.
               </li>
               <li>
                 <strong>Annexes.</strong> Sample log book, design worked examples, test record
@@ -846,24 +1231,24 @@ const EmergencyLightingModule1Section1 = () => {
             <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
               <li>
                 <strong>Scope expansion.</strong> The standard now explicitly covers escape +
-                local-area + standby lighting. Designs that addressed only escape lighting under
-                the 2016 edition may be deficient in 2025 if the premises has spaces that need
+                local-area + standby lighting. Designs that addressed only escape lighting under the
+                2016 edition may be deficient in 2025 if the premises has spaces that need
                 local-area or standby coverage (care home bedrooms; hospital wards; operating
                 theatres; broadcast studios; data-centre racks during fail-over).
               </li>
               <li>
-                <strong>Borrowed-light exclusion.</strong> Light spilling in from an adjacent
-                space no longer counts as design provision. Every space needing emergency
-                lighting must be illuminated directly. Designs that previously relied on lobbies
-                being lit by spill from the corridor, or stair-half-landings being lit by spill
-                from the upper landing, must now provide their own dedicated luminaires.
+                <strong>Borrowed-light exclusion.</strong> Light spilling in from an adjacent space
+                no longer counts as design provision. Every space needing emergency lighting must be
+                illuminated directly. Designs that previously relied on lobbies being lit by spill
+                from the corridor, or stair-half-landings being lit by spill from the upper landing,
+                must now provide their own dedicated luminaires.
               </li>
               <li>
                 <strong>5-year photometric verification.</strong> NEW periodic check. Every five
-                years a calibrated luxmeter survey verifies that actual measured illuminance on
-                the escape route, in open areas, and at high-risk points still meets the BS EN
-                1838:2024 levels. Catches lumen depreciation, dirt, decoration changes, and
-                layout changes that an annual functional test cannot detect.
+                years a calibrated luxmeter survey verifies that actual measured illuminance on the
+                escape route, in open areas, and at high-risk points still meets the BS EN 1838:2024
+                levels. Catches lumen depreciation, dirt, decoration changes, and layout changes
+                that an annual functional test cannot detect.
               </li>
               <li>
                 <strong>High-risk area segmentation.</strong> NEW rule. Emergency luminaires in
@@ -873,10 +1258,10 @@ const EmergencyLightingModule1Section1 = () => {
               </li>
             </ol>
             <p>
-              Other 2025 changes — clarified handover documentation, refined illuminance
-              calculation methodology, updated cross-references to BS EN 1838:2024 and BS EN
-              50172:2024, expanded annex on special premises — are also worth reading, but the
-              four above are the ones that change design briefs and contract scopes.
+              Other 2025 changes — clarified handover documentation, refined illuminance calculation
+              methodology, updated cross-references to BS EN 1838:2024 and BS EN 50172:2024,
+              expanded annex on special premises — are also worth reading, but the four above are
+              the ones that change design briefs and contract scopes.
             </p>
           </ConceptBlock>
 
@@ -884,13 +1269,13 @@ const EmergencyLightingModule1Section1 = () => {
             source="BS 5266-1:2025 · Clause 8.3 (Periodic verification) — NEW"
             clause={
               <>
-                In addition to the periodic inspection and testing routine specified in clause
-                8.2, the photometric performance of the installation should be verified at
-                intervals not exceeding five years. The verification should establish that the
-                measured illuminance at the points of emphasis, across the full width of the
-                escape route (within the BS EN 1838:2024 non-excluded boundary), across the open
-                areas, and at the high-risk task points, is not less than the values specified in
-                BS EN 1838:2024. Records should be retained for a minimum of five years.
+                In addition to the periodic inspection and testing routine specified in clause 8.2,
+                the photometric performance of the installation should be verified at intervals not
+                exceeding five years. The verification should establish that the measured
+                illuminance at the points of emphasis, across the full width of the escape route
+                (within the BS EN 1838:2024 non-excluded boundary), across the open areas, and at
+                the high-risk task points, is not less than the values specified in BS EN 1838:2024.
+                Records should be retained for a minimum of five years.
               </>
             }
             meaning="Annual functional discharge tests prove the system runs for 3 hours; they do not prove the floor is illuminated to the required level. The 2025 5-year photometric survey closes that gap. It is the engineering check that matches the legal expectation under RRO Art 17 ('efficient working order'). Schedule it; budget for it; document it."
@@ -939,18 +1324,17 @@ const EmergencyLightingModule1Section1 = () => {
                 impact begins here.
               </li>
               <li>
-                <strong>Prohibition notice (RRO Art 31).</strong> Serious — restricts or
-                prohibits use of premises, in part or whole, until rectification. Issued where the
-                use poses a risk so serious it must stop. Commercially devastating; few small
-                businesses survive a long prohibition.
+                <strong>Prohibition notice (RRO Art 31).</strong> Serious — restricts or prohibits
+                use of premises, in part or whole, until rectification. Issued where the use poses a
+                risk so serious it must stop. Commercially devastating; few small businesses survive
+                a long prohibition.
               </li>
               <li>
                 <strong>Prosecution (RRO Art 32).</strong> Criminal proceedings. Tier-1 (general
-                non-compliance) is summary jurisdiction in the magistrates' court — fine.
-                Tier-2 (failures placing relevant persons at risk of death or serious injury)
-                indictable in the Crown Court — unlimited fine, custodial up to 2 years, or
-                both. Officer personal liability under Art 32(8) where attributable to consent,
-                connivance or neglect.
+                non-compliance) is summary jurisdiction in the magistrates' court — fine. Tier-2
+                (failures placing relevant persons at risk of death or serious injury) indictable in
+                the Crown Court — unlimited fine, custodial up to 2 years, or both. Officer personal
+                liability under Art 32(8) where attributable to consent, connivance or neglect.
               </li>
               <li>
                 <strong>Insurer voiding.</strong> Most commercial property insurance requires
@@ -961,17 +1345,16 @@ const EmergencyLightingModule1Section1 = () => {
               </li>
               <li>
                 <strong>Civil liability.</strong> A person injured during evacuation can sue the
-                responsible person personally and the body corporate under occupiers' liability
-                / negligence. Industry insurers may be involved or excluded depending on the
-                policy wording. Settlement values reflect the injury — broken bones, head
-                injuries, smoke inhalation, deaths.
+                responsible person personally and the body corporate under occupiers' liability /
+                negligence. Industry insurers may be involved or excluded depending on the policy
+                wording. Settlement values reflect the injury — broken bones, head injuries, smoke
+                inhalation, deaths.
               </li>
             </ul>
             <p>
               The cost of compliance is small. The cost of non-compliance, especially after an
               incident, is large and often personal — directors named in proceedings, custodial
-              sentences for the worst failures, businesses closed, premises uninsurable for
-              years.
+              sentences for the worst failures, businesses closed, premises uninsurable for years.
             </p>
           </ConceptBlock>
 
@@ -982,15 +1365,15 @@ const EmergencyLightingModule1Section1 = () => {
             <p>The standard insurance documentation pack for emergency lighting:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Design certificate.</strong> Issued at original design stage by a
-                competent designer. States the standard followed (BS 5266-1:2025), the design
-                premise (which areas need which category of EL), the luminaire schedule, the
-                durations, and the assumptions.
+                <strong>Design certificate.</strong> Issued at original design stage by a competent
+                designer. States the standard followed (BS 5266-1:2025), the design premise (which
+                areas need which category of EL), the luminaire schedule, the durations, and the
+                assumptions.
               </li>
               <li>
                 <strong>Installation certificate.</strong> Confirms the design was installed as
-                specified. Cross-reference to the BS 7671 Electrical Installation Certificate /
-                EICR for the supply and final circuits.
+                specified. Cross-reference to the BS 7671 Electrical Installation Certificate / EICR
+                for the supply and final circuits.
               </li>
               <li>
                 <strong>Commissioning certificate.</strong> Confirms first full functional and
@@ -1007,22 +1390,22 @@ const EmergencyLightingModule1Section1 = () => {
                 proving the system still delivers BS EN 1838 levels.
               </li>
               <li>
-                <strong>Risk assessment (RRO Art 9).</strong> Live document showing the
-                responsible person's assessment that drove the EL provision in the first place
-                and continues to be reviewed.
+                <strong>Risk assessment (RRO Art 9).</strong> Live document showing the responsible
+                person's assessment that drove the EL provision in the first place and continues to
+                be reviewed.
               </li>
               <li>
                 <strong>Competence evidence.</strong> Records that the designer, installer,
-                commissioner, and maintenance contractor are competent for emergency lighting
-                work — typically certification through an industry body (ICEL, LIA, BAFE) or
-                manufacturer training.
+                commissioner, and maintenance contractor are competent for emergency lighting work —
+                typically certification through an industry body (ICEL, LIA, BAFE) or manufacturer
+                training.
               </li>
             </ul>
             <p>
-              A compliance pack like this protects the responsible person commercially as well
-              as legally. Insurers price risk against documented compliance; absence of
-              documentation moves premiums upward and may make cover unavailable in some segments
-              (high-occupancy assembly, healthcare).
+              A compliance pack like this protects the responsible person commercially as well as
+              legally. Insurers price risk against documented compliance; absence of documentation
+              moves premiums upward and may make cover unavailable in some segments (high-occupancy
+              assembly, healthcare).
             </p>
           </ConceptBlock>
 
@@ -1036,7 +1419,7 @@ const EmergencyLightingModule1Section1 = () => {
               'BS 5266-1:2025 is the technical standard — Code of Practice. Following it is the standard route to demonstrating compliance with the legal duties.',
               'Four primary purposes: escape lighting, anti-panic / open-area, high-risk task area, standby (NEW in 2025 scope). Local-area lighting recognised by BS EN 1838:2024.',
               '2025 changes: scope expansion (now includes standby + local-area), borrowed light EXCLUDED, 5-year photometric verification REQUIRED, high-risk areas need ≥2 circuits and ≤20 luminaires per fault.',
-              'Penalties under RRO Art 32: unlimited fine, up to 2 years\' custodial. Officer personal liability under Art 32(8). Insurer voiding plus civil liability layered on top.',
+              "Penalties under RRO Art 32: unlimited fine, up to 2 years' custodial. Officer personal liability under Art 32(8). Insurer voiding plus civil liability layered on top.",
               'The 5-year photometric survey is the new audit point. Annual discharge tests prove the system runs; the photometric survey proves the floor is still illuminated to BS EN 1838 levels.',
               'Documentation is part of compliance. Design / installation / commissioning certificates, log book, risk assessment, photometric records, competence evidence.',
             ]}
@@ -1071,13 +1454,13 @@ const EmergencyLightingModule1Section1 = () => {
                 question:
                   'The 2025 edition came in on 31 October 2025. What about systems designed before that under the 2016 edition?',
                 answer:
-                  'Systems designed and installed under BS 5266-1:2016 remain valid for their compliance demonstration at the time of installation. Periodic verification under the 2025 edition will pick up any gap — for example, a 2016 design relying on borrowed light will fail the 2025 photometric survey because the borrowed source doesn\'t deliver design illuminance directly. Best practice for retrofits / extensions / re-fits after 31 October 2025 is to design to the 2025 edition. Existing systems are remediated as part of the 5-year photometric verification cycle.',
+                  "Systems designed and installed under BS 5266-1:2016 remain valid for their compliance demonstration at the time of installation. Periodic verification under the 2025 edition will pick up any gap — for example, a 2016 design relying on borrowed light will fail the 2025 photometric survey because the borrowed source doesn't deliver design illuminance directly. Best practice for retrofits / extensions / re-fits after 31 October 2025 is to design to the 2025 edition. Existing systems are remediated as part of the 5-year photometric verification cycle.",
               },
               {
                 question:
                   'Who is liable if a contractor I engaged installs sub-standard EL and someone is injured?',
                 answer:
-                  'Both, separately. The responsible person is liable under the RRO for the failure of the premises\' fire safety provisions (Art 32). The contractor may be liable under HSAW 1974 for failures attributable to their work, in contract for the substandard work, in tort for negligence, and in product liability if the equipment itself was defective. The two streams of liability run in parallel; a settlement on one does not extinguish the other.',
+                  "Both, separately. The responsible person is liable under the RRO for the failure of the premises' fire safety provisions (Art 32). The contractor may be liable under HSAW 1974 for failures attributable to their work, in contract for the substandard work, in tort for negligence, and in product liability if the equipment itself was defective. The two streams of liability run in parallel; a settlement on one does not extinguish the other.",
               },
               {
                 question:

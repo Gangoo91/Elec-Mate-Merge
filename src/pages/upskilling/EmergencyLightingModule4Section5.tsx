@@ -58,12 +58,12 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'Logbook (paper or electronic) is still required. Automated test data is the input; the logbook is the duty-holder\'s reviewed and signed record. Auditors expect both — the data from the system and the logbook from the duty-holder.',
+      "Logbook (paper or electronic) is still required. Automated test data is the input; the logbook is the duty-holder's reviewed and signed record. Auditors expect both — the data from the system and the logbook from the duty-holder.",
   },
   {
     id: 'elm4-s5-cyber',
     question:
-      'An IP-connected emergency lighting monitoring system sits on the same network as the building\'s general IT. What cyber-security consideration applies?',
+      "An IP-connected emergency lighting monitoring system sits on the same network as the building's general IT. What cyber-security consideration applies?",
     options: [
       'No issue — emergency lighting is a building system, not IT.',
       'The same considerations BS 5839-1:2025 raises for fire alarm systems apply by analogy to emergency lighting: the IP-connected system is potentially exposed to network attacks that could (a) suppress alarms / fault notifications, (b) inject false test results making the system appear compliant when it is not, (c) DoS the gateway disabling the monitoring function, or (d) provide a foothold to attack other safety systems. Mitigations: network segmentation (emergency lighting on its own VLAN with controlled gateway), strong authentication on gateway access, regular firmware updates, monitoring of gateway access logs, vendor security advisories. The principle is treating the emergency lighting controller as a SAFETY-CRITICAL ASSET requiring the same cyber hygiene as any other life-safety system.',
@@ -79,7 +79,8 @@ const inlineChecks = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'What is the dominant digital communication protocol for modern emergency lighting self-test luminaires?',
+    question:
+      'What is the dominant digital communication protocol for modern emergency lighting self-test luminaires?',
     options: [
       'KNX only.',
       'DALI Type 1 / DALI-2 with edition 2 emergency commands. Per-luminaire addressing on a 2-wire bus, status reporting, group test commands, fault flagging. The gateway polls each luminaire and aggregates into a system-wide view. Wireless protocols (BLE, Zigbee, proprietary RF) are also used in some retrofit applications, but DALI dominates wired installations.',
@@ -92,7 +93,8 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'BS 5266-1:2025 introduces a 5-year photometric check in addition to the traditional monthly functional and annual 3-hour duration tests. What does it verify?',
+    question:
+      'BS 5266-1:2025 introduces a 5-year photometric check in addition to the traditional monthly functional and annual 3-hour duration tests. What does it verify?',
     options: [
       'Battery voltage only.',
       'That the luminaires still deliver BS EN 1838 illuminance levels (lux) on the escape route at end-of-life. Lumen depreciation can mean the luminaire passes duration (it stays on) but delivers less lux on the floor than required. The photometric check measures actual delivered illuminance with a calibrated lux meter at design points and compares against BS EN 1838 minimums.',
@@ -105,7 +107,8 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'A wireless emergency lighting monitoring system uses BLE (Bluetooth Low Energy) for luminaire-to-gateway communication. What is the typical advantage in retrofit applications?',
+    question:
+      'A wireless emergency lighting monitoring system uses BLE (Bluetooth Low Energy) for luminaire-to-gateway communication. What is the typical advantage in retrofit applications?',
     options: [
       'Lower lamp output.',
       'No bus cable to install. Each luminaire has a small BLE radio; the gateway is anywhere within range and the luminaires communicate over the air. Retrofit cost is dominated by installing the luminaires; running a DALI bus afterwards through finished ceilings is expensive. BLE removes that cost. Trade-offs: range limited (typically 10-30 m, more with mesh extension), interference / co-existence with other 2.4 GHz systems, security model differs from wired bus, battery drain on the radio (small but real). Suits small-to-medium retrofits; less common in new-build where cabling is laid in the build.',
@@ -118,10 +121,11 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'What is the role of a Building Management System (BMS) in emergency lighting monitoring?',
+    question:
+      'What is the role of a Building Management System (BMS) in emergency lighting monitoring?',
     options: [
       'It runs the lamps directly.',
-      'The BMS aggregates emergency lighting status alongside HVAC, fire alarm, security, and other building systems into a unified operator interface. The emergency lighting gateway reports status (system OK, faults, test events, battery alarms) to the BMS via a standard protocol (BACnet, Modbus, REST API, MQTT). The duty-holder uses the BMS dashboard for daily checks; the BMS sends alerts on faults; integration with the building\'s ticketing system creates work orders automatically. The BMS does NOT replace the dedicated emergency lighting gateway — it provides the building-wide overlay above it.',
+      "The BMS aggregates emergency lighting status alongside HVAC, fire alarm, security, and other building systems into a unified operator interface. The emergency lighting gateway reports status (system OK, faults, test events, battery alarms) to the BMS via a standard protocol (BACnet, Modbus, REST API, MQTT). The duty-holder uses the BMS dashboard for daily checks; the BMS sends alerts on faults; integration with the building's ticketing system creates work orders automatically. The BMS does NOT replace the dedicated emergency lighting gateway — it provides the building-wide overlay above it.",
       'It replaces the cabinet.',
       'It is unrelated.',
     ],
@@ -144,10 +148,11 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'A duty-holder receives an automated email at 10 PM saying "Luminaire 04-12-08 failed monthly functional test — battery fault". What is the appropriate response?',
+    question:
+      'A duty-holder receives an automated email at 10 PM saying "Luminaire 04-12-08 failed monthly functional test — battery fault". What is the appropriate response?',
     options: [
       'Ignore until next inspection.',
-      'Log the alarm, raise a work order for the maintenance contractor to attend within the response time defined in the maintenance contract (typically 24-72 hours for a single-luminaire fault), and confirm fault rectified at next visit. Update the logbook. The automated system has done the detection; the duty-holder\'s response is the corrective action loop. Faults that are not resolved promptly drift the system out of compliance — automated detection without prompt rectification is no better than no detection.',
+      "Log the alarm, raise a work order for the maintenance contractor to attend within the response time defined in the maintenance contract (typically 24-72 hours for a single-luminaire fault), and confirm fault rectified at next visit. Update the logbook. The automated system has done the detection; the duty-holder's response is the corrective action loop. Faults that are not resolved promptly drift the system out of compliance — automated detection without prompt rectification is no better than no detection.",
       'Replace the building.',
       'Delete the email.',
     ],
@@ -157,20 +162,22 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'Why is a paper or electronic logbook still required even with full automated self-test and cloud monitoring?',
+    question:
+      'Why is a paper or electronic logbook still required even with full automated self-test and cloud monitoring?',
     options: [
       'No reason.',
-      'BS EN 50172:2024 / BS 5266-1:2025 expect the duty-holder to maintain an auditable record of test results, faults, corrective actions, and modifications — retained for the operational life of the installation. The automated system PROVIDES the data; the logbook is the duty-holder\'s reviewed and signed record. An auditor or post-incident investigator examines the logbook first to check test history, fault response, and modifications, then drills into the underlying data if needed. Without the logbook the audit trail is incomplete even if the automated system has all the data.',
+      "BS EN 50172:2024 / BS 5266-1:2025 expect the duty-holder to maintain an auditable record of test results, faults, corrective actions, and modifications — retained for the operational life of the installation. The automated system PROVIDES the data; the logbook is the duty-holder's reviewed and signed record. An auditor or post-incident investigator examines the logbook first to check test history, fault response, and modifications, then drills into the underlying data if needed. Without the logbook the audit trail is incomplete even if the automated system has all the data.",
       'It is decorative.',
       'Only for fire alarms.',
     ],
     correctAnswer: 1,
     explanation:
-      'Logbook = duty-holder\'s reviewed audit trail. Automated data is the input; logbook is the curated, signed, retained record. Both are required.',
+      "Logbook = duty-holder's reviewed audit trail. Automated data is the input; logbook is the curated, signed, retained record. Both are required.",
   },
   {
     id: 8,
-    question: 'An IP-connected emergency lighting monitoring system sits on the building general LAN. What cyber-security control should be applied first?',
+    question:
+      'An IP-connected emergency lighting monitoring system sits on the building general LAN. What cyber-security control should be applied first?',
     options: [
       'Disable the network entirely.',
       'Network segmentation — place the emergency lighting gateway on its own VLAN with controlled access from the general LAN to that VLAN (firewall rules, access control lists). Combined with strong authentication on the gateway, regular firmware updates, monitoring of access logs, and vendor security advisories. The principle: the emergency lighting controller is a SAFETY-CRITICAL ASSET that must not be exposed to the same threat surface as user laptops and printers. BS 5839-1:2025 raised this concept for fire alarms; the same logic applies to emergency lighting.',
@@ -183,7 +190,8 @@ const quizQuestions = [
   },
   {
     id: 9,
-    question: 'A self-test luminaire reports "battery test complete — capacity 75% of rated". What is the duty-holder\'s decision criterion?',
+    question:
+      'A self-test luminaire reports "battery test complete — capacity 75% of rated". What is the duty-holder\'s decision criterion?',
     options: [
       'Always replace.',
       'Compare against the design ageing factor (typically 80% of rated at end-of-design-life for SLA). 75% is BELOW the typical 80% threshold, meaning the battery has degraded faster than the design assumption. Plan replacement in the next maintenance cycle (do not wait until annual duration test). Track trend across multiple monthly tests to confirm the reading. If repeated low readings: replace immediately. The 80% threshold is the practical end-of-life trigger; readings below indicate the battery may not deliver full duration in a real event.',
@@ -196,7 +204,8 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'How does the 2025 5-year photometric check change the maintenance regime relative to the traditional functional + duration cycle?',
+    question:
+      'How does the 2025 5-year photometric check change the maintenance regime relative to the traditional functional + duration cycle?',
     options: [
       'It removes other tests.',
       'It ADDS a 5-yearly photometric verification (using a calibrated lux meter at design points) to the existing monthly functional + annual duration regime. The photometric check audits delivered illuminance against BS EN 1838 minimums; lumen depreciation that duration testing misses is caught here. Most luminaires will pass at 5 years; aged luminaires (especially those with non-LED lamps or lower-quality LED drivers) may fail and trigger lamp or luminaire replacement. Modern self-test electronics may eventually automate part of this (estimating delivered lux from internal LED current and aging models), but as at 2026 the formal photometric check is a manual verification with a lux meter.',
@@ -245,7 +254,7 @@ const EmergencyLightingModule4Section5 = () => {
               'Automated self-test scheduling runs monthly functional + annual 3-hour duration tests on each luminaire, staggered across the building. Results captured per-luminaire; duty-holder reviews exceptions.',
               'BS 5266-1:2025 NEW: 5-year photometric verification using calibrated lux meter at design points. Audits delivered illuminance vs BS EN 1838 minimums — catches lumen depreciation.',
               'Self-test reports: dates, results, faults, corrective actions, battery condition trends, photometric check outcomes. Captured per-luminaire and aggregated.',
-              'Logbook (paper or electronic) is STILL required — automated data is input, logbook is the duty-holder\'s curated audit trail.',
+              "Logbook (paper or electronic) is STILL required — automated data is input, logbook is the duty-holder's curated audit trail.",
               'Cyber security for IP-connected systems: network segmentation (own VLAN), strong authentication, firmware updates, log monitoring. Treat the gateway as a safety-critical asset.',
               'Closed-loop maintenance: detection → work order → attend → resolve → logbook update. Detection alone without rectification is no better than no detection.',
               'Touchpoint with BS 5839-1:2025 (fire alarms) cyber clause — same principles applied by analogy to emergency lighting monitoring.',
@@ -284,15 +293,16 @@ const EmergencyLightingModule4Section5 = () => {
               </li>
               <li>
                 <strong>Per-luminaire address.</strong> Each fitting on the bus has a short address
-                (0-63) assigned during commissioning. The gateway uses the address to direct messages
-                — "luminaire 12, run functional test" or "luminaire 47, report battery state".
+                (0-63) assigned during commissioning. The gateway uses the address to direct
+                messages — "luminaire 12, run functional test" or "luminaire 47, report battery
+                state".
               </li>
               <li>
                 <strong>Edition 2 emergency commands.</strong> DALI-2 (the modern revision) added
-                specific commands for emergency lighting: start functional test, start duration test,
-                report test result, report fault flags (lamp fault, battery fault, charger fault,
-                circuit fault). The protocol gives standardised access to all the data the luminaire
-                tracks internally.
+                specific commands for emergency lighting: start functional test, start duration
+                test, report test result, report fault flags (lamp fault, battery fault, charger
+                fault, circuit fault). The protocol gives standardised access to all the data the
+                luminaire tracks internally.
               </li>
               <li>
                 <strong>Gateway / controller.</strong> The device that bridges DALI to higher-level
@@ -301,16 +311,17 @@ const EmergencyLightingModule4Section5 = () => {
               </li>
               <li>
                 <strong>Per-luminaire data.</strong> Test history, fault flags, battery condition
-                trend, last functional test date, last duration test date, last duration test result.
-                The gateway maintains the per-luminaire record and serves it to the BMS / cloud.
+                trend, last functional test date, last duration test date, last duration test
+                result. The gateway maintains the per-luminaire record and serves it to the BMS /
+                cloud.
               </li>
             </ul>
             <p>
               The protocol turns each luminaire from a dumb fitting into an addressable asset.
               Status, test, fault — all available digitally without walking the building. The
               maintenance regime becomes data-driven: the gateway tells you which luminaires need
-              attention; the contractor attends those specifically rather than a periodic
-              inspection sweep of every fitting.
+              attention; the contractor attends those specifically rather than a periodic inspection
+              sweep of every fitting.
             </p>
           </ConceptBlock>
 
@@ -338,10 +349,10 @@ const EmergencyLightingModule4Section5 = () => {
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
                 <strong>No bus cable.</strong> The dominant retrofit advantage. Luminaires are
-                installed in finished ceilings without running a DALI cable through. Each fitting has
-                its mains supply (PH30 fire-resistant) and the radio handles the data.
+                installed in finished ceilings without running a DALI cable through. Each fitting
+                has its mains supply (PH30 fire-resistant) and the radio handles the data.
               </li>
-                <li>
+              <li>
                 <strong>Range and mesh.</strong> Single-hop range typically 10-30 m line-of-sight.
                 Most modern systems use mesh networking — luminaires relay messages to extend range.
                 A typical floor with 30 luminaires forms a self-organising mesh covering 1000+ m².
@@ -349,9 +360,9 @@ const EmergencyLightingModule4Section5 = () => {
               <li>
                 <strong>Interference / co-existence.</strong> 2.4 GHz BLE / Zigbee shares spectrum
                 with Wi-Fi, Bluetooth devices, microwave ovens. Properly designed systems use
-                frequency hopping / channel hopping to mitigate; problems are rare but can occur
-                in dense RF environments. 868 MHz proprietary protocols have less competition but
-                are vendor-specific.
+                frequency hopping / channel hopping to mitigate; problems are rare but can occur in
+                dense RF environments. 868 MHz proprietary protocols have less competition but are
+                vendor-specific.
               </li>
               <li>
                 <strong>Security.</strong> Wireless protocols use authenticated and encrypted links
@@ -405,71 +416,339 @@ const EmergencyLightingModule4Section5 = () => {
 
               {/* Luminaires (left) */}
               <g>
-                <rect x="40" y="60" width="180" height="280" rx="12" fill="rgba(34,197,94,0.05)" stroke="#22C55E" strokeWidth="1.6" />
-                <text x="130" y="84" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">Self-test luminaires</text>
-                <text x="130" y="100" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">DALI Type 1 / DALI-2</text>
+                <rect
+                  x="40"
+                  y="60"
+                  width="180"
+                  height="280"
+                  rx="12"
+                  fill="rgba(34,197,94,0.05)"
+                  stroke="#22C55E"
+                  strokeWidth="1.6"
+                />
+                <text
+                  x="130"
+                  y="84"
+                  textAnchor="middle"
+                  fill="#22C55E"
+                  fontSize="11"
+                  fontWeight="bold"
+                >
+                  Self-test luminaires
+                </text>
+                <text
+                  x="130"
+                  y="100"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.65)"
+                  fontSize="9"
+                >
+                  DALI Type 1 / DALI-2
+                </text>
 
                 {/* 5 luminaires */}
-                <rect x="60" y="120" width="140" height="36" rx="6" fill="rgba(34,197,94,0.10)" stroke="#22C55E" strokeWidth="1.2" />
-                <text x="130" y="142" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="9.5">Lum 1 · addr 1</text>
-                <rect x="60" y="164" width="140" height="36" rx="6" fill="rgba(34,197,94,0.10)" stroke="#22C55E" strokeWidth="1.2" />
-                <text x="130" y="186" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="9.5">Lum 2 · addr 2</text>
-                <rect x="60" y="208" width="140" height="36" rx="6" fill="rgba(239,68,68,0.10)" stroke="#EF4444" strokeWidth="1.2" />
-                <text x="130" y="230" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="9.5">Lum 3 · addr 3 ⚠</text>
-                <rect x="60" y="252" width="140" height="36" rx="6" fill="rgba(34,197,94,0.10)" stroke="#22C55E" strokeWidth="1.2" />
-                <text x="130" y="274" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="9.5">Lum 4 · addr 4</text>
-                <rect x="60" y="296" width="140" height="36" rx="6" fill="rgba(34,197,94,0.10)" stroke="#22C55E" strokeWidth="1.2" />
-                <text x="130" y="318" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="9.5">Lum N · addr N</text>
+                <rect
+                  x="60"
+                  y="120"
+                  width="140"
+                  height="36"
+                  rx="6"
+                  fill="rgba(34,197,94,0.10)"
+                  stroke="#22C55E"
+                  strokeWidth="1.2"
+                />
+                <text
+                  x="130"
+                  y="142"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.85)"
+                  fontSize="9.5"
+                >
+                  Lum 1 · addr 1
+                </text>
+                <rect
+                  x="60"
+                  y="164"
+                  width="140"
+                  height="36"
+                  rx="6"
+                  fill="rgba(34,197,94,0.10)"
+                  stroke="#22C55E"
+                  strokeWidth="1.2"
+                />
+                <text
+                  x="130"
+                  y="186"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.85)"
+                  fontSize="9.5"
+                >
+                  Lum 2 · addr 2
+                </text>
+                <rect
+                  x="60"
+                  y="208"
+                  width="140"
+                  height="36"
+                  rx="6"
+                  fill="rgba(239,68,68,0.10)"
+                  stroke="#EF4444"
+                  strokeWidth="1.2"
+                />
+                <text
+                  x="130"
+                  y="230"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.85)"
+                  fontSize="9.5"
+                >
+                  Lum 3 · addr 3 ⚠
+                </text>
+                <rect
+                  x="60"
+                  y="252"
+                  width="140"
+                  height="36"
+                  rx="6"
+                  fill="rgba(34,197,94,0.10)"
+                  stroke="#22C55E"
+                  strokeWidth="1.2"
+                />
+                <text
+                  x="130"
+                  y="274"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.85)"
+                  fontSize="9.5"
+                >
+                  Lum 4 · addr 4
+                </text>
+                <rect
+                  x="60"
+                  y="296"
+                  width="140"
+                  height="36"
+                  rx="6"
+                  fill="rgba(34,197,94,0.10)"
+                  stroke="#22C55E"
+                  strokeWidth="1.2"
+                />
+                <text
+                  x="130"
+                  y="318"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.85)"
+                  fontSize="9.5"
+                >
+                  Lum N · addr N
+                </text>
               </g>
 
               {/* DALI bus arrow */}
               <line x1="220" y1="200" x2="290" y2="200" stroke="#FBBF24" strokeWidth="2" />
               <polygon points="290,200 282,196 282,204" fill="#FBBF24" />
-              <text x="255" y="190" textAnchor="middle" fill="#FBBF24" fontSize="9" fontWeight="bold">DALI bus</text>
-              <text x="255" y="216" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">2-wire</text>
+              <text
+                x="255"
+                y="190"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                DALI bus
+              </text>
+              <text x="255" y="216" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                2-wire
+              </text>
 
               {/* Gateway */}
-              <rect x="300" y="160" width="160" height="80" rx="10" fill="rgba(168,85,247,0.10)" stroke="#A855F7" strokeWidth="1.6" />
-              <text x="380" y="184" textAnchor="middle" fill="#A855F7" fontSize="11" fontWeight="bold">DALI gateway</text>
-              <text x="380" y="202" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Test scheduler</text>
-              <text x="380" y="216" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Result aggregator</text>
-              <text x="380" y="230" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Local dashboard</text>
+              <rect
+                x="300"
+                y="160"
+                width="160"
+                height="80"
+                rx="10"
+                fill="rgba(168,85,247,0.10)"
+                stroke="#A855F7"
+                strokeWidth="1.6"
+              />
+              <text
+                x="380"
+                y="184"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                DALI gateway
+              </text>
+              <text x="380" y="202" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                Test scheduler
+              </text>
+              <text x="380" y="216" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                Result aggregator
+              </text>
+              <text x="380" y="230" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                Local dashboard
+              </text>
 
               {/* Arrow to BMS */}
               <line x1="460" y1="200" x2="530" y2="200" stroke="#22D3EE" strokeWidth="2" />
               <polygon points="530,200 522,196 522,204" fill="#22D3EE" />
-              <text x="495" y="190" textAnchor="middle" fill="#22D3EE" fontSize="9" fontWeight="bold">BACnet / MQTT</text>
+              <text
+                x="495"
+                y="190"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                BACnet / MQTT
+              </text>
 
               {/* BMS / cloud */}
-              <rect x="540" y="100" width="180" height="80" rx="10" fill="rgba(34,211,238,0.10)" stroke="#22D3EE" strokeWidth="1.6" />
-              <text x="630" y="124" textAnchor="middle" fill="#22D3EE" fontSize="11" fontWeight="bold">BMS</text>
-              <text x="630" y="142" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">HVAC + fire + EL + security</text>
-              <text x="630" y="158" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Operator dashboard</text>
+              <rect
+                x="540"
+                y="100"
+                width="180"
+                height="80"
+                rx="10"
+                fill="rgba(34,211,238,0.10)"
+                stroke="#22D3EE"
+                strokeWidth="1.6"
+              />
+              <text
+                x="630"
+                y="124"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                BMS
+              </text>
+              <text x="630" y="142" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                HVAC + fire + EL + security
+              </text>
+              <text x="630" y="158" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                Operator dashboard
+              </text>
 
-              <rect x="540" y="220" width="180" height="80" rx="10" fill="rgba(34,211,238,0.10)" stroke="#22D3EE" strokeWidth="1.6" />
-              <text x="630" y="244" textAnchor="middle" fill="#22D3EE" fontSize="11" fontWeight="bold">Cloud monitoring</text>
-              <text x="630" y="262" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">Per-luminaire history</text>
-              <text x="630" y="278" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">Email / SMS alerts</text>
+              <rect
+                x="540"
+                y="220"
+                width="180"
+                height="80"
+                rx="10"
+                fill="rgba(34,211,238,0.10)"
+                stroke="#22D3EE"
+                strokeWidth="1.6"
+              />
+              <text
+                x="630"
+                y="244"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Cloud monitoring
+              </text>
+              <text x="630" y="262" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                Per-luminaire history
+              </text>
+              <text x="630" y="278" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                Email / SMS alerts
+              </text>
 
-              <line x1="540" y1="200" x2="540" y2="240" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+              <line
+                x1="540"
+                y1="200"
+                x2="540"
+                y2="240"
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth="1"
+              />
 
               {/* Reports / logbook */}
-              <line x1="720" y1="160" x2="780" y2="160" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
+              <line
+                x1="720"
+                y1="160"
+                x2="780"
+                y2="160"
+                stroke="rgba(255,255,255,0.5)"
+                strokeWidth="2"
+              />
               <polygon points="780,160 772,156 772,164" fill="rgba(255,255,255,0.5)" />
-              <line x1="720" y1="260" x2="780" y2="260" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
+              <line
+                x1="720"
+                y1="260"
+                x2="780"
+                y2="260"
+                stroke="rgba(255,255,255,0.5)"
+                strokeWidth="2"
+              />
               <polygon points="780,260 772,256 772,264" fill="rgba(255,255,255,0.5)" />
 
-              <rect x="780" y="120" width="80" height="180" rx="10" fill="rgba(251,191,36,0.10)" stroke="#FBBF24" strokeWidth="1.6" />
-              <text x="820" y="180" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">Reports</text>
-              <text x="820" y="200" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">Monthly</text>
-              <text x="820" y="216" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">Annual</text>
-              <text x="820" y="232" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">5-year</text>
-              <text x="820" y="248" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">Faults</text>
+              <rect
+                x="780"
+                y="120"
+                width="80"
+                height="180"
+                rx="10"
+                fill="rgba(251,191,36,0.10)"
+                stroke="#FBBF24"
+                strokeWidth="1.6"
+              />
+              <text
+                x="820"
+                y="180"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Reports
+              </text>
+              <text x="820" y="200" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                Monthly
+              </text>
+              <text x="820" y="216" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                Annual
+              </text>
+              <text x="820" y="232" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                5-year
+              </text>
+              <text x="820" y="248" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                Faults
+              </text>
 
               {/* Logbook box */}
-              <rect x="240" y="370" width="400" height="60" rx="10" fill="rgba(251,191,36,0.06)" stroke="#FBBF24" strokeWidth="1.4" strokeDasharray="6,3" />
-              <text x="440" y="394" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">Duty-holder logbook (paper or electronic)</text>
-              <text x="440" y="412" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">Reviewed and signed audit trail · retained for operational life of installation · BS EN 50172:2024</text>
+              <rect
+                x="240"
+                y="370"
+                width="400"
+                height="60"
+                rx="10"
+                fill="rgba(251,191,36,0.06)"
+                stroke="#FBBF24"
+                strokeWidth="1.4"
+                strokeDasharray="6,3"
+              />
+              <text
+                x="440"
+                y="394"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Duty-holder logbook (paper or electronic)
+              </text>
+              <text x="440" y="412" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                Reviewed and signed audit trail · retained for operational life of installation · BS
+                EN 50172:2024
+              </text>
             </svg>
           </div>
 
@@ -492,10 +771,11 @@ const EmergencyLightingModule4Section5 = () => {
               </li>
               <li>
                 <strong>Annual 3-hour duration test.</strong> Each luminaire run on battery for the
-                rated autonomy duration (typically 3 hours). This is the load-bearing capacity test —
-                the battery delivers full duration at rated output, or it does not. Staggered across
-                the building (e.g. 1/12th of the luminaires per month, or all in one month with the
-                building accepting the discharge state) to manage the system-wide capacity exposure.
+                rated autonomy duration (typically 3 hours). This is the load-bearing capacity test
+                — the battery delivers full duration at rated output, or it does not. Staggered
+                across the building (e.g. 1/12th of the luminaires per month, or all in one month
+                with the building accepting the discharge state) to manage the system-wide capacity
+                exposure.
               </li>
               <li>
                 <strong>Result capture.</strong> Per-luminaire, per-test: timestamp, test type, pass
@@ -510,18 +790,18 @@ const EmergencyLightingModule4Section5 = () => {
                 rather than examined individually.
               </li>
               <li>
-                <strong>5-year photometric (NEW 2025).</strong> The traditional functional + duration
-                regime is supplemented by a 5-yearly photometric verification. Most current
+                <strong>5-year photometric (NEW 2025).</strong> The traditional functional +
+                duration regime is supplemented by a 5-yearly photometric verification. Most current
                 automated systems do not yet automate this — it remains a manual lux-meter
                 measurement at design points. Future generations may estimate delivered lux from
                 internal LED drive current and lumen depreciation models.
               </li>
             </ul>
             <p>
-              Automated scheduling does not remove the duty-holder's responsibility — it changes
-              the work pattern. Less manual testing; more reviewing of automated reports and
-              attending to exceptions. The labour saving is substantial; the test quality improves
-              (every test runs on time, every result captured, no missed inspections).
+              Automated scheduling does not remove the duty-holder's responsibility — it changes the
+              work pattern. Less manual testing; more reviewing of automated reports and attending
+              to exceptions. The labour saving is substantial; the test quality improves (every test
+              runs on time, every result captured, no missed inspections).
             </p>
           </ConceptBlock>
 
@@ -551,14 +831,15 @@ const EmergencyLightingModule4Section5 = () => {
               <li>
                 <strong>Take readings.</strong> At each design point, record the lux reading. For
                 escape route, BS EN 1838:2024 requires 1 lx across the full width of the route at
-                floor level, with edge exclusions (outer 0.5 m on routes > 2 m, outer ¼ width on
+                floor level, with edge exclusions (outer 0.5 m on routes &gt; 2 m, outer ¼ width on
                 routes ≤ 2 m). For anti-panic open area, typically 0.5 lx average over 90 % of the
-                area. For high-risk task areas, 10 % of the maintained value or 15 lx, whichever
-                is greater.
+                area. For high-risk task areas, 10 % of the maintained value or 15 lx, whichever is
+                greater.
               </li>
               <li>
-                <strong>Compare and document.</strong> Reading vs requirement. Pass / fail per point.
-                Aggregate results. Document on the photometric check report; retain in the logbook.
+                <strong>Compare and document.</strong> Reading vs requirement. Pass / fail per
+                point. Aggregate results. Document on the photometric check report; retain in the
+                logbook.
               </li>
               <li>
                 <strong>Act on failures.</strong> A failed point indicates the luminaire(s)
@@ -615,10 +896,10 @@ const EmergencyLightingModule4Section5 = () => {
                 supports one or more of these; the BMS subscribes.
               </li>
               <li>
-                <strong>Data points.</strong> System status (OK / fault / test in progress), per-zone
-                summaries (luminaires-in-service, luminaires-faulted), specific alarms (battery
-                fault, charger fault, cabinet door open, mains failure), test events (test start,
-                test complete, test result).
+                <strong>Data points.</strong> System status (OK / fault / test in progress),
+                per-zone summaries (luminaires-in-service, luminaires-faulted), specific alarms
+                (battery fault, charger fault, cabinet door open, mains failure), test events (test
+                start, test complete, test result).
               </li>
               <li>
                 <strong>Operator dashboard.</strong> Status panel showing emergency lighting state,
@@ -675,8 +956,8 @@ const EmergencyLightingModule4Section5 = () => {
                 Convenient but increases vendor lock-in.
               </li>
               <li>
-                <strong>Cyber security implications.</strong> Cloud connection means data leaves
-                the building. Encrypted in transit (HTTPS / TLS), authenticated to the cloud account,
+                <strong>Cyber security implications.</strong> Cloud connection means data leaves the
+                building. Encrypted in transit (HTTPS / TLS), authenticated to the cloud account,
                 cloud provider responsible for data security at rest. Adds to the cyber-security
                 surface — see the cyber section below.
               </li>
@@ -743,8 +1024,8 @@ const EmergencyLightingModule4Section5 = () => {
                 or equivalent reports, fire risk assessment outputs.
               </li>
               <li>
-                <strong>Drawings reference.</strong> Pointer to as-built drawings, zone plans,
-                cable schedules, fire-stopping log — the full hand-over pack.
+                <strong>Drawings reference.</strong> Pointer to as-built drawings, zone plans, cable
+                schedules, fire-stopping log — the full hand-over pack.
               </li>
               <li>
                 <strong>Duty-holder signature.</strong> Each periodic review (typically monthly or
@@ -769,8 +1050,8 @@ const EmergencyLightingModule4Section5 = () => {
               <li>
                 <strong>Network segmentation.</strong> Place the emergency lighting gateway on its
                 own VLAN, separate from user traffic and IT systems. Firewall rules / ACLs control
-                what can reach the gateway. The general LAN cannot directly access the gateway;
-                only specific authorised systems (BMS, cloud monitoring) can.
+                what can reach the gateway. The general LAN cannot directly access the gateway; only
+                specific authorised systems (BMS, cloud monitoring) can.
               </li>
               <li>
                 <strong>Strong authentication.</strong> Gateway admin access requires non-default
@@ -800,8 +1081,8 @@ const EmergencyLightingModule4Section5 = () => {
               </li>
               <li>
                 <strong>Vendor due diligence.</strong> Choose vendors with documented security
-                practices, vulnerability disclosure programmes, and a track record of timely patches.
-                Avoid orphaned products no longer receiving updates.
+                practices, vulnerability disclosure programmes, and a track record of timely
+                patches. Avoid orphaned products no longer receiving updates.
               </li>
               <li>
                 <strong>Incident response plan.</strong> What does the duty-holder do if the gateway
@@ -810,11 +1091,10 @@ const EmergencyLightingModule4Section5 = () => {
               </li>
             </ul>
             <p>
-              The principle: an IP-connected life-safety system is a safety-critical asset. The
-              same cyber hygiene applied to other safety-critical IT (e.g. fire alarm panels per
-              BS 5839-1:2025 clause 43.4) should be applied to emergency lighting monitoring.
-              Skipping cyber controls because "it is just lighting" misunderstands the threat
-              surface.
+              The principle: an IP-connected life-safety system is a safety-critical asset. The same
+              cyber hygiene applied to other safety-critical IT (e.g. fire alarm panels per BS
+              5839-1:2025 clause 43.4) should be applied to emergency lighting monitoring. Skipping
+              cyber controls because "it is just lighting" misunderstands the threat surface.
             </p>
           </ConceptBlock>
 
@@ -824,8 +1104,8 @@ const EmergencyLightingModule4Section5 = () => {
               <>
                 Where emergency lighting monitoring or control systems are interconnected with
                 Internet Protocol (IP) networks or the public internet, appropriate cyber-security
-                controls shall be implemented to protect the integrity of the system status,
-                test data, and command channels. Controls shall include network segmentation,
+                controls shall be implemented to protect the integrity of the system status, test
+                data, and command channels. Controls shall include network segmentation,
                 authenticated access, encrypted communications, and management of vendor security
                 advisories.
               </>
@@ -852,7 +1132,7 @@ const EmergencyLightingModule4Section5 = () => {
               'Cloud monitoring suits multi-site portfolios — per-luminaire dashboards, push alerts, compliance reports, multi-site management.',
               'Automated self-test scheduling: monthly functional + annual 3-hour duration on every luminaire, staggered, results captured per-luminaire, exceptions reported.',
               'BS 5266-1:2025 NEW: 5-year photometric verification with calibrated lux meter at design points. Audits delivered illuminance vs BS EN 1838 — catches lumen depreciation.',
-              'Logbook (paper or electronic) STILL required even with full automation. Automated data is input; logbook is the duty-holder\'s curated, reviewed, signed audit trail.',
+              "Logbook (paper or electronic) STILL required even with full automation. Automated data is input; logbook is the duty-holder's curated, reviewed, signed audit trail.",
               'Closed-loop maintenance: detection → work order → attendance → resolution → logbook update. Detection alone is half the job.',
               'Cyber security for IP-connected systems: network segmentation, strong authentication, firmware updates, log monitoring. Treat the gateway as a safety-critical asset.',
               'Touchpoint with BS 5839-1:2025 §43.4 thinking — same cyber principles applied by analogy to emergency lighting monitoring.',
@@ -863,22 +1143,25 @@ const EmergencyLightingModule4Section5 = () => {
           <FAQ
             items={[
               {
-                question: 'What is the difference between DALI Type 1 and DALI-2 for emergency lighting?',
+                question:
+                  'What is the difference between DALI Type 1 and DALI-2 for emergency lighting?',
                 answer:
                   'DALI Type 1 (the original specification) added emergency-specific commands to the basic DALI lighting protocol — start test, report result, etc. DALI-2 (the modernised version) extends this with edition 2 emergency commands offering more detailed status and finer-grained control. Both are widely used; DALI-2 is preferred for new installations because of better interoperability and richer data.',
               },
               {
                 question: 'Can I add wireless monitoring to existing self-contained luminaires?',
                 answer:
-                  'Sometimes — there are retrofit modules available from some vendors that fit inside the luminaire and add wireless monitoring without changing the luminaire itself. The module typically reads the luminaire\'s self-test LED state (or the test electronics directly if accessible) and reports via BLE / Zigbee / RF to a gateway. Retrofit suits estates with many existing luminaires that are otherwise serviceable. New installations are typically wireless-from-design or DALI-from-design rather than retrofit modules.',
+                  "Sometimes — there are retrofit modules available from some vendors that fit inside the luminaire and add wireless monitoring without changing the luminaire itself. The module typically reads the luminaire's self-test LED state (or the test electronics directly if accessible) and reports via BLE / Zigbee / RF to a gateway. Retrofit suits estates with many existing luminaires that are otherwise serviceable. New installations are typically wireless-from-design or DALI-from-design rather than retrofit modules.",
               },
               {
-                question: 'How does the 5-year photometric verification fit with automated self-test?',
+                question:
+                  'How does the 5-year photometric verification fit with automated self-test?',
                 answer:
                   'As at 2026, the 5-year photometric is a manual exercise — calibrated lux meter, design points, recorded readings. Some vendors are starting to offer estimated-lux features in their self-test electronics (using internal LED drive current and a depreciation model), but these are not yet a substitute for the formal photometric verification. Future standard revisions may recognise automated photometric estimation if the methodology is suitably calibrated. For now, schedule the manual photometric check at the 5-year interval.',
               },
               {
-                question: 'What happens if my BMS does not support BACnet — can I still integrate emergency lighting?',
+                question:
+                  'What happens if my BMS does not support BACnet — can I still integrate emergency lighting?',
                 answer:
                   'Most modern emergency lighting gateways support multiple protocols — BACnet, Modbus, REST, MQTT, sometimes proprietary. If the BMS supports any of these, integration is feasible. If the BMS is older and supports only legacy protocols, a protocol gateway (a device that translates between protocols) may be needed. Worst case, the emergency lighting runs on its own dedicated gateway with its own dashboard, and the duty-holder consults both that and the BMS separately. Compliance is unaffected; operational integration is impaired.',
               },
@@ -898,7 +1181,8 @@ const EmergencyLightingModule4Section5 = () => {
                   'Data leaves the building and resides on vendor cloud infrastructure. Risks: vendor cloud breach exposes data; cloud-to-gateway connection is a vector for command injection if not properly authenticated; loss of cloud connectivity disables remote monitoring (but not local self-test). Mitigations: TLS-encrypted connections, authenticated tunnels, cloud provider with documented security practices, alerts on connection loss so the duty-holder is aware of monitoring downtime, fall-back to manual inspection if cloud is unavailable for extended periods.',
               },
               {
-                question: 'How does the closed-loop maintenance regime change the duty-holder\'s role?',
+                question:
+                  "How does the closed-loop maintenance regime change the duty-holder's role?",
                 answer:
                   'Less time running tests; more time reviewing exception reports and managing the work-order pipeline. The duty-holder reads the daily fault summary, decides priority, raises work orders, tracks rectification, signs the logbook. The contractor attends faults, resolves, reports back. The duty-holder reviews the closed work orders and updates the logbook. The work pattern is supervisory rather than operational — but the responsibility for compliance is unchanged. Closed-loop discipline (every detected fault → work order → resolved → logged) is what turns automated detection into actual compliance.',
               },
@@ -931,9 +1215,7 @@ const EmergencyLightingModule4Section5 = () => {
               <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
                 Next module <ChevronRight className="h-3 w-3" />
               </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Module 5
-              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">Module 5</div>
             </button>
           </div>
 

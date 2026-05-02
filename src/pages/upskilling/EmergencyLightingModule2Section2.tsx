@@ -62,8 +62,7 @@ const inlineChecks = [
   },
   {
     id: 'elm2-s2-trigger',
-    question:
-      'When does anti-panic open-area lighting become mandatory under BS EN 1838:2024?',
+    question: 'When does anti-panic open-area lighting become mandatory under BS EN 1838:2024?',
     options: [
       'Only when the area exceeds 100 m².',
       'When the unobstructed area exceeds 60 m² OR when occupancy exceeds 10 persons regardless of area size, whichever triggers first. The dual trigger captures two different risk profiles: (a) large empty spaces where occupants could lose orientation in darkness even at low occupancy (the 60 m² rule), and (b) crowded spaces where panic could spread rapidly even in a smaller room (the 10-occupant rule). A small 30 m² meeting room with 12 occupants triggers anti-panic; an empty 80 m² warehouse aisle also triggers.',
@@ -107,8 +106,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'What is the maximum max-to-min uniformity ratio for anti-panic open-area lighting?',
+    question: 'What is the maximum max-to-min uniformity ratio for anti-panic open-area lighting?',
     options: [
       '10:1.',
       '40:1 across the unobstructed area excluding the 0.5 m perimeter. Same figure as escape route lighting (which applies along the route). The shared 40:1 means a single luminaire layout can satisfy both metrics in spaces where both functional categories apply.',
@@ -177,8 +175,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question:
-      'What rated DURATION applies to anti-panic open-area lighting under BS 5266-1:2025?',
+    question: 'What rated DURATION applies to anti-panic open-area lighting under BS 5266-1:2025?',
     options: [
       '30 minutes.',
       'Same as escape route lighting in the same premises — typically 3 h for non-domestic, with shorter durations (1 h or 2 h) by exception with risk-assessment justification. Anti-panic and escape route lighting share a duration because they share a battery / central system; designing them to different durations is mechanically possible but rarely done. The premises duration applies to the whole emergency installation.',
@@ -289,15 +286,15 @@ const EmergencyLightingModule2Section2 = () => {
                 exit direction, initial movement.
               </li>
               <li>
-                <strong>It does not enable safe machinery operation.</strong> Operators of
-                hazardous equipment need the high-risk task lighting figure (15 lx, 0.5 s — see
-                §3). 0.5 lx is well below the level required for shutting down a printing press.
+                <strong>It does not enable safe machinery operation.</strong> Operators of hazardous
+                equipment need the high-risk task lighting figure (15 lx, 0.5 s — see §3). 0.5 lx is
+                well below the level required for shutting down a printing press.
               </li>
               <li>
                 <strong>It does not produce comfortable seeing.</strong> 0.5 lx is barely above
-                moonlight. Occupants can see shapes, recognise the room layout, identify
-                doorways — they cannot read, work, or perform any visual task. Anti-panic is a
-                survival floor, not a working level.
+                moonlight. Occupants can see shapes, recognise the room layout, identify doorways —
+                they cannot read, work, or perform any visual task. Anti-panic is a survival floor,
+                not a working level.
               </li>
               <li>
                 <strong>It does not extend everywhere.</strong> Bounded by the unobstructed area;
@@ -312,8 +309,8 @@ const EmergencyLightingModule2Section2 = () => {
             clause={
               <>
                 Open area (anti-panic) lighting shall provide a horizontal illuminance of not less
-                than 0.5 lx across the unobstructed area, excluding a peripheral band of 0.5 m
-                from the walls and obstacles. The maximum to minimum ratio of illuminance shall not
+                than 0.5 lx across the unobstructed area, excluding a peripheral band of 0.5 m from
+                the walls and obstacles. The maximum to minimum ratio of illuminance shall not
                 exceed 40:1.
               </>
             }
@@ -327,8 +324,8 @@ const EmergencyLightingModule2Section2 = () => {
             <p>How the perimeter exclusion plays out in design:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Walls.</strong> A 0.5 m strip running along every wall is excluded. In a
-                10 m × 8 m room, the verification area is 9 m × 7 m = 63 m² (not the gross 80 m²).
+                <strong>Walls.</strong> A 0.5 m strip running along every wall is excluded. In a 10
+                m × 8 m room, the verification area is 9 m × 7 m = 63 m² (not the gross 80 m²).
               </li>
               <li>
                 <strong>Internal columns.</strong> A 0.5 m strip around each column is also
@@ -343,8 +340,8 @@ const EmergencyLightingModule2Section2 = () => {
               <li>
                 <strong>Movable obstructions.</strong> Desks, chairs, free-standing equipment —
                 generally NOT excluded because the layout could change. The verification area
-                assumes the room could be cleared; the design must work whether the desks are
-                there or not.
+                assumes the room could be cleared; the design must work whether the desks are there
+                or not.
               </li>
               <li>
                 <strong>Partitions below 1.5 m.</strong> Treated as not blocking emergency egress
@@ -352,8 +349,8 @@ const EmergencyLightingModule2Section2 = () => {
               </li>
             </ul>
             <p>
-              The exclusion is for verification, not for emergency function. A luminaire near a
-              wall still illuminates the wall and the perimeter band — that light is welcome. The
+              The exclusion is for verification, not for emergency function. A luminaire near a wall
+              still illuminates the wall and the perimeter band — that light is welcome. The
               exclusion just means the calculated minimum is verified excluding those zones; the
               light that does fall there is a bonus, not a requirement.
             </p>
@@ -381,7 +378,14 @@ const EmergencyLightingModule2Section2 = () => {
               role="img"
               aria-label="Plan view of an open area showing the 0.5 m perimeter exclusion band, internal column exclusion, unobstructed verification area, luminaire grid producing a uniform 0.5 lx field, and the 40:1 max-to-min ratio annotation."
             >
-              <text x="410" y="24" textAnchor="middle" fill="#FBBF24" fontSize="13" fontWeight="bold">
+              <text
+                x="410"
+                y="24"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="13"
+                fontWeight="bold"
+              >
                 OPEN AREA (ANTI-PANIC) — 0.5 lx MINIMUM across unobstructed area
               </text>
               <text x="410" y="40" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="10">
@@ -424,7 +428,14 @@ const EmergencyLightingModule2Section2 = () => {
                 stroke="rgba(34,211,238,0.6)"
                 strokeWidth="1.4"
               />
-              <text x="410" y="146" textAnchor="middle" fill="#22D3EE" fontSize="10" fontWeight="bold">
+              <text
+                x="410"
+                y="146"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
                 Unobstructed verification area — 0.5 lx minimum applies here
               </text>
 
@@ -493,7 +504,8 @@ const EmergencyLightingModule2Section2 = () => {
                   Trigger: unobstructed area &gt; 60 m² OR occupancy &gt; 10 — either fires.
                 </text>
                 <text x="80" y="438" fill="rgba(255,255,255,0.7)" fontSize="10">
-                  Response: 50 % of rated illuminance within 5 s; 100 % within 60 s. Duration: 3 h non-domestic default.
+                  Response: 50 % of rated illuminance within 5 s; 100 % within 60 s. Duration: 3 h
+                  non-domestic default.
                 </text>
               </g>
             </svg>
@@ -527,9 +539,9 @@ const EmergencyLightingModule2Section2 = () => {
                 mandatory.
               </li>
               <li>
-                <strong>Open-plan office 120 m², 20 occupants.</strong> Both fire. Anti-panic
-                across the unobstructed area; escape route along the diagonal route to the exit.
-                Both methodologies apply concurrently.
+                <strong>Open-plan office 120 m², 20 occupants.</strong> Both fire. Anti-panic across
+                the unobstructed area; escape route along the diagonal route to the exit. Both
+                methodologies apply concurrently.
               </li>
               <li>
                 <strong>Lecture theatre 200 m², 150 occupants.</strong> Both fire. Anti-panic
@@ -598,14 +610,13 @@ const EmergencyLightingModule2Section2 = () => {
               <li>
                 <strong>Dark spot location.</strong> Different. Route minimum is between adjacent
                 luminaires along the route. Area minimum is at the geometric centre of the
-                furthest-from-luminaire zone — typically the corner of the unobstructed area, at
-                or near the 0.5 m perimeter boundary.
+                furthest-from-luminaire zone — typically the corner of the unobstructed area, at or
+                near the 0.5 m perimeter boundary.
               </li>
               <li>
                 <strong>Spacing-to-mounting-height ratio.</strong> Modern LED practice keeps this
-                under 1.5:1 to give comfortable area uniformity. A spacing-to-height ratio of
-                3:1 will struggle to meet 40:1 across an area, even if it passes 40:1 along a
-                route.
+                under 1.5:1 to give comfortable area uniformity. A spacing-to-height ratio of 3:1
+                will struggle to meet 40:1 across an area, even if it passes 40:1 along a route.
               </li>
               <li>
                 <strong>Edge effects.</strong> Anti-panic verification at the 0.5 m perimeter
@@ -619,9 +630,9 @@ const EmergencyLightingModule2Section2 = () => {
             source="BS EN 1838:2024 · §5.3 (Open area lighting — response time and duration)"
             clause={
               <>
-                The illuminance for open area lighting shall reach 50 % within 5 s and 100 %
-                within 60 s. The minimum duration shall be that determined for the building, not
-                less than the duration applied to escape route lighting.
+                The illuminance for open area lighting shall reach 50 % within 5 s and 100 % within
+                60 s. The minimum duration shall be that determined for the building, not less than
+                the duration applied to escape route lighting.
               </>
             }
             meaning="Response time identical to escape route — 5 s to half output, 60 s to full output. Duration ties to the building's overall emergency lighting duration (3 h default for non-domestic), which means anti-panic and escape route share batteries / central system in normal installations."
@@ -634,9 +645,9 @@ const EmergencyLightingModule2Section2 = () => {
             <p>Practical consequences of the 5 s rule:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Switchover hardware speed.</strong> Self-contained luminaires use a relay
-                or solid-state switch that responds in milliseconds. Central battery systems
-                respond in 1-2 s typically. Both well within 5 s.
+                <strong>Switchover hardware speed.</strong> Self-contained luminaires use a relay or
+                solid-state switch that responds in milliseconds. Central battery systems respond in
+                1-2 s typically. Both well within 5 s.
               </li>
               <li>
                 <strong>Lamp warm-up.</strong> LED is effectively instant. Discharge lamps could
@@ -645,15 +656,15 @@ const EmergencyLightingModule2Section2 = () => {
                 meet.
               </li>
               <li>
-                <strong>Verification.</strong> BS EN 50172:2024 commissioning includes a
-                stopwatch test of switchover. Routine monthly tests confirm switchover but do not
-                always quantitatively measure to 5 s; annual tests do.
+                <strong>Verification.</strong> BS EN 50172:2024 commissioning includes a stopwatch
+                test of switchover. Routine monthly tests confirm switchover but do not always
+                quantitatively measure to 5 s; annual tests do.
               </li>
               <li>
                 <strong>The hidden failure.</strong> A luminaire whose switchover relay sticks
                 (mechanical wear) may take 10-15 s instead of 1 s. Looks fine on monthly visual
-                test, fails 5 s rule. Battery testing alone misses this — the relay timing has to
-                be checked.
+                test, fails 5 s rule. Battery testing alone misses this — the relay timing has to be
+                checked.
               </li>
             </ul>
           </ConceptBlock>
@@ -676,30 +687,30 @@ const EmergencyLightingModule2Section2 = () => {
             <p>How to satisfy both efficiently:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Escape route is more demanding numerically.</strong> 1 lx is double 0.5
-                lx. A layout that produces 1 lx along the route generally produces 0.5 lx in the
+                <strong>Escape route is more demanding numerically.</strong> 1 lx is double 0.5 lx.
+                A layout that produces 1 lx along the route generally produces 0.5 lx in the
                 surrounding area as a side effect — provided the spacing is reasonably tight.
               </li>
               <li>
-                <strong>Verification differs.</strong> Verify route compliance across the full
-                width at floor level, with the BS EN 1838:2024 edge exclusions (outer 0.5 m on
-                routes > 2 m, outer ¼ width on routes ≤ 2 m). Verify anti-panic compliance across
-                the unobstructed area excluding the 0.5 m perimeter. Two different measurement
+                <strong>Verification differs.</strong> Verify route compliance across the full width
+                at floor level, with the BS EN 1838:2024 edge exclusions (outer 0.5 m on routes &gt;
+                2 m, outer ¼ width on routes ≤ 2 m). Verify anti-panic compliance across the
+                unobstructed area excluding the 0.5 m perimeter. Two different measurement
                 geometries; one luminaire layout has to satisfy both.
               </li>
               <li>
                 <strong>Uniformity figures share.</strong> Both 40:1. A layout that achieves 40:1
-                along the route usually achieves 40:1 across the area at the same time, provided
-                the spacing-to-height ratio is sensible.
+                along the route usually achieves 40:1 across the area at the same time, provided the
+                spacing-to-height ratio is sensible.
               </li>
               <li>
                 <strong>Mandatory locations apply from escape route.</strong> The mandatory
-                luminaire locations from BS 5266-1:2025 §6 (exit doors, change of direction, top
-                and bottom of stairs, etc.) carry through. Anti-panic does not relax these.
+                luminaire locations from BS 5266-1:2025 §6 (exit doors, change of direction, top and
+                bottom of stairs, etc.) carry through. Anti-panic does not relax these.
               </li>
               <li>
-                <strong>The risk: designing for anti-panic alone.</strong> A layout designed for
-                0.5 lx everywhere may fall to 0.6 lx along the route — passes anti-panic but fails
+                <strong>The risk: designing for anti-panic alone.</strong> A layout designed for 0.5
+                lx everywhere may fall to 0.6 lx along the route — passes anti-panic but fails
                 escape route 1 lx. Always design for the more demanding metric where both apply.
               </li>
             </ul>
@@ -769,9 +780,9 @@ const EmergencyLightingModule2Section2 = () => {
                 route. Verify on actual area used and occupancy.
               </li>
               <li>
-                <strong>Mezzanine floors.</strong> Treated as a separate space from the main
-                floor. Anti-panic evaluated separately on each mezzanine. Some mezzanines escape
-                anti-panic by being below the area trigger and lightly occupied.
+                <strong>Mezzanine floors.</strong> Treated as a separate space from the main floor.
+                Anti-panic evaluated separately on each mezzanine. Some mezzanines escape anti-panic
+                by being below the area trigger and lightly occupied.
               </li>
             </ul>
           </ConceptBlock>
@@ -820,14 +831,12 @@ const EmergencyLightingModule2Section2 = () => {
                   'Different functional purposes. Escape route lighting illuminates a defined path so occupants can follow it without tripping or losing the route — 1 lx is calibrated for navigation. Anti-panic lighting prevents panic in open spaces by giving occupants enough light to perceive layout and identify an exit direction — 0.5 lx is calibrated for orientation, which is a less demanding visual task than path-following. Once the occupant has identified a route and moved onto it, escape route lighting takes over.',
               },
               {
-                question:
-                  'Does anti-panic apply to a small storeroom with one occupant?',
+                question: 'Does anti-panic apply to a small storeroom with one occupant?',
                 answer:
                   'No, both triggers fail. Below 60 m² area AND below 11 occupants — neither fires. Anti-panic methodology does not apply. Escape route lighting at the exit door applies (BS 5266-1:2025 mandatory location), but the anti-panic 0.5 lx area-wide rule does not.',
               },
               {
-                question:
-                  'What about a 12-occupant meeting room that is only 30 m²?',
+                question: 'What about a 12-occupant meeting room that is only 30 m²?',
                 answer:
                   'Anti-panic IS triggered. The occupancy trigger (11+ persons) fires regardless of the area. The 30 m² area is small but does not exempt the room. Apply 0.5 lx across the unobstructed area excluding 0.5 m perimeter, with 40:1 uniformity. Designers regularly miss this case because the area looks "small enough not to matter".',
               },
@@ -838,8 +847,7 @@ const EmergencyLightingModule2Section2 = () => {
                   'Movable obstructions (desks, chairs, free-standing equipment) generally are NOT excluded — the design must work whether they are there or not. Fixed obstructions (columns, fixed partitions taller than waist height, server racks, manufacturing cells) ARE excluded along with their 0.5 m perimeter. The unobstructed area is the floor that occupants can walk on or stand on through a flexible layout, plus the 0.5 m perimeter exclusion against walls and fixed obstacles.',
               },
               {
-                question:
-                  'What if my anti-panic design verifies at 0.5 lx exactly — no margin?',
+                question: 'What if my anti-panic design verifies at 0.5 lx exactly — no margin?',
                 answer:
                   'Technically compliant but operationally fragile. Battery degradation, luminaire ageing, lens soiling all reduce in-service output by 20-30 % over 3-5 years. A design at exactly 0.5 lx will fall below in service. Specify a target minimum of 0.7-1.0 lx in design to give margin, particularly across an area where the worst-case point is hard to predict precisely.',
               },
@@ -849,8 +857,7 @@ const EmergencyLightingModule2Section2 = () => {
                   'Lux meter at floor level on a grid across the unobstructed area. Typical practice: 1 m or 2 m grid, depending on space size. Take readings at each grid point, plus targeted readings at columns, partition corners, and other expected dark spots. Maximum across the grid divided by minimum gives uniformity ratio. Any reading below 0.5 lx at a grid point inside the verification area fails minimum; any ratio over 40:1 fails uniformity. Record all readings and the calculation in the commissioning report.',
               },
               {
-                question:
-                  'Does anti-panic apply outside the building?',
+                question: 'Does anti-panic apply outside the building?',
                 answer:
                   'Generally no — anti-panic is an inside-the-building concept where occupants might lose orientation. Outdoor areas (car parks, courtyards) usually have ambient light from the surroundings even in mains failure. Exception: covered external areas that form part of the escape route (covered loading bay, internal courtyard) — these may trigger anti-panic if their geometry meets the criteria. Treat case-by-case.',
               },
