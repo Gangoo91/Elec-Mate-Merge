@@ -1,643 +1,1137 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight, Battery } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  LearningOutcomes,
+  ContentEyebrow,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Secondary Power & Battery Sizing - Fire Alarm Module 4 Section 2';
-const DESCRIPTION =
-  'Learn battery autonomy periods, sizing calculations, charger capacity, temperature effects and verification for BS 5839-1 fire alarm systems.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'autonomy-purpose',
-    question: 'Autonomy is the ability to:',
+    id: 'fam4-s2-formula',
+    question: 'Write out the BS 5839-1:2025 standby battery sizing formula in plain terms.',
     options: [
-      'Run with mains present',
-      'Operate for the required standby and alarm periods on battery',
-      'Charge faster',
-      'Increase loop addresses',
+      'Cmin equals standby current times standby hours.',
+      'Cmin = 1.25 × (T1·I1 + D·I2·T2). The 1.25 is the four-year ageing factor — batteries lose capacity over service life, the design rule books in 25% loss. T1 is the standby duration in hours (typically 24 h, or 6 h where automatic standby generation gives a justified reduction). I1 is the standby current. T2 is the alarm duration (typically 0.5 h). I2 is the alarm current. D is a de-rating factor of 1.75 applied to the alarm portion to account for high-discharge capacity loss at high currents. The result Cmin is the minimum required nominal capacity in Ah.',
+      'Cmin = standby current divided by 24.',
+      'Cmin = alarm current times 1.75.',
     ],
     correctIndex: 1,
     explanation:
-      'Autonomy covers standby plus alarm periods on battery to meet the design/standard.',
+      'The formula is one of the most often-cited BS 5839-1 calculations and one of the most often-mis-applied. The four factors — ageing, standby duration, alarm duration, alarm de-rating — each have to be present, and applied in the order shown. Skipping the 1.75 alarm de-rating is the single most common error and produces a battery that passes day-one but cannot deliver alarm current at end-of-life.',
   },
   {
-    id: 'battery-sizing',
-    question: 'Battery sizing must consider:',
+    id: 'fam4-s2-standby',
+    question:
+      'BS 5839-1:2025 specifies the standby duration T1 as how many hours, and under what condition can it be reduced?',
     options: [
-      'Standby only',
-      'Alarm only',
-      'Standby + alarm and temperature/ageing factors',
-      'Only charger current',
-    ],
-    correctIndex: 2,
-    explanation:
-      'Use total Ah for standby and alarm; apply derating for temperature and ageing per manufacturer guidance.',
-  },
-  {
-    id: 'charger-capacity',
-    question: 'Charger capacity should be:',
-    options: [
-      'Less than standby current',
-      'Sufficient to recharge within specified time while supporting load',
-      'Ignored',
-      'Equal to alarm current',
+      'Always 12 hours.',
+      "Default 24 hours of standby capacity. The 24-hour figure may be reduced to 6 hours where AUTOMATIC starting standby generation is provided AND the generation arrangement itself meets the standard's recommendations for reliability and fuel reserves. The reduction is conditional, not unconditional: a building with no standby generator must use 24 h; a building with a manual-start generator does not qualify for the reduction; only fully automatic, reliable standby generation justifies the 6 h figure.",
+      'Default 6 hours, reduced to 24 hours where an alarm signal is received at an ARC.',
+      'Default 72 hours.',
     ],
     correctIndex: 1,
     explanation:
-      'The charger must recharge batteries in the permitted time while supporting system loads.',
+      'The 24/6 hour split is the default mains-failure ride-through requirement. Most installations operate on the 24 h figure because automatic standby generation is uncommon outside large commercial / institutional sites. A site with a Cat 1 emergency standby generator that auto-starts on mains loss can justify 6 h, but only if the generator itself is reliable, periodically tested, and has fuel reserves to outlast the credible mains-fail event.',
+  },
+  {
+    id: 'fam4-s2-en54-4',
+    question:
+      'BS 5839-1:2025 references which power supply equipment standards as acceptable for fire alarm primary / secondary power equipment?',
+    options: [
+      'BS EN 60204-1 only.',
+      'BS EN 54-4 (Power supply equipment for fire detection and fire alarm systems) is the primary standard. NEW IN 2025: BS EN 50131-6 Grade 4 is now an explicitly acceptable alternative for the alarm-transmission power supply. The 2025 alignment recognises that intruder-alarm-grade power supplies can meet the reliability bar for fire alarm transmission equipment when the BS EN 50131-6 grading is high enough.',
+      'BS EN 50525 only.',
+      'BS 7671 Section 560 only.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'BS EN 54-4 has long been the benchmark. The 2025 addition of BS EN 50131-6 Grade 4 as an acceptable alternative is recognised as one of the more practical changes in the new standard — it widens the supplier base for alarm-transmission power supplies without weakening the reliability bar.',
+  },
+  {
+    id: 'fam4-s2-date-label',
+    question:
+      'BS 5839-1:2025 has formalised a long-standing custom regarding battery installation. What is now expected on every installed battery?',
+    options: [
+      'A serial number etched into the casing.',
+      'A LABEL fixed to the battery showing the date of installation. The 2025 standard has acknowledged the custom-and-practice of marking installed batteries with their installation date — typically with a permanent marker on the casing — and now formalises it as a recommendation. The date is the datum for end-of-life calculations: a sealed lead-acid battery typically has a 4-year design life, and the installation date is what tells the maintainer when replacement is due.',
+      'A safety data sheet attached to the battery.',
+      'No label is required.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'The date label is part of the maintenance audit trail. Without it, the maintainer has to guess battery age from CIE commissioning records, which may be incomplete. With it, the answer is on the battery itself — replace at four years from the date marked, sooner if periodic standby capacity tests indicate degradation.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: 'Autonomy is the ability to:',
+    question: 'Write out the BS 5839-1:2025 standby battery sizing formula and identify each term.',
     options: [
-      'Run with mains present',
-      'Operate for the required standby and alarm periods on battery',
-      'Charge faster',
-      'Increase loop addresses',
+      'Cmin = T1·I1 only.',
+      'Cmin = 1.25 × (T1·I1 + D·I2·T2). Where: 1.25 = ageing factor (four-year design life, 25% capacity loss budgeted); T1 = standby duration in hours (24 h default, 6 h with auto-start standby generation); I1 = standby current; T2 = alarm duration in hours (0.5 h); I2 = alarm current; D = de-rating factor (1.75) applied to the alarm portion to account for high-discharge capacity loss. Cmin is the minimum required nominal battery capacity in Ah.',
+      'Cmin = I2·T2.',
+      'Cmin = I1·24.',
     ],
     correctAnswer: 1,
     explanation:
-      'Autonomy covers standby plus alarm periods on battery to meet the design/standard.',
+      'The formula has four engineering reasons for being structured the way it is: ageing (1.25), standby duration (T1), alarm duration (T2), and alarm de-rating (D = 1.75). Each term is independently necessary; missing any of them produces an undersized battery.',
   },
   {
     id: 2,
-    question: 'Battery sizing must consider:',
+    question: 'The 1.25 factor in the standby battery sizing formula represents what?',
     options: [
-      'Standby only',
-      'Alarm only',
-      'Standby + alarm and temperature/ageing factors',
-      'Only charger current',
+      'A safety margin.',
+      'The four-year ageing factor — sealed lead-acid (SLA) batteries lose capacity over their service life, and the design rule books in 25% capacity loss across the four-year design replacement cycle. A new battery with nominal 7 Ah delivers 7 Ah; the same battery at four years delivers approximately 5.6 Ah. The 1.25 multiplier in the formula sizes the battery so that the END-OF-LIFE capacity, not the new capacity, meets the standby + alarm requirement.',
+      'Voltage tolerance.',
+      'Temperature compensation.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Use total Ah for standby and alarm; apply derating for temperature and ageing per manufacturer guidance.',
+      'Sizing for end-of-life is the architectural principle. A battery that just meets the requirement when new will fail to meet it long before its replacement date. The 1.25 factor accepts the ageing reality and sizes for the worst-case (end-of-life) point.',
   },
   {
     id: 3,
-    question: 'Charger capacity should be:',
+    question:
+      'The 1.75 de-rating factor (D) applied to the alarm portion of the formula represents what?',
     options: [
-      'Less than standby current',
-      'Sufficient to recharge within specified time while supporting load',
-      'Ignored',
-      'Equal to alarm current',
+      'A safety margin.',
+      'The high-discharge capacity loss — sealed lead-acid batteries deliver substantially less than their nominal capacity when discharged at high current. A battery rated 7 Ah at the standard 20-hour discharge rate may deliver only around 4 Ah at the much higher current required for sounder operation in alarm. The 1.75 factor in the alarm portion of the formula sizes the battery so that even at high alarm-discharge current, the required Ah are delivered.',
+      'Cable voltage drop.',
+      'Charger inefficiency.',
     ],
     correctAnswer: 1,
     explanation:
-      'The charger must recharge batteries in the permitted time while supporting system loads.',
+      'High-current discharge characteristic is one of the SLA chemistry quirks the formula has to accommodate. The standard 20 h capacity rating does not predict the half-hour alarm discharge accurately; the 1.75 de-rating bridges the gap.',
   },
   {
     id: 4,
-    question: 'What is the typical standby autonomy period required for a Category L system?',
-    options: ['12 hours', '24 hours', '48 hours', '72 hours'],
+    question:
+      'For a typical Category L2 system with standby current 200 mA and alarm current 1.6 A, calculate Cmin assuming T1 = 24 h, T2 = 0.5 h. Show the working.',
+    options: [
+      'Cmin = 4.8 Ah.',
+      'Cmin = 1.25 × (T1·I1 + D·I2·T2) = 1.25 × (24 × 0.2 + 1.75 × 1.6 × 0.5) = 1.25 × (4.8 + 1.4) = 1.25 × 6.2 = 7.75 Ah. Round up to next available battery size — typically 12 Ah for an SLA pair (2 × 6 Ah cells in series for 24 V, or 2 × 12 V batteries in parallel depending on CIE topology). Selecting smaller would leave no margin against the formula.',
+      'Cmin = 6.2 Ah.',
+      'Cmin = 1.6 Ah.',
+    ],
     correctAnswer: 1,
     explanation:
-      'BS 5839-1 typically requires 24 hours standby plus 30 minutes alarm for most Category L systems, though the fire strategy may specify different requirements.',
+      'The worked example demonstrates the practical application: write down each term, plug in the numbers, sum, multiply by 1.25, round up. Selecting the next available battery size above the calculated minimum is the correct rounding direction; rounding down breaks the formula.',
   },
   {
     id: 5,
-    question: 'Temperature affects capacity by:',
+    question:
+      'BS 5839-1:2025 has relocated the detailed battery requirements to a different part of the standard. Where do they now sit?',
     options: [
-      'Increasing at low temperature',
-      'No effect',
-      'Reducing effective Ah in colder environments',
-      'Only affecting charger',
+      'In Section 1.',
+      'In Annexe E (the 2025 standard moved detailed battery sizing recommendations into an annexe). The main clauses retain the principles; the annexe holds the worked details, the sizing tables, and the calculation methodology. Inspectors and designers should be aware that what was in the main body of the 2017 edition is now an annexe in the 2025 — same engineering, different location.',
+      'In Annexe A.',
+      'Removed entirely.',
     ],
-    correctAnswer: 2,
-    explanation: 'Battery capacity reduces at lower temperatures; apply manufacturer derating.',
+    correctAnswer: 1,
+    explanation:
+      "Standards re-organisation rarely changes the engineering, but it does change where you look. The 2025 annexe placement reflects the standard's broader re-organisation; designers used to the 2017 numbering must update their reference habits.",
   },
   {
     id: 6,
-    question: 'Ageing allowance is typically:',
-    options: ['0%', 'Considered per manufacturer (e.g., +10-30%)', 'Always 100%', 'Ignored'],
+    question:
+      'BS 5839-1:2025 references which power supply equipment standards as acceptable for fire alarm transmission equipment?',
+    options: [
+      'BS EN 60950 only.',
+      'BS EN 54-4 (the long-standing fire-alarm-specific power supply standard) OR — NEW IN 2025 — BS EN 50131-6 Grade 4 (intruder alarm power supplies, Grade 4 reliability). The 2025 widening of acceptable standards recognises that the high-grade intruder power supplies can match BS EN 54-4 reliability and offers practical alternatives where supply chain or system integration drives the choice. Note: the BS EN 50131-6 alternative applies specifically to the alarm transmission equipment power supply, not necessarily the main CIE power supply.',
+      'IEC 62133 only.',
+      'BS 7671 Section 560 only.',
+    ],
     correctAnswer: 1,
-    explanation: 'Allow for capacity loss over service life as specified by the manufacturer.',
+    explanation:
+      'The 2025 dual-standard recognition (BS EN 54-4 OR BS EN 50131-6 Grade 4 for transmission PSU) is one of the practical industry-friendly changes in the new standard.',
   },
   {
     id: 7,
     question:
-      'When calculating battery capacity for a system with 24h standby at 0.5A and 30min alarm at 2A, the minimum Ah before derating is:',
-    options: ['1 Ah', '12 Ah', '13 Ah', '24 Ah'],
-    correctAnswer: 2,
+      'A maintainer arrives at a site for the annual service and finds the SLA batteries unmarked — no installation date, no service record matching the batteries to a date. The batteries appear physically in good condition. What is the correct response?',
+    options: [
+      'Leave them in place.',
+      'Treat the batteries as of UNKNOWN AGE — and therefore replace them. Without a date, end-of-life cannot be determined; the design-life calculation depends on knowing the install date. The batteries may be 6 months old or 6 years old; the inspection cannot tell. Replace them, fit new batteries with installation-date labels per BS 5839-1:2025, and update the system logbook with the new install date and the four-year replacement target.',
+      'Run a 30-minute alarm test on them and decide.',
+      'Leave them and re-inspect in 12 months.',
+    ],
+    correctAnswer: 1,
     explanation:
-      'Calculate: (0.5A x 24h) + (2A x 0.5h) = 12 + 1 = 13 Ah minimum before applying derating factors.',
+      'The 2025 date-label recommendation exists precisely to prevent this situation. Where no date label exists on legacy batteries, the cautious response is replacement plus correct labelling on the new batteries. A standby capacity test can confirm degradation but not age; replacement removes the uncertainty.',
   },
   {
     id: 8,
-    question: 'VRLA batteries should be installed:',
+    question:
+      'Why does the formula apply the 1.25 ageing factor to BOTH the standby and the alarm portions, not just the standby portion?',
     options: [
-      'In any orientation',
-      'Upright as specified by manufacturer data',
-      'Always horizontal',
-      'Upside down for better performance',
+      'Convention.',
+      'Because the ageing-related capacity loss affects the WHOLE battery — standby and alarm performance both decline together as the battery ages. A battery at four years cannot deliver four-year-aged 24 h of standby AND four-year-aged 30 minutes of alarm; both portions must be calculated against the aged capacity. The 1.25 multiplier is applied across the bracket, not just to the T1·I1 term.',
+      'It only applies to standby.',
+      'The 1.25 only applies to alarm.',
     ],
     correctAnswer: 1,
     explanation:
-      'Follow manufacturer installation requirements for orientation, ventilation and environmental conditions to ensure proper operation and service life.',
+      'A common error is to apply the 1.25 only to the standby term, reasoning that the alarm event is short and ageing matters less. Wrong — at end-of-life the battery is aged for both purposes simultaneously. The bracket structure of the formula is intentional.',
   },
   {
     id: 9,
-    question: 'The typical recharge time specified for fire alarm batteries after discharge is:',
-    options: ['6 hours', '12 hours', '24 hours', '48 hours'],
-    correctAnswer: 2,
-    explanation:
-      'BS 5839-1 typically requires batteries to be recharged to 80% capacity within 24 hours of restoration of mains supply.',
-  },
-  {
-    id: 10,
-    question: 'Battery replacement is typically recommended after:',
+    question:
+      'A Category L2 design has standby current 350 mA and alarm current 2.4 A. The CIE specifies a 24 h standby duration and the standard 0.5 h alarm duration. What is the correct Cmin and what is the next standard battery size to fit?',
     options: [
-      '1 year regardless of condition',
-      '3-5 years or per manufacturer guidance',
-      '10 years minimum',
-      'Never, batteries last forever',
+      'Cmin = 8 Ah, fit 7 Ah.',
+      'Cmin = 1.25 × (24 × 0.35 + 1.75 × 2.4 × 0.5) = 1.25 × (8.4 + 2.1) = 1.25 × 10.5 = 13.125 Ah. Next standard SLA size up is typically 17 Ah (a 2 × 17 Ah pair on a 24 V system). Selecting 12 Ah would breach the formula; selecting 17 Ah meets it with modest end-of-life margin. The correct selection is 17 Ah.',
+      'Cmin = 10.5 Ah, fit 7 Ah.',
+      'Cmin = 12 Ah, fit 12 Ah.',
     ],
     correctAnswer: 1,
     explanation:
-      'VRLA batteries typically require replacement every 3-5 years, though this depends on manufacturer recommendations and actual capacity testing results.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'Can I oversize batteries?',
-    answer:
-      'Yes, if the charger can recharge them within the specified time and the enclosure has space. Larger batteries provide extra resilience.',
+      'A larger system shows the formula more visibly: I1 of 350 mA produces 8.4 Ah of standby alone, before the alarm portion or the ageing factor are added. End-of-life sizing is a meaningful constraint at this scale; 17 Ah is correct.',
   },
   {
-    question: 'What Ah size should I choose?',
-    answer:
-      'Select the next standard size above your derated calculation. Common sizes are 7Ah, 12Ah, 17Ah, 24Ah, 38Ah.',
-  },
-  {
-    question: 'Do batteries need ventilation?',
-    answer:
-      'Follow manufacturer and BS 7671 guidance. VRLA batteries produce minimal gas but adequate ventilation is still required.',
-  },
-  {
-    question: 'How often should batteries be replaced?',
-    answer:
-      'Typically every 3-5 years, or when capacity testing shows significant degradation. Record replacement dates.',
-  },
-  {
-    question: 'What if the panel is in a cold location?',
-    answer:
-      'Apply additional temperature derating or consider relocating the panel/batteries to a warmer environment.',
-  },
-  {
-    question: 'Can I use lithium batteries instead?',
-    answer:
-      'Only if specifically approved by the panel manufacturer and meeting BS EN 54-4 requirements. Most panels are designed for VRLA.',
+    id: 10,
+    question:
+      'Why is the BS 5839-1:2025 formula calibrated to a 4-year design replacement cycle rather than a longer one (say 7-10 years)?',
+    options: [
+      'Manufacturer pressure.',
+      "Sealed lead-acid (SLA) chemistry has a limited float-charge service life. After approximately 4 years on continuous float charge in typical fire-alarm operating conditions (temperature, charge regime), capacity has degraded to around 75-80% of nominal even on a battery that has not been alarm-discharged. Pushing beyond 4 years means the formula's 1.25 ageing factor no longer represents real capacity; the battery may fail to deliver the required standby + alarm without warning. The 4-year cycle is calibrated to the real chemistry, not to a maintenance-business preference.",
+      'Cost savings for installers.',
+      'Arbitrary choice.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The four-year cycle is rooted in SLA chemistry behaviour under float charge in fire-alarm typical conditions. Different chemistries (LiFePO4, for example) would have different cycle lengths and the formula would not necessarily apply unchanged. The 1.25 factor and the 4-year cycle are paired engineering assumptions; if you change the chemistry, you have to change the calculation, ideally with manufacturer engineering support.',
   },
 ];
 
 const FireAlarmModule4Section2 = () => {
-  useSEO(TITLE, DESCRIPTION);
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'Secondary power and battery sizing | Fire Alarm Module 4.2 | Elec-Mate',
+    description:
+      'BS 5839-1:2025 Annexe E battery sizing — Cmin = 1.25 × (T1·I1 + D·I2·T2), the 4-year ageing factor, the 1.75 alarm de-rating, BS EN 54-4 and BS EN 50131-6 Grade 4 PSU references, and the 2025 battery date label.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Module 4
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4 Section 2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Secondary Power & Battery Sizing
-          </h1>
-          <p className="text-white">
-            Battery capacity calculations, autonomy requirements and charger verification
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 2"
+            title="Secondary power and battery sizing"
+            description="BS 5839-1:2025 Annexe E — the standby battery sizing formula Cmin = 1.25 × (T1·I1 + D·I2·T2), the 4-year ageing factor, the 1.75 alarm de-rating, the standby PSU standards (BS EN 54-4 and the new 2025 BS EN 50131-6 Grade 4 alternative), and the 2025 battery date label requirement."
+            tone="yellow"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
+          <TLDR
+            points={[
+              'Standby battery sizing formula: Cmin = 1.25 × (T1·I1 + D·I2·T2). All four terms must be present; mis-applying any one produces an undersized battery.',
+              '1.25 = four-year ageing factor — books in 25% capacity loss across the design replacement cycle. Sizes for end-of-life capacity, not new.',
+              'T1 = standby duration. Default 24 hours; reducible to 6 h ONLY where automatic standby generation is provided and reliable.',
+              'T2 = alarm duration = 0.5 hours (30 minutes) — the standard alarm-current discharge time built into the formula.',
+              'D = 1.75 de-rating factor on the alarm portion — accounts for SLA high-discharge capacity loss at sounder-load currents.',
+              'I1 = standby current (CIE quiescent + interfaces); I2 = alarm current (CIE + sounders + visual alarms + interfaces in alarm).',
+              'Battery requirements moved to ANNEXE E in the 2025 revision — engineering unchanged, location changed.',
+              'Power supply equipment standards: BS EN 54-4 (long-standing) OR — NEW IN 2025 — BS EN 50131-6 Grade 4 acceptable for alarm transmission equipment PSU.',
+              'BS 5839-1:2025 clause 16 — every installed battery should carry a permanent label showing the installation date. Datum for the 4-year replacement cycle.',
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Write out and apply the BS 5839-1:2025 standby battery sizing formula Cmin = 1.25 × (T1·I1 + D·I2·T2) with the correct value for each term',
+              'Justify the 1.25 four-year ageing factor and the 1.75 alarm-portion de-rating in terms of SLA battery chemistry',
+              'Select T1 correctly: 24 h default, 6 h only with reliable automatic standby generation; select T2 = 0.5 h',
+              'Calculate Cmin for typical L2 / L3 / L4 / L5 systems and select the next-available standard battery size',
+              'Reference BS EN 54-4 as the primary PSU equipment standard and BS EN 50131-6 Grade 4 as the 2025-introduced alternative for transmission PSU',
+              'Apply the 2025 battery date-label recommendation and use the date as the datum for end-of-life replacement',
+              'Locate the detailed battery requirements in BS 5839-1:2025 Annexe E (relocated from main body in 2017 edition)',
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The standby battery formula — anatomy</ContentEyebrow>
+
+          <ConceptBlock
+            title="The four engineering reasons inside the formula"
+            plainEnglish="Cmin = 1.25 × (T1·I1 + D·I2·T2) looks simple but every term in it is doing real engineering work. The formula has to size a battery that survives mains failure for the standby duration, supplies alarm current for the alarm duration, and does both at end-of-life — four years from installation — when the battery has lost capacity to ageing. Each factor in the formula handles one of those constraints."
+            onSite="When you sit down to size a battery, write the formula at the top of the page first. Plug in the numbers second. The single most common error is sizing on standby alone — forgetting the alarm portion or the de-rating — and producing a battery that holds 24 hours of standby but cannot push the sounders for 30 minutes."
+          >
+            <p>The four terms, in order:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Autonomy:</strong> 24h standby + 30min alarm typical
+                <strong>1.25 — the four-year ageing factor.</strong> Sealed lead-acid (SLA)
+                batteries on continuous float charge lose capacity over their service life. By the
+                end of the four-year design replacement cycle, capacity has typically fallen to
+                around 75-80% of nominal. The 1.25 multiplier sizes the battery so that the
+                END-OF-LIFE capacity meets the requirement, not the new capacity. A battery that
+                only meets the formula when new will fail to meet it long before its replacement
+                date.
               </li>
               <li>
-                <strong>Calculation:</strong> Ah = Current x Time
+                <strong>T1·I1 — the standby capacity term.</strong> Standby current (I1) multiplied
+                by standby duration (T1) gives the Ah needed to keep the system alive through mains
+                failure. T1 is 24 h by default (reducible to 6 h only with reliable automatic
+                standby generation). I1 is the quiescent draw of the CIE plus all always-energised
+                interface devices.
               </li>
               <li>
-                <strong>Derating:</strong> Apply 25-50% for temperature/ageing
+                <strong>D·I2·T2 — the alarm capacity term.</strong> Alarm current (I2) multiplied by
+                alarm duration (T2 = 0.5 h) gives the nominal Ah needed to drive the alarm event.
+                The de-rating factor D = 1.75 accounts for SLA high-discharge capacity loss — the
+                battery delivers substantially less than its 20 h-rated capacity when discharged at
+                the high current required by a full bank of sounders.
               </li>
               <li>
-                <strong>Recharge:</strong> 80% within 24 hours
+                <strong>Sum and 1.25 multiplier.</strong> The standby and alarm portions are summed
+                inside the bracket, then the whole sum is multiplied by 1.25 for ageing. Both
+                standby AND alarm performance degrade with age; the 1.25 must be applied to both,
+                which is why the brackets are around the sum.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
-            <ul className="text-sm text-white space-y-1">
+            <p>
+              The result, Cmin, is the minimum required nominal battery capacity in Ah at the
+              standard 20-hour discharge rate (the rate at which SLA batteries are nominally
+              specified). The battery selected for fitting is the next available standard size equal
+              to or greater than Cmin — rounding up only.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Annexe E (Standby battery sizing — relocated from main body)"
+            clause={
+              <>
+                The minimum required battery capacity Cmin (Ah, at the 20 h discharge rate) for the
+                standby supply of a fire detection and fire alarm system is given by:
+                <br />
+                <br />
+                <strong>Cmin = 1.25 × (T1 × I1 + D × I2 × T2)</strong>
+                <br />
+                <br />
+                where 1.25 is the ageing factor for a four-year design replacement cycle; T1 is the
+                standby duration in hours; I1 is the standby current; T2 is the alarm duration in
+                hours; I2 is the alarm current; and D = 1.75 is the de-rating factor applied to the
+                alarm capacity to allow for the high-discharge capacity loss of sealed lead-acid
+                batteries.
+              </>
+            }
+            meaning="The four engineering factors are encoded in the formula. The 2025 standard has relocated this calculation to Annexe E from its previous position in the main body — designers must update their reference habits accordingly. The engineering is unchanged; only the location has changed."
+          />
+
+          <InlineCheck
+            id={inlineChecks[0].id}
+            question={inlineChecks[0].question}
+            options={inlineChecks[0].options}
+            correctIndex={inlineChecks[0].correctIndex}
+            explanation={inlineChecks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Worked example — Category L2 system</ContentEyebrow>
+
+          <ConceptBlock
+            title="A typical L2 sizing calculation, step by step"
+            plainEnglish="The clearest way to internalise the formula is to walk through a worked example. Take a Category L2 system in a small commercial building: a CIE drawing 200 mA quiescent, an alarm current of 1.6 A from the combined CIE + sounders + visual alarms in alarm, a standard 24 h standby duration (no auto-start generator on site), and the standard 0.5 h alarm duration. We will calculate Cmin, then select the battery to fit."
+          >
+            <p>The numbers:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Spot:</strong> Battery date codes for replacement
+                <strong>I1 (standby current) = 0.2 A.</strong> Sum of the CIE quiescent draw plus
+                any always-energised interface devices (door-closer hold-open magnets, addressable
+                loop quiescent, etc.).
               </li>
               <li>
-                <strong>Use:</strong> Standby + alarm Ah calculation
+                <strong>T1 (standby duration) = 24 h.</strong> No auto-start generator at this site;
+                the default 24 h figure applies.
               </li>
               <li>
-                <strong>Apply:</strong> Select next standard size up
+                <strong>I2 (alarm current) = 1.6 A.</strong> Sum of the CIE + all sounders + all
+                visual alarms + all interfaces drawing power in alarm. This figure is taken from the
+                CIE manufacturer&apos;s loading calculation worksheet and the sounder datasheets.
+              </li>
+              <li>
+                <strong>T2 (alarm duration) = 0.5 h.</strong> Standard half-hour alarm capacity.
+              </li>
+              <li>
+                <strong>D (alarm de-rating factor) = 1.75.</strong> Standard SLA high-discharge
+                de-rating.
+              </li>
+              <li>
+                <strong>1.25 (ageing factor).</strong> Standard four-year ageing.
               </li>
             </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Calculate Ah requirements from current and time for standby and alarm periods',
-              'Apply derating factors for temperature and ageing per manufacturer guidance',
-              'Verify charger can recharge batteries within the specified timeframe',
-              'Select appropriate battery types and understand installation requirements',
-              'Understand autonomy requirements for different system categories',
-              'Commission and test battery backup systems to BS 5839-1',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 01: Autonomy Requirements */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Autonomy Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Autonomy is the duration the fire alarm system can operate on battery power alone. BS
-              5839-1 specifies minimum requirements based on system category and building use.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm font-medium text-white mb-2">Typical Requirements:</p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  <strong>Category L systems:</strong> 24 hours standby + 30 minutes alarm
-                </li>
-                <li>
-                  <strong>Category M systems:</strong> 24 hours standby + 30 minutes alarm
-                </li>
-                <li>
-                  <strong>Category P systems:</strong> 24-72 hours depending on response capability
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              The fire strategy document may specify different requirements. Always confirm autonomy
-              periods during design.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 02: Battery Sizing Method */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Battery Sizing Method
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Calculate battery capacity systematically using current draws and time periods. The
-              basic formula is: Ah = Current (A) x Time (h).
-            </p>
-
-            <div className="space-y-4 my-6">
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-white mb-1">Step 1: Standby Capacity</p>
-                <p className="text-sm text-white">
-                  Standby Ah = Standby Current (A) x Standby Period (h)
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-white mb-1">Step 2: Alarm Capacity</p>
-                <p className="text-sm text-white">
-                  Alarm Ah = Alarm Current (A) x Alarm Period (h)
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-white mb-1">Step 3: Total + Derating</p>
-                <p className="text-sm text-white">
-                  Total Ah = (Standby Ah + Alarm Ah) x Derating Factor
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 03: Worked Example */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Worked Example
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm font-medium text-white mb-3">Category L System Calculation:</p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  <strong>Given:</strong>
-                </p>
-                <ul className="ml-4 space-y-1">
-                  <li>Standby current: 0.45A</li>
-                  <li>Standby period: 24 hours</li>
-                  <li>Alarm current: 1.95A</li>
-                  <li>Alarm period: 0.5 hours (30 minutes)</li>
-                </ul>
-                <p className="mt-3">
-                  <strong>Calculation:</strong>
-                </p>
-                <ul className="ml-4 space-y-1">
-                  <li>Standby Ah = 0.45A x 24h = 10.8 Ah</li>
-                  <li>Alarm Ah = 1.95A x 0.5h = 0.98 Ah</li>
-                  <li>Total = 10.8 + 0.98 = 11.78 Ah</li>
-                  <li>With 30% derating: 11.78 x 1.3 = 15.3 Ah</li>
-                </ul>
-                <p className="mt-3 text-elec-yellow">
-                  <strong>Selection:</strong> Choose 17 Ah batteries (next standard size). For 24V
-                  systems, use 2 x 12V 17Ah in series.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 04: Derating Factors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Derating Factors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Real-world battery capacity is affected by temperature, age and discharge rate. Apply
-              derating factors to ensure adequate capacity throughout battery life.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Temperature Derating</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>VRLA capacity reduces significantly below 20C</li>
-                  <li>At 0C, capacity may be only 80% of rated value</li>
-                  <li>Use manufacturer temperature curves for accurate derating</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Ageing Derating</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Capacity reduces over service life</li>
-                  <li>Typically allow 10-30% extra capacity for ageing</li>
-                  <li>Plan for 3-5 year battery replacement cycle</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white">
-                <strong>Practical Guidance:</strong> A combined derating factor of 1.25-1.5 (25-50%
-                extra capacity) is commonly used to cover both temperature and ageing effects.
+            <p>The calculation:</p>
+            <div className="rounded-lg border border-elec-yellow/30 bg-elec-yellow/[0.04] p-4 my-3">
+              <p className="text-[14px] text-white/90 font-mono">
+                Cmin = 1.25 × (T1·I1 + D·I2·T2)
+                <br />
+                Cmin = 1.25 × (24 × 0.2 + 1.75 × 1.6 × 0.5)
+                <br />
+                Cmin = 1.25 × (4.8 + 1.4)
+                <br />
+                Cmin = 1.25 × 6.2
+                <br />
+                <strong>Cmin = 7.75 Ah</strong>
               </p>
             </div>
-          </div>
-        </section>
-
-        {/* Section 05: Charger Requirements */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Charger Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The charger must be capable of recharging depleted batteries within the specified time
-              while also supporting the system standby load.
+              The minimum required capacity is 7.75 Ah. Standard SLA battery sizes available are
+              typically 7 Ah, 12 Ah, 17 Ah. Selecting 7 Ah breaches the formula (under by 0.75 Ah);
+              selecting 12 Ah meets the formula with modest margin. The correct selection is 12 Ah.
+              On a 24 V CIE topology this is typically two 12 V 12 Ah batteries in series; on a
+              dual-bank topology it might be 4 × 6 V 12 Ah batteries.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key Requirements:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Recharge to 80% capacity within 24 hours of mains restoration</li>
-                <li>Maintain system operation during charging</li>
-                <li>Charger voltage and current must match battery specifications</li>
-                <li>Temperature compensation may be required for extreme environments</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 06: Battery Types and Installation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Battery Types and Installation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              VRLA (Valve Regulated Lead Acid) batteries are standard for fire alarm panels. Follow
-              manufacturer requirements for installation and maintenance.
+              The selected battery is fitted with a permanent installation-date label per BS
+              5839-1:2025 clause 16, and the system logbook is updated with the install date and the
+              calculated 4-year replacement target. The battery date and replacement target are also
+              recorded on the design records and made available to future maintainers.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Installation Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Install upright as specified by manufacturer</li>
-                  <li>Ensure adequate ventilation per BS 7671</li>
-                  <li>Protect against temperature extremes</li>
-                  <li>Use correct fusing and cabling</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Checks</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Measure quiescent and alarm current</li>
-                  <li>Simulate mains fail and verify changeover</li>
-                  <li>Check charger voltage and current settings</li>
-                  <li>Record battery date code and capacity</li>
-                  <li>Verify installation date label is affixed to battery</li>
-                </ul>
-              </div>
-              <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3 mt-3">
-                <p className="text-sm text-white">
-                  <strong className="text-elec-yellow">BS 5839-1:2025 Update:</strong> Batteries
-                  must display an installation date label to aid servicing and replacement
-                  scheduling. The label should be clearly visible and include the date of
-                  installation.
-                </p>
-              </div>
-            </div>
+          <RegsCallout
+            source="BS 5839-1:2025 · Clause 16 (Battery installation labelling)"
+            clause={
+              <>
+                Standby batteries should be fitted with a label showing the date of installation.
+                The label may be a printed adhesive label, an engraved tag, or a permanent marker
+                applied to the battery casing. The installation date is the datum for the design
+                replacement cycle, and the battery should be replaced at intervals not exceeding the
+                design cycle. The 2025 revision acknowledges the long-standing custom and practice
+                of marking batteries with installation date and formalises it as a recommendation.
+              </>
+            }
+            meaning="The date label is part of the maintenance audit trail. Without it, a maintainer cannot determine when replacement is due. With it, the answer is on the battery itself: replace at four years from the date marked, sooner if periodic standby capacity tests indicate accelerated degradation."
+          />
+
+          {/* Diagram — battery sizing flow */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+            <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+              Diagram
+            </p>
+            <h4 className="text-sm font-bold text-white mb-4">
+              Battery sizing — formula flow with worked example
+            </h4>
+            <svg
+              viewBox="0 0 880 520"
+              className="w-full h-auto"
+              role="img"
+              aria-label="Battery sizing flow diagram showing inputs (standby current I1, alarm current I2, durations T1 and T2), the standard factors (1.25 ageing, 1.75 de-rating), the formula Cmin equals 1.25 times open bracket T1 times I1 plus D times I2 times T2 close bracket, and the worked example yielding 7.75 Ah for a typical L2 system, with battery selection of next-available 12 Ah size."
+            >
+              {/* Inputs row */}
+              <rect
+                x="20"
+                y="30"
+                width="170"
+                height="60"
+                rx="8"
+                fill="rgba(34,211,238,0.10)"
+                stroke="#22D3EE"
+                strokeWidth="1.6"
+              />
+              <text
+                x="105"
+                y="50"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Standby current I1
+              </text>
+              <text
+                x="105"
+                y="68"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="13"
+                fontWeight="bold"
+              >
+                0.2 A
+              </text>
+              <text x="105" y="83" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                CIE quiescent + interfaces
+              </text>
+
+              <rect
+                x="210"
+                y="30"
+                width="170"
+                height="60"
+                rx="8"
+                fill="rgba(34,211,238,0.10)"
+                stroke="#22D3EE"
+                strokeWidth="1.6"
+              />
+              <text
+                x="295"
+                y="50"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Standby duration T1
+              </text>
+              <text
+                x="295"
+                y="68"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="13"
+                fontWeight="bold"
+              >
+                24 h
+              </text>
+              <text x="295" y="83" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                no auto-start gen
+              </text>
+
+              <rect
+                x="400"
+                y="30"
+                width="170"
+                height="60"
+                rx="8"
+                fill="rgba(239,68,68,0.10)"
+                stroke="#EF4444"
+                strokeWidth="1.6"
+              />
+              <text
+                x="485"
+                y="50"
+                textAnchor="middle"
+                fill="#EF4444"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Alarm current I2
+              </text>
+              <text
+                x="485"
+                y="68"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="13"
+                fontWeight="bold"
+              >
+                1.6 A
+              </text>
+              <text x="485" y="83" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                CIE + sounders + VADs
+              </text>
+
+              <rect
+                x="590"
+                y="30"
+                width="170"
+                height="60"
+                rx="8"
+                fill="rgba(239,68,68,0.10)"
+                stroke="#EF4444"
+                strokeWidth="1.6"
+              />
+              <text
+                x="675"
+                y="50"
+                textAnchor="middle"
+                fill="#EF4444"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Alarm duration T2
+              </text>
+              <text
+                x="675"
+                y="68"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="13"
+                fontWeight="bold"
+              >
+                0.5 h
+              </text>
+              <text x="675" y="83" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                standard 30 min
+              </text>
+
+              {/* Factors row */}
+              <rect
+                x="120"
+                y="125"
+                width="220"
+                height="60"
+                rx="8"
+                fill="rgba(251,191,36,0.10)"
+                stroke="#FBBF24"
+                strokeWidth="1.6"
+              />
+              <text
+                x="230"
+                y="146"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Ageing factor (4-year)
+              </text>
+              <text
+                x="230"
+                y="166"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="14"
+                fontWeight="bold"
+              >
+                × 1.25
+              </text>
+              <text x="230" y="180" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                SLA capacity loss to end-of-life
+              </text>
+
+              <rect
+                x="450"
+                y="125"
+                width="220"
+                height="60"
+                rx="8"
+                fill="rgba(251,191,36,0.10)"
+                stroke="#FBBF24"
+                strokeWidth="1.6"
+              />
+              <text
+                x="560"
+                y="146"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Alarm de-rating D
+              </text>
+              <text
+                x="560"
+                y="166"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="14"
+                fontWeight="bold"
+              >
+                × 1.75
+              </text>
+              <text x="560" y="180" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                high-discharge capacity loss
+              </text>
+
+              {/* Formula box */}
+              <rect
+                x="40"
+                y="220"
+                width="800"
+                height="76"
+                rx="10"
+                fill="rgba(168,85,247,0.10)"
+                stroke="#A855F7"
+                strokeWidth="2"
+              />
+              <text
+                x="440"
+                y="246"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="12"
+                fontWeight="bold"
+              >
+                FORMULA — BS 5839-1:2025 Annexe E
+              </text>
+              <text
+                x="440"
+                y="276"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.95)"
+                fontSize="20"
+                fontWeight="bold"
+              >
+                Cmin = 1.25 × (T1·I1 + D·I2·T2)
+              </text>
+
+              {/* Worked example */}
+              <rect
+                x="40"
+                y="320"
+                width="800"
+                height="120"
+                rx="10"
+                fill="rgba(34,211,238,0.06)"
+                stroke="#22D3EE"
+                strokeWidth="1.6"
+              />
+              <text
+                x="440"
+                y="345"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="12"
+                fontWeight="bold"
+              >
+                WORKED EXAMPLE — typical L2
+              </text>
+              <text
+                x="440"
+                y="370"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="13"
+                fontFamily="ui-monospace,monospace"
+              >
+                Cmin = 1.25 × (24 × 0.2 + 1.75 × 1.6 × 0.5)
+              </text>
+              <text
+                x="440"
+                y="392"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="13"
+                fontFamily="ui-monospace,monospace"
+              >
+                Cmin = 1.25 × (4.8 + 1.4)
+              </text>
+              <text
+                x="440"
+                y="414"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="13"
+                fontFamily="ui-monospace,monospace"
+              >
+                Cmin = 1.25 × 6.2 = 7.75 Ah
+              </text>
+
+              {/* Selection */}
+              <rect
+                x="40"
+                y="460"
+                width="800"
+                height="50"
+                rx="10"
+                fill="rgba(251,191,36,0.12)"
+                stroke="#FBBF24"
+                strokeWidth="1.6"
+              />
+              <text
+                x="440"
+                y="482"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="12"
+                fontWeight="bold"
+              >
+                SELECT next available size ≥ 7.75 Ah → 12 Ah SLA pair
+              </text>
+              <text x="440" y="500" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="10">
+                Fit installation-date label per BS 5839-1:2025 clause 16 — replace at 4 years
+              </text>
+            </svg>
           </div>
-        </section>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <ContentEyebrow>The standby duration choice — 24 h or 6 h</ContentEyebrow>
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Designing</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  Always select the next standard battery size above your calculated requirement
-                </li>
-                <li>Consider future expansion when sizing - allow additional margin if possible</li>
-                <li>Document all calculations and assumptions in design records</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Installing</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  Record battery date codes during installation for accurate replacement scheduling
-                </li>
-                <li>
-                  Measure actual standby and alarm currents during commissioning to verify
-                  calculations
-                </li>
-                <li>Check batteries are correctly connected and charger is operating</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Forgetting derating factors</strong> - for temperature and ageing in
-                  calculations
-                </li>
-                <li>
-                  <strong>Using insufficient battery capacity</strong> - for the charger to recharge
-                  within 24 hours
-                </li>
-                <li>
-                  <strong>Installing in extreme temperatures</strong> - without additional derating
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Autonomy Periods</p>
-                <ul className="space-y-0.5">
-                  <li>Category L: 24h + 30min</li>
-                  <li>Category P: 24-72h typically</li>
-                  <li>Check fire strategy</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Battery Sizing</p>
-                <ul className="space-y-0.5">
-                  <li>Ah = Current x Time</li>
-                  <li>Apply 25-50% derating</li>
-                  <li>Select next standard size</li>
-                  <li>Recharge within 24h</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="When can T1 be reduced from 24 h to 6 h"
+            plainEnglish="The default standby duration is 24 hours. The intention is that even on a complete prolonged mains failure, the fire alarm continues to operate for a full day — long enough for the cause of the failure to be diagnosed and either fixed or escalated. The reduction to 6 hours is conditional: it applies only where AUTOMATIC standby generation is provided, AND that generation arrangement is itself reliable enough to be relied on within the 6 hours. Both conditions are required; either alone is not enough."
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-4/section-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous Section
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
+            <p>What &quot;automatic standby generation&quot; means in this context:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Automatic start.</strong> The generator detects mains loss and starts itself
+                without human intervention. Manual-start generators do not qualify — the standard
+                cannot assume someone will be present to operate them within the 6 h window.
+              </li>
+              <li>
+                <strong>Time to load.</strong> The generator reaches a stable supply within an
+                acceptable time after mains loss — typically tens of seconds. Battery has to cover
+                the gap between mains failure and generator stabilisation.
+              </li>
+              <li>
+                <strong>Reliable.</strong> The generator is regularly maintained, periodically
+                test-started under load, and has fuel reserves sufficient for the credible
+                mains-fail event. A generator that is rarely tested or that has unreliable starting
+                does not justify the reduction.
+              </li>
+              <li>
+                <strong>Connected.</strong> The fire alarm primary supply is on a circuit that the
+                generator powers — not on a circuit that remains de-energised when the generator is
+                running.
+              </li>
+            </ul>
+            <p>
+              Where all four conditions are met, T1 = 6 h is justifiable. The battery sizing for a 6
+              h system is materially smaller than the 24 h equivalent, which produces real cost
+              savings and physical-space savings on large installations. The justification must be
+              documented in the design records — both the standby duration choice and the evidence
+              base for the generator reliability claim.
+            </p>
+            <p>
+              Note that the 24/6 hour choice affects T1 (the standby term) only. T2 (the alarm
+              duration) is fixed at 0.5 h regardless of the standby choice. Auto-start standby
+              generation can shorten standby; it cannot affect the alarm-portion sizing.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[1].id}
+            question={inlineChecks[1].question}
+            options={inlineChecks[1].options}
+            correctIndex={inlineChecks[1].correctIndex}
+            explanation={inlineChecks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Power supply equipment — the BS EN standards</ContentEyebrow>
+
+          <ConceptBlock
+            title="BS EN 54-4 and the new BS EN 50131-6 Grade 4 alternative"
+            plainEnglish="The CIE incorporates a power supply unit (PSU) that takes the 230 V AC mains feed, charges the standby battery, and delivers the regulated low-voltage rails the system runs on. That PSU is itself a piece of safety-critical equipment and is built to a defined standard. BS EN 54-4 is the long-standing fire-alarm-specific PSU standard. The 2025 revision of BS 5839-1 has added a second acceptable standard — BS EN 50131-6 Grade 4 — for the specific case of alarm transmission equipment power supplies. The dual-standard recognition widens the supplier base without weakening the reliability bar."
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-4/section-3">
-              Next Section
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+            <p>The two standards in context:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>
+                  BS EN 54-4 — Fire detection and fire alarm systems: Power supply equipment.
+                </strong>{' '}
+                The fire-alarm-specific standard. Covers normal operation, fault tolerance, charge
+                regime, monitoring, indication. Designed around the fire-alarm operating envelope:
+                continuous float charge, periodic alarm discharge, long service life. The default
+                reference for the CIE&apos;s integrated PSU and for any external standby PSUs
+                feeding fire alarm equipment.
+              </li>
+              <li>
+                <strong>
+                  BS EN 50131-6 Grade 4 — Intruder alarm systems: Power supplies, Grade 4
+                  reliability.
+                </strong>{' '}
+                The intruder-alarm power supply standard, at its highest grade. NEW IN 2025 as an
+                acceptable standard for alarm transmission equipment PSUs. The recognition reflects
+                that BS EN 50131-6 Grade 4 PSUs match the reliability characteristics required for
+                fire alarm transmission, and many transmission equipment vendors have BS EN 50131-6
+                product lines that can now be directly applied without separate BS EN 54-4
+                certification.
+              </li>
+              <li>
+                <strong>The scope distinction.</strong> The 2025 widening is specifically for ALARM
+                TRANSMISSION equipment PSUs — not for the main CIE power supply. The CIE&apos;s
+                integral PSU continues to be governed by BS EN 54-4 (or equivalent). The new
+                acceptance is narrower than a blanket &quot;either standard, anywhere&quot;.
+              </li>
+            </ul>
+            <p>
+              Designers and installers should read the equipment marking to verify which standard
+              the unit is built to. A BS EN 54-4-marked PSU is acceptable for fire alarm primary and
+              secondary power. A BS EN 50131-6 Grade 4-marked PSU is acceptable for alarm
+              transmission equipment power. Grade 1, 2 or 3 BS EN 50131-6 PSUs do NOT qualify; only
+              Grade 4.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Clause 19 / Alarm transmission power supply"
+            clause={
+              <>
+                Where a separate power supply unit is used to power alarm transmission equipment,
+                the power supply should conform to either BS EN 54-4 or BS EN 50131-6 Grade 4. The
+                2025 revision recognises BS EN 50131-6 Grade 4 as an acceptable alternative to BS EN
+                54-4 for this specific application, reflecting the equivalent reliability achieved
+                at the highest grade of the intruder-alarm power supply standard.
+              </>
+            }
+            meaning="The dual-standard recognition is one of the practical 2025 changes. Designers selecting a transmission PSU now have two acceptable routes; the supplier base widens; the reliability requirement is preserved at BS EN 50131-6 Grade 4 (not lower grades)."
+          />
+
+          <ConceptBlock
+            title="What the PSU standards govern"
+            plainEnglish="A standby PSU is not just a battery charger. It has to handle a long list of operating conditions reliably, and it has to fail in safe ways when something does go wrong. The PSU standards encode all of that into testable requirements — input voltage range, charge regime, deep-discharge protection, output regulation, fault monitoring, indication, environmental tolerance."
+          >
+            <p>The areas a BS EN 54-4 / BS EN 50131-6 Grade 4 PSU is tested against:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Input range.</strong> Operates correctly over a defined range of mains input
+                voltage and frequency, and rides through brief mains dips without interrupting
+                output.
+              </li>
+              <li>
+                <strong>Charge regime.</strong> Supplies the SLA battery with the correct float
+                voltage (typically around 13.6-13.8 V per 12 V battery, temperature-compensated),
+                and limits charge current to the manufacturer-specified safe level.
+              </li>
+              <li>
+                <strong>Battery monitoring.</strong> Continuously monitors the battery — open
+                circuit, short circuit, low capacity at periodic load test. Reports faults to the
+                CIE.
+              </li>
+              <li>
+                <strong>Deep-discharge protection.</strong> When the battery falls below the
+                low-voltage cutoff, the PSU disconnects the load to prevent battery damage. The
+                threshold is set per chemistry / battery manufacturer.
+              </li>
+              <li>
+                <strong>Output regulation.</strong> Maintains stable output rails through transient
+                load events — sounder activation, charger inrush, mains-failure transition.
+              </li>
+              <li>
+                <strong>Fault indication.</strong> Reports its own faults — internal supply fault,
+                charger fault, battery fault, output fault — to the CIE for indication.
+              </li>
+              <li>
+                <strong>Environmental tolerance.</strong> Operates over the temperature range
+                expected in service, with humidity, vibration and other environmental constraints
+                defined.
+              </li>
+            </ul>
+            <p>
+              The standards mark allows the designer to select equipment without having to test all
+              of these characteristics individually — the third-party certification is the evidence
+              that the equipment meets the requirements.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>Battery date labelling and the 4-year cycle</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why the install date is the controlling datum"
+            plainEnglish="A battery does not announce its own age. Without an external record, an installer or maintainer has no way of knowing whether a battery is one year old or six. The 2025 standard formalises a long-standing custom-and-practice of marking installed batteries with their installation date — the date is then the single piece of information that lets the maintenance regime work. Replacement at four years from the date marked is the standard rule; some sites with hostile environments (high temperature, frequent discharge) replace earlier."
+          >
+            <p>What the date label provides:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Replacement scheduling.</strong> The maintenance team can produce a forward
+                schedule of battery replacements simply by reading the install dates on each battery
+                and adding 4 years. Without dates, scheduling depends on the system logbook (which
+                may be missing or inconsistent).
+              </li>
+              <li>
+                <strong>Age-related fault diagnosis.</strong> When a battery fails its standby
+                capacity test at 18 months, the installer needs to know if 18 months is the issue.
+                Without a date, the question is &quot;when was this fitted?&quot; — answered only by
+                paperwork. With a date, the answer is on the battery.
+              </li>
+              <li>
+                <strong>Mixed-stock identification.</strong> A site with multiple batteries may have
+                units of different ages — a previously-replaced battery alongside the originals. The
+                date labels distinguish them; without dates, all batteries look interchangeable.
+              </li>
+              <li>
+                <strong>Independent verification.</strong> An auditor or fire-risk assessor can
+                check battery replacement compliance directly from the batteries themselves, not
+                only from documentation. The label is on-site evidence.
+              </li>
+            </ul>
+            <p>
+              The label format is not prescribed — a printed adhesive label, an engraved tag, or a
+              permanent marker writing on the battery casing all work. What matters is that the date
+              is permanent (will survive the four years until the battery is replaced) and legible
+              (the maintainer at year 4 can read it). DD/MM/YYYY format is preferred for clarity.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Clause 16 (Cabling, labelling and identification — battery date)"
+            clause={
+              <>
+                Batteries should have a label fixed to them showing the date of installation. The
+                standard acknowledges the long-standing custom and practice of labelling batteries
+                with a permanent marker. The date marked is the datum for the design replacement
+                cycle, and the replacement target should be recorded in the system logbook
+                accordingly.
+              </>
+            }
+            meaning="The date label is now a positive recommendation in the standard, not just a customary practice. The maintainer can read end-of-life directly from the battery."
+          />
+
+          <InlineCheck
+            id={inlineChecks[2].id}
+            question={inlineChecks[2].question}
+            options={inlineChecks[2].options}
+            correctIndex={inlineChecks[2].correctIndex}
+            explanation={inlineChecks[2].explanation}
+          />
+
+          <InlineCheck
+            id={inlineChecks[3].id}
+            question={inlineChecks[3].question}
+            options={inlineChecks[3].options}
+            correctIndex={inlineChecks[3].correctIndex}
+            explanation={inlineChecks[3].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Practical sizing pitfalls</ContentEyebrow>
+
+          <Scenario
+            title="The undersized standby — a Cat L3 system that fails at 14 hours"
+            situation="A Category L3 system has been designed and installed in a small office building. The battery selection was based on standby alone: I1 = 0.3 A, T1 = 24 h, calculated 24 × 0.3 = 7.2 Ah, fitted 7 Ah. The alarm portion was not added; the de-rating was not applied; the ageing factor was not applied. At year 1, a mains failure occurs out of hours; the system runs for approximately 14 hours and then loses output. No alarm event occurred during the 14 h window so the consequence was limited, but the audit reveals the standby fell well short of the 24 h requirement."
+            whatToDo="Re-calculate against the full BS 5839-1:2025 formula, including the alarm portion (I2·T2 with the 1.75 de-rating) and the 1.25 ageing factor. The proper Cmin for I1 = 0.3 A, I2 = 1.4 A, T1 = 24 h, T2 = 0.5 h is: 1.25 × (24 × 0.3 + 1.75 × 1.4 × 0.5) = 1.25 × (7.2 + 1.225) = 10.5 Ah. Round up to 12 Ah. The original 7 Ah is materially undersized. Replace with 12 Ah, fit installation-date labels, update logbook and design records, raise a system modification certificate."
+            whyItMatters="The shortcut of 'standby only, no alarm portion' is one of the most common sizing errors and produces batteries that pass casual inspection but fail under load. The formula has four engineering reasons; skipping any of them produces a non-compliant battery. The mains-fail incident in this scenario revealed the under-sizing — the previous compliant inspections had not run a 24 h discharge to verify it. Battery sizing is a design-stage discipline, and the formula has to be applied in full."
+          />
+
+          <CommonMistake
+            title="Applying the 1.25 ageing factor to the standby term only"
+            whatHappens="The designer reasons: 'The alarm event is short — half an hour — so ageing barely affects it. I'll apply 1.25 to the standby term and ignore it on the alarm term.' The calculation produces Cmin = 1.25 × T1·I1 + D·I2·T2 (without the 1.25 multiplying the alarm portion). The result is materially smaller than the correct value. At end-of-life the battery may meet the standby duration but cannot deliver alarm current for the full 30 minutes; sounders trail off after 15-20 minutes and the alarm event is incomplete."
+            doInstead="Apply the 1.25 to the WHOLE bracket: Cmin = 1.25 × (T1·I1 + D·I2·T2). The bracket structure of the formula is intentional — both standby and alarm performance degrade with age, and both must be sized against the aged capacity. The 1.25 sits outside the bracket; its scope is the sum, not just the standby term."
+          />
+
+          <CommonMistake
+            title="Forgetting the 1.75 alarm de-rating"
+            whatHappens="The designer applies the formula as Cmin = 1.25 × (T1·I1 + I2·T2), without the D = 1.75 de-rating on the alarm term. The mathematical result looks right at the 20 h discharge rate, but at the actual high-discharge currents required for sounder operation the SLA battery delivers significantly less than its nominal 20 h Ah. Day-one testing may pass; by year 2 the alarm portion is failing because the aged battery at high discharge is well below the required Ah."
+            doInstead="The 1.75 alarm de-rating is not optional. It accounts for the SLA chemistry behaviour at the discharge rates encountered during alarm operation — the battery is being asked to deliver, say, 1.6 A from a nominal 12 Ah cell, which is a much more aggressive discharge than the 0.6 A nominal rate. The chemistry simply does not deliver full capacity at that rate. The 1.75 factor bridges the gap; apply it always."
+          />
+
+          <CommonMistake
+            title="Mixing battery ages within one CIE"
+            whatHappens="A maintainer replaces one of two SLA batteries in a CIE because that single battery has failed its capacity test. The other battery is left in place. After a few months the system starts producing battery faults intermittently. The cause: the older battery has lower internal impedance and slightly different terminal voltage, so the charger and the load see an imbalance between the cells. The newer cell is over-charged, the older cell is under-charged, both age faster, and the system reports faults."
+            doInstead="Replace BATTERIES IN MATCHED PAIRS (or sets). When one battery fails, replace all batteries in that CIE's standby bank simultaneously. Fit fresh installation-date labels on all replacements; record the replacement in the logbook. The cost difference between one and two batteries is small; the reliability difference is substantial."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="What to remember on site"
+            points={[
+              'Cmin = 1.25 × (T1·I1 + D·I2·T2) — write the formula at the top of the page, plug in the numbers, sum, multiply by 1.25, round UP to next standard size.',
+              '1.25 = four-year ageing factor — books in 25% capacity loss to end-of-life. Applies to the WHOLE bracket, not just the standby term.',
+              'T1 = 24 h default. Reducible to 6 h ONLY where automatic standby generation is reliable, periodically tested, and connected to the fire alarm primary supply.',
+              'T2 = 0.5 h alarm duration. Standard half-hour figure built into the formula.',
+              'D = 1.75 alarm de-rating — accounts for SLA high-discharge capacity loss at sounder-load currents. Apply always; never skip.',
+              'I1 = standby current = CIE quiescent + always-energised interfaces. I2 = alarm current = CIE + sounders + VADs + interfaces in alarm.',
+              'Battery requirements relocated to ANNEXE E in BS 5839-1:2025. Engineering unchanged; reference location changed.',
+              'PSU standards: BS EN 54-4 (long-standing) OR — NEW IN 2025 — BS EN 50131-6 Grade 4 acceptable for alarm transmission equipment.',
+              'Battery date labels (BS 5839-1:2025 clause 16): permanent, legible, on every installed battery. Datum for the 4-year replacement cycle.',
+              'Replace batteries in matched pairs / sets. Never mix ages within a single standby bank.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question:
+                  'Why is the 4-year design replacement cycle the basis for the 1.25 ageing factor?',
+                answer:
+                  "The four-year cycle reflects the typical service life of sealed lead-acid (SLA) batteries on continuous float charge in the operating conditions found in fire alarm CIEs — moderate temperature, low discharge frequency, continuous trickle charge. By year 4, capacity has typically fallen to around 75-80% of nominal even on a battery that has not been alarm-discharged. The 1.25 multiplier (the inverse of 0.8) sizes the battery so that 80% of the new Ah equals or exceeds the requirement. Pushing replacement beyond 4 years means the formula's ageing factor no longer represents real capacity, and the battery may fail to deliver the required performance without warning.",
+              },
+              {
+                question:
+                  'I have a CIE rated for 0.5 h of alarm. Can I size T2 differently for an installation that requires longer alarm duration?',
+                answer:
+                  'Some installations — sites with extended evacuation times, or specific design requirements — may require alarm duration longer than the standard 0.5 h. The formula scales linearly: a longer T2 produces a proportionally larger I2·T2 term and therefore a larger Cmin. The minimum T2 = 0.5 h is the BS 5839-1 default; the design may specify longer where required by the building&apos;s evacuation strategy or by fire engineering. The formula structure is unchanged; only T2 changes.',
+              },
+              {
+                question:
+                  'The formula gives me Cmin = 7.75 Ah but the available battery sizes are 7 Ah and 12 Ah. Can I round to 7 Ah and accept a small under-size?',
+                answer:
+                  'No. The formula is a minimum; rounding down breaches it. Selecting 7 Ah produces an under-sized battery from day one — even before ageing or de-rating real-world variation. Round UP to 12 Ah. The formula is calibrated to be just sufficient at end-of-life with no margin; rounding down removes the small margin and produces an installation that may fail under load before the 4-year replacement is due.',
+              },
+              {
+                question:
+                  'My CIE has two parallel battery strings — does the formula apply to each string or to the total?',
+                answer:
+                  'The formula gives the total required capacity. If the CIE design has multiple parallel strings (some larger systems are built this way for redundancy or capacity), the total Ah of all strings must equal or exceed Cmin. Each individual string must also be sized to handle its share of the load — equipment-manufacturer-specific. Read the CIE manual for the topology rules; the BS 5839-1 formula gives the system-level total, but the per-string distribution is an equipment design decision.',
+              },
+              {
+                question:
+                  'Does the formula apply to lithium-iron-phosphate (LiFePO4) batteries instead of SLA?',
+                answer:
+                  'Not directly. The 1.25 ageing factor and the 1.75 de-rating are calibrated to SLA chemistry under fire-alarm-typical operating conditions. LiFePO4 has different ageing behaviour (longer service life, different float-charge characteristics) and different high-discharge characteristics (better delivery at high current). A LiFePO4 system needs the equivalent calculation done against the LiFePO4 chemistry parameters — which is typically supplied by the battery / CIE manufacturer rather than by an installer-level calculation. Apply the BS 5839-1 formula for SLA installations; for non-SLA chemistries, follow the manufacturer engineering.',
+              },
+              {
+                question:
+                  'I have an automatic standby generator on site that powers the whole building including the fire alarm. Can I use T1 = 6 h?',
+                answer:
+                  'Yes — provided the four conditions are met: automatic start, time-to-load within an acceptable window, reliable (regularly maintained, periodically test-started under load, fuel reserves), and connected to the fire alarm primary supply circuit. Document the justification in the design records, including the evidence base for the reliability claim. The 6 h figure produces a smaller battery and lower lifecycle cost; the conditions are non-trivial but verifiable.',
+              },
+              {
+                question:
+                  'What is the difference between BS EN 54-4 and BS EN 50131-6 Grade 4 in practical terms?',
+                answer:
+                  'BS EN 54-4 is the fire-alarm-specific PSU standard, calibrated to fire-alarm operating conditions (continuous float charge, periodic alarm discharge, long service life, fault reporting compatible with CIE supervision). BS EN 50131-6 Grade 4 is the highest-grade intruder-alarm PSU standard, calibrated to intruder-alarm operating conditions but at a reliability bar that matches the fire-alarm requirement for transmission equipment. The 2025 standard recognises BS EN 50131-6 Grade 4 as acceptable for alarm transmission equipment PSUs specifically — not for the main CIE PSU. Read equipment markings to verify the standard, and verify the application matches.',
+              },
+              {
+                question:
+                  'A maintenance visit finds a battery with no installation-date label. Is the system non-compliant?',
+                answer:
+                  'The 2025 standard recommends a date label on every installed battery. Existing installations from before the 2025 effective date have a transition period; new installations and any battery replacements are expected to apply the recommendation immediately. Where no date is present and no documentation evidences the install date, the practical response is to replace the battery (treating it as of unknown age) and fit a fresh installation-date label on the replacement. The replacement also resets the 4-year clock and restores audit-trail integrity.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Knowledge check</ContentEyebrow>
+          <Quiz title="Secondary power and battery sizing — Module 4.2" questions={quizQuestions} />
+
+          {/* Bottom navigation grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/fire-alarm-course/module-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 4
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/fire-alarm-course/module-4/section-3')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                4.3 Cable types and fire resistance
+              </div>
+            </button>
+          </div>
+
+          <div className="hidden">
+            <Battery />
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

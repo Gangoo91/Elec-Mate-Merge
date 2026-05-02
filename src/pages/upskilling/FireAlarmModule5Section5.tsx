@@ -1,881 +1,1409 @@
-import { useState, useMemo } from 'react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
-  ArrowLeft,
-  ArrowRight,
-  FileCheck,
-  CheckCircle,
-  AlertTriangle,
-  HelpCircle,
-  BookOpen,
-  RotateCcw,
-  Lightbulb,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+  TLDR,
+  LearningOutcomes,
+  ContentEyebrow,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
-import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
-import type { QuizQuestion } from '@/types/quiz';
 
-const TITLE = 'Commissioning Test Sheet Completion - Fire Alarm Course';
-const DESCRIPTION =
-  'Learn how to complete commissioning test sheets accurately including BS 5839-1 certificates, instrument calibration records, as-built drawings and O&M manual structure.';
+const inlineChecks = [
+  {
+    id: 'fam5-s5-sequence',
+    question:
+      'What is the correct order for the commissioning sequence on a new fire alarm system?',
+    options: [
+      'Power-up, then test devices.',
+      'Visual inspection → continuity tests → insulation resistance (devices removed) → polarity / address verification → first power-up → cause-and-effect verification → device-by-device functional tests → sound level survey → battery autonomy / mains-fail simulation → ARC / interface tests → false-alarm-investigation procedure handover. Each step verifies a specific aspect; each later step depends on earlier steps having passed. Skipping or re-ordering produces unverified gaps in the safety case.',
+      'Just press the test button on every device.',
+      'Whatever order is convenient.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'The commissioning sequence is logical: passive checks (visual, continuity, IR) before any voltage; pre-energisation polarity / address verification; first power-up under controlled conditions; cause-and-effect verification proves the design intent is wired; per-device functional tests prove every device communicates and operates; sound level survey proves audibility; battery autonomy proves resilience; ARC / interface tests prove external signalling; handover briefs the user. Each step builds on the previous.',
+  },
+  {
+    id: 'fam5-s5-cause-effect',
+    question:
+      'Under BS 5839-1:2025, what does the commissioning engineer have to verify about the cause-and-effect matrix?',
+    options: [
+      'Just that the panel sounds when an MCP is pressed.',
+      'That every CAUSE in the design cause-and-effect matrix produces the documented EFFECT — every detector activation, MCP operation, interface input, etc. produces the designed alarm response, sounder operation, ARC signal, plant shutdown, door release, etc. The 2025 revision makes the cause-and-effect matrix or text description part of the mandatory documentation handover (NEW per the documentation clause), so the matrix must exist before commissioning, must be verified at commissioning, and must be handed over with the system.',
+      'Only the panel-internal cause and effect.',
+      'Only on the bigger systems.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Cause-and-effect is the design intent expressed as "if A happens, B happens". Every cause is tested at commissioning. The 2025 revision elevates the cause-and-effect matrix (or text description for simple systems) to mandatory documentation that must be handed over. Commissioning verifies that the wired system implements the designed matrix.',
+  },
+  {
+    id: 'fam5-s5-soundlevel',
+    question:
+      'What sound levels does BS 5839-1:2025 require for fire alarm sounders at all accessible points and at bed-head positions?',
+    options: [
+      '50 dB(A) general / 60 dB(A) bed-head.',
+      '65 dB(A) at all accessible points / 75 dB(A) at bed-head positions / at least 5 dB above any sustained background noise of 30 seconds or more. The 65 / 75 / +5 figures are unchanged from 2017. The bed-head 75 dB(A) reflects that someone asleep needs a higher level to be woken; the +5 dB above sustained background means sounders must be louder than any equivalent-noise environment they share. All measured at commissioning with a calibrated sound level meter, recorded in the commissioning record.',
+      '90 dB(A) everywhere.',
+      'Whatever the sounders produce.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'The 65 / 75 / +5 dB figures are the audibility targets that drive sounder selection and positioning. At commissioning, the engineer walks the building with a calibrated sound level meter and records the level at every accessible point. Levels below the target trigger sounder repositioning, additional sounders, or higher-output devices.',
+  },
+  {
+    id: 'fam5-s5-arc-timing',
+    question:
+      'Under BS 5839-1:2025 clauses 14.17 and 14.18, what are the maximum allowed alarm transmission times to the ARC for Category L and Category P systems?',
+    options: [
+      '30 s for both.',
+      'Category L: indication received at the ARC within a maximum of 90 s; catastrophic failure indicated at ARC and CIE within 3 min. Category P: indication received at the ARC within a maximum of 120 s; catastrophic failure indicated at ARC and CIE within 31 min. NEW in 2025 — the 2017 revision did not provide these explicit transmission timings. The figures recognise that Category L (Life) requires faster signalling than Category P (Property) because life is at greater immediate risk.',
+      '5 min for both.',
+      'No limit.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'BS 5839-1:2025 introduces explicit transmission timings that were absent in 2017. L = 90 s alarm / 3 min catastrophic; P = 120 s alarm / 31 min catastrophic. The verification at commissioning involves triggering an alarm signal and confirming the ARC received it within the timing, and simulating a catastrophic failure (e.g. all paths down) and confirming both ARC and CIE indication within the catastrophic-failure timing.',
+  },
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question:
+      'BS 5839-1:2025 introduced explicit alarm-transmission timings to the ARC. What are the figures for a Category L system?',
+    options: [
+      '30 s alarm / 30 min catastrophic.',
+      'Indication received at the ARC within a maximum of 90 s; catastrophic failure indicated at ARC and CIE within 3 min. Set out in clause 14.17. NEW for 2025; the 2017 revision recognised the use of I&HAS transmission equipment but did not set explicit timings.',
+      '120 s alarm / 31 min catastrophic.',
+      'No limit.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Category L (Life): 90 s alarm to ARC, 3 min catastrophic failure indication at ARC and CIE per clause 14.17. The 90 s figure recognises that life-safety systems need rapid signalling. The 3 min catastrophic-failure indication ensures users know quickly when the transmission path is compromised.',
+  },
+  {
+    id: 2,
+    question:
+      'BS 5839-1:2025 introduced explicit alarm-transmission timings to the ARC. What are the figures for a Category P system?',
+    options: [
+      '60 s alarm / 5 min catastrophic.',
+      'Indication received at the ARC within a maximum of 120 s; catastrophic failure indicated at ARC and CIE within 31 min. Set out in clause 14.18. NEW for 2025. Category P (Property) timings are more relaxed than Category L (Life) because property protection has lower immediacy than life safety.',
+      '90 s alarm / 3 min catastrophic.',
+      'No limit.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Category P (Property): 120 s alarm to ARC, 31 min catastrophic failure indication at ARC and CIE per clause 14.18. The longer catastrophic-failure window (31 min vs 3 min for L) recognises that property-only protection has more time to tolerate a transmission compromise without endangering life.',
+  },
+  {
+    id: 3,
+    question: 'What sound levels does BS 5839-1:2025 require for fire alarm sounders?',
+    options: [
+      '50 dB(A) anywhere.',
+      '65 dB(A) at all accessible points / 75 dB(A) at bed-head positions / at least 5 dB above any sustained background noise of 30 seconds or more. Targets verified at commissioning with a calibrated sound level meter, walked through every accessible point and recorded. Failure at any point triggers re-positioning, additional sounders, or higher-output devices.',
+      '120 dB(A) — louder is better.',
+      'Whatever the sounders produce.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The 65 / 75 / +5 dB figures are the audibility benchmarks. 65 at all accessible points = the floor; 75 at bed-head = louder for sleeping occupants; +5 above 30s+ background = ensure sounders are heard over equivalent-noise environments.',
+  },
+  {
+    id: 4,
+    question: 'What does BS EN 54-23 govern, and when does it apply at commissioning?',
+    options: [
+      'Smoke detector test.',
+      'BS EN 54-23 covers VISUAL ALARM DEVICES (VADs) — specifies coverage volume (defined as cubic shape based on light intensity) and luminous flux requirements. Applies at commissioning when a VAD is the PRIMARY evacuation signal (e.g. for hearing-impaired occupants, or in noise-exempt areas where audible alarms are inappropriate). Verified by manufacturer table or calculation showing the VAD covers the design volume, light intensity meets the BS EN 54-23 category for the application.',
+      'Battery autonomy.',
+      'Cable colour.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS EN 54-23 is the product / coverage standard for VADs. Categories C-3-15 (ceiling 3 m, 15 cd) etc. specify the device performance. Where VAD is the primary evacuation signal, BS EN 54-23 verification at commissioning is mandatory. Where VAD supplements an audible signal, audible verification is the primary check and VAD verification is supplementary.',
+  },
+  {
+    id: 5,
+    question:
+      'During commissioning, the cause-and-effect matrix is verified. Which best describes that verification process?',
+    options: [
+      'Test only the panel buttons.',
+      'For every CAUSE in the design matrix (every detector, every MCP, every interface input, every test condition), trigger the cause and verify that ALL designed EFFECTS occur (alarm sound, sounder operation, ARC signal, plant shutdown, lift recall, door release, smoke vent open, etc.) in the correct timing, in the correct zones. Failures are documented on the cause-and-effect verification record and rectified before sign-off. The matrix is a contractual document handed over with the system.',
+      'Just verify the alarm sounds.',
+      'Cause-and-effect is optional.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Cause-and-effect verification is the load-bearing design-intent check at commissioning. Every cause activated; every effect observed and recorded; failures rectified. Under BS 5839-1:2025 the matrix or text description is mandatory documentation handed over with the system — the engineer cannot sign off without verifying every row.',
+  },
+  {
+    id: 6,
+    question:
+      'What is the purpose of the battery autonomy / mains-fail simulation test at commissioning?',
+    options: [
+      'Just check the batteries are connected.',
+      'Verify the standby batteries can support the system in quiescent state for the full design autonomy period (typically 24 h or 72 h) followed by a defined alarm period at the end (typically 30 min). Procedure: (a) verify battery is fully charged, (b) isolate the mains, (c) panel runs on batteries, (d) at end of autonomy period, trigger alarm and verify sounders run for full alarm period at full output, (e) restore mains, (f) record results. Often abbreviated for commissioning by calculation + load test rather than full-duration; full-duration test annually thereafter.',
+      'Optional test.',
+      'Only on big systems.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The battery autonomy test proves the system survives a mains failure. At commissioning, often abbreviated by calculation + load test (battery impedance + projected runtime); full-duration test confirms the calculation. Annual service repeats the autonomy test. The test must verify both quiescent autonomy and end-of-autonomy alarm capability.',
+  },
+  {
+    id: 7,
+    question:
+      'BS 5839-1:2025 clause 29.6 introduces a new requirement for the commissioning organisation. What is it?',
+    options: [
+      'No new requirement.',
+      'The commissioning organisation should advise the user to arrange for suitable INVESTIGATION and, if appropriate, action to be taken on every occasion that a false alarm occurs. NEW in 2025 — recognises that false alarms are a major industry problem (call-challenge policies, FRS attendance pressures) and that user investigation is the primary mitigation. The commissioning engineer briefs the user on the investigation procedure at handover, and the procedure is documented in the O&M manual.',
+      'Only false alarms in residential property.',
+      'Only when ARC requests it.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 5839-1:2025 clause 29.6 is a new responsibility on the commissioning / handover organisation — to advise the user on false-alarm investigation. The recommendation reflects that false alarms are a chronic problem, that FRS now operate call-challenge policies, and that user-side investigation (managerial change, system modification, or engaged separate investigation) is the primary mitigation.',
+  },
+  {
+    id: 8,
+    question:
+      'During commissioning of an addressable Class A loop, the cause-and-effect verification reports that one detector triggers an alarm at the panel — but the recorded ZONE is wrong: detector "Floor 3 — Office 12" triggers as if it were in "Floor 2 — Office 12". What is the most likely cause?',
+    options: [
+      'Detector hardware fault.',
+      'Address mismatch — the device is correctly wired and communicating with the panel, but the address-to-text mapping in the panel programming is wrong (the detector address is associated with the wrong text descriptor). Either the detector is set to the wrong address (DIP switch error or auto-address error), OR the panel programming has the address mapped to the wrong text. Resolution: verify the device address against the design schedule, verify the panel programming, correct whichever is wrong, re-test cause-and-effect from that detector.',
+      'Wiring open-circuit.',
+      'Detector contaminated.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The classic addressable misconfiguration. Hardware works, communication works, but the address-to-location mapping is wrong. Resolved by verifying device address against schedule, verifying panel text descriptor against schedule, and correcting whichever does not match. Common at commissioning of large systems; caught by cause-and-effect verification.',
+  },
+  {
+    id: 9,
+    question:
+      'A sound level survey at commissioning reveals 60 dB(A) at one accessible point on a corridor where a 65 dB(A) target applies. What is the appropriate response?',
+    options: [
+      'Sign off and move on.',
+      'Investigate and rectify. Options: (a) reposition the nearest sounder closer to the deficient point, (b) add a supplementary sounder, (c) change the existing sounder for a higher-output device, (d) re-survey to confirm the rectification meets the 65 dB(A) target with margin. The deficient point is recorded on the commissioning record before rectification; the rectified result is recorded after. The system cannot be signed off as compliant with 60 dB(A) at an accessible point.',
+      'Adjust the meter.',
+      'Lower the target.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Sound level deficiencies are rectified, not waved through. Reposition / add / upsize sounders. Re-survey. Record the rectification. The target is in the standard; the system is signed off only when the target is met at every accessible point.',
+  },
+  {
+    id: 10,
+    question:
+      'At first power-up of a newly wired addressable system, the panel reports "loop fault — earth fault detected". What is the engineer\'s first response?',
+    options: [
+      'Ignore — addressable systems are always grumpy.',
+      'DIAGNOSE before continuing. The panel has detected a fault — typically a screen incorrectly terminated to PE rather than FE, a damaged conductor leaking to earth, or a moisture-ingress at a recently installed JB / penetration. Procedure: (a) check screen termination at panel (should be on FE, not PE), (b) check screen termination at far end (should be cut back, not earthed), (c) section the loop using isolators to localise, (d) IR-test the localised section after disconnecting devices, (e) rectify and re-test. Continuing past a reported earth fault is a service-life liability — the fault is real even if the panel is still functional.',
+      'Reset the panel until it stops.',
+      'Disconnect the screen entirely.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Earth fault on a new addressable loop is a real fault, not a panel quirk. Diagnose: screen termination at both ends, conductor IR, JB / penetration condition. Section using isolators, localise, IR-test, rectify. Reset is not a fix; it merely silences the indication until the next monitoring cycle.',
+  },
+];
 
 const FireAlarmModule5Section5 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
+  const navigate = useNavigate();
 
-  const questions: QuizQuestion[] = useMemo(
-    () => [
-      {
-        id: 1,
-        question: 'Commissioning test sheets should be completed in accordance with:',
-        options: [
-          'Personal preference',
-          'BS 5839-1 and client templates',
-          'BS 7671 only',
-          'No formal standard',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Commissioning documentation should meet BS 5839-1 requirements and any client or consultant formats specified for the project.',
-      },
-      {
-        id: 2,
-        question: 'Instrument details recorded on test sheets should include:',
-        options: [
-          'Colour of the instrument',
-          'Serial number and calibration date',
-          'Installer favourite brand',
-          'None of the above',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Traceability requires serial numbers and calibration status to be recorded on test sheets for audit purposes.',
-      },
-      {
-        id: 3,
-        question: 'What must be attached to commissioning certificates?',
-        options: [
-          'Only site photographs',
-          'Device lists, zone charts, C&E matrix and test records',
-          'Only drawings',
-          'Nothing additional is required',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Provide a complete pack including device schedules, zone charts, cause and effect matrix, and all test records.',
-      },
-      {
-        id: 4,
-        question: 'Defects found during commissioning should be:',
-        options: [
-          'Ignored if minor',
-          'Logged with corrective action and retest evidence',
-          'Hidden from the client',
-          'Left for the maintenance contractor',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'All defects must be recorded with corrective actions taken and evidence of retesting to close them out.',
-      },
-      {
-        id: 5,
-        question: 'As-built drawings should be:',
-        options: [
-          'Draft quality only',
-          'Final, accurate and match the installed system including device IDs',
-          'Optional for small systems',
-          'Hand-drawn sketches',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'As-built drawings must accurately reflect the installed configuration for ongoing maintenance and modifications.',
-      },
-      {
-        id: 6,
-        question: 'Zone plans must:',
-        options: [
-          'Be omitted from documentation',
-          'Be clear, accurate and posted adjacent to the CIE',
-          'Be kept in a drawer',
-          'Be optional for simple systems',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Zone plans are mandatory under BS 5839-1 and must be displayed at the control panel for emergency response.',
-      },
-      {
-        id: 7,
-        question: 'Site acceptance requires:',
-        options: [
-          'Nothing documented',
-          'Signed certificates, test sheets and training records',
-          'Only verbal confirmation',
-          'Photographs only',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Formal acceptance is based on signed documentation and evidence of training provided to the Responsible Person.',
-      },
-      {
-        id: 8,
-        question: 'Battery calculations and autonomy verification should be:',
-        options: [
-          'Skipped for standard systems',
-          'Included and signed-off in documentation',
-          'Estimated only',
-          'Done after handover',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Include detailed calculations and verification of standby and alarm loads with sign-off confirmation.',
-      },
-      {
-        id: 9,
-        question: 'Who signs the commissioning certificate?',
-        options: [
-          'Any person on site',
-          'The competent person responsible for commissioning',
-          'The client only',
-          'The electrician only',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'A competent person responsible for commissioning signs the certificate as required by BS 5839-1.',
-      },
-      {
-        id: 10,
-        question: 'What should be included in O&M manuals?',
-        options: [
-          'Marketing materials only',
-          'As-builts, data sheets, certificates, C&E matrix and maintenance requirements',
-          'Snag list only',
-          'Nothing specific is required',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Provide a comprehensive handover pack including all documentation needed for ongoing operation and maintenance.',
-      },
-    ],
-    []
-  );
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
-    Array(questions.length).fill(-1)
-  );
-  const [showResults, setShowResults] = useState(false);
-  const [showQuiz, setShowQuiz] = useState(false);
-
-  const handleAnswerSelect = (answerIndex: number) => {
-    const updated = [...selectedAnswers];
-    updated[currentQuestion] = answerIndex;
-    setSelectedAnswers(updated);
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
-    else setShowResults(true);
-  };
-
-  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
-
-  const resetQuiz = () => {
-    setCurrentQuestion(0);
-    setSelectedAnswers(Array(questions.length).fill(-1));
-    setShowResults(false);
-  };
-
-  const calculateScore = () =>
-    selectedAnswers.reduce(
-      (acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc),
-      0
-    );
+  useSEO({
+    title: 'Commissioning procedures | Fire Alarm Module 5.5 | Elec-Mate',
+    description:
+      'BS 5839-1:2025 commissioning sequence: visual, continuity, IR (devices removed), polarity / address, first power-up, cause-and-effect (mandatory documentation 2025), per-device functional tests, sound level survey (65 / 75 / +5 dB), battery autonomy, ARC alarm transmission timings (clauses 14.17 / 14.18 — NEW 2025: L ≤90 s / P ≤120 s), false-alarm-investigation procedure handover (clause 29.6 NEW 2025).',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-5">
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              <span className="hidden sm:inline">Module 5</span>
-              <span className="sm:hidden">Back</span>
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Module 5
+          </button>
 
-      <div className="px-4 sm:px-6 py-6 max-w-4xl mx-auto space-y-8">
-        {/* Page Header */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-              <FileCheck className="h-6 w-6 text-elec-yellow" />
-            </div>
-            <span className="text-xs font-medium text-elec-yellow/80 uppercase tracking-wider">
-              Section 5 of 6
-            </span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">
-            Commissioning Test Sheet Completion
-          </h1>
-          <p className="text-white text-base sm:text-lg leading-relaxed">
-            Documentation requirements, test sheet completion, and O&M manual structure for fire
-            alarm commissioning.
-          </p>
-        </div>
+          <PageHero
+            eyebrow="Module 5 · Section 5"
+            title="Commissioning procedures"
+            description="The full commissioning sequence for a BS 5839-1:2025 fire alarm system: visual to handover. Cause-and-effect verification, sound level survey, battery autonomy, ARC alarm-transmission timings (NEW 2025: L ≤90 s / P ≤120 s under clauses 14.17 / 14.18), and the new commissioning-organisation duty to brief the user on false-alarm investigation (clause 29.6, NEW 2025)."
+            tone="yellow"
+          />
 
-        {/* Quick Summary */}
-        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white text-sm">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>
-                <strong className="text-white">BS 5839-1 certificates</strong> with traceable test
-                records and calibrated instruments
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>
-                <strong className="text-white">As-built drawings</strong> must match installed
-                system with accurate device IDs
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>
-                <strong className="text-white">O&M manuals</strong> provide comprehensive handover
-                documentation for maintenance
-              </span>
-            </li>
-          </ul>
-        </div>
+          <TLDR
+            points={[
+              'Commissioning sequence: visual → continuity → IR (devices off) → polarity / address → first power-up → cause-and-effect → device-by-device functional → sound level → battery autonomy → ARC / interface → false-alarm-investigation procedure handover.',
+              'Cause-and-effect matrix or text description: NEW 2025 mandatory documentation, verified at commissioning, handed over with the system.',
+              'Sound level survey: 65 dB(A) at all accessible points / 75 dB(A) at bed-head / ≥5 dB above 30s+ sustained background. Walked with calibrated meter, recorded.',
+              'VAD coverage where VAD is primary signal: BS EN 54-23 — defined coverage volume and luminous flux. Verified by manufacturer table or calculation.',
+              'Battery autonomy: design quiescent period (typically 24 h or 72 h) + alarm period at end. Tested by calculation + load test at commissioning, full-duration repeated annually.',
+              'ARC alarm transmission (NEW 2025 clauses 14.17 / 14.18): Category L ≤90 s alarm + ≤3 min catastrophic; Category P ≤120 s alarm + ≤31 min catastrophic.',
+              'False alarm investigation procedure handover: NEW 2025 clause 29.6 — commissioning organisation advises user on investigation arrangement.',
+              'Acceptance test = the documented record of all commissioning verifications. Issued by the commissioning engineer; received by the user. Annex G certificate format.',
+              'Fault simulation: deliberate fault injection during commissioning verifies fault-monitoring (open-circuit, short-circuit, earth-fault) reports correctly to the panel.',
+              'Sprinkler-as-heat-detector zoning: where used, sprinkler indication zone must NOT overlap with more than one fire detection zone (NEW 2025 clarification, §14 of FIA Guide).',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-white">Learning Outcomes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              'Complete BS 5839-1 certificates with traceable test records',
-              'Record instrument serials and calibration dates correctly',
-              'Produce accurate as-built drawings and zone plans',
-              'Structure O&M manuals with required documentation',
-              'Calculate and verify battery autonomy requirements',
-              'Manage defects and close-out with proper evidence',
-            ].map((outcome, i) => (
-              <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/10">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
-                  </div>
-                  <p className="text-sm text-white">{outcome}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+          <LearningOutcomes
+            outcomes={[
+              'Carry out the BS 5839-1:2025 commissioning sequence in the correct order: visual, continuity, IR (devices removed), polarity / address verification, first power-up, cause-and-effect, per-device functional, sound level, battery autonomy, ARC / interface, handover',
+              'Verify the cause-and-effect matrix or text description as mandatory 2025 documentation, with every cause triggering the documented effect',
+              'Conduct a sound level survey to BS 5839-1:2025: 65 dB(A) at all accessible points / 75 dB(A) at bed-head / ≥5 dB above sustained background',
+              'Verify VAD coverage where VAD is the primary evacuation signal per BS EN 54-23 by manufacturer table or calculation',
+              'Carry out a battery autonomy / mains-fail simulation: quiescent design period + alarm period at end, by load test + calculation at commissioning',
+              'Confirm the alarm transmission timings to the ARC under BS 5839-1:2025 clauses 14.17 (L: ≤90 s alarm / ≤3 min catastrophic) and 14.18 (P: ≤120 s alarm / ≤31 min catastrophic) — NEW for 2025',
+              'Brief the user on the false-alarm-investigation procedure at handover per the NEW 2025 clause 29.6',
+              'Issue an acceptance certificate per Annex G with the supporting commissioning record',
+              'Carry out fault simulation (open-circuit, short-circuit, earth-fault) and verify correct CIE indication',
+              'Verify sprinkler-zone indication does NOT overlap with more than one fire detection zone where sprinklers are used as heat detectors (NEW 2025 §14 clarification)',
+            ]}
+          />
 
-        {/* Main Content */}
-        <div className="space-y-8">
-          {/* Section 01 */}
-          <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-              Certificates and Test Records
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                <strong className="text-white">BS 5839-1</strong> requires specific certificates and
-                test records to demonstrate compliance. These must be completed accurately and
-                retained for future reference.
-              </p>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-semibold text-white mb-3">Required Certificates:</p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Installation certificate confirming compliance with design
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Commissioning certificate with responsible person details
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Test sheets for loops, sound levels and interfaces
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    VAD coverage verification records
-                  </li>
-                </ul>
-              </div>
-              <p className="text-sm text-white italic">
-                All certificates should reference the project specification and design documents.
-              </p>
-            </div>
-          </section>
+          <SectionRule />
 
-          {/* Section 02 */}
-          <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-              Instrument Traceability
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                Test instruments used during commissioning must be{' '}
-                <strong className="text-elec-yellow">traceable</strong> and within their calibration
-                period. This ensures measurement accuracy and provides audit evidence.
-              </p>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-semibold text-white mb-3">Record on Test Sheets:</p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Instrument make and model
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Serial number
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Calibration date and expiry
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Calibration certificate reference
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-                <p className="text-sm text-orange-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Using instruments with expired calibration invalidates test results and can result
-                  in failed audits.
-                </p>
-              </div>
-            </div>
-          </section>
+          <ContentEyebrow>The commissioning sequence — order matters</ContentEyebrow>
 
-          {/* Section 03 */}
-          <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-              As-Built Drawings and Zone Plans
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                <strong className="text-white">As-built drawings</strong> must accurately reflect
-                what has been installed, not just what was designed. Any variations from the
-                original design must be clearly shown.
-              </p>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-semibold text-white mb-3">As-Built Requirements:</p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Accurate device locations with unique IDs
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Cable routes and containment details
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Zone boundaries clearly marked
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Interface connections and locations
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10 mt-4">
-                <p className="text-sm font-semibold text-white mb-3">Zone Plan Requirements:</p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Clear, legible format suitable for emergency use
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Posted adjacent to the control panel
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Copy included in O&M documentation
-                  </li>
-                </ul>
-                <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3 mt-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-elec-yellow">BS 5839-1:2025 Update:</strong> The 2025
-                    edition places higher expectations on commissioning documentation. Zone drawings
-                    must follow a standardised format, cause and effect matrices are mandatory for
-                    systems with automatic responses, and full test certification must be provided
-                    as part of the handover package.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
+          <ConceptBlock
+            title="Why the order is fixed"
+            plainEnglish="Commissioning is a sequence of verifications that build on each other. Each step assumes the previous step has passed; each step's tools and methods are different. Skipping or re-ordering produces gaps in the safety case — a step that depends on an earlier step having passed is signed off without the underlying basis. Doing the steps in order, with each step's results recorded before moving to the next, gives an end-to-end verification record that is contractually and legally robust."
+            onSite="Resist the urge to start with the headline tests (alarm sound, ARC signal). Those depend on everything before them. Start with the passive checks (visual, continuity), move through the pre-energisation tests (IR, polarity, address), then power up under controlled conditions and work through cause-and-effect, per-device functional, sound level, battery, ARC, handover. The sequence is the safety case."
+          >
+            <p>The full sequence:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Visual inspection.</strong> Walk the building. Verify cable identification,
+                support, fixings, JB / penetration condition, detector head fitment, MCP fitment,
+                sounder / VAD fitment, panel mounting, battery installation, mains feed, mains
+                isolator. Check against the as-installed drawing. Record findings on the visual
+                inspection record. Defects raised before any test.
+              </li>
+              <li>
+                <strong>Continuity tests.</strong> Loop continuity end-to-end (panel SLC OUT to
+                panel SLC RETURN); sounder zone continuity; mains feed continuity; FE continuity.
+                Verifies physical wiring is continuous before any voltage applied.
+              </li>
+              <li>
+                <strong>Insulation resistance — devices removed.</strong> 500 V dc, ≥1 MΩ acceptance
+                per BS 7671 §612.3. Loop devices DISCONNECTED before the test (covered in §4 of this
+                module). Cable conductor-to-earth, conductor-to-conductor, screen-to-earth.
+              </li>
+              <li>
+                <strong>Polarity / address verification.</strong> At every base, every MCP, every
+                sounder: polarity (+/−) maintained. At every addressable device: address matches the
+                design schedule. Walk-through pre-energisation finds the back-to-front device and
+                the swapped address.
+              </li>
+              <li>
+                <strong>First power-up.</strong> Loop devices re-fitted, panel energised under
+                controlled conditions. Initial loop diagnostic from panel — device count, loop
+                length, isolator status, fault status. Address any reported faults before
+                proceeding.
+              </li>
+              <li>
+                <strong>Cause-and-effect verification.</strong> Every cause in the design matrix
+                triggered; every effect observed and recorded. Mandatory 2025 documentation.
+              </li>
+              <li>
+                <strong>Per-device functional tests.</strong> Every detector, every MCP, every
+                sounder, every interface, every input / output. Cause activated; correct device
+                indication on the panel; correct zone identified; correct cause-and-effect
+                triggered.
+              </li>
+              <li>
+                <strong>Sound level survey.</strong> Walked with calibrated sound level meter. Every
+                accessible point recorded. 65 / 75 / +5 dB targets verified.
+              </li>
+              <li>
+                <strong>VAD coverage verification.</strong> If VAD is primary signal, BS EN 54-23
+                verification by manufacturer table or calculation.
+              </li>
+              <li>
+                <strong>Battery autonomy / mains-fail simulation.</strong> Calculation + load test
+                at commissioning; full-duration test annually thereafter.
+              </li>
+              <li>
+                <strong>ARC interface tests.</strong> Alarm transmission within timings (L ≤90 s / P
+                ≤120 s); fault transmission; catastrophic-failure simulation within timings (L ≤3
+                min / P ≤31 min).
+              </li>
+              <li>
+                <strong>Fault simulation.</strong> Deliberate open-circuit, short-circuit,
+                earth-fault, mains-fail, battery-fail injected; correct CIE indication and
+                cause-and-effect verified.
+              </li>
+              <li>
+                <strong>Acceptance test and certificate.</strong> All commissioning records
+                consolidated; Annex G acceptance certificate issued; user signs.
+              </li>
+              <li>
+                <strong>False-alarm-investigation procedure handover.</strong> NEW 2025 clause 29.6:
+                commissioning organisation advises user on investigation arrangement, briefing
+                recorded in O&M manual.
+              </li>
+              <li>
+                <strong>Documentation handover.</strong> Operating manual, O&M manual, as-installed
+                drawings, cause-and-effect matrix or text description, logbook (Annex H 2025),
+                certificates. Detail covered in §6.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-          {/* Quick Check 1 */}
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-elec-yellow" />
-              <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
-            </div>
-            <p className="text-sm text-white mb-3">
-              A commissioning engineer discovers that the actual detector locations differ from the
-              design drawings. What action is required?
+          {/* Commissioning sequence flow diagram */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+            <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+              Diagram
             </p>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white">
-                <strong className="text-white">Answer:</strong> The as-built drawings must be
-                updated to show the actual installed locations. The device schedule must also be
-                updated and the variation recorded with approval from the designer or consultant if
-                significant.
-              </p>
-            </div>
-          </div>
+            <h4 className="text-sm font-bold text-white mb-4">
+              Commissioning sequence — flow from visual to handover
+            </h4>
+            <svg
+              viewBox="0 0 820 580"
+              className="w-full h-auto"
+              role="img"
+              aria-label="Commissioning sequence flow: visual inspection, continuity tests, IR (devices removed), polarity and address verification, first power-up, cause-and-effect verification, per-device functional tests, sound level survey, VAD verification, battery autonomy, ARC interface tests, fault simulation, acceptance certificate, false-alarm-investigation procedure handover, documentation handover."
+            >
+              <text x="20" y="30" fill="#FBBF24" fontSize="13" fontWeight="bold">
+                Commissioning sequence — order matters
+              </text>
 
-          {/* Section 04 */}
-          <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-              O&M Manual Structure
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                The{' '}
-                <strong className="text-elec-yellow">Operation and Maintenance (O&M) manual</strong>{' '}
-                provides all documentation needed for ongoing system operation, testing and
-                maintenance.
-              </p>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-semibold text-white mb-3">Recommended O&M Index:</p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Section 1:</strong> Overview, contacts and
-                    emergency procedures
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Section 2:</strong> System description and
-                    specification
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Section 3:</strong> Cause and effect matrix with
-                    revision history
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Section 4:</strong> As-built drawings and zone
-                    plans
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Section 5:</strong> Certificates and test sheets
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Section 6:</strong> Equipment data sheets
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Section 7:</strong> Maintenance requirements and
-                    schedules
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Section 8:</strong> Configuration backups and
-                    appendices
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
+              {/* Phase 1: Pre-energisation */}
+              <rect
+                x="20"
+                y="50"
+                width="780"
+                height="120"
+                rx="8"
+                fill="rgba(34,211,238,0.06)"
+                stroke="rgba(34,211,238,0.5)"
+                strokeWidth="1.5"
+              />
+              <text x="40" y="74" fill="#22D3EE" fontSize="11" fontWeight="bold">
+                PRE-ENERGISATION (passive checks, no voltage)
+              </text>
 
-          {/* Section 05 */}
-          <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-              Battery Calculations and Autonomy
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                <strong className="text-white">Battery autonomy calculations</strong> must be
-                included in the documentation to demonstrate the system meets standby requirements
-                per BS EN 54-4 and BS 5839-1.
-              </p>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-semibold text-white mb-3">Calculation Requirements:</p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Calculate total quiescent (standby) current
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Calculate alarm condition current
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Apply required capacity factors (typically 1.25)
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Select battery with adequate margin
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Verify charger can recharge within 24 hours
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10 mt-4">
-                <p className="text-sm font-semibold text-white mb-3">Standard Requirements:</p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Normal:</strong> 24 hours standby + 30 minutes
-                    alarm
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    <strong className="text-white">Enhanced:</strong> 72 hours standby where
-                    specified
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Quick Check 2 */}
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-elec-yellow" />
-              <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
-            </div>
-            <p className="text-sm text-white mb-3">
-              Why is it important to include the calibration date of test instruments on
-              commissioning documentation?
-            </p>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white">
-                <strong className="text-white">Answer:</strong> Calibration dates provide
-                traceability and prove that instruments were accurate at the time of testing. This
-                is essential for audit purposes and demonstrates that test results are valid and
-                reliable.
-              </p>
-            </div>
-          </div>
-
-          {/* Section 06 */}
-          <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-              Defect Management and Close-Out
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                Any <strong className="text-elec-yellow">defects or non-conformances</strong> found
-                during commissioning must be recorded and closed out with evidence before final
-                sign-off.
-              </p>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-semibold text-white mb-3">Defect Register Contents:</p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Unique defect reference number
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Description of the defect or non-conformance
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Person responsible for correction
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Target completion date
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Corrective action taken
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Retest evidence and sign-off
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-                <p className="text-sm text-orange-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Outstanding defects should be listed with agreed timescales at handover. Critical
-                  defects must be resolved before acceptance.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Quick Check 3 */}
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-elec-yellow" />
-              <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
-            </div>
-            <p className="text-sm text-white mb-3">
-              What documentation should be provided as part of the O&M manual for a fire alarm
-              system?
-            </p>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white">
-                <strong className="text-white">Answer:</strong> The O&M manual should include:
-                system description, as-built drawings, zone plans, device schedules, cause and
-                effect matrix, certificates, test sheets, equipment data sheets, maintenance
-                requirements, and configuration backups.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Practical Guidance */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-white">Practical Guidance</h2>
-          <div className="space-y-4">
-            <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <div className="flex items-center gap-2 mb-3">
-                <Lightbulb className="h-5 w-5 text-green-400" />
-                <h4 className="text-sm font-semibold text-green-400">Pro Tips</h4>
-              </div>
-              <ul className="space-y-2 text-sm text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Use a completion checklist to verify all documentation is complete before witness
-                  testing
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Maintain version control on all documents with approval signatures and dates
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Provide both PDF and editable copies where appropriate for ongoing maintenance
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="h-5 w-5 text-red-400" />
-                <h4 className="text-sm font-semibold text-red-400">Common Mistakes</h4>
-              </div>
-              <ul className="space-y-2 text-sm text-white">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Using design drawings as as-builts without updating for actual installed
-                  configuration
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Failing to record instrument calibration details making test results untraceable
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Omitting battery calculations from documentation despite being required by BS
-                  5839-1
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* FAQs */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-white">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {[
-              {
-                q: 'Are handwritten test sheets acceptable?',
-                a: 'Yes, provided they use legible, controlled templates with clear entries and proper signatures. Electronic records are preferred where available.',
-              },
-              {
-                q: 'Should we include panel configuration backups in handover?',
-                a: 'Yes, provide safe copies of panel configuration with the version and date noted. This is essential for maintenance and disaster recovery.',
-              },
-              {
-                q: 'Where should zone plans be displayed?',
-                a: 'Zone plans must be posted adjacent to the CIE for emergency response and a copy included in the O&M manual for reference.',
-              },
-              {
-                q: 'How long should commissioning records be retained?',
-                a: 'Agree retention periods with the client or consultant. BS 5839-1 recommends keeping records for the life of the system or a minimum of 15 years.',
-              },
-              {
-                q: 'What if defects cannot be closed before handover?',
-                a: 'Outstanding items should be listed in a snag register with owners, target dates and agreed severity classifications. Critical safety defects must be resolved first.',
-              },
-              {
-                q: 'Do we need to provide training records?',
-                a: 'Yes, training records showing attendees, date, scope covered and trainer details should be included in the handover documentation.',
-              },
-            ].map((faq, i) => (
-              <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-sm text-white">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Quiz Section */}
-        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-          <div className="flex items-center gap-2 mb-4">
-            <BookOpen className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-semibold text-white">Knowledge Check</h3>
-          </div>
-          {!showQuiz ? (
-            <div className="text-center py-6">
-              <p className="text-sm text-white mb-4">
-                Test your understanding of commissioning documentation with 10 questions.
-              </p>
-              <Button
-                onClick={() => setShowQuiz(true)}
-                className="min-h-[44px] px-6 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation"
+              <rect
+                x="40"
+                y="90"
+                width="160"
+                height="60"
+                rx="6"
+                fill="rgba(34,211,238,0.12)"
+                stroke="#22D3EE"
+                strokeWidth="1.5"
+              />
+              <text
+                x="120"
+                y="114"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="11"
+                fontWeight="bold"
               >
-                Start Quiz
-              </Button>
-            </div>
-          ) : showResults ? (
-            <div className="space-y-6">
-              <div className="text-center py-4">
-                <p className="text-3xl font-bold text-elec-yellow">
-                  {calculateScore()}/{questions.length}
-                </p>
-                <p className="text-sm text-white">
-                  ({Math.round((calculateScore() / questions.length) * 100)}% correct)
-                </p>
-              </div>
+                1 · Visual
+              </text>
+              <text x="120" y="130" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                cable, supports, fitment
+              </text>
+              <text x="120" y="142" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                vs as-installed dwg
+              </text>
 
-              <div className="space-y-4">
-                {questions.map((q, i) => {
-                  const correct = selectedAnswers[i] === q.correctAnswer;
-                  return (
-                    <div key={q.id} className="p-4 rounded-lg bg-white/5 border border-white/10">
-                      <p className="text-sm font-semibold text-white mb-2">
-                        Q{i + 1}. {q.question}
-                      </p>
-                      <p className={`text-sm ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                        Your answer: {q.options[selectedAnswers[i]] ?? 'Not answered'}{' '}
-                        {correct ? '(Correct)' : '(Incorrect)'}
-                      </p>
-                      {!correct && (
-                        <p className="text-sm text-white mt-1">
-                          Correct: {q.options[q.correctAnswer]}
-                        </p>
-                      )}
-                      <p className="text-sm text-white mt-2">{q.explanation}</p>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <Button
-                onClick={resetQuiz}
-                variant="outline"
-                className="w-full min-h-[44px] border-white/20 text-white hover:bg-white/5 touch-manipulation"
+              <rect
+                x="220"
+                y="90"
+                width="160"
+                height="60"
+                rx="6"
+                fill="rgba(34,211,238,0.12)"
+                stroke="#22D3EE"
+                strokeWidth="1.5"
+              />
+              <text
+                x="300"
+                y="114"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="11"
+                fontWeight="bold"
               >
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Restart Quiz
-              </Button>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+                2 · Continuity
+              </text>
+              <text x="300" y="130" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                loop end-to-end
+              </text>
+              <text x="300" y="142" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                sounder, mains, FE
+              </text>
 
-              <div>
-                <p className="text-base font-semibold text-white mb-4">
-                  Q{currentQuestion + 1}. {questions[currentQuestion].question}
-                </p>
-                <div className="space-y-2">
-                  {questions[currentQuestion].options.map((opt, idx) => {
-                    const selected = selectedAnswers[currentQuestion] === idx;
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => handleAnswerSelect(idx)}
-                        className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
-                          selected
-                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              <rect
+                x="400"
+                y="90"
+                width="160"
+                height="60"
+                rx="6"
+                fill="rgba(34,211,238,0.12)"
+                stroke="#22D3EE"
+                strokeWidth="1.5"
+              />
+              <text
+                x="480"
+                y="114"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                3 · IR · 500 V dc
+              </text>
+              <text x="480" y="130" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                devices REMOVED
+              </text>
+              <text x="480" y="142" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                ≥1 MΩ BS 7671 §612.3
+              </text>
 
-              <div className="flex items-center justify-between gap-3">
-                <Button
-                  variant="outline"
-                  onClick={handlePrevious}
-                  disabled={currentQuestion === 0}
-                  className="flex-1 min-h-[44px] border-white/20 text-white hover:bg-white/5 touch-manipulation disabled:opacity-50"
-                >
-                  Previous
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  disabled={selectedAnswers[currentQuestion] === -1}
-                  className="flex-1 min-h-[44px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation disabled:opacity-50"
-                >
-                  {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
+              <rect
+                x="580"
+                y="90"
+                width="200"
+                height="60"
+                rx="6"
+                fill="rgba(34,211,238,0.12)"
+                stroke="#22D3EE"
+                strokeWidth="1.5"
+              />
+              <text
+                x="680"
+                y="114"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                4 · Polarity / address
+              </text>
+              <text x="680" y="130" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                walk loop, every base
+              </text>
+              <text x="680" y="142" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                device address vs schedule
+              </text>
 
-        {/* Navigation Footer */}
-        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button
-            variant="outline"
-            asChild
-            className="flex-1 min-h-[44px] border-white/20 text-white hover:bg-white/5 touch-manipulation"
+              {/* Arrow to phase 2 */}
+              <line x1="410" y1="170" x2="410" y2="195" stroke="#FBBF24" strokeWidth="2" />
+              <polygon points="410,200 405,193 415,193" fill="#FBBF24" />
+
+              {/* Phase 2: Power-up + verification */}
+              <rect
+                x="20"
+                y="200"
+                width="780"
+                height="180"
+                rx="8"
+                fill="rgba(168,85,247,0.06)"
+                stroke="rgba(168,85,247,0.5)"
+                strokeWidth="1.5"
+              />
+              <text x="40" y="224" fill="#A855F7" fontSize="11" fontWeight="bold">
+                POWER-UP and VERIFICATION
+              </text>
+
+              <rect
+                x="40"
+                y="240"
+                width="160"
+                height="60"
+                rx="6"
+                fill="rgba(168,85,247,0.12)"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+              />
+              <text
+                x="120"
+                y="262"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                5 · First power-up
+              </text>
+              <text x="120" y="278" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                controlled conditions
+              </text>
+              <text x="120" y="290" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                panel diagnostic
+              </text>
+
+              <rect
+                x="220"
+                y="240"
+                width="160"
+                height="60"
+                rx="6"
+                fill="rgba(168,85,247,0.12)"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+              />
+              <text
+                x="300"
+                y="262"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                6 · Cause-and-effect
+              </text>
+              <text x="300" y="278" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                every cause → effect
+              </text>
+              <text
+                x="300"
+                y="290"
+                textAnchor="middle"
+                fill="rgba(236,72,153,0.85)"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                NEW 2025 mandatory doc
+              </text>
+
+              <rect
+                x="400"
+                y="240"
+                width="160"
+                height="60"
+                rx="6"
+                fill="rgba(168,85,247,0.12)"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+              />
+              <text
+                x="480"
+                y="262"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                7 · Per-device functional
+              </text>
+              <text x="480" y="278" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                every detector / MCP / sounder
+              </text>
+              <text x="480" y="290" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                interface I/O verified
+              </text>
+
+              <rect
+                x="580"
+                y="240"
+                width="200"
+                height="60"
+                rx="6"
+                fill="rgba(168,85,247,0.12)"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+              />
+              <text
+                x="680"
+                y="262"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                8 · Sound level survey
+              </text>
+              <text x="680" y="278" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                65 / 75 / +5 dB(A)
+              </text>
+              <text x="680" y="290" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                calibrated SLM
+              </text>
+
+              <rect
+                x="40"
+                y="310"
+                width="160"
+                height="60"
+                rx="6"
+                fill="rgba(168,85,247,0.12)"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+              />
+              <text
+                x="120"
+                y="332"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                9 · VAD per BS EN 54-23
+              </text>
+              <text x="120" y="348" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                if VAD primary signal
+              </text>
+              <text x="120" y="360" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                manuf. table / calc
+              </text>
+
+              <rect
+                x="220"
+                y="310"
+                width="160"
+                height="60"
+                rx="6"
+                fill="rgba(168,85,247,0.12)"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+              />
+              <text
+                x="300"
+                y="332"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                10 · Battery autonomy
+              </text>
+              <text x="300" y="348" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                quiescent + alarm @ end
+              </text>
+              <text x="300" y="360" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                load test + calc
+              </text>
+
+              <rect
+                x="400"
+                y="310"
+                width="160"
+                height="60"
+                rx="6"
+                fill="rgba(168,85,247,0.12)"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+              />
+              <text
+                x="480"
+                y="328"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                11 · ARC interface
+              </text>
+              <text
+                x="480"
+                y="343"
+                textAnchor="middle"
+                fill="rgba(236,72,153,0.85)"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                L ≤90s · P ≤120s alarm
+              </text>
+              <text
+                x="480"
+                y="356"
+                textAnchor="middle"
+                fill="rgba(236,72,153,0.85)"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                L ≤3min · P ≤31min cat-fail
+              </text>
+              <text x="480" y="368" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+                14.17 / 14.18 NEW 2025
+              </text>
+
+              <rect
+                x="580"
+                y="310"
+                width="200"
+                height="60"
+                rx="6"
+                fill="rgba(168,85,247,0.12)"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+              />
+              <text
+                x="680"
+                y="332"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                12 · Fault simulation
+              </text>
+              <text x="680" y="348" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                o/c · s/c · e/f · mains
+              </text>
+              <text x="680" y="360" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                CIE indication verified
+              </text>
+
+              {/* Arrow to phase 3 */}
+              <line x1="410" y1="380" x2="410" y2="405" stroke="#FBBF24" strokeWidth="2" />
+              <polygon points="410,410 405,403 415,403" fill="#FBBF24" />
+
+              {/* Phase 3: Acceptance + handover */}
+              <rect
+                x="20"
+                y="410"
+                width="780"
+                height="156"
+                rx="8"
+                fill="rgba(251,191,36,0.06)"
+                stroke="rgba(251,191,36,0.5)"
+                strokeWidth="1.5"
+              />
+              <text x="40" y="434" fill="#FBBF24" fontSize="11" fontWeight="bold">
+                ACCEPTANCE and HANDOVER
+              </text>
+
+              <rect
+                x="40"
+                y="450"
+                width="220"
+                height="60"
+                rx="6"
+                fill="rgba(251,191,36,0.12)"
+                stroke="#FBBF24"
+                strokeWidth="1.5"
+              />
+              <text
+                x="150"
+                y="474"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                13 · Acceptance certificate
+              </text>
+              <text x="150" y="490" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                Annex G · all records
+              </text>
+              <text x="150" y="502" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                signed by user
+              </text>
+
+              <rect
+                x="280"
+                y="450"
+                width="240"
+                height="60"
+                rx="6"
+                fill="rgba(251,191,36,0.12)"
+                stroke="#FBBF24"
+                strokeWidth="1.5"
+              />
+              <text
+                x="400"
+                y="472"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                14 · False-alarm proc
+              </text>
+              <text
+                x="400"
+                y="488"
+                textAnchor="middle"
+                fill="rgba(236,72,153,0.85)"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                NEW 2025 clause 29.6
+              </text>
+              <text x="400" y="500" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
+                advise user on investigation
+              </text>
+
+              <rect
+                x="540"
+                y="450"
+                width="240"
+                height="60"
+                rx="6"
+                fill="rgba(251,191,36,0.12)"
+                stroke="#FBBF24"
+                strokeWidth="1.5"
+              />
+              <text
+                x="660"
+                y="472"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                15 · Documentation
+              </text>
+              <text x="660" y="488" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                O&amp;M, drawings, C&amp;E matrix
+              </text>
+              <text x="660" y="500" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
+                logbook · §6 of this module
+              </text>
+
+              <text x="410" y="540" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="10">
+                Each step recorded before moving to next · gaps in record = gaps in safety case
+              </text>
+              <text
+                x="410"
+                y="556"
+                textAnchor="middle"
+                fill="rgba(236,72,153,0.85)"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Cause-and-effect verification + clause 29.6 false-alarm advice are NEW 2025
+                mandatory items
+              </text>
+            </svg>
+          </div>
+
+          <InlineCheck
+            id={inlineChecks[0].id}
+            question={inlineChecks[0].question}
+            options={inlineChecks[0].options}
+            correctIndex={inlineChecks[0].correctIndex}
+            explanation={inlineChecks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Cause-and-effect — the design intent verified</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why cause-and-effect is the load-bearing commissioning check"
+            plainEnglish="The cause-and-effect matrix expresses the design intent of the fire alarm system as a table: every CAUSE that the system can sense (detector activation, MCP operation, interface input from another system, fault condition) maps to one or more EFFECTS (alarm sound throughout zone X, sounders / VADs activated, ARC signal sent, plant shutdown initiated, lift recall to ground, smoke vent opened, magnetically held door released, etc.). The cause-and-effect verification at commissioning triggers each cause and verifies that ALL designed effects occur, in the correct timing, in the correct zones. It is the single check that proves the wired system implements the designed system."
+            onSite="Print the cause-and-effect matrix on a clipboard. Walk the building with a colleague at the panel. Trigger each cause; the colleague observes the panel and notes the resulting effects; you observe the field response (sounder operation, smoke vent operation, door release). Tick each effect as observed. The matrix walk-through is methodical and slow but is the load-bearing safety verification. Skip it and the system is signed off without verifying the design intent — a serious omission with court-aware exposure."
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-5/section-4">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            asChild
-            className="flex-1 min-h-[44px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation"
+            <p>The verification process:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>The matrix.</strong> The design cause-and-effect matrix is provided by the
+                system designer. Mandatory documentation under BS 5839-1:2025. May be a formal
+                matrix table for complex systems, or a text description for simple systems
+                (&quot;this system operates as a simultaneous evacuation&quot;).
+              </li>
+              <li>
+                <strong>The verification team.</strong> Two engineers — one at the panel, one
+                walking the building — communicating by radio or phone. Single engineer verification
+                is acceptable for very small systems but is slow.
+              </li>
+              <li>
+                <strong>Trigger each cause.</strong> Every detector activated by test smoke / test
+                heat / magnetic test wand per the device manufacturer instruction. Every MCP
+                operated by the test key (not the break-glass — preserve the device for service).
+                Every interface input simulated.
+              </li>
+              <li>
+                <strong>Observe each effect.</strong> Field engineer notes sounder operation, VAD
+                operation, smoke vent open, door release, plant shutdown. Panel engineer notes panel
+                indication, zone identified, ARC signal status, log entry.
+              </li>
+              <li>
+                <strong>Tick the matrix.</strong> Each cell of the matrix is a cause-and-effect
+                pair; verified means the effect occurs when the cause is triggered. Failures are
+                noted, investigated, rectified, re-tested.
+              </li>
+              <li>
+                <strong>Reset between causes.</strong> Each cause-and-effect verification ends with
+                system reset and zone-clear before the next cause is triggered.
+              </li>
+              <li>
+                <strong>Record.</strong> The fully ticked matrix is the commissioning record for
+                cause-and-effect. It is part of the handover documentation.
+              </li>
+            </ol>
+            <p>
+              Mandatory under BS 5839-1:2025 — both the matrix existence (in the design and handover
+              documentation) and the verification at commissioning. The 2017 revision recommended
+              cause-and-effect verification; the 2025 revision elevates the matrix / text
+              description to mandatory documentation.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Documentation clause / §21 of FIA Guide (Cause-and-effect — NEW for 2025)"
+            clause={
+              <>
+                A cause-and-effect matrix or text description of how the cause and effect operates
+                should be included with the documentation provided to the purchaser or user of the
+                system. This could be as simple as &quot;this system operates as a simultaneous
+                evacuation&quot; or a cause-and-effect matrix document might be required for more
+                complex strategies. The standard does not dictate the manner of the cause-and-effect
+                matrix only that it needs to be produced.
+              </>
+            }
+            meaning="NEW for 2025. Cause-and-effect — matrix or text description — is MANDATORY documentation handed over with the system. Format flexible (matrix for complex, text for simple); requirement firm. Verified at commissioning; handed over with the O&M manual."
+          />
+
+          <CommonMistake
+            title="Cause-and-effect tested by representative sample only — not every cause"
+            whatHappens="200-device addressable system. Engineer tests one detector per zone (10 detectors out of 200), confirms zone identification on the panel, ticks 'cause-and-effect verified'. Five months later, an MCP on a corridor activates and the zone-correct sounder zone fires — but the corridor MCP was wired with a swapped address, mapped to a different zone in the panel. Activation correctly indicates fire; identifies the wrong zone. Evacuation is delayed by occupants going to the wrong area to investigate. Court-aware liability falls on the commissioning engineer who did not verify the MCP."
+            doInstead="Verify every cause. Every detector, every MCP, every interface input. Yes, it is slow on a 200-device system — typically a 3-day commissioning event with two engineers. Yes, the commercial pressure pushes back. The cause-and-effect verification is the load-bearing commissioning check — the engineer who short-cuts it is signing off without verification, and is exposed if a cause-effect mismatch produces a real-world consequence."
+          />
+
+          <InlineCheck
+            id={inlineChecks[1].id}
+            question={inlineChecks[1].question}
+            options={inlineChecks[1].options}
+            correctIndex={inlineChecks[1].correctIndex}
+            explanation={inlineChecks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Sound level survey and VAD verification</ContentEyebrow>
+
+          <ConceptBlock
+            title="The 65 / 75 / +5 dB(A) targets"
+            plainEnglish="The fire alarm sounders must be loud enough to alert occupants throughout the protected area. BS 5839-1:2025 sets three audibility benchmarks: 65 dB(A) at all accessible points (the floor — anywhere a person might be); 75 dB(A) at bed-head positions (sleeping occupants need higher levels to be roused); at least 5 dB above any sustained background noise of 30 seconds or more (sounders must be heard over equivalent-noise environments — kitchens, plant rooms, factory floors). The targets are verified at commissioning by walking with a calibrated sound level meter and recording the level at every accessible point."
+            onSite="Calibrated sound level meter (Class 2 minimum, Class 1 preferred for high-spec work). Walk the building with the matrix of accessible points marked on the floor plan. At each point, take a 1-2 second average reading with sounders activated. Record the value. Targets met = move to next point. Target NOT met = note the deficiency, investigate, rectify (reposition / add / upsize sounders), re-survey. The acceptance is at every point, not on average — a 70 dB(A) average with one 60 dB(A) deficiency is non-compliant."
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-5/section-6">
-              Next
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Link>
-          </Button>
-        </div>
+            <p>The targets in detail:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>65 dB(A) at all accessible points.</strong> The general floor level. Any
+                position a person can reach during normal occupancy — corridors, rooms, plant rooms,
+                stair landings, plant cupboards, roof-access positions. Measured 1.4 m AGL.
+              </li>
+              <li>
+                <strong>75 dB(A) at bed-head positions.</strong> In rooms where people sleep
+                (residential dwellings, hotels, dormitories, residential care). Measured at the head
+                end of the bed, 1.4 m above floor. Reflects the higher level needed to wake a
+                sleeping occupant.
+              </li>
+              <li>
+                <strong>≥5 dB above 30s+ sustained background.</strong> In areas where ambient noise
+                is sustained at 30 seconds or more (kitchens during prep, plant rooms, factory
+                floors, machine workshops), sounders must be at least 5 dB above the sustained
+                background. Measured ambient first, then sounder + ambient, derive differential.
+              </li>
+              <li>
+                <strong>Calibrated meter.</strong> Class 2 minimum (general purpose), Class 1
+                preferred (precision). Calibration certificate within 2 years of test date. Pre-test
+                calibrator check and post-test calibrator check; both recorded.
+              </li>
+              <li>
+                <strong>Recorded.</strong> Floor-plan annotated with measurement points and results.
+                Deficiencies, rectification, re-survey results all recorded. Commissioning sign-off
+                only when every point meets the target.
+              </li>
+            </ul>
+            <p>
+              The 65 / 75 / +5 figures are the floor — sounders should be designed to give margin
+              over them. A 65 dB(A) reading at the deepest point of the system, with all sounders
+              operational, leaves no margin for sounder degradation, occupant noise, or door
+              closure. Design for 70-75 dB(A) deepest at commissioning to allow for service-life
+              degradation.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="VAD coverage per BS EN 54-23 — when VAD is the primary signal"
+            plainEnglish="Visual Alarm Devices (VADs) supplement audible sounders for hearing-impaired occupants and where audible alarms are not the primary evacuation signal (e.g. some industrial environments where ambient noise exceeds the +5 dB target, some operating theatres, some hearing-loop environments). Where VAD is the PRIMARY evacuation signal, BS EN 54-23 applies — the product / coverage standard for VADs. BS EN 54-23 specifies the device's category (e.g. C-3-15 = ceiling-mounted, 3 m room, 15 cd light intensity), the defined coverage volume, and the luminous flux requirements."
+            onSite="If the design specifies VAD as the primary signal, BS EN 54-23 verification at commissioning is mandatory. Procedure: confirm device is BS EN 54-23 certified (CE / UKCA mark, product classification on label); confirm device category matches the design (C-3-15 for typical 3 m ceiling); confirm VAD spacing covers the design volume per the manufacturer table OR by calculation; record the verification on the commissioning record. Where VAD supplements audible (not primary), audible verification is the primary check; VAD verification is supplementary."
+          >
+            <p>BS EN 54-23 in summary:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>VAD product certification.</strong> CE / UKCA marked to BS EN 54-23 with a
+                defined category. Category encoding: e.g. C-3-15 = Ceiling-mounted, 3 m room height,
+                15 cd luminous intensity (covers a 7.5 m diameter cylinder at 1 m above floor).
+                Wall-mounted VADs use W-x-y categories.
+              </li>
+              <li>
+                <strong>Coverage volume.</strong> Each category has a defined coverage volume —
+                typically a cylinder for ceiling-mounted, a square prism for wall-mounted. The
+                volume specifies where the VAD is guaranteed to deliver the rated luminous flux.
+              </li>
+              <li>
+                <strong>Spacing.</strong> Multiple VADs are spaced to cover the protected volume
+                without dark zones. Manufacturer tables typical; calculation acceptable for
+                non-standard layouts.
+              </li>
+              <li>
+                <strong>Verification at commissioning.</strong> Device certification confirmed
+                (label / data sheet); spacing matches design; activation observed at the VADs during
+                cause-and-effect; recorded on the commissioning record.
+              </li>
+              <li>
+                <strong>Photometric measurement.</strong> Where the design relies on photometric
+                performance under specific conditions (large open spaces, atria), commissioning may
+                include a photometric measurement; rare on standard Cat L installations.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Sound level survey done with all interior doors open"
+            whatHappens="Engineer surveys sound levels with all interior doors propped open. Readings throughout the building meet 65 dB(A). System signed off. Three months later, the building is in normal occupancy with doors closed, and the rear bedrooms register 50 dB(A) at bed-head — well below the 75 dB(A) target. Doors closed in service produce a sound pressure level very different from doors open at commissioning. The system is functionally non-compliant in service even though it passed at commissioning."
+            doInstead="Survey under representative service conditions. Doors closed (or in their normal occupancy state). Plant noise running where it normally runs. Building furniture in place where it normally sits. The survey result is the level the occupant experiences in service. Note the survey conditions on the record (e.g. 'doors closed in residential rooms; plant rooms with running plant; HVAC at normal demand'). A survey done under unrealistic conditions is not a survey of the system as installed."
+          />
+
+          <InlineCheck
+            id={inlineChecks[2].id}
+            question={inlineChecks[2].question}
+            options={inlineChecks[2].options}
+            correctIndex={inlineChecks[2].correctIndex}
+            explanation={inlineChecks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Battery autonomy and ARC interface — NEW 2025 timings</ContentEyebrow>
+
+          <ConceptBlock
+            title="Battery autonomy / mains-fail simulation"
+            plainEnglish="Standby batteries provide power during mains failure. Capacity is sized to support quiescent operation for a design autonomy period (typically 24 h or 72 h depending on the system class) plus a defined alarm period at the end (typically 30 min). At commissioning, the battery autonomy is verified — usually by a combination of calculation and load test rather than full-duration. The full-duration test is repeated at the annual service. The verification proves the system survives a typical mains failure and still delivers full-output alarm at the end."
+            onSite="At commissioning: (a) verify battery is fully charged (panel reports float voltage); (b) carry out a battery impedance test (specific to the panel manufacturer's tool); (c) calculate projected runtime from impedance + load + capacity; (d) load-test for a defined period (often 30 min - 1 h) to confirm calculation; (e) at end of test, simulate alarm and verify sounders run at full output; (f) restore mains and verify charging resumes; (g) record. Annual service repeats with a longer-duration test (often full-duration, e.g. 24 h)."
+          >
+            <p>The autonomy test elements:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Charge state verification.</strong> Battery float voltage as panel reports;
+                visible charge indicator if fitted. Battery temperature within rating.
+              </li>
+              <li>
+                <strong>Impedance test.</strong> Panel-specific battery diagnostic measures internal
+                impedance; impedance vs new-battery baseline indicates capacity degradation. Common
+                acceptance: impedance ≤25-30% above new-battery baseline.
+              </li>
+              <li>
+                <strong>Capacity calculation.</strong> Quiescent load (mA) × autonomy (hours) +
+                alarm load (mA) × alarm duration (hours) = required Ah. Installed battery Ah must
+                exceed required Ah by a margin (typically ≥25%).
+              </li>
+              <li>
+                <strong>Load test (commissioning, abbreviated).</strong> Mains isolated, panel runs
+                on batteries for typically 30-60 min. Battery voltage and current monitored. At end
+                of period, alarm triggered to verify alarm-load capability.
+              </li>
+              <li>
+                <strong>Full-duration test (annual).</strong> Mains isolated for full design
+                autonomy (24 h or 72 h) followed by alarm period. Full battery runtime verified.
+              </li>
+              <li>
+                <strong>Restoration and recharge.</strong> Mains restored, charge cycle observed,
+                panel reports normal float within design recharge time (typically 24 h to fully
+                recharge from fully discharged).
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="ARC alarm transmission timings — NEW 2025 clauses 14.17 and 14.18"
+            plainEnglish="The 2017 revision of BS 5839-1 recognised the use of intruder and hold-up alarm system (I&HAS) transmission equipment for fire signalling, but did not provide explicit timings for alarm or fault transmission. The 2025 revision introduces explicit timings under clauses 14.17 (Category L) and 14.18 (Category P): for Category L systems, the alarm signal must be received at the ARC within a maximum of 90 s, and a catastrophic transmission failure (no signals possible) must be indicated at both ARC and CIE within 3 minutes. For Category P systems, the alarm timing relaxes to 120 s and the catastrophic-failure timing relaxes to 31 minutes. The verification at commissioning involves triggering an alarm and confirming receipt at the ARC within the timing, and simulating a catastrophic failure (e.g. all paths down) and confirming both ARC and CIE indication within the catastrophic-failure timing."
+            onSite="At commissioning, coordinate with the ARC. Trigger an alarm at the panel with a stopwatch start. ARC operator records receipt time and reports back. Verify ≤90 s (L) or ≤120 s (P). Then simulate path failure: pull the primary path (typically IP), wait, observe the panel and confirm catastrophic-failure indication within 3 min (L) or 31 min (P). Restore. Repeat for path failure of secondary path. Record results on commissioning record."
+          >
+            <p>The timings detail:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Category L · clause 14.17.</strong> Alarm to ARC ≤90 s. Catastrophic failure
+                indication at ARC and CIE ≤3 min. Faster timings reflect that life safety has higher
+                immediacy.
+              </li>
+              <li>
+                <strong>Category P · clause 14.18.</strong> Alarm to ARC ≤120 s. Catastrophic
+                failure indication at ARC and CIE ≤31 min. Longer catastrophic timing reflects lower
+                immediacy of property protection vs life.
+              </li>
+              <li>
+                <strong>Why introduced 2025.</strong> The PSTN switch-off in 2027 and the move to
+                all-IP networks created uncertainty about transmission reliability. Explicit timings
+                give a benchmark; alarm transmission equipment must meet these and is tested at
+                commissioning and at annual service.
+              </li>
+              <li>
+                <strong>Power supply for transmission equipment.</strong> Where a separate PSU
+                powers the alarm transmission equipment, it should conform to BS EN 54-4 or BS EN
+                50131-6 Grade 4. The 2025 revision cross-references these.
+              </li>
+              <li>
+                <strong>False alarm notice label.</strong> NEW figure in the 2025 revision (FIA
+                Guide §13) showing a recommended &quot;False alarm notice — this fire alarm has an
+                active connection to the fire and rescue service&quot; label, fixed on or adjacent
+                to the CIE to remind premises management before any test.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Clause 14.17 (Category L alarm transmission) · Clause 14.18 (Category P alarm transmission) — NEW for 2025"
+            clause={
+              <>
+                14.17 — For Category L systems, in the event of a fire alarm signal, an indication
+                should be received at the ARC within a maximum of 90 s; a catastrophic failure of
+                the transmission system (whereby no alarm signals can be transmitted) should be
+                indicated at the ARC and the CIE within 3 min.
+                <br />
+                <br />
+                14.18 — For Category P systems, in the event of a fire alarm signal, an indication
+                should be received at the ARC within a maximum of 120 s; a catastrophic failure of
+                the transmission system (whereby no alarm signals can be transmitted) should be
+                indicated at the ARC and the CIE within 31 min.
+              </>
+            }
+            meaning="NEW explicit timings in the 2025 revision. L = 90 s alarm + 3 min catastrophic. P = 120 s alarm + 31 min catastrophic. Verified at commissioning by stopwatch test of alarm transmission, and simulated path-failure test of catastrophic-failure indication. Recorded on commissioning record."
+          />
+
+          <Scenario
+            title="Commissioning a Cat L2 system in a residential care home"
+            situation="A 60-bed residential care home has a new Cat L2 system with sleeping-room smoke detection (no heat detectors per 2025 §14), MCPs, sounders, VADs in deaf-suitable rooms, and ARC connection (mandatory under 2025 §6 — variation absent ARC = unacceptable). System wired, devices fitted, panel awaiting power-up."
+            whatToDo="Run the full sequence in order. Visual: confirm dust caps off, heads fitted, MCPs in place. Continuity: loop end-to-end, sounder zones, mains, FE. IR: 500 V dc, devices removed, ≥1 MΩ. Polarity / address: walk every base. First power-up: panel reports normal, addresses match schedule, isolators online. Cause-and-effect: every smoke detector, every MCP, every interface input, observed effects (sounder zones, VADs in deaf-suitable rooms, plant interface, ARC signal). Sound level: 65 / 75 / +5 dB walked in service conditions (doors closed, ambient running). VAD: BS EN 54-23 verification in deaf-suitable rooms. Battery: impedance + load + 30 min runtime + alarm at end. ARC: 120 s alarm to ARC verified (Cat L = 90 s — but 14.17 is L; this is L2 so L applies 90 s); catastrophic failure ≤3 min via primary-path simulated failure. Acceptance certificate signed. False-alarm-investigation procedure briefed (clause 29.6) — manager understands what false alarm investigation means and what the home is responsible for."
+            whyItMatters="Residential care is the area most affected by 2025 changes. Heat detectors banned in sleeping rooms (§14); ARC connection mandatory (§6 — absence is unacceptable variation); zone plan mandatory (§6 — absence is unacceptable variation); false-alarm-investigation briefing mandatory (clause 29.6). Commissioning a Cat L2 in residential care must address all of these, not just the legacy commissioning checks. Court-aware: failures of these new requirements are recorded breaches of BS 5839-1:2025 specifically called out in the standard."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>False-alarm investigation handover and acceptance</ContentEyebrow>
+
+          <ConceptBlock
+            title="The NEW 2025 clause 29.6 commissioning organisation duty"
+            plainEnglish="False alarms are a chronic industry problem. Fire and Rescue Services now operate call-challenging policies (FRS may not attend automatic alarms unless the user can confirm a fire is present); ARCs charge for alarm forwarding; building managers face escalating costs and disruption from repeat false alarms. The 2025 revision introduces clause 29.6 placing a NEW duty on the commissioning organisation: advise the user to arrange for suitable investigation, and (if appropriate) action, on every occasion that a false alarm occurs. The advice covers: how to investigate (managerial change, system modification, engaged separate investigator), when to investigate (every occasion), what to record (cause, action, outcome). Briefed at handover; documented in the O&M manual."
+            onSite="Brief the responsible person at handover. Explain what a false alarm is (categories of false alarm now in commentary to clause 30); explain why investigation matters (FRS attendance, ARC charges, Regulatory Reform Order liability); explain the investigation procedure (preliminary investigation when rate exceeds 4 per 100 detectors per annum; in-depth investigation when rate exceeds 5 per 100 detectors per annum on systems >40 detectors). Hand over a written false-alarm-investigation procedure that the home / business can follow when the next false alarm occurs. The procedure goes in the O&M manual."
+          >
+            <p>The clause 29.6 elements:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Advise the user.</strong> The commissioning organisation has a duty to BRIEF
+                the user — not just hand over a manual. The briefing is recorded; user acknowledges
+                by signature.
+              </li>
+              <li>
+                <strong>Suitable investigation.</strong> Each false alarm is investigated. The
+                investigation is recorded — what triggered the false alarm, what action was taken,
+                what was learned.
+              </li>
+              <li>
+                <strong>Action where appropriate.</strong> Investigation may produce action —
+                managerial change (e.g. revised cooking practices in a kitchen), system modification
+                (e.g. detector relocation, multi-sensor in place of point smoke), or engaged
+                separate investigator (e.g. for systemic problems beyond user capability).
+              </li>
+              <li>
+                <strong>Categories of false alarm.</strong> Now in commentary to clause 30 (moved
+                from the terms and definitions in 2025). Categories include unwanted-fire-alarm,
+                equipment-fault false alarm, malicious false alarm. The commissioning organisation
+                explains the categories so the user can correctly categorise each occurrence.
+              </li>
+              <li>
+                <strong>Trigger points for formal investigation.</strong> Preliminary investigation
+                when false alarm rate exceeds 4 per 100 detectors per annum; in-depth investigation
+                when rate exceeds 5 per 100 detectors per annum (systems with &gt;40 detectors).
+                Trigger points unchanged from 2017.
+              </li>
+              <li>
+                <strong>Multi-sensor where higher false alarm risk.</strong> The 2025 revision gives
+                greater emphasis to multi-sensor selection where point smoke detectors present
+                higher false alarm risk; Annex D (was Annex E) gives the selection guidance.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Clause 29.6 (Commissioning organisation duty — NEW for 2025)"
+            clause={
+              <>
+                The commissioning / handover organisation should advise the user to arrange for
+                suitable investigation and, if appropriate, action to be taken on every occasion
+                that a false alarm occurs. NOTE — This could, for example, comprise managerial
+                changes within the building, modifications to the fire detection and fire alarm
+                system or further separate investigation by the organisation that maintains the
+                system.
+              </>
+            }
+            meaning="NEW for 2025. The commissioning organisation has an explicit duty to brief the user on false-alarm investigation. Recommended the briefing happens at handover and is recorded in the O&M manual. The 2017 revision did not include this duty. The new clause reflects the industry-wide concern about false alarms and the FRS call-challenging environment."
+          />
+
+          <ConceptBlock
+            title="Acceptance test and certificate"
+            plainEnglish="The commissioning sequence ends with the issue of an acceptance certificate. The certificate confirms that the system has been commissioned per BS 5839-1:2025, that all designed cause-and-effect has been verified, that the documented commissioning records support the certificate, and that the system is accepted into service. Format per BS 5839-1:2025 Annex G. Issued by the commissioning engineer; signed by the user (or user's representative). Becomes part of the system documentation handed over and retained by the user."
+            onSite="The acceptance certificate is the contractual sign-off. It records the system parameters (category, number of zones, number of devices, design autonomy, ARC arrangement) and the commissioning verifications (visual, IR, cause-and-effect, sound level, battery, ARC). Issued by the engineer who carried out commissioning; signed by the user. After signature, the system is in service and the responsibility for ongoing maintenance falls to the user (typically by service contract with a competent organisation)."
+          >
+            <p>The acceptance certificate:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>System parameters.</strong> Category (L1, L2, L3, L4, L5, M, P1, P2, hybrid
+                combinations), number of zones, number of automatic detectors, number of manual call
+                points, number of sounders / VADs, design autonomy.
+              </li>
+              <li>
+                <strong>Commissioning records.</strong> All commissioning verifications referenced —
+                visual inspection record, continuity test record, IR test record, cause-and-effect
+                verification record, sound level survey record, battery autonomy record, ARC
+                interface record. The certificate references these; the records are appended.
+              </li>
+              <li>
+                <strong>Variations.</strong> All variations from BS 5839-1:2025 recorded (NEW 2025 —
+                was &quot;major variations&quot; only in 2017). Each variation justified.
+              </li>
+              <li>
+                <strong>Issuer signature.</strong> Commissioning engineer signs and dates. Name,
+                qualification, organisation, third-party scheme membership (if applicable — FIA /
+                BAFE / NSI / SSAIB).
+              </li>
+              <li>
+                <strong>User signature.</strong> User (or user's representative — typically building
+                manager or responsible person under the Regulatory Reform Order) signs acknowledging
+                acceptance and receipt of the documentation.
+              </li>
+              <li>
+                <strong>Format.</strong> Annex G of BS 5839-1:2025 gives a model form. Project may
+                use an organisation-specific form provided it captures all the Annex G elements.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[3].id}
+            question={inlineChecks[3].question}
+            options={inlineChecks[3].options}
+            correctIndex={inlineChecks[3].correctIndex}
+            explanation={inlineChecks[3].explanation}
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="What to remember on site"
+            points={[
+              'Commissioning sequence: visual → continuity → IR (devices off) → polarity / address → first power-up → cause-and-effect → device functional → sound level → battery → ARC → fault sim → acceptance → false-alarm advice → docs.',
+              'Cause-and-effect verification: every cause triggered, every effect observed. NEW 2025 mandatory documentation — matrix or text description handed over with system.',
+              'Sound level: 65 dB(A) at all accessible points / 75 dB(A) at bed-head / ≥5 dB above 30s+ background. Calibrated meter, walked in service conditions, recorded.',
+              'VAD per BS EN 54-23 where VAD is primary signal: device category, coverage volume, luminous flux. Manuf. table or calc.',
+              'Battery autonomy: design quiescent + alarm at end. Commissioning by load test + calculation; full-duration repeated annually.',
+              'NEW 2025 clause 14.17 (Cat L): alarm to ARC ≤90 s; catastrophic failure ≤3 min at ARC and CIE.',
+              'NEW 2025 clause 14.18 (Cat P): alarm to ARC ≤120 s; catastrophic failure ≤31 min at ARC and CIE.',
+              'NEW 2025 clause 29.6: commissioning organisation must advise user on false-alarm investigation. Briefed at handover, recorded in O&M.',
+              'False alarm trigger points: preliminary investigation if rate >4 per 100 detectors p.a.; in-depth if rate >5 per 100 detectors p.a. (systems >40 detectors).',
+              'Sprinkler-as-heat-detector (NEW 2025 §14 clarification): sprinkler indication zone must NOT overlap with more than one fire detection zone.',
+              'Fault simulation: o/c, s/c, e/f, mains-fail, battery-fail injected at commissioning; CIE indication verified.',
+              'Acceptance certificate per Annex G; issued by engineer, signed by user; commissioning records appended.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question:
+                  'BS 5839-1:2025 says cause-and-effect matrix is mandatory documentation. What if the design is so simple that a matrix is overkill?',
+                answer:
+                  'A text description is acceptable for simple designs. The standard explicitly says the cause-and-effect can be "as simple as ‘this system operates as a simultaneous evacuation’" or a formal matrix for complex strategies. The requirement is that the cause-and-effect is documented and handed over — format is flexible. Verified at commissioning regardless of format.',
+              },
+              {
+                question:
+                  'The new 2025 clause 14.17 specifies 90 s alarm transmission to ARC for Cat L. How is this verified at commissioning?',
+                answer:
+                  'Coordinate with the ARC. Trigger an alarm at the panel with a stopwatch start. The ARC operator records receipt time and reports back. Verify the time elapsed is ≤90 s. Repeat for the catastrophic-failure timing: simulate path failure (e.g. pull primary IP path), wait, observe panel and ARC indication of catastrophic failure, verify ≤3 min. Both results recorded on commissioning record. The ARC will typically have a procedure for this commissioning test — coordinate in advance.',
+              },
+              {
+                question:
+                  'Sound level 65 dB(A) at all accessible points — what counts as "accessible"?',
+                answer:
+                  'Anywhere a person can reach during normal occupancy: corridors, rooms, plant rooms, stair landings, plant cupboards, roof-access positions if those are part of normal use. Excludes locked or non-traversed spaces (e.g. the inside of a sealed riser shaft). The judgement is "could a person be in this position when an alarm sounds?" — if yes, accessible point; if no, not.',
+              },
+              {
+                question:
+                  'VAD verification — when is BS EN 54-23 mandatory at commissioning vs supplementary?',
+                answer:
+                  'Mandatory when VAD is the PRIMARY evacuation signal (e.g. for hearing-impaired occupants or in noise-exempt areas). Supplementary when VAD complements an audible signal (most common case). Where supplementary, audible verification is the primary commissioning check; VAD activation observed during cause-and-effect is sufficient. Where primary, BS EN 54-23 device certification + coverage verification (manuf. table or calc) is mandatory.',
+              },
+              {
+                question:
+                  'Battery autonomy at commissioning — full-duration test, or load test + calculation?',
+                answer:
+                  'Industry practice: load test + calculation at commissioning (e.g. 30-60 min runtime + impedance + capacity calc); full-duration test (24 h or 72 h) repeated at annual service. The commissioning approach proves the battery is fit for purpose without holding up the project for a full duration. The annual service repeats with full duration as part of the service-life verification.',
+              },
+              {
+                question:
+                  'Clause 29.6 says I must advise the user on false-alarm investigation. What format should the advice take?',
+                answer:
+                  'Format flexible. Typical: a written false-alarm-investigation procedure in the O&M manual, briefed verbally to the responsible person at handover, briefing acknowledged by signature on the acceptance certificate or a dedicated record. Content: categories of false alarm, trigger points for preliminary / in-depth investigation, recommended actions (managerial, system mod, engaged investigator), record-keeping requirements. Recommended in writing because the 2025 revision specifically introduces this duty.',
+              },
+              {
+                question:
+                  'Cause-and-effect verification on a 200-device system — do I really test EVERY cause?',
+                answer:
+                  'Yes. Every detector, every MCP, every interface input. The 2025 revision elevates cause-and-effect to mandatory documentation; verifying a representative sample is not verifying the design intent. Typical commissioning event for a 200-device addressable system is 2-3 days with two engineers. Plan accordingly. The commercial pressure to short-cut is real; the court-aware liability for short-cutting is also real.',
+              },
+              {
+                question:
+                  'Fault simulation — open-circuit, short-circuit, earth-fault — how is this done in practice?',
+                answer:
+                  'At a representative point on each loop: (a) open-circuit by disconnecting one conductor at a base — verify CIE reports loop fault, isolators latch, devices on either side of break still online; (b) short-circuit by bridging the two loop conductors at a base — verify CIE reports loop fault and isolators latch; (c) earth-fault by bonding one conductor to the FE — verify CIE reports earth fault. Restore after each. Test mains-fail by isolating mains breaker; battery-fail by disconnecting one battery. Each fault produces a specific indication on the CIE — record the indications observed.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Knowledge check</ContentEyebrow>
+          <Quiz title="Commissioning procedures — Module 5.5" questions={quizQuestions} />
+
+          {/* Bottom navigation grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/fire-alarm-course/module-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 5
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/fire-alarm-course/module-5/section-6')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                5.6 Handover and documentation
+              </div>
+            </button>
+          </div>
+
+          <div className="hidden">
+            <Activity />
+          </div>
+        </PageFrame>
       </div>
     </div>
   );

@@ -1,631 +1,1580 @@
-import { ArrowLeft, ArrowRight, Volume2, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  LearningOutcomes,
+  ContentEyebrow,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    question:
-      'A hotel has noisy plant on the ground floor with ambient levels around 70 dB(A). What sounder level is required?',
-    answer:
-      'Sounders must achieve 75 dB(A) (5 dB above the 70 dB(A) ambient). Additionally, as a hotel with sleeping risk, bedrooms require 75 dB(A) at bedhead regardless of ambient levels.',
+    id: 'fam3-s3-matrix',
+    question: 'What does a cause-and-effect matrix specify?',
+    options: [
+      'The cable routes.',
+      'The detector types.',
+      "For each input event (cause) — e.g. detector in zone 3 operates, call point pressed, sprinkler flow switch activates — what the system does in response (effect): which sounders sound, which strobes flash, which interfaces operate (door release, lift recall, plant shutdown), at what stage. The matrix is the logical specification of the system's behaviour, independent of the hardware.",
+      'The number of zones.',
+    ],
+    correctIndex: 2,
+    explanation:
+      "The cause-and-effect matrix is the system's programmed behaviour expressed as a table. Causes are along one axis (each detector zone, each call point, each interface input); effects are along the other (each sounder circuit, each output, each interface to plant / door release / lift). At each cell, the matrix records what the cause triggers and at what stage. It is the core programming document.",
   },
   {
+    id: 'fam3-s3-mandatory',
     question:
-      'Why must VADs be synchronised when multiple devices are visible from the same location?',
-    answer:
-      'Synchronisation reduces photosensitive epilepsy risk and provides a clearer, more recognisable warning signal. Unsynchronised flashing can cause disorientation and discomfort.',
+      'BS 5839-1:2025 documentation/handover clause introduces a new requirement about cause-and-effect. What is it?',
+    options: [
+      'It must be in colour.',
+      'A cause-and-effect matrix or text description of how the cause and effect operates is now MANDATORY at handover — included in the documentation provided to the purchaser or user. It can be as simple as "this system operates as a simultaneous evacuation" or a complex matrix for staged evacuation. The standard does not dictate format, only that it must be produced.',
+      'It must be encrypted.',
+      'It is optional.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'The 2025 documentation clause closes a long-standing gap: pre-2025, cause-and-effect was often verbal or implicit. From 2025, the system handover documentation MUST include a cause-and-effect matrix or text description. The complexity is proportional to the system: simple one-stage simultaneous evacuation = one sentence; phased evacuation in a high-rise = a detailed matrix.',
   },
   {
-    question: 'What is the difference between alert and evacuate signals in phased evacuation?',
-    answer:
-      'Alert (intermittent tone) tells occupants to prepare and await instruction. Evacuate (continuous tone) instructs immediate departure. Fire floor and floor above receive immediate evacuate; other floors receive alert first.',
+    id: 'fam3-s3-coincidence',
+    question: 'What is two-detector coincidence (or two-stage coincidence) used for?',
+    options: [
+      'To save power.',
+      'To reduce false alarms by requiring TWO detectors in the same area to operate before triggering an evacuation alarm. The first operating detector raises a "warning" or "investigate" condition; only when a second detector also operates does the system go to full alarm. Used in environments with persistent false-alarm risk (kitchens, plant rooms, warehouses with dust). Configured at the CIE.',
+      'To detect fires faster.',
+      'To replace heat detectors.',
+    ],
+    correctIndex: 1,
+    explanation:
+      "Coincidence schemes filter spurious single-detector activations. They are not a replacement for proper detector selection but are a powerful tool where a single false trigger has a high cost (e.g. shutdown of a critical process). Coincidence increases the time-to-alarm slightly — that trade-off must be assessed against the false-alarm cost. The 2025 standard's emphasis on multi-sensor detectors (Annex D) addresses similar goals.",
+  },
+  {
+    id: 'fam3-s3-daynight',
+    question: 'What is the purpose of day / night sensitivity settings?',
+    options: [
+      'Power saving.',
+      'Different sensitivity / coincidence thresholds at different times of day, reflecting different occupancy and activity patterns. Example: a kitchen detector may operate in coincidence (two-detector) mode during the day when cooking activity produces many false-positives, and switch to single-detector immediate response at night when the kitchen is unoccupied. Configured in the CIE per detector or per zone with a real-time clock schedule.',
+      'Cosmetic.',
+      'For testing only.',
+    ],
+    correctIndex: 1,
+    explanation:
+      "Day / night settings are part of the cause-and-effect logic — the same physical event triggers different system responses depending on time of day. They must be carefully designed (and reviewed annually) so that night-mode does not inadvertently degrade detection in occupied zones. Per the 2025 maintenance clause, the CIE's real-time clock should be checked and adjusted at every service visit, particularly important where day / night settings are in use.",
   },
 ];
 
 const quizQuestions = [
   {
+    id: 1,
+    question: 'What is the purpose of a cause-and-effect matrix in fire alarm design?',
+    options: [
+      'A wiring diagram.',
+      "It specifies, for every input event (cause), what outputs the system produces (effects). It is the logical specification of the system's behaviour: which sounders sound on a fire in zone 3; which interfaces operate; at what stage. It is the design document the commissioning engineer programs into the CIE and the operator reads to understand what will happen.",
+      'A bill of materials.',
+      'A test schedule.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "The cause-and-effect matrix is hardware-independent. It expresses the design intent in functional terms. The CIE is then programmed to implement the matrix; tests verify the implementation matches. Without a written matrix, the system's behaviour exists only in the CIE configuration — a fragile and undocumented state.",
+  },
+  {
+    id: 2,
     question:
-      'What is the general audibility target for fire alarm sounders in most occupied areas?',
-    options: ['55 dB(A)', '65 dB(A) or 5 dB above ambient', '75 dB(A) everywhere', '85 dB(A)'],
-    correctAnswer: 1,
-    explanation: 'BS 5839-1 specifies 65 dB(A) or 5 dB above ambient noise - whichever is greater.',
-  },
-  {
-    question: 'What audibility level is required at the bedhead in sleeping accommodation?',
-    options: ['55 dB(A)', '65 dB(A)', '75 dB(A) with doors closed', '85 dB(A)'],
-    correctAnswer: 2,
-    explanation:
-      'Sleeping areas require 75 dB(A) at the bedhead with bedroom doors closed to ensure occupants are awakened.',
-  },
-  {
-    question: 'Why should multiple visual alarm devices (VADs) be synchronised?',
+      'In a one-stage (simultaneous) evacuation, what happens when any detector or call point operates?',
     options: [
-      'To save power',
-      'To reduce photosensitive risk and provide clear, unified signalling',
-      'For aesthetic reasons',
-      'It is not required',
+      'A warning is given to the manager.',
+      'ALL evacuation sounders / VADs throughout the building operate simultaneously. Every occupant evacuates at the same time. Used in buildings where simultaneous evacuation is the design intent: small offices, retail, single-compartment buildings, and many smaller premises. Simplest staging philosophy.',
+      'Only the sounders in the operated zone activate.',
+      'No sounders activate.',
     ],
     correctAnswer: 1,
     explanation:
-      'Synchronised VADs reduce photosensitive risk and provide clearer, more recognisable warning signals.',
+      'One-stage simultaneous is the simplest cause-and-effect: any cause = full evacuation. The matrix is essentially "all causes → all effects". Larger buildings often use phased or two-stage strategies because simultaneous evacuation of (say) a high-rise is impractical and creates congestion in stairways. The choice of staging is driven by the building\'s fire safety strategy.',
   },
   {
-    question: 'What distinguishes an alert signal from an evacuate signal in phased evacuation?',
+    id: 3,
+    question: 'What is two-stage (alert / evacuate) alarm philosophy?',
     options: [
-      'Volume only',
-      'Alert prepares occupants to standby; evacuate instructs immediate departure',
-      'They are identical',
-      'Alert is visual only',
+      'Two-detector coincidence.',
+      'A staged response: stage 1 is an ALERT signal (a different audible / visual signal, e.g. intermittent or staff-only) sent to staff or trained occupants, prompting investigation. Stage 2 is full EVACUATION — the standard fire alarm sound across all areas. Stage 2 may be triggered automatically (after a time-out, or by a second detector operating) or manually (by a staff member confirming a fire). Used in hospitals, hotels with dispersed staff, large premises with managed response.',
+      'Two CIE displays.',
+      'Two power supplies.',
     ],
     correctAnswer: 1,
     explanation:
-      'Alert signals prepare occupants in adjacent areas while evacuate signals instruct immediate departure from the affected zone.',
+      'Two-stage alarm separates the "something is happening" signal from the "everyone evacuate" signal. It buys time for staff investigation in environments where mass evacuation is operationally costly (hospitals, hotels). The matrix specifies the alert / evacuate progression, the time-outs, the manual escalation paths.',
   },
   {
-    question: 'For voice alarm systems, what is more important than maximum loudness?',
+    id: 4,
+    question:
+      'In a phased evacuation strategy in a multi-storey building, what typically happens first when fire is detected?',
     options: [
-      'Lowest cost',
-      'Intelligibility (speech transmission index)',
-      'Number of speakers',
-      'Aesthetic appearance',
+      'The whole building evacuates.',
+      'The fire floor and the floor immediately above evacuate first; subsequent floors evacuate in a programmed sequence (typically the floors above the fire next, then floors below, on a time interval). This manages stairway congestion. Used in tall buildings where simultaneous full evacuation would create dangerous bottlenecks at stair exits. The cause-and-effect matrix specifies the staging sequence and timings.',
+      'The basement only.',
+      'No floors evacuate.',
     ],
     correctAnswer: 1,
     explanation:
-      'Speech intelligibility (measured by STI) is critical - occupants must understand evacuation instructions clearly.',
+      "Phased evacuation is a sophisticated staging in which the cause (fire on floor N) triggers a sequence of effects on different floors with time gaps. The strategy is set by the building's fire engineering and codified in the cause-and-effect matrix. The CIE implements the timing logic. Test programmes verify the sequence is followed.",
   },
   {
-    question: 'What is the primary purpose of sounder zones in fire alarm design?',
+    id: 5,
+    question: 'What is "investigation delay" in a cause-and-effect strategy?',
     options: [
-      'Reduce equipment costs',
-      'Enable selective alerting based on fire location and evacuation strategy',
-      'Simplify wiring',
-      'Meet aesthetic requirements',
+      'A fault.',
+      'A programmed delay between detector operation and full evacuation, intended to allow staff to investigate and confirm the fire (or cancel a false alarm) before the building is evacuated. Typical 30 seconds to 3 minutes. Acceptable only in environments with trained staff present 24/7 (or during defined occupied hours). Day / night settings often disable investigation delay at night when staff are not present. Documented in the matrix.',
+      'A network delay.',
+      'A power-up sequence.',
     ],
     correctAnswer: 1,
     explanation:
-      'Sounder zones enable selective alerting, supporting phased evacuation and preventing unnecessary building-wide alarm.',
+      'Investigation delay is a false-alarm management tool. It must not be used in environments where staff cannot promptly investigate (e.g. an unoccupied building at night). Misapplied investigation delay materially delays evacuation in a real fire and is a design error. Day / night settings are how this is typically managed: investigation delay during occupied hours; immediate alarm during unoccupied hours.',
   },
   {
-    question: 'When should different alarm tones be used within the same building?',
+    id: 6,
+    question:
+      'A multi-sensor detector with selectable response characteristics (smoke, heat, CO, combination) is installed. Where is the selection recorded per BS 5839-1:2025 clause 20.11?',
     options: [
-      'Never - one tone throughout',
-      'To distinguish different alarm types (e.g., fire vs. gas)',
-      'Based on occupant preferences',
-      'Only in hospitals',
+      'On the detector body.',
+      "The designer should record the selection of the detector type and configuration, AND make this information available to the commissioning technician AND record it in the operating and maintenance manual for the system. Annex D Figure D.1 provides a suitable means of recording the information. The detector's programmed mode is part of the system documentation.",
+      'On the CIE display only.',
+      'In the cable schedule.',
     ],
     correctAnswer: 1,
     explanation:
-      'Different tones can distinguish alarm types (fire, gas, security) but must be clearly recognisable and documented in fire procedures.',
+      'The 2025 standard emphasises this strongly because multi-sensor detectors with selectable modes are increasingly common. The mode the detector operates in is design intent, not detector hardware. It must be recorded in the design (so the commissioning engineer programs it correctly) and in the O&M manual (so the maintenance organisation knows what to verify). Annex D — formerly Annex E — provides the recording format.',
   },
   {
-    question: 'What consideration is needed for sounder placement in high-ceiling areas?',
+    id: 7,
+    question: 'What does a coincidence-of-two-detectors logic require?',
     options: [
-      'Ceiling height has no effect',
-      'Sound may need to be supplemented or speakers angled to maintain audibility at occupant level',
-      'Only VADs are needed',
-      'Use louder sounders automatically',
+      'One detector operating.',
+      'TWO separate detectors in defined areas (commonly the same room or zone) must operate before the system goes to full alarm. The first operating detector raises an internal "warning" or "first-stage" condition that may signal staff or the CIE; the alarm escalates only when a second detector confirms. Reduces single-point false alarms. Used in environments with persistent false-alarm risk (kitchens, dust-heavy areas, vehicle exhaust zones).',
+      'Two CIEs operating.',
+      'Two power supplies.',
     ],
     correctAnswer: 1,
     explanation:
-      'High ceilings can affect sound distribution; supplementary wall-mounted sounders or angled speakers may be needed to maintain audibility at floor level.',
+      'Coincidence schemes require careful design: the two coincidence detectors must be physically positioned so a real fire would activate both within a reasonable time window, and the time window must be set appropriately. Too tight = real fires miss the coincidence; too loose = the false-alarm filtering benefit erodes. The cause-and-effect matrix records the coincidence logic and timings.',
   },
   {
-    question: 'How should class change or test signals differ from fire alarms?',
+    id: 8,
+    question: 'How are day / night settings typically used in cause-and-effect design?',
     options: [
-      'They should sound identical',
-      'Clearly distinguishable tones to prevent confusion or inappropriate response',
-      'No signal should be used',
-      'Visual only',
+      'For lighting.',
+      "Different cause-and-effect logic at different times: e.g. during day (occupied) hours, an investigation delay or coincidence scheme reduces false alarms while staff are present to respond; at night (unoccupied) the system reverts to immediate single-detector full evacuation because no staff are present to investigate. The CIE's real-time clock controls the switch-over. Per the 2025 maintenance clause, the clock is checked and adjusted at every service visit.",
+      'For energy saving.',
+      'For colour temperature.',
     ],
     correctAnswer: 1,
     explanation:
-      'Test and class change signals must be clearly distinguishable from fire alarms to prevent confusion and maintain appropriate response to actual fire signals.',
+      "Day / night settings encode the temporal context of the response into the system. They are a powerful false-alarm management tool but they must be designed correctly — the day / night transitions must reflect actual occupancy, not arbitrary clock times. The matrix records the schedule; the CIE's clock executes it.",
   },
   {
-    question: 'What documentation should specify sounder zone arrangements?',
+    id: 9,
+    question:
+      'Why is the cause-and-effect matrix maintained as documentation, not just programmed into the CIE?',
     options: [
-      'No documentation needed',
-      'Cause and effect matrix and zone drawings',
-      'Only verbal instructions',
-      'Manufacturer catalogues only',
+      'Convention.',
+      'Because the CIE configuration alone is not human-readable and may be lost on CIE replacement. The matrix as a document survives CIE upgrades and firmware changes; it is the design intent against which the CIE programming is verified. Per BS 5839-1:2025 documentation/handover clause, the matrix or text description must be included in the handover documentation. The premises management uses it to understand what the system will do.',
+      'Convenience.',
+      'For training only.',
     ],
     correctAnswer: 1,
     explanation:
-      'Cause and effect documentation and zone drawings must clearly specify which sounders operate for each detection zone and scenario.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'Can sounder zones differ from detection zones?',
-    answer:
-      'Yes - sounder zones are designed around evacuation strategy and may not match detection zones exactly. The cause and effect matrix defines how detection zones trigger sounder zones.',
+      "Documentation is the persistent record. CIE configurations are vendor-specific binary data that may not transfer across firmware upgrades or CIE replacements. The cause-and-effect matrix, written as a table or text, is the architecture-independent specification. It guides the next CIE's programming when the original is replaced, which is a 10-15 year horizon many systems will face.",
   },
   {
-    question: 'Is voice alarm always required?',
-    answer:
-      'No - voice alarm is beneficial for complex buildings, phased evacuation, and multilingual environments but is not mandatory for all premises.',
-  },
-  {
-    question: 'How do I calculate required sounder coverage?',
-    answer:
-      'Use manufacturer data for sounder output and coverage patterns. Account for distance attenuation, absorption, and barriers. Verify with commissioning measurements.',
-  },
-  {
-    question: 'Do VADs replace sounders?',
-    answer:
-      'No - VADs supplement sounders. They provide visual warning for hearing-impaired occupants and noisy areas but do not replace audible warning.',
-  },
-  {
-    question: 'What about test and class change signals?',
-    answer:
-      'These must be clearly distinguishable from fire alarms. Use different tones, patterns, or pre-announcements to prevent confusion.',
-  },
-  {
-    question: 'How should sounders operate during a fire drill?',
-    answer:
-      'Fire drills should use the same signals as actual fire conditions to ensure familiarity. Brief occupants beforehand and record the drill in the logbook.',
+    id: 10,
+    question:
+      'A cause-and-effect matrix shows: "Smoke detector zone 3 operates → Sounder circuit S1 (zone 3 sounders) operate immediately; Sounder circuit S2 (whole building) operates after 60 seconds delay". What evacuation philosophy is this?',
+    options: [
+      'Simultaneous.',
+      'A staged / two-stage philosophy: zone 3 evacuates immediately on local detection (the alert + immediate evacuation phase); whole-building evacuation follows after a 60-second investigation / confirmation delay. This pattern is common where local fast-response is essential but mass-evacuation is to be deferred briefly to allow staff confirmation or a more controlled progression. The matrix expresses the design intent precisely.',
+      'No alarm.',
+      'Network handshake.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'This is one of many possible staging strategies. The matrix encodes the precise timing and sequencing. Different fire safety strategies generate different matrices; there is no one-size-fits-all. The matrix is the bridge between the fire engineering and the system programming.',
   },
 ];
 
 const FireAlarmModule3Section3 = () => {
+  const navigate = useNavigate();
+
   useSEO({
-    title: 'Sounder Zones - Fire Alarm Course',
+    title: 'Cause and effect programming | Fire Alarm Module 3.3 | Elec-Mate',
     description:
-      'BS 5839-1 sounder zone design: audibility requirements, alarm signals, voice alarm systems, VADs, and phased evacuation considerations.',
+      'BS 5839-1:2025 cause-and-effect: input/output relationship matrices, mandatory at handover from 2025, one-stage / two-stage / phased evacuation philosophies, coincidence schemes, day/night settings, multi-sensor detector configuration recording.',
   });
 
   return (
-    <div className="bg-background text-white">
-      {/* Header */}
-      <header className="border-b border-white/10 bg-background/95 backdrop-blur-sm sticky top-0 z-10">
-        <div className="px-4 py-4 flex items-center justify-between max-w-4xl mx-auto">
-          <Button
-            variant="ghost"
-            size="sm"
-            asChild
-            className="gap-2 text-white hover:text-elec-yellow"
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-3">
-              <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Back to Module</span>
-            </Link>
-          </Button>
-          <span className="text-sm text-white">Section 3 of 6</span>
-        </div>
-      </header>
+            <ArrowLeft className="h-4 w-4" /> Module 3
+          </button>
 
-      <main className="px-4 py-8 max-w-4xl mx-auto">
-        {/* Title */}
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
-            <Volume2 className="h-8 w-8 text-elec-yellow" />
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Sounder Zones</h1>
-          <p className="text-white">
-            Designing effective alarm signalling with audibility, voice alarm, VADs, and phased
-            evacuation support
-          </p>
-        </div>
-
-        {/* Learning Outcomes */}
-        <div className="mb-8 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-          <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
-          <ul className="space-y-2 text-white">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Apply BS 5839-1 audibility requirements for general and sleeping areas</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Design sounder zones to support evacuation strategy</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Specify voice alarm systems with appropriate intelligibility</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Select and position VADs for effective visual warning</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Understand alert vs evacuate signalling for phased evacuation</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Coordinate sounder zones with cause and effect programming</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Section 01: Audibility Requirements */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">01</span>
-            Audibility Requirements
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Fire alarm sounders must provide adequate warning throughout all occupied areas. BS
-              5839-1 sets clear audibility targets that depend on the type of occupancy.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">BS 5839-1 Audibility Targets</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>General areas:</strong> 65 dB(A) or 5 dB above ambient noise (whichever
-                    is greater)
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Sleeping areas:</strong> 75 dB(A) at the bedhead with bedroom doors
-                    closed
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Noisy environments:</strong> consider ambient noise levels during
-                    typical occupied hours
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Sound level calculations should account for absorption, distance, and intervening
-              barriers. Always measure ambient noise during typical occupied hours rather than when
-              the building is empty.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 02: Sounder Zone Design */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">02</span>
-            Sounder Zone Design
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Sounder zones enable selective alerting based on fire location and evacuation
-              strategy. This supports phased evacuation and prevents unnecessary building-wide
-              alarm.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">Zone Design Principles</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>Align sounder zones with evacuation strategy (phased or simultaneous)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>Consider floor-by-floor or area-based zoning for phased evacuation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>Protected stairs may have separate sounder arrangements</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>Coordinate with cause and effect matrix for each detection zone</span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Sounder zones do not need to match detection zones exactly. The cause and effect
-              matrix defines how detection in one zone triggers sounders in other zones based on the
-              fire strategy.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 03: Alert and Evacuate Signals */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">03</span>
-            Alert and Evacuate Signals
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Phased evacuation uses distinct signals to control occupant movement progressively:
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">Signal Types</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Alert (intermittent tone):</strong> prepare to leave, await further
-                    instruction
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Evacuate (continuous tone):</strong> leave immediately via nearest
-                    escape route
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              The fire floor and floor above typically receive immediate evacuate signal, while
-              other floors receive an alert signal that can escalate to full evacuation if needed.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck
-          question={quickCheckQuestions[0].question}
-          answer={quickCheckQuestions[0].answer}
-        />
-
-        {/* Section 04: Voice Alarm Systems */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">04</span>
-            Voice Alarm Systems
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Voice alarm provides clear spoken instructions rather than tones alone. This is
-              particularly valuable for complex buildings, phased evacuation, and multilingual
-              environments.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">Voice Alarm Considerations</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Intelligibility:</strong> prioritise STI (Speech Transmission Index)
-                    over loudness
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Reverberation:</strong> control acoustic environment to maintain clarity
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Messages:</strong> pre-recorded and live announcement capability
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Zoning:</strong> enable targeted messages per zone or floor
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Occupants must be able to clearly understand evacuation instructions. A highly
-              intelligible message at moderate volume is more effective than a loud but
-              unintelligible one.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 05: Visual Alarm Devices (VADs) */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">05</span>
-            Visual Alarm Devices (VADs)
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              VADs provide visual warning for hearing-impaired occupants and in noisy environments
-              where audible alarms may not be heard.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">EN 54-23 VAD Categories</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Category W:</strong> wall-mounted - coverage specified in height x width
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Category C:</strong> ceiling-mounted - circular coverage pattern
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Category O:</strong> open area - large space coverage
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Synchronisation:</strong> required where multiple VADs are visible
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Synchronisation is critical when multiple VADs are visible from the same location.
-              Unsynchronised flashing increases photosensitive epilepsy risk and makes the warning
-              less recognisable.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck
-          question={quickCheckQuestions[1].question}
-          answer={quickCheckQuestions[1].answer}
-        />
-
-        {/* Section 06: Sounder Placement Considerations */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">06</span>
-            Sounder Placement Considerations
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Effective sounder placement ensures audibility throughout the protected area while
-              avoiding excessive noise that could cause distress or confusion.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">Placement Factors</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>Account for room acoustics, absorption materials, and barriers</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>High ceilings may require wall-mounted or angled speakers</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    Open-plan areas need distributed coverage rather than single powerful sounders
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    Avoid excessive loudness that causes sound masking or occupant distress
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Consider future use changes when designing sounder coverage. A plant room today may
-              become an occupied office tomorrow, requiring adequate audibility.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck
-          question={quickCheckQuestions[2].question}
-          answer={quickCheckQuestions[2].answer}
-        />
-
-        {/* Pro Tips */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">07</span>
-            Pro Tips
-          </h2>
-          <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
-            <ul className="space-y-2 text-white">
-              <li className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>
-                  Measure ambient noise during typical occupied hours, not when the building is
-                  empty
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>Consider future use changes - plant rooms may become occupied spaces</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>
-                  Document sounder zones clearly in cause and effect matrix for commissioning
-                </span>
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        {/* Common Mistakes */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">08</span>
-            Common Mistakes
-          </h2>
-          <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
-            <ul className="space-y-2 text-white">
-              <li className="flex items-start gap-2">
-                <span className="text-red-400 font-bold">X</span>
-                <span>Ignoring sleeping risk audibility requirements (75 dB(A) at bedhead)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-400 font-bold">X</span>
-                <span>Omitting VADs in noisy areas or accessibility-critical spaces</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-400 font-bold">X</span>
-                <span>Unsynchronised VADs where multiple devices are visible</span>
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">09</span>
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-8">
-          <Quiz
-            title="Sounder Zones Knowledge Check"
-            questions={quizQuestions}
-            moduleTitle="Sounder Zones"
+          <PageHero
+            eyebrow="Module 3 · Section 3"
+            title="Cause and effect programming"
+            description="BS 5839-1:2025: cause-and-effect matrices now mandatory at handover, one-stage and two-stage and phased evacuation philosophies, coincidence (two-detector) schemes, day / night sensitivity settings, and how multi-sensor detector configuration is recorded per Annex D."
+            tone="yellow"
           />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-white/10">
-          <Button variant="outline" asChild className="gap-2">
-            <Link to="/electrician/upskilling/fire-alarm-course/module-3/section-2">
-              <ArrowLeft className="h-4 w-4" />
-              Previous: Detection Zones & Categories
-            </Link>
-          </Button>
-          <Button asChild className="gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90">
-            <Link to="/electrician/upskilling/fire-alarm-course/module-3/section-4">
-              Next: Detector Spacing & Coverage
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </nav>
-      </main>
+          <TLDR
+            points={[
+              'Cause-and-effect matrix = the logical specification of system behaviour. For each input (cause), what outputs operate (effects), at what stage, with what timings.',
+              'NEW in BS 5839-1:2025: cause-and-effect matrix or text description is MANDATORY at handover documentation. Pre-2025, this was often verbal or implicit.',
+              'One-stage (simultaneous) evacuation: any cause = all sounders. Simplest matrix. Used in small premises and single-compartment buildings.',
+              'Two-stage (alert / evacuate): stage 1 = alert signal to staff for investigation; stage 2 = full evacuation. Used in hospitals, hotels with managed response.',
+              'Phased evacuation: fire floor + floor above evacuate first; remaining floors evacuate in sequence. Used in tall buildings to manage stairway congestion.',
+              'Coincidence (two-detector) schemes: two detectors must operate before full alarm. Reduces false alarms in high-risk environments (kitchens, dust). Trade-off: slight delay to alarm.',
+              'Day / night settings: different cause-and-effect at different times. Investigation delay during occupied hours; immediate alarm overnight. Real-time clock controls; checked at every service.',
+              'Multi-sensor detector mode (smoke, heat, CO, combination) recorded by the designer per BS 5839-1:2025 clause 20.11; available to commissioning; in O&M manual; format per Annex D Figure D.1.',
+              'The matrix is hardware-independent and survives CIE replacements, firmware updates, and modifications. The CIE configuration alone is not the documentation.',
+              'Verification: commissioning tests confirm each matrix entry is correctly implemented in the CIE programming. Documented in the commissioning certificate.',
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Produce a cause-and-effect matrix that captures every input event and its outputs, at the staging and timing required by the fire engineering',
+              'Apply the new BS 5839-1:2025 documentation/handover requirement: the cause-and-effect matrix or text description is mandatory in handover documentation',
+              'Distinguish one-stage simultaneous, two-stage alert / evacuate, and phased evacuation philosophies and choose appropriately for the building',
+              'Design coincidence (two-detector) schemes to reduce false alarms while preserving real-fire response; understand the trade-off',
+              'Configure day / night sensitivity settings consistent with occupancy patterns; verify the CIE real-time clock at every service',
+              'Record multi-sensor detector configuration per BS 5839-1:2025 clause 20.11 / Annex D Figure D.1 in the design package and O&M manual',
+              'Verify CIE programming against the matrix at commissioning; record the verification on the commissioning certificate',
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>What a cause-and-effect matrix is</ContentEyebrow>
+
+          <ConceptBlock
+            title="Inputs, outputs, and the table that connects them"
+            plainEnglish="A cause-and-effect matrix is a table. Down the left side: every input the system can receive — each detector zone, each call point, each interface input (sprinkler flow switch, manual input, network signal). Across the top: every output the system can produce — each sounder circuit, each visual alarm device circuit, each interface output (door release, lift recall, plant shutdown, ventilation control), each network signal out. At each intersection, an entry says what happens: blank = no action; immediate = output activates as soon as the cause is detected; delayed = output activates after a defined time; staged = output activates at a defined stage. The matrix is the system's behavioural specification."
+            onSite="When you arrive at a site to commission a system, the cause-and-effect matrix is the most important document in the package. Read it before you turn anything on. Every test you do is verifying one row of the matrix."
+          >
+            <p>What goes on each axis:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Causes (inputs)</strong> — every detector zone or device address; every call
+                point; every interface input from external systems (sprinkler flow switch, gas
+                detection, BMS signal, manual input, network signal from a peer panel).
+              </li>
+              <li>
+                <strong>Effects (outputs)</strong> — every sounder circuit; every voice alarm
+                output; every visual alarm device (VAD) circuit; every interface output (relay or
+                volt-free contact) to plant, doors, lifts, ventilation, BMS, ARC transmission.
+              </li>
+              <li>
+                <strong>Cell entries</strong> — the action and any time / stage qualifier.
+                &quot;Immediate&quot;, &quot;delayed 60 s&quot;, &quot;stage 1&quot;, &quot;stage
+                2&quot;, &quot;coincidence required&quot;, &quot;disabled at night&quot;.
+              </li>
+            </ul>
+            <p>
+              For complex systems (high-rise phased evacuation), the matrix can be a substantial
+              document — many input rows, many output columns, careful staging. For simple systems
+              (small office, simultaneous evacuation), the matrix can be a sentence: &quot;any cause
+              activates all effects immediately&quot;. Both are valid; both are documentation; both
+              are now mandatory under BS 5839-1:2025.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Documentation/handover clause"
+            clause={
+              <>
+                A new item that appears within the documentation clause of BS 5839-1:2025 is the
+                recommendation that a cause-and-effect matrix or text description of how the cause
+                and effect operates is included with the documentation to be provided to the
+                purchaser or user of the system. This could be as simple as &quot;this system
+                operates as a simultaneous evacuation&quot; or a cause-and-effect matrix document
+                might be required for more complex strategies. The standard does not dictate the
+                manner of the cause-and-effect matrix only that it needs to be produced.
+              </>
+            }
+            meaning="Three specific changes. (1) Matrix is now mandatory in handover documentation — pre-2025 this was often verbal or in commissioning notes only. (2) Format is flexible: text description for simple systems, full matrix for complex. (3) The standard requires it be PRODUCED — the deliverable is on the system commissioner, included in the handover pack, retained by the responsible person."
+          />
+
+          <InlineCheck
+            id={inlineChecks[0].id}
+            question={inlineChecks[0].question}
+            options={inlineChecks[0].options}
+            correctIndex={inlineChecks[0].correctIndex}
+            explanation={inlineChecks[0].explanation}
+          />
+
+          <InlineCheck
+            id={inlineChecks[1].id}
+            question={inlineChecks[1].question}
+            options={inlineChecks[1].options}
+            correctIndex={inlineChecks[1].correctIndex}
+            explanation={inlineChecks[1].explanation}
+          />
+
+          {/* Diagram — example cause and effect matrix */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+            <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+              Diagram
+            </p>
+            <h4 className="text-sm font-bold text-white mb-4">
+              Example cause-and-effect matrix — three-storey hotel with phased evacuation
+            </h4>
+            <svg
+              viewBox="0 0 880 540"
+              className="w-full h-auto"
+              role="img"
+              aria-label="A cause-and-effect matrix tabulating fire alarm causes (detector zones and call points) against effects (sounders, lift recall, plant shutdown, door release, ARC transmission) showing immediate, delayed, and staged responses."
+            >
+              <text
+                x="440"
+                y="26"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="14"
+                fontWeight="bold"
+              >
+                Cause-and-effect matrix — phased evacuation
+              </text>
+
+              {/* Header row */}
+              <rect
+                x="40"
+                y="50"
+                width="180"
+                height="40"
+                rx="4"
+                fill="rgba(255,255,255,0.08)"
+                stroke="rgba(255,255,255,0.3)"
+                strokeWidth="1"
+              />
+              <text
+                x="130"
+                y="74"
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.85)"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                CAUSE ↓ / EFFECT →
+              </text>
+
+              {/* Effect column headers */}
+              <rect
+                x="220"
+                y="50"
+                width="90"
+                height="40"
+                rx="4"
+                fill="rgba(34,211,238,0.15)"
+                stroke="#22D3EE"
+                strokeWidth="1"
+              />
+              <text
+                x="265"
+                y="68"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Sounders
+              </text>
+              <text x="265" y="80" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+                fire floor
+              </text>
+
+              <rect
+                x="310"
+                y="50"
+                width="90"
+                height="40"
+                rx="4"
+                fill="rgba(34,211,238,0.15)"
+                stroke="#22D3EE"
+                strokeWidth="1"
+              />
+              <text
+                x="355"
+                y="68"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Sounders
+              </text>
+              <text x="355" y="80" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+                floor above
+              </text>
+
+              <rect
+                x="400"
+                y="50"
+                width="90"
+                height="40"
+                rx="4"
+                fill="rgba(34,211,238,0.15)"
+                stroke="#22D3EE"
+                strokeWidth="1"
+              />
+              <text
+                x="445"
+                y="68"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Sounders
+              </text>
+              <text x="445" y="80" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+                whole bldg
+              </text>
+
+              <rect
+                x="490"
+                y="50"
+                width="90"
+                height="40"
+                rx="4"
+                fill="rgba(168,85,247,0.15)"
+                stroke="#A855F7"
+                strokeWidth="1"
+              />
+              <text
+                x="535"
+                y="68"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Lift recall
+              </text>
+              <text x="535" y="80" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+                EN 81-73
+              </text>
+
+              <rect
+                x="580"
+                y="50"
+                width="90"
+                height="40"
+                rx="4"
+                fill="rgba(251,191,36,0.15)"
+                stroke="#FBBF24"
+                strokeWidth="1"
+              />
+              <text
+                x="625"
+                y="68"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Plant
+              </text>
+              <text x="625" y="80" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+                HVAC shut
+              </text>
+
+              <rect
+                x="670"
+                y="50"
+                width="90"
+                height="40"
+                rx="4"
+                fill="rgba(34,197,94,0.15)"
+                stroke="#22C55E"
+                strokeWidth="1"
+              />
+              <text
+                x="715"
+                y="68"
+                textAnchor="middle"
+                fill="#22C55E"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Doors
+              </text>
+              <text x="715" y="80" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+                holders rel
+              </text>
+
+              <rect
+                x="760"
+                y="50"
+                width="90"
+                height="40"
+                rx="4"
+                fill="rgba(239,68,68,0.15)"
+                stroke="#EF4444"
+                strokeWidth="1"
+              />
+              <text
+                x="805"
+                y="68"
+                textAnchor="middle"
+                fill="#EF4444"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                ARC tx
+              </text>
+              <text x="805" y="80" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="8">
+                fire signal
+              </text>
+
+              {/* Cause rows */}
+              {/* Row 1 — Smoke detector Z1 (ground) */}
+              <rect
+                x="40"
+                y="100"
+                width="180"
+                height="34"
+                fill="rgba(255,255,255,0.04)"
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth="1"
+              />
+              <text x="50" y="120" fill="rgba(255,255,255,0.85)" fontSize="10" fontWeight="bold">
+                Smoke detector Z1 (ground)
+              </text>
+
+              <rect
+                x="220"
+                y="100"
+                width="90"
+                height="34"
+                fill="rgba(34,211,238,0.08)"
+                stroke="rgba(34,211,238,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="265"
+                y="121"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                IMMED
+              </text>
+
+              <rect
+                x="310"
+                y="100"
+                width="90"
+                height="34"
+                fill="rgba(34,211,238,0.08)"
+                stroke="rgba(34,211,238,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="355"
+                y="121"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                IMMED
+              </text>
+
+              <rect
+                x="400"
+                y="100"
+                width="90"
+                height="34"
+                fill="rgba(255,255,255,0.04)"
+                stroke="rgba(255,255,255,0.1)"
+                strokeWidth="1"
+              />
+              <text x="445" y="121" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                +60 s
+              </text>
+
+              <rect
+                x="490"
+                y="100"
+                width="90"
+                height="34"
+                fill="rgba(168,85,247,0.08)"
+                stroke="rgba(168,85,247,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="535"
+                y="121"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                RECALL
+              </text>
+
+              <rect
+                x="580"
+                y="100"
+                width="90"
+                height="34"
+                fill="rgba(251,191,36,0.08)"
+                stroke="rgba(251,191,36,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="625"
+                y="121"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                SHUT
+              </text>
+
+              <rect
+                x="670"
+                y="100"
+                width="90"
+                height="34"
+                fill="rgba(34,197,94,0.08)"
+                stroke="rgba(34,197,94,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="715"
+                y="121"
+                textAnchor="middle"
+                fill="#22C55E"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                RELEASE
+              </text>
+
+              <rect
+                x="760"
+                y="100"
+                width="90"
+                height="34"
+                fill="rgba(239,68,68,0.08)"
+                stroke="rgba(239,68,68,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="805"
+                y="121"
+                textAnchor="middle"
+                fill="#EF4444"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                FIRE
+              </text>
+
+              {/* Row 2 — Smoke detector Z2 (first) */}
+              <rect
+                x="40"
+                y="134"
+                width="180"
+                height="34"
+                fill="rgba(255,255,255,0.04)"
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth="1"
+              />
+              <text x="50" y="154" fill="rgba(255,255,255,0.85)" fontSize="10" fontWeight="bold">
+                Smoke detector Z2 (first)
+              </text>
+
+              <rect
+                x="220"
+                y="134"
+                width="90"
+                height="34"
+                fill="rgba(255,255,255,0.04)"
+                stroke="rgba(255,255,255,0.1)"
+                strokeWidth="1"
+              />
+              <text x="265" y="155" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                Z1 only
+              </text>
+
+              <rect
+                x="310"
+                y="134"
+                width="90"
+                height="34"
+                fill="rgba(34,211,238,0.08)"
+                stroke="rgba(34,211,238,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="355"
+                y="155"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                IMMED
+              </text>
+
+              <rect
+                x="400"
+                y="134"
+                width="90"
+                height="34"
+                fill="rgba(255,255,255,0.04)"
+                stroke="rgba(255,255,255,0.1)"
+                strokeWidth="1"
+              />
+              <text x="445" y="155" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                +60 s
+              </text>
+
+              <rect
+                x="490"
+                y="134"
+                width="90"
+                height="34"
+                fill="rgba(168,85,247,0.08)"
+                stroke="rgba(168,85,247,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="535"
+                y="155"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                RECALL
+              </text>
+
+              <rect
+                x="580"
+                y="134"
+                width="90"
+                height="34"
+                fill="rgba(251,191,36,0.08)"
+                stroke="rgba(251,191,36,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="625"
+                y="155"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                SHUT
+              </text>
+
+              <rect
+                x="670"
+                y="134"
+                width="90"
+                height="34"
+                fill="rgba(34,197,94,0.08)"
+                stroke="rgba(34,197,94,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="715"
+                y="155"
+                textAnchor="middle"
+                fill="#22C55E"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                RELEASE
+              </text>
+
+              <rect
+                x="760"
+                y="134"
+                width="90"
+                height="34"
+                fill="rgba(239,68,68,0.08)"
+                stroke="rgba(239,68,68,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="805"
+                y="155"
+                textAnchor="middle"
+                fill="#EF4444"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                FIRE
+              </text>
+
+              {/* Row 3 — Manual call point any */}
+              <rect
+                x="40"
+                y="168"
+                width="180"
+                height="34"
+                fill="rgba(255,255,255,0.04)"
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth="1"
+              />
+              <text x="50" y="188" fill="rgba(255,255,255,0.85)" fontSize="10" fontWeight="bold">
+                Manual call point (any)
+              </text>
+
+              <rect
+                x="220"
+                y="168"
+                width="90"
+                height="34"
+                fill="rgba(34,211,238,0.08)"
+                stroke="rgba(34,211,238,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="265"
+                y="189"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                IMMED
+              </text>
+
+              <rect
+                x="310"
+                y="168"
+                width="90"
+                height="34"
+                fill="rgba(34,211,238,0.08)"
+                stroke="rgba(34,211,238,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="355"
+                y="189"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                IMMED
+              </text>
+
+              <rect
+                x="400"
+                y="168"
+                width="90"
+                height="34"
+                fill="rgba(34,211,238,0.08)"
+                stroke="rgba(34,211,238,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="445"
+                y="189"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                IMMED
+              </text>
+
+              <rect
+                x="490"
+                y="168"
+                width="90"
+                height="34"
+                fill="rgba(168,85,247,0.08)"
+                stroke="rgba(168,85,247,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="535"
+                y="189"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                RECALL
+              </text>
+
+              <rect
+                x="580"
+                y="168"
+                width="90"
+                height="34"
+                fill="rgba(251,191,36,0.08)"
+                stroke="rgba(251,191,36,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="625"
+                y="189"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                SHUT
+              </text>
+
+              <rect
+                x="670"
+                y="168"
+                width="90"
+                height="34"
+                fill="rgba(34,197,94,0.08)"
+                stroke="rgba(34,197,94,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="715"
+                y="189"
+                textAnchor="middle"
+                fill="#22C55E"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                RELEASE
+              </text>
+
+              <rect
+                x="760"
+                y="168"
+                width="90"
+                height="34"
+                fill="rgba(239,68,68,0.08)"
+                stroke="rgba(239,68,68,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="805"
+                y="189"
+                textAnchor="middle"
+                fill="#EF4444"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                FIRE
+              </text>
+
+              {/* Row 4 — Sprinkler flow switch */}
+              <rect
+                x="40"
+                y="202"
+                width="180"
+                height="34"
+                fill="rgba(255,255,255,0.04)"
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth="1"
+              />
+              <text x="50" y="222" fill="rgba(255,255,255,0.85)" fontSize="10" fontWeight="bold">
+                Sprinkler flow switch
+              </text>
+
+              <rect
+                x="220"
+                y="202"
+                width="90"
+                height="34"
+                fill="rgba(34,211,238,0.08)"
+                stroke="rgba(34,211,238,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="265"
+                y="223"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                IMMED
+              </text>
+
+              <rect
+                x="310"
+                y="202"
+                width="90"
+                height="34"
+                fill="rgba(34,211,238,0.08)"
+                stroke="rgba(34,211,238,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="355"
+                y="223"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                IMMED
+              </text>
+
+              <rect
+                x="400"
+                y="202"
+                width="90"
+                height="34"
+                fill="rgba(34,211,238,0.08)"
+                stroke="rgba(34,211,238,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="445"
+                y="223"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                IMMED
+              </text>
+
+              <rect
+                x="490"
+                y="202"
+                width="90"
+                height="34"
+                fill="rgba(168,85,247,0.08)"
+                stroke="rgba(168,85,247,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="535"
+                y="223"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                RECALL
+              </text>
+
+              <rect
+                x="580"
+                y="202"
+                width="90"
+                height="34"
+                fill="rgba(251,191,36,0.08)"
+                stroke="rgba(251,191,36,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="625"
+                y="223"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                SHUT
+              </text>
+
+              <rect
+                x="670"
+                y="202"
+                width="90"
+                height="34"
+                fill="rgba(34,197,94,0.08)"
+                stroke="rgba(34,197,94,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="715"
+                y="223"
+                textAnchor="middle"
+                fill="#22C55E"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                RELEASE
+              </text>
+
+              <rect
+                x="760"
+                y="202"
+                width="90"
+                height="34"
+                fill="rgba(239,68,68,0.08)"
+                stroke="rgba(239,68,68,0.4)"
+                strokeWidth="1"
+              />
+              <text
+                x="805"
+                y="223"
+                textAnchor="middle"
+                fill="#EF4444"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                FIRE
+              </text>
+
+              {/* Legend */}
+              <rect
+                x="40"
+                y="260"
+                width="820"
+                height="180"
+                rx="8"
+                fill="rgba(255,255,255,0.03)"
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth="1"
+              />
+              <text x="60" y="282" fill="rgba(255,255,255,0.85)" fontSize="11" fontWeight="bold">
+                Reading the matrix:
+              </text>
+              <text x="60" y="304" fill="rgba(255,255,255,0.7)" fontSize="10">
+                Each row = one input (cause). Each column = one output (effect). Each cell = the
+                action.
+              </text>
+              <text x="60" y="324" fill="rgba(255,255,255,0.7)" fontSize="10">
+                IMMED = output activates as soon as the cause is detected. +60 s = output activates
+                60 seconds after the cause.
+              </text>
+              <text x="60" y="344" fill="rgba(255,255,255,0.7)" fontSize="10">
+                Z1 only = sounders only on the originating zone (phased — zone above also activates,
+                whole building delayed).
+              </text>
+              <text x="60" y="364" fill="rgba(255,255,255,0.7)" fontSize="10">
+                Manual call point = always full immediate evacuation (whole building) regardless of
+                zone — overrides phased delay.
+              </text>
+              <text x="60" y="386" fill="#FBBF24" fontSize="10" fontWeight="bold">
+                NEW in BS 5839-1:2025 (clause 38.1b): the matrix is MANDATORY in handover
+                documentation — even a one-line text description.
+              </text>
+              <text x="60" y="408" fill="rgba(255,255,255,0.6)" fontSize="9">
+                Multi-sensor detector mode (smoke / heat / CO / combination) recorded per Annex D
+                Figure D.1 alongside the matrix. The CIE programming verifies against the matrix at
+                commissioning.
+              </text>
+              <text x="60" y="426" fill="rgba(255,255,255,0.6)" fontSize="9">
+                Day / night logic: separate matrix or annotated columns for night-mode behaviour.
+                CIE clock checked at every service per BS 5839-1:2025 maintenance clause.
+              </text>
+            </svg>
+          </div>
+
+          <SectionRule />
+
+          <ContentEyebrow>Evacuation philosophies — one-stage, two-stage, phased</ContentEyebrow>
+
+          <ConceptBlock
+            title="One-stage simultaneous evacuation"
+            plainEnglish="The simplest staging philosophy. Any cause triggers all evacuation effects immediately. The whole building evacuates at once. The matrix has effectively one row: 'all causes'. The matrix has effectively one column: 'all effects'. Single time delay (immediate). Used in small premises, single-compartment buildings, and any building where simultaneous evacuation is the design intent."
+          >
+            <p>Suitable for:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Small offices</strong> — total population that can clear the building in a
+                few minutes via a small number of exits.
+              </li>
+              <li>
+                <strong>Retail premises</strong> — public access; occupants are unfamiliar with the
+                building; rapid simultaneous evacuation is the safest response.
+              </li>
+              <li>
+                <strong>Single-compartment buildings</strong> — no sub-divisions to evacuate
+                differently; all areas are equivalent in the response model.
+              </li>
+              <li>
+                <strong>Buildings with one or two storeys</strong> and occupant numbers not
+                producing stairway congestion at simultaneous evacuation.
+              </li>
+            </ul>
+            <p>
+              Unsuitable for tall buildings (stairway congestion), hospitals (mass evacuation
+              impractical), and any premises with managed-response staffing where staged response is
+              the design intent.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Two-stage alert / evacuate"
+            plainEnglish="A staged response with two states. Stage 1: an alert signal — distinguishably different from the full alarm — sent to staff and trained occupants, prompting investigation. Stage 2: full evacuation — the standard fire alarm sound across all areas. Stage 2 may be triggered automatically (after a time-out, e.g. 60 seconds, or by a second detector activating) or manually (a staff member confirming a real fire and pressing an evacuate button). Used in hospitals, hotels with dispersed staff, large premises with managed response."
+          >
+            <p>The alert signal is typically:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                A different audible pattern (intermittent, modulated, voice-message-only) audible
+                only to staff areas.
+              </li>
+              <li>
+                A signal to staff pagers, public-address messages directed to staff, or visual
+                indicators on a staff board.
+              </li>
+              <li>
+                A signal to a security / reception desk that displays the cause and prompts
+                investigation.
+              </li>
+            </ul>
+            <p>
+              The escalation to stage 2 (full evacuation) is critical: too long a delay = a real
+              fire develops while staff investigate; too short = the false-alarm-management benefit
+              is lost. The matrix records the time-out and the manual escalation paths. Day / night
+              settings often disable two-stage during unoccupied hours, reverting to immediate
+              evacuation.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Phased evacuation"
+            plainEnglish="A sophisticated staging used in tall buildings. Fire is detected on floor N. The system evacuates floor N and floor N+1 (the floor immediately above) FIRST, because they are at most immediate risk. Then, after a defined time interval (typically 1-3 minutes per stage), additional floors evacuate in a programmed sequence — typically floors above N+1 next, then floors below N, and so on. The strategy manages stairway congestion: too many people in the stair at once creates a bottleneck and slows everyone down."
+          >
+            <p>The phased strategy parameters:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Initial evacuation</strong> — fire floor + floor above. Always. The most
+                exposed populations evacuate without delay.
+              </li>
+              <li>
+                <strong>Subsequent evacuation</strong> — sequenced upward then downward (or per the
+                building\&apos;s fire engineering). Time intervals typically 1-3 minutes between
+                stages.
+              </li>
+              <li>
+                <strong>Manual call point override</strong> — a manual call point typically triggers
+                immediate full-building evacuation (overrides the phased sequence). This is because
+                a manual call point is a confirmed fire signal from a person who has seen the fire.
+              </li>
+              <li>
+                <strong>Voice alarm integration</strong> — phased evacuation is typically paired
+                with a voice alarm system (BS 5839-8) that gives clear evacuation messages per floor
+                and per stage.
+              </li>
+            </ul>
+            <p>
+              The matrix for a phased system is substantial. Each floor row is an input; each floor
+              sounder zone is an output column; each cell records the time at which that floor
+              sounds in response to a fire on each other floor. Building-specific; designed
+              alongside the fire engineering of the building.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Clause 22 (Cause and effect) and BS 9999 (general fire engineering)"
+            clause={
+              <>
+                The cause-and-effect matrix should reflect the fire safety strategy of the building
+                as established by the fire risk assessment and any fire engineering analysis. Where
+                staged evacuation is provided (whether two-stage alert/evacuate, phased, or other),
+                the staging shall be clearly recorded in the matrix and programmed at the CIE
+                accordingly. Manual call points shall, in general, trigger immediate full evacuation
+                regardless of any staging applied to detector inputs.
+              </>
+            }
+            meaning="Three principles. (1) The matrix follows the fire engineering — not the other way round. The architect / fire engineer decides the strategy; the matrix encodes it. (2) Staging is documented, not implicit. The CIE's programming reflects the documented staging. (3) Manual call points override staging — a person seeing a fire is the highest-confidence fire signal and warrants immediate full-evacuation response."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Coincidence schemes and false-alarm management</ContentEyebrow>
+
+          <ConceptBlock
+            title="Two-detector coincidence — when one is not enough"
+            plainEnglish="In environments with persistent false-alarm risk — kitchens (steam, smoke from cooking), warehouses (dust, vehicle exhaust), plant rooms (occasional smoke / steam from plant) — a single detector activation may not be reliable evidence of a fire. The two-detector coincidence scheme requires TWO detectors in the same defined area to operate before the system goes to full alarm. The first activation raises a 'first-stage' or 'warning' state at the CIE; only the second activation triggers the matrix's full effects."
+          >
+            <p>Design considerations:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Coincidence area</strong> — the defined area in which two detectors must
+                operate. Typically the same room or zone. The two detectors must be physically
+                positioned so a real fire would activate both within a reasonable time window (a
+                fire too localised to reach both is a real risk).
+              </li>
+              <li>
+                <strong>Time window</strong> — the maximum interval between the first and second
+                activation that still constitutes coincidence. Too short = real fires miss the
+                window; too long = false-alarm filtering benefit erodes. Typical 60-180 seconds.
+              </li>
+              <li>
+                <strong>First-stage action</strong> — what the first activation does. Often: alert
+                staff at the CIE (via a flashing indicator or local audible signal), without
+                triggering full alarm. May trigger interface outputs that are reversible (e.g. damp
+                down a process) without triggering evacuation.
+              </li>
+              <li>
+                <strong>Day / night context</strong> — coincidence is typically used in occupied
+                hours when staff can investigate the first-stage signal. At night with no staff
+                present, single-detector immediate alarm is often the right choice.
+              </li>
+            </ul>
+            <p>
+              Coincidence is a tool, not a default. It must be designed correctly. Deploying it
+              everywhere increases time-to-alarm for genuine fires; deploying it nowhere accepts
+              false-alarm cost in the spaces that warrant it. The design package documents where
+              coincidence is used and why.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[2].id}
+            question={inlineChecks[2].question}
+            options={inlineChecks[2].options}
+            correctIndex={inlineChecks[2].correctIndex}
+            explanation={inlineChecks[2].explanation}
+          />
+
+          <ConceptBlock
+            title="Day / night settings — context-aware sensitivity"
+            plainEnglish="Many fire alarm systems support different cause-and-effect logic at different times of day. During occupied hours: investigation delays, coincidence schemes, multi-sensor detector modes that filter cooking-related false positives. During unoccupied hours: immediate single-detector alarm response, no investigation delay. The CIE's real-time clock controls the switch-over. Schedules can be daily (e.g. 08:00 day mode, 22:00 night mode) or accommodate weekends and special calendar dates."
+          >
+            <p>Practical examples:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Hotel kitchen</strong> — day mode: coincidence-of-two with 90 s window
+                (cooking activity expected). Night mode: single-detector immediate (kitchen closed,
+                any smoke is a real fire).
+              </li>
+              <li>
+                <strong>Hospital ward</strong> — day mode: investigation delay 60 s before staff
+                pager + ward sounder. Night mode: immediate ward sounder + ARC transmission (staff
+                presence is reduced).
+              </li>
+              <li>
+                <strong>School</strong> — day mode: routine class-change tones permitted on the same
+                sounders (BS 5839-1:2025 clause 15.1.12 allows this with up to 10 second duration).
+                Night mode: any cause = full alarm.
+              </li>
+            </ul>
+            <p>
+              Day / night settings are powerful but must be designed correctly. A misconfigured
+              schedule can leave critical hours without proper detection / response. The 2025
+              standard\&apos;s emphasis on clock verification at every service visit reflects the
+              importance: a real-time clock that has drifted by an hour effectively shifts every
+              transition by an hour, possibly putting investigation-delay periods into unstaffed
+              times.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Clause 43.2 (12-month service) — clock verification"
+            clause={
+              <>
+                At every service visit, any time clock of the CIE should be checked and adjusted as
+                necessary. This is particularly important where systems include day/night settings.
+              </>
+            }
+            meaning="Routine clock verification is now explicitly tied to day / night settings. The clock is the executor of the matrix's temporal logic. A drifted clock corrupts every time-dependent rule. The 6-monthly service includes a check, and adjusts as necessary — particularly around BST transitions, leap days, and system reboots that may have lost time."
+          />
+
+          <InlineCheck
+            id={inlineChecks[3].id}
+            question={inlineChecks[3].question}
+            options={inlineChecks[3].options}
+            correctIndex={inlineChecks[3].correctIndex}
+            explanation={inlineChecks[3].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Multi-sensor detectors — recording the configuration</ContentEyebrow>
+
+          <ConceptBlock
+            title="Detection mode is design intent, not detector hardware"
+            plainEnglish="Modern multi-sensor detectors can be configured to operate in different modes: smoke-only, heat-only, smoke-AND-heat, smoke-OR-heat, smoke + CO, and various combinations with different sensitivity profiles. The mode the detector operates in IS PART OF THE DESIGN — the designer specifies it based on the room's use, false-alarm risk, and detection objective. The commissioning engineer programs the CIE to set each detector to its specified mode."
+          >
+            <p>BS 5839-1:2025 clause 20.11 requires:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Designer records the selection</strong> — the design package identifies, for
+                each detector or each detector type / area, the operating mode and any configuration
+                parameters.
+              </li>
+              <li>
+                <strong>Information available to the commissioning technician</strong> — the
+                commissioning engineer reads the design and programs accordingly. The programming is
+                then verified against the design.
+              </li>
+              <li>
+                <strong>Recorded in the operating and maintenance manual</strong> — the O&M manual
+                carries the configuration so the maintenance organisation knows what each detector
+                should do.
+              </li>
+              <li>
+                <strong>Annex D Figure D.1</strong> provides a suitable means of recording the
+                information — a tabulated format covering detector address / location / mode /
+                sensitivity / coincidence / other parameters.
+              </li>
+            </ul>
+            <p>
+              The 2025 standard formerly placed Annex E for this; it is now Annex D (renumbered).
+              The format is suggested, not mandated — the requirement is that the information IS
+              recorded. Without a record, future service visits cannot verify the detector mode
+              against the design intent.
+            </p>
+          </ConceptBlock>
+
+          <Scenario
+            title="Hospital surgical theatre — configuring detection"
+            situation="A new operating theatre suite in a hospital. The theatre has high-flow laminar airflow ventilation, surgical lights producing significant heat, occasional anaesthetic gas spillage, and 24/7 staffing during operating hours. The fire engineer specifies smoke detection in the theatre with reduced false-alarm risk. The fire alarm designer must specify the detection mode and the cause-and-effect matrix."
+            whatToDo="Specify multi-sensor detectors (smoke + heat), configured in coincidence-of-two mode during operating hours. The smoke sensor monitors for smoke; the heat sensor adds confirmation. Both must operate before alarm escalates. The matrix: theatre detector first activation = first-stage alert at theatre control desk + nurses station, no full alarm, no plant shutdown (avoid disrupting surgery). Second activation in same coincidence area = full alarm, theatre HVAC isolated to prevent smoke spread, surgery team evacuates per the building's emergency procedure. Document in the design package per BS 5839-1:2025 clause 20.11 / Annex D Figure D.1: detector address, location, mode (smoke + heat coincidence), sensitivity, day-mode timer (90 s coincidence window during operating hours), night-mode behaviour (single-detector immediate alarm when theatre is closed). Include in the cause-and-effect matrix in the handover documentation. The commissioning engineer verifies the programming matches; the test certificate records the verification."
+            whyItMatters="Theatres are a textbook case where detection mode and matrix design must reflect the operational reality. A single-sensor smoke detector with immediate alarm response would generate frequent false alarms from anaesthetic spillage or transient smoke, disrupting surgery and undermining trust in the alarm. The multi-sensor + coincidence + day-mode design preserves response to genuine fires while filtering false positives. Without recording in the O&M manual, a future service visit might revert the detector to its default factory mode — silently undoing the design."
+          />
+
+          <CommonMistake
+            title="Treating the cause-and-effect matrix as a commissioning artefact rather than design intent"
+            whatHappens="A system is designed with simple wiring drawings and a verbal brief: 'standard fire alarm, simultaneous evacuation across the building.' The commissioning engineer programs the CIE based on this brief. No matrix is produced. Three years later, the building changes use; some areas now require staged response. The replacement designer asks for the matrix and is told there is no matrix. The engineer must reverse-engineer the system behaviour from the CIE configuration, which is fragmented, vendor-specific, and partially undocumented."
+            doInstead="Produce the matrix at design stage, not at commissioning. The matrix is design intent expressed in tabular form; the CIE programming follows from it. BS 5839-1:2025 requires the matrix or text description to be in the handover documentation — even for the simplest one-stage system. A one-line text description ('this system operates as a simultaneous evacuation: any cause activates all sounders immediately') is acceptable. Producing nothing is not."
+          />
+
+          <CommonMistake
+            title="Day / night settings without ongoing review"
+            whatHappens="A retail premises has day / night settings: investigation delay 60 s during opening hours (08:00 - 22:00); immediate alarm overnight. The retailer changes opening hours to 24/7 (extended trading) but does not update the CIE schedule. The CIE continues to apply night-mode (immediate alarm) only between 22:00 and 08:00. During the new 22:00 - 08:00 trading period, occupants are present but the system applies the day-mode investigation delay — a delay that was designed assuming no public was on site. A real fire produces 60 s evacuation delay with hundreds of customers in the building."
+            doInstead="Day / night settings are part of the cause-and-effect matrix and must be reviewed when business operations change. Annual fire risk assessment review should include the cause-and-effect matrix and verify the day / night schedule still matches occupancy. Any change to opening hours, staffing, or building use should trigger a matrix review and CIE re-programming. The 2025 standard's clock-verification clause is one part of the picture; matrix review against current operations is another."
+          />
+
+          <CommonMistake
+            title="Multi-sensor detector mode reverted at maintenance"
+            whatHappens="A multi-sensor detector configured for 'smoke + heat coincidence' mode in a kitchen needs replacement after a fault. The maintenance engineer fits a new detector but does not check the configuration; the new detector defaults to 'smoke-only immediate' mode. The kitchen now has standard single-sensor immediate-alarm response — and the cooking activity that the original mode was designed to filter starts triggering false alarms. The premises management complains; the source of the regression is not obvious."
+            doInstead="The detector configuration is recorded in the O&M manual per BS 5839-1:2025 clause 20.11. Before replacing any detector, check the O&M manual for its configuration. Set the new detector to the same configuration. Verify against the matrix. Update the O&M manual entry with the date and engineer. The Annex D Figure D.1 format makes this routine: each row is one detector, programmed mode is one column. Follow the format and the regression is impossible."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="What to remember on site"
+            points={[
+              "Cause-and-effect matrix = the system's behavioural specification. Inputs (causes), outputs (effects), and what each cell does at what stage.",
+              'BS 5839-1:2025 NEW: the matrix or text description is MANDATORY in handover documentation. Even a one-line description for simple systems.',
+              'One-stage simultaneous: any cause = all effects immediately. Simplest matrix.',
+              'Two-stage alert / evacuate: stage 1 alert to staff, stage 2 full evacuation. Used in hospitals, hotels, managed-response premises.',
+              'Phased evacuation: fire floor + floor above first; subsequent floors in sequence. Used in tall buildings.',
+              'Coincidence-of-two: two detectors must operate before full alarm. Reduces false alarms in high-risk environments.',
+              'Day / night settings: different matrix logic at different times. CIE clock executes; check at every service.',
+              'Multi-sensor detector mode recorded per BS 5839-1:2025 clause 20.11 / Annex D Figure D.1. In the O&M manual.',
+              'Manual call points typically override staging — immediate full evacuation regardless of staged delays applied to detector inputs.',
+              'Verify CIE programming against the matrix at commissioning. Any change to the matrix requires a modification certificate per BS 5839-1:2025 clause 47.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question:
+                  'Is a cause-and-effect matrix required for a small simple fire alarm system?',
+                answer:
+                  'Yes — per BS 5839-1:2025 documentation/handover clause, a matrix or text description is required in the handover documentation regardless of system size. For a small simple system the description can be one sentence: "This system operates as a simultaneous evacuation: any cause activates all sounders immediately, and triggers ARC transmission and door release." That qualifies.',
+              },
+              {
+                question:
+                  "How is a cause-and-effect matrix stored and maintained over the system's life?",
+                answer:
+                  'In the O&M manual / handover documentation. The responsible person retains the documentation; the servicing organisation references it at every service. When the system is modified (extension, reconfiguration, firmware update), the matrix is updated and the new version is filed. Per BS 5839-1:2025 clause 47, modifications produce a modification certificate; the certificate references the updated matrix.',
+              },
+              {
+                question:
+                  'In a phased evacuation system, what happens if a manual call point is operated on a non-fire floor?',
+                answer:
+                  'Typically: the manual call point overrides the phased sequence and triggers immediate full-building evacuation. The reasoning: a manual call point activation is a confirmed fire signal from a person who has seen the fire. The phased sequence is a tool to manage stairway congestion when the fire location is identified by detection; a person-confirmed fire signal warrants immediate full response. The matrix records this override explicitly.',
+              },
+              {
+                question:
+                  'How long should a two-stage alert period be before automatic escalation to full alarm?',
+                answer:
+                  'Building-specific, typically 60-180 seconds, set by the fire engineering and recorded in the matrix. Long enough to give staff time to investigate; short enough that a real fire is not allowed to develop unchecked. The setting must be supported by the staffing model — a 180 s investigation delay is meaningful only if staff can reach the indication within 180 s of the alert. In premises with sparse staff, shorter time-outs are appropriate.',
+              },
+              {
+                question: 'Can coincidence-of-two be used everywhere to reduce false alarms?',
+                answer:
+                  'No. Coincidence increases time-to-alarm slightly (the second detector must operate). In low-false-alarm-risk areas, this delay is unnecessary cost. Coincidence is targeted at specific high-risk areas — kitchens, warehouses with dust, plant rooms — where single-detector false alarms are common. The design package documents where coincidence is used and why; the matrix records the coincidence logic explicitly.',
+              },
+              {
+                question: "What if the CIE's real-time clock fails or drifts significantly?",
+                answer:
+                  "Day / night transitions occur at the wrong time. The 2025 maintenance clause requires the clock be checked and adjusted at every service visit, particularly important where day / night settings are in use. A clock that has drifted by an hour effectively shifts every transition by an hour. After a power outage that exhausts the CIE's battery-backed clock, the clock may need full re-setting on power restoration. Modern CIEs may sync to network time (NTP) where the network is available; this is a preference but not all CIEs support it.",
+              },
+              {
+                question: 'How is a cause-and-effect matrix verified during commissioning?',
+                answer:
+                  'Each row of the matrix is tested. Each cause is simulated (typically by activating the detector in test mode or pressing a call point); each expected effect is observed; the matrix entry is marked verified. Cells that say "no action" are also tested — the absence of action confirms the cell is correctly programmed. The commissioning certificate records the verification. Failure of any cell requires reprogramming and re-test.',
+              },
+              {
+                question:
+                  "A change is made to the cause-and-effect matrix during the system's life. What documentation is required?",
+                answer:
+                  'Per BS 5839-1:2025 clause 47 (Section 7 Extensions and modifications), any modification — including a cause-and-effect change — produces a modification certificate. The certificate documents what was changed, why, who made the change, the date, and references the updated matrix. The updated matrix is filed in the O&M manual; the previous version is archived. Firmware updates of the CIE that may have implications for the matrix are also modifications and require certificates.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Knowledge check</ContentEyebrow>
+          <Quiz title="Cause and effect programming — Module 3.3" questions={quizQuestions} />
+
+          {/* Bottom navigation grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/fire-alarm-course/module-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 3
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/fire-alarm-course/module-3/section-4')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                3.4 Interface design
+              </div>
+            </button>
+          </div>
+
+          <div className="hidden">
+            <Activity />
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

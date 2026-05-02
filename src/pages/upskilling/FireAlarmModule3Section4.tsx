@@ -1,664 +1,1087 @@
-import { ArrowLeft, ArrowRight, Ruler, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  LearningOutcomes,
+  ContentEyebrow,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const quickCheckQuestions = [
+const inlineChecks = [
   {
+    id: 'fam3-s4-accessible',
     question:
-      'A warehouse has a flat ceiling at 8 m height with structural beams creating 4 m wide bays, each beam projecting 800 mm below ceiling. How should detectors be positioned?',
-    answer:
-      'With 800 mm deep beams (over 600 mm threshold), each bay should be treated as a separate detection area. Since bays are 4 m wide (less than 7 m), a single row of detectors centred in each bay may suffice, but spacing between detectors should meet standard requirements.',
+      'BS 5839-1:2025 clause 7 introduces a new requirement on the placement of fire alarm interfaces. What is it?',
+    options: [
+      'Interfaces must be red.',
+      'Interfaces must be inside the CIE.',
+      'Interfaces must be located so they are ACCESSIBLE for maintenance — aligned with CDM 2015 to reduce risks to maintenance personnel. Common consequence: interfaces should not be sited inside an enclosure provided for other equipment where access requires removing power to that other equipment or attendance by other parties (e.g. inside a switchgear cabinet that has to be isolated and locked off by the electrical contractor).',
+      'Interfaces must be remote.',
+    ],
+    correctIndex: 2,
+    explanation:
+      "The 2025 standard explicitly aligns with the Construction (Design and Management) Regulations 2015. The reasoning: interfaces require maintenance throughout the system's life. Designers must consider where the interface goes so future maintenance is safe and practicable. Sticking the interface in a switchgear cabinet because it was convenient at install creates a maintenance hazard later.",
   },
   {
-    question:
-      'A sports hall has a ceiling height of 14 m. Why might point smoke detectors be problematic, and what alternative should be considered?',
-    answer:
-      'At 14 m, smoke may stratify below ceiling level before reaching point detectors. Beam detectors mounted at an appropriate level (potentially multiple levels for stratification) or aspirating detection should be considered. Point detector maintenance access is also challenging at this height.',
+    id: 'fam3-s4-lift',
+    question: 'What is "lift recall" and what European standard governs the interface?',
+    options: [
+      'Manual lift call.',
+      'Phone-based.',
+      "Lift recall is the automatic return of lifts to the designated recall floor (typically the ground / final exit floor) on a fire alarm signal, with the lifts then taken out of service. The fire alarm system provides a signal to the lift control via a defined interface. BS EN 81-73 specifies the safety requirements for the lift's behaviour in fire conditions; the fire alarm interface is the trigger. Lifts must not be used by occupants for evacuation (firefighting lifts excepted).",
+      'Stair only.',
+    ],
+    correctIndex: 2,
+    explanation:
+      'BS EN 81-73 is the lift safety standard for behaviour in the event of fire. The fire alarm system feeds a recall signal via a monitored output (typically volt-free contact); the lift control reads it and executes the recall sequence. The cause-and-effect matrix records the recall trigger; the lift commissioning verifies the recall behaviour. Both standards work together.',
   },
   {
+    id: 'fam3-s4-monitored',
+    question: 'What is the difference between a MONITORED and an UNMONITORED interface output?',
+    options: [
+      'Colour.',
+      'Voltage.',
+      'Monitored: the fire alarm system continuously checks the integrity of the wiring between the interface and the controlled equipment (typically by passing a small standby current and monitoring for open / short circuits). A fault is reported as a system fault. Unmonitored: the wiring is not checked; a fault on the cable would not be detected. BS 5839-1 generally requires monitored outputs where the controlled function is part of life-safety response (sounders, voice alarm, evacuation outputs); unmonitored may be acceptable for non-critical functions.',
+      'Symbol.',
+    ],
+    correctIndex: 2,
+    explanation:
+      'Monitoring is essential where the controlled function is part of life-safety. A failed sounder cable is a critical fault that must be detected. A failed cable to a non-life-safety output (e.g. a process plant alert) may be tolerable as unmonitored. The design specifies which outputs are monitored and which are not; the CIE configuration matches.',
+  },
+  {
+    id: 'fam3-s4-refuge',
     question:
-      'What is the maximum distance from a wall to the nearest detector according to BS 5839-1?',
-    answer:
-      'Detectors should be positioned no more than half the spacing distance from walls to ensure coverage to room edges. This prevents dead zones where smoke could accumulate without triggering detection.',
+      'What is the relevance of BS 8893 (newly normative reference in BS 5839-1:2025) to interface design?',
+    options: [
+      'It is for cabling.',
+      'It is for batteries.',
+      'BS 8893 covers emergency voice communication (EVC) systems — the two-way communication systems used at disabled refuges to allow an occupant in a refuge to communicate with the fire warden / control point. The 2025 standard adds BS 8893 as a normative reference, signalling that EVC systems are now a standard part of life-safety design where Equality Act 2010 / inclusive design principles apply. The fire alarm interface to the EVC may signal alarm status; the EVC is its own life-safety system that must be designed and maintained alongside.',
+      'It is for power supplies.',
+    ],
+    correctIndex: 2,
+    explanation:
+      'Disabled refuges and EVC systems support inclusive evacuation. BS 8893 sets the EVC component standard. The 2025 normative reference means BS 5839-1:2025 expects interfaces and integration with EVC where refuges are present. BS EN 50518 covers monitoring and alarm receiving centre standards; together they form the framework for EVC and ARC integration around disabled persons in fire scenarios.',
   },
 ];
 
 const quizQuestions = [
   {
+    id: 1,
     question:
-      'What is the typical maximum spacing for point smoke detectors in rooms with flat ceilings up to 10.5 m?',
+      'Which BS 5839-1:2025 clause introduces the new accessibility requirement for fire alarm interfaces?',
     options: [
-      '5.3 m radius coverage',
-      '7.5 m between detectors',
-      '10 m between detectors',
-      '15 m between detectors',
-    ],
-    correctAnswer: 0,
-    explanation:
-      'BS 5839-1 typically specifies 5.3 m radius coverage for point smoke detectors in standard conditions, giving about 10.6 m between detectors.',
-  },
-  {
-    question: 'How does ceiling height affect detector spacing?',
-    options: [
-      'No effect',
-      'Higher ceilings may require closer spacing due to smoke stratification',
-      'Higher ceilings always need wider spacing',
-      'Only heat detectors are affected',
+      'Clause 13.',
+      'Clause 7. The clause requires interfaces to be located such that they are accessible for maintenance, in line with the Construction (Design and Management) Regulations 2015. The example given: interfaces should not be inside an enclosure provided for other equipment if access requires removing power to that other equipment or attendance by other parties.',
+      'Clause 22.',
+      'Clause 47.',
     ],
     correctAnswer: 1,
     explanation:
-      'Higher ceilings can cause smoke stratification and cooling, potentially requiring closer detector spacing or alternative detection methods.',
+      "Clause 7 is a 2025 addition specifically for interface placement. It is a CDM-aligned requirement: design with maintenance in mind. The example in the clause (placement inside other equipment's enclosure) is one common scenario; the principle applies more broadly — any siting that creates a maintenance hazard or impracticality must be avoided.",
   },
   {
-    question: 'What is the maximum distance from a wall to the nearest detector?',
-    options: ['2.5 m', 'Half the spacing distance', 'Full spacing distance', '10 m'],
-    correctAnswer: 1,
-    explanation:
-      'Detectors should be positioned no more than half the spacing distance from walls to ensure coverage to room edges.',
-  },
-  {
-    question: 'When might beam detectors be more appropriate than point detectors?',
-    options: [
-      'In small offices',
-      'In high-ceiling or large open-span areas',
-      'In sleeping accommodation',
-      'Only outdoors',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Beam detectors are well-suited to high ceilings and large open spaces where point detectors would be difficult to access for maintenance.',
-  },
-  {
-    question: 'How do downstand beams affect detector placement?',
-    options: [
-      'No effect',
-      'Beams over 600 mm may require additional detectors in bays',
-      'All beams require separate detection',
-      'Beams always reduce coverage',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Significant downstand beams (typically over 600 mm) can trap smoke and may require separate detection within the created bays.',
-  },
-  {
+    id: 2,
     question:
-      'What factor must be considered when positioning heat detectors compared to smoke detectors?',
+      'A fire alarm system needs to recall lifts on a fire signal. What is the typical interface architecture?',
     options: [
-      'Heat detectors can be placed anywhere',
-      'Heat detectors typically require closer spacing than smoke detectors',
-      'Heat detectors need more distance from walls',
-      'Heat and smoke detectors have identical spacing',
+      'Hard-wired direct.',
+      'A monitored volt-free contact output from the fire alarm CIE / interface module to the lift controller. The lift controller reads the contact and executes the BS EN 81-73 recall sequence: lifts return to the recall floor, doors open, lifts are taken out of service. The fire alarm CIE display indicates recall is active. The cause-and-effect matrix records the recall trigger.',
+      'Manual cable.',
+      'Pneumatic.',
     ],
     correctAnswer: 1,
     explanation:
-      'Heat detectors typically have smaller coverage areas than smoke detectors due to how heat dissipates, often requiring closer spacing.',
+      'Volt-free (or "dry") contact is the universal interface idiom — it works regardless of the lift controller\'s voltage / circuitry. Monitored means the cable run is checked. The cause-and-effect matrix says when recall fires; the BS EN 81-73 lift behaviour says what the lift does; the interface monitor says the cable is intact.',
   },
   {
-    question: 'What is the purpose of considering airflow patterns when positioning detectors?',
+    id: 3,
+    question:
+      'What does "magnetic door holder" / "door release" mean in fire alarm interface design?',
     options: [
-      'Aesthetics only',
-      'Ensure smoke reaches detectors and is not dispersed before detection',
-      'Reduce cable lengths',
-      'Meet architectural requirements',
+      'A locking system.',
+      'A door holder is an electromagnet that holds open a fire-resisting door under normal conditions (allowing free passage for occupants and goods); the magnet de-energises on a fire alarm signal, releasing the door which closes (typically by a self-closer) to restore compartmentation. The fire alarm interface controls the magnet supply — typically a monitored output, fail-safe (loss of power = door closes). Used widely in commercial buildings, hospitals, schools.',
+      'A door alarm.',
+      'A door bell.',
     ],
     correctAnswer: 1,
     explanation:
-      'Airflow from HVAC systems can affect smoke travel; detectors should be positioned to ensure smoke reaches them rather than being dispersed.',
+      'Door holders integrate the active fire alarm system with passive compartmentation. Free passage during normal operation; self-closing under fire alarm to restore the compartment. Fail-safe: any loss of power (fault, deliberate isolation, fire damage to the magnet circuit) closes the door. The cause-and-effect matrix records the release trigger.',
   },
   {
-    question: 'At what minimum distance should point detectors be kept from air supply diffusers?',
+    id: 4,
+    question: 'What are typical "plant shutdown" interfaces and why are they used?',
     options: [
-      'No minimum distance',
-      'At least 0.5 m from the edge of the diffuser',
-      'At least 5 m',
-      '1 metre exactly',
+      'Office lighting.',
+      'Outputs to HVAC systems (closing fire dampers, shutting fans), gas isolation valves, fuel shut-offs, and process plant emergency stops. Used to prevent fire / smoke spread (HVAC), to remove fuel from the area (gas), and to render plant safe. The fire alarm CIE provides monitored interface outputs; the controlled equipment has an emergency-stop input that triggers on the contact change. Documented in the cause-and-effect matrix.',
+      'Refrigerators.',
+      'Domestic appliances.',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 5839-1 recommends keeping point detectors at least 0.5 m from air supply diffusers to prevent dilution of smoke before detection.',
+      'Plant shutdown is a major life-safety integration: HVAC continuing to run during a fire spreads smoke through the ductwork; live gas during a fire feeds the fire. The interfaces shut these systems down at the right moment per the matrix. The interface outputs are typically monitored (life-safety) and the controlled equipment is tested at commissioning and at every service.',
   },
   {
-    question: 'How should sloped ceilings affect detector positioning?',
+    id: 5,
+    question: 'What does the Equality Act 2010 obligation produce in fire alarm interface design?',
     options: [
-      'Place detectors at lowest point only',
-      'Position within 600 mm of apex and consider horizontal coverage',
-      'Slope has no effect on placement',
-      'Only use heat detectors on slopes',
+      'Coloured cables.',
+      'Accessibility considerations: provision of disabled refuges with two-way communication (BS 8893 EVC systems), visual alarm devices (VADs / strobes) for hearing-impaired occupants in addition to audible sounders, evacuation chairs near refuges, and in some cases tactile / vibrating signals. The fire alarm interface design must accommodate these — the matrix records VAD operation per zone and the EVC signalling, and the lift recall logic accommodates evacuation lift use where provided.',
+      'Larger CIE.',
+      'Network only.',
     ],
     correctAnswer: 1,
     explanation:
-      'On sloped ceilings, smoke rises to the apex; detectors should be positioned within 600 mm horizontally of the apex while maintaining required coverage.',
+      'Inclusive evacuation is now mainstream. BS 5839-1:2025 adds BS 8893 as a normative reference for EVC; visual alarm devices are governed by BS EN 54-23. The fire alarm system is one part of an inclusive evacuation strategy that also includes physical refuges, evacuation chairs, training, and sometimes evacuation lifts.',
   },
   {
-    question: 'What documentation should support detector layout design?',
+    id: 6,
+    question:
+      'A fire alarm system is to interface with a security access control system that locks specific doors. What is the typical fail-safe design?',
     options: [
-      'No documentation needed',
-      'Calculations showing spacing compliance and drawings marking positions',
-      'Only verbal agreements',
-      'Manufacturer preference letters',
+      'Doors stay locked.',
+      'Doors should fail-safe to UNLOCKED on fire alarm: loss of access-control power (deliberate or by fault) causes the lock to release, allowing escape. Achieved typically by an electromagnetic lock that the access control system holds energised; the fire alarm interface drops the supply (or signals the access control to drop the supply) on fire alarm. Mechanical override may also exist for individual doors. The fire alarm cause-and-effect records the release trigger.',
+      'Doors stay open always.',
+      'No interface.',
     ],
     correctAnswer: 1,
     explanation:
-      'Detector layouts should be supported by spacing calculations demonstrating BS 5839-1 compliance and clear drawings showing positions relative to room features.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'Can I exceed standard spacing with risk assessment justification?',
-    answer:
-      'BS 5839-1 allows engineered solutions with appropriate justification, but spacing deviations should be documented and agreed with the responsible person and AHJ if applicable.',
+      'Life-safety priority over security: doors on escape routes must release on fire alarm to allow escape. Magnetic locks are common (fail-safe by design — loss of power releases the lock); some other lock technologies need explicit signalling. The fire alarm interface drives the release. Building occupants must be able to leave; that is non-negotiable.',
   },
   {
-    question: 'How do I handle suspended ceilings with voids?',
-    answer:
-      'Voids may need separate detection depending on contents (cables, combustibles) and construction. Treat void detection as a separate zone where installed.',
+    id: 7,
+    question:
+      'The fire alarm system must signal a Building Management System (BMS). What is the typical interface and what data is conveyed?',
+    options: [
+      'Direct mains.',
+      'Either a set of volt-free contact outputs (one per status: fire, fault, isolation) read by the BMS as digital inputs, OR a serial / network protocol (BACnet, Modbus, proprietary) carrying richer data including zone-level fire and fault status. The BMS uses the data to log events, alert facilities staff, and integrate with other building systems. The fire alarm system must continue to function regardless of BMS state — BMS is informed by the fire alarm, not vice versa for life-safety.',
+      'Audio.',
+      'Light beam.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BMS integration is informational: the BMS receives status; the BMS does not control the fire alarm. The interface respects the principle that life-safety functions remain entirely within the fire alarm system. A BMS failure must not affect fire detection, alarm, or evacuation. The interface is monitored where the BMS uses the signal for life-safety annotation; otherwise unmonitored may be acceptable.',
   },
   {
-    question: 'What spacing applies to multi-sensor detectors?',
-    answer:
-      'Multi-sensor detectors should generally be spaced according to the most restrictive element (typically heat) unless manufacturer guidance indicates otherwise.',
+    id: 8,
+    question:
+      'BS 5839-1:2025 clause 7 example states interfaces should NOT be sited inside an enclosure for other equipment if access requires what?',
+    options: [
+      'A short walk.',
+      'A ladder.',
+      'Removing power to the other equipment OR attendance by other parties — i.e. if accessing the fire alarm interface for routine maintenance would require isolating a switchgear cabinet (creating a power outage) or coordinating with the electrical contractor responsible for that cabinet. The example is illustrative; the principle is broader — interface placement must allow safe and practicable maintenance.',
+      'Specialist tools.',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "The 2025 clause aligns with CDM 2015. Designers think about maintenance, not just install. An interface that requires the building to be partially shut down for routine maintenance is a poor design — the maintenance will be deferred or skipped, and the interface will degrade out of compliance. The clause directs designers to plan for the system's maintenance lifecycle.",
   },
   {
-    question: 'Do aspirating systems have different spacing rules?',
-    answer:
-      'Yes - aspirating detection has its own design criteria based on sampling pipe layout and hole spacing. Follow manufacturer guidance and EN 54-20 requirements.',
+    id: 9,
+    question: 'What is a disabled refuge and how does the fire alarm system interface with it?',
+    options: [
+      'A storage room.',
+      'A protected space within an escape route where a person who cannot self-evacuate (e.g. wheelchair user) waits for assistance. Equipped with a two-way EVC system (per BS 8893) connecting to a control point manned during the evacuation. The fire alarm system signals "fire" status to the EVC system so the refuge occupant knows the alarm has activated; the EVC provides voice communication so they can request help. Refuges are provided per Equality Act 2010 / Approved Document M / building fire engineering.',
+      'A locked room.',
+      'A bedroom.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Disabled refuges are a critical part of inclusive evacuation. The fire alarm gives the alarm signal; the EVC gives two-way voice comms. The refuge is somewhere safe to wait for evacuation assistance (which may include trained staff with evacuation chairs, or evacuation lifts where provided). BS 8893 is now a normative reference in BS 5839-1:2025.',
   },
   {
-    question: 'How close to walls can detectors be mounted?',
-    answer:
-      'Detectors should not be closer than 0.5 m from walls to avoid dead air spaces, but should be within half the standard spacing distance for coverage.',
-  },
-  {
-    question: 'What if the room is smaller than standard spacing allows?',
-    answer:
-      'Small rooms still need at least one detector regardless of spacing calculations. A single detector in a small room is acceptable.',
+    id: 10,
+    question:
+      'For a fire alarm interface to a critical life-safety output (sounders / VADs / lift recall), should the wiring be monitored?',
+    options: [
+      'Optional.',
+      'YES — the wiring must be monitored. The fire alarm system continuously checks the integrity of the cable run. Open-circuit (cable break) and short-circuit (damage) are reported as faults. The CIE indicates the fault; the responsible person and servicing organisation respond. Unmonitored wiring on life-safety outputs is non-compliant with BS 5839-1 because a failed cable would only be discovered at the next test, by which time a real fire could occur with the output non-functional.',
+      'Only at install.',
+      'Never.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Monitoring is the BS 5839-1 baseline for life-safety outputs. The reasoning: a critical output that does not work in a fire is a worse failure mode than a CIE that does not work, because the CIE failure is signalled by the fault while the output failure can be silent. Continuous monitoring of cable integrity catches the silent failure mode.',
   },
 ];
 
 const FireAlarmModule3Section4 = () => {
+  const navigate = useNavigate();
+
   useSEO({
-    title: 'Detector Spacing & Coverage - Fire Alarm Course',
+    title: 'Interface design | Fire Alarm Module 3.4 | Elec-Mate',
     description:
-      'BS 5839-1 detector spacing requirements: ceiling heights, room shapes, obstructions, beam detectors, and coverage calculations for fire detection.',
+      'BS 5839-1:2025 interface design: clause 7 accessibility / CDM 2015, lift recall (EN 81-73), magnetic door holders, plant shutdown, BMS integration, access control, voice alarm, disabled refuge / EVC (BS 8893 — new 2025 normative reference), monitored vs unmonitored outputs.',
   });
 
   return (
-    <div className="bg-background text-white">
-      {/* Header */}
-      <header className="border-b border-white/10 bg-background/95 backdrop-blur-sm sticky top-0 z-10">
-        <div className="px-4 py-4 flex items-center justify-between max-w-4xl mx-auto">
-          <Button
-            variant="ghost"
-            size="sm"
-            asChild
-            className="gap-2 text-white hover:text-elec-yellow"
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-3">
-              <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Back to Module</span>
-            </Link>
-          </Button>
-          <span className="text-sm text-white">Section 4 of 6</span>
-        </div>
-      </header>
+            <ArrowLeft className="h-4 w-4" /> Module 3
+          </button>
 
-      <main className="px-4 py-8 max-w-4xl mx-auto">
-        {/* Title */}
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
-            <Ruler className="h-8 w-8 text-elec-yellow" />
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Detector Spacing & Coverage</h1>
-          <p className="text-white">
-            BS 5839-1 spacing requirements for smoke and heat detectors, beam detectors, and
-            coverage calculations
-          </p>
-        </div>
-
-        {/* Learning Outcomes */}
-        <div className="mb-8 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-          <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
-          <ul className="space-y-2 text-white">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Apply BS 5839-1 spacing requirements for smoke and heat detectors</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Calculate detector positions for various room shapes and sizes</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Account for ceiling height and stratification effects</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Position detectors relative to beams, vents, and obstructions</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Select appropriate detection for high-ceiling and open-plan spaces</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Document detector layouts with compliant spacing calculations</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Section 01: Point Detector Spacing Basics */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">01</span>
-            Point Detector Spacing Basics
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              BS 5839-1 provides spacing guidance based on detector type and ceiling height. The
-              standard assumes a flat ceiling and normal room conditions.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">
-                Standard Spacing (Flat Ceilings up to 10.5 m)
-              </h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Smoke detectors:</strong> 5.3 m radius coverage (7.5 m between if square
-                    layout)
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Heat detectors:</strong> typically 5.3 m radius for Grade A1 (varies by
-                    grade)
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Wall distance:</strong> maximum half spacing from walls
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Ceiling distance:</strong> 25-600 mm below ceiling (typically 25-150 mm)
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              These are the baseline requirements. Actual spacing may need to be reduced based on
-              specific conditions such as ceiling height, obstructions, or environmental factors.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 02: Ceiling Height Considerations */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">02</span>
-            Ceiling Height Considerations
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Ceiling height affects smoke behaviour and detector performance. Higher ceilings can
-              cause smoke stratification where smoke cools and stops rising before reaching ceiling
-              level.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">Height Effects</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Up to 10.5 m:</strong> standard spacing typically applies
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>10.5-12 m:</strong> reduced spacing may be needed
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Above 12 m:</strong> consider beam detectors or specialist solutions
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Stratification occurs when hot smoke cools as it rises and reaches equilibrium with
-              surrounding air before hitting the ceiling. This is more pronounced in tall spaces
-              with temperature gradients.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 03: Beams and Obstructions */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">03</span>
-            Beams and Obstructions
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Downstand beams and obstructions affect smoke flow and can create pockets where smoke
-              accumulates without reaching detectors.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">Beam Guidance</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Beams less than 10% ceiling height:</strong> generally ignore for
-                    spacing
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Beams over 600 mm depth:</strong> may create bays requiring separate
-                    detection
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Bay width:</strong> if less than 7 m, single bay may be acceptable
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Position:</strong> centre detectors within bays, not directly under
-                    beams
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Deep beams effectively create smoke reservoirs. Smoke rises and fills the space
-              between beams before potentially spilling to adjacent areas.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck
-          question={quickCheckQuestions[0].question}
-          answer={quickCheckQuestions[0].answer}
-        />
-
-        {/* Section 04: HVAC and Airflow Effects */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">04</span>
-            HVAC and Airflow Effects
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Airflow from ventilation systems can dilute smoke or push it away from detectors,
-              significantly affecting detection reliability.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">HVAC Considerations</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Diffusers:</strong> keep detectors at least 0.5 m from air supply
-                    diffusers
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>High airflow:</strong> may dilute smoke - consider closer spacing or
-                    duct detection
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Return air:</strong> duct detectors can provide early warning in
-                    recirculating systems
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Air changes:</strong> very high air change rates may warrant specialist
-                    advice
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Consider the airflow pattern when the HVAC is operating. Smoke from a fire may follow
-              air currents rather than rising directly to ceiling-mounted detectors.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 05: Beam Detectors */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">05</span>
-            Beam Detectors
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Optical beam detectors are well-suited to large, high spaces where point detectors
-              would be difficult to install and maintain.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">Beam Detector Applications</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>High ceilings:</strong> effective up to 25 m or more depending on type
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Large spans:</strong> paths up to 100 m possible with some models
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Mounting height:</strong> position within 600 mm of ceiling, or at
-                    stratification level
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Coverage width:</strong> typically 7.5 m either side of beam path
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Beam detectors offer easier maintenance access as they can be aligned and tested from
-              floor level. Ensure stable mounting to prevent false alarms from beam drift.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck
-          question={quickCheckQuestions[1].question}
-          answer={quickCheckQuestions[1].answer}
-        />
-
-        {/* Section 06: Sloped and Irregular Ceilings */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">06</span>
-            Sloped and Irregular Ceilings
-          </h2>
-          <div className="space-y-4 text-white">
-            <p>
-              Non-flat ceilings require special consideration for detector positioning as smoke
-              behaviour changes with ceiling shape.
-            </p>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-white mb-2">Sloped Ceiling Rules</h3>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Apex position:</strong> detector within 600 mm horizontally of highest
-                    point
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Coverage:</strong> maintain horizontal spacing requirements
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Steep slopes:</strong> may need detectors on sloped surface plus apex
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Valleys:</strong> treat like beams - smoke may collect in troughs
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <p>
-              Smoke naturally rises to the highest point. Ensure detectors are positioned to
-              intercept smoke at its likely accumulation points.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck
-          question={quickCheckQuestions[2].question}
-          answer={quickCheckQuestions[2].answer}
-        />
-
-        {/* Pro Tips */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">07</span>
-            Pro Tips
-          </h2>
-          <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
-            <ul className="space-y-2 text-white">
-              <li className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>
-                  Draw detector positions on scaled drawings and verify spacing with measurements
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>Visit site to assess ceiling obstructions not shown on drawings</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>Consider maintenance access when positioning high-level detectors</span>
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        {/* Common Mistakes */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">08</span>
-            Common Mistakes
-          </h2>
-          <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
-            <ul className="space-y-2 text-white">
-              <li className="flex items-start gap-2">
-                <span className="text-red-400 font-bold">X</span>
-                <span>Exceeding maximum spacing without documented justification</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-400 font-bold">X</span>
-                <span>Ignoring deep beams that create separate smoke reservoirs</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-400 font-bold">X</span>
-                <span>Positioning detectors directly in HVAC airflow paths</span>
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow text-sm font-normal">09</span>
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-8">
-          <Quiz
-            title="Detector Spacing & Coverage Knowledge Check"
-            questions={quizQuestions}
-            moduleTitle="Detector Spacing & Coverage"
+          <PageHero
+            eyebrow="Module 3 · Section 4"
+            title="Interface design"
+            description="BS 5839-1:2025 clause 7: interfaces must be accessible for maintenance (CDM 2015 alignment). Plus lift recall (EN 81-73), magnetic door holders, plant shutdown, BMS integration, access control, voice alarm (BS 5839-8 / EN 54-16/-24), and disabled refuge / EVC (BS 8893 — new 2025 normative reference)."
+            tone="yellow"
           />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-white/10">
-          <Button variant="outline" asChild className="gap-2">
-            <Link to="/electrician/upskilling/fire-alarm-course/module-3/section-3">
-              <ArrowLeft className="h-4 w-4" />
-              Previous: Sounder Zones
-            </Link>
-          </Button>
-          <Button asChild className="gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90">
-            <Link to="/electrician/upskilling/fire-alarm-course/module-3/section-5">
-              Next: Special Applications
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </nav>
-      </main>
+          <TLDR
+            points={[
+              "NEW in BS 5839-1:2025 (clause 7): interfaces must be located so they are ACCESSIBLE for maintenance — aligned with CDM 2015 to reduce risks to maintenance personnel. Don't hide interfaces inside other equipment's enclosures.",
+              'Lift recall on fire alarm: monitored volt-free contact from CIE → lift controller; lift returns to recall floor and is taken out of service per BS EN 81-73.',
+              'Magnetic door holders: electromagnets hold fire-resisting doors open under normal conditions; de-energise on fire alarm; doors close to restore compartmentation. Fail-safe by design.',
+              'Plant shutdown: HVAC fans / fire dampers, gas isolation valves, fuel shut-offs, process emergency stops. Monitored outputs from CIE; documented in cause-and-effect matrix.',
+              'Access control: locked doors on escape routes must fail-safe to UNLOCKED on fire alarm. Magnetic locks (fail-safe by design); access control system signals or drops supply.',
+              'BMS integration: volt-free contacts or serial / network protocol (BACnet, Modbus). Informational — BMS receives status; BMS does NOT control fire alarm.',
+              'Voice alarm: BS 5839-8 specifies voice alarm system design; BS EN 54-16 (control + indicating) and BS EN 54-24 (loudspeakers) are the product standards. Fire alarm CIE triggers VA; VA delivers spoken evacuation messages.',
+              'Disabled refuges + EVC (emergency voice communication): BS 8893 is NEW normative reference in BS 5839-1:2025. Two-way comms between refuge and control point.',
+              'BS EN 50518 (alarm receiving centre standard) governs ARC infrastructure for life-safety signalling.',
+              'Monitored outputs (continuous cable integrity check) required for life-safety functions; unmonitored may be acceptable for non-critical functions.',
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Apply BS 5839-1:2025 clause 7: place fire alarm interfaces so they are accessible for maintenance, aligned with CDM 2015',
+              'Specify lift recall interfaces in line with BS EN 81-73 lift safety standard',
+              'Design magnetic door holder circuits as fail-safe outputs that close fire-resisting doors on alarm to restore compartmentation',
+              'Configure plant shutdown interfaces (HVAC, gas, fuel, process emergency stops) so smoke / fuel / hazard is removed from the affected area',
+              'Integrate access control so escape-route doors fail-safe to UNLOCKED on fire alarm',
+              'Specify monitored interface outputs for life-safety functions; understand when unmonitored may be acceptable for informational outputs',
+              'Integrate disabled refuges with emergency voice communication systems per BS 8893 (new 2025 normative reference) and Equality Act 2010 obligations',
+              'Distinguish life-safety outputs (always monitored, fail-safe) from informational outputs (BMS, logging) that may use simpler interfaces',
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The 2025 accessibility requirement (clause 7)</ContentEyebrow>
+
+          <ConceptBlock
+            title="Interfaces must be accessible for maintenance"
+            plainEnglish="Interfaces are devices that translate between the fire alarm system and other building systems — relays, contact outputs, signal modules. They are typically wall-mounted boxes containing the interface circuitry. Over the system's life, interfaces require maintenance: testing the contact operation, replacing failed components, updating wiring on system changes. BS 5839-1:2025 clause 7 introduces a new requirement: interfaces must be located so they are ACCESSIBLE for maintenance. This aligns with the Construction (Design and Management) Regulations 2015 obligation to reduce risks to maintenance personnel."
+            onSite="Before signing off an interface location, ask: 'Can a fire alarm engineer reach this interface during a normal working day, with normal access, without coordination with other trades?' If yes, the location is fine. If the answer involves shutting down switchgear, getting a permit, or scaffolding, the location is not fine — find another."
+          >
+            <p>The clause and its practical effect:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Clause 7 of BS 5839-1:2025</strong> — &quot;For all systems and categories,
+                the fire detection and fire alarm system interfaces should be located such that they
+                are accessible for maintenance purposes.&quot;
+              </li>
+              <li>
+                <strong>CDM 2015 alignment</strong> — designers have a legal duty to reduce risks
+                during the construction AND maintenance phases of a project. Interface placement
+                affects maintenance risk; designers must consider maintenance access from the
+                outset.
+              </li>
+              <li>
+                <strong>The clause example</strong> — interfaces should not be sited inside an
+                enclosure provided for other equipment if access would not be possible without
+                removing power to that other equipment or requiring attendance by other parties.
+              </li>
+              <li>
+                <strong>Practical interpretation</strong> — interface boxes mounted on accessible
+                wall surfaces in defined plant rooms / risers / service voids; not buried in ceiling
+                voids without access hatches; not behind permanent finishes; not inside live
+                switchgear cabinets.
+              </li>
+            </ul>
+            <p>
+              The new requirement formalises common-sense good practice that was previously left to
+              designer judgement. It changes the conversation at design review: interface
+              accessibility is now a clause-level question, asked explicitly.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Clause 7 (Placement of interfaces)"
+            clause={
+              <>
+                For all systems, and categories, the fire detection and fire alarm system interfaces
+                should be located such that they are accessible for maintenance purposes. This is to
+                keep in line with the requirements of The Construction (Design and Management)
+                Regulations 2015, with its requirements to reduce risks to maintenance personnel.
+                Therefore, as a common example, this might preclude the siting of the interface
+                within an enclosure provided for other equipment, as access might not be possible
+                without the need for attendance by other parties or might involve removing power to
+                the other equipment.
+              </>
+            }
+            meaning="Three explicit alignments. (1) CDM 2015 is named — designers have legal duties under CDM that include planning for maintenance. (2) The 'enclosure for other equipment' example is illustrative — switchgear cabinets are the most common case but the principle applies more broadly. (3) The clause asks designers to think about who needs to access the interface and how, throughout the system's life, not just at install."
+          />
+
+          <InlineCheck
+            id={inlineChecks[0].id}
+            question={inlineChecks[0].question}
+            options={inlineChecks[0].options}
+            correctIndex={inlineChecks[0].correctIndex}
+            explanation={inlineChecks[0].explanation}
+          />
+
+          {/* Diagram — interface schematic */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+            <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+              Diagram
+            </p>
+            <h4 className="text-sm font-bold text-white mb-4">
+              Interface schematic — door release, lift recall, plant shutdown, EVC
+            </h4>
+            <svg
+              viewBox="0 0 880 540"
+              className="w-full h-auto"
+              role="img"
+              aria-label="A fire alarm CIE with monitored interface outputs feeding (a) magnetic door holders for fire doors, (b) lift recall input on the lift controller per BS EN 81-73, (c) HVAC / gas plant shutdown via emergency stop input, (d) Disabled refuge EVC system per BS 8893."
+            >
+              <text
+                x="440"
+                y="28"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="14"
+                fontWeight="bold"
+              >
+                Fire alarm CIE → interface outputs → controlled systems
+              </text>
+
+              {/* CIE central */}
+              <rect
+                x="360"
+                y="60"
+                width="160"
+                height="100"
+                rx="10"
+                fill="rgba(251,191,36,0.1)"
+                stroke="#FBBF24"
+                strokeWidth="2"
+              />
+              <text
+                x="440"
+                y="92"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="13"
+                fontWeight="bold"
+              >
+                CIE
+              </text>
+              <text x="440" y="112" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="10">
+                Cause-and-effect
+              </text>
+              <text x="440" y="126" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="10">
+                drives outputs
+              </text>
+              <text x="440" y="146" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+                Clause 22.5 mandatory
+              </text>
+
+              {/* Top-left — Door holders */}
+              <line x1="360" y1="100" x2="200" y2="100" stroke="#22C55E" strokeWidth="2" />
+              <line x1="200" y1="100" x2="200" y2="190" stroke="#22C55E" strokeWidth="2" />
+              <rect
+                x="80"
+                y="190"
+                width="240"
+                height="100"
+                rx="8"
+                fill="rgba(34,197,94,0.08)"
+                stroke="#22C55E"
+                strokeWidth="1.6"
+              />
+              <text
+                x="200"
+                y="214"
+                textAnchor="middle"
+                fill="#22C55E"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Magnetic door holders
+              </text>
+              <text x="200" y="232" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                Electromagnet holds fire door open
+              </text>
+              <text x="200" y="248" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                De-energise on alarm → door closes
+              </text>
+              <text x="200" y="264" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                Fail-safe (loss of power = closed)
+              </text>
+              <text
+                x="200"
+                y="280"
+                textAnchor="middle"
+                fill="rgba(34,197,94,0.7)"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                MONITORED output
+              </text>
+
+              {/* Top-right — Lift recall */}
+              <line x1="520" y1="100" x2="680" y2="100" stroke="#A855F7" strokeWidth="2" />
+              <line x1="680" y1="100" x2="680" y2="190" stroke="#A855F7" strokeWidth="2" />
+              <rect
+                x="560"
+                y="190"
+                width="240"
+                height="100"
+                rx="8"
+                fill="rgba(168,85,247,0.08)"
+                stroke="#A855F7"
+                strokeWidth="1.6"
+              />
+              <text
+                x="680"
+                y="214"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Lift recall (BS EN 81-73)
+              </text>
+              <text x="680" y="232" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                Volt-free contact → lift controller
+              </text>
+              <text x="680" y="248" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                Lift returns to recall floor
+              </text>
+              <text x="680" y="264" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                Out of service (occupants out)
+              </text>
+              <text
+                x="680"
+                y="280"
+                textAnchor="middle"
+                fill="rgba(168,85,247,0.7)"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                MONITORED output
+              </text>
+
+              {/* Bottom-left — Plant shutdown */}
+              <line x1="360" y1="160" x2="200" y2="160" stroke="#EF4444" strokeWidth="2" />
+              <line x1="200" y1="160" x2="200" y2="350" stroke="#EF4444" strokeWidth="2" />
+              <rect
+                x="80"
+                y="350"
+                width="240"
+                height="100"
+                rx="8"
+                fill="rgba(239,68,68,0.08)"
+                stroke="#EF4444"
+                strokeWidth="1.6"
+              />
+              <text
+                x="200"
+                y="374"
+                textAnchor="middle"
+                fill="#EF4444"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Plant shutdown
+              </text>
+              <text x="200" y="392" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                HVAC fans / fire dampers / gas
+              </text>
+              <text x="200" y="408" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                isolation valve / fuel shut-off
+              </text>
+              <text x="200" y="424" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                Emergency-stop input on plant
+              </text>
+              <text
+                x="200"
+                y="440"
+                textAnchor="middle"
+                fill="rgba(239,68,68,0.7)"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                MONITORED output
+              </text>
+
+              {/* Bottom-right — EVC / refuge */}
+              <line x1="520" y1="160" x2="680" y2="160" stroke="#22D3EE" strokeWidth="2" />
+              <line x1="680" y1="160" x2="680" y2="350" stroke="#22D3EE" strokeWidth="2" />
+              <rect
+                x="560"
+                y="350"
+                width="240"
+                height="100"
+                rx="8"
+                fill="rgba(34,211,238,0.08)"
+                stroke="#22D3EE"
+                strokeWidth="1.6"
+              />
+              <text
+                x="680"
+                y="374"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="11"
+                fontWeight="bold"
+              >
+                Disabled refuge / EVC
+              </text>
+              <text x="680" y="392" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                BS 8893 — new 2025 normative ref
+              </text>
+              <text x="680" y="408" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="9">
+                Two-way comms refuge ↔ control
+              </text>
+              <text x="680" y="424" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+                Equality Act 2010 obligation
+              </text>
+              <text
+                x="680"
+                y="440"
+                textAnchor="middle"
+                fill="rgba(34,211,238,0.7)"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Status signalling to EVC
+              </text>
+
+              {/* Bottom legend */}
+              <rect
+                x="40"
+                y="476"
+                width="800"
+                height="48"
+                rx="8"
+                fill="rgba(251,191,36,0.05)"
+                stroke="rgba(251,191,36,0.3)"
+                strokeWidth="1.2"
+              />
+              <text
+                x="440"
+                y="496"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                BS 5839-1:2025 clause 7: ALL interfaces accessible for maintenance (CDM 2015
+                alignment)
+              </text>
+              <text x="440" y="512" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
+                Do not bury interfaces inside switchgear cabinets · life-safety outputs MONITORED ·
+                cause-and-effect matrix mandatory
+              </text>
+            </svg>
+          </div>
+
+          <SectionRule />
+
+          <ContentEyebrow>
+            Interface types — door, lift, plant, BMS, access, voice, EVC
+          </ContentEyebrow>
+
+          <ConceptBlock
+            title="Magnetic door holders — passive compartmentation made active"
+            plainEnglish="A fire-resisting door is part of the building's passive compartmentation. Held closed it forms part of the fire barrier; held open (for free passage of occupants and goods) the compartment line is broken. A magnetic door holder is an electromagnet that holds the fire door OPEN against the closing force of a self-closer. Energising the magnet (normal condition) holds the door open; de-energising the magnet (fire alarm or power loss) releases the door which closes under the self-closer's spring force, restoring the compartment."
+          >
+            <p>Design considerations:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Fail-safe</strong> — the magnet de-energising on power loss closes the door.
+                This is the architectural property: no separate signal needed. A fire that damages
+                the supply causes the door to close.
+              </li>
+              <li>
+                <strong>Monitored output</strong> — the fire alarm CIE provides a monitored
+                interface output that drops the magnet supply on fire alarm. Continuous monitoring
+                detects cable faults; at fire-alarm time the monitored output drops the supply
+                intentionally.
+              </li>
+              <li>
+                <strong>Coordination with door hardware</strong> — the door must have a self-closer
+                strong enough to overcome any swelling / friction. The magnet must be powerful
+                enough to hold the door open in normal conditions but weaker than the self-closer
+                under release.
+              </li>
+              <li>
+                <strong>Manual release</strong> — door holders typically include a local manual
+                release button to allow the door to be closed without triggering the fire alarm
+                (e.g. for fire drills, security checks).
+              </li>
+            </ul>
+            <p>
+              Door holders are widely used in commercial buildings, hospitals, schools, and wherever
+              free passage is needed during normal operation but compartmentation must be restored
+              on alarm. The cause-and-effect matrix records the release trigger.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Lift recall — BS EN 81-73 integration"
+            plainEnglish="Passenger lifts are not normally used for evacuation in fire (firefighting lifts and evacuation lifts are exceptions designed for different scenarios). On a fire alarm, lifts are recalled to the designated recall floor (typically the ground / final exit floor); they take any passengers there, open the doors, and then go out of service. The fire alarm system signals the lift control to initiate recall via a defined interface; the lift controller executes the BS EN 81-73 recall sequence."
+          >
+            <p>Recall interface design:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Monitored volt-free contact</strong> from the fire alarm CIE / interface
+                module to the lift controller&apos;s recall input. Volt-free is universal — works
+                regardless of the lift controller voltage / circuitry.
+              </li>
+              <li>
+                <strong>Per-shaft signalling</strong> in some designs — typically all lifts in a
+                building recall together, but in some configurations specific lifts may be held in
+                service for fire-fighter use or excluded for other reasons. The cause-and-effect
+                matrix records the per-lift logic.
+              </li>
+              <li>
+                <strong>Indication at the CIE</strong> — the CIE indicates recall is active. On the
+                lift control side, BS EN 81-73 specifies the lift behaviour: returning to the recall
+                floor, opening doors, going out of service.
+              </li>
+              <li>
+                <strong>Firefighting lifts</strong> — if the building has firefighting lifts (BS EN
+                81-72), they are NOT recalled with the passenger lifts. They remain in service for
+                fire and rescue service use, controlled by their own switching at the fire-fighter
+                access level.
+              </li>
+            </ul>
+            <p>
+              The interface is the bridge between BS 5839-1 (fire alarm) and BS EN 81-73 / -72 (lift
+              safety). The two systems are commissioned together and tested together at every
+              service.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[1].id}
+            question={inlineChecks[1].question}
+            options={inlineChecks[1].options}
+            correctIndex={inlineChecks[1].correctIndex}
+            explanation={inlineChecks[1].explanation}
+          />
+
+          <ConceptBlock
+            title="Plant shutdown — HVAC, gas, fuel, process"
+            plainEnglish="Several building services must shut down or change state on fire alarm to manage the spread of fire / smoke and to remove fuel sources. The fire alarm system signals each affected plant via interface outputs; each plant has an emergency-stop input that triggers the shutdown sequence. The cause-and-effect matrix records every interface output and the sequence of activation."
+          >
+            <p>Typical plant shutdowns:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>HVAC fans</strong> — shut off to prevent smoke distribution through the
+                ductwork. Some smoke control systems do the opposite — START fans to extract smoke
+                from specific zones. The cause-and-effect matrix records which fans stop and which
+                start.
+              </li>
+              <li>
+                <strong>Fire dampers</strong> — close to seal the ductwork penetrations through fire
+                compartments. Some are electrically driven (interface controlled); some are
+                fusible-link / passive.
+              </li>
+              <li>
+                <strong>Gas isolation valves</strong> — close to remove gas as a fuel source from
+                the affected area. Often a building-wide gas valve at the meter; sometimes
+                zone-specific valves for laboratories / kitchens.
+              </li>
+              <li>
+                <strong>Fuel shut-offs</strong> — fuel oil pumps, biomass feeds, hydrogen / other
+                fuel supply lines. Critical in industrial premises.
+              </li>
+              <li>
+                <strong>Process emergency stops</strong> — manufacturing, chemical, food processing
+                equipment. Fire alarm initiates the same emergency-stop sequence as a local E-stop
+                button.
+              </li>
+            </ul>
+            <p>
+              Each plant shutdown is a defined interface from the CIE to the plant controller. Each
+              interface output is monitored for life-safety reasons. The matrix records the
+              activation logic; the commissioning tests verify each interface operates as specified.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Access control — fail-safe to escape"
+            plainEnglish="Modern buildings often have access-controlled doors on escape routes — magnetic locks, electric strikes, or maglock-equipped fire doors. Access control prevents unauthorised entry but must NEVER prevent egress in a fire. The fire alarm interface signals the access control system (or directly drops the lock supply) on fire alarm, releasing all locks on escape routes."
+          >
+            <p>Design principles:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Fail-safe to unlocked</strong> — the lock technology must release on power
+                loss. Magnetic locks (maglocks) do this by design — the lock holds when energised
+                and releases when de-energised. Electric strikes need to be specified fail-safe-mode
+                (also de-energised = released).
+              </li>
+              <li>
+                <strong>Direct power drop OR signalling</strong> — the simplest design is for the
+                fire alarm interface to drop the lock supply directly. More sophisticated designs
+                signal the access control system, which logs the event and releases the relevant
+                doors.
+              </li>
+              <li>
+                <strong>Independent override</strong> — break-glass green call points adjacent to
+                each access-controlled exit door provide manual override. These are NOT fire alarm
+                call points; they are escape-door overrides.
+              </li>
+              <li>
+                <strong>Secure but not trapped</strong> — the design balance: secure under normal
+                conditions; never trap occupants in a fire.
+              </li>
+            </ul>
+            <p>
+              Building Regulations and the Regulatory Reform (Fire Safety) Order 2005 require escape
+              routes to be useable. Access control that prevents escape is non-compliant. The fire
+              alarm interface to access control is the principal mechanism that ensures compliance
+              under alarm conditions.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Regulatory Reform (Fire Safety) Order 2005 · Article 14 (Emergency routes and exits)"
+            clause={
+              <>
+                Where necessary in order to safeguard the safety of relevant persons in case of
+                fire, the responsible person must ensure that emergency routes and exits are kept
+                clear at all times and that any door or gate on an escape route can be easily and
+                immediately opened by any person who may require to use it in an emergency. Any fire
+                detection and fire alarm system or other safety system that is interfaced with door
+                release / access control should ensure that locked doors release immediately on the
+                fire alarm signal.
+              </>
+            }
+            meaning="Escape route doors must release on fire alarm. The fire alarm interface to access control is how this is implemented; the maglock fail-safe behaviour is how this is achieved physically. Failure here is a serious fire safety failing — occupants trapped behind locked doors. Designers, installers, and the responsible person are jointly responsible for ensuring the escape integrity."
+          />
+
+          <ConceptBlock
+            title="BMS / network integration — informational, not control"
+            plainEnglish="Modern buildings have a Building Management System (BMS) that integrates HVAC, lighting, energy, and other systems. The BMS commonly receives status signals from the fire alarm — fire indication per zone, fault status, isolation status — for logging, alerting facilities staff, and integration with other building events. The fire alarm REMAINS the controller of life-safety functions. The BMS is informed; the BMS does not control."
+          >
+            <p>Integration patterns:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Volt-free contact outputs</strong> — typical for legacy / simple
+                installations. Fire / fault / isolation status as separate contacts read by the BMS
+                as digital inputs.
+              </li>
+              <li>
+                <strong>Serial / network protocol</strong> — BACnet, Modbus, or vendor-proprietary —
+                for richer data including zone-level status, device-level addressable information,
+                and historical event logs.
+              </li>
+              <li>
+                <strong>Cyber security boundary</strong> (per BS 5839-1:2025 clause 43.4) — the
+                interface to BMS / corporate network must not allow the BMS to control the fire
+                alarm. Authentication, network segregation, and risk assessment per the 2025
+                cyber-security clause apply.
+              </li>
+            </ul>
+            <p>
+              The fire alarm system\&apos;s primary loyalty is to the life-safety function. Any
+              integration with BMS / network must preserve that loyalty.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[2].id}
+            question={inlineChecks[2].question}
+            options={inlineChecks[2].options}
+            correctIndex={inlineChecks[2].correctIndex}
+            explanation={inlineChecks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Voice alarm and emergency voice communication</ContentEyebrow>
+
+          <ConceptBlock
+            title="Voice alarm — BS 5839-8 / EN 54-16 / EN 54-24"
+            plainEnglish="In larger or more complex buildings, voice alarm replaces (or augments) tone-based sounders. Instead of a generic alarm tone, occupants hear spoken evacuation messages: 'A fire has been reported in the building. Please evacuate via the nearest exit.' BS 5839-8 specifies the voice alarm system design; BS EN 54-16 governs the voice alarm control + indicating equipment; BS EN 54-24 governs the loudspeakers. The fire alarm CIE triggers the voice alarm via an interface; the voice alarm system delivers the spoken messages."
+          >
+            <p>Design considerations:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Trigger interface</strong> — fire alarm CIE → voice alarm controller. The
+                cause-and-effect matrix specifies which message zones activate on which causes.
+                Phased evacuation in a tall building uses voice alarm extensively because spoken
+                messages can give specific instructions per floor.
+              </li>
+              <li>
+                <strong>Message zones</strong> — areas of the building covered by specific
+                loudspeaker groups. Often align with fire detection zones; not always (a single
+                voice alarm zone may cover several detection zones).
+              </li>
+              <li>
+                <strong>Pre-recorded vs live</strong> — pre-recorded messages for standard
+                evacuation; live announcements via microphone for staff use during managed response.
+              </li>
+              <li>
+                <strong>Audibility and intelligibility</strong> — voice alarm must be loud enough
+                AND clear enough. Speech transmission index (STI) is the metric; specific values per
+                BS 5839-8.
+              </li>
+            </ul>
+            <p>
+              Voice alarm is now common in large retail, transport hubs, hotels, and high-rise
+              buildings. The integration with fire alarm is via interface outputs; the design and
+              commissioning are coordinated.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Disabled refuge and emergency voice communication — BS 8893 (new 2025 normative reference)"
+            plainEnglish="Disabled refuges are protected spaces within escape routes where occupants who cannot self-evacuate (wheelchair users, occupants with mobility impairments, occupants with sensory impairments) wait for evacuation assistance. They are equipped with two-way emergency voice communication (EVC) systems connecting the refuge to a control point manned during the evacuation. BS 8893 specifies the EVC system; BS 5839-1:2025 adds it as a normative reference."
+          >
+            <p>Refuge + EVC integration:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>The refuge</strong> — a fire-resisting protected space within or adjacent to
+                a stairway / escape route. Equipped with an evacuation chair, the EVC handset, and
+                signage. Per Approved Document M / Equality Act 2010 obligations.
+              </li>
+              <li>
+                <strong>The EVC</strong> — a two-way audio communication system. The refuge has a
+                handset / panel; a control point (fire warden station / reception) has a master
+                panel that takes calls from any active refuge handset. BS 8893 specifies the
+                technical requirements.
+              </li>
+              <li>
+                <strong>Fire alarm interface</strong> — the fire alarm CIE signals fire status to
+                the EVC system. The EVC system may automatically switch to a "fire" state where it
+                displays / signals the alarm status to the refuge and to the control point. The EVC
+                remains operational independent of the fire alarm — it has its own power supply, its
+                own cabling.
+              </li>
+              <li>
+                <strong>Evacuation lifts</strong> — where provided (typically high-rise buildings),
+                evacuation lifts are managed in coordination with the fire alarm and the EVC. They
+                are dispatched to refuges to evacuate occupants who cannot use stairs.
+              </li>
+            </ul>
+            <p>
+              The 2025 normative reference to BS 8893 signals the maturity of EVC systems as
+              standard life-safety infrastructure. Designers of new buildings (and refurbishments of
+              existing ones) increasingly include EVC as part of an inclusive evacuation strategy.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Normative references (BS 8893 added 2025)"
+            clause={
+              <>
+                BS 8893, Emergency voice communication (EVC) systems — Components — Specification,
+                is added to the normative references in BS 5839-1:2025. EVC systems are a normal
+                expectation in fire detection and fire alarm system design where disabled refuges
+                are provided per the Equality Act 2010 and Approved Document M of the Building
+                Regulations.
+              </>
+            }
+            meaning="The 2025 standard formally recognises EVC as part of the life-safety design framework. BS 8893 is the EVC component specification; BS EN 50518 covers monitoring and alarm receiving centres; together they provide the standards-based framework. The fire alarm system interfaces with the EVC; the EVC integrates with the broader inclusive evacuation strategy."
+          />
+
+          <Scenario
+            title="High-rise office tower — interfaces in a complex life-safety system"
+            situation="A 25-storey commercial office tower is being designed. The fire engineering specifies phased evacuation, a voice alarm system covering the whole building, lift recall on all 8 passenger lifts (BS EN 81-73), a separate firefighting lift (BS EN 81-72), 12 disabled refuges (one on each upper floor stairway lobby) with EVC, magnetic door holders on cross-corridor fire doors, BMS integration for facilities management, plant shutdown (HVAC fans, gas valves on lower floors). The fire alarm designer must specify all interfaces."
+            whatToDo="Map every interface against the cause-and-effect matrix. Each interface is a clause-7 conversation: where will this interface module physically live? Is it accessible for maintenance? On a 25-storey building, interfaces should typically be sited in service risers / plant rooms with proper access — not buried in ceilings or inside live switchgear cabinets. Lift recall interfaces: monitored volt-free contacts from CIE → lift controller in the lift motor room (accessed by lift maintenance); CIE indicates recall active; firefighting lift NOT recalled with passengers. Door holders: monitored outputs to each magnet circuit; cause-and-effect releases at the right stage in the phased evacuation. EVC: BS 8893-compliant system with handsets at each refuge, master panel at the fire warden control point on the ground floor; fire alarm signals fire status to EVC, EVC remains independent. Voice alarm: BS 5839-8 system, message zones aligned to floors / phased stages; pre-recorded messages with live announcement capability from the fire warden position. Plant shutdown: HVAC interfaces accessible at the AHU plant rooms; gas valve interface accessible at the gas meter cabinet (with appropriate signage and access management). BMS integration: BACnet over IP, fire alarm system signals one-way to BMS, BMS does not control fire alarm. Cyber security: BS 5839-1:2025 clause 43.4 — physical access control to the CIE cabinet, network segregation between fire alarm and corporate IT, authentication for any remote service. Document everything in the cause-and-effect matrix and the interface schedule. Issue a commissioning certificate and a system extension or modification certificate per clause 47."
+            whyItMatters="A 25-storey tower has perhaps 50-100 individual interfaces. Each is a single point that must work in a fire. Each is a single point that must be maintainable over the building's 50-year life. The 2025 clause 7 accessibility requirement is not pedantry — it is the difference between a system that is maintained and a system that is left to degrade. The cause-and-effect matrix coordinates everything; the interface schedule is the implementation."
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Monitored vs unmonitored — when each is appropriate</ContentEyebrow>
+
+          <ConceptBlock
+            title="Monitoring is the BS 5839-1 baseline for life-safety"
+            plainEnglish="Cable monitoring continuously checks the integrity of an interface output's wiring. The fire alarm system passes a small standby current; if the cable opens (break) or shorts, the current changes and the CIE reports a fault. Monitored outputs catch silent failures: a cable damaged during refurbishment, a corroded terminal, a connector vibrating loose. Unmonitored outputs do not — a fault on the cable would only be discovered at the next scheduled test."
+          >
+            <p>The BS 5839-1 monitoring expectations:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Sounder circuits</strong> — always monitored. A failed sounder cable means
+                an audible alarm not heard.
+              </li>
+              <li>
+                <strong>VAD circuits</strong> — always monitored. Same reasoning for visual alarms.
+              </li>
+              <li>
+                <strong>Voice alarm interfaces</strong> — monitored to and within the voice alarm
+                system.
+              </li>
+              <li>
+                <strong>Lift recall outputs</strong> — monitored. Lift recall is life-safety.
+              </li>
+              <li>
+                <strong>Door holder outputs</strong> — monitored. Door release is life-safety
+                (compartmentation restoration).
+              </li>
+              <li>
+                <strong>Plant shutdown outputs</strong> — typically monitored where life-safety
+                affects (HVAC for smoke control, gas isolation).
+              </li>
+              <li>
+                <strong>BMS / informational outputs</strong> — may be unmonitored. The BMS receiving
+                stale or no data is not a life-safety failure.
+              </li>
+              <li>
+                <strong>Service / maintenance signals</strong> — may be unmonitored. Engineering
+                test outputs, indication-only signals.
+              </li>
+            </ul>
+            <p>
+              The design specifies monitored vs unmonitored per output. The CIE configuration
+              matches. Commissioning verifies the monitoring is operational. The 6-monthly service
+              tests cable monitoring by introducing controlled faults at the interface and observing
+              the CIE response.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[3].id}
+            question={inlineChecks[3].question}
+            options={inlineChecks[3].options}
+            correctIndex={inlineChecks[3].correctIndex}
+            explanation={inlineChecks[3].explanation}
+          />
+
+          <CommonMistake
+            title="Siting a fire alarm interface inside a switchgear cabinet"
+            whatHappens="A new commercial premises is designed with the fire alarm interface to a generator load-shed function sited inside the LV switchgear cabinet because it was the closest space at install time. Three years later, a service engineer arrives to test the load-shed interface during a 6-monthly service. They cannot access the cabinet without the building's HV electrician attending and isolating part of the LV switchgear. The service engineer reports the interface as inaccessible, the load-shed test is deferred, the service is incomplete."
+            doInstead="Per BS 5839-1:2025 clause 7, the interface should not be sited inside an enclosure for other equipment if access requires removing power to that other equipment OR attendance by other parties. Site the interface in an accessible location — adjacent to the switchgear in a separate small enclosure with its own access; in a service cupboard; in a plant room with proper access. The interface module itself is small (perhaps a pattress-sized box); the space requirement is modest; the savings from co-location are typically minimal. The new clause prevents this trade-off being made at install in a way that bites later."
+          />
+
+          <CommonMistake
+            title="Treating door holders as unmonitored 'just to save cable'"
+            whatHappens="A retrofit fire alarm covers a building with 30 fire doors fitted with magnetic door holders. The original install used unmonitored interface outputs to the magnets, justified at the time as 'door holders fail safely on power loss anyway.' Two years later, a cable supplying one zone's door holders is damaged during a separate works project. The cable is severed but the maintenance team does not notice — there is no monitoring, no fault on the CIE. The doors held by that cable are no longer held energised; they have closed. Occupants report 'doors keep closing on us' and the building manager assumes mechanical fault. The compartmentation function is in fact still working (the doors close); the convenience function (held open) is broken. But the CIE shows nothing wrong."
+            doInstead="Monitor door holder outputs. The 'fail-safe' argument is correct for the closing direction (doors close on power loss = compartmentation restored), but it ignores the other failure mode: the holding circuit failing in a way that closes doors prematurely is also a fault that must be reported. Monitored outputs catch cable faults; the CIE reports the fault; the maintenance organisation responds. The cable cost difference for monitoring is trivial; the operational benefit is real."
+          />
+
+          <CommonMistake
+            title="Forgetting the voice alarm cause-and-effect matrix entries"
+            whatHappens="A building with both fire alarm sounders AND voice alarm has a cause-and-effect matrix that documents the sounder activation per zone — but does not document the voice alarm message zones, message selection, or staging. The voice alarm system is commissioned separately by the VA contractor. At a fire test six months later, the sounders activate as expected but the voice alarm gives a different message in some zones than the fire alarm matrix would suggest. The two systems have drifted out of alignment. There is no single source of truth."
+            doInstead="The cause-and-effect matrix covers ALL outputs the fire alarm system controls — sounders, VADs, voice alarm message zones, lift recall, door holders, plant shutdown, EVC signals, ARC transmission. Voice alarm is integrated, not separate. The matrix records, for each cause, every effect across every output system. The commissioning of the integrated system tests every entry. the BS 5839-1:2025 mandate that the matrix be in handover documentation is exactly to prevent this kind of drift."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="What to remember on site"
+            points={[
+              "NEW in BS 5839-1:2025 (clause 7): interfaces must be accessible for maintenance, aligned with CDM 2015. Don't bury them in switchgear cabinets.",
+              'Lift recall (BS EN 81-73): monitored volt-free contact CIE → lift controller; lift returns to recall floor and goes out of service.',
+              'Magnetic door holders: electromagnets hold fire doors open in normal conditions; de-energise on alarm to close doors. Fail-safe by design. Monitored output.',
+              'Plant shutdown: HVAC, gas, fuel, process emergency stops via monitored outputs. Cause-and-effect matrix records each.',
+              'Access control: escape route doors must fail-safe to UNLOCKED on fire alarm. Magnetic locks (maglocks) or fail-safe-mode electric strikes; fire alarm signals release.',
+              'BMS integration: informational only — BMS receives status; BMS does NOT control fire alarm. Cyber security boundary per clause 43.4.',
+              'Voice alarm: BS 5839-8 design, BS EN 54-16 control + indicating equipment, BS EN 54-24 loudspeakers. Trigger interface from fire alarm CIE; messages per zone.',
+              'Disabled refuge + EVC: BS 8893 NEW 2025 normative reference. Two-way comms refuge ↔ control point. Equality Act 2010 / Approved Document M obligations.',
+              'BS EN 50518 covers ARC monitoring infrastructure for life-safety signalling.',
+              'Monitored outputs (continuous cable check) for life-safety functions. Unmonitored may be acceptable for informational signals only.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Where should a fire alarm interface module be sited per BS 5839-1:2025?',
+                answer:
+                  'In a location accessible for maintenance per clause 7. Practical guidance: in a service cupboard, riser, or plant room with normal working access; not inside switchgear cabinets where access requires isolating live equipment; not in ceiling voids without access hatches; not behind permanent finishes. The principle: a fire alarm engineer should be able to reach the interface during routine maintenance without coordinating with other trades or shutting down other systems.',
+              },
+              {
+                question: 'Is BS EN 81-73 a fire alarm standard?',
+                answer:
+                  'No — it is a lift safety standard. It specifies how lifts behave in the event of a fire alarm signal: recalling to the recall floor, opening doors, going out of service. The fire alarm system does not implement this behaviour; the lift does. The fire alarm interface to the lift control provides the trigger signal. The two systems work together; commissioning involves both contractors testing the integrated behaviour.',
+              },
+              {
+                question:
+                  'On a fire alarm, do firefighting lifts get recalled with passenger lifts?',
+                answer:
+                  'No. Firefighting lifts (BS EN 81-72) are intended for fire and rescue service use during fire-fighting operations. They are NOT recalled by the passenger-lift recall logic. They remain in service, controlled by switching at the firefighting access level. The cause-and-effect matrix clearly distinguishes passenger lifts (recalled) from firefighting lifts (held in service).',
+              },
+              {
+                question: 'How is the EVC system tested?',
+                answer:
+                  'Per BS 8893 maintenance recommendations and the maintenance schedule for the EVC system. Routine testing typically includes: handset operation at each refuge, audio quality from refuge to control point, control point answer / call routing, fault indication. The fire alarm interface to the EVC is tested at each fire alarm service visit (the fire alarm signals "fire" to the EVC; the EVC indication should respond). The EVC has its own commissioning and maintenance regime separate from but coordinated with the fire alarm.',
+              },
+              {
+                question: 'Can BMS integration use a network protocol like BACnet?',
+                answer:
+                  'Yes — many modern installations use BACnet, Modbus, or similar protocols for BMS integration. The interface is informational: the BMS reads status from the fire alarm. Cyber security per BS 5839-1:2025 clause 43.4 applies — the integration must not allow the BMS to control the fire alarm. Network segregation, authentication, and risk assessment apply. The interface is typically read-only from the BMS perspective.',
+              },
+              {
+                question: 'What happens if a magnetic door holder cable is faulty?',
+                answer:
+                  'If the output is monitored (per BS 5839-1 expectation), the CIE reports a fault. The responsible person and servicing organisation respond — a service engineer attends, diagnoses, repairs the cable. The doors held by that cable have likely already closed (de-energising on cable break) — compartmentation is restored, but the convenience function is lost. If the output is unmonitored, the same physical event happens (doors close) but the CIE does not report a fault — the next service visit identifies the issue, potentially weeks later. Monitor your outputs.',
+              },
+              {
+                question: 'Is voice alarm part of fire alarm or a separate system?',
+                answer:
+                  'Both. Voice alarm has its own product standards (BS EN 54-16 for control + indicating equipment, BS EN 54-24 for loudspeakers) and design standard (BS 5839-8). It is a separate system in the same way that a sounder circuit is a separate system. From the cause-and-effect matrix perspective, voice alarm is simply another output the fire alarm CIE controls. Commissioning and maintenance involve both fire alarm and voice alarm contractors; the integrated system is verified end-to-end at the fire alarm system commissioning.',
+              },
+              {
+                question: 'How should I document interfaces in the design package?',
+                answer:
+                  'Three things. (1) An interface schedule — a table listing every interface, where it physically is, what it controls, monitored or unmonitored, the cable type / route. (2) The cause-and-effect matrix — what each cause does to each output, including each interface output. (3) Interface schematics — diagrammatic representations of the wiring, particularly important for complex interfaces (lift recall, plant shutdown, EVC integration). All three together form the documentation set per BS 5839-1:2025 clause 22 / 38.',
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Knowledge check</ContentEyebrow>
+          <Quiz title="Interface design — Module 3.4" questions={quizQuestions} />
+
+          {/* Bottom navigation grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/fire-alarm-course/module-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 3
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/fire-alarm-course/module-3/section-5')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                3.5 Network and multi-panel systems
+              </div>
+            </button>
+          </div>
+
+          <div className="hidden">
+            <Activity />
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

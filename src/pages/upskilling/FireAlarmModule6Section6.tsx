@@ -1,817 +1,972 @@
-import { useState, useMemo } from 'react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Users } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
-  ArrowLeft,
-  ArrowRight,
-  Users,
-  CheckCircle,
-  AlertTriangle,
-  HelpCircle,
-  BookOpen,
-  RotateCcw,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+  TLDR,
+  LearningOutcomes,
+  ContentEyebrow,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
-import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
-import type { QuizQuestion } from '@/types/quiz';
 
-const TITLE = 'Handover & Client Training - Fire Alarm Course';
-const DESCRIPTION =
-  'Master fire alarm system handover procedures, user training delivery and ongoing support per BS 5839-1.';
+const inlineChecks = [
+  {
+    id: 'fam6-s6-rp',
+    question:
+      'Who is the "responsible person" under the Regulatory Reform (Fire Safety) Order 2005, and what is their relationship to the BS 5839-1:2025 weekly user test duty?',
+    options: [
+      'The fire and rescue service.',
+      'In most non-domestic premises the responsible person is (in workplace areas) the employer, (otherwise) the person with control of the premises in connection with carrying on a trade / business / undertaking, or the owner. RRO 2005 Article 17 places on this person the duty to maintain fire safety provisions in efficient working order. BS 5839-1:2025 implements this through the weekly user test, monthly auxiliary supply test, and contracted six-monthly servicing. The responsible person owns the duty even where they delegate execution to a designated person on site.',
+      'Anyone in the building.',
+      'The servicing organisation only.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'RRO 2005 Article 3 defines the responsible person; Article 17 imposes the maintenance duty. BS 5839-1:2025 implementation hangs on this duty. Delegation of execution does not transfer the duty.',
+  },
+  {
+    id: 'fam6-s6-content',
+    question:
+      'At handover, what training does BS 5839-1:2025 expect the commissioning / handover organisation to provide to the user / responsible person?',
+    options: [
+      'Just a phone number for the engineer.',
+      'A structured training session covering: how to perform the weekly user test (operate one MCP rotated through the building, observe alarm, confirm sounders / VADs, reset, log); what to do on a real alarm activation (occupant evacuation, FRS interaction, system reset by competent person only); how to respond to a fault indication (do not silence, log, contact servicing organisation, institute interim measure if applicable); the false-alarm categories and how to assign them; the location of all documentation; basic cyber-security expectations (do not connect untrusted devices, change default passwords, restrict physical access). The training is recorded in the logbook with date and signed acknowledgement.',
+      'No training is required.',
+      'Just a leaflet.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Structured handover training covering test, alarm response, fault response, false-alarm categorisation, documentation, cyber security. Recorded with date and signed acknowledgement. The 2025 standard makes the false-alarm-category training explicit (was implicit pre-2025).',
+  },
+  {
+    id: 'fam6-s6-doc',
+    question: 'What documentation pack should be left with the responsible person at handover?',
+    options: [
+      'Just a wiring diagram.',
+      'A complete pack including: acceptance certificate (Annex G), as-installed drawings, zone plan (per clause 22.2.5 — note multi-zone sleeping premises now require a zone plan unconditionally per clause 6), cause-and-effect matrix or text description (NEW 2025 — clause 47 explicitly requires this), O&M manuals for the CIE and each device type, asset register with every device row populated, log book template (per Annex H), training records of designated weekly-test users, ARC connection details and credentials, manufacturer cyber-security guidance, and contact details for the servicing organisation.',
+      'No documentation.',
+      'Just an invoice.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Comprehensive doc pack: certificate, drawings, zone plan, cause-and-effect (NEW 2025 explicit), O&M manuals, asset register, logbook, training records, ARC details, cyber-security guidance, contacts. The 2025 standard adds the cause-and-effect requirement explicitly.',
+  },
+  {
+    id: 'fam6-s6-cyber',
+    question: 'Cyber-security training for the user / responsible person should cover.',
+    options: [
+      'Nothing — only engineers need cyber training.',
+      'Basic cyber-hygiene appropriate to a non-technical user: do not connect untrusted devices to the CIE / gateway (USB sticks, laptops); do not share authentication credentials; physical access control to the CIE / comms cabinet; recognising unusual remote-access requests (a contractor calling to "do an emergency firmware update" without a planned service visit is a red flag); reporting any suspected unauthorised access to the servicing organisation immediately. The 2025 standard supports this by adding the cyber-security clause 43.4 — the user is part of the defence, not just the engineer.',
+      'Only how to read manuals.',
+      'Just a password.',
+    ],
+    correctIndex: 1,
+    explanation:
+      'User-level cyber hygiene. Basic, non-technical, focused on what the user can do (or refuse to do) to support the wider cyber-security regime under clause 43.4. The user is part of the defence.',
+  },
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question:
+      'Who is the "responsible person" under RRO 2005 in a typical workplace, and what is their relationship to BS 5839-1:2025?',
+    options: [
+      'The fire brigade.',
+      'In most workplaces, the employer is the responsible person for workplace areas; for non-workplace non-domestic premises, the person with control of the premises in connection with carrying on a trade / business / undertaking, or the owner. RRO 2005 Article 17 imposes the duty to maintain fire safety provisions in efficient working order. BS 5839-1:2025 is the practical implementation — weekly tests, monthly auxiliary tests, six-monthly servicing — that delivers that duty for the fire alarm system.',
+      'The local council.',
+      'Any visitor.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'RRO 2005 Article 3 + Article 17 — responsible person + maintenance duty. BS 5839-1:2025 implements the duty practically. Delegation of execution does not transfer the duty.',
+  },
+  {
+    id: 2,
+    question:
+      'Per BS 5839-1:2025 clause 47, what is now explicitly required to be included in the documentation pack at handover?',
+    options: [
+      'No specific addition.',
+      'A cause-and-effect matrix or text description of how the cause and effect operates. The 2025 standard explicitly recommends this — could be as simple as "this system operates as simultaneous evacuation" for a basic system, or a comprehensive cause-and-effect matrix document for complex strategies. The standard does not dictate the format, but it does require the document to be produced and included.',
+      'A photograph of the building.',
+      'Bank details.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Cause-and-effect document = NEW 2025 explicit handover requirement (clause 47). Simple system = simple statement; complex strategy = matrix document. Format flexible; production mandatory.',
+  },
+  {
+    id: 3,
+    question: 'The handover training session should cover which of the following at minimum?',
+    options: [
+      'Just the panel reset procedure.',
+      'Weekly user test procedure (operate one MCP rotated, observe alarm, sounders / VADs, ARC, reset, log); response to a real alarm (evacuation, FRS interaction, reset only by competent person); response to a fault indication (no silencing, log, notify servicer, interim measure if applicable); false-alarm categorisation (NEW 2025 explicit user training); documentation locations; cyber-security basics (no untrusted devices, physical access, credentials). The training is recorded in the logbook with date and signed acknowledgement.',
+      'Only the cleaning schedule.',
+      'A handout only.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Structured training: test, alarm, fault, false-alarm categorisation, documentation, cyber security. Recorded and signed. The 2025 standard makes false-alarm-category training explicit.',
+  },
+  {
+    id: 4,
+    question: 'Periodic re-training of the designated weekly-test user is recommended.',
+    options: [
+      'Never.',
+      "When the designated user changes (new staff member taking on the duty), when the system is significantly modified (new zones, new CIE, new firmware behaviour), at the responsible person's discretion in response to changes in premises use or staff turnover, and as a matter of good practice on an annual or biennial cycle. The training records are updated and the new user signs the logbook to acknowledge their training.",
+      'Only after a real fire.',
+      'Only every ten years.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Re-training triggered by user change, system modification, or planned cycle. Records updated; logbook signed.',
+  },
+  {
+    id: 5,
+    question:
+      'A real fire alarm has activated. Per the handover training, the user / staff response should be.',
+    options: [
+      'Reset the panel and continue.',
+      "Initiate evacuation per the building's fire plan; do NOT reset the panel until the source has been investigated and confirmed safe (the panel reset by a competent person only, after FRS clearance if FRS attended); cooperate with FRS arrival; record the event in detail in the logbook (date, time, originating device, evacuation outcome, FRS attendance, cause, damage, reset time and person); notify the servicing organisation if any damage to the system has occurred or any equipment requires post-event service.",
+      'Cover it up to avoid alarm.',
+      'Press silence and wait.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Evacuation first; reset after investigation by competent person; comprehensive logbook entry; servicing organisation notified for post-event service. The training must make this sequence routine for staff.',
+  },
+  {
+    id: 6,
+    question:
+      'A user receives a phone call from someone claiming to be a "manufacturer field engineer" needing remote access to the CIE for an "emergency firmware update". The trained response should be.',
+    options: [
+      'Grant access immediately.',
+      'Decline the request as it stands, and verify with the contracted servicing organisation. The cyber-security training should make this red flag obvious — unscheduled "emergency" remote access requests from unknown parties are a classic social-engineering attack vector. Per clause 43.4, remote access must be authenticated and risk-assessed; an unscheduled call from an unverified party does not meet that bar. Refer the caller to the servicing organisation; log the call.',
+      'Read out the password.',
+      'Connect a USB stick.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'User-level cyber hygiene. Decline + verify. Unscheduled "emergency" requests are red flags. The user is part of the defence under clause 43.4.',
+  },
+  {
+    id: 7,
+    question:
+      'A well-prepared documentation pack at handover supports the responsible person in which of the following ways?',
+    options: [
+      'Only insurance audits.',
+      'Audit-readiness for AHJ and insurer inspections; engineer continuity if the servicing organisation changes (new servicer can read the as-installed drawings and cause-and-effect rather than starting from zero); fault investigation (the cause-and-effect document tells the responsible person and engineer what the system was designed to do, against which the actual behaviour can be compared); training of new designated users (the documentation pack is the training material); modification planning (any change must reference the existing pack to ensure consistency).',
+      'No practical use.',
+      'Only legal compliance.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "The documentation pack is the responsible person's tool kit for the system's entire life — audit readiness, engineer continuity, fault investigation, user training, modification planning.",
+  },
+  {
+    id: 8,
+    question:
+      'Per BS 5839-1:2025, the user investigation of false alarms is recommended. What is the user expected to do, and what should the commissioning / handover organisation provide?',
+    options: [
+      'Nothing on either side.',
+      'The user / responsible person is recommended to arrange suitable investigation and, if appropriate, action on every occasion that a false alarm occurs (clause 29.6). The commissioning / handover organisation is recommended to advise the user on how this is to be carried out — in practice this is part of the handover training pack. The note to clause 29.6 gives examples: managerial changes within the building, modifications to the system, or further separate investigation by the maintenance organisation.',
+      'Just disable the system.',
+      'Wait for the next service.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Clause 29.6 — user investigation of every false alarm; commissioning organisation advises user on how. The handover training pack is where the "how" is delivered. Examples include managerial changes, system modifications, or formal investigation.',
+  },
+  {
+    id: 9,
+    question:
+      'The acceptance certificate carries the agreement of multiple parties. Who typically signs?',
+    options: [
+      'Just the installer.',
+      'The commissioning engineer (competent person under clause 3.13) signs as the originator of the certification statement. The responsible person (or their authorised representative) signs to acknowledge receipt and acceptance of the system. The signatures together establish the system as accepted and operational. Some scheme templates also require the designer to countersign where the designer and commissioner are different organisations.',
+      'Just the receptionist.',
+      'No signatures needed.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Acceptance signatures: commissioning engineer + responsible person (and designer if different from commissioner). The certificate is a binding agreement that the system has been delivered to specification.',
+  },
+  {
+    id: 10,
+    question:
+      'A care home changes its designated weekly-test user (the original user has retired). What handover-training-related action should be taken?',
+    options: [
+      'No action — anyone can do the test.',
+      'Provide structured training to the new user covering the same content as the original handover training (weekly test procedure, alarm response, fault response, false-alarm categorisation, documentation, cyber-security basics). Update the logbook with the training record (date, trainer, trainee). The new user signs to acknowledge training. The responsible person updates the asset / responsibility register to record the new designated user. This continuity ensures the test discipline is maintained across staff changes.',
+      'Just hand them a key.',
+      'Replace the panel.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'User changes trigger fresh training (same content as original handover training). Records updated; logbook signed. Continuity of test discipline across staff turnover is the responsibility of the responsible person.',
+  },
+];
 
 const FireAlarmModule6Section6 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
+  const navigate = useNavigate();
 
-  const questions: QuizQuestion[] = useMemo(
-    () => [
-      {
-        id: 1,
-        question: 'What is the primary purpose of system handover?',
-        options: [
-          'To complete the invoice',
-          'To transfer responsibility and ensure users can operate the system safely',
-          'To end the warranty period',
-          'To satisfy insurance requirements only',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Handover transfers responsibility to the client and ensures they can operate, test, and manage the fire alarm system safely and effectively.',
-      },
-      {
-        id: 2,
-        question: 'Who should receive fire alarm training?',
-        options: [
-          'Only the building owner',
-          'Only security staff',
-          'All responsible persons who will operate or manage the system',
-          'Just the receptionist',
-        ],
-        correctAnswer: 2,
-        explanation:
-          'All responsible persons who will operate, test, or manage the system should receive appropriate training for their role.',
-      },
-      {
-        id: 3,
-        question: 'What documentation must be provided at handover?',
-        options: [
-          'Just the warranty card',
-          'Complete documentation package including certificates, drawings, and operating instructions',
-          'Invoice only',
-          'Marketing materials',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'A complete documentation package including certificates, as-fitted drawings, zone charts, and operating instructions must be provided.',
-      },
-      {
-        id: 4,
-        question: 'What practical demonstration should be included in user training?',
-        options: [
-          'Only how to silence alarms',
-          'Panel operation, weekly testing, fault recognition and emergency procedures',
-          'Just how to call for service',
-          'Only fire drill procedures',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Training should cover panel operation, weekly testing procedures, fault recognition and response, and emergency actions.',
-      },
-      {
-        id: 5,
-        question: 'When should handover training be conducted?',
-        options: [
-          'After the warranty expires',
-          'Before the system is brought into service',
-          'Only if the client requests it',
-          'At the first annual service',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Training must be completed before the system is brought into operational service to ensure safe and effective use from day one.',
-      },
-      {
-        id: 6,
-        question: 'What should happen if staff changes occur after handover?',
-        options: [
-          'Nothing - original training is sufficient',
-          'New staff should receive appropriate training for their role',
-          'Training is only needed if there are system changes',
-          'Wait until the annual service',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'When staff with fire alarm responsibilities change, new personnel must receive appropriate training to maintain competent system management.',
-      },
-      {
-        id: 7,
-        question: 'What level of training should security staff receive?',
-        options: [
-          'Basic awareness only',
-          'Comprehensive operator training including all panel functions',
-          'No training is needed for security',
-          'Engineering level training',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Security staff often serve as first responders to alarms and should receive comprehensive training on all relevant panel operations and emergency procedures.',
-      },
-      {
-        id: 8,
-        question: 'What should be included in the operating instructions?',
-        options: [
-          'Sales information only',
-          'Panel controls, alarm response, testing, fault reporting and emergency contacts',
-          'Just manufacturer warranty',
-          'Building regulations',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Operating instructions should cover all aspects of day-to-day operation including controls, alarm response, testing procedures, and contact information.',
-      },
-      {
-        id: 9,
-        question: 'How should training attendance be recorded?',
-        options: [
-          'No record is needed',
-          'Documented in the logbook with names, dates and topics covered',
-          'Just a verbal confirmation',
-          'Only if requested by insurers',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Training attendance should be documented in the logbook with attendee names, dates, and topics covered for compliance and liability purposes.',
-      },
-      {
-        id: 10,
-        question: 'What ongoing support should be offered after handover?',
-        options: [
-          'None - handover ends all responsibility',
-          '24-hour helpline, maintenance contract options and refresher training',
-          'Only emergency callout',
-          'Just annual service',
-        ],
-        correctAnswer: 1,
-        explanation:
-          'Ongoing support typically includes helpline access, maintenance contract options, and availability of refresher training as needed.',
-      },
-    ],
-    []
-  );
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
-    Array(questions.length).fill(-1)
-  );
-  const [showResults, setShowResults] = useState(false);
-  const [showQuiz, setShowQuiz] = useState(false);
-
-  const handleAnswerSelect = (answerIndex: number) => {
-    const updated = [...selectedAnswers];
-    updated[currentQuestion] = answerIndex;
-    setSelectedAnswers(updated);
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
-    else setShowResults(true);
-  };
-
-  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
-
-  const resetQuiz = () => {
-    setCurrentQuestion(0);
-    setSelectedAnswers(Array(questions.length).fill(-1));
-    setShowResults(false);
-  };
-
-  const calculateScore = () =>
-    selectedAnswers.reduce(
-      (acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc),
-      0
-    );
+  useSEO({
+    title: 'Handover and client training | Fire Alarm Module 6.6 | Elec-Mate',
+    description:
+      'BS 5839-1:2025 handover and client training — the responsible person under RRO 2005, structured handover training (weekly test, alarm response, fault response, false-alarm categorisation), the documentation pack including the new clause 47 cause-and-effect requirement, periodic re-training, and user-level cyber-security training under clause 43.4.',
+  });
 
   return (
-    <div className="bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-6">
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Module 6
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Module 6
+          </button>
 
-      <div className="px-4 sm:px-6 py-6 max-w-4xl mx-auto space-y-8">
-        {/* Page Title */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
-              <Users className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <span className="text-sm text-white">Section 6 of 6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">Handover & Client Training</h1>
-          <p className="text-white">
-            System handover procedures, user training delivery and ongoing support.
-          </p>
-        </div>
+          <PageHero
+            eyebrow="Module 6 · Section 6"
+            title="Handover and client training"
+            description="Handover is where the system passes from the commissioning organisation to the responsible person under RRO 2005 — and where the practical conditions for ongoing safe operation are set. BS 5839-1:2025 reinforces the handover obligation with new explicit content (the cause-and-effect document under clause 47, the user-level false-alarm training, the cyber-security expectations under clause 43.4) and places the duty firmly on the commissioning / handover organisation to deliver structured training, comprehensive documentation, and ongoing support."
+            tone="yellow"
+          />
 
-        {/* Quick Summary */}
-        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white text-sm">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>
-                <strong className="text-white">Handover</strong> transfers responsibility and
-                ensures users can operate the system safely
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>
-                <strong className="text-white">Training</strong> must cover panel operation, weekly
-                testing, fault response and emergencies
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>
-                <strong className="text-white">Documentation</strong> should be complete and handed
-                over before system goes live
-              </span>
-            </li>
-          </ul>
-        </div>
+          <TLDR
+            points={[
+              'Responsible person under RRO 2005 Article 3 owns the duty to maintain fire safety provisions; BS 5839-1:2025 is the practical implementation. Delegation of execution does not transfer the duty.',
+              'Handover training (structured session, recorded, signed) covers: weekly user test, real-alarm response, fault response (no concealment per clause 23), false-alarm categorisation (NEW 2025 explicit), documentation, cyber-security basics.',
+              'Documentation pack: acceptance certificate (Annex G), as-installed drawings, zone plan, cause-and-effect document (NEW 2025 explicit per clause 47), O&M manuals, asset register, logbook template (Annex H), training records, ARC details, cyber-security guidance, contacts.',
+              'Cause-and-effect document NEW 2025 — could be a simple statement ("simultaneous evacuation") or a complex matrix; format flexible, production mandatory.',
+              'Periodic re-training of the designated weekly-test user — triggered by user change, system modification, or planned cycle. Records updated; logbook signed.',
+              'False-alarm investigation by user (clause 29.6) recommended; commissioning organisation advises user on how at handover.',
+              'User-level cyber-security training: do not connect untrusted devices, do not share credentials, physical access control, refuse unscheduled "emergency" remote access requests, report suspected attacks.',
+              "Engineer continuity if servicing organisation changes — the documentation pack is the new servicer's starting point; without it, the new servicer is starting from zero.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-white">Learning Outcomes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              'Plan and conduct effective system handover procedures',
-              'Identify training needs for different user groups',
-              'Deliver comprehensive operator training sessions',
-              'Provide complete documentation packages at handover',
-              'Establish ongoing support arrangements with clients',
-              'Document training and handover activities appropriately',
-            ].map((outcome, i) => (
-              <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/10">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
-                  </div>
-                  <p className="text-sm text-white">{outcome}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+          <LearningOutcomes
+            outcomes={[
+              'Identify the responsible person under RRO 2005 Article 3 and apply the maintenance duty under Article 17 through the BS 5839-1:2025 testing regime',
+              'Deliver structured handover training covering weekly test, real-alarm response, fault response, false-alarm categorisation, documentation, and cyber-security basics',
+              'Produce a comprehensive documentation pack including the new BS 5839-1:2025 clause 47 cause-and-effect requirement (matrix or text description)',
+              'Apply BS 5839-1:2025 clause 29.6 — user investigation of false alarms with commissioning-organisation guidance on how',
+              'Manage periodic re-training of designated users when staff change, system is modified, or as planned cycle',
+              'Apply BS 5839-1:2025 clause 43.4 user-level cyber-security training: untrusted devices, credentials, physical access, recognising social-engineering attempts',
+              'Evidence handover training in the logbook with date, content covered, trainer, trainee, and signed acknowledgement',
+              "Use the documentation pack as the foundation for engineer continuity, audit-readiness, fault investigation, and modification planning over the system's life",
+            ]}
+          />
 
-        {/* Section 01 */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Handover Process Overview
-          </h2>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white">
-              Handover is the{' '}
-              <strong className="text-white">formal transfer of responsibility</strong> from
-              installer to client, marking when the system becomes operational.
+          <SectionRule />
+
+          <ContentEyebrow>The responsible person — RRO 2005 Article 3</ContentEyebrow>
+
+          <ConceptBlock
+            title="Who, and what duty"
+            plainEnglish="The Regulatory Reform (Fire Safety) Order 2005 (RRO 2005) defines the responsible person in Article 3. In most workplaces this is the employer for workplace areas; for non-workplace non-domestic premises it is the person with control of the premises in connection with carrying on a trade / business / undertaking, or the owner. The duty in Article 17 is to ensure the premises and any facilities, equipment and devices are subject to a suitable system of maintenance and are maintained in an efficient state, in efficient working order and in good repair. BS 5839-1:2025 is the practical answer to that duty for the fire alarm system."
+            onSite="The responsible person owns the duty even if they delegate the execution. Identifying who that person is — by name, by role — is the foundation of every handover. The acceptance certificate names them; the logbook front-section names them; subsequent service contracts name them."
+          >
+            <p>
+              The responsible person\'s relationship to the various BS 5839-1:2025 testing tiers:
             </p>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm font-semibold text-white mb-2">Handover Checklist:</p>
-              <ul className="space-y-1 text-sm text-white">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Verification testing complete and documented
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  All documentation prepared and organised
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Training sessions scheduled with key personnel
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Logbook established and initial entries made
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Ongoing support arrangements confirmed
-                </li>
-              </ul>
-            </div>
-            <p className="text-sm text-white italic">
-              Never handover a system before training has been delivered and accepted.
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Weekly user test.</strong> The duty is the responsible person\'s. Execution
+                is typically delegated to a designated person on site (a member of premises
+                management, a trained occupier). The responsible person\'s accountability is to
+                ensure the test happens, the records are kept, and faults are followed up.
+              </li>
+              <li>
+                <strong>Monthly auxiliary supply test.</strong> The duty sits with premises
+                management as part of the wider building\'s standby supply regime. The responsible
+                person ensures the regime exists.
+              </li>
+              <li>
+                <strong>Six-monthly inspection and service.</strong> The responsible person
+                contracts a competent person (a third-party-certificated organisation) to perform
+                the work. The contract documents responsibilities including reporting, logbook
+                updates, and emergency-response SLAs.
+              </li>
+              <li>
+                <strong>Modifications and extensions.</strong> The responsible person commissions
+                the work, signs the certificates, ensures the documentation pack is updated.
+              </li>
+              <li>
+                <strong>Incident response.</strong> Real alarms initiate evacuation per the fire
+                plan; the responsible person ensures the plan is current and staff are trained.
+              </li>
+            </ul>
+            <p>
+              The handover training is where the responsible person (or their named representative)
+              is briefed on all of the above. It is the moment the system\'s technical complexity is
+              translated into operational practice for the people who will live with the system day
+              to day.
             </p>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Documentation Package
-          </h2>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white">
-              A complete <strong className="text-elec-yellow">documentation package</strong> is
-              essential for effective system management.
+          <RegsCallout
+            source="Regulatory Reform (Fire Safety) Order 2005 · Article 3 (Responsible person) and Article 17 (Maintenance)"
+            clause={
+              <>
+                Article 3: "responsible person" means — in relation to a workplace, the employer, if
+                the workplace is to any extent under his control; in relation to any premises not
+                falling within the above, the person who has control of the premises in connection
+                with the carrying on by him of a trade, business or other undertaking (for profit or
+                not), or the owner. Article 17: where necessary in order to safeguard the safety of
+                relevant persons the responsible person must ensure that the premises and any
+                facilities, equipment and devices provided in respect of the premises … are subject
+                to a suitable system of maintenance and are maintained in an efficient state, in
+                efficient working order and in good repair.
+              </>
+            }
+            meaning="Article 3 names who; Article 17 names what duty. The fire alarm system is one of the 'facilities, equipment and devices' covered. BS 5839-1:2025 is the recognised method of meeting the maintenance duty for the fire alarm. Failure to maintain in efficient working order is a regulatory breach with potentially serious consequences."
+          />
+
+          <InlineCheck
+            id={inlineChecks[0].id}
+            question={inlineChecks[0].question}
+            options={inlineChecks[0].options}
+            correctIndex={inlineChecks[0].correctIndex}
+            explanation={inlineChecks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The handover training session</ContentEyebrow>
+
+          <ConceptBlock
+            title="What good handover training looks like"
+            plainEnglish="Handover training is a structured session run by the commissioning / handover organisation for the responsible person and any designated representatives. It is not a casual conversation at the end of installation; it is a formal session with an agenda, training material, opportunity for questions, and recorded acknowledgement. The session is the bridge between technical delivery (the system is installed and commissioned) and operational reality (the system is being safely operated by the people who run the building)."
+          >
+            <p>Recommended training agenda:</p>
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>System overview.</strong> Walk the responsible person through the system —
+                CIE location, zone layout, detector locations, sounder / VAD locations, MCP
+                locations, ARC connection (if applicable). The zone plan is the map.
+              </li>
+              <li>
+                <strong>Weekly user test procedure.</strong> Demonstrate the test on the day of
+                handover. Operate an MCP, observe the panel response, observe the sounders / VADs,
+                observe the ARC test transmission, reset, log. Hand over the test key. Have the
+                designated user perform the test under supervision.
+              </li>
+              <li>
+                <strong>Real-alarm response.</strong> What happens when the system goes into alarm —
+                evacuation per the fire plan, FRS interaction, reset only by a competent person
+                after investigation. Brief on the cause-and-effect (what the system does in
+                different alarm scenarios — partial evacuation, simultaneous evacuation, lift
+                homing, AOV release).
+              </li>
+              <li>
+                <strong>Fault response.</strong> What happens when the panel shows a fault — do not
+                silence (clause 23), log the fault, contact the servicing organisation, institute
+                interim measure if the fault affects detection / alarm in a significant area.
+              </li>
+              <li>
+                <strong>False-alarm categorisation</strong> (NEW 2025 explicit). Train the user on
+                the four categories (unwanted from cooking / dust / steam / environmental; equipment
+                fault; malicious; system fault). Provide guidance on assigning category at the time
+                of the event. Cover the user investigation expectation under clause 29.6.
+              </li>
+              <li>
+                <strong>Documentation walkthrough.</strong> Show every document in the pack —
+                acceptance certificate, as-installed drawings, zone plan, cause-and-effect, O&M
+                manuals, asset register, logbook, training records, ARC details. Explain where each
+                lives, who has access, retention expectations.
+              </li>
+              <li>
+                <strong>Cyber-security basics.</strong> User-level guidance on physical access to
+                the CIE / comms cabinet, recognising unauthorised remote-access requests,
+                credentials discipline, untrusted-device avoidance.
+              </li>
+              <li>
+                <strong>Servicing contract.</strong> Brief on the six-monthly service cycle, the
+                next planned visit window, emergency contact details, emergency-response SLA.
+              </li>
+              <li>
+                <strong>Q&A and acknowledgement.</strong> Open questions; the responsible person
+                signs the logbook to acknowledge the training and the date.
+              </li>
+            </ol>
+            <p>
+              The session takes typically 60-90 minutes for a small system, longer for complex
+              systems. It is recorded in the logbook and a written summary (training-completed
+              checklist) is left with the responsible person. The training is the moment that
+              transforms the responsible person from a passive recipient of the system into an
+              active operator with the knowledge and authority to manage it.
             </p>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm font-semibold text-white mb-2">Required Documents:</p>
-              <ul className="space-y-1 text-sm text-white">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Certificate of Compliance
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  As-fitted drawings and zone chart
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Operating and maintenance instructions
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Cause-and-effect matrix
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Device schedules and specifications
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Fire alarm logbook
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Warranty information and service contacts
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Identifying Training Needs
-          </h2>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white">
-              Different personnel require{' '}
-              <strong className="text-white">different levels of training</strong> based on their
-              roles and responsibilities.
+          <InlineCheck
+            id={inlineChecks[1].id}
+            question={inlineChecks[1].question}
+            options={inlineChecks[1].options}
+            correctIndex={inlineChecks[1].correctIndex}
+            explanation={inlineChecks[1].explanation}
+          />
+
+          {/* Diagram — client training session structure */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+            <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+              Diagram
             </p>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm font-semibold text-white mb-2">Training Levels by Role:</p>
-              <ul className="space-y-2 text-sm text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow mt-1" />
-                  <span>
-                    <strong className="text-white">Responsible Person:</strong> Full understanding
-                    of system, compliance requirements, management responsibilities
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow mt-1" />
-                  <span>
-                    <strong className="text-white">Security/Reception:</strong> Panel operation,
-                    alarm response, fault recognition, emergency contacts
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow mt-1" />
-                  <span>
-                    <strong className="text-white">Maintenance Staff:</strong> Weekly testing
-                    procedures, visual inspection, logbook entries
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow mt-1" />
-                  <span>
-                    <strong className="text-white">General Staff:</strong> Awareness of system, call
-                    point operation, evacuation procedures
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Check 1 */}
-        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-          <div className="flex items-center gap-2 mb-3">
-            <HelpCircle className="h-5 w-5 text-elec-yellow" />
-            <span className="font-semibold text-elec-yellow">Quick Check</span>
-          </div>
-          <p className="text-white mb-3">
-            The security manager has changed since handover. What action is required?
-          </p>
-          <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white">
-              <strong className="text-white">Answer:</strong> The new security manager should
-              receive comprehensive training appropriate to their role before assuming
-              responsibility. This should be documented in the logbook and may be arranged through
-              the maintaining company.
-            </p>
-          </div>
-        </div>
-
-        {/* Section 04 */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Operator Training Content
-          </h2>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white">
-              Comprehensive operator training ensures staff can{' '}
-              <strong className="text-elec-yellow">manage the system effectively</strong> in all
-              situations.
-            </p>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm font-semibold text-white mb-2">Training Topics:</p>
-              <ul className="space-y-1 text-sm text-white">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  System overview and zone layout
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Panel controls and displays
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Normal operating state recognition
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Fire alarm response procedures
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Fault condition recognition and response
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Silencing and resetting alarms
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Weekly testing procedures
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Logbook entries and record keeping
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 05 */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Practical Demonstrations
-          </h2>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white">
-              Hands-on practice is <strong className="text-white">essential for confidence</strong>{' '}
-              in operating the system.
-            </p>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm font-semibold text-white mb-2">Practical Exercises:</p>
-              <ul className="space-y-1 text-sm text-white">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Activate a detector and observe panel response
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Silence alarms using correct procedure
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Reset system after alarm condition
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Navigate through panel menus
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Conduct a weekly test with trainee leading
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Complete logbook entries
-                </li>
-              </ul>
-            </div>
-            <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-              <p className="text-sm text-amber-300 flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                Always ensure building occupants are warned before any training that activates
-                alarms.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 06 */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Ongoing Support Arrangements
-          </h2>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white">
-              Establishing{' '}
-              <strong className="text-elec-yellow">ongoing support arrangements</strong> ensures
-              continued effective system management.
-            </p>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm font-semibold text-white mb-2">Support Options to Discuss:</p>
-              <ul className="space-y-1 text-sm text-white">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Maintenance contract options and coverage
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Emergency callout arrangements
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Helpline availability for queries
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Refresher training availability
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  System extension or modification services
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  Spare parts availability and ordering
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Check 2 */}
-        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-          <div className="flex items-center gap-2 mb-3">
-            <HelpCircle className="h-5 w-5 text-elec-yellow" />
-            <span className="font-semibold text-elec-yellow">Quick Check</span>
-          </div>
-          <p className="text-white mb-3">
-            A client wants to bring the system live immediately without training as they are
-            short-staffed. How should you respond?
-          </p>
-          <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white">
-              <strong className="text-white">Answer:</strong> Explain that training is essential
-              before handover - operating an unfamiliar system could result in incorrect responses
-              to alarms or faults, potentially endangering life. Offer flexible training times or a
-              phased approach, but do not compromise on training delivery.
-            </p>
-          </div>
-        </div>
-
-        {/* Practical Guidance */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-white">Practical Guidance</h2>
-          <div className="space-y-3">
-            <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
-              <h4 className="font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-sm text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Use the actual panel during training rather than just describing controls
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Provide written quick reference guides for common operations
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Allow trainees to practise - hands-on experience builds confidence
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
-              <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-sm text-white">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Rushing through training to meet deadlines
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Failing to document who attended training and what was covered
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Not providing contact details for ongoing support
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* FAQs */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-white">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {[
-              {
-                q: 'How long should handover training take?',
-                a: 'Typically 1-2 hours for basic operator training, longer for responsible persons or complex systems. Allow sufficient time for questions and practice.',
-              },
-              {
-                q: 'What if the client refuses training?',
-                a: 'Document the refusal in writing and advise of the implications. Consider not completing handover until training is accepted, or obtain signed acknowledgment of risks.',
-              },
-              {
-                q: 'Should training be repeated for shift staff?',
-                a: 'Yes - all staff who may need to operate the system should receive training. Schedule sessions for different shifts as needed.',
-              },
-              {
-                q: 'Can we provide video training instead?',
-                a: 'Video can supplement but not replace hands-on training. Staff must have practical experience with the actual system before assuming responsibility.',
-              },
-              {
-                q: 'What if the client has questions after handover?',
-                a: 'This is normal - provide helpline contact details. Many queries can be resolved by phone. Schedule follow-up visits if complex issues arise.',
-              },
-              {
-                q: 'Should we test trainee understanding?',
-                a: 'Yes - ask questions during training and have trainees demonstrate operations. Ensure they can confidently perform key tasks before completing handover.',
-              },
-            ].map((faq, i) => (
-              <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-sm text-white">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Quiz Section */}
-        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-          <div className="flex items-center gap-2 mb-4">
-            <BookOpen className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-semibold text-white">Knowledge Check</h3>
-          </div>
-
-          {!showQuiz ? (
-            <div className="text-center py-6">
-              <p className="text-white mb-4">
-                Test your understanding of handover and client training with 10 questions.
-              </p>
-              <Button
-                onClick={() => setShowQuiz(true)}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation"
+            <h4 className="text-sm font-bold text-white mb-4">
+              Handover training session — agenda + outputs
+            </h4>
+            <svg
+              viewBox="0 0 880 580"
+              className="w-full h-auto"
+              role="img"
+              aria-label="Handover training session structure. Nine agenda items down the left with description and timing. Documentation pack and trained-user outputs on the right."
+            >
+              <rect
+                x="20"
+                y="20"
+                width="840"
+                height="36"
+                rx="8"
+                fill="rgba(251,191,36,0.08)"
+                stroke="#FBBF24"
+                strokeWidth="1.5"
+              />
+              <text
+                x="440"
+                y="44"
+                textAnchor="middle"
+                fill="#FBBF24"
+                fontSize="13"
+                fontWeight="bold"
               >
-                Start Quiz
-              </Button>
-            </div>
-          ) : showResults ? (
-            <div className="space-y-6">
-              <div className="text-center py-4">
-                <p className="text-3xl font-bold text-elec-yellow">
-                  {calculateScore()}/{questions.length}
-                </p>
-                <p className="text-white">
-                  ({Math.round((calculateScore() / questions.length) * 100)}% correct)
-                </p>
-              </div>
+                Handover training session — BS 5839-1:2025
+              </text>
 
-              <div className="space-y-4">
-                {questions.map((q, i) => {
-                  const correct = selectedAnswers[i] === q.correctAnswer;
-                  return (
-                    <div key={q.id} className="p-4 rounded-lg bg-white/5 border border-white/10">
-                      <p className="font-semibold text-white mb-2">
-                        Q{i + 1}. {q.question}
-                      </p>
-                      <p className={`text-sm ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                        Your answer: {q.options[selectedAnswers[i]] ?? 'Not answered'}{' '}
-                        {correct ? '(Correct)' : '(Incorrect)'}
-                      </p>
-                      {!correct && (
-                        <p className="text-sm text-white mt-1">
-                          Correct: {q.options[q.correctAnswer]}
-                        </p>
-                      )}
-                      <p className="text-sm text-white mt-2">{q.explanation}</p>
-                    </div>
-                  );
-                })}
-              </div>
+              {[
+                {
+                  n: '1',
+                  t: 'System overview + walk',
+                  d: 'CIE location · zone layout · device locations · ARC',
+                  c: '#22D3EE',
+                  m: '10 min',
+                },
+                {
+                  n: '2',
+                  t: 'Weekly user test demo',
+                  d: 'Demonstrate · user performs under supervision · hand over key',
+                  c: '#22D3EE',
+                  m: '10 min',
+                },
+                {
+                  n: '3',
+                  t: 'Real-alarm response',
+                  d: 'Evacuation · FRS · reset only by competent person',
+                  c: '#A855F7',
+                  m: '8 min',
+                },
+                {
+                  n: '4',
+                  t: 'Fault response (clause 23)',
+                  d: 'No concealment · log · contact servicer · interim measure',
+                  c: '#A855F7',
+                  m: '8 min',
+                },
+                {
+                  n: '5',
+                  t: 'False-alarm categorisation',
+                  d: '4 categories · clause 29.6 user investigation · NEW 2025 explicit',
+                  c: '#FBBF24',
+                  m: '10 min',
+                },
+                {
+                  n: '6',
+                  t: 'Documentation walkthrough',
+                  d: 'Cert · drawings · zone plan · C&E · O&M · asset · logbook',
+                  c: '#FBBF24',
+                  m: '10 min',
+                },
+                {
+                  n: '7',
+                  t: 'Cyber-security basics (43.4)',
+                  d: 'Untrusted devices · credentials · physical access · social-eng',
+                  c: '#EF4444',
+                  m: '8 min',
+                },
+                {
+                  n: '8',
+                  t: 'Servicing contract briefing',
+                  d: 'Six-monthly cycle · next visit · emergency SLA · contacts',
+                  c: '#EF4444',
+                  m: '5 min',
+                },
+                {
+                  n: '9',
+                  t: 'Q&A + acknowledgement',
+                  d: 'Questions · sign logbook · receive doc pack',
+                  c: '#EF4444',
+                  m: '15 min',
+                },
+              ].map((s, i) => {
+                const y = 80 + i * 50;
+                return (
+                  <g key={s.n}>
+                    <circle
+                      cx="60"
+                      cy={y + 16}
+                      r="16"
+                      fill={s.c}
+                      opacity="0.18"
+                      stroke={s.c}
+                      strokeWidth="1.4"
+                    />
+                    <text
+                      x="60"
+                      y={y + 21}
+                      textAnchor="middle"
+                      fill={s.c}
+                      fontSize="12"
+                      fontWeight="bold"
+                    >
+                      {s.n}
+                    </text>
+                    <rect
+                      x="88"
+                      y={y}
+                      width="500"
+                      height="34"
+                      rx="8"
+                      fill="rgba(255,255,255,0.04)"
+                      stroke={s.c}
+                      strokeWidth="1.1"
+                    />
+                    <text x="100" y={y + 14} fill={s.c} fontSize="11" fontWeight="bold">
+                      {s.t}
+                    </text>
+                    <text x="100" y={y + 27} fill="rgba(255,255,255,0.7)" fontSize="9.5">
+                      {s.d}
+                    </text>
+                    <rect
+                      x="600"
+                      y={y + 5}
+                      width="48"
+                      height="22"
+                      rx="11"
+                      fill="rgba(251,191,36,0.1)"
+                      stroke="#FBBF24"
+                      strokeWidth="0.8"
+                    />
+                    <text
+                      x="624"
+                      y={y + 19}
+                      textAnchor="middle"
+                      fill="#FBBF24"
+                      fontSize="9.5"
+                      fontWeight="bold"
+                    >
+                      {s.m}
+                    </text>
+                  </g>
+                );
+              })}
 
-              <Button
-                onClick={resetQuiz}
-                variant="outline"
-                className="w-full min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10"
+              {/* Outputs panel */}
+              <rect
+                x="666"
+                y="80"
+                width="180"
+                height="450"
+                rx="10"
+                fill="rgba(168,85,247,0.04)"
+                stroke="#A855F7"
+                strokeWidth="1.4"
+                strokeDasharray="4,2"
+              />
+              <text
+                x="756"
+                y="100"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="11"
+                fontWeight="bold"
               >
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Restart Quiz
-              </Button>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+                OUTPUTS
+              </text>
 
-              <div>
-                <p className="font-semibold text-white mb-4">
-                  Q{currentQuestion + 1}. {questions[currentQuestion].question}
-                </p>
-                <div className="space-y-2">
-                  {questions[currentQuestion].options.map((opt, idx) => {
-                    const selected = selectedAnswers[currentQuestion] === idx;
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => handleAnswerSelect(idx)}
-                        className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
-                          selected
-                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              {[
+                'Acceptance cert (Annex G)',
+                'As-installed drawings',
+                'Zone plan',
+                'Cause-and-effect (NEW 2025)',
+                'O&M manuals',
+                'Asset register',
+                'Logbook (Annex H)',
+                'Training records',
+                'ARC details',
+                'Cyber guidance',
+                'Servicer contacts',
+                'Trained user',
+                'Signed logbook entry',
+              ].map((o, i) => {
+                const y = 118 + i * 30;
+                return (
+                  <g key={o}>
+                    <rect
+                      x="680"
+                      y={y}
+                      width="152"
+                      height="22"
+                      rx="6"
+                      fill="rgba(168,85,247,0.06)"
+                      stroke="#A855F7"
+                      strokeWidth="0.7"
+                    />
+                    <text
+                      x="756"
+                      y={y + 14}
+                      textAnchor="middle"
+                      fill="rgba(255,255,255,0.8)"
+                      fontSize="9"
+                    >
+                      {o}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
 
-              <div className="flex items-center justify-between gap-3">
-                <Button
-                  onClick={handlePrevious}
-                  disabled={currentQuestion === 0}
-                  variant="outline"
-                  className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
-                >
-                  Previous
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  disabled={selectedAnswers[currentQuestion] === -1}
-                  className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
-                >
-                  {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
+          <SectionRule />
 
-        {/* Navigation Footer */}
-        <div className="flex items-center justify-between gap-3 pt-6 border-t border-white/10">
-          <Button
-            variant="outline"
-            asChild
-            className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10"
+          <ContentEyebrow>
+            The documentation pack — clause 47 + the new cause-and-effect requirement
+          </ContentEyebrow>
+
+          <ConceptBlock
+            title="What goes in the pack"
+            plainEnglish="The documentation pack is the responsible person\'s tool kit for the system\'s entire life. It must be comprehensive, up to date, and accessible. BS 5839-1:2025 clause 47 spells out the documentation expectations including a new explicit requirement for a cause-and-effect document. The 2025 wording is permissive on format — the cause-and-effect can be as simple as a one-line statement ('this system operates as simultaneous evacuation') or as comprehensive as a multi-page matrix document, depending on system complexity. What matters is that the document exists and is included."
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-5">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            asChild
-            className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            <p>The pack contents:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Acceptance certificate (Annex G).</strong> The handover document. Signed by
+                commissioning engineer and responsible person. Carries the system baseline, the
+                agreed variations, the acceptance date.
+              </li>
+              <li>
+                <strong>As-installed drawings.</strong> Updated drawings showing every device
+                location, every cable route, every zone, every interface. The drawings reflect the
+                as-built system, not the as-designed.
+              </li>
+              <li>
+                <strong>Zone plan</strong> (per clause 22.2.5). Required unconditionally in
+                multi-zone sleeping premises (clause 6 declares its absence unacceptable — Section
+                6.5). Recommended in all systems. Posted at the CIE for FRS attendance.
+              </li>
+              <li>
+                <strong>Cause-and-effect document</strong> (NEW 2025 explicit per clause 47).
+                Describes the programmed behaviour of the system in response to events. Format
+                appropriate to system complexity.
+              </li>
+              <li>
+                <strong>O&M manuals.</strong> CIE manufacturer manual; manuals for each device type
+                (detectors, MCPs, sounders, VADs, interfaces); ARC connection documentation.
+              </li>
+              <li>
+                <strong>Asset register.</strong> Every device row populated — type, location,
+                addressable address, install date, last test date, last contamination level,
+                replacement-due date, open defect status (Section 6.4).
+              </li>
+              <li>
+                <strong>Logbook (Annex H template).</strong> Pre-populated with system
+                identification, ready for ongoing entries.
+              </li>
+              <li>
+                <strong>Training records.</strong> Initial handover training; any subsequent
+                re-training; designated weekly-test users with sign-off.
+              </li>
+              <li>
+                <strong>ARC details.</strong> Account number, panel ID, signal types transmitted,
+                ARC contact details, escalation procedures.
+              </li>
+              <li>
+                <strong>Cyber-security guidance</strong> (per clause 43.4). Manufacturer guidance on
+                physical access, authentication, remote services. User-facing portion appropriate to
+                a non-technical reader.
+              </li>
+              <li>
+                <strong>Servicing organisation contacts.</strong> Day contact, out-of-hours contact,
+                emergency contact, emergency-response SLA.
+              </li>
+              <li>
+                <strong>Modification history</strong> (built up over time). Every extension or
+                modification certificate filed in chronological order.
+              </li>
+            </ul>
+            <p>
+              The pack is delivered at handover and updated throughout the system\'s life.
+              Modifications and extensions add new documents; the asset register and logbook are
+              updated continuously; training records are added when users change. A pack that is ten
+              years old and has never been updated is a red flag for both compliance and safety.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 5839-1:2025 · Clause 47 (Documentation / handover)"
+            clause={
+              <>
+                A new item that appears within the documentation clause of BS 5839-1:2025 is the
+                recommendation that a cause-and-effect matrix or text description of how the cause
+                and effect operates is included with the documentation to be provided to the
+                purchaser or user of the system. This could be as simple as "this system operates as
+                a simultaneous evacuation" or a cause-and-effect matrix document might be required
+                for more complex strategies. The standard does not dictate the manner of the
+                cause-and-effect matrix only that it needs to be produced. The commissioning
+                technician should inform the user that it is important to keep the documentation
+                provided up to date and available to interested parties.
+              </>
+            }
+            meaning="Cause-and-effect document = NEW 2025 explicit handover requirement. Format flexible (simple text or complex matrix) but production mandatory. Plus user-briefing duty: the commissioning technician explicitly tells the user to keep documentation current and accessible. Documentation is alive, not static."
+          />
+
+          <InlineCheck
+            id={inlineChecks[2].id}
+            question={inlineChecks[2].question}
+            options={inlineChecks[2].options}
+            correctIndex={inlineChecks[2].correctIndex}
+            explanation={inlineChecks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Cyber-security training for users</ContentEyebrow>
+
+          <ConceptBlock
+            title="The user as part of the defence"
+            plainEnglish="BS 5839-1:2025 clause 43.4 sets out cyber-security expectations for the system as a whole. Most of those controls are technical and operational — physical access, authentication, risk assessment, post-action verification — but the user has a role too. A user who is trained on basic cyber hygiene is part of the defence; a user who is not trained is a vulnerability. The handover training session is where this is established."
           >
-            <Link to="/electrician/upskilling/fire-alarm-course/module-7">
-              Module 7
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Link>
-          </Button>
-        </div>
+            <p>What the user training should cover:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>Untrusted devices.</strong> Do not connect anything to the CIE / gateway
+                that has not been provided by the servicing organisation. USB sticks, laptops, "test
+                devices" from unverified parties — refuse and report.
+              </li>
+              <li>
+                <strong>Credentials discipline.</strong> Do not share passwords. Do not write them
+                on a sticky note next to the panel. If credentials need to be shared with a new
+                staff member, use a documented onboarding procedure with the servicing
+                organisation\'s knowledge.
+              </li>
+              <li>
+                <strong>Physical access.</strong> Lock the comms cabinet. Restrict access to the
+                panel area. Anyone working on the system should be from the contracted servicing
+                organisation and should be expected — challenge anyone who is not.
+              </li>
+              <li>
+                <strong>Recognising social-engineering attempts.</strong> An unscheduled call from
+                someone claiming to be from the manufacturer, asking for "emergency" remote access,
+                is a classic attack. Decline; verify with the contracted servicing organisation; log
+                the call. The same applies to emails offering "free firmware updates" or "urgent
+                security patches" from unknown parties.
+              </li>
+              <li>
+                <strong>Reporting suspected attacks.</strong> Any suspected unauthorised access,
+                strange CIE behaviour, unexpected login attempts visible on the panel — report to
+                the servicing organisation immediately. The earlier the report, the better the
+                chance of containment.
+              </li>
+            </ul>
+            <p>
+              The user training does not need to be technically deep. It needs to be practical and
+              behavioural — what to do, what not to do, when to escalate. Five minutes of clear
+              behavioural training is more effective than thirty minutes of cryptographic theory.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={inlineChecks[3].id}
+            question={inlineChecks[3].question}
+            options={inlineChecks[3].options}
+            correctIndex={inlineChecks[3].correctIndex}
+            explanation={inlineChecks[3].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Periodic re-training and continuity</ContentEyebrow>
+
+          <ConceptBlock
+            title="When and why"
+            plainEnglish="Handover training is once. Periodic re-training is recurring. The reason: people change, systems change, knowledge fades. A care home that trained its facilities manager in 2024 and has had three changes of facilities manager since 2026 has effectively no trained user unless re-training has been delivered with each change. The responsible person owns the duty to ensure the designated user is trained at all times."
+          >
+            <p>Re-training triggers:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+              <li>
+                <strong>User change.</strong> The original designated user has left, retired,
+                changed role. The replacement needs the same training the original received.
+                Schedule a session with the servicing organisation; record in the logbook.
+              </li>
+              <li>
+                <strong>System modification.</strong> The system has been modified — new zones, new
+                CIE, new firmware behaviour, new cause-and-effect. The user training content needs
+                updating to reflect the new behaviour.
+              </li>
+              <li>
+                <strong>Significant premises change.</strong> The premises has changed use
+                (residential to mixed, office to laboratory), occupancy has changed significantly,
+                or the fire plan has been updated. Re-training aligns the user with the new
+                operational reality.
+              </li>
+              <li>
+                <strong>Planned cycle.</strong> Annual or biennial re-training as a matter of good
+                practice. Even without a triggering event, periodic re-training keeps knowledge
+                fresh.
+              </li>
+              <li>
+                <strong>Post-incident.</strong> After a real fire, a major false alarm episode, or a
+                near-miss, re-training reinforces correct response and updates any lessons learnt.
+              </li>
+            </ul>
+            <p>
+              The servicing organisation should offer re-training as part of the contract, either at
+              scheduled intervals or in response to triggers. The responsible person should request
+              it when triggered. Training records are updated in the logbook with date, content,
+              trainer, trainee, and signed acknowledgement.
+            </p>
+          </ConceptBlock>
+
+          <Scenario
+            title="Engineer continuity when a servicing contract changes"
+            situation="A 200-bed care home has changed its servicing organisation after fifteen years with the same provider. The new servicer arrives for the first six-monthly visit. The handover from the outgoing servicer was minimal — a brief phone call. The new engineer needs to understand a complex multi-CIE installation with several historical modifications."
+            whatToDo="The documentation pack is the new servicer\'s starting point. The new engineer reads (1) the original acceptance certificate to understand the system baseline; (2) the modification certificates to understand what has changed since acceptance; (3) the zone plan to understand the building layout; (4) the cause-and-effect document to understand the programmed behaviour; (5) the asset register to understand the device population; (6) the logbook for recent operational history (faults, false alarms, services); (7) the training records to understand who has been trained on what. Without this pack, the new engineer would be reverse-engineering the system through testing — slower, more expensive, more error-prone, and a source of risk during the transition. The pack is the foundation of engineer continuity. The new servicer\'s first visit takes longer than subsequent visits because the engineer is also building a relationship with the responsible person and confirming that the documentation is accurate; subsequent visits proceed normally. The first service report should explicitly note the change of servicer and the baseline established."
+            whyItMatters="Engineer continuity is one of the most consequential practical reasons for a comprehensive documentation pack. Servicing organisations change. Engineers change within organisations. Without documentation, every change is a fresh start; with documentation, every change is a handover. The responsible person\'s investment in maintaining the pack pays back many times over the system\'s life."
+          />
+
+          <CommonMistake
+            title="Handover that is just a key and a phone number"
+            whatHappens="A small office\'s fire alarm is commissioned. The installer hands the receptionist a test key, says 'just operate one of the call points each week and let us know if there\'s a problem', and leaves. No documentation pack. No training record. No cause-and-effect document. No zone plan. Eighteen months later, a new receptionist has joined; the previous receptionist (who never received any structured training) has left and not handed over. A real fire occurs; the receptionist does not know what to do; the evacuation is delayed; the system\'s cause-and-effect is unknown."
+            doInstead="Structured handover training for every system, regardless of size. Even a single-zone Category L4 office system warrants a 30-minute training session with the responsible person, a documentation pack including the cause-and-effect (a one-line statement is fine for a simple system), a logbook with system identification populated, and a signed acknowledgement. The marginal cost is small; the long-term value is high. The 2025 standard\'s clause 47 makes this explicit — the cause-and-effect document is now formally required regardless of system complexity."
+          />
+
+          <CommonMistake
+            title="Documentation pack that is never updated"
+            whatHappens="A 2015 commissioning produced a comprehensive documentation pack. Over the following decade, three minor extensions and one CIE firmware update were carried out — all properly certificated at the time but the resulting certificates were filed separately, not added to the pack. By 2025, the documentation pack on site is the original 2015 pack; the extensions and firmware update are 'somewhere'. An insurer audit asks for the current as-installed state and finds the documentation does not reflect reality."
+            doInstead="The documentation pack is alive. Every modification, extension, and firmware update produces a certificate — file the certificate in the pack at the time. Update the asset register at the time. Update the as-installed drawings (or at least mark the change clearly). The pack should always reflect the current state of the system. The 2025 standard explicitly directs the commissioning technician to inform the user that the documentation is to be kept up to date — this is part of the handover briefing."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="What to remember on site"
+            points={[
+              'Responsible person under RRO 2005 Article 3 owns the duty; BS 5839-1:2025 implements it. Delegation does not transfer the duty.',
+              'Handover training is structured, recorded, signed. Covers test, alarm, fault, false-alarm categorisation, documentation, cyber-security basics.',
+              'Documentation pack: acceptance cert, drawings, zone plan, cause-and-effect (NEW 2025), O&M, asset register, logbook, training records, ARC details, cyber guidance, contacts.',
+              'Cause-and-effect document NEW 2025 — clause 47 explicit. Format flexible (text or matrix) but production mandatory.',
+              'False-alarm investigation by user (clause 29.6) — commissioning organisation advises user on how at handover.',
+              'Periodic re-training triggered by user change, system modification, significant premises change, or planned cycle.',
+              'User-level cyber-security training: untrusted devices, credentials, physical access, social-engineering recognition, attack reporting.',
+              'Documentation pack is alive — updated with every modification, extension, firmware update, training event. The pack is the foundation of engineer continuity.',
+            ]}
+          />
+
+          <FAQ
+            items={[
+              {
+                question: 'Who actually performs the weekly user test in a typical small office?',
+                answer:
+                  'A designated person on site — typically the office manager, a member of facilities, or a long-standing employee who is reliably present. The responsible person (often the employer) names the designated person, ensures they receive the structured handover training, and ensures their name is recorded in the logbook. Backup designated users are sensible — if the primary is on holiday or off sick, the test still happens. Continuity matters: if the designated user changes (resignation, role change), re-training of the replacement is triggered.',
+              },
+              {
+                question:
+                  'How detailed should the cause-and-effect document be for a Category L4 office?',
+                answer:
+                  'For a simple Category L4 system (escape route detection, simultaneous evacuation, no ancillary equipment), a one-paragraph text description is sufficient: "On detection of fire by any detector or operation of any manual call point, the panel enters alarm condition. All sounders / VADs operate immediately to give simultaneous evacuation. There are no ancillary outputs (no lift homing, no AOV, no fire dampers, no door holders). Reset is by competent person only after investigation". For a complex system with multi-stage evacuation, lift homing, AOVs, magnetic door holders, fire dampers, ventilation control, and ARC transmission, a comprehensive matrix document is appropriate. The 2025 standard accommodates both.',
+              },
+              {
+                question:
+                  'Does BS 5839-1:2025 require a specific format for the handover training record?',
+                answer:
+                  'No specific format. The standard requires the training to happen and to be evidenced. A practical training record includes: date, system identification, trainer (name + organisation + accreditation), trainee (name + role), content covered (matched to the recommended agenda), questions asked and answered, signed acknowledgement by trainee, signed by trainer. Many servicing organisations have a one-page training-record form that is completed and filed in the pack with a copy in the logbook.',
+              },
+              {
+                question:
+                  'What should I do if the responsible person refuses to engage with the handover training?',
+                answer:
+                  'The handover training is a recommended part of the BS 5839-1:2025 commissioning process. If the responsible person refuses, document the refusal in writing and brief them on the consequence: the system will not be properly understood by their organisation, the weekly test discipline is unlikely to be maintained, the RRO 2005 duty is at risk. The commissioning organisation should not lower its standards to accommodate refusal — better to document the refusal, complete the handover with the documentation pack, and offer the training as a standalone follow-up. Some scheme certifications (BAFE SP203) require evidence of attempted training; the documented refusal protects the servicing organisation.',
+              },
+              {
+                question: 'How does the false-alarm-categorisation user training work in practice?',
+                answer:
+                  'The trainer walks the user through the four categories (unwanted from cooking / dust / steam / environmental; equipment fault; malicious; system fault) with examples appropriate to the premises type. The user is given a logbook template that prompts category assignment at the time of every false-alarm entry. Worked examples — "if the kitchen detector activates while toast burns, that is unwanted from cooking; if the panel reports fault on a detector and an alarm follows, that is equipment fault" — make the categories memorable. The 2025 standard\'s explicit user-training requirement is a response to inconsistent assignment in past practice.',
+              },
+              {
+                question:
+                  'When and how should I update the documentation pack after a modification?',
+                answer:
+                  'At the time of the modification. The competent engineer producing the extension or modification certificate also updates: (a) the as-installed drawings to reflect the new state; (b) the asset register to add / change device entries; (c) the cause-and-effect document if the modification changes programmed behaviour; (d) the logbook to record the modification with cross-reference to the certificate; (e) the front section of the documentation pack with a chronological list of all modifications. The pack is left with the responsible person at the visit, not "to be sent later".',
+              },
+              {
+                question:
+                  'A care home has multiple wings with different staff teams. How do we handle handover training?',
+                answer:
+                  "Train the responsible person centrally and the designated weekly-test user(s) — possibly multiple, with rotation across wings. Provide written summaries appropriate to each wing's staff (alarm response, evacuation procedure for that wing). Update training records in the logbook with each individual's name and date. Periodic re-training cycles per wing-team. The responsible person remains the single accountable person; execution is distributed. The cause-and-effect document should specifically name how each wing's alarm and evacuation strategy interacts with the others (partial vs simultaneous evacuation, phased vs immediate).",
+              },
+              {
+                question:
+                  'How does the documentation pack support engineer continuity if the servicing organisation changes?',
+                answer:
+                  "The pack is the new servicer's starting point. They read the acceptance certificate (system baseline), the modification certificates (changes since baseline), the zone plan and as-installed drawings (layout), the cause-and-effect (programmed behaviour), the asset register (device population), and the logbook (recent operational history). Without the pack, the new servicer is reverse-engineering the system through testing — slower, more expensive, error-prone. With the pack, the new servicer can hold a credible briefing with the responsible person at the first visit, confirm the documentation is accurate, and proceed with normal six-monthly servicing from there. The pack is the most valuable single document the responsible person owns.",
+              },
+            ]}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Knowledge check</ContentEyebrow>
+          <Quiz title="Handover and client training — Module 6.6" questions={quizQuestions} />
+
+          {/* Bottom navigation grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/fire-alarm-course/module-6')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 6
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/fire-alarm-course/module-7')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">Module 7</div>
+            </button>
+          </div>
+
+          <div className="hidden">
+            <Users />
+          </div>
+        </PageFrame>
       </div>
     </div>
   );
