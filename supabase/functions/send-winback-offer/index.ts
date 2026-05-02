@@ -1,6 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
+import { generateV11HTML, generateV11PlainText, v11Subject } from '../_shared/winback-v11.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -2126,8 +2127,12 @@ Deno.serve(async (req) => {
           ).toISOString(),
         };
 
-        // V10 path — best-in-class with suppression check + unsubscribe headers + plain text
-        if (!email_version || email_version === 'v10') {
+        // V10 / V11 path — shared infra (suppression check, HMAC unsubscribe, plain text).
+        // v11 is the default (A4:2026 cheatsheet hero, what's-changed/in/coming).
+        // Pass email_version: 'v10' to send the previous template explicitly.
+        if (!email_version || email_version === 'v10' || email_version === 'v11') {
+          const useV11 = !email_version || email_version === 'v11';
+          const versionTag = useV11 ? 'v11' : 'v10';
           const recipient = userWithEmail.email.trim().toLowerCase();
 
           if (await isSuppressed(supabaseAdmin, recipient)) {
@@ -2136,12 +2141,18 @@ Deno.serve(async (req) => {
 
           const firstName = userWithEmail.full_name?.split(' ')[0] || 'mate';
           const unsubscribeUrl = await buildUnsubscribeUrl(recipient);
-          const html = generateV10WinbackHTML(firstName, unsubscribeUrl);
-          const text = generateV10WinbackPlainText(firstName, unsubscribeUrl);
-          const subject = "We've been building. You should see it.";
+          const html = useV11
+            ? generateV11HTML('winback', firstName, unsubscribeUrl)
+            : generateV10WinbackHTML(firstName, unsubscribeUrl);
+          const text = useV11
+            ? generateV11PlainText('winback', firstName, unsubscribeUrl)
+            : generateV10WinbackPlainText(firstName, unsubscribeUrl);
+          const subject = useV11
+            ? v11Subject('winback', firstName)
+            : "We've been building. You should see it.";
 
           await rateLimiter.acquire(1);
-          const { data: v10Data, error: v10Err } = await resend.emails.send({
+          const { data: vData, error: vErr } = await resend.emails.send({
             from: FROM_V10,
             replyTo: REPLY_TO,
             to: [recipient],
@@ -2151,14 +2162,14 @@ Deno.serve(async (req) => {
             headers: buildUnsubscribeHeaders(unsubscribeUrl),
             tags: [
               { name: 'campaign', value: 'winback' },
-              { name: 'version', value: 'v10' },
+              { name: 'version', value: versionTag },
               { name: 'user_id', value: userId },
             ],
           });
 
-          if (v10Err) {
-            console.error('V10 send error:', v10Err);
-            throw new Error(`Failed to send: ${v10Err.message}`);
+          if (vErr) {
+            console.error(`${versionTag.toUpperCase()} send error:`, vErr);
+            throw new Error(`Failed to send: ${vErr.message}`);
           }
 
           await supabaseAdmin
@@ -2169,13 +2180,15 @@ Deno.serve(async (req) => {
           await supabaseAdmin.from('email_logs').insert({
             to_email: recipient,
             subject,
-            template: 'winback_offer_v10',
+            template: `winback_offer_${versionTag}`,
             status: 'sent',
-            metadata: { user_id: userId, email_version: 'v10', resend_id: v10Data?.id },
+            metadata: { user_id: userId, email_version: versionTag, resend_id: vData?.id },
           });
 
-          console.log(`V10 winback sent to ${recipient} by admin ${user.id}`);
-          result = { success: true, email: recipient, version: 'v10', resend_id: v10Data?.id };
+          console.log(
+            `${versionTag.toUpperCase()} winback sent to ${recipient} by admin ${user.id}`
+          );
+          result = { success: true, email: recipient, version: versionTag, resend_id: vData?.id };
           break;
         }
 
@@ -2300,8 +2313,8 @@ Deno.serve(async (req) => {
           throw new Error('User IDs array is required');
         }
 
-        // V10 path — Resend batch API, token-bucket rate limit, idempotency, retries, suppression
-        if (!email_version || email_version === 'v10') {
+        // V10 / V11 batch path — Resend batch API, token-bucket rate limit, idempotency, retries, suppression
+        if (!email_version || email_version === 'v10' || email_version === 'v11') {
           const { data: profiles, error: profilesErr } = await supabaseAdmin
             .from('profiles')
             .select(
@@ -2389,24 +2402,35 @@ Deno.serve(async (req) => {
             chunks.push(withUnsub.slice(i, i + BATCH_MAX));
           }
 
-          const subject = "We've been building. You should see it.";
+          const useV11 = !email_version || email_version === 'v11';
+          const versionTag = useV11 ? 'v11' : 'v10';
           const dateStr = new Date().toISOString().slice(0, 10);
           let sentCount = 0;
           const sentNow = new Date().toISOString();
 
           for (let ci = 0; ci < chunks.length; ci++) {
             const chunk = chunks[ci];
-            const batchItems: ResendBatchItem[] = chunk.map((r) => ({
+            // Compute subjects per-recipient (v11 includes first name in subject)
+            const subjects: string[] = chunk.map((r) =>
+              useV11
+                ? v11Subject('winback', r.firstName)
+                : "We've been building. You should see it."
+            );
+            const batchItems: ResendBatchItem[] = chunk.map((r, idx) => ({
               from: FROM_V10,
               replyTo: REPLY_TO,
               to: [r.email],
-              subject,
-              html: generateV10WinbackHTML(r.firstName, r.unsubscribeUrl),
-              text: generateV10WinbackPlainText(r.firstName, r.unsubscribeUrl),
+              subject: subjects[idx],
+              html: useV11
+                ? generateV11HTML('winback', r.firstName, r.unsubscribeUrl)
+                : generateV10WinbackHTML(r.firstName, r.unsubscribeUrl),
+              text: useV11
+                ? generateV11PlainText('winback', r.firstName, r.unsubscribeUrl)
+                : generateV10WinbackPlainText(r.firstName, r.unsubscribeUrl),
               headers: buildUnsubscribeHeaders(r.unsubscribeUrl),
               tags: [
                 { name: 'campaign', value: 'winback' },
-                { name: 'version', value: 'v10' },
+                { name: 'version', value: versionTag },
                 { name: 'user_id', value: r.userId },
               ],
             }));
@@ -2417,7 +2441,7 @@ Deno.serve(async (req) => {
               .sort()
               .join('')
               .slice(0, 40);
-            const idempotencyKey = `winback-v10-${dateStr}-${ci}-${uidHash}`;
+            const idempotencyKey = `winback-${versionTag}-${dateStr}-${ci}-${uidHash}`;
 
             const { ids, error: batchErr } = await sendBatchWithRetry(batchItems, idempotencyKey);
 
@@ -2437,12 +2461,12 @@ Deno.serve(async (req) => {
                 successfulIds.push(r.userId);
                 logRows.push({
                   to_email: r.email,
-                  subject,
-                  template: 'winback_offer_v10',
+                  subject: subjects[i],
+                  template: `winback_offer_${versionTag}`,
                   status: 'sent',
                   metadata: {
                     user_id: r.userId,
-                    email_version: 'v10',
+                    email_version: versionTag,
                     resend_id: resendId,
                     batch_index: ci,
                   },
@@ -2696,16 +2720,24 @@ Deno.serve(async (req) => {
 
         const testRecipient = testEmail.trim().toLowerCase();
 
-        // V10 test path — same template + headers as bulk, but with [TEST] prefix
-        if (!email_version || email_version === 'v10') {
-          const firstName = 'Test';
+        // V10 / V11 test path — same template + headers as bulk, with [TEST] prefix
+        if (!email_version || email_version === 'v10' || email_version === 'v11') {
+          const useV11 = !email_version || email_version === 'v11';
+          const versionTag = useV11 ? 'v11' : 'v10';
+          const firstName = (recipientName && (recipientName as string).split(' ')[0]) || 'Andrew';
           const unsubscribeUrl = await buildUnsubscribeUrl(testRecipient);
-          const html = generateV10WinbackHTML(firstName, unsubscribeUrl);
-          const text = generateV10WinbackPlainText(firstName, unsubscribeUrl);
-          const subject = "[TEST] We've been building. You should see it.";
+          const html = useV11
+            ? generateV11HTML('winback', firstName, unsubscribeUrl)
+            : generateV10WinbackHTML(firstName, unsubscribeUrl);
+          const text = useV11
+            ? generateV11PlainText('winback', firstName, unsubscribeUrl)
+            : generateV10WinbackPlainText(firstName, unsubscribeUrl);
+          const subject = useV11
+            ? `[TEST] ${v11Subject('winback', firstName)}`
+            : "[TEST] We've been building. You should see it.";
 
           await rateLimiter.acquire(1);
-          const { data: v10TestData, error: v10TestErr } = await resend.emails.send({
+          const { data: vTestData, error: vTestErr } = await resend.emails.send({
             from: FROM_V10,
             replyTo: REPLY_TO,
             to: [testRecipient],
@@ -2715,22 +2747,24 @@ Deno.serve(async (req) => {
             headers: buildUnsubscribeHeaders(unsubscribeUrl),
             tags: [
               { name: 'campaign', value: 'winback' },
-              { name: 'version', value: 'v10' },
+              { name: 'version', value: versionTag },
               { name: 'type', value: 'test' },
             ],
           });
 
-          if (v10TestErr) {
-            console.error('V10 test send error:', v10TestErr);
-            throw new Error(`Failed to send test email: ${v10TestErr.message}`);
+          if (vTestErr) {
+            console.error(`${versionTag.toUpperCase()} test send error:`, vTestErr);
+            throw new Error(`Failed to send test email: ${vTestErr.message}`);
           }
 
-          console.log(`V10 test email sent to ${testRecipient} by admin ${user.id}`);
+          console.log(
+            `${versionTag.toUpperCase()} test email sent to ${testRecipient} by admin ${user.id}`
+          );
           result = {
             success: true,
             email: testRecipient,
-            version: 'v10',
-            resend_id: v10TestData?.id,
+            version: versionTag,
+            resend_id: vTestData?.id,
           };
           break;
         }

@@ -1,8 +1,11 @@
 // Public one-click unsubscribe endpoint (RFC 8058 compliant).
 // Supports:
-//   GET  /unsubscribe?token=...            → renders confirm page
-//   GET  /unsubscribe?token=...&confirm=1  → unsubscribes, renders success
-//   POST /unsubscribe (body or ?token=...) → one-click unsubscribe (Gmail, Yahoo)
+//   GET  /unsubscribe?token=...   → instant unsubscribe + success page
+//   POST /unsubscribe             → one-click unsubscribe (Gmail, Yahoo)
+//
+// Both methods suppress immediately — no confirmation step. The HMAC-signed
+// per-recipient token already proves intent (only the recipient has it), so
+// the extra confirmation page was friction without a security benefit.
 //
 // Token format: `${payloadB64}.${sigB64}`
 //   payload = { email, issued_at } JSON → base64url
@@ -22,6 +25,11 @@ const htmlHeaders = {
   ...corsHeaders,
   'Content-Type': 'text/html; charset=utf-8',
   'Cache-Control': 'no-store',
+  // Without nosniff, Gmail's iOS in-app webview content-sniffs the response and
+  // offers it as a .txt download instead of rendering. Belt-and-braces: also
+  // X-Frame-Options to keep this off any unwanted iframe wrapper.
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
 };
 
 const SECRET = Deno.env.get('WINBACK_UNSUBSCRIBE_SECRET');
@@ -133,17 +141,9 @@ Deno.serve(async (req) => {
       auth: { persistSession: false },
     });
 
-    // GET without ?confirm=1 → render the confirmation page (requires a click)
-    if (req.method === 'GET' && url.searchParams.get('confirm') !== '1') {
-      return new Response(confirmPageHtml(email, token), {
-        headers: htmlHeaders,
-        status: 200,
-      });
-    }
-
-    // Either POST (one-click) or GET with ?confirm=1 → suppress
+    // Both GET and POST suppress immediately — single-click unsubscribe.
     const reason =
-      req.method === 'POST' ? 'user_unsubscribed_one_click' : 'user_unsubscribed_confirmed';
+      req.method === 'POST' ? 'user_unsubscribed_one_click' : 'user_unsubscribed_link_click';
 
     const { error: suppressError } = await supabase.from('email_suppressions').upsert(
       {
@@ -174,14 +174,16 @@ Deno.serve(async (req) => {
       return new Response('OK', { headers: corsHeaders, status: 200 });
     }
 
-    return new Response(
-      pageHtml({
-        title: "You're unsubscribed",
-        message: `We won't send any more marketing emails to ${escapeHtml(email)}. If that was a mistake, reply to info@elec-mate.com and we'll re-subscribe you.`,
-        status: 'success',
-      }),
-      { headers: htmlHeaders, status: 200 }
-    );
+    // GET: redirect to the static success page on elec-mate.com.
+    // Why not render inline? Gmail's iOS in-app webview content-sniffs *.supabase.co
+    // function responses and offers them as .txt downloads instead of rendering —
+    // even with Content-Type: text/html and X-Content-Type-Options: nosniff.
+    // Redirecting to a real domain with a real .html file sidesteps the bug.
+    const successUrl = `https://www.elec-mate.com/unsubscribed.html?email=${encodeURIComponent(email)}`;
+    return new Response(null, {
+      status: 302,
+      headers: { ...corsHeaders, Location: successUrl, 'Cache-Control': 'no-store' },
+    });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error('unsubscribe error:', msg);
@@ -249,19 +251,7 @@ function pageHtml({
 </div>`);
 }
 
-function confirmPageHtml(email: string, token: string): string {
-  const safeToken = escapeHtml(token);
-  const safeEmail = escapeHtml(email);
-  return pageShell(`<div class="card">
-<img class="logo" src="https://www.elec-mate.com/pwa-512x512.png" alt="Elec-Mate" width="72" height="72">
-<h1>Unsubscribe from marketing</h1>
-<p>We'll stop sending marketing emails to <strong style="color:#fbbf24">${safeEmail}</strong>.</p>
-<p style="margin-top:8px">Important account emails (receipts, password resets, security) will still come through.</p>
-<form method="POST" action="?">
-  <input type="hidden" name="token" value="${safeToken}">
-  <button type="submit">Confirm unsubscribe</button>
-  <a class="btn btn-ghost" href="https://www.elec-mate.com">Never mind</a>
-</form>
-<p class="mute">Questions? Reply to info@elec-mate.com</p>
-</div>`);
-}
+// confirmPageHtml removed — unsubscribe is now instant on the first click.
+// Kept here as a comment so we remember why: RFC 8058 expects POST one-click
+// from Gmail/Yahoo, and GET-confirm-then-POST adds friction with no real
+// security benefit since the token itself is HMAC-signed and per-recipient.
