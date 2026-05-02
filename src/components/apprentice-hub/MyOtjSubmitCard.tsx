@@ -1,9 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import { SubmitWorkOtjSheet } from './SubmitWorkOtjSheet';
+
+interface AiPrefill {
+  title: string;
+  description: string;
+  activity_type: string;
+  duration_minutes: number;
+  unit_codes: string[];
+}
 
 /* ==========================================================================
    MyOtjSubmitCard — apprentice-side. Shows ESFA-defensible hours total
@@ -81,11 +89,71 @@ function fmtRel(iso: string | null): string {
 }
 
 export function MyOtjSubmitCard() {
-  const navigate = useNavigate();
+  const { toast } = useToast();
   const [rows, setRows] = useState<OtjRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
+
+  // Write-up-with-AI flow state. The apprentice types a one-line prompt,
+  // we POST to ai-otj-proposal, store the structured prefill, and open
+  // the SubmitWorkOtjSheet pre-populated. Apprentice always edits before
+  // submitting — nothing is auto-filed.
+  const [aiPromptOpen, setAiPromptOpen] = useState(false);
+  const [aiPromptText, setAiPromptText] = useState('');
+  const [aiPromptLoading, setAiPromptLoading] = useState(false);
+  const [aiPrefill, setAiPrefill] = useState<AiPrefill | null>(null);
+
+  const handleGenerateProposal = async () => {
+    const trimmed = aiPromptText.trim();
+    if (trimmed.length < 8) {
+      toast({
+        title: 'Tell me a bit more',
+        description: 'A few words about what you did so the AI has something to work with.',
+      });
+      return;
+    }
+    setAiPromptLoading(true);
+    try {
+      const { data: session } = await supabase.auth.getSession();
+      const token = session.session?.access_token;
+      if (!token) throw new Error('Not signed in');
+      const url = `${(import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? ''}/functions/v1/ai-otj-proposal`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ prompt: trimmed }),
+      });
+      if (!res.ok) {
+        let detail = `request_${res.status}`;
+        try {
+          const j = (await res.json()) as { error?: string; detail?: string };
+          detail = j.detail ?? j.error ?? detail;
+        } catch {
+          // ignore
+        }
+        throw new Error(detail);
+      }
+      const proposal = (await res.json()) as AiPrefill;
+      setAiPrefill(proposal);
+      setAiPromptOpen(false);
+      setAiPromptText('');
+      // Open the submit sheet pre-populated. The Sheet's open-time
+      // effect will hydrate the form from the prefill.
+      setOpen(true);
+    } catch (e) {
+      toast({
+        title: 'Could not draft your write-up',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    } finally {
+      setAiPromptLoading(false);
+    }
+  };
 
   const fetchRows = useCallback(async () => {
     const { data: u } = await supabase.auth.getUser();
@@ -200,24 +268,70 @@ export function MyOtjSubmitCard() {
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
             <button
               type="button"
-              onClick={() => setOpen(true)}
+              onClick={() => {
+                // Direct submit — clear any stale AI prefill so the form
+                // opens blank as expected.
+                setAiPrefill(null);
+                setOpen(true);
+              }}
               className="h-11 rounded-lg bg-emerald-500 text-black text-[13px] font-semibold hover:bg-emerald-400 transition-colors touch-manipulation"
             >
               Submit work activity
             </button>
             <button
               type="button"
-              onClick={() => {
-                const prompt =
-                  "Help me write up the work I did today. I'll describe it and you draft the OTJ entry, the portfolio entry against any ACs it covers, and any goal worth setting.";
-                navigate(`/apprentice/college-ai?prompt=${encodeURIComponent(prompt)}`);
-              }}
-              className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border border-cyan-300/30 bg-cyan-300/[0.08] text-cyan-200 text-[13px] font-semibold hover:bg-cyan-300/[0.14] transition-colors touch-manipulation"
+              onClick={() => setAiPromptOpen((x) => !x)}
+              className={cn(
+                'inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border text-[13px] font-semibold transition-colors touch-manipulation',
+                aiPromptOpen
+                  ? 'border-cyan-300/40 bg-cyan-300/[0.14] text-cyan-100'
+                  : 'border-cyan-300/30 bg-cyan-300/[0.08] text-cyan-200 hover:bg-cyan-300/[0.14]'
+              )}
             >
               <Sparkles className="h-3.5 w-3.5" />
               Write up with AI
             </button>
           </div>
+
+          {/* AI prompt panel — slides in below the CTAs. Apprentice types a
+              one-line description, AI returns a structured proposal, the
+              SubmitWorkOtjSheet opens prefilled with it. Always editable. */}
+          {aiPromptOpen && (
+            <div className="mt-3 rounded-xl border border-cyan-300/25 bg-cyan-500/[0.04] p-3.5 space-y-2.5">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-cyan-200">
+                Tell me what you did
+              </div>
+              <textarea
+                value={aiPromptText}
+                onChange={(e) => setAiPromptText(e.target.value)}
+                placeholder="e.g. rewired a kitchen consumer unit with my supervisor, took 4 hours, learned how to terminate the SWA properly"
+                rows={3}
+                disabled={aiPromptLoading}
+                className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[12.5px] text-white placeholder:text-white/45 leading-snug focus:outline-none focus:border-cyan-300/50 focus:ring-1 focus:ring-cyan-300/25 touch-manipulation resize-none disabled:opacity-60"
+              />
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-[10.5px] text-white/65 leading-snug">
+                  AI drafts a starter — you review, edit, then submit. Nothing is auto-filed.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => void handleGenerateProposal()}
+                  disabled={aiPromptLoading || aiPromptText.trim().length < 8}
+                  className={cn(
+                    'shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-semibold transition-colors touch-manipulation',
+                    aiPromptLoading
+                      ? 'bg-cyan-300/40 text-black/70'
+                      : aiPromptText.trim().length < 8
+                        ? 'bg-white/[0.05] text-white/40'
+                        : 'bg-cyan-300 text-black hover:bg-cyan-200'
+                  )}
+                >
+                  <Sparkles className="h-3 w-3" />
+                  {aiPromptLoading ? 'Drafting…' : 'Draft my entry'}
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Recent submissions */}
           {rows.length > 0 && (
@@ -246,7 +360,14 @@ export function MyOtjSubmitCard() {
 
       <SubmitWorkOtjSheet
         open={open}
-        onOpenChange={setOpen}
+        onOpenChange={(o) => {
+          setOpen(o);
+          // Sheet closing — clear AI prefill so the next plain "Submit
+          // work activity" tap opens a blank form rather than the stale
+          // AI draft.
+          if (!o) setAiPrefill(null);
+        }}
+        prefill={aiPrefill ?? undefined}
         onSubmitted={() => {
           fetchRows();
         }}
