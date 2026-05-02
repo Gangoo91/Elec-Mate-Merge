@@ -115,29 +115,22 @@ export function MyOtjSubmitCard() {
     }
     setAiPromptLoading(true);
     try {
-      const { data: session } = await supabase.auth.getSession();
-      const token = session.session?.access_token;
-      if (!token) throw new Error('Not signed in');
-      const url = `${(import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? ''}/functions/v1/ai-otj-proposal`;
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ prompt: trimmed }),
+      // Use supabase.functions.invoke so the URL + auth header are
+      // resolved by the SDK from the same config the rest of the app
+      // uses. The earlier raw-fetch fallback to `/functions/v1/...`
+      // would silently 200-with-HTML if VITE_SUPABASE_URL was missing
+      // (relative path → app origin → index.html → JSON.parse fails).
+      const { data, error: fnErr } = await supabase.functions.invoke('ai-otj-proposal', {
+        body: { prompt: trimmed },
       });
-      if (!res.ok) {
-        let detail = `request_${res.status}`;
-        try {
-          const j = (await res.json()) as { error?: string; detail?: string };
-          detail = j.detail ?? j.error ?? detail;
-        } catch {
-          // ignore
-        }
-        throw new Error(detail);
+      if (fnErr) throw new Error(fnErr.message ?? 'request_failed');
+      const proposal = (data ?? {}) as AiPrefill | { error?: string };
+      if ('error' in proposal && proposal.error) {
+        throw new Error(proposal.error);
       }
-      const proposal = (await res.json()) as AiPrefill;
+      if (!('title' in proposal) || !proposal.title) {
+        throw new Error('AI returned an empty proposal');
+      }
       setAiPrefill(proposal);
       setAiPromptOpen(false);
       setAiPromptText('');

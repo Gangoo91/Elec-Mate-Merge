@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 /* ==========================================================================
@@ -261,7 +261,10 @@ export function useAcMatrix(studentId: string | null, studentUserId: string | nu
 
       // ─── Compute per-AC by_type counts ───
       const portfolioTypeCount = new Map<string, Map<EvidenceTypeCode, number>>();
-      const fileTypeToEvidenceType = (item: { category: string; file_type: string | null }): EvidenceTypeCode => {
+      const fileTypeToEvidenceType = (item: {
+        category: string;
+        file_type: string | null;
+      }): EvidenceTypeCode => {
         // Prefer category if it matches a known evidence_type code
         const cat = (item.category ?? '').toLowerCase();
         const known: EvidenceTypeCode[] = [
@@ -394,7 +397,9 @@ export function useAcMatrix(studentId: string | null, studentUserId: string | nu
             .sort((a, b) => a.lo_number - b.lo_number)
             .map((lo) => ({
               ...lo,
-              acs: lo.acs.sort((a, b) => a.ac_code.localeCompare(b.ac_code, 'en-GB', { numeric: true })),
+              acs: lo.acs.sort((a, b) =>
+                a.ac_code.localeCompare(b.ac_code, 'en-GB', { numeric: true })
+              ),
             })),
         }));
 
@@ -439,40 +444,54 @@ export function useAcMatrix(studentId: string | null, studentUserId: string | nu
     void load();
   }, [load]);
 
-  // Realtime — bump when any source changes. Channel name is namespaced
-  // with useId() so multiple consumers (e.g. matrix + locker) don't collide
-  // on the same `ac_matrix:${studentId}` topic.
+  // Realtime — bump when any source changes. Trailing-debounced so
+  // a bulk sign-off of 30 ACs doesn't fire 30 full-matrix reloads in
+  // quick succession (each touches student_ac_coverage + ac_signoffs,
+  // so 30 ACs = up to 60 events). Channel name is namespaced with
+  // useId() so multiple consumers don't collide on the same topic.
+  const reloadTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (!studentId) return;
+    const scheduleReload = () => {
+      if (reloadTimerRef.current) clearTimeout(reloadTimerRef.current);
+      reloadTimerRef.current = setTimeout(() => {
+        reloadTimerRef.current = null;
+        void load();
+      }, 350);
+    };
     const ch = supabase
       .channel(`ac_matrix:${studentId}:${channelId}`)
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'student_ac_coverage' },
-        () => void load()
+        scheduleReload
       )
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'college_observations' },
-        () => void load()
+        scheduleReload
       )
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'portfolio_items' },
-        () => void load()
+        scheduleReload
       )
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'ac_signoffs' },
-        () => void load()
+        scheduleReload
       )
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'ac_evidence_rules' },
-        () => void load()
+        scheduleReload
       )
       .subscribe();
     return () => {
+      if (reloadTimerRef.current) {
+        clearTimeout(reloadTimerRef.current);
+        reloadTimerRef.current = null;
+      }
       supabase.removeChannel(ch);
     };
   }, [studentId, load, channelId]);

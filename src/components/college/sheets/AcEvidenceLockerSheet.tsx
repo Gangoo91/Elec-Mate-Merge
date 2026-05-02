@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -105,10 +105,11 @@ export function AcEvidenceLockerSheet({
   const [saving, setSaving] = useState(false);
   const [savingNarrative, setSavingNarrative] = useState(false);
   const [drafting, setDrafting] = useState(false);
-  const [draftMeta, setDraftMeta] = useState<
-    | { verdict: string; confidence: string; evidence_count: number }
-    | null
-  >(null);
+  const [draftMeta, setDraftMeta] = useState<{
+    verdict: string;
+    confidence: string;
+    evidence_count: number;
+  } | null>(null);
 
   const channelId = useId();
 
@@ -131,13 +132,22 @@ export function AcEvidenceLockerSheet({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, cell?.unit_code, cell?.ac_code]);
 
-  // Realtime: when ac_signoffs changes (e.g. IQA fans out a verdict from the
-  // sampling page), refresh the locker without requiring close+reopen. Don't
-  // clobber unsaved narrative drafts — only re-pull the signoff row.
+  // Realtime: when ac_signoffs changes (e.g. IQA fans out a verdict from
+  // the sampling page), refresh the locker without requiring close+reopen.
+  //
+  // Filter is `student_id=eq.X` only (Postgres doesn't support multi-key
+  // filters in supabase realtime), so a bulk sign-off touching 30 ACs
+  // would naively fire 30 events for THIS open drawer. Filter
+  // client-side to (qual,unit,ac) AND debounce so the burst settles
+  // before we hit the DB. Don't clobber unsaved narrative drafts.
+  const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (!open || !cell) return;
+    const myQual = cell.qualification_code;
+    const myUnit = cell.unit_code;
+    const myAc = cell.ac_code;
     const ch = supabase
-      .channel(`ac_locker:${studentId}:${cell.unit_code}:${cell.ac_code}:${channelId}`)
+      .channel(`ac_locker:${studentId}:${myUnit}:${myAc}:${channelId}`)
       .on(
         'postgres_changes',
         {
@@ -146,18 +156,46 @@ export function AcEvidenceLockerSheet({
           table: 'ac_signoffs',
           filter: `student_id=eq.${studentId}`,
         },
-        () => {
-          // Only refresh signoff (covers IQA writes). Don't replace narrative
-          // if assessor has unsaved edits in the textarea.
-          if (!narrativeDirty) void loadSignoff();
+        (payload) => {
+          // Skip if the change isn't for our specific (qual,unit,ac).
+          // payload.new / payload.old shape varies by event; check both.
+          const row =
+            (payload.new as Record<string, unknown> | null) ??
+            (payload.old as Record<string, unknown> | null) ??
+            null;
+          if (
+            row &&
+            (row.qualification_code !== myQual || row.unit_code !== myUnit || row.ac_code !== myAc)
+          ) {
+            return;
+          }
+          // Debounce trailing 250ms so a tight burst (bulk save touching
+          // many rows in <100ms) settles before the read.
+          if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
+          refreshTimerRef.current = setTimeout(() => {
+            refreshTimerRef.current = null;
+            if (!narrativeDirty) void loadSignoff();
+          }, 250);
         }
       )
       .subscribe();
     return () => {
+      if (refreshTimerRef.current) {
+        clearTimeout(refreshTimerRef.current);
+        refreshTimerRef.current = null;
+      }
       void supabase.removeChannel(ch);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, cell?.unit_code, cell?.ac_code, studentId, channelId, narrativeDirty]);
+  }, [
+    open,
+    cell?.qualification_code,
+    cell?.unit_code,
+    cell?.ac_code,
+    studentId,
+    channelId,
+    narrativeDirty,
+  ]);
 
   const loadPieces = useCallback(async () => {
     if (!cell) return;
@@ -170,9 +208,7 @@ export function AcEvidenceLockerSheet({
       if (studentUserId) {
         const { data: pRows } = await supabase
           .from('portfolio_items')
-          .select(
-            'id, title, description, category, file_type, file_url, storage_urls, created_at'
-          )
+          .select('id, title, description, category, file_type, file_url, storage_urls, created_at')
           .eq('user_id', studentUserId)
           .contains('assessment_criteria_met', [cell.ac_code]);
         for (const p of (pRows ?? []) as Array<{
@@ -350,8 +386,7 @@ export function AcEvidenceLockerSheet({
             .is('archived_at', null)
             .maybeSingle()
         : { data: null };
-      const assessorName =
-        (staffRow as { name?: string } | null)?.name ?? null;
+      const assessorName = (staffRow as { name?: string } | null)?.name ?? null;
       const { error } = await supabase.from('ac_signoffs').upsert(
         {
           student_id: studentId,
@@ -499,10 +534,18 @@ export function AcEvidenceLockerSheet({
                 <div
                   className={cn(
                     'text-[11.5px] font-semibold tabular-nums',
-                    meets ? 'text-emerald-300' : requirement?.is_mandatory ? 'text-rose-300' : 'text-white'
+                    meets
+                      ? 'text-emerald-300'
+                      : requirement?.is_mandatory
+                        ? 'text-rose-300'
+                        : 'text-white'
                   )}
                 >
-                  {meets ? 'Requirement met' : requirement?.is_mandatory ? 'Gap' : 'No requirement set'}
+                  {meets
+                    ? 'Requirement met'
+                    : requirement?.is_mandatory
+                      ? 'Gap'
+                      : 'No requirement set'}
                 </div>
               </div>
               {requirement && (
@@ -520,7 +563,12 @@ export function AcEvidenceLockerSheet({
                               : 'border-rose-500/30 bg-rose-500/[0.06] text-rose-200'
                           )}
                         >
-                          <span className={cn('h-1 w-1 rounded-full', have ? 'bg-emerald-400' : 'bg-rose-400')} />
+                          <span
+                            className={cn(
+                              'h-1 w-1 rounded-full',
+                              have ? 'bg-emerald-400' : 'bg-rose-400'
+                            )}
+                          />
                           {TYPE_LABEL[rc] ?? rc} {have ? '✓' : '–'}
                         </span>
                       );
@@ -551,7 +599,11 @@ export function AcEvidenceLockerSheet({
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
                 {(
                   [
-                    { v: 'not_started', label: 'Not started', tone: 'border-white/[0.10] text-white' },
+                    {
+                      v: 'not_started',
+                      label: 'Not started',
+                      tone: 'border-white/[0.10] text-white',
+                    },
                     {
                       v: 'in_progress',
                       label: 'In progress',
@@ -631,8 +683,9 @@ export function AcEvidenceLockerSheet({
               </div>
               {draftMeta && (
                 <div className="mb-2 text-[10.5px] text-white/65 italic">
-                  AI suggests verdict <strong className="text-white">{draftMeta.verdict.replace('_', ' ')}</strong>{' '}
-                  ({draftMeta.confidence} confidence, {draftMeta.evidence_count} evidence pieces).
+                  AI suggests verdict{' '}
+                  <strong className="text-white">{draftMeta.verdict.replace('_', ' ')}</strong> (
+                  {draftMeta.confidence} confidence, {draftMeta.evidence_count} evidence pieces).
                 </div>
               )}
               <textarea
@@ -683,9 +736,7 @@ export function AcEvidenceLockerSheet({
                   <span
                     className={cn(
                       'text-[10.5px] font-semibold tabular-nums',
-                      signoffRow.iqa_verdict === 'confirmed'
-                        ? 'text-elec-yellow'
-                        : 'text-rose-300'
+                      signoffRow.iqa_verdict === 'confirmed' ? 'text-elec-yellow' : 'text-rose-300'
                     )}
                   >
                     {signoffRow.iqa_verdict.toUpperCase()}
@@ -726,16 +777,15 @@ export function AcEvidenceLockerSheet({
                 <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                   Evidence ({totalEvidence})
                 </div>
-                {loading && (
-                  <span className="text-[10.5px] text-white">Loading…</span>
-                )}
+                {loading && <span className="text-[10.5px] text-white">Loading…</span>}
               </div>
               {!loading && totalEvidence === 0 && (
                 <div className="rounded-lg border border-dashed border-white/[0.10] px-4 py-8 text-center">
                   <div className="text-[12.5px] font-medium text-white">No evidence yet</div>
                   <p className="mt-1 text-[11px] text-white max-w-xs mx-auto">
-                    Add evidence by recording an observation, having the apprentice upload a portfolio
-                    item with this AC tagged, or logging an OTJ entry that references {cell.ac_code}.
+                    Add evidence by recording an observation, having the apprentice upload a
+                    portfolio item with this AC tagged, or logging an OTJ entry that references{' '}
+                    {cell.ac_code}.
                   </p>
                 </div>
               )}
@@ -750,9 +800,7 @@ export function AcEvidenceLockerSheet({
                     >
                       {TYPE_LABEL[type] ?? type}
                     </span>
-                    <span className="text-[10.5px] text-white tabular-nums">
-                      {list.length}
-                    </span>
+                    <span className="text-[10.5px] text-white tabular-nums">{list.length}</span>
                   </div>
                   <ul className="space-y-1.5">
                     {list.map((piece) => (

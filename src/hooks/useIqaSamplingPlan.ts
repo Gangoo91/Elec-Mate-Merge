@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { IqaSamplingPlan } from '@/hooks/useIqaSamplingPlans';
 
@@ -86,6 +86,9 @@ export function useIqaSamplingPlan(planId: string | null) {
   const [eligibleOtj, setEligibleOtj] = useState<EligibleOtjEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  // Tracks the last total_assessments value we wrote so the realtime
+  // echo doesn't trigger an infinite write loop. Per-hook lifetime.
+  const lastWrittenTotalRef = useRef<number | null>(null);
 
   const fetch = useCallback(async () => {
     if (!planId) {
@@ -199,9 +202,16 @@ export function useIqaSamplingPlan(planId: string | null) {
     );
     setEligibleOtj(eligibleOtjList);
 
-    // Reconcile plan total_assessments — sum across both target types.
+    // Reconcile plan total_assessments. RACE: this fetch is also bound
+    // to a realtime sub on college_iqa_sampling, so writing back the
+    // count fires another realtime event → another fetch → another
+    // potential write. Two browsers open at once would chain forever
+    // before this guard. Now: only write if the count actually changed
+    // AND we haven't already written this exact value during this
+    // hook's lifetime — avoids the postgres_changes echo loop entirely.
     const total = eligibleList.length + eligibleOtjList.length + sampleRows.length;
-    if (total !== (planData.total_assessments ?? 0)) {
+    if (total !== (planData.total_assessments ?? 0) && lastWrittenTotalRef.current !== total) {
+      lastWrittenTotalRef.current = total;
       await supabase
         .from('college_iqa_sampling')
         .update({ total_assessments: total })
@@ -307,9 +317,7 @@ export function useIqaSamplingPlan(planId: string | null) {
   /** Map an IQA sample verdict (assessor-judgement-stage language) to the
       ac_signoffs.iqa_verdict enum (per-AC closed-loop language). `refer`
       ≈ `returned` — the IQA has bounced it back for more evidence. */
-  const mapVerdictToAcVerdict = (
-    v: SampleVerdict
-  ): 'confirmed' | 'returned' | 'not_sampled' => {
+  const mapVerdictToAcVerdict = (v: SampleVerdict): 'confirmed' | 'returned' | 'not_sampled' => {
     if (v === 'agree') return 'confirmed';
     if (v === 'disagree' || v === 'refer') return 'returned';
     return 'not_sampled';
@@ -319,11 +327,7 @@ export function useIqaSamplingPlan(planId: string | null) {
       the observation evidenced. OTJ samples are skipped (OTJ has no AC
       granularity, only unit_codes). */
   const fanOutVerdictToAcSignoffs = useCallback(
-    async (
-      sampleRow: IqaSampleRow,
-      verdict: SampleVerdict,
-      comments?: string | null
-    ) => {
+    async (sampleRow: IqaSampleRow, verdict: SampleVerdict, comments?: string | null) => {
       // Only observation samples carry AC-level granularity.
       if (!sampleRow.observation_id) return;
       const { data: obs } = await supabase
@@ -331,14 +335,12 @@ export function useIqaSamplingPlan(planId: string | null) {
         .select('college_student_id, qualification_code, unit_code, acs_evidenced')
         .eq('id', sampleRow.observation_id)
         .maybeSingle();
-      const obsRow = obs as
-        | {
-            college_student_id: string | null;
-            qualification_code: string | null;
-            unit_code: string | null;
-            acs_evidenced: string[] | null;
-          }
-        | null;
+      const obsRow = obs as {
+        college_student_id: string | null;
+        qualification_code: string | null;
+        unit_code: string | null;
+        acs_evidenced: string[] | null;
+      } | null;
       if (!obsRow?.college_student_id || !obsRow.qualification_code || !obsRow.unit_code) {
         return;
       }

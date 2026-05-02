@@ -278,16 +278,21 @@ Deno.serve(async (req) => {
 
     const proposal = JSON.parse(args) as ProposalArgs;
     // Defensive normalisation — clamp duration, dedupe + cap unit codes,
-    // truncate strings to keep the prefill UI clean.
+    // truncate strings. Guard against the model returning a non-numeric
+    // duration (NaN) — Math.round/min/max preserve NaN, which would write
+    // an unparseable value into the form prefill. Default to 60 minutes
+    // when we can't parse a number (matches the prompt's stated default).
+    const rawDuration = Number(proposal.duration_minutes);
+    const duration = Number.isFinite(rawDuration) ? Math.round(rawDuration) : 60;
     const safe = {
-      title: proposal.title.slice(0, 120).trim(),
-      description: proposal.description.slice(0, 1200).trim(),
+      title: (proposal.title ?? '').slice(0, 120).trim(),
+      description: (proposal.description ?? '').slice(0, 1200).trim(),
       activity_type: ACTIVITY_TYPES.includes(proposal.activity_type)
         ? proposal.activity_type
         : 'other',
-      duration_minutes: Math.max(15, Math.min(1440, Math.round(proposal.duration_minutes))),
+      duration_minutes: Math.max(15, Math.min(1440, duration)),
       unit_codes: Array.from(
-        new Set((proposal.unit_codes ?? []).map((u) => u.trim()).filter(Boolean))
+        new Set((proposal.unit_codes ?? []).map((u) => String(u).trim()).filter(Boolean))
       ).slice(0, 3),
     };
 

@@ -48,10 +48,7 @@ const STATUS_LABEL: Record<AcStatus, string> = {
   confirmed: 'Confirmed',
 };
 
-const STATUS_TONE: Record<
-  AcStatus,
-  { dot: string; text: string; chipBg: string }
-> = {
+const STATUS_TONE: Record<AcStatus, { dot: string; text: string; chipBg: string }> = {
   not_started: {
     dot: 'bg-white/30',
     text: 'text-white',
@@ -276,7 +273,8 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
       if (drafts.length === 0) {
         toast({
           title: 'No drafts produced',
-          description: 'AI returned nothing — check evidence is attached, or draft per-AC from the locker.',
+          description:
+            'AI returned nothing — check evidence is attached, or draft per-AC from the locker.',
           variant: 'destructive',
         });
         return;
@@ -315,41 +313,46 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
       const stamp = new Date().toISOString();
       const trimmedNarrative = bulkNarrative.trim() || null;
 
-      // Fan out signoff upserts + status updates with allSettled so a single
-      // failure doesn't lose the rest.
-      const signoffPromises = targets.map((cell) =>
-        supabase.from('ac_signoffs').upsert(
-          {
-            student_id: studentId,
-            qualification_code: cell.qualification_code,
-            unit_code: cell.unit_code,
-            ac_code: cell.ac_code,
-            assessor_narrative: trimmedNarrative,
-            assessor_signed_at: stamp,
-            assessor_signed_by: userId,
-            assessor_name_snapshot: assessorName,
-          },
-          { onConflict: 'student_id,qualification_code,unit_code,ac_code' }
-        )
+      // Per-AC: signoff upsert + status update together, fail the AC if
+      // either side errors. Reporting at AC level (not raw op count) is
+      // what the assessor needs to retry — "5 of 10 operations" was
+      // confusing for 5 ACs (each AC = 2 ops). Either-side failure
+      // throws so the AC counts as failed even if one side persisted —
+      // partial-row state is the worst possible outcome and we want it
+      // surfaced loudly.
+      const acResults = await Promise.allSettled(
+        targets.map(async (cell) => {
+          const [{ error: signoffErr }, { error: statusErr }] = await Promise.all([
+            supabase.from('ac_signoffs').upsert(
+              {
+                student_id: studentId,
+                qualification_code: cell.qualification_code,
+                unit_code: cell.unit_code,
+                ac_code: cell.ac_code,
+                assessor_narrative: trimmedNarrative,
+                assessor_signed_at: stamp,
+                assessor_signed_by: userId,
+                assessor_name_snapshot: assessorName,
+              },
+              { onConflict: 'student_id,qualification_code,unit_code,ac_code' }
+            ),
+            supabase
+              .from('student_ac_coverage')
+              .update({ status: bulkStatus })
+              .eq('student_id', studentId)
+              .eq('qualification_code', cell.qualification_code)
+              .eq('unit_code', cell.unit_code)
+              .eq('ac_code', cell.ac_code),
+          ]);
+          if (signoffErr) throw new Error(`signoff: ${signoffErr.message}`);
+          if (statusErr) throw new Error(`status: ${statusErr.message}`);
+          return cell.ac_code;
+        })
       );
-      const statusPromises = targets.map((cell) =>
-        supabase
-          .from('student_ac_coverage')
-          .update({ status: bulkStatus })
-          .eq('student_id', studentId)
-          .eq('qualification_code', cell.qualification_code)
-          .eq('unit_code', cell.unit_code)
-          .eq('ac_code', cell.ac_code)
-      );
-
-      const results = await Promise.allSettled([...signoffPromises, ...statusPromises]);
-      const failed = results.filter(
-        (r) => r.status === 'rejected' || (r.status === 'fulfilled' && (r.value as { error?: unknown })?.error)
-      ).length;
-      const totalOps = results.length;
+      const failedAcs = acResults.filter((r) => r.status === 'rejected').length;
       const totalAcs = targets.length;
 
-      if (failed === 0) {
+      if (failedAcs === 0) {
         toast({
           title: `Signed off ${totalAcs} AC${totalAcs === 1 ? '' : 's'}`,
           description: `Status set to ${bulkStatus.replace('_', ' ')}.`,
@@ -359,7 +362,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
       } else {
         toast({
           title: 'Partial save',
-          description: `${totalOps - failed}/${totalOps} operations succeeded. Refresh and re-try the failed ones.`,
+          description: `${totalAcs - failedAcs}/${totalAcs} AC${totalAcs === 1 ? '' : 's'} signed off. ${failedAcs} failed — refresh and re-try.`,
           variant: 'destructive',
         });
       }
@@ -373,7 +376,16 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
     } finally {
       setBulkSaving(false);
     }
-  }, [selectedAcs, cellIndex, bulkNarrative, bulkStatus, studentId, refresh, clearSelection, toast]);
+  }, [
+    selectedAcs,
+    cellIndex,
+    bulkNarrative,
+    bulkStatus,
+    studentId,
+    refresh,
+    clearSelection,
+    toast,
+  ]);
 
   if (loading && !data) {
     return (
@@ -412,8 +424,8 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
         </div>
         <div className="mt-1 text-[14px] font-semibold text-white">No qualification mapped</div>
         <p className="mt-2 text-[12.5px] text-white max-w-prose">
-          This learner doesn't have a course assigned, or the qualification has no AC catalogue.
-          Set their course on the identity strip to populate the matrix.
+          This learner doesn't have a course assigned, or the qualification has no AC catalogue. Set
+          their course on the identity strip to populate the matrix.
         </p>
       </div>
     );
@@ -436,8 +448,11 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
               {data.qualification_code} · {t.total} criteria
             </h3>
             <p className="mt-1 text-[12px] text-white">
-              {completionPct}% complete · {t.confirmed} confirmed · {t.evidenced + t.assessed} evidenced ·{' '}
-              {t.in_progress} in progress · <span className={t.gaps ? 'text-rose-300' : ''}>{t.gaps} gap{t.gaps === 1 ? '' : 's'}</span>
+              {completionPct}% complete · {t.confirmed} confirmed · {t.evidenced + t.assessed}{' '}
+              evidenced · {t.in_progress} in progress ·{' '}
+              <span className={t.gaps ? 'text-rose-300' : ''}>
+                {t.gaps} gap{t.gaps === 1 ? '' : 's'}
+              </span>
             </p>
             {/* Progress bar */}
             <div className="mt-3 h-1.5 w-full max-w-md rounded-full bg-white/[0.06] overflow-hidden">
@@ -626,7 +641,8 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
       {bulkMode && (
         <div className="border-t border-elec-yellow/20 bg-elec-yellow/[0.04] px-5 sm:px-6 py-2.5 flex items-center justify-between gap-3 flex-wrap text-[11.5px] text-white">
           <span>
-            <strong className="text-elec-yellow">Bulk mode</strong> — tap rows to select. Each AC still gets its own audit row.
+            <strong className="text-elec-yellow">Bulk mode</strong> — tap rows to select. Each AC
+            still gets its own audit row.
           </span>
           <div className="flex items-center gap-2">
             <button
@@ -720,8 +736,8 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
             className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/40 leading-relaxed focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-y"
           />
           <p className="text-[10.5px] text-white/55 italic">
-            Saving stamps "signed by you, today" on each AC + flips status. The IQA will see the full
-            list when sampling.
+            Saving stamps "signed by you, today" on each AC + flips status. The IQA will see the
+            full list when sampling.
           </p>
         </div>
       )}
@@ -764,9 +780,7 @@ function MatrixGrid({
       <table className="w-full border-collapse text-[11.5px] tabular-nums">
         <thead>
           <tr>
-            {bulkMode && (
-              <th className="w-7 pb-1.5 align-bottom" aria-label="Select" />
-            )}
+            {bulkMode && <th className="w-7 pb-1.5 align-bottom" aria-label="Select" />}
             <th className="text-left font-medium text-white pb-1.5 pr-3 align-bottom min-w-[80px] sticky left-0 bg-[hsl(0_0%_12%)]">
               AC
             </th>
@@ -781,9 +795,7 @@ function MatrixGrid({
                 {EVIDENCE_TYPE_LABEL[t] ?? t}
               </th>
             ))}
-            <th className="text-center font-medium text-white pb-1.5 pl-2 align-bottom">
-              Status
-            </th>
+            <th className="text-center font-medium text-white pb-1.5 pl-2 align-bottom">Status</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-white/[0.04]">
@@ -791,69 +803,70 @@ function MatrixGrid({
             const k = `${cell.unit_code}:${cell.ac_code}`;
             const isSelected = selectedAcs.has(k);
             return (
-            <tr
-              key={k}
-              role="button"
-              tabIndex={0}
-              onClick={() => (bulkMode ? onToggleSelect(cell) : onOpenAc(cell))}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  if (bulkMode) onToggleSelect(cell);
-                  else onOpenAc(cell);
-                }
-              }}
-              className={cn(
-                'cursor-pointer hover:bg-white/[0.03] transition-colors',
-                cell.requirement?.is_mandatory && !cell.meets_requirement && 'bg-rose-500/[0.03]',
-                isSelected && 'bg-elec-yellow/[0.06]'
-              )}
-            >
-              {bulkMode && (
-                <td className="py-2 pl-1 pr-1 align-middle">
-                  <span
-                    className={cn(
-                      'inline-flex items-center justify-center h-5 w-5 rounded border text-[11px] font-bold',
-                      isSelected
-                        ? 'bg-elec-yellow border-elec-yellow text-black'
-                        : 'border-white/30 bg-transparent text-transparent'
-                    )}
-                    aria-hidden
-                  >
-                    ✓
-                  </span>
-                </td>
-              )}
-              <td className="py-2 pr-3 sticky left-0 bg-[hsl(0_0%_12%)] group-hover:bg-transparent">
-                <div className="font-mono text-[12px] font-semibold text-white">
-                  {cell.ac_code}
-                </div>
-              </td>
-              <td className="py-2 pr-3 text-[12px] text-white max-w-[300px]">
-                <div className="line-clamp-2">{cell.ac_text}</div>
-                {cell.requirement?.is_mandatory && cell.missing_types.length > 0 && (
-                  <div className="mt-0.5 text-[10.5px] text-rose-300">
-                    Missing: {cell.missing_types.map((m) => EVIDENCE_TYPE_LABEL[m] ?? m).join(', ')}
-                  </div>
+              <tr
+                key={k}
+                role="button"
+                tabIndex={0}
+                onClick={() => (bulkMode ? onToggleSelect(cell) : onOpenAc(cell))}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    if (bulkMode) onToggleSelect(cell);
+                    else onOpenAc(cell);
+                  }
+                }}
+                className={cn(
+                  'cursor-pointer hover:bg-white/[0.03] transition-colors',
+                  cell.requirement?.is_mandatory && !cell.meets_requirement && 'bg-rose-500/[0.03]',
+                  isSelected && 'bg-elec-yellow/[0.06]'
                 )}
-              </td>
-              {evidenceTypes.map((t) => {
-                const count = cell.by_type[t] ?? 0;
-                const isRequired = cell.requirement?.required_codes.includes(t) ?? false;
-                return (
-                  <td key={t} className="text-center px-1 py-2">
-                    <CountCell
-                      count={count}
-                      isRequired={isRequired}
-                      isMandatoryAc={cell.requirement?.is_mandatory ?? false}
-                    />
+              >
+                {bulkMode && (
+                  <td className="py-2 pl-1 pr-1 align-middle">
+                    <span
+                      className={cn(
+                        'inline-flex items-center justify-center h-5 w-5 rounded border text-[11px] font-bold',
+                        isSelected
+                          ? 'bg-elec-yellow border-elec-yellow text-black'
+                          : 'border-white/30 bg-transparent text-transparent'
+                      )}
+                      aria-hidden
+                    >
+                      ✓
+                    </span>
                   </td>
-                );
-              })}
-              <td className="text-center pl-2 py-2">
-                <StatusChip status={cell.status} />
-              </td>
-            </tr>
+                )}
+                <td className="py-2 pr-3 sticky left-0 bg-[hsl(0_0%_12%)] group-hover:bg-transparent">
+                  <div className="font-mono text-[12px] font-semibold text-white">
+                    {cell.ac_code}
+                  </div>
+                </td>
+                <td className="py-2 pr-3 text-[12px] text-white max-w-[300px]">
+                  <div className="line-clamp-2">{cell.ac_text}</div>
+                  {cell.requirement?.is_mandatory && cell.missing_types.length > 0 && (
+                    <div className="mt-0.5 text-[10.5px] text-rose-300">
+                      Missing:{' '}
+                      {cell.missing_types.map((m) => EVIDENCE_TYPE_LABEL[m] ?? m).join(', ')}
+                    </div>
+                  )}
+                </td>
+                {evidenceTypes.map((t) => {
+                  const count = cell.by_type[t] ?? 0;
+                  const isRequired = cell.requirement?.required_codes.includes(t) ?? false;
+                  return (
+                    <td key={t} className="text-center px-1 py-2">
+                      <CountCell
+                        count={count}
+                        isRequired={isRequired}
+                        isMandatoryAc={cell.requirement?.is_mandatory ?? false}
+                      />
+                    </td>
+                  );
+                })}
+                <td className="text-center pl-2 py-2">
+                  <StatusChip status={cell.status} />
+                </td>
+              </tr>
             );
           })}
         </tbody>
@@ -980,7 +993,8 @@ function ListView({
                     <>
                       <span className="text-white">·</span>
                       <span className="text-rose-300">
-                        Missing {cell.missing_types.map((m) => EVIDENCE_TYPE_LABEL[m] ?? m).join(', ')}
+                        Missing{' '}
+                        {cell.missing_types.map((m) => EVIDENCE_TYPE_LABEL[m] ?? m).join(', ')}
                       </span>
                     </>
                   )}
@@ -1003,7 +1017,13 @@ function UnitMiniBar({
   stats,
   total,
 }: {
-  stats: { not_started: number; in_progress: number; evidenced: number; assessed: number; confirmed: number };
+  stats: {
+    not_started: number;
+    in_progress: number;
+    evidenced: number;
+    assessed: number;
+    confirmed: number;
+  };
   total: number;
 }) {
   if (total === 0) return null;

@@ -16,6 +16,8 @@ import { StaffComplianceList } from './StaffComplianceList';
 import { PoliciesList } from './PoliciesList';
 import { StaffComplianceDrawer } from '@/components/college/sheets/StaffComplianceDrawer';
 import { AddPolicyDialog } from '@/components/college/dialogs/AddPolicyDialog';
+import { AiAuthorPolicySheet } from '@/components/college/dialogs/AiAuthorPolicySheet';
+import { PolicyTemplatesSheet } from '@/components/college/dialogs/PolicyTemplatesSheet';
 
 export function ComplianceDocsSection() {
   const { toast } = useToast();
@@ -24,6 +26,8 @@ export function ComplianceDocsSection() {
   const [activeTab, setActiveTab] = useState('staff');
   const [openStaffId, setOpenStaffId] = useState<string | null>(null);
   const [addPolicyOpen, setAddPolicyOpen] = useState(false);
+  const [aiAuthorOpen, setAiAuthorOpen] = useState(false);
+  const [templatesOpen, setTemplatesOpen] = useState(false);
   const { stats, loading: statsLoading } = useComplianceStats();
   const { isVerifier } = useVerifierAuthority();
 
@@ -67,6 +71,24 @@ export function ComplianceDocsSection() {
                 >
                   Generate audit pack
                 </button>
+              )}
+              {activeTab === 'policies' && (
+                <>
+                  <button
+                    onClick={() => setTemplatesOpen(true)}
+                    className="text-[12px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+                    title="Browse starter templates and clone one as a draft"
+                  >
+                    Templates
+                  </button>
+                  <button
+                    onClick={() => setAiAuthorOpen(true)}
+                    className="text-[12px] font-medium text-cyan-300/90 hover:text-cyan-200 transition-colors touch-manipulation whitespace-nowrap"
+                    title="AI drafts a policy from a topic, you review and file as draft"
+                  >
+                    Draft with AI
+                  </button>
+                </>
               )}
               <button
                 onClick={heroAction}
@@ -150,6 +172,8 @@ export function ComplianceDocsSection() {
       />
 
       <AddPolicyDialog open={addPolicyOpen} onOpenChange={setAddPolicyOpen} />
+      <AiAuthorPolicySheet open={aiAuthorOpen} onOpenChange={setAiAuthorOpen} />
+      <PolicyTemplatesSheet open={templatesOpen} onOpenChange={setTemplatesOpen} />
     </PageFrame>
   );
 }
