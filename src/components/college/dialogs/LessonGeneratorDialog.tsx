@@ -130,9 +130,7 @@ export function LessonGeneratorDialog({
   const [activePreset, setActivePreset] = useState<string>('standard');
 
   const [cohorts, setCohorts] = useState<CohortOption[]>([]);
-  const [selectedCohortId, setSelectedCohortId] = useState<string | null>(
-    cohortId ?? null
-  );
+  const [selectedCohortId, setSelectedCohortId] = useState<string | null>(cohortId ?? null);
   const [loadingCohorts, setLoadingCohorts] = useState(false);
 
   // Load cohorts for this college once the dialog opens, with learner
@@ -162,9 +160,7 @@ export function LessonGeneratorDialog({
         .eq('college_id', profile.college_id)
         .order('name');
       if (cancelled) return;
-      const active = (rows ?? []).filter(
-        (r) => r.status !== 'archived' && r.status !== 'Archived'
-      );
+      const active = (rows ?? []).filter((r) => r.status !== 'archived' && r.status !== 'Archived');
       if (active.length === 0) {
         setCohorts([]);
         setLoadingCohorts(false);
@@ -269,10 +265,7 @@ export function LessonGeneratorDialog({
       .filter(([, g]) => g.acs.length > 0);
   }, [grouped, search]);
 
-  const totalAcs = useMemo(
-    () => grouped.reduce((sum, [, g]) => sum + g.acs.length, 0),
-    [grouped]
-  );
+  const totalAcs = useMemo(() => grouped.reduce((sum, [, g]) => sum + g.acs.length, 0), [grouped]);
 
   const toggleAc = (code: string) => {
     const next = new Set(selected);
@@ -341,9 +334,7 @@ export function LessonGeneratorDialog({
             Build a lesson plan
           </DialogTitle>
           <DialogDescription className="text-[12.5px] sm:text-[13px] text-white leading-relaxed">
-            <span className="font-mono tabular-nums text-white">
-              {qualificationCode}
-            </span>
+            <span className="font-mono tabular-nums text-white">{qualificationCode}</span>
             <span className="mx-2 text-white/30">·</span>
             <span>
               Unit <span className="font-mono tabular-nums">{unitCode}</span>
@@ -400,9 +391,7 @@ export function LessonGeneratorDialog({
                       >
                         {c.name}
                         {c.learner_count > 0 && (
-                          <span className="ml-2 text-white tabular-nums">
-                            {c.learner_count}
-                          </span>
+                          <span className="ml-2 text-white tabular-nums">{c.learner_count}</span>
                         )}
                       </button>
                     ))}
@@ -414,9 +403,7 @@ export function LessonGeneratorDialog({
                         Planning for
                       </div>
                       <div className="text-[13.5px] text-white leading-snug">
-                        <span className="font-semibold">
-                          {selectedCohort.learner_count}
-                        </span>{' '}
+                        <span className="font-semibold">{selectedCohort.learner_count}</span>{' '}
                         learner{selectedCohort.learner_count === 1 ? '' : 's'}
                         {selectedCohort.first_names.length > 0 && (
                           <span className="text-white">
@@ -441,8 +428,7 @@ export function LessonGeneratorDialog({
                           selectedCohort.eal_count === 0 &&
                           selectedCohort.ehcp_count === 0 && (
                             <span className="text-white/50">
-                              No inclusion flags recorded — the AI will use
-                              generic differentiation.
+                              No inclusion flags recorded — the AI will use generic differentiation.
                             </span>
                           )}
                       </div>
@@ -457,7 +443,10 @@ export function LessonGeneratorDialog({
           <section className="px-6 sm:px-8 pt-6 sm:pt-7">
             <SectionHeader eyebrow="Starting point" title="Choose a shape" />
 
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2.5">
+              {/* lg → xl breakpoint for 4-up so each card keeps a sensible
+                  width on tablet/laptop. At lg (1024-1279px) cards are
+                  too narrow to fit "1h 30m · Classroom" cleanly. */}
               {PRESETS.map((p) => (
                 <PresetCard
                   key={p.id}
@@ -472,10 +461,7 @@ export function LessonGeneratorDialog({
           {/* ── Section 2: Criteria ── */}
           <section className="px-6 sm:px-8 pt-8 sm:pt-10">
             <div className="flex items-end justify-between gap-4 mb-4">
-              <SectionHeader
-                eyebrow="Coverage"
-                title="Assessment criteria"
-              />
+              <SectionHeader eyebrow="Coverage" title="Assessment criteria" />
               <div className="flex items-center gap-3 text-[12px] text-white shrink-0">
                 <span className="tabular-nums">
                   <span className="text-white font-medium">{selected.size}</span>
@@ -532,12 +518,9 @@ export function LessonGeneratorDialog({
               {/* Length slider */}
               <div>
                 <div className="flex items-baseline justify-between mb-3">
-                  <label className="text-[12px] font-medium text-white">
-                    Length
-                  </label>
+                  <label className="text-[12px] font-medium text-white">Length</label>
                   <div className="text-[14px] text-white font-semibold tabular-nums">
-                    {length}{' '}
-                    <span className="text-[11px] text-white font-normal">min</span>
+                    {length} <span className="text-[11px] text-white font-normal">min</span>
                   </div>
                 </div>
                 <Slider
@@ -587,9 +570,7 @@ export function LessonGeneratorDialog({
 
               {/* Include toggle chips */}
               <div>
-                <label className="text-[12px] font-medium text-white mb-2 block">
-                  Include
-                </label>
+                <label className="text-[12px] font-medium text-white mb-2 block">Include</label>
                 <div className="flex flex-wrap gap-2">
                   <ToggleChip
                     label="Differentiation"
@@ -633,9 +614,7 @@ export function LessonGeneratorDialog({
                 <span className="text-white">Pick at least one criterion to begin</span>
               ) : (
                 <span>
-                  <span className="text-white font-medium tabular-nums">
-                    {selected.size}
-                  </span>{' '}
+                  <span className="text-white font-medium tabular-nums">{selected.size}</span>{' '}
                   criter{selected.size === 1 ? 'ion' : 'ia'}
                   <span className="mx-2 text-white/30">·</span>
                   <span className="text-white tabular-nums">{length}</span> min
@@ -645,9 +624,7 @@ export function LessonGeneratorDialog({
                     <>
                       <span className="mx-2 text-white/30">·</span>
                       <span className="text-white">
-                        {[diff && 'Diff', hs && 'H&S', hw && 'HW']
-                          .filter(Boolean)
-                          .join(' · ')}
+                        {[diff && 'Diff', hs && 'H&S', hw && 'HW'].filter(Boolean).join(' · ')}
                       </span>
                     </>
                   )}
@@ -657,11 +634,7 @@ export function LessonGeneratorDialog({
 
             {/* Actions */}
             <div className="flex items-center gap-2 flex-col-reverse sm:flex-row">
-              <SecondaryButton
-                onClick={() => onOpenChange(false)}
-                fullWidth
-                className="sm:w-auto"
-              >
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth className="sm:w-auto">
                 Cancel
               </SecondaryButton>
               <PrimaryButton
@@ -706,11 +679,7 @@ function PresetCard({
 }) {
   const hours = preset.length >= 60 ? `${Math.floor(preset.length / 60)}h` : '';
   const mins = preset.length % 60;
-  const timeLabel = hours
-    ? mins > 0
-      ? `${hours} ${mins}m`
-      : hours
-    : `${preset.length}m`;
+  const timeLabel = hours ? (mins > 0 ? `${hours} ${mins}m` : hours) : `${preset.length}m`;
 
   const includes: string[] = [];
   if (preset.diff) includes.push('Diff');
@@ -722,30 +691,39 @@ function PresetCard({
       type="button"
       onClick={onClick}
       className={cn(
-        'relative text-left rounded-xl border px-4 py-4 sm:px-5 sm:py-5 transition-all touch-manipulation flex flex-col gap-2 min-h-[128px]',
+        // min-w-0 + overflow-hidden prevents content (e.g. "1h 30m · Classroom")
+        // from spilling into the next grid cell when the lg:grid-cols-4
+        // packing leaves cards narrow.
+        'group relative text-left rounded-xl border px-4 py-4 sm:px-4 sm:py-4 transition-all touch-manipulation flex flex-col gap-2 min-h-[136px] min-w-0 overflow-hidden',
         active
-          ? 'border-elec-yellow bg-elec-yellow/[0.06]'
+          ? 'border-elec-yellow bg-elec-yellow/[0.06] shadow-[0_0_0_1px_rgba(250,204,21,0.10)]'
           : 'border-white/[0.08] bg-[hsl(0_0%_13%)] hover:bg-[hsl(0_0%_15%)] hover:border-white/[0.14]'
       )}
     >
       {active && (
         <span
-          className="absolute top-3 right-3 inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow"
+          className="absolute top-2.5 right-2.5 inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow"
           aria-hidden
         />
       )}
-      <div className={cn('text-[14px] font-semibold', active ? 'text-elec-yellow' : 'text-white')}>
+      <div
+        className={cn(
+          // pr-5 so the active dot doesn't overlap the heading on narrow cards
+          'text-[14px] font-semibold leading-tight pr-5',
+          active ? 'text-elec-yellow' : 'text-white'
+        )}
+      >
         {preset.label}
       </div>
-      <div className="text-[11.5px] text-white flex items-center gap-2 tabular-nums">
-        <span className="text-white font-medium">{timeLabel}</span>
-        <span className="text-white/30">·</span>
+      {/* Meta row — stack on narrow cards (xl+) so "1h 30m · Classroom"
+          never has to wrap awkwardly across columns. */}
+      <div className="text-[11px] text-white tabular-nums leading-snug">
+        <span className="font-medium">{timeLabel}</span>
+        <span className="text-white/30 mx-1.5">·</span>
         <span className="capitalize">{preset.mode}</span>
       </div>
       <div className="flex-1" />
-      <div className="text-[11px] text-white leading-snug line-clamp-2">
-        {preset.description}
-      </div>
+      <div className="text-[11px] text-white leading-snug line-clamp-2">{preset.description}</div>
       {includes.length > 0 && (
         <div className="flex items-center gap-1 flex-wrap pt-1">
           {includes.map((i) => (
@@ -852,9 +830,7 @@ function AcRowItem({
         >
           {ac.ac_code}
         </span>
-        <span
-          className="text-[12.5px] leading-relaxed flex-1 min-w-0 text-white"
-        >
+        <span className="text-[12.5px] leading-relaxed flex-1 min-w-0 text-white">
           {ac.ac_text}
         </span>
       </button>

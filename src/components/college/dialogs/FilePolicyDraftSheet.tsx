@@ -197,7 +197,7 @@ export function FilePolicyDraftSheet({ open, onOpenChange, onSubmitted, prefill 
             <h2 className="mt-1 text-[18px] font-semibold text-white tracking-tight leading-tight">
               Review &amp; save draft
             </h2>
-            <p className="mt-1 text-[12px] text-white/85 leading-snug">
+            <p className="mt-1 text-[12px] text-white leading-snug">
               Lands as a v1 draft in your compliance vault. Edit the body on the next screen, then
               publish when it's ready for staff acknowledgement.
             </p>
@@ -266,7 +266,7 @@ export function FilePolicyDraftSheet({ open, onOpenChange, onSubmitted, prefill 
               />
               <span className="text-[12.5px] text-white leading-snug">
                 Requires staff acknowledgement
-                <span className="block text-[11px] text-white/55 mt-0.5">
+                <span className="block text-[11px] text-white mt-0.5">
                   Every member of staff must sign-off this policy when published. Re-signed each new
                   version.
                 </span>
@@ -292,7 +292,7 @@ export function FilePolicyDraftSheet({ open, onOpenChange, onSubmitted, prefill 
               type="button"
               onClick={() => onOpenChange(false)}
               disabled={saving}
-              className="h-11 px-4 rounded-lg text-[13px] font-medium text-white/85 hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
+              className="h-11 px-4 rounded-lg text-[13px] font-medium text-white hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
             >
               Cancel
             </button>
@@ -303,7 +303,7 @@ export function FilePolicyDraftSheet({ open, onOpenChange, onSubmitted, prefill 
               className={cn(
                 'inline-flex items-center h-11 px-4 rounded-lg text-[13px] font-semibold text-black transition-colors touch-manipulation',
                 saving || !form.title.trim() || !form.content_md.trim()
-                  ? 'bg-white/[0.05] text-white/40'
+                  ? 'bg-white/[0.05] text-white'
                   : 'bg-amber-300 hover:bg-amber-200'
               )}
             >
@@ -327,10 +327,10 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/85">
+      <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white">
         {label}
       </span>
-      {hint && <span className="block mt-0.5 text-[11.5px] text-white/55">{hint}</span>}
+      {hint && <span className="block mt-0.5 text-[11.5px] text-white">{hint}</span>}
       <div className="mt-1.5">{children}</div>
     </label>
   );

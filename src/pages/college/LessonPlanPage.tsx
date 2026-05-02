@@ -289,24 +289,27 @@ function StreamingView({
       {ragPreview && ragPreview.facets.length > 0 && (
         <motion.div variants={itemVariants}>
           <SectionEyebrow eyebrow="Grounded in" title="Regulation references" />
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3 items-stretch">
             <RagSourceCard
               title="BS 7671"
               subtitle="Wiring Regulations"
               facets={ragPreview.facets.filter((f) => f.document_type === 'bs7671')}
               regPrefix=""
+              accent="yellow"
             />
             <RagSourceCard
               title="Guidance Note 3"
               subtitle="Inspection & Testing"
               facets={ragPreview.facets.filter((f) => f.document_type === 'gn3')}
               regPrefix="§"
+              accent="blue"
             />
             <RagSourceCard
               title="On-Site Guide"
               subtitle="Practical guidance"
               facets={ragPreview.facets.filter((f) => f.document_type === 'osg')}
               regPrefix=""
+              accent="emerald"
             />
           </div>
         </motion.div>
@@ -1842,8 +1845,11 @@ function ActivityCard({
                     Regs
                   </span>
                   <div className="flex flex-wrap gap-1.5">
-                    {regs.map((r) => (
-                      <RegChip key={r.facet_id} citation={r} />
+                    {regs.map((r, ri) => (
+                      // Index-based composite key — facet_id can repeat
+                      // within a single activity when the same facet is
+                      // cited under different reg_numbers.
+                      <RegChip key={`${r.facet_id}-${ri}`} citation={r} />
                     ))}
                   </div>
                 </div>
@@ -2213,25 +2219,64 @@ function DiffBox({ label, items }: { label: string; items: string[] }) {
   );
 }
 
+type RagAccent = 'yellow' | 'blue' | 'emerald';
+
+const RAG_ACCENT_CLASSES: Record<
+  RagAccent,
+  {
+    border: string;
+    eyebrow: string;
+    bigNumber: string;
+    backdrop: string;
+    indicator: string;
+  }
+> = {
+  yellow: {
+    border: 'border-elec-yellow/20',
+    eyebrow: 'text-elec-yellow',
+    bigNumber: 'text-elec-yellow',
+    backdrop: 'bg-[radial-gradient(ellipse_at_top_right,rgba(250,204,21,0.06),transparent_55%)]',
+    indicator: 'bg-elec-yellow',
+  },
+  blue: {
+    border: 'border-blue-500/20',
+    eyebrow: 'text-blue-300',
+    bigNumber: 'text-blue-300',
+    backdrop: 'bg-[radial-gradient(ellipse_at_top_right,rgba(96,165,250,0.06),transparent_55%)]',
+    indicator: 'bg-blue-400',
+  },
+  emerald: {
+    border: 'border-emerald-500/20',
+    eyebrow: 'text-emerald-300',
+    bigNumber: 'text-emerald-300',
+    backdrop: 'bg-[radial-gradient(ellipse_at_top_right,rgba(52,211,153,0.06),transparent_55%)]',
+    indicator: 'bg-emerald-400',
+  },
+};
+
 function RagSourceCard({
   title,
   subtitle,
   facets,
   regPrefix,
+  accent,
 }: {
   title: string;
   subtitle: string;
   facets: RagPreview['facets'];
   regPrefix: string;
+  accent: RagAccent;
 }) {
+  const A = RAG_ACCENT_CLASSES[accent];
+
   if (facets.length === 0) {
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 opacity-40">
+      <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 opacity-40 min-h-[220px] flex flex-col">
         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {subtitle}
         </div>
         <div className="mt-0.5 text-[15px] font-semibold text-white">{title}</div>
-        <div className="mt-5 text-[11.5px] text-white">No references matched</div>
+        <div className="mt-auto text-[11.5px] text-white">No references matched</div>
       </div>
     );
   }
@@ -2248,42 +2293,61 @@ function RagSourceCard({
   const a4Count = dedup.filter((f) => f.is_a4_change).length;
 
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex flex-col">
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-2xl border p-5 sm:p-6 flex flex-col bg-[hsl(0_0%_11%)]',
+        A.border,
+        A.backdrop
+      )}
+    >
+      {/* Subtle accent bar at the top edge */}
+      <div
+        className={cn('absolute top-0 left-0 right-0 h-px', A.indicator, 'opacity-40')}
+        aria-hidden
+      />
+
       {/* Header */}
-      <div className="flex items-start justify-between gap-3 mb-4">
+      <div className="flex items-start justify-between gap-4 mb-4">
         <div className="min-w-0 flex-1">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <div className={cn('text-[10px] font-semibold uppercase tracking-[0.22em]', A.eyebrow)}>
             {subtitle}
           </div>
-          <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white truncate">
+          <div className="mt-1 text-[16px] sm:text-[18px] font-semibold text-white tracking-tight leading-tight truncate">
             {title}
           </div>
         </div>
-        <div className="shrink-0 text-right">
-          <div className="text-[22px] sm:text-[26px] font-semibold tabular-nums text-white leading-none tracking-tight">
+        <div className="shrink-0 text-right pl-2">
+          <div
+            className={cn(
+              'text-[28px] sm:text-[34px] font-semibold tabular-nums leading-none tracking-tight',
+              A.bigNumber
+            )}
+          >
             {facets.length}
           </div>
-          <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-            {facets.length === 1 ? 'ref' : 'refs'}
+          <div className="mt-1 text-[9.5px] font-semibold uppercase tracking-[0.20em] text-white">
+            {facets.length === 1 ? 'reference' : 'references'}
           </div>
         </div>
       </div>
 
       {a4Count > 0 && (
-        <div className="mb-3 text-[10.5px] text-amber-300/90 flex items-center gap-2">
-          <span className="inline-block h-1 w-1 rounded-full bg-amber-400" aria-hidden />
-          <span className="tabular-nums">{a4Count}</span>
-          <span>{a4Count === 1 ? 'change' : 'changes'} in A4:2026</span>
+        <div className="mb-4 inline-flex items-center self-start gap-2 h-7 px-2.5 rounded-full bg-amber-500/[0.10] border border-amber-500/30">
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400" aria-hidden />
+          <span className="text-[10.5px] font-semibold text-amber-300 tabular-nums tracking-wide">
+            {a4Count} {a4Count === 1 ? 'change' : 'changes'} in A4:2026
+          </span>
         </div>
       )}
 
       <div className="space-y-2 flex-1">
-        {dedup.map((f) => (
+        {dedup.map((f, di) => (
           <RegReferenceTile
-            key={f.facet_id}
+            key={`${f.facet_id}-${di}`}
             regNumber={f.reg_number ? `${regPrefix}${f.reg_number}` : null}
             topic={f.primary_topic}
             isA4={f.is_a4_change}
+            accent={accent}
           />
         ))}
       </div>
@@ -2293,30 +2357,36 @@ function RagSourceCard({
 
 /* Shared tile for a single regulation reference — used in the Grounded-in
  * panel and the Evidence citations section. Reg number is the hero, topic
- * the supporting line, A4 marker is a discrete corner pill. */
+ * the supporting line, A4 marker is a discrete corner pill. Accent is the
+ * source-document colour family (yellow=BS7671, blue=GN3, emerald=OSG). */
 function RegReferenceTile({
   regNumber,
   topic,
   isA4,
   citationNote,
+  accent = 'yellow',
 }: {
   regNumber: string | null;
   topic: string | null;
   isA4: boolean;
   citationNote?: string | null;
+  accent?: RagAccent;
 }) {
+  const A = RAG_ACCENT_CLASSES[accent];
+  // A4 wins over the source accent — those are headline changes.
+  const regColor = isA4 ? 'text-amber-200' : A.bigNumber;
   return (
     <div
       className={cn(
-        'relative bg-[hsl(0_0%_9%)] border rounded-lg px-3.5 py-3 transition-colors',
+        'relative bg-[hsl(0_0%_8%)] border rounded-lg px-3.5 py-3 transition-colors',
         isA4
-          ? 'border-amber-500/20 hover:border-amber-500/35'
-          : 'border-white/[0.05] hover:border-white/[0.12]'
+          ? 'border-amber-500/25 hover:border-amber-500/40'
+          : 'border-white/[0.06] hover:border-white/[0.14]'
       )}
     >
       {isA4 && (
         <span
-          className="absolute top-2.5 right-2.5 text-[8.5px] font-semibold uppercase tracking-[0.14em] text-amber-300 bg-amber-500/[0.12] border border-amber-500/30 rounded-full px-1.5 py-[1px] leading-none"
+          className="absolute top-2.5 right-2.5 text-[8.5px] font-semibold uppercase tracking-[0.14em] text-amber-300 bg-amber-500/[0.14] border border-amber-500/30 rounded-full px-1.5 py-[1px] leading-none"
           title="New or changed in BS 7671 Amendment 4:2026"
         >
           A4
@@ -2324,26 +2394,35 @@ function RegReferenceTile({
       )}
 
       {regNumber ? (
-        <div
-          className={cn(
-            'font-mono tabular-nums text-[15px] sm:text-[16px] font-semibold leading-none tracking-tight',
-            isA4 ? 'text-amber-200' : 'text-elec-yellow'
+        <>
+          <div
+            className={cn(
+              'font-mono tabular-nums text-[15px] sm:text-[16px] font-semibold leading-none tracking-tight pr-8',
+              regColor
+            )}
+          >
+            {regNumber}
+          </div>
+          {topic && (
+            <div className="mt-2 text-[12px] text-white/80 leading-snug line-clamp-2">{topic}</div>
           )}
-        >
-          {regNumber}
-        </div>
+        </>
       ) : topic ? (
-        <div className="text-[13px] font-medium text-white leading-snug">{topic}</div>
+        // Topic-only tile (no reg number) — use a small accent dot so it
+        // still feels like part of the same family rather than orphaned.
+        <div className="flex items-start gap-2.5 pr-8">
+          <span
+            className={cn('mt-1.5 h-1.5 w-1.5 rounded-full shrink-0', A.indicator)}
+            aria-hidden
+          />
+          <div className="text-[12.5px] text-white leading-snug">{topic}</div>
+        </div>
       ) : (
         <div className="text-[12px] text-white italic">Reference</div>
       )}
 
-      {regNumber && topic && (
-        <div className="mt-1.5 text-[11.5px] text-white/65 leading-snug line-clamp-2">{topic}</div>
-      )}
-
       {citationNote && (
-        <div className="mt-2 pt-2 border-t border-white/[0.05] text-[12px] text-white leading-relaxed">
+        <div className="mt-2.5 pt-2.5 border-t border-white/[0.05] text-[12px] text-white/80 leading-relaxed">
           {citationNote}
         </div>
       )}

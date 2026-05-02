@@ -208,7 +208,10 @@ export default function LessonSlideDeckPage() {
 
   const handleGenerateConfirmed = useCallback(
     async (preflight: DeckPreflight) => {
-      autoFiredRef.current = false;
+      // Reset the per-prompt fired tracker so the new deck's image
+      // prompts get processed even if a slide at index N already had a
+      // photo from a prior deck.
+      firedPromptsRef.current = new Map();
       await generate(preflight);
     },
     [generate]
