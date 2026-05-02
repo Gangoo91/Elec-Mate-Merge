@@ -135,12 +135,58 @@ export function ProgressTrackingSection() {
             tone="blue"
             actions={
               <button
-                onClick={() =>
+                onClick={() => {
+                  // Real CSV export of the currently filtered progress
+                  // table — no backend round-trip needed, just serialise
+                  // the rows we already have. Keeps it honest.
+                  const rows = sortedProgress;
+                  if (rows.length === 0) {
+                    toast({
+                      title: 'Nothing to export',
+                      description: 'Adjust filters so the list has at least one learner.',
+                      variant: 'destructive',
+                    });
+                    return;
+                  }
+                  const escape = (v: string) =>
+                    /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+                  const header = [
+                    'Name',
+                    'ULN',
+                    'Cohort',
+                    'Progress %',
+                    'Attendance %',
+                    'Risk',
+                  ];
+                  const lines = [
+                    header.join(','),
+                    ...rows.map((r) =>
+                      [
+                        escape(r.name ?? ''),
+                        escape(r.uln ?? ''),
+                        escape(getCohortName(r.cohort_id)),
+                        String(r.overallProgress),
+                        String(r.attendanceRate),
+                        escape(r.risk_level ?? 'low'),
+                      ].join(',')
+                    ),
+                  ];
+                  const blob = new Blob([lines.join('\n')], {
+                    type: 'text/csv;charset=utf-8;',
+                  });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `progress-${new Date().toISOString().slice(0, 10)}.csv`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
                   toast({
-                    title: 'Export coming soon',
-                    description: 'Progress report export is being developed.',
-                  })
-                }
+                    title: 'Export ready',
+                    description: `${rows.length} learner${rows.length === 1 ? '' : 's'} downloaded as CSV.`,
+                  });
+                }}
                 className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
               >
                 Export →

@@ -549,9 +549,11 @@ const CollegeDashboard = () => {
 
   return (
     <CollegeSupabaseProvider collegeId={profile?.college_id ?? undefined}>
-      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-[hsl(0_0%_8%)] pb-24">
-        {/* Sticky Header — editorial text-only nav */}
-        <div className="sticky top-0 z-50 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm border-b border-white/[0.06]">
+      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark pb-24">
+        {/* Sticky Header — editorial text-only nav. Uses bg-elec-dark to
+            match the main Dashboard (the editorial Index/home surface in
+            Layout.tsx) — the old hsl(0 0% 8%) was visibly greyer. */}
+        <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
           <div className="mx-auto max-w-7xl px-4">
             <div className="flex items-center h-12 gap-4 sm:gap-6">
               <button

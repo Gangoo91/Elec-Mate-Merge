@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PageFrame } from '@/components/college/primitives';
 import { useUnifiedInbox, type InboxItem, type InboxKind } from '@/hooks/useUnifiedInbox';
 import { cn } from '@/lib/utils';
@@ -31,11 +31,32 @@ const KIND_META: Record<InboxKind, { label: string; tone: string }> = {
   message: { label: 'Message', tone: 'blue' },
 };
 
+function isFilter(v: string | null): v is Filter {
+  return v === 'all' || v === 'portfolio' || v === 'otj' || v === 'iqa' || v === 'message';
+}
+
 export default function UnifiedInboxPage() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { items, stats, loading, error, refresh } = useUnifiedInbox();
-  const [filter, setFilter] = useState<Filter>('all');
+  // Deep-linkable: /college/inbox?tab=otj lands on the OTJ filter directly,
+  // so dashboard CTAs (e.g. TutorToday OTJ row) can route here precisely.
+  const initialFilter: Filter = (() => {
+    const t = searchParams.get('tab');
+    return isFilter(t) ? t : 'all';
+  })();
+  const [filter, setFilter] = useState<Filter>(initialFilter);
   const [search, setSearch] = useState('');
+
+  // Keep URL in sync when the user clicks a chip — preserves shareable state.
+  useEffect(() => {
+    const current = searchParams.get('tab') ?? 'all';
+    if (filter === current) return;
+    const next = new URLSearchParams(searchParams);
+    if (filter === 'all') next.delete('tab');
+    else next.set('tab', filter);
+    setSearchParams(next, { replace: true });
+  }, [filter, searchParams, setSearchParams]);
 
   const filtered = useMemo(() => {
     let list = items;

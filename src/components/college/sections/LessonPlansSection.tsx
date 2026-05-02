@@ -78,7 +78,7 @@ function parseObjectives(objectives: string | null): ParsedObjective[] {
 }
 
 export function LessonPlansSection() {
-  const { lessonPlans, cohorts, staff, updateLessonPlan } = useCollegeSupabase();
+  const { lessonPlans, cohorts, staff, updateLessonPlan, addLessonPlan } = useCollegeSupabase();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
@@ -334,7 +334,36 @@ export function LessonPlansSection() {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="h-11 touch-manipulation text-[13px]"
-                          onClick={() => toast({ title: 'Duplicate', description: 'Coming soon.' })}
+                          onClick={async () => {
+                            // Duplicate: clone every editable column, prefix
+                            // title with "Copy of", reset status to draft and
+                            // wipe the scheduled date so the assessor can
+                            // schedule the new copy independently.
+                            try {
+                              await addLessonPlan({
+                                college_id: lesson.college_id,
+                                title: `Copy of ${lesson.title}`,
+                                cohort_id: lesson.cohort_id,
+                                tutor_id: lesson.tutor_id,
+                                scheduled_date: null,
+                                duration_minutes: lesson.duration_minutes,
+                                objectives: lesson.objectives,
+                                content: lesson.content,
+                                resources: lesson.resources,
+                                status: 'draft',
+                              });
+                              toast({
+                                title: 'Lesson plan duplicated',
+                                description: `"Copy of ${lesson.title}" is now in your drafts.`,
+                              });
+                            } catch (e) {
+                              toast({
+                                title: 'Duplicate failed',
+                                description: (e as Error).message,
+                                variant: 'destructive',
+                              });
+                            }
+                          }}
                         >
                           Duplicate
                         </DropdownMenuItem>

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
@@ -41,6 +42,7 @@ export function CollegeChatView({
   currentUserType,
 }: CollegeChatViewProps) {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [isConfidential, setIsConfidential] = useState(false);
   const [visibleToStudent, setVisibleToStudent] = useState(true);
@@ -192,10 +194,53 @@ export function CollegeChatView({
               </IconButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white">
-              <DropdownMenuItem>View Profile</DropdownMenuItem>
-              {conversation.student && <DropdownMenuItem>View Student Progress</DropdownMenuItem>}
+              {/* View Profile — for student/tutor conversations the
+                  other party usually has a college_students or
+                  college_staff record. We route to whichever matches:
+                  if it's the linked student, that's Student 360;
+                  otherwise we don't have a staff-profile route so fall
+                  back to closing + opening the People hub. */}
+              <DropdownMenuItem
+                onClick={() => {
+                  if (conversation.student?.id) {
+                    navigate(`/college/students/${conversation.student.id}`);
+                    onOpenChange(false);
+                  } else {
+                    toast({
+                      title: 'No profile to open',
+                      description: "This conversation isn't linked to a learner profile.",
+                    });
+                  }
+                }}
+              >
+                View profile
+              </DropdownMenuItem>
+              {conversation.student && (
+                <DropdownMenuItem
+                  onClick={() => {
+                    navigate(`/college/students/${conversation.student!.id}`);
+                    onOpenChange(false);
+                  }}
+                >
+                  View student progress
+                </DropdownMenuItem>
+              )}
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-400">Archive Conversation</DropdownMenuItem>
+              <DropdownMenuItem
+                className="text-red-400"
+                onClick={() => {
+                  // Archive isn't yet a server mutation — surface honest
+                  // status rather than silently fail. Wire to a real
+                  // mutation when the backing column exists.
+                  toast({
+                    title: 'Archive not yet available',
+                    description:
+                      'Conversation archiving needs a backend column — coming soon. For now, mute notifications instead.',
+                  });
+                }}
+              >
+                Archive conversation
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

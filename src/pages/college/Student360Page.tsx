@@ -24,6 +24,7 @@ import { SectionObservations } from '@/components/college/student360/SectionObse
 import { SectionApprenticeOtj } from '@/components/college/student360/SectionApprenticeOtj';
 import { SectionCourseProgress } from '@/components/college/student360/SectionCourseProgress';
 import { SectionPortfolio } from '@/components/college/student360/SectionPortfolio';
+import { SectionAcMatrix } from '@/components/college/student360/SectionAcMatrix';
 import { SectionQuizzes } from '@/components/college/student360/SectionQuizzes';
 import { SectionEpaReadiness } from '@/components/college/student360/SectionEpaReadiness';
 import { SectionIlp } from '@/components/college/student360/SectionIlp';
@@ -378,6 +379,13 @@ export default function Student360Page() {
                 }}
                 seeding={syncingCoverage}
               />
+              <div id="matrix">
+                <SectionAcMatrix
+                  studentId={core.id}
+                  studentUserId={core.user_id}
+                  studentName={core.name}
+                />
+              </div>
               <SectionApprenticeOtj
                 id="otj"
                 studentName={core.name}

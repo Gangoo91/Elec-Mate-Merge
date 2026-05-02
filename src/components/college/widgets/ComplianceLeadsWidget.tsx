@@ -113,15 +113,16 @@ export function ComplianceLeadsWidget() {
                 type="button"
                 onClick={() => navigate('/college?section=tutors')}
                 className="h-10 px-4 rounded-lg bg-amber-400 hover:bg-amber-300 active:bg-amber-300 text-black text-[12.5px] font-semibold transition-colors touch-manipulation"
+                title="Open the Tutors list, tap a staff member to open their compliance vault, then toggle the lead role."
               >
                 Assign leads →
               </button>
               <button
                 type="button"
-                onClick={() => navigate('/college?section=tutors')}
+                onClick={() => navigate('/college?section=compliancedocs')}
                 className="h-10 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12.5px] font-medium transition-colors touch-manipulation"
               >
-                Open Tutors
+                View policies
               </button>
             </div>
           </div>

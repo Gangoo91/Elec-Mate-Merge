@@ -304,6 +304,132 @@ export function useIqaSamplingPlan(planId: string | null) {
     [planId, resolveIqaStaffId]
   );
 
+  /** Map an IQA sample verdict (assessor-judgement-stage language) to the
+      ac_signoffs.iqa_verdict enum (per-AC closed-loop language). `refer`
+      ≈ `returned` — the IQA has bounced it back for more evidence. */
+  const mapVerdictToAcVerdict = (
+    v: SampleVerdict
+  ): 'confirmed' | 'returned' | 'not_sampled' => {
+    if (v === 'agree') return 'confirmed';
+    if (v === 'disagree' || v === 'refer') return 'returned';
+    return 'not_sampled';
+  };
+
+  /** Fan an observation-sample verdict out to ac_signoffs — one row per AC
+      the observation evidenced. OTJ samples are skipped (OTJ has no AC
+      granularity, only unit_codes). */
+  const fanOutVerdictToAcSignoffs = useCallback(
+    async (
+      sampleRow: IqaSampleRow,
+      verdict: SampleVerdict,
+      comments?: string | null
+    ) => {
+      // Only observation samples carry AC-level granularity.
+      if (!sampleRow.observation_id) return;
+      const { data: obs } = await supabase
+        .from('college_observations')
+        .select('college_student_id, qualification_code, unit_code, acs_evidenced')
+        .eq('id', sampleRow.observation_id)
+        .maybeSingle();
+      const obsRow = obs as
+        | {
+            college_student_id: string | null;
+            qualification_code: string | null;
+            unit_code: string | null;
+            acs_evidenced: string[] | null;
+          }
+        | null;
+      if (!obsRow?.college_student_id || !obsRow.qualification_code || !obsRow.unit_code) {
+        return;
+      }
+      const acs = (obsRow.acs_evidenced ?? []).filter((a) => typeof a === 'string' && a.length);
+      if (acs.length === 0) return;
+
+      // Resolve IQA identity once. iqa_id on the sample row is a
+      // college_staff.id — we need the auth.uid for ac_signoffs.iqa_sampled_by.
+      const userRes = await supabase.auth.getUser();
+      const iqaUserId = userRes.data.user?.id ?? null;
+      let iqaName: string | null = null;
+      if (iqaUserId) {
+        const { data: staff } = await supabase
+          .from('college_staff')
+          .select('name')
+          .eq('user_id', iqaUserId)
+          .is('archived_at', null)
+          .maybeSingle();
+        iqaName = (staff as { name?: string } | null)?.name ?? null;
+      }
+
+      const acVerdict = mapVerdictToAcVerdict(verdict);
+      const stamp = new Date().toISOString();
+      const trimmedFeedback = comments?.trim() || null;
+
+      // Pending → clear back to not_sampled and wipe the timestamps so the
+      // locker stops rendering IQA verdict block.
+      if (verdict === 'pending') {
+        await Promise.allSettled(
+          acs.map((ac) =>
+            supabase.from('ac_signoffs').upsert(
+              {
+                student_id: obsRow.college_student_id!,
+                qualification_code: obsRow.qualification_code!,
+                unit_code: obsRow.unit_code!,
+                ac_code: ac,
+                iqa_verdict: 'not_sampled',
+                iqa_sampled_at: null,
+                iqa_sampled_by: null,
+                iqa_name_snapshot: null,
+                iqa_feedback: null,
+              },
+              { onConflict: 'student_id,qualification_code,unit_code,ac_code' }
+            )
+          )
+        );
+        return;
+      }
+
+      await Promise.allSettled(
+        acs.map((ac) =>
+          supabase.from('ac_signoffs').upsert(
+            {
+              student_id: obsRow.college_student_id!,
+              qualification_code: obsRow.qualification_code!,
+              unit_code: obsRow.unit_code!,
+              ac_code: ac,
+              iqa_verdict: acVerdict,
+              iqa_sampled_at: stamp,
+              iqa_sampled_by: iqaUserId,
+              iqa_name_snapshot: iqaName,
+              iqa_feedback: trimmedFeedback,
+            },
+            { onConflict: 'student_id,qualification_code,unit_code,ac_code' }
+          )
+        )
+      );
+
+      // Auto-advance student_ac_coverage.status when IQA confirms — the
+      // 'confirmed' status literally means "IQA confirmed", so the matrix
+      // StatusChip should reflect this without a second manual action.
+      // Conservative: only forward to 'confirmed', never auto-flip status
+      // backwards on returned/refer (assessor reviews the IQA block in the
+      // locker and decides whether to re-evidence).
+      if (acVerdict === 'confirmed') {
+        await Promise.allSettled(
+          acs.map((ac) =>
+            supabase
+              .from('student_ac_coverage')
+              .update({ status: 'confirmed' })
+              .eq('student_id', obsRow.college_student_id!)
+              .eq('qualification_code', obsRow.qualification_code!)
+              .eq('unit_code', obsRow.unit_code!)
+              .eq('ac_code', ac)
+          )
+        );
+      }
+    },
+    []
+  );
+
   const setVerdict = useCallback(
     async (sampleId: string, verdict: SampleVerdict, comments?: string) => {
       const { error: updErr } = await supabase
@@ -314,17 +440,46 @@ export function useIqaSamplingPlan(planId: string | null) {
         })
         .eq('id', sampleId);
       if (updErr) throw updErr;
+
+      // Fan out to ac_signoffs so the per-AC locker reflects the IQA verdict.
+      // We re-fetch the row (cheaper than threading state through callers).
+      const { data: sampleData } = await supabase
+        .from('college_iqa_samples')
+        .select(SAMPLE_COLS)
+        .eq('id', sampleId)
+        .maybeSingle();
+      const sampleRow = sampleData as IqaSampleRow | null;
+      if (sampleRow) {
+        await fanOutVerdictToAcSignoffs(sampleRow, verdict, comments);
+      }
     },
-    []
+    [fanOutVerdictToAcSignoffs]
   );
 
-  const removeSample = useCallback(async (sampleId: string) => {
-    const { error: delErr } = await supabase
-      .from('college_iqa_samples')
-      .delete()
-      .eq('id', sampleId);
-    if (delErr) throw delErr;
-  }, []);
+  const removeSample = useCallback(
+    async (sampleId: string) => {
+      // Capture the row first so we can clear its AC-level verdict trace.
+      const { data: sampleData } = await supabase
+        .from('college_iqa_samples')
+        .select(SAMPLE_COLS)
+        .eq('id', sampleId)
+        .maybeSingle();
+      const sampleRow = sampleData as IqaSampleRow | null;
+
+      const { error: delErr } = await supabase
+        .from('college_iqa_samples')
+        .delete()
+        .eq('id', sampleId);
+      if (delErr) throw delErr;
+
+      // Clear IQA fields on the affected ac_signoffs rows. Without this,
+      // a re-sampled obs would carry stale IQA verdicts forward.
+      if (sampleRow) {
+        await fanOutVerdictToAcSignoffs(sampleRow, 'pending');
+      }
+    },
+    [fanOutVerdictToAcSignoffs]
+  );
 
   return {
     plan,

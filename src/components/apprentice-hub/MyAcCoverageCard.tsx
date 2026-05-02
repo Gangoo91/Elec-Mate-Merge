@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { JobIdeasPanel } from '@/components/college/assessor/JobIdeasPanel';
 
 /* ==========================================================================
    MyAcCoverageCard — apprentice-side qualification progress. Buckets
@@ -52,6 +54,8 @@ const STATUS_LABEL: Record<AcStatus, string> = {
 export function MyAcCoverageCard() {
   const [rows, setRows] = useState<CoverageRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [studentId, setStudentId] = useState<string | null>(null);
+  const [ideasOpen, setIdeasOpen] = useState(false);
 
   const fetchAll = useCallback(async () => {
     const { data: u } = await supabase.auth.getUser();
@@ -66,6 +70,7 @@ export function MyAcCoverageCard() {
       .eq('user_id', uid)
       .maybeSingle();
     const csId = (cs?.id as string | undefined) ?? null;
+    setStudentId(csId);
     if (!csId) {
       setLoading(false);
       return;
@@ -279,7 +284,46 @@ export function MyAcCoverageCard() {
             </ul>
           </div>
         )}
+
+        {/* Job ideas CTA — opens a dialog with AI-generated suggestions
+            tailored to the apprentice's current gaps. Only show when the
+            student has unfinished ACs. */}
+        {studentId && summary.buckets.not_started + summary.buckets.in_progress > 0 && (
+          <div className="mt-5 rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] px-4 py-3.5">
+            <div className="flex items-start justify-between gap-3 flex-wrap">
+              <div className="min-w-0 flex-1">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                  What can I do next?
+                </div>
+                <div className="mt-1 text-[13px] font-medium text-white">
+                  Get AI-suggested jobs that hit your current gaps
+                </div>
+                <p className="mt-1 text-[11.5px] text-white/85 leading-snug">
+                  Real on-site work — each idea covers multiple criteria efficiently and tells you
+                  exactly what photos and witness statements to capture.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIdeasOpen(true)}
+                className="shrink-0 h-10 px-4 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+              >
+                Get ideas →
+              </button>
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Job ideas dialog */}
+      <Dialog open={ideasOpen} onOpenChange={setIdeasOpen}>
+        <DialogContent className="sm:max-w-[640px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.08] text-white">
+          <DialogTitle className="text-[16px] font-semibold tracking-tight text-white">
+            Job ideas for your gaps
+          </DialogTitle>
+          {studentId && <JobIdeasPanel studentId={studentId} variant="card" />}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

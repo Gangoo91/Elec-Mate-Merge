@@ -478,22 +478,18 @@ export function EmployerPortalSection() {
         )}
       </motion.section>
 
-      {/* Workplace Visit Log */}
+      {/* Workplace Visit Log — there's no top-level Observations route or
+          college_workplace_visits table yet, so we surface this honestly
+          as a parked feature pointing at the existing per-learner
+          Observations workflow. No misleading action button. */}
       <motion.section variants={itemVariants} className="space-y-5">
         <SectionHeader
           eyebrow="Workplace Visits"
           title="Employer site visits"
-          action="Log visit"
-          onAction={() =>
-            toast({
-              title: 'Log Visit',
-              description: 'Workplace visit logging is coming soon.',
-            })
-          }
         />
         <EmptyState
-          title="No visits recorded"
-          description="Log employer site visits to keep a record of workplace assessments, health & safety checks and apprentice progress discussions."
+          title="Log workplace visits per learner"
+          description="A dedicated visit log isn't shipped yet. For now, open a learner from the People hub → Observations to record employer site visits — the same audit chain (activity, ACs evidenced, assessor signature) covers visits."
         />
       </motion.section>
 

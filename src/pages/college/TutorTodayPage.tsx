@@ -72,9 +72,13 @@ export default function TutorTodayPage() {
     render the same content without duplication.
 
     `mode="page"` shows the full greeting + intro paragraph (standalone
-    route). `mode="embed"` swaps to a tighter eyebrow heading suitable
-    for use as the top section of another page. ELE-939 / [M2]. */
-export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = {}) {
+    route). `mode="embed"` swaps to a tighter eyebrow heading.
+    `mode="embed-bare"` suppresses greeting entirely — useful when the
+    parent page already renders an editorial hero (College Hub overview
+    sits above this with its own VerdictHero-style greeting). */
+export function TutorTodayBody({
+  mode = 'page',
+}: { mode?: 'page' | 'embed' | 'embed-bare' } = {}) {
   const { data, loading, error, refresh } = useTutorToday();
   const { stats: markingStats } = useMarkingQueue();
   const { stats: inboxStats } = useUnifiedInbox();
@@ -89,7 +93,7 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = 
 
   return (
     <>
-      {mode === 'page' ? (
+      {mode === 'page' && (
         <motion.div variants={itemVariants}>
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
             Today · {todayLong}
@@ -104,7 +108,8 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = 
             seconds.
           </p>
         </motion.div>
-      ) : (
+      )}
+      {mode === 'embed' && (
         <motion.div variants={itemVariants}>
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
             <div>
@@ -303,7 +308,11 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = 
                 label: 'OTJ awaiting verification',
                 count: data.otj.length,
                 items: data.otj.map((o) => (
-                  <OtjRow key={o.id} otj={o} onOpen={() => navigate('/college')} />
+                  <OtjRow
+                    key={o.id}
+                    otj={o}
+                    onOpen={() => navigate('/college/inbox?tab=otj')}
+                  />
                 )),
               },
               {
@@ -311,7 +320,11 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' } = 
                 label: 'Action-required comments',
                 count: data.comments.length,
                 items: data.comments.map((c) => (
-                  <CommentRow key={c.id} comment={c} onOpen={() => navigate('/college')} />
+                  <CommentRow
+                    key={c.id}
+                    comment={c}
+                    onOpen={() => navigate('/college/inbox?tab=portfolio')}
+                  />
                 )),
               },
               {

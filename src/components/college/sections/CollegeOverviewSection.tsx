@@ -1,20 +1,30 @@
 /**
- * CollegeOverviewSection — the College Hub home, redesigned tutor-first.
+ * CollegeOverviewSection — College Hub home, rebuilt to match the
+ * editorial /dashboard surface (the main Dashboard.tsx route).
  *
- * Lands on /college and shows the tutor's morning workflow at the top
- * (greeting + KPIs + show-me search + classes/inbox/at-risk/this-week),
- * then a compliance pulse strip, then the navigation hubs as a smaller
- * secondary surface so they're discoverable but not in the way.
+ * Layout mirrors `Dashboard.tsx` exactly:
+ *   ——   GREETING        "Hello, ANDREW." with first word in elec-yellow
+ *   01 · THIS MONTH       monochrome stat strip, single yellow accent cell
+ *   02 · YOUR HUBS        numbered editorial hub grid
+ *   03 · TODAY            actionable inbox / classes / at-risk (TutorTodayBody)
+ *   04 · MOMENTUM         recent activity feed
+ *   ——   COMPLIANCE       optional collapsible details below the fold
+ *   ——   TOOLS            workflow utilities
  *
- * Design rationale: the previous overview was admin-shaped — aggregate
- * counts (Students/Tutors/Pending/Gateway), four giant nav hubs, then
- * widgets. A tutor's actual morning is "what's happening today + what's
- * waiting for me + who needs help" — that's the Tutor Today body.  The
- * old admin metrics still exist but as smaller chips on the bottom hubs.
+ * Single colour accent: elec-yellow on the hero greeting, the leftmost
+ * stat cell, and the hub grid's top hairline. Restraint is the point.
+ *
+ * Cards: `bg-[hsl(0_0%_10%)]` (matches the main dashboard editorial cards)
+ * Page bg: inherited `bg-elec-dark` from CollegeDashboard wrapper.
  */
 
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
+import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { AtRiskPredictor } from '@/components/college/widgets/AtRiskPredictor';
 import { EPACountdown } from '@/components/college/widgets/EPACountdown';
 import { ActivityFeed } from '@/components/college/widgets/ActivityFeed';
@@ -26,60 +36,416 @@ import { TopExpiringWidget } from '@/components/college/widgets/TopExpiringWidge
 import { TutorTodayBody } from '@/pages/college/TutorTodayPage';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useTutorToday } from '@/hooks/useTutorToday';
+
+/* ──────────────── Section ID & collapse helpers ─────────────────────────
+   Compliance + tools live below-the-fold and are collapsible — they hold
+   real signal but most tutors don't open them daily. State persists per
+   browser so a returning user lands where they left off. */
+type DashSectionId = 'compliance' | 'tools';
+const COLLAPSE_KEY = 'college.overview.collapsed.v2';
+
+function useDashCollapse() {
+  const [collapsed, setCollapsed] = useState<Set<DashSectionId>>(() => {
+    if (typeof window === 'undefined') return new Set();
+    try {
+      const raw = window.localStorage.getItem(COLLAPSE_KEY);
+      if (raw) return new Set(JSON.parse(raw) as DashSectionId[]);
+      // First visit: closed by default — Today + hubs are the daily
+      // workflow, compliance/tools are reach-for-when-you-need-them.
+      return new Set<DashSectionId>(['compliance', 'tools']);
+    } catch {
+      return new Set();
+    }
+  });
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(COLLAPSE_KEY, JSON.stringify(Array.from(collapsed)));
+    } catch {
+      // ignore
+    }
+  }, [collapsed]);
+  const toggle = (id: DashSectionId) =>
+    setCollapsed((s) => {
+      const next = new Set(s);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  return { collapsed, toggle };
+}
 
 interface CollegeOverviewSectionProps {
   onNavigate: (section: CollegeSection) => void;
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
+/* ──────────────── Greeting helpers ─────────────────────────────────── */
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
-};
+function partOfDay(): 'MORNING' | 'AFTERNOON' | 'EVENING' {
+  const h = new Date().getHours();
+  if (h < 12) return 'MORNING';
+  if (h < 18) return 'AFTERNOON';
+  return 'EVENING';
+}
 
-function SectionHeader({
-  eyebrow,
-  title,
-  action,
-  onAction,
+function dateEyebrow(): string {
+  const d = new Date();
+  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
+  const day = d.getDate();
+  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
+  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
+}
+
+/* ──────────────── Hero (matches main Dashboard's VerdictHero) ──────── */
+
+function CollegeHero({
+  firstName,
+  verdict,
+  cta,
 }: {
-  eyebrow: string;
-  title: string;
-  action?: string;
-  onAction?: () => void;
+  firstName: string | null;
+  verdict: string;
+  cta?: { label: string; onClick: () => void };
 }) {
   return (
-    <div className="flex items-end justify-between gap-4">
-      <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          {eyebrow}
-        </div>
-        <h2 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight leading-tight">
-          {title}
-        </h2>
-      </div>
-      {action && onAction && (
-        <button
-          onClick={onAction}
-          className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors shrink-0 touch-manipulation"
-        >
-          {action} →
-        </button>
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="relative pt-2 sm:pt-4"
+    >
+      <motion.div variants={itemVariants}>
+        <Eyebrow>{dateEyebrow()}</Eyebrow>
+      </motion.div>
+
+      <motion.h1
+        variants={itemVariants}
+        className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
+      >
+        <span className="text-elec-yellow">Hello, </span>
+        <span className="text-white uppercase">{firstName ?? 'TUTOR'}.</span>
+      </motion.h1>
+
+      <motion.p
+        variants={itemVariants}
+        className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
+      >
+        {verdict}
+      </motion.p>
+
+      {cta && (
+        <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
+          <button
+            type="button"
+            onClick={cta.onClick}
+            className={cn(
+              'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
+              'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
+              'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
+            )}
+          >
+            <span>{cta.label}</span>
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+          </button>
+        </motion.div>
       )}
-    </div>
+    </motion.section>
   );
 }
 
+/* ──────────────── 01 · THIS MONTH (HeadlineStats look-alike) ───────── */
+
+function CollegeStats({
+  activeStudents,
+  activeTutors,
+  pendingAssessments,
+  atRisk,
+  onOpenPeople,
+  onOpenAssessment,
+}: {
+  activeStudents: number;
+  activeTutors: number;
+  pendingAssessments: number;
+  atRisk: number;
+  onOpenPeople: () => void;
+  onOpenAssessment: () => void;
+}) {
+  // Each cell is clickable so the strip works as a launcher. Single
+  // yellow accent on the leftmost (LEARNERS) cell — the headline number
+  // for a tutor.
+  type Stat = {
+    label: string;
+    value: string | number;
+    sub: string;
+    accent?: boolean;
+    onClick: () => void;
+  };
+  const stats: Stat[] = [
+    {
+      label: 'Learners',
+      value: activeStudents,
+      sub: `${activeTutors} tutors active`,
+      accent: true,
+      onClick: onOpenPeople,
+    },
+    {
+      label: 'Pending',
+      value: pendingAssessments,
+      sub: pendingAssessments > 0 ? 'Awaiting marks' : 'All caught up',
+      onClick: onOpenAssessment,
+    },
+    {
+      label: 'At risk',
+      value: atRisk,
+      sub: atRisk > 0 ? 'Need attention' : 'On track',
+      onClick: onOpenPeople,
+    },
+    {
+      label: 'Tutors',
+      value: activeTutors,
+      sub: 'On the team',
+      onClick: onOpenPeople,
+    },
+  ];
+
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-4"
+    >
+      <motion.div variants={itemVariants}>
+        <Eyebrow>01 · THIS MONTH</Eyebrow>
+      </motion.div>
+      <motion.div
+        variants={itemVariants}
+        className="relative grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden"
+      >
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+        {stats.map((s) => {
+          const v = String(s.value);
+          const sizeClass =
+            v.length <= 4
+              ? 'text-4xl sm:text-5xl lg:text-[56px]'
+              : v.length <= 8
+                ? 'text-3xl sm:text-4xl lg:text-5xl'
+                : 'text-2xl sm:text-3xl lg:text-4xl';
+          return (
+            <button
+              key={s.label}
+              type="button"
+              onClick={s.onClick}
+              className={cn(
+                'group relative bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation active:scale-[0.99]',
+                'hover:bg-elec-yellow/[0.04] transition-all',
+                s.accent &&
+                  'bg-gradient-to-br from-elec-yellow/[0.08] via-amber-500/[0.03] to-transparent hover:from-elec-yellow/[0.14]'
+              )}
+            >
+              <div
+                className={cn(
+                  'text-[10.5px] font-semibold uppercase tracking-[0.18em]',
+                  s.accent ? 'text-elec-yellow' : 'text-white/75'
+                )}
+              >
+                {s.label}
+              </div>
+              <span
+                className={cn(
+                  'mt-2.5 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                  sizeClass,
+                  s.accent ? 'text-elec-yellow' : 'text-white'
+                )}
+              >
+                {s.value}
+              </span>
+              <span className="mt-2.5 text-[11.5px] text-white/80 group-hover:text-white transition-colors leading-snug">
+                {s.sub}
+              </span>
+            </button>
+          );
+        })}
+      </motion.div>
+    </motion.section>
+  );
+}
+
+/* ──────────────── 02 · YOUR HUBS (EditorialHubGrid look-alike) ──── */
+
+interface HubDef {
+  eyebrow: string;
+  title: string;
+  description: string;
+  meta: string;
+  section: CollegeSection;
+}
+
+function CollegeHubs({
+  hubs,
+  onNavigate,
+}: {
+  hubs: HubDef[];
+  onNavigate: (section: CollegeSection) => void;
+}) {
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-4"
+    >
+      <motion.div variants={itemVariants} className="flex items-baseline justify-between gap-3">
+        <Eyebrow>02 · YOUR HUBS</Eyebrow>
+        <span className="text-[11px] text-white/50 tabular-nums">{hubs.length} hubs</span>
+      </motion.div>
+      <motion.div
+        variants={itemVariants}
+        className="relative grid gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+      >
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+        {hubs.map((hub, i) => (
+          <button
+            key={hub.title}
+            type="button"
+            onClick={() => onNavigate(hub.section)}
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] active:scale-[0.99] transition-all p-5 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[170px] sm:min-h-[240px]"
+          >
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow tabular-nums">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/75">
+                · {hub.eyebrow}
+              </span>
+            </div>
+            <h3 className="mt-3 sm:mt-5 text-[22px] sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.1] text-white group-hover:text-elec-yellow transition-colors">
+              {hub.title}
+            </h3>
+            <p className="mt-2 text-[13px] leading-relaxed text-white/85 max-w-[34ch]">
+              {hub.description}
+            </p>
+            <div className="flex-grow" />
+            <div className="mt-4 sm:mt-6 flex items-center justify-between gap-3 pt-3 sm:pt-4 border-t border-white/[0.08]">
+              <span className="text-[11.5px] text-white/85 truncate tabular-nums">{hub.meta}</span>
+              <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-elec-yellow shrink-0">
+                Open
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </div>
+          </button>
+        ))}
+      </motion.div>
+    </motion.section>
+  );
+}
+
+/* ──────────────── Numbered section header (03 · TODAY etc) ──────── */
+
+function NumberedHeader({
+  number,
+  label,
+  action,
+  onAction,
+  collapsible,
+  isCollapsed,
+  onToggle,
+}: {
+  number: string;
+  label: string;
+  action?: string;
+  onAction?: () => void;
+  collapsible?: boolean;
+  isCollapsed?: boolean;
+  onToggle?: () => void;
+}) {
+  const inner = (
+    <div className="flex items-baseline justify-between gap-3">
+      <Eyebrow>
+        {number} · {label}
+      </Eyebrow>
+      <div className="flex items-center gap-3 shrink-0">
+        {action && onAction && !isCollapsed && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAction();
+            }}
+            className="text-[11.5px] font-semibold text-elec-yellow hover:text-elec-yellow/90 transition-colors touch-manipulation"
+          >
+            {action} →
+          </button>
+        )}
+        {collapsible && (
+          <span
+            className={cn(
+              'text-white/75 text-[13px] transition-transform select-none',
+              isCollapsed ? '' : 'rotate-180'
+            )}
+            aria-hidden
+          >
+            ▾
+          </span>
+        )}
+      </div>
+    </div>
+  );
+  if (!collapsible) return inner;
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className="w-full text-left touch-manipulation active:opacity-70 transition-opacity"
+      aria-expanded={!isCollapsed}
+    >
+      {inner}
+    </button>
+  );
+}
+
+/* ──────────────── Main component ─────────────────────────────────── */
+
 export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionProps) {
+  const navigate = useNavigate();
+  const { profile } = useAuth();
   const { students, getStaffByRole, getPendingGradesData, isLoading } = useCollegeSupabase();
+  const { data: today } = useTutorToday();
+  const { collapsed, toggle } = useDashCollapse();
+
+  const firstName = useMemo(() => {
+    const full = profile?.full_name?.trim();
+    if (!full) return null;
+    return full.split(/\s+/)[0]?.toUpperCase() ?? null;
+  }, [profile?.full_name]);
 
   const activeTutors = getStaffByRole('tutor').length;
   const activeStudents = students.filter((s) => s.status?.toLowerCase() === 'active').length;
   const pendingAssessments = getPendingGradesData().length;
+  const atRiskCount = today?.counts.at_risk ?? 0;
+
+  // Verdict line — picks the most pressing single fact and surfaces it.
+  // Order: pending assessments > at-risk learners > inbox load > the
+  // calm default. This is the same shape as Dashboard.tsx — verdict
+  // over data.
+  const verdict = useMemo(() => {
+    const inboxTotal =
+      (today?.counts.otj_awaiting ?? 0) +
+      (today?.counts.comments_action_required ?? 0) +
+      (today?.counts.iqa_awaiting ?? 0);
+    if (pendingAssessments > 0) {
+      return `${pendingAssessments} learner${pendingAssessments === 1 ? '' : 's'} waiting for a grade — clear before the weekend if you can.`;
+    }
+    if (atRiskCount > 0) {
+      return `${atRiskCount} learner${atRiskCount === 1 ? ' is' : 's are'} flagged at risk. Today's a good day for a check-in.`;
+    }
+    if (inboxTotal > 0) {
+      return `${inboxTotal} item${inboxTotal === 1 ? '' : 's'} in your inbox — OTJ verifications, action comments, IQA verdicts.`;
+    }
+    return `Quiet morning — no assessments pending, no risk flags. A good window to plan ahead.`;
+  }, [pendingAssessments, atRiskCount, today]);
 
   if (isLoading) {
     return (
@@ -89,100 +455,37 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
     );
   }
 
-  // Navigation hubs — kept as a secondary surface so tutors who need to
-  // jump elsewhere have a clear path. Sized smaller than before; the
-  // *primary* surface above is the Tutor Today body.
-  const hubs: Array<{
-    eyebrow: string;
-    title: string;
-    desc: string;
-    section: CollegeSection;
-    accent: string;
-    meta: string;
-  }> = [
+  const hubs: HubDef[] = [
     {
-      eyebrow: 'Students & Staff',
+      eyebrow: 'Students & staff',
       title: 'People',
-      desc: 'Students, tutors, cohorts, support staff.',
+      description: 'Students, tutors, cohorts, support staff.',
+      meta: `${activeStudents} active learners`,
       section: 'peoplehub',
-      accent: 'from-blue-500/70 via-blue-400/70 to-cyan-400/70',
-      meta: `${activeStudents} active · ${activeTutors} tutors`,
     },
     {
-      eyebrow: 'Courses & Lessons',
+      eyebrow: 'Courses & lessons',
       title: 'Curriculum',
-      desc: 'Courses, lesson plans, teaching resources, notebook.',
-      section: 'curriculumhub',
-      accent: 'from-emerald-500/70 via-emerald-400/70 to-green-400/70',
+      description: 'Lesson plans, courses, teaching resources, notebook.',
       meta: 'Lesson planner ready',
+      section: 'curriculumhub',
     },
     {
-      eyebrow: 'Grading & Progress',
+      eyebrow: 'Grading & progress',
       title: 'Assessment',
-      desc: 'Grades, ILPs, EPA gateway, portfolio review, work queue.',
+      description: 'Grades, ILPs, EPA gateway, portfolio review, work queue.',
+      meta:
+        pendingAssessments > 0
+          ? `${pendingAssessments} pending`
+          : 'All caught up',
       section: 'assessmenthub',
-      accent: 'from-amber-500/70 via-amber-400/70 to-yellow-400/70',
-      meta: pendingAssessments > 0 ? `${pendingAssessments} pending` : 'All caught up',
     },
     {
-      eyebrow: 'Docs & Settings',
+      eyebrow: 'Docs & settings',
       title: 'Resources',
-      desc: 'Compliance docs, LTI, college configuration.',
-      section: 'resourceshub',
-      accent: 'from-purple-500/70 via-violet-400/70 to-indigo-400/70',
+      description: 'Compliance docs, LTI, college configuration.',
       meta: 'Settings & admin',
-    },
-  ];
-
-  // Secondary tools row — discoverable workflows that don't fit a hub.
-  const tools: Array<{
-    eyebrow: string;
-    title: string;
-    desc: string;
-    section: CollegeSection;
-    accent: string;
-  }> = [
-    {
-      eyebrow: 'OTJ',
-      title: 'Off-the-job tracker',
-      desc: 'ESFA 20% time tracker for apprentices.',
-      section: 'otjtraining',
-      accent: 'from-emerald-500/70 to-green-400/70',
-    },
-    {
-      eyebrow: 'Quality',
-      title: 'Quality dashboard',
-      desc: 'Ofsted-aligned compliance metrics and reports.',
-      section: 'qualitydashboard',
-      accent: 'from-blue-500/70 to-cyan-400/70',
-    },
-    {
-      eyebrow: 'AI',
-      title: 'AI ILP generator',
-      desc: 'SMART targets generated from learner data.',
-      section: 'aiilpgenerator',
-      accent: 'from-elec-yellow/80 to-amber-400/70',
-    },
-    {
-      eyebrow: 'Schedule',
-      title: 'Timetable',
-      desc: 'Weekly lesson schedule across cohorts.',
-      section: 'timetable',
-      accent: 'from-purple-500/70 to-indigo-400/70',
-    },
-    {
-      eyebrow: 'Live',
-      title: 'Live lesson',
-      desc: 'In-lesson register with built-in timer.',
-      section: 'livelesson',
-      accent: 'from-elec-yellow/80 to-orange-400/70',
-    },
-    {
-      eyebrow: 'Batch',
-      title: 'Batch operations',
-      desc: 'Bulk grading and review workflows.',
-      section: 'batchoperations',
-      accent: 'from-amber-500/70 to-yellow-400/70',
+      section: 'resourceshub',
     },
   ];
 
@@ -191,121 +494,117 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="mx-auto max-w-7xl space-y-7 sm:space-y-12 lg:space-y-16"
+      className="w-full mx-auto max-w-7xl space-y-7 sm:space-y-12 lg:space-y-16"
     >
-      {/* ──────────────── TODAY (PRIMARY — the morning workflow) ──────────────── */}
-      {/* Embedded TutorTodayBody — same hook, same UI as /college/today. The
-          embed mode swaps the giant H1 for a tighter heading + "Open full
-          Today's view →" link for the standalone surface. */}
-      <TutorTodayBody mode="embed" />
+      {/* HERO */}
+      <CollegeHero
+        firstName={firstName}
+        verdict={verdict}
+        cta={{ label: "View today's queue", onClick: () => navigate('/college/today') }}
+      />
 
-      {/* ──────────────── COMPLIANCE PULSE ──────────────── */}
-      {/* Three widgets that need to live somewhere — kept as a single
-          "pulse" strip so they're visible without dominating. */}
-      <motion.section variants={itemVariants} className="space-y-4 sm:space-y-5">
-        <SectionHeader
-          eyebrow="Compliance pulse"
-          title="Your records and the college's"
-          action="Open hub"
-          onAction={() => onNavigate('compliancedocs')}
+      {/* 01 · THIS MONTH */}
+      <CollegeStats
+        activeStudents={activeStudents}
+        activeTutors={activeTutors}
+        pendingAssessments={pendingAssessments}
+        atRisk={atRiskCount}
+        onOpenPeople={() => onNavigate('peoplehub')}
+        onOpenAssessment={() => onNavigate('assessmenthub')}
+      />
+
+      {/* 02 · YOUR HUBS */}
+      <CollegeHubs hubs={hubs} onNavigate={onNavigate} />
+
+      {/* 03 · TODAY — TutorTodayBody in bare embed mode (no greeting,
+          since the editorial hero above already renders one). */}
+      <motion.section variants={itemVariants} className="space-y-4">
+        <NumberedHeader
+          number="03"
+          label="TODAY"
+          action="Open full view"
+          onAction={() => navigate('/college/today')}
         />
-        <div className="space-y-3 sm:space-y-4">
-          <MyAcknowledgementsWidget />
-          <VerifierInboxWidget />
-          <TopExpiringWidget />
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-3 sm:gap-4">
-          <MyComplianceWidget />
-          <ComplianceLeadsWidget />
-        </div>
+        <TutorTodayBody mode="embed-bare" />
       </motion.section>
 
-      {/* ──────────────── PREDICTIVE ──────────────── */}
-      <motion.section variants={itemVariants} className="space-y-4 sm:space-y-5">
-        <SectionHeader eyebrow="Insights" title="Predictive analytics" />
+      {/* 04 · MOMENTUM */}
+      <motion.section variants={itemVariants} className="space-y-4">
+        <NumberedHeader number="04" label="MOMENTUM" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           <AtRiskPredictor onNavigate={onNavigate} compact />
           <EPACountdown onNavigate={onNavigate} compact />
         </div>
+        <ActivityFeed maxItems={6} iconless />
       </motion.section>
 
-      {/* ──────────────── OTHER AREAS (de-prominent navigation) ──────────────── */}
-      {/* The 4 hubs were the hero of the old design.  Now they're a
-          secondary "where to next" — smaller tiles, denser meta. */}
-      <motion.section variants={itemVariants} className="space-y-4 sm:space-y-5">
-        <SectionHeader eyebrow="Other areas" title="Navigate the college" />
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
-          {hubs.map((hub) => (
-            <button
-              key={hub.title}
-              onClick={() => onNavigate(hub.section)}
-              className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-4 sm:p-5 text-left touch-manipulation flex flex-col min-h-[140px]"
-            >
-              <div
-                className={cn(
-                  'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-70 group-hover:opacity-100 transition-opacity',
-                  hub.accent
-                )}
-              />
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {hub.eyebrow}
-              </div>
-              <h3 className="mt-2 text-lg sm:text-xl font-semibold text-white tracking-tight">
-                {hub.title}
-              </h3>
-              <p className="mt-1.5 text-[12px] leading-relaxed text-white line-clamp-2">
-                {hub.desc}
-              </p>
-              <div className="flex-grow" />
-              <div className="mt-3 flex items-center justify-between pt-2 border-t border-white/[0.06]">
-                <span className="text-[10.5px] text-white truncate">{hub.meta}</span>
-                <span className="text-[12px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
-                  Open →
+      {/* COMPLIANCE — collapsible below-the-fold detail */}
+      <motion.section variants={itemVariants} className="space-y-4">
+        <NumberedHeader
+          number="05"
+          label="COMPLIANCE"
+          action="Open hub"
+          onAction={() => onNavigate('compliancedocs')}
+          collapsible
+          isCollapsed={collapsed.has('compliance')}
+          onToggle={() => toggle('compliance')}
+        />
+        {!collapsed.has('compliance') && (
+          <>
+            <div className="space-y-3 sm:space-y-4">
+              <MyAcknowledgementsWidget />
+              <VerifierInboxWidget />
+              <TopExpiringWidget />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-3 sm:gap-4">
+              <MyComplianceWidget />
+              <ComplianceLeadsWidget />
+            </div>
+          </>
+        )}
+      </motion.section>
+
+      {/* TOOLS — collapsible workflow utilities */}
+      <motion.section variants={itemVariants} className="space-y-4">
+        <NumberedHeader
+          number="06"
+          label="TOOLS"
+          collapsible
+          isCollapsed={collapsed.has('tools')}
+          onToggle={() => toggle('tools')}
+        />
+        {!collapsed.has('tools') && (
+          <div className="grid gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden grid-cols-2 sm:grid-cols-3">
+            {(
+              [
+                { eyebrow: 'OTJ', title: 'Off-the-job tracker', section: 'otjtraining' },
+                { eyebrow: 'Quality', title: 'Quality dashboard', section: 'qualitydashboard' },
+                { eyebrow: 'AI', title: 'AI ILP generator', section: 'aiilpgenerator' },
+                { eyebrow: 'Schedule', title: 'Timetable', section: 'timetable' },
+                { eyebrow: 'Live', title: 'Live lesson', section: 'livelesson' },
+                { eyebrow: 'Batch', title: 'Batch operations', section: 'batchoperations' },
+              ] as Array<{ eyebrow: string; title: string; section: CollegeSection }>
+            ).map((tool) => (
+              <button
+                key={tool.title}
+                type="button"
+                onClick={() => onNavigate(tool.section)}
+                className="group bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] active:scale-[0.99] transition-all p-4 sm:p-5 text-left touch-manipulation flex flex-col"
+              >
+                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/75">
+                  {tool.eyebrow}
                 </span>
-              </div>
-            </button>
-          ))}
-        </div>
-      </motion.section>
-
-      {/* ──────────────── TOOLS ──────────────── */}
-      <motion.section variants={itemVariants} className="space-y-4 sm:space-y-5">
-        <SectionHeader eyebrow="Tools" title="Workflows & utilities" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
-          {tools.map((tool) => (
-            <button
-              key={tool.title}
-              onClick={() => onNavigate(tool.section)}
-              className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-3 sm:p-4 text-left touch-manipulation flex flex-col min-h-[110px]"
-            >
-              <div
-                className={cn(
-                  'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-70 group-hover:opacity-100 transition-opacity',
-                  tool.accent
-                )}
-              />
-              <div className="text-[9.5px] font-medium uppercase tracking-[0.18em] text-white">
-                {tool.eyebrow}
-              </div>
-              <div className="mt-1.5 text-[13px] font-semibold text-white tracking-tight leading-snug line-clamp-1">
-                {tool.title}
-              </div>
-              <div className="mt-1 text-[11px] leading-snug text-white line-clamp-2">
-                {tool.desc}
-              </div>
-              <div className="flex-grow" />
-              <div className="mt-2 text-[11px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow transition-colors">
-                Open →
-              </div>
-            </button>
-          ))}
-        </div>
-      </motion.section>
-
-      {/* ──────────────── ACTIVITY FEED ──────────────── */}
-      <motion.section variants={itemVariants} className="space-y-4 sm:space-y-5">
-        <SectionHeader eyebrow="Recent activity" title="What's happening" />
-        <ActivityFeed maxItems={8} iconless />
+                <span className="mt-1.5 text-[15px] sm:text-base font-semibold tracking-tight text-white group-hover:text-elec-yellow transition-colors">
+                  {tool.title}
+                </span>
+                <span className="mt-2 inline-flex items-center gap-1 text-[11.5px] font-semibold text-elec-yellow">
+                  Open
+                  <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
       </motion.section>
     </motion.div>
   );
