@@ -1,8 +1,27 @@
-import { ArrowLeft, Volume2, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 4 · Subsection 5 — Noise Control Methods
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Source-path-receiver hierarchy, mass law, duct silencers, acoustic enclosures
+ *   and vibration isolation — the design toolkit that turns a noisy plant room
+ *   into a compliant building.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Noise Control Methods - HNC Module 2 Section 4.5';
@@ -256,794 +275,533 @@ const faqs = [
 ];
 
 const HNCModule2Section4_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Volume2 className="h-4 w-4" />
-            <span>Module 2.4.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Noise Control Methods
-          </h1>
-          <p className="text-white">
-            Source, path, and receiver control strategies for building services acoustic design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 4 · Subsection 5"
+            title="Noise Control Methods"
+            description="Source, path, and receiver control strategies for building services acoustic design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Source control:</strong> Quieter equipment, good selection
-              </li>
-              <li className="pl-1">
-                <strong>Path control:</strong> Barriers, enclosures, silencers
-              </li>
-              <li className="pl-1">
-                <strong>Receiver control:</strong> PPE, exposure limits
-              </li>
-              <li className="pl-1">
-                <strong>Mass law:</strong> +6 dB per doubling of mass
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Duct silencers:</strong> 10-25 dB attenuation
-              </li>
-              <li className="pl-1">
-                <strong>AV mounts:</strong> Vibration isolation
-              </li>
-              <li className="pl-1">
-                <strong>Flexible connections:</strong> Break transmission
-              </li>
-              <li className="pl-1">
-                <strong>Velocity limits:</strong> Control regenerated noise
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You apply the source-path-receiver hierarchy: cheaper to control noise at source than to attenuate at the receiver.',
+              'You spec attenuator type by frequency: absorptive splitters for broadband AHU noise, reactive silencers for low-frequency fan tones, lined plenums for compact runs.',
+              'You apply the mass law (≈6 dB per doubling of partition mass per m²) to plant-room wall and ceiling design.',
+              'You isolate rotating plant on AVMs (anti-vibration mounts) sized for ≥ 95% efficiency at the lowest forcing frequency.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="Building Regulations 2010 — Approved Document E (Resistance to the passage of sound)"
+            clause="Reasonable provision shall be made to protect against the passage of sound: (a) within a dwelling-house etc; (b) between dwelling-houses or other buildings; and (c) between rooms intended for residential purposes — including airborne and impact sound."
+            meaning={
+              <>
+                Approved Document E sets the legal floor for sound insulation between
+                dwellings and rooms for residential purposes — directly relevant when
+                building services plant adjoins residential walls or floors. The HNC
+                engineer evidences compliance via partition mass-law calculations and
+                pre-completion sound testing where required.
+              </>
+            }
+            cite="Source: Building Regulations 2010, Approved Document E — gov.uk; CIBSE Guide B4 — Noise and Vibration Control; BS 8233 — Guidance on sound insulation and noise reduction for buildings."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the source-path-receiver noise control hierarchy',
               'Describe source control measures for building services plant',
               'Apply the mass law to partition design',
               'Specify silencer types for ductwork applications',
               'Understand acoustic enclosure design principles',
               'Prevent structure-borne noise transmission',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Source Control */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Source Control - Reducing Noise at Origin
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Source Control — Reducing Noise at Origin"
+            plainEnglish="Cheapest dB you'll ever buy is the one that never got created. Quieter plant, better selection, lower velocity — sort it at source first."
+          >
             <p>
               Source control is the most effective and cost-efficient approach to noise management.
               By selecting quieter equipment and ensuring optimal operating conditions, noise
               problems can often be eliminated before they arise.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Source Control Strategies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Source Control Measures
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fans</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Select for BEP operation, specify low noise options, avoid oversizing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pumps</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Match duty point, avoid cavitation, seal type selection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Compressors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Scroll vs reciprocating type, variable speed operation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chillers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specification of Lw limits, acoustic packages, location
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ductwork</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low velocities, gradual transitions, avoid sharp bends
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Equipment Selection</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Request Lw data at duty point</li>
-                  <li className="pl-1">Compare octave band spectra</li>
-                  <li className="pl-1">Specify maximum noise limits</li>
-                  <li className="pl-1">Consider acoustic options/packages</li>
-                  <li className="pl-1">Avoid operation away from BEP</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Design</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Locate plant away from sensitive spaces</li>
-                  <li className="pl-1">Size ducts for low velocity</li>
-                  <li className="pl-1">Use radius bends not mitred</li>
-                  <li className="pl-1">Allow straight duct before silencers</li>
-                  <li className="pl-1">Separate supplies to adjacent rooms</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Source Control Strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fans:</strong> Select for BEP operation, specify low noise options, avoid
+                oversizing
+              </li>
+              <li>
+                <strong>Pumps:</strong> Match duty point, avoid cavitation, seal type selection
+              </li>
+              <li>
+                <strong>Compressors:</strong> Scroll vs reciprocating type, variable speed
+                operation
+              </li>
+              <li>
+                <strong>Chillers:</strong> Specification of Lw limits, acoustic packages, location
+              </li>
+              <li>
+                <strong>Ductwork:</strong> Low velocities, gradual transitions, avoid sharp bends
+              </li>
+            </ul>
+            <p>
+              <strong>Equipment Selection:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Request Lw data at duty point</li>
+              <li>Compare octave band spectra</li>
+              <li>Specify maximum noise limits</li>
+              <li>Consider acoustic options/packages</li>
+              <li>Avoid operation away from BEP</li>
+            </ul>
+            <p>
+              <strong>System Design:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Locate plant away from sensitive spaces</li>
+              <li>Size ducts for low velocity</li>
+              <li>Use radius bends not mitred</li>
+              <li>Allow straight duct before silencers</li>
+              <li>Separate supplies to adjacent rooms</li>
+            </ul>
+            <p>
               <strong>Key principle:</strong> Every dB reduced at source is worth 10 dB of path
               treatment. Always address source control before specifying acoustic treatments.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Path Control - Barriers and Enclosures */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Path Control - Barriers and Enclosures
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Path Control — Barriers and Enclosures"
+            plainEnglish="Mass law: heavier wall = more dB. Double leaf with absorption beats single leaf at the same weight. Outdoor barriers: 5-10 dB and diminishing returns."
+          >
             <p>
               When source control alone is insufficient, path control measures reduce noise during
               transmission from source to receiver. This includes physical barriers, acoustic
               enclosures, and treatments to the transmission path itself.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Mass Law</p>
-              <p className="font-mono text-center text-lg mb-2">R ≈ 20 log₁₀(f × m) - 48 dB</p>
-              <div className="text-xs text-white text-center mt-2">
-                R = sound reduction index, f = frequency (Hz), m = surface mass (kg/m²)
-              </div>
-              <p className="text-xs text-white text-center mt-2">
-                Doubling mass or frequency increases R by approximately 6 dB
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Barrier and Enclosure Performance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Construction</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Mass (kg/m²)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Rw (dB)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        12.5mm plasterboard (single)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10</td>
-                      <td className="border border-white/10 px-3 py-2">28</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Double plasterboard on studs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20</td>
-                      <td className="border border-white/10 px-3 py-2">35-45</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        100mm blockwork (plastered)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">150</td>
-                      <td className="border border-white/10 px-3 py-2">45</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">215mm brick (plastered)</td>
-                      <td className="border border-white/10 px-3 py-2">400</td>
-                      <td className="border border-white/10 px-3 py-2">50</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Steel acoustic enclosure (lined)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-50</td>
-                      <td className="border border-white/10 px-3 py-2">25-40</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Enclosure Design Principles
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Heavy, airtight construction</li>
-                  <li className="pl-1">Internal absorption (prevent build-up)</li>
-                  <li className="pl-1">Vibration isolation from equipment</li>
-                  <li className="pl-1">Ventilation with attenuated openings</li>
-                  <li className="pl-1">Access for maintenance</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Barrier Limitations</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Must break line of sight</li>
-                  <li className="pl-1">Low frequency diffraction limits effect</li>
-                  <li className="pl-1">Sound goes around ends too</li>
-                  <li className="pl-1">Diminishing returns with height</li>
-                  <li className="pl-1">Typically 5-15 dB maximum</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>The Mass Law:</strong> R ≈ 20 log₁₀(f × m) - 48 dB. R = sound reduction
+              index, f = frequency (Hz), m = surface mass (kg/m²). Doubling mass or frequency
+              increases R by approximately 6 dB.
+            </p>
+            <p>
+              <strong>Barrier and Enclosure Performance:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>12.5mm plasterboard (single):</strong> 10 kg/m², typical Rw 28 dB
+              </li>
+              <li>
+                <strong>Double plasterboard on studs:</strong> 20 kg/m², typical Rw 35-45 dB
+              </li>
+              <li>
+                <strong>100mm blockwork (plastered):</strong> 150 kg/m², typical Rw 45 dB
+              </li>
+              <li>
+                <strong>215mm brick (plastered):</strong> 400 kg/m², typical Rw 50 dB
+              </li>
+              <li>
+                <strong>Steel acoustic enclosure (lined):</strong> 20-50 kg/m², typical Rw 25-40 dB
+              </li>
+            </ul>
+            <p>
+              <strong>Enclosure Design Principles:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Heavy, airtight construction</li>
+              <li>Internal absorption (prevent build-up)</li>
+              <li>Vibration isolation from equipment</li>
+              <li>Ventilation with attenuated openings</li>
+              <li>Access for maintenance</li>
+            </ul>
+            <p>
+              <strong>Barrier Limitations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Must break line of sight</li>
+              <li>Low frequency diffraction limits effect</li>
+              <li>Sound goes around ends too</li>
+              <li>Diminishing returns with height</li>
+              <li>Typically 5-15 dB maximum</li>
+            </ul>
+            <p>
               <strong>Double-leaf construction:</strong> A cavity partition with absorption
               outperforms a single-leaf of equal total mass by 10-15 dB at mid-high frequencies.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Silencers and Attenuators */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Silencers and Attenuators
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Silencers and Attenuators"
+            plainEnglish="Sound goes through ductwork like water through a hose — silencers slow it down. Absorptive for HVAC, reactive for combustion, both for industrial."
+          >
             <p>
               Silencers (attenuators) reduce noise travelling through ductwork and pipework. They
               are essential for preventing plant noise from reaching occupied spaces through the
               ventilation system.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Silencer Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Mechanism</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effectiveness</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Absorptive (dissipative)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sound energy converted to heat
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">HVAC ductwork</td>
-                      <td className="border border-white/10 px-3 py-2">Broadband, mid-high freq</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reactive</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Impedance mismatch reflects sound
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Exhausts, combustion</td>
-                      <td className="border border-white/10 px-3 py-2">Low frequency, tuned</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Combination</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Both absorption and reaction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Industrial, high performance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Wide frequency range</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Active</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Anti-phase sound cancellation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specific low freq problems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Low frequency tonal</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Absorptive Silencer Performance Factors
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Length:</strong> Longer = more attenuation (but more pressure drop)
-                </li>
-                <li className="pl-1">
-                  <strong>Splitters:</strong> More splitters = more attenuation (narrower airways)
-                </li>
-                <li className="pl-1">
-                  <strong>Material:</strong> Thicker absorption = better low frequency performance
-                </li>
-                <li className="pl-1">
-                  <strong>Facing:</strong> Perforated metal protects material, slight HF loss
-                </li>
-                <li className="pl-1">
-                  <strong>Velocity:</strong> Self-noise increases with velocity (limit ~10 m/s)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Silencer Attenuation (Rectangular, 900mm)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency (Hz)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">125</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">250</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">500</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">1k</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">2k</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">4k</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insertion Loss (dB)</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">15</td>
-                      <td className="border border-white/10 px-3 py-2">22</td>
-                      <td className="border border-white/10 px-3 py-2">28</td>
-                      <td className="border border-white/10 px-3 py-2">25</td>
-                      <td className="border border-white/10 px-3 py-2">18</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Values are indicative - always use manufacturer's data for specific products
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Silencer Types:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Absorptive (dissipative):</strong> Sound energy converted to heat, used for
+                HVAC ductwork, broadband and mid-high frequency effective
+              </li>
+              <li>
+                <strong>Reactive:</strong> Impedance mismatch reflects sound, used for exhausts and
+                combustion, low frequency tuned
+              </li>
+              <li>
+                <strong>Combination:</strong> Both absorption and reaction, used for industrial and
+                high performance applications, wide frequency range
+              </li>
+              <li>
+                <strong>Active:</strong> Anti-phase sound cancellation, used for specific low
+                frequency problems, low frequency tonal
+              </li>
+            </ul>
+            <p>
+              <strong>Absorptive Silencer Performance Factors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Length:</strong> Longer = more attenuation (but more pressure drop)
+              </li>
+              <li>
+                <strong>Splitters:</strong> More splitters = more attenuation (narrower airways)
+              </li>
+              <li>
+                <strong>Material:</strong> Thicker absorption = better low frequency performance
+              </li>
+              <li>
+                <strong>Facing:</strong> Perforated metal protects material, slight HF loss
+              </li>
+              <li>
+                <strong>Velocity:</strong> Self-noise increases with velocity (limit ~10 m/s)
+              </li>
+            </ul>
+            <p>
+              <strong>Typical Silencer Attenuation (Rectangular, 900mm) — Insertion Loss (dB):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>125 Hz: 8 dB</li>
+              <li>250 Hz: 15 dB</li>
+              <li>500 Hz: 22 dB</li>
+              <li>1k Hz: 28 dB</li>
+              <li>2k Hz: 25 dB</li>
+              <li>4k Hz: 18 dB</li>
+            </ul>
+            <p>
+              Values are indicative — always use manufacturer's data for specific products.
+            </p>
+            <p>
               <strong>Selection tip:</strong> Match silencer to noise spectrum. Standard absorptive
-              silencers are weak at low frequencies - specify longer silencers or reactive sections
+              silencers are weak at low frequencies — specify longer silencers or reactive sections
               for low frequency problems.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Vibration Isolation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Vibration Isolation and Structure-Borne Sound
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Vibration Isolation and Structure-Borne Sound"
+            plainEnglish="One rigid pipe to a plant skid kills your isolation. Springs, flex connections, no rigid bridges — that's the rule."
+          >
             <p>
               Structure-borne sound occurs when vibration from machinery is transmitted through
               building structure and re-radiated as airborne noise in distant rooms. Vibration
               isolation at the source prevents this transmission path.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Vibration Isolation Elements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Isolator Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Natural Frequency
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rubber pads</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Light equipment, low isolation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15-30 Hz</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Neoprene mounts</td>
-                      <td className="border border-white/10 px-3 py-2">FCUs, small pumps</td>
-                      <td className="border border-white/10 px-3 py-2">10-20 Hz</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Steel springs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AHUs, chillers, large pumps
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3-8 Hz</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air springs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Precision equipment, very low freq
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1-3 Hz</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inertia bases</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adds mass, lowers resonance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Variable</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Isolation Efficiency</p>
-              <p className="text-sm text-white mb-2">
-                Isolation begins when forcing frequency exceeds √2 × natural frequency of the mount
-                system. Effectiveness increases with frequency ratio.
-              </p>
-              <div className="grid grid-cols-3 gap-2 text-xs text-center mt-3">
-                <div className="p-2 rounded bg-black/30">
-                  <p className="text-white">f/fn = 2</p>
-                  <p className="text-elec-yellow font-bold">65% isolation</p>
-                </div>
-                <div className="p-2 rounded bg-black/30">
-                  <p className="text-white">f/fn = 3</p>
-                  <p className="text-elec-yellow font-bold">88% isolation</p>
-                </div>
-                <div className="p-2 rounded bg-black/30">
-                  <p className="text-white">f/fn = 5</p>
-                  <p className="text-elec-yellow font-bold">96% isolation</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Connection Breaks</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Flexible duct connections (canvas/rubber)</li>
-                  <li className="pl-1">Flexible pipe connectors</li>
-                  <li className="pl-1">Flexible electrical conduit/cable</li>
-                  <li className="pl-1">Resilient pipe hangers</li>
-                  <li className="pl-1">Isolated supports for connected duct</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Installation Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Level and even loading on mounts</li>
-                  <li className="pl-1">No rigid bridges (pipes, conduit)</li>
-                  <li className="pl-1">Sufficient static deflection</li>
-                  <li className="pl-1">Restraints for seismic/movement</li>
-                  <li className="pl-1">Maintenance access without removal</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Vibration Isolation Elements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Rubber pads:</strong> Light equipment, low isolation, natural frequency
+                15-30 Hz
+              </li>
+              <li>
+                <strong>Neoprene mounts:</strong> FCUs and small pumps, natural frequency 10-20 Hz
+              </li>
+              <li>
+                <strong>Steel springs:</strong> AHUs, chillers, large pumps, natural frequency 3-8
+                Hz
+              </li>
+              <li>
+                <strong>Air springs:</strong> Precision equipment, very low frequency, natural
+                frequency 1-3 Hz
+              </li>
+              <li>
+                <strong>Inertia bases:</strong> Add mass and lower resonance, natural frequency
+                variable
+              </li>
+            </ul>
+            <p>
+              <strong>Isolation Efficiency:</strong> Isolation begins when forcing frequency exceeds
+              √2 × natural frequency of the mount system. Effectiveness increases with frequency
+              ratio.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>f/fn = 2 → 65% isolation</li>
+              <li>f/fn = 3 → 88% isolation</li>
+              <li>f/fn = 5 → 96% isolation</li>
+            </ul>
+            <p>
+              <strong>Connection Breaks:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Flexible duct connections (canvas/rubber)</li>
+              <li>Flexible pipe connectors</li>
+              <li>Flexible electrical conduit/cable</li>
+              <li>Resilient pipe hangers</li>
+              <li>Isolated supports for connected duct</li>
+            </ul>
+            <p>
+              <strong>Installation Requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Level and even loading on mounts</li>
+              <li>No rigid bridges (pipes, conduit)</li>
+              <li>Sufficient static deflection</li>
+              <li>Restraints for seismic/movement</li>
+              <li>Maintenance access without removal</li>
+            </ul>
+            <p>
               <strong>Critical point:</strong> A single rigid connection (unbypassed pipe, taut
               cable) can completely short-circuit vibration isolation. All connections must be
               flexible.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Sizing a silencer, predicting a heavier wall's improvement, and picking a spring mount for a pump."
+          >
+            <p>
+              <strong>Example 1: Silencer Selection.</strong> A fan produces 85 dB(A) at the
+              discharge. The target at the nearest grille is 40 dB(A). Natural duct attenuation is
+              12 dB. What silencer insertion loss is required?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Required total attenuation = 85 - 40 = <strong>45 dB</strong>
+              </li>
+              <li>Natural duct attenuation = 12 dB</li>
+              <li>
+                Silencer requirement = 45 - 12 = <strong>33 dB</strong>
+              </li>
+              <li>This suggests a 1.2-1.5m silencer with splitters, or two silencers in series.</li>
+              <li>Note: Check at each octave band, not just overall dB(A).</li>
+            </ul>
+            <p>
+              <strong>Example 2: Mass Law Application.</strong> A 100mm blockwork wall (150 kg/m²)
+              provides Rw 45 dB. Estimate the performance if replaced with 215mm brick (400 kg/m²).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mass ratio = 400 / 150 = 2.67</li>
+              <li>
+                Increase = 20 log(2.67) = 20 × 0.43 = <strong>8.5 dB</strong>
+              </li>
+              <li>
+                Estimated Rw = 45 + 8.5 = <strong>53.5 dB</strong>
+              </li>
+              <li>Actual performance may differ due to coincidence effects and workmanship.</li>
+            </ul>
+            <p>
+              <strong>Example 3: Vibration Isolation.</strong> A pump runs at 1450 rpm. What
+              isolator natural frequency is needed for 90% isolation?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Forcing frequency = 1450 / 60 = <strong>24.2 Hz</strong>
+              </li>
+              <li>For 90% isolation, need f/fn ≈ 3.3</li>
+              <li>
+                Required fn = 24.2 / 3.3 = <strong>7.3 Hz</strong>
+              </li>
+              <li>This requires steel spring mounts (rubber/neoprene too stiff).</li>
+              <li>
+                Spring deflection needed: δ = 25/fn² = 25/53 ={' '}
+                <strong>~0.5mm static deflection</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Silencer Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A fan produces 85 dB(A) at the discharge. The target at
-                the nearest grille is 40 dB(A). Natural duct attenuation is 12 dB. What silencer
-                insertion loss is required?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Required total attenuation = 85 - 40 = <strong>45 dB</strong>
-                </p>
-                <p>Natural duct attenuation = 12 dB</p>
-                <p>
-                  Silencer requirement = 45 - 12 = <strong>33 dB</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This suggests a 1.2-1.5m silencer with splitters, or two silencers in series
-                </p>
-                <p className="mt-2 text-white">
-                  Note: Check at each octave band, not just overall dB(A)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Mass Law Application
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 100mm blockwork wall (150 kg/m²) provides Rw 45 dB.
-                Estimate the performance if replaced with 215mm brick (400 kg/m²).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Mass ratio = 400 / 150 = 2.67</p>
-                <p>
-                  Increase = 20 log(2.67) = 20 × 0.43 = <strong>8.5 dB</strong>
-                </p>
-                <p>
-                  Estimated Rw = 45 + 8.5 = <strong>53.5 dB</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Actual performance may differ due to coincidence effects and workmanship
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The hierarchy, the CIBSE velocity limits, and the gotchas that wreck a good design."
+          >
+            <p>
+              <strong>Noise Control Hierarchy:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Source:</strong> Quieter equipment, optimal operation
+              </li>
+              <li>
+                <strong>2. Path:</strong> Distance, barriers, enclosures, silencers
+              </li>
+              <li>
+                <strong>3. Receiver:</strong> Room treatment, PPE, time limits
+              </li>
+            </ul>
+            <p>
+              <strong>CIBSE Duct Velocity Limits:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Main ducts:</strong> 5-7.5 m/s
+              </li>
+              <li>
+                <strong>Branch ducts:</strong> 3-5 m/s
+              </li>
+              <li>
+                <strong>Near terminals:</strong> 2-3 m/s
+              </li>
+              <li>
+                <strong>Through silencers:</strong> ≤10 m/s (check self-noise)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Vibration Isolation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A pump runs at 1450 rpm. What isolator natural frequency
-                is needed for 90% isolation?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Forcing frequency = 1450 / 60 = <strong>24.2 Hz</strong>
-                </p>
-                <p>For 90% isolation, need f/fn ≈ 3.3</p>
-                <p>
-                  Required fn = 24.2 / 3.3 = <strong>7.3 Hz</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This requires steel spring mounts (rubber/neoprene too stiff)
-                </p>
-                <p className="mt-2">
-                  Spring deflection needed: δ = 25/fn² = 25/53 ={' '}
-                  <strong>~0.5mm static deflection</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Noise Control Hierarchy
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1. Source:</strong> Quieter equipment, optimal operation
-                </li>
-                <li className="pl-1">
-                  <strong>2. Path:</strong> Distance, barriers, enclosures, silencers
-                </li>
-                <li className="pl-1">
-                  <strong>3. Receiver:</strong> Room treatment, PPE, time limits
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE Duct Velocity Limits
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Main ducts:</strong> 5-7.5 m/s
-                </li>
-                <li className="pl-1">
-                  <strong>Branch ducts:</strong> 3-5 m/s
-                </li>
-                <li className="pl-1">
-                  <strong>Near terminals:</strong> 2-3 m/s
-                </li>
-                <li className="pl-1">
-                  <strong>Through silencers:</strong> ≤10 m/s (check self-noise)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Rigid bridges:</strong> One unbypassed pipe ruins vibration isolation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Gaps in enclosures:</strong> Even small gaps destroy performance
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Crosstalk:</strong> Forgetting shared ductwork between rooms
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Velocity:</strong> Regenerated noise from high duct velocity
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Inspect every connection to vibrating plant — pipes, conduit, taut cables — and put a flex section in each. Seal acoustic enclosures airtight, route ductwork to avoid crosstalk between adjacent rooms, and design ducts to CIBSE velocities."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Designing duct attenuation for an AHU above a meeting room"
+            situation={
+              <>
+                A 6,000 l/s mixed-air AHU is located in a roof-level plant room directly
+                above a 12-person meeting room with a CIBSE NR 30 design target. The fan
+                produces 78 dB(A) inlet SWL, peaking at 250 Hz. The supply ductwork is
+                rectangular 800 × 400 mm, 12 m run before the first diffuser.
+              </>
+            }
+            whatToDo={
+              <>
+                Calculate untreated breakout: free-field, plenum, diffuser. Compare against
+                NR 30 (≈ 35 dB(A)). Specify a 1.2 m absorptive splitter silencer sized
+                for ≥ 18 dB(A) insertion loss at 250 Hz, and a lined plenum for the final
+                3 m. Verify pressure drop is within fan curve allowance. Add a 10 mm acoustic
+                lining to the duct break-in length. Coordinate with structural engineer for
+                AVM mounts at ≥ 98% isolation efficiency at the fan&rsquo;s shaft speed.
+              </>
+            }
+            whyItMatters={
+              <>
+                A meeting room over-target by 5 dB(A) is unusable for video conferences and
+                is a defect liability item. Retrofitting splitter silencers in a finished
+                ceiling void is brutally disruptive and expensive — the design-stage
+                attenuator schedule is the cheapest acoustic protection the project will
+                ever buy.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Mass Law</p>
-                <ul className="space-y-0.5">
-                  <li>+6 dB per doubling of mass</li>
-                  <li>+6 dB per doubling of frequency</li>
-                  <li>Double-leaf &gt; single-leaf</li>
-                  <li>Coincidence dip 1-4 kHz</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Isolation</p>
-                <ul className="space-y-0.5">
-                  <li>Need f/fn &gt; √2 for isolation</li>
-                  <li>f/fn = 3 gives 88% isolation</li>
-                  <li>Springs: 3-8 Hz natural freq</li>
-                  <li>All connections must be flexible</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Source-path-receiver hierarchy: control at source first (low-noise plant), then in the path (silencers, partitions), then at the receiver (absorption).',
+              'Mass law: sound reduction R ≈ 20 log(m·f) − 47 — doubling mass per m² gains ≈ 6 dB.',
+              'Absorptive duct silencers: broadband, mid/high frequency dominant.',
+              'Reactive (chamber) silencers: low-frequency fan tones, narrow band.',
+              'AVM (anti-vibration mount) selection: aim for ≥ 95% isolation efficiency at the lowest forcing frequency.',
+              'Acoustic enclosures: 4 sides + roof + base, internally lined, sealed at all penetrations.',
+              'Approved Document E sets minimum partition performance for residential adjacency.',
+              'CIBSE Guide B4 is the UK design code of practice for HVAC noise and vibration control.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section4-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Sound Fundamentals
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section4-6">
-              Next: Building Acoustics and Compliance
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Sound Fundamentals
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Building Acoustics and Compliance
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

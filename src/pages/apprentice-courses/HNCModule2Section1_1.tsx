@@ -1,8 +1,27 @@
-import { ArrowLeft, Thermometer, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 1 · Subsection 1 — Conduction
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Heat transfer through solid materials — Fourier&rsquo;s law, thermal conductivity,
+ *   composite walls, pipe insulation. The thermal foundation that every U-value, heat-loss
+ *   calculation and insulation specification on a building services project rests on.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  SectionRule,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Conduction - HNC Module 2 Section 1.1';
@@ -225,863 +244,564 @@ const faqs = [
 ];
 
 const HNCModule2Section1_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Thermometer className="h-4 w-4" />
-            <span>Module 2.1.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">Conduction</h1>
-          <p className="text-white">
-            Heat transfer through solid materials - the foundation of building thermal analysis and
-            insulation design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 1 · Subsection 1"
+            title="Conduction"
+            description="Heat transfer through solid materials - the foundation of building thermal analysis and insulation design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Conduction:</strong> Heat transfer through direct molecular contact
-              </li>
-              <li className="pl-1">
-                <strong>Fourier's Law:</strong> Q = -kA(dT/dx) governs heat flow rate
-              </li>
-              <li className="pl-1">
-                <strong>Thermal conductivity (k):</strong> Material property in W/m·K
-              </li>
-              <li className="pl-1">
-                <strong>R-value:</strong> Thermal resistance = thickness / conductivity
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Wall U-values:</strong> Building Regs require 0.26 W/m²·K
-              </li>
-              <li className="pl-1">
-                <strong>Pipe insulation:</strong> Reduces heat loss by ~90%
-              </li>
-              <li className="pl-1">
-                <strong>Thermal bridges:</strong> Cold spots cause condensation
-              </li>
-              <li className="pl-1">
-                <strong>Composite walls:</strong> Resistances add in series
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will apply Fourier&rsquo;s law (Q = -kA·dT/dx) to size insulation, evaluate composite walls and predict pipe heat loss on building services jobs.',
+              'You can read thermal conductivity (k, W/m·K) values from product data and use them in steady-state heat-flow calculations.',
+              'You apply the &ldquo;resistance in series&rdquo; rule for layered fabric and the &ldquo;resistance in parallel&rdquo; rule for thermal-bridge analysis.',
+              'You spec pipe and duct insulation against BS 5422 and the building&rsquo;s Part L target, not just &ldquo;25 mm because that&rsquo;s what we always use&rdquo;.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="Building Regulations 2010 — Part L (Conservation of fuel and power)"
+            clause="Reasonable provision shall be made for the conservation of fuel and power in or in connection with buildings by limiting heat gains and losses through thermal elements and other parts of the building fabric, and from pipes, ducts and vessels used for space heating, space cooling and hot water services."
+            meaning={
+              <>
+                Part L is the regulatory anchor for conduction calculations on a building
+                services project. Insulation thickness on pipework and ductwork is not optional
+                — it is a Building Regulations submission item, evidenced against BS 5422 and
+                the project&rsquo;s as-built model.
+              </>
+            }
+            cite="Source: Building Regulations 2010, Part L; CIBSE Guide A &mdash; Environmental design"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               "Apply Fourier's Law to calculate conductive heat transfer",
               'Use thermal conductivity values for common building materials',
               'Distinguish between steady-state and transient conduction',
               'Calculate thermal resistance of composite walls',
               'Analyse parallel heat paths and thermal bridges',
               'Specify pipe insulation for building services applications',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Fourier's Law */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Fourier's Law of Conduction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Fourier's Law of Conduction"
+            plainEnglish="Conduction is heat moving through a solid by molecules bumping into one another. Hot molecules vibrate hard, knock energy into cooler neighbours, and so on until everything's at the same temperature."
+          >
             <p>
               Conduction is heat transfer through a material by direct molecular contact. Molecules
               in hotter regions vibrate more energetically, transferring kinetic energy to adjacent
               cooler molecules. This process continues until thermal equilibrium is reached.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fourier's Law - The Fundamental Equation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">Q = -kA(dT/dx)</p>
-              <div className="text-xs text-white space-y-1 mt-3">
-                <p>
-                  <strong>Q</strong> = Heat transfer rate (W)
-                </p>
-                <p>
-                  <strong>k</strong> = Thermal conductivity (W/m·K)
-                </p>
-                <p>
-                  <strong>A</strong> = Cross-sectional area perpendicular to heat flow (m²)
-                </p>
-                <p>
-                  <strong>dT/dx</strong> = Temperature gradient (K/m or °C/m)
-                </p>
-                <p>
-                  <strong>-ve sign</strong> = Heat flows from hot to cold (decreasing T)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">For a flat wall of thickness L:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Heat flux: <strong>q = Q/A = k(T1 - T2)/L</strong> (W/m²)
-                </li>
-                <li className="pl-1">
-                  Total heat flow: <strong>Q = kA(T1 - T2)/L</strong> (W)
-                </li>
-                <li className="pl-1">T1 = hot face temperature, T2 = cold face temperature</li>
-                <li className="pl-1">Heat flux (q) is heat flow per unit area</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Worked Example: Wall Heat Loss
-              </p>
-              <p className="text-sm text-white mb-2">
-                A 215mm solid brick wall (k = 0.77 W/m·K) separates a room at 20°C from outside at
-                0°C. Calculate the heat flux through the wall.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>q = k x dT / L</p>
-                <p>q = 0.77 x (20 - 0) / 0.215</p>
-                <p>q = 0.77 x 20 / 0.215</p>
-                <p>
-                  q = <strong>71.6 W/m²</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  For a 10m² wall: Q = 71.6 x 10 = 716W heat loss
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Fourier's Law - the fundamental equation:</strong> Q = -kA(dT/dx)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Q</strong> = Heat transfer rate (W)
+              </li>
+              <li>
+                <strong>k</strong> = Thermal conductivity (W/m·K)
+              </li>
+              <li>
+                <strong>A</strong> = Cross-sectional area perpendicular to heat flow (m²)
+              </li>
+              <li>
+                <strong>dT/dx</strong> = Temperature gradient (K/m or °C/m)
+              </li>
+              <li>
+                <strong>-ve sign</strong> = Heat flows from hot to cold (decreasing T)
+              </li>
+            </ul>
+            <p>For a flat wall of thickness L:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Heat flux: <strong>q = Q/A = k(T1 - T2)/L</strong> (W/m²)
+              </li>
+              <li>
+                Total heat flow: <strong>Q = kA(T1 - T2)/L</strong> (W)
+              </li>
+              <li>T1 = hot face temperature, T2 = cold face temperature</li>
+              <li>Heat flux (q) is heat flow per unit area</li>
+            </ul>
+            <p>
+              <strong>Worked example - wall heat loss:</strong> A 215mm solid brick wall (k = 0.77
+              W/m·K) separates a room at 20°C from outside at 0°C. Calculate the heat flux.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>q = k × dT / L</li>
+              <li>q = 0.77 × (20 - 0) / 0.215</li>
+              <li>q = 0.77 × 20 / 0.215</li>
+              <li>
+                q = <strong>71.6 W/m²</strong>
+              </li>
+              <li>For a 10m² wall: Q = 71.6 × 10 = 716W heat loss</li>
+            </ul>
+            <p>
               <strong>Key insight:</strong> Heat flow is proportional to temperature difference and
               inversely proportional to thickness. Doubling wall thickness halves heat loss.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Thermal Conductivity */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Thermal Conductivity of Materials
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Thermal Conductivity of Materials"
+            plainEnglish="k tells you how easily heat moves through a material. Low k = good insulator. High k = good conductor (and a thermal bridge if you don't want one)."
+          >
             <p>
               Thermal conductivity (k) is an intrinsic material property that quantifies how readily
               heat flows through a material. Low k-values indicate good insulators; high k-values
               indicate good thermal conductors.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Thermal Conductivity of Common Building Materials
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Material</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">k (W/m·K)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Classification</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="bg-red-900/10">
-                      <td className="border border-white/10 px-3 py-2">Copper</td>
-                      <td className="border border-white/10 px-3 py-2">385</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent conductor</td>
-                    </tr>
-                    <tr className="bg-red-900/10">
-                      <td className="border border-white/10 px-3 py-2">Aluminium</td>
-                      <td className="border border-white/10 px-3 py-2">205</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent conductor</td>
-                    </tr>
-                    <tr className="bg-red-900/10">
-                      <td className="border border-white/10 px-3 py-2">Steel</td>
-                      <td className="border border-white/10 px-3 py-2">50</td>
-                      <td className="border border-white/10 px-3 py-2">Good conductor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dense concrete</td>
-                      <td className="border border-white/10 px-3 py-2">1.4</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Brick (facing)</td>
-                      <td className="border border-white/10 px-3 py-2">0.77</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lightweight block</td>
-                      <td className="border border-white/10 px-3 py-2">0.19</td>
-                      <td className="border border-white/10 px-3 py-2">Poor conductor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plasterboard</td>
-                      <td className="border border-white/10 px-3 py-2">0.21</td>
-                      <td className="border border-white/10 px-3 py-2">Poor conductor</td>
-                    </tr>
-                    <tr className="bg-green-900/10">
-                      <td className="border border-white/10 px-3 py-2">Glass wool/mineral wool</td>
-                      <td className="border border-white/10 px-3 py-2">0.035</td>
-                      <td className="border border-white/10 px-3 py-2">Good insulator</td>
-                    </tr>
-                    <tr className="bg-green-900/10">
-                      <td className="border border-white/10 px-3 py-2">
-                        Expanded polystyrene (EPS)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.038</td>
-                      <td className="border border-white/10 px-3 py-2">Good insulator</td>
-                    </tr>
-                    <tr className="bg-green-900/10">
-                      <td className="border border-white/10 px-3 py-2">Polyurethane foam (PUR)</td>
-                      <td className="border border-white/10 px-3 py-2">0.025</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent insulator</td>
-                    </tr>
-                    <tr className="bg-green-900/10">
-                      <td className="border border-white/10 px-3 py-2">Phenolic foam</td>
-                      <td className="border border-white/10 px-3 py-2">0.020</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent insulator</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Still air</td>
-                      <td className="border border-white/10 px-3 py-2">0.025</td>
-                      <td className="border border-white/10 px-3 py-2">Reference value</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Factors Affecting k-value
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Density:</strong> Denser materials typically conduct better
-                  </li>
-                  <li className="pl-1">
-                    <strong>Moisture:</strong> Wet insulation conducts ~17x better
-                  </li>
-                  <li className="pl-1">
-                    <strong>Temperature:</strong> k generally increases with temperature
-                  </li>
-                  <li className="pl-1">
-                    <strong>Porosity:</strong> Air pockets reduce conductivity
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why Insulators Work</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Trap still air (k = 0.025 W/m·K)</li>
-                  <li className="pl-1">Fibrous/cellular structure limits convection</li>
-                  <li className="pl-1">Low density reduces solid conduction paths</li>
-                  <li className="pl-1">Must remain dry to maintain performance</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Thermal conductivity of common building materials:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Copper: 385 W/m·K - excellent conductor</li>
+              <li>Aluminium: 205 W/m·K - excellent conductor</li>
+              <li>Steel: 50 W/m·K - good conductor</li>
+              <li>Dense concrete: 1.4 W/m·K - moderate</li>
+              <li>Brick (facing): 0.77 W/m·K - moderate</li>
+              <li>Lightweight block: 0.19 W/m·K - poor conductor</li>
+              <li>Plasterboard: 0.21 W/m·K - poor conductor</li>
+              <li>Glass wool / mineral wool: 0.035 W/m·K - good insulator</li>
+              <li>Expanded polystyrene (EPS): 0.038 W/m·K - good insulator</li>
+              <li>Polyurethane foam (PUR): 0.025 W/m·K - excellent insulator</li>
+              <li>Phenolic foam: 0.020 W/m·K - excellent insulator</li>
+              <li>Still air: 0.025 W/m·K - reference value</li>
+            </ul>
+            <p>
+              <strong>Factors affecting k-value:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Density:</strong> Denser materials typically conduct better
+              </li>
+              <li>
+                <strong>Moisture:</strong> Wet insulation conducts ~17x better
+              </li>
+              <li>
+                <strong>Temperature:</strong> k generally increases with temperature
+              </li>
+              <li>
+                <strong>Porosity:</strong> Air pockets reduce conductivity
+              </li>
+            </ul>
+            <p>
+              <strong>Why insulators work:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Trap still air (k = 0.025 W/m·K)</li>
+              <li>Fibrous/cellular structure limits convection</li>
+              <li>Low density reduces solid conduction paths</li>
+              <li>Must remain dry to maintain performance</li>
+            </ul>
+            <p>
               <strong>Design note:</strong> When selecting insulation, consider not just k-value but
               also moisture resistance, fire performance, compressive strength, and long-term
               stability.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Steady-State vs Transient */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Steady-State vs Transient Conduction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Steady-State vs Transient Conduction"
+            plainEnglish="Steady-state = nothing's changing over time. Transient = it is. Sizing radiators? Steady-state. Working out warm-up time? Transient."
+          >
             <p>
               Conduction problems are classified as either steady-state (temperatures constant over
               time) or transient (temperatures changing with time). Building services design
               typically uses steady-state analysis for sizing, but transient effects influence
               real-world performance.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Steady-State Conduction
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Temperature at any point is constant over time</li>
-                  <li className="pl-1">Heat in = Heat out (no storage)</li>
-                  <li className="pl-1">dT/dt = 0 (no time variation)</li>
-                  <li className="pl-1">Used for design heat loss calculations</li>
-                  <li className="pl-1">Simpler mathematics: Q = kAdT/L</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Transient Conduction
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Temperature varies with both position and time</li>
-                  <li className="pl-1">Heat may be stored in the material</li>
-                  <li className="pl-1">dT/dt does not equal 0 (time-dependent)</li>
-                  <li className="pl-1">Warm-up periods, intermittent heating</li>
-                  <li className="pl-1">Requires: dT/dt = a(d²T/dx²)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Thermal Diffusivity</p>
-              <p className="font-mono text-center text-lg mb-2">a = k / (p x c)</p>
-              <div className="text-xs text-white space-y-1 mt-3">
-                <p>
-                  <strong>a</strong> = Thermal diffusivity (m²/s)
-                </p>
-                <p>
-                  <strong>k</strong> = Thermal conductivity (W/m·K)
-                </p>
-                <p>
-                  <strong>p</strong> = Density (kg/m³)
-                </p>
-                <p>
-                  <strong>c</strong> = Specific heat capacity (J/kg·K)
-                </p>
-              </div>
-              <p className="text-sm text-white mt-3">
-                High a means rapid temperature response; low a means slow response (high thermal
-                mass).
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Building Services Implications:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Thermal mass:</strong> Heavy construction smooths temperature swings
-                </li>
-                <li className="pl-1">
-                  <strong>Warm-up time:</strong> Heavyweight buildings need earlier heating start
-                </li>
-                <li className="pl-1">
-                  <strong>Intermittent heating:</strong> Transient effects affect efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Design loads:</strong> Steady-state used for peak load sizing
-                </li>
-                <li className="pl-1">
-                  <strong>Energy simulation:</strong> Dynamic modelling considers transient effects
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Steady-state conduction:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Temperature at any point is constant over time</li>
+              <li>Heat in = Heat out (no storage)</li>
+              <li>dT/dt = 0 (no time variation)</li>
+              <li>Used for design heat loss calculations</li>
+              <li>Simpler mathematics: Q = kAdT/L</li>
+            </ul>
+            <p>
+              <strong>Transient conduction:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Temperature varies with both position and time</li>
+              <li>Heat may be stored in the material</li>
+              <li>dT/dt does not equal 0 (time-dependent)</li>
+              <li>Warm-up periods, intermittent heating</li>
+              <li>Requires: dT/dt = a(d²T/dx²)</li>
+            </ul>
+            <p>
+              <strong>Thermal diffusivity:</strong> a = k / (p × c)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>a</strong> = Thermal diffusivity (m²/s)
+              </li>
+              <li>
+                <strong>k</strong> = Thermal conductivity (W/m·K)
+              </li>
+              <li>
+                <strong>p</strong> = Density (kg/m³)
+              </li>
+              <li>
+                <strong>c</strong> = Specific heat capacity (J/kg·K)
+              </li>
+            </ul>
+            <p>High a means rapid temperature response; low a means slow response (high thermal mass).</p>
+            <p>
+              <strong>Building services implications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Thermal mass:</strong> Heavy construction smooths temperature swings
+              </li>
+              <li>
+                <strong>Warm-up time:</strong> Heavyweight buildings need earlier heating start
+              </li>
+              <li>
+                <strong>Intermittent heating:</strong> Transient effects affect efficiency
+              </li>
+              <li>
+                <strong>Design loads:</strong> Steady-state used for peak load sizing
+              </li>
+              <li>
+                <strong>Energy simulation:</strong> Dynamic modelling considers transient effects
+              </li>
+            </ul>
+            <p>
               <strong>Practical note:</strong> For HNC calculations, assume steady-state unless told
               otherwise. Real building energy analysis uses dynamic simulation software that handles
               transient effects.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 4: Composite Walls and Thermal Resistance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Composite Walls, Series Resistance and Parallel Heat Paths
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Composite Walls, Series Resistance and Parallel Heat Paths"
+            plainEnglish="Real walls are layered cake. Each layer has its own resistance. Stack them up in series, take the reciprocal, that's your U-value."
+          >
             <p>
               Real walls comprise multiple layers, each with different thermal properties. The
               thermal resistance concept allows us to analyse these composite structures
               systematically, using methods analogous to electrical circuit analysis.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Thermal Resistance (R-value)
-              </p>
-              <div className="grid grid-cols-2 gap-3 text-center text-sm mb-4">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">R = L / k</p>
-                  <p className="text-white text-xs">For a solid layer</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Unit: m²·K/W</p>
-                  <p className="text-white text-xs">Higher = better insulation</p>
-                </div>
-              </div>
-              <p className="text-sm text-white">
-                Thermal resistance is the 'opposition' to heat flow. It's the thermal equivalent of
-                electrical resistance.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Layers in Series (Typical Wall)
-              </p>
-              <p className="text-sm text-white mb-2">
-                For layers stacked together (heat flows through each in turn):
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
-                <p>R_total = R_si + R1 + R2 + R3 + ... + R_se</p>
-                <p className="mt-1 text-white">
-                  Where R_si = internal surface resistance (0.13 m²·K/W)
-                </p>
-                <p className="text-white">R_se = external surface resistance (0.04 m²·K/W)</p>
-              </div>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Same heat flows through all layers</li>
-                <li className="pl-1">
-                  Temperature drops across each layer proportional to its R-value
-                </li>
-                <li className="pl-1">Total dT = sum of individual dT values</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Worked Example: Cavity Wall U-value
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Calculate the U-value of a cavity wall: 102mm brick (k=0.77), 50mm insulated cavity
-                (k=0.035), 100mm lightweight block (k=0.19), 13mm plaster (k=0.57).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>R_si = 0.13 m²·K/W (internal surface)</p>
-                <p>R_brick = 0.102/0.77 = 0.132 m²·K/W</p>
-                <p>R_cavity = 0.050/0.035 = 1.429 m²·K/W</p>
-                <p>R_block = 0.100/0.19 = 0.526 m²·K/W</p>
-                <p>R_plaster = 0.013/0.57 = 0.023 m²·K/W</p>
-                <p>R_se = 0.04 m²·K/W (external surface)</p>
-                <p className="mt-2">R_total = 0.13 + 0.132 + 1.429 + 0.526 + 0.023 + 0.04</p>
-                <p>
-                  R_total = <strong>2.28 m²·K/W</strong>
-                </p>
-                <p className="mt-2">
-                  U = 1/R_total = 1/2.28 = <strong>0.44 W/m²·K</strong>
-                </p>
-                <p className="mt-2 text-orange-400">
-                  Note: Does not meet Building Regs (0.26) - needs more insulation
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Parallel Heat Paths (Thermal Bridges)
-              </p>
-              <p className="text-sm text-white mb-2">
-                When heat can take alternative routes (e.g., through mortar joints or steel beams):
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
-                <p>1/R_total = (A1/R1 + A2/R2) / A_total</p>
-                <p className="mt-1 text-white">
-                  Or for conductances: U_avg = (A1 x U1 + A2 x U2) / A_total
-                </p>
-              </div>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Same temperature difference across parallel paths</li>
-                <li className="pl-1">Heat flow divides according to conductance</li>
-                <li className="pl-1">More heat flows through lower resistance path</li>
-                <li className="pl-1">
-                  Steel lintels, mortar joints, wall ties act as thermal bridges
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Thermal Bridges in Buildings
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Bridge Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cause</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Mitigation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Steel lintel</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Steel k approx 50 W/m·K vs insulation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulated lintels, thermal breaks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Window reveals</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation discontinuity at openings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Return insulation into reveals
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wall ties</td>
-                      <td className="border border-white/10 px-3 py-2">Metal penetrating cavity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stainless/plastic ties, thermal clips
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Floor edge</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Concrete slab bridging wall
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Perimeter insulation, thermal blocks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mortar joints</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mortar k approx 0.8 vs block k approx 0.19
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thin-joint systems, insulated mortar
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Thermal resistance (R-value):</strong> R = L / k (for a solid layer). Unit:
+              m²·K/W. Higher = better insulation. Thermal resistance is the 'opposition' to heat
+              flow - the thermal equivalent of electrical resistance.
+            </p>
+            <p>
+              <strong>Layers in series (typical wall):</strong> R_total = R_si + R1 + R2 + R3 + ...
+              + R_se. R_si = internal surface resistance (0.13 m²·K/W). R_se = external surface
+              resistance (0.04 m²·K/W).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Same heat flows through all layers</li>
+              <li>Temperature drops across each layer proportional to its R-value</li>
+              <li>Total dT = sum of individual dT values</li>
+            </ul>
+            <p>
+              <strong>Worked example - cavity wall U-value:</strong> 102mm brick (k=0.77), 50mm
+              insulated cavity (k=0.035), 100mm lightweight block (k=0.19), 13mm plaster (k=0.57).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>R_si = 0.13 m²·K/W (internal surface)</li>
+              <li>R_brick = 0.102/0.77 = 0.132 m²·K/W</li>
+              <li>R_cavity = 0.050/0.035 = 1.429 m²·K/W</li>
+              <li>R_block = 0.100/0.19 = 0.526 m²·K/W</li>
+              <li>R_plaster = 0.013/0.57 = 0.023 m²·K/W</li>
+              <li>R_se = 0.04 m²·K/W (external surface)</li>
+              <li>R_total = 0.13 + 0.132 + 1.429 + 0.526 + 0.023 + 0.04 = <strong>2.28 m²·K/W</strong></li>
+              <li>U = 1/R_total = 1/2.28 = <strong>0.44 W/m²·K</strong></li>
+              <li>Note: Does not meet Building Regs (0.26) - needs more insulation</li>
+            </ul>
+            <p>
+              <strong>Parallel heat paths (thermal bridges):</strong> 1/R_total = (A1/R1 + A2/R2) /
+              A_total. Or for conductances: U_avg = (A1 × U1 + A2 × U2) / A_total.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Same temperature difference across parallel paths</li>
+              <li>Heat flow divides according to conductance</li>
+              <li>More heat flows through lower resistance path</li>
+              <li>Steel lintels, mortar joints, wall ties act as thermal bridges</li>
+            </ul>
+            <p>
+              <strong>Common thermal bridges in buildings:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Steel lintel</strong> - steel k ≈ 50 W/m·K vs insulation. Mitigation:
+                insulated lintels, thermal breaks
+              </li>
+              <li>
+                <strong>Window reveals</strong> - insulation discontinuity at openings. Mitigation:
+                return insulation into reveals
+              </li>
+              <li>
+                <strong>Wall ties</strong> - metal penetrating cavity. Mitigation:
+                stainless/plastic ties, thermal clips
+              </li>
+              <li>
+                <strong>Floor edge</strong> - concrete slab bridging wall. Mitigation: perimeter
+                insulation, thermal blocks
+              </li>
+              <li>
+                <strong>Mortar joints</strong> - mortar k ≈ 0.8 vs block k ≈ 0.19. Mitigation:
+                thin-joint systems, insulated mortar
+              </li>
+            </ul>
+            <p>
               <strong>Critical point:</strong> Thermal bridges can cause localised cold spots where
               surface temperatures drop below dewpoint, leading to condensation, mould growth, and
               structural damage.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Building Services Applications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Building Services Applications</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Pipe Insulation</h3>
-              <p className="text-sm text-white mb-3">
-                Pipe insulation is essential for LPHW/MTHW systems to minimise distribution losses
-                and maintain water temperatures. BS 5422 specifies minimum insulation thicknesses.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Pipe OD (mm)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Hot Water (min)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Chilled Water (min)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">15-22</td>
-                      <td className="border border-white/10 px-3 py-2">20mm</td>
-                      <td className="border border-white/10 px-3 py-2">13mm + VCL</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">28-42</td>
-                      <td className="border border-white/10 px-3 py-2">25mm</td>
-                      <td className="border border-white/10 px-3 py-2">19mm + VCL</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">54-76</td>
-                      <td className="border border-white/10 px-3 py-2">30mm</td>
-                      <td className="border border-white/10 px-3 py-2">25mm + VCL</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">89-114</td>
-                      <td className="border border-white/10 px-3 py-2">35mm</td>
-                      <td className="border border-white/10 px-3 py-2">32mm + VCL</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
+          <ConceptBlock
+            title="Building services applications"
+            plainEnglish="Where you'll actually meet conduction on the job: pipe insulation, wall U-values, and the bits in between."
+          >
+            <p>
+              <strong>Pipe insulation:</strong> Pipe insulation is essential for LPHW/MTHW systems
+              to minimise distribution losses and maintain water temperatures. BS 5422 specifies
+              minimum insulation thicknesses.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>15-22mm OD pipe: 20mm hot water / 13mm + VCL chilled water</li>
+              <li>28-42mm OD pipe: 25mm hot water / 19mm + VCL chilled water</li>
+              <li>54-76mm OD pipe: 30mm hot water / 25mm + VCL chilled water</li>
+              <li>89-114mm OD pipe: 35mm hot water / 32mm + VCL chilled water</li>
+              <li>
                 VCL = Vapour Control Layer (essential for chilled water to prevent condensation)
-              </p>
-            </div>
+              </li>
+            </ul>
+            <p>
+              <strong>Example - pipe heat loss calculation:</strong> Calculate the heat loss per
+              metre from a 42mm OD LPHW pipe at 80°C in a 20°C plantroom, with and without 25mm
+              insulation (k = 0.035 W/m·K).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Uninsulated (simplified bare pipe): q ≈ π × D × h × dT ≈ 3.14 × 0.042 × 10 × 60</li>
+              <li>q ≈ <strong>79 W/m</strong></li>
+              <li>Insulated (cylindrical coordinates): R_ins = ln(r2/r1) / (2 × π × k) = ln(46/21) / (2 × 3.14 × 0.035)</li>
+              <li>R_ins = 0.784 / 0.22 = 3.56 m·K/W</li>
+              <li>q = dT / R_ins = 60 / 3.56 = <strong>16.8 W/m</strong></li>
+              <li>Heat loss reduction: 79% (typical for 25mm insulation)</li>
+            </ul>
+            <p>
+              <strong>Wall construction for Building Regulations:</strong> To achieve U ≤ 0.26
+              W/m²·K (Building Regs Part L), typical constructions require:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Full-fill cavity:</strong> 100-150mm mineral wool in 150mm cavity
+              </li>
+              <li>
+                <strong>Partial fill + PIR:</strong> 50mm PIR boards + 50mm clear cavity
+              </li>
+              <li>
+                <strong>External insulation:</strong> 80-100mm EPS/phenolic on masonry
+              </li>
+              <li>
+                <strong>Timber frame:</strong> 140mm studs fully filled + service void
+              </li>
+            </ul>
+            <p>
+              Remember to include thermal bridging allowances - typically add 10-15% to U-value
+              calculations.
+            </p>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example: Pipe Heat Loss Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Calculate the heat loss per metre from a 42mm OD LPHW pipe at 80°C in a 20°C
-                plantroom, with and without 25mm insulation (k = 0.035 W/m·K).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">
-                  Uninsulated (using simplified formula for bare pipe):
-                </p>
-                <p>q approx pi x D x h x dT approx 3.14 x 0.042 x 10 x 60</p>
-                <p>
-                  q approx <strong>79 W/m</strong>
-                </p>
-                <p className="mt-3 text-white">Insulated (cylindrical coordinates):</p>
-                <p>R_ins = ln(r2/r1) / (2 x pi x k) = ln(46/21) / (2 x 3.14 x 0.035)</p>
-                <p>R_ins = 0.784 / 0.22 = 3.56 m·K/W</p>
-                <p>
-                  q = dT / R_ins = 60 / 3.56 = <strong>16.8 W/m</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  Heat loss reduction: 79% (typical for 25mm insulation)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Wall Construction for Building Regulations
-              </h3>
-              <p className="text-sm text-white mb-3">
-                To achieve U of 0.26 W/m²·K or less (Building Regs Part L), typical constructions
-                require:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Full-fill cavity:</strong> 100-150mm mineral wool in 150mm cavity
-                </li>
-                <li className="pl-1">
-                  <strong>Partial fill + PIR:</strong> 50mm PIR boards + 50mm clear cavity
-                </li>
-                <li className="pl-1">
-                  <strong>External insulation:</strong> 80-100mm EPS/phenolic on masonry
-                </li>
-                <li className="pl-1">
-                  <strong>Timber frame:</strong> 140mm studs fully filled + service void
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                Remember to include thermal bridging allowances - typically add 10-15% to U-value
-                calculations.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The handful of formulas and standard values you actually need to remember."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>q = k × dT/L</strong> - Heat flux (W/m²)
+              </li>
+              <li>
+                <strong>Q = k × A × dT/L</strong> - Total heat flow (W)
+              </li>
+              <li>
+                <strong>R = L/k</strong> - Thermal resistance of a layer
+              </li>
+              <li>
+                <strong>R_total = sum of R</strong> - Series resistances add
+              </li>
+              <li>
+                <strong>U = 1/R_total</strong> - Overall U-value
+              </li>
+              <li>
+                <strong>a = k/(p × c)</strong> - Thermal diffusivity
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                R_si (internal surface): <strong>0.13 m²·K/W</strong>
+              </li>
+              <li>
+                R_se (external surface): <strong>0.04 m²·K/W</strong>
+              </li>
+              <li>
+                Mineral wool k: <strong>0.035 W/m·K</strong>
+              </li>
+              <li>
+                PIR/PUR k: <strong>0.022-0.025 W/m·K</strong>
+              </li>
+              <li>
+                Building Regs wall U-value: <strong>0.26 W/m²·K or less</strong>
+              </li>
+              <li>
+                Building Regs floor U-value: <strong>0.18 W/m²·K or less</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>q = k x dT/L</strong> - Heat flux (W/m²)
-                </li>
-                <li className="pl-1">
-                  <strong>Q = k x A x dT/L</strong> - Total heat flow (W)
-                </li>
-                <li className="pl-1">
-                  <strong>R = L/k</strong> - Thermal resistance of a layer
-                </li>
-                <li className="pl-1">
-                  <strong>R_total = sum of R</strong> - Series resistances add
-                </li>
-                <li className="pl-1">
-                  <strong>U = 1/R_total</strong> - Overall U-value
-                </li>
-                <li className="pl-1">
-                  <strong>a = k/(p x c)</strong> - Thermal diffusivity
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  R_si (internal surface): <strong>0.13 m²·K/W</strong>
-                </li>
-                <li className="pl-1">
-                  R_se (external surface): <strong>0.04 m²·K/W</strong>
-                </li>
-                <li className="pl-1">
-                  Mineral wool k: <strong>0.035 W/m·K</strong>
-                </li>
-                <li className="pl-1">
-                  PIR/PUR k: <strong>0.022-0.025 W/m·K</strong>
-                </li>
-                <li className="pl-1">
-                  Building Regs wall U-value: <strong>0.26 W/m²·K or less</strong>
-                </li>
-                <li className="pl-1">
-                  Building Regs floor U-value: <strong>0.18 W/m²·K or less</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Unit confusion:</strong> Convert mm to m for thickness (100mm = 0.1m)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Forgetting surface resistances:</strong> Always include R_si and R_se
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring thermal bridges:</strong> Can add 10-30% to heat loss
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Using dry k-values for wet conditions:</strong> Wet insulation fails
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>U vs R confusion:</strong> U = 1/R (they're reciprocals)
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always work in metres, always include surface resistances (R_si and R_se), allow 10-15% extra for thermal bridges, derate insulation k-values if it's likely to be damp, and never confuse U and R - one is the reciprocal of the other."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Sizing pipe insulation for a 100 mm LTHW main"
+            situation={
+              <>
+                You are specifying the insulation thickness for a 100 mm steel LTHW flow main
+                running through an unheated plant room. The fluid runs at 80 °C, the ambient
+                is 10 °C, and the project is targeting Part L 2021 compliance.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply BS 5422 maximum permitted heat loss (W/m) for the pipe size and
+                temperature class. Pick a phenolic or mineral-wool insulation with appropriate
+                k value (typically 0.025-0.040 W/m·K). Calculate the radial heat loss using
+                the cylindrical conduction equation (Q = 2πLk(T₁-T₂)/ln(r₂/r₁)). Iterate
+                thickness until Q is below the BS 5422 limit. Document the calculation in the
+                Part L submission.
+              </>
+            }
+            whyItMatters={
+              <>
+                Under-insulated pipework wastes energy for the building&rsquo;s 25-year life
+                and breaches Part L. Over-insulating wastes capital. The Fourier-law
+                calculation gives the defendable answer.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Conduction Fundamentals</p>
-                <ul className="space-y-0.5">
-                  <li>Fourier's Law: Q = -kA(dT/dx)</li>
-                  <li>Heat flux: q = k x dT/L (W/m²)</li>
-                  <li>R-value: R = L/k (m²·K/W)</li>
-                  <li>U-value: U = 1/R_total (W/m²·K)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Services Values</p>
-                <ul className="space-y-0.5">
-                  <li>Wall U-value limit: 0.26 W/m²·K or less</li>
-                  <li>R_si = 0.13, R_se = 0.04 m²·K/W</li>
-                  <li>Insulation k: 0.020-0.040 W/m·K</li>
-                  <li>Pipe insulation saves ~90% heat loss</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Fourier&rsquo;s law: Q = -kA·dT/dx — the foundation equation for steady-state conduction.',
+              'Thermal conductivity k (W/m·K) is a material property — copper 385, brick 0.77, mineral wool 0.035, polyurethane 0.022.',
+              'Composite walls in series: R_total = R₁ + R₂ + R₃ — same heat flow through each layer.',
+              'Parallel paths (e.g. wall stud + insulation): 1/R_total = 1/R₁ + 1/R₂ — increased heat flow through the lower-R path drives thermal bridging.',
+              'Cylindrical conduction (pipework): Q = 2πLk(T₁-T₂)/ln(r₂/r₁) — non-linear in radius, so first 25 mm of insulation matters most.',
+              'BS 5422 sets maximum permitted heat loss for insulated pipes and ducts in building services.',
+              'Part L of the Building Regulations is the regulatory anchor — insulation specs are evidenced in the Part L submission.',
+              'Steady-state assumes thermal equilibrium — transient conduction (warm-up, cool-down) needs more advanced methods (Fourier number, Biot number).',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section1-2">
-              Next: Convection
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Heat transfer principles
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Convection
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

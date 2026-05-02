@@ -1,8 +1,29 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 3 · Subsection 4 — Safety Audits and Inspections
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   Active monitoring (audit, inspection, observation) and reactive monitoring (incident,
+ *   near-miss). Engineer-in-training perspective: how an HNC supervisor uses MHSWR Reg 5
+ *   monitoring to keep the SSOW honest.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Safety Audits and Inspections - HNC Module 1 Section 3.4';
@@ -252,793 +273,544 @@ const faqs = [
 ];
 
 const HNCModule1Section3_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 3
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.3.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Safety Audits and Inspections
-          </h1>
-          <p className="text-white">
-            Monitoring safety performance through systematic checking and verification
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.3.4"
+            title="Safety Audits and Inspections"
+            description="Monitoring safety performance through systematic checking and verification"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Audits:</strong> Systematic review of management systems
-              </li>
-              <li className="pl-1">
-                <strong>Inspections:</strong> Physical checks of conditions and practices
-              </li>
-              <li className="pl-1">
-                <strong>Frequency:</strong> Risk-based - higher risk = more frequent
-              </li>
-              <li className="pl-1">
-                <strong>Action:</strong> Findings must lead to corrective action
-              </li>
+          <TLDR
+            points={[
+              'You will distinguish audits (system-level checks of policy and arrangements) from inspections (workplace-level checks of conditions and behaviour).',
+              'You can run an active monitoring programme (planned inspections, behavioural observations, audit) alongside reactive monitoring (incident investigation, near-miss).',
+              'You apply MHSWR Reg 5 — health and safety arrangements must include effective monitoring and review.',
+              'You write findings that prioritise corrective actions by risk, with named owners and target dates.',
+            ]}
+          />
+
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 5(1)"
+            clause="Every employer shall make and give effect to such arrangements as are appropriate, having regard to the nature of his activities and the size of his undertaking, for the effective planning, organisation, control, monitoring and review of the preventive and protective measures."
+            meaning={
+              <>
+                Reg 5 names monitoring and review as statutory duties. Audit and inspection are
+                the two main mechanisms. As an HNC supervisor your audit programme is the
+                evidence that the firm is meeting Reg 5.
+              </>
+            }
+            cite="Source: Management of Health and Safety at Work Regulations 1999, Reg 5(1) — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Distinguish between safety audits and safety inspections",
+              "Identify different types of audits and their purposes",
+              "Understand statutory inspection requirements for building services",
+              "Plan and conduct effective workplace inspections",
+              "Implement corrective action processes for findings",
+              "Apply risk-based prioritisation to safety findings",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Understanding Audits and Inspections</ContentEyebrow>
+
+          <ConceptBlock title="Understanding Audits and Inspections">
+            <p>
+            While often used interchangeably, audits and inspections serve different purposes in
+            safety management. Understanding the distinction helps apply the right approach for
+            different monitoring needs.
+            </p>
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Differences</p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Focus</strong> — Safety Audit: Management systems, procedures, compliance. Safety Inspection: Physical conditions, equipment, practices</li>
+            <li><strong>Depth</strong> — Safety Audit: Systematic, comprehensive, in-depth. Safety Inspection: Snapshot at a point in time</li>
+            <li><strong>Frequency</strong> — Safety Audit: Annual or planned programme. Safety Inspection: Daily to monthly based on risk</li>
+            <li><strong>Conducted by</strong> — Safety Audit: Trained auditors (internal/external). Safety Inspection: Supervisors, managers, safety reps</li>
+            <li><strong>Output</strong> — Safety Audit: Formal report with non-conformances. Safety Inspection: Checklist, action list, observations</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Statutory:</strong> Electrical periodic inspection, LOLER
-              </li>
-              <li className="pl-1">
-                <strong>Site inspections:</strong> Daily/weekly on construction sites
-              </li>
-              <li className="pl-1">
-                <strong>Quality audits:</strong> Workmanship and installation checks
-              </li>
-              <li className="pl-1">
-                <strong>Client audits:</strong> Contractor safety assessments
-              </li>
+            
+            
+
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of Audits</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Internal (1st party):</strong> Self-assessment
+            </li>
+            <li>
+            <strong>Supplier (2nd party):</strong> Client auditing contractor
+            </li>
+            <li>
+            <strong>Certification (3rd party):</strong> Independent body
+            </li>
+            <li>
+            <strong>Compliance audit:</strong> Against legal requirements
+            </li>
+            <li>
+            <strong>System audit:</strong> Against ISO 45001 or similar
+            </li>
             </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Distinguish between safety audits and safety inspections',
-              'Identify different types of audits and their purposes',
-              'Understand statutory inspection requirements for building services',
-              'Plan and conduct effective workplace inspections',
-              'Implement corrective action processes for findings',
-              'Apply risk-based prioritisation to safety findings',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Audits vs Inspections */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding Audits and Inspections
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              While often used interchangeably, audits and inspections serve different purposes in
-              safety management. Understanding the distinction helps apply the right approach for
-              different monitoring needs.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Differences</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Safety Audit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Safety Inspection
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Focus</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Management systems, procedures, compliance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical conditions, equipment, practices
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Depth</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Systematic, comprehensive, in-depth
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Snapshot at a point in time
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Frequency</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Annual or planned programme
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daily to monthly based on risk
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Conducted by</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trained auditors (internal/external)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supervisors, managers, safety reps
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Output</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Formal report with non-conformances
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Checklist, action list, observations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of Audits</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Internal (1st party):</strong> Self-assessment
-                  </li>
-                  <li className="pl-1">
-                    <strong>Supplier (2nd party):</strong> Client auditing contractor
-                  </li>
-                  <li className="pl-1">
-                    <strong>Certification (3rd party):</strong> Independent body
-                  </li>
-                  <li className="pl-1">
-                    <strong>Compliance audit:</strong> Against legal requirements
-                  </li>
-                  <li className="pl-1">
-                    <strong>System audit:</strong> Against ISO 45001 or similar
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of Inspections</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>General workplace:</strong> Overall conditions
-                  </li>
-                  <li className="pl-1">
-                    <strong>Statutory:</strong> Legally required checks
-                  </li>
-                  <li className="pl-1">
-                    <strong>Pre-use:</strong> Equipment before each use
-                  </li>
-                  <li className="pl-1">
-                    <strong>Management tour:</strong> Leadership visibility
-                  </li>
-                  <li className="pl-1">
-                    <strong>Behavioural:</strong> Work practices observed
-                  </li>
-                </ul>
-              </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of Inspections</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>General workplace:</strong> Overall conditions
+            </li>
+            <li>
+            <strong>Statutory:</strong> Legally required checks
+            </li>
+            <li>
+            <strong>Pre-use:</strong> Equipment before each use
+            </li>
+            <li>
+            <strong>Management tour:</strong> Leadership visibility
+            </li>
+            <li>
+            <strong>Behavioural:</strong> Work practices observed
+            </li>
+            </ul>
             </div>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Complementary approaches:</strong> Audits and inspections work together -
-              audits ensure systems are in place; inspections verify they're implemented on the
-              ground.
+            <strong>Complementary approaches:</strong> Audits and inspections work together -
+            audits ensure systems are in place; inspections verify they're implemented on the
+            ground.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Statutory Inspections */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Statutory Inspection Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Statutory Inspection Requirements</ContentEyebrow>
+
+          <ConceptBlock title="Statutory Inspection Requirements">
             <p>
-              Certain equipment and systems require inspection at legally defined intervals. In
-              building services, this includes electrical installations, lifting equipment, pressure
-              systems, and work equipment.
+            Certain equipment and systems require inspection at legally defined intervals. In
+            building services, this includes electrical installations, lifting equipment, pressure
+            systems, and work equipment.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Statutory Inspections for Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Equipment/System
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Regulation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Interval
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical installation</td>
-                      <td className="border border-white/10 px-3 py-2">EAWR / BS 7671</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1-5 years (based on type)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lifting equipment (MEWP, hoist)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">LOLER 1998</td>
-                      <td className="border border-white/10 px-3 py-2">6-12 months</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pressure systems</td>
-                      <td className="border border-white/10 px-3 py-2">PSSR 2000</td>
-                      <td className="border border-white/10 px-3 py-2">As per written scheme</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Portable appliances</td>
-                      <td className="border border-white/10 px-3 py-2">EAWR (via PUWER)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        3 months - 4 years (risk-based)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire detection systems</td>
-                      <td className="border border-white/10 px-3 py-2">RRO / BS 5839</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Weekly test, annual service
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Emergency lighting</td>
-                      <td className="border border-white/10 px-3 py-2">RRO / BS 5266</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Monthly test, annual full test
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Key Statutory Inspections for Building Services
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Electrical installation</strong> — Regulation: EAWR / BS 7671. Typical Interval: 1-5 years (based on type)</li>
+            <li><strong>Lifting equipment (MEWP, hoist)</strong> — Regulation: LOLER 1998. Typical Interval: 6-12 months</li>
+            <li><strong>Pressure systems</strong> — Regulation: PSSR 2000. Typical Interval: As per written scheme</li>
+            <li><strong>Portable appliances</strong> — Regulation: EAWR (via PUWER). Typical Interval: 3 months - 4 years (risk-based)</li>
+            <li><strong>Fire detection systems</strong> — Regulation: RRO / BS 5839. Typical Interval: Weekly test, annual service</li>
+            <li><strong>Emergency lighting</strong> — Regulation: RRO / BS 5266. Typical Interval: Monthly test, annual full test</li>
+            </ul>
+            
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electrical Periodic Inspection Intervals (BS 7671)
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <ul className="text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Domestic: 10 years (5 on change of occupancy)</li>
-                  <li className="pl-1">Commercial: 5 years</li>
-                  <li className="pl-1">Industrial: 3 years</li>
-                </ul>
-                <ul className="text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Leisure/entertainment: 1 year</li>
-                  <li className="pl-1">Construction site: 3 months</li>
-                  <li className="pl-1">Caravan parks: 1-3 years</li>
-                </ul>
-              </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Electrical Periodic Inspection Intervals (BS 7671)
+            </p>
+            <div className="grid sm:grid-cols-2 gap-4 text-sm">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Domestic: 10 years (5 on change of occupancy)</li>
+            <li>Commercial: 5 years</li>
+            <li>Industrial: 3 years</li>
+            </ul>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Leisure/entertainment: 1 year</li>
+            <li>Construction site: 3 months</li>
+            <li>Caravan parks: 1-3 years</li>
+            </ul>
             </div>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Record keeping:</strong> Statutory inspection reports and certificates must be
-              retained and made available for inspection. LOLER thorough examinations require
-              reports kept until the next examination; EICR kept for the period of the certificate
-              plus 2 years.
+            <strong>Record keeping:</strong> Statutory inspection reports and certificates must be
+            retained and made available for inspection. LOLER thorough examinations require
+            reports kept until the next examination; EICR kept for the period of the certificate
+            plus 2 years.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Conducting Inspections */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Conducting Effective Inspections
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Conducting Effective Inspections</ContentEyebrow>
+
+          <ConceptBlock title="Conducting Effective Inspections">
             <p>
-              Regular workplace inspections are essential for identifying hazards before they cause
-              harm. Effective inspections are planned, systematic, and result in action - not just
-              paperwork.
+            Regular workplace inspections are essential for identifying hazards before they cause
+            harm. Effective inspections are planned, systematic, and result in action - not just
+            paperwork.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Inspection process:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Prepare:</strong> Review previous findings, incidents, current work
-                  activities
-                </li>
-                <li className="pl-1">
-                  <strong>Conduct:</strong> Follow systematic route, use checklist, observe and talk
-                  to workers
-                </li>
-                <li className="pl-1">
-                  <strong>Record:</strong> Document findings with location, description, photos if
-                  needed
-                </li>
-                <li className="pl-1">
-                  <strong>Prioritise:</strong> Risk-rank findings for action priority
-                </li>
-                <li className="pl-1">
-                  <strong>Act:</strong> Assign actions, set deadlines, follow up completion
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">Inspection process:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Prepare:</strong> Review previous findings, incidents, current work
+            activities
+            </li>
+            <li>
+            <strong>Conduct:</strong> Follow systematic route, use checklist, observe and talk
+            to workers
+            </li>
+            <li>
+            <strong>Record:</strong> Document findings with location, description, photos if
+            needed
+            </li>
+            <li>
+            <strong>Prioritise:</strong> Risk-rank findings for action priority
+            </li>
+            <li>
+            <strong>Act:</strong> Assign actions, set deadlines, follow up completion
+            </li>
+            </ul>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sample Inspection Checklist Areas
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Items to Check</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Access/egress
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Clear walkways, unobstructed exits, signage, lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Electrical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable condition, temporary supplies, isolation points, testing records
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Working at height
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Scaffold condition, ladder inspection tags, edge protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Fire precautions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extinguisher condition, storage of flammables, hot work controls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">PPE</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Correct PPE worn, condition, storage, availability
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Housekeeping</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Waste management, material storage, slip/trip hazards
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Sample Inspection Checklist Areas
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Access/egress</strong> — Items to Check: Clear walkways, unobstructed exits, signage, lighting</li>
+            <li><strong>Electrical</strong> — Items to Check: Cable condition, temporary supplies, isolation points, testing records</li>
+            <li><strong>Working at height</strong> — Items to Check: Scaffold condition, ladder inspection tags, edge protection</li>
+            <li><strong>Fire precautions</strong> — Items to Check: Extinguisher condition, storage of flammables, hot work controls</li>
+            <li><strong>PPE</strong> — Items to Check: Correct PPE worn, condition, storage, availability</li>
+            <li><strong>Housekeeping</strong> — Items to Check: Waste management, material storage, slip/trip hazards</li>
+            </ul>
+            
+            
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Inspection Tips</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Vary route to avoid predictable patterns</li>
-                  <li className="pl-1">Look up, down, behind - not just eye level</li>
-                  <li className="pl-1">Engage workers - ask about concerns</li>
-                  <li className="pl-1">Check work in progress, not just static conditions</li>
-                  <li className="pl-1">Note positive findings too</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Site Inspection Frequency
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Construction site: Daily by supervisor</li>
-                  <li className="pl-1">Construction site: Weekly formal inspection</li>
-                  <li className="pl-1">Occupied commercial: Monthly minimum</li>
-                  <li className="pl-1">High-risk areas: More frequent as required</li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Inspection Tips</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Vary route to avoid predictable patterns</li>
+            <li>Look up, down, behind - not just eye level</li>
+            <li>Engage workers - ask about concerns</li>
+            <li>Check work in progress, not just static conditions</li>
+            <li>Note positive findings too</li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Site Inspection Frequency
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Construction site: Daily by supervisor</li>
+            <li>Construction site: Weekly formal inspection</li>
+            <li>Occupied commercial: Monthly minimum</li>
+            <li>High-risk areas: More frequent as required</li>
+            </ul>
+            </div>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Worker involvement:</strong> Including workers in inspections improves
-              coverage, builds ownership, and often identifies issues that outsiders miss. Safety
-              reps have statutory rights to conduct inspections.
+            <strong>Worker involvement:</strong> Including workers in inspections improves
+            coverage, builds ownership, and often identifies issues that outsiders miss. Safety
+            reps have statutory rights to conduct inspections.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Corrective Action and Follow-up */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Corrective Action and Follow-up
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Corrective Action and Follow-up</ContentEyebrow>
+
+          <ConceptBlock title="Corrective Action and Follow-up">
             <p>
-              Findings from audits and inspections are only valuable if they lead to action. A
-              robust corrective action process ensures issues are addressed effectively and verified
-              closed.
+            Findings from audits and inspections are only valuable if they lead to action. A
+            robust corrective action process ensures issues are addressed effectively and verified
+            closed.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Action Priority Framework
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Priority</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Risk Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Timeframe</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="text-red-400">
-                      <td className="border border-white/10 px-3 py-2">Immediate</td>
-                      <td className="border border-white/10 px-3 py-2">Imminent danger</td>
-                      <td className="border border-white/10 px-3 py-2">Stop work now</td>
-                      <td className="border border-white/10 px-3 py-2 text-white">
-                        Exposed live conductors
-                      </td>
-                    </tr>
-                    <tr className="text-amber-400">
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                      <td className="border border-white/10 px-3 py-2">High risk</td>
-                      <td className="border border-white/10 px-3 py-2">Within 24-48 hours</td>
-                      <td className="border border-white/10 px-3 py-2 text-white">
-                        Scaffold incomplete
-                      </td>
-                    </tr>
-                    <tr className="text-yellow-400">
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate risk</td>
-                      <td className="border border-white/10 px-3 py-2">Within 1-2 weeks</td>
-                      <td className="border border-white/10 px-3 py-2 text-white">
-                        PPE storage inadequate
-                      </td>
-                    </tr>
-                    <tr className="text-green-400">
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                      <td className="border border-white/10 px-3 py-2">Low risk</td>
-                      <td className="border border-white/10 px-3 py-2">Within 1 month</td>
-                      <td className="border border-white/10 px-3 py-2 text-white">
-                        Notice board update needed
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Action Priority Framework
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Immediate</strong> — Risk Level: Imminent danger. Timeframe: Stop work now. Example: Exposed live conductors</li>
+            <li><strong>High</strong> — Risk Level: High risk. Timeframe: Within 24-48 hours. Example: Scaffold incomplete</li>
+            <li><strong>Medium</strong> — Risk Level: Moderate risk. Timeframe: Within 1-2 weeks. Example: PPE storage inadequate</li>
+            <li><strong>Low</strong> — Risk Level: Low risk. Timeframe: Within 1 month. Example: Notice board update needed</li>
+            </ul>
+            
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Corrective action process:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Log:</strong> Enter finding in tracking system with unique reference
-                </li>
-                <li className="pl-1">
-                  <strong>Assign:</strong> Allocate to person with authority to resolve
-                </li>
-                <li className="pl-1">
-                  <strong>Analyse:</strong> Identify root cause, not just symptoms
-                </li>
-                <li className="pl-1">
-                  <strong>Plan:</strong> Define corrective action with realistic deadline
-                </li>
-                <li className="pl-1">
-                  <strong>Implement:</strong> Carry out the action
-                </li>
-                <li className="pl-1">
-                  <strong>Verify:</strong> Check action was effective - close only when confirmed
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">Corrective action process:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Log:</strong> Enter finding in tracking system with unique reference
+            </li>
+            <li>
+            <strong>Assign:</strong> Allocate to person with authority to resolve
+            </li>
+            <li>
+            <strong>Analyse:</strong> Identify root cause, not just symptoms
+            </li>
+            <li>
+            <strong>Plan:</strong> Define corrective action with realistic deadline
+            </li>
+            <li>
+            <strong>Implement:</strong> Carry out the action
+            </li>
+            <li>
+            <strong>Verify:</strong> Check action was effective - close only when confirmed
+            </li>
+            </ul>
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Audit Reporting Best Practice
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Executive summary with key findings and overall opinion</li>
-                <li className="pl-1">Scope, objectives, and methodology described</li>
-                <li className="pl-1">Positive findings as well as non-conformances</li>
-                <li className="pl-1">Evidence referenced for each finding</li>
-                <li className="pl-1">Risk-rated non-conformances with recommended actions</li>
-                <li className="pl-1">Agreed management responses and target dates</li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Audit Reporting Best Practice
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Executive summary with key findings and overall opinion</li>
+            <li>Scope, objectives, and methodology described</li>
+            <li>Positive findings as well as non-conformances</li>
+            <li>Evidence referenced for each finding</li>
+            <li>Risk-rated non-conformances with recommended actions</li>
+            <li>Agreed management responses and target dates</li>
+            </ul>
+            
 
             <p className="text-sm text-white italic">
-              <strong>Trend analysis:</strong> Review findings over time to identify patterns.
-              Repeat issues in the same area may indicate systemic problems, training gaps, or
-              cultural issues that need deeper investigation.
+            <strong>Trend analysis:</strong> Review findings over time to identify patterns.
+            Repeat issues in the same area may indicate systemic problems, training gaps, or
+            cultural issues that need deeper investigation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Application</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Weekly Site Inspection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Site:</strong> New commercial building - M&E installation phase.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Inspection Findings:</strong>
-                </p>
-                <p className="ml-4 text-red-400">
-                  HIGH: Temporary DB cover removed, live terminals exposed
-                </p>
-                <p className="ml-4">
-                  → Action: Immediate - work stopped, cover replaced before resuming
-                </p>
-                <p className="ml-4 text-amber-400">
-                  MEDIUM: Some operatives not wearing eye protection during drilling
-                </p>
-                <p className="ml-4">→ Action: Toolbox talk on PPE, supervisors to monitor</p>
-                <p className="ml-4 text-yellow-400">
-                  LOW: Storage area cluttered, materials blocking access
-                </p>
-                <p className="ml-4">→ Action: Site tidy scheduled for Friday</p>
-                <p className="mt-2 text-green-400">
-                  POSITIVE: All scaffold inspections up to date with tags
-                </p>
-              </div>
+          <ConceptBlock title="Practical Application">
+            <p><strong>Example 1: Weekly Site Inspection</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Site:</strong> New commercial building - M&E installation phase.
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p>
+            <strong>Inspection Findings:</strong>
+            </p>
+            <p className="ml-4 text-red-400">
+            HIGH: Temporary DB cover removed, live terminals exposed
+            </p>
+            <p className="ml-4">
+            → Action: Immediate - work stopped, cover replaced before resuming
+            </p>
+            <p className="ml-4 text-amber-400">
+            MEDIUM: Some operatives not wearing eye protection during drilling
+            </p>
+            <p className="ml-4">→ Action: Toolbox talk on PPE, supervisors to monitor</p>
+            <p className="ml-4 text-yellow-400">
+            LOW: Storage area cluttered, materials blocking access
+            </p>
+            <p className="ml-4">→ Action: Site tidy scheduled for Friday</p>
+            <p className="mt-2 text-green-400">
+            POSITIVE: All scaffold inspections up to date with tags
+            </p>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Internal Safety Audit Finding
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Finding:</strong> Training records do not demonstrate competence
-                verification.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Non-Conformance Report:</strong>
-                </p>
-                <p className="ml-4">Ref: NC-2024-017</p>
-                <p className="ml-4">Standard: Training Procedure TP-003 clause 5.3</p>
-                <p className="ml-4">
-                  Finding: Training records show attendance but no evidence of competence assessment
-                </p>
-                <p className="ml-4">
-                  Evidence: Sample of 10 training records reviewed - none include test results
-                </p>
-                <p className="mt-2">
-                  <strong>Root Cause:</strong> Assessment element not built into training process
-                </p>
-                <p className="mt-2">
-                  <strong>Corrective Action:</strong>
-                </p>
-                <p className="ml-4">
-                  1. Revise training procedure to include assessment (Owner: L&D Manager)
-                </p>
-                <p className="ml-4">2. Create assessment templates for each training module</p>
-                <p className="ml-4">3. Brief trainers on new requirements</p>
-                <p className="ml-4">4. Target date: 30 days</p>
-              </div>
+            
+            <p><strong>Example 2: Internal Safety Audit Finding</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Finding:</strong> Training records do not demonstrate competence
+            verification.
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p>
+            <strong>Non-Conformance Report:</strong>
+            </p>
+            <p className="ml-4">Ref: NC-2024-017</p>
+            <p className="ml-4">Standard: Training Procedure TP-003 clause 5.3</p>
+            <p className="ml-4">
+            Finding: Training records show attendance but no evidence of competence assessment
+            </p>
+            <p className="ml-4">
+            Evidence: Sample of 10 training records reviewed - none include test results
+            </p>
+            <p className="mt-2">
+            <strong>Root Cause:</strong> Assessment element not built into training process
+            </p>
+            <p className="mt-2">
+            <strong>Corrective Action:</strong>
+            </p>
+            <p className="ml-4">
+            1. Revise training procedure to include assessment (Owner: L&D Manager)
+            </p>
+            <p className="ml-4">2. Create assessment templates for each training module</p>
+            <p className="ml-4">3. Brief trainers on new requirements</p>
+            <p className="ml-4">4. Target date: 30 days</p>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Key Points Summary</h2>
-
-          <div className="space-y-6">
+          <ConceptBlock title="Key Points Summary">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Audit Essentials</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Audits verify systems - are policies and procedures implemented?
-                </li>
-                <li className="pl-1">
-                  Gather evidence from documents, observations, and interviews
-                </li>
-                <li className="pl-1">Report both positive findings and non-conformances</li>
-                <li className="pl-1">Track corrective actions to verified closure</li>
-                <li className="pl-1">Use findings for continuous improvement</li>
-              </ul>
+            <p><strong>Audit Essentials</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Audits verify systems - are policies and procedures implemented?
+            </li>
+            <li>
+            Gather evidence from documents, observations, and interviews
+            </li>
+            <li>Report both positive findings and non-conformances</li>
+            <li>Track corrective actions to verified closure</li>
+            <li>Use findings for continuous improvement</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Inspection Essentials
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Inspections check physical conditions and behaviours</li>
-                <li className="pl-1">Frequency based on risk - high risk = more frequent</li>
-                <li className="pl-1">Use checklists but don't be limited by them</li>
-                <li className="pl-1">Involve workers and safety representatives</li>
-                <li className="pl-1">Act immediately on imminent dangers</li>
-              </ul>
+            <p><strong>Inspection Essentials</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Inspections check physical conditions and behaviours</li>
+            <li>Frequency based on risk - high risk = more frequent</li>
+            <li>Use checklists but don't be limited by them</li>
+            <li>Involve workers and safety representatives</li>
+            <li>Act immediately on imminent dangers</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Failures</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Tick-box approach:</strong> Going through motions without engagement
-                </li>
-                <li className="pl-1">
-                  <strong>No follow-up:</strong> Actions not tracked or closed
-                </li>
-                <li className="pl-1">
-                  <strong>Blame focus:</strong> Finding fault rather than fixing systems
-                </li>
-                <li className="pl-1">
-                  <strong>Poor prioritisation:</strong> All issues treated equally
-                </li>
-                <li className="pl-1">
-                  <strong>No trend analysis:</strong> Missing patterns in repeat issues
-                </li>
-              </ul>
+            <p><strong>Common Failures</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Tick-box approach:</strong> Going through motions without engagement
+            </li>
+            <li>
+            <strong>No follow-up:</strong> Actions not tracked or closed
+            </li>
+            <li>
+            <strong>Blame focus:</strong> Finding fault rather than fixing systems
+            </li>
+            <li>
+            <strong>Poor prioritisation:</strong> All issues treated equally
+            </li>
+            <li>
+            <strong>No trend analysis:</strong> Missing patterns in repeat issues
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Quarterly site inspection on a multi-trade fit-out"
+            situation={
+              <>
+                You are running a quarterly safety inspection on a 24-week multi-trade office
+                fit-out. Last quarter&rsquo;s findings included blocked fire-escape routes and
+                missing isolation locks. The actions were closed, but you want to verify on
+                the ground.
+              </>
+            }
+            whatToDo={
+              <>
+                Walk the floors with the principal contractor&rsquo;s safety lead and the
+                workforce safety rep. Check fire routes physically (not just paperwork),
+                check isolation lock kits at each TBA, sample five RAMS at random, observe a
+                live task. Photograph findings, score against a numerical checklist, prioritise
+                actions: red (stop work), amber (close within 7 days), green (improvement).
+                Issue the report within 48 hours, allocate named owners, follow up at the next
+                review.
+              </>
+            }
+            whyItMatters={
+              <>
+                Closing actions on paper without verifying on the floor is the most common
+                audit failing. The HSE will sample your inspection records after any incident
+                and a paper-only history is treated as evidence of a wider failure.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Audit vs Inspection</p>
-                <ul className="space-y-0.5">
-                  <li>Audit = Systems, procedures, compliance</li>
-                  <li>Inspection = Physical conditions, practices</li>
-                  <li>Both needed for complete monitoring</li>
-                  <li>Both require follow-up actions</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Statutory Inspections</p>
-                <ul className="space-y-0.5">
-                  <li>EICR: 1-5 years (type dependent)</li>
-                  <li>LOLER: 6-12 months</li>
-                  <li>Fire systems: Weekly/annual</li>
-                  <li>Emergency lighting: Monthly/annual</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Audit = system-level (policy, procedures, arrangements). Inspection = workplace-level (conditions, behaviour).',
+              'MHSWR Reg 5 names monitoring and review as statutory duties.',
+              'Active monitoring (planned inspections, observations, audit) is leading; reactive monitoring (incident, near-miss) is lagging.',
+              'Audit programme: scope, criteria, methodology, frequency, competence of auditor, reporting.',
+              'Inspection findings: prioritise by risk (red/amber/green), name owners, set target dates, verify closure.',
+              'HSG65 Plan-Do-Check-Act provides the framework — inspection sits in Check.',
+              'Behavioural observation programmes (e.g. DuPont STOP, BBS) measure leading indicators of culture.',
+              'Independent audit (internal department or external) is more credible than self-audit.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section3-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Permit to Work
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section3-5">
-              Next: Emergency Procedures
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 3
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section3-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Emergency Procedures
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

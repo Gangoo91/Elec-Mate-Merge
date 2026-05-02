@@ -1,8 +1,27 @@
-import { ArrowLeft, Battery, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 5 · Subsection 4 — UPS and Standby Power
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   UPS topologies (offline / line-interactive / online / rotary), battery sizing,
+ *   battery technologies (VRLA / lithium-ion), generator coordination sequences and
+ *   automatic transfer switch configurations for resilient power architectures.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'UPS and Standby Power - HNC Module 4 Section 5.4';
@@ -212,667 +231,431 @@ const faqs = [
 ];
 
 const HNCModule4Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Battery className="h-4 w-4" />
-            <span>Module 4.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            UPS and Standby Power
-          </h1>
-          <p className="text-white">
-            Ensuring continuous power supply for critical building systems
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 5 · Subsection 4"
+            title="UPS and Standby Power"
+            description="Ensuring continuous power supply for critical building systems."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Online UPS:</strong> Zero transfer time, continuous conditioning
-              </li>
-              <li className="pl-1">
-                <strong>Line-interactive:</strong> Voltage regulation, fast transfer
-              </li>
-              <li className="pl-1">
-                <strong>Offline/standby:</strong> Basic protection, lowest cost
-              </li>
-              <li className="pl-1">
-                <strong>Generator backup:</strong> Long-term power continuity
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Data centres:</strong> 99.999% uptime requirement
-              </li>
-              <li className="pl-1">
-                <strong>Healthcare:</strong> Life-critical systems
-              </li>
-              <li className="pl-1">
-                <strong>Commercial:</strong> IT, security, emergency lighting
-              </li>
-              <li className="pl-1">
-                <strong>Autonomy:</strong> 5-30 minutes typical with generator
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Understand UPS topologies and their applications',
               'Size UPS systems and battery capacity',
               'Design generator-UPS coordination',
               'Specify automatic transfer switch systems',
               'Apply redundancy principles for critical loads',
               'Plan maintenance requirements for standby systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <TLDR
+            points={[
+              'UPS topologies: offline (cheap, slow transfer), line-interactive (mid-range, voltage regulation), online double-conversion (zero transfer, full conditioning) — pick by load criticality.',
+              'UPS conform to BS EN 50171 (in addition to BS EN [IEC] 62040 series) per Reg 560.6.12 when used as a recognised safety services source.',
+              'Battery autonomy must cover generator start + stabilise + load step — typically 5–10 min for IT loads with a generator behind, 15+ min where no generator exists.',
+              'ATS (automatic transfer switch) coordinates DNO ↔ generator transfer; UPS bridges the changeover. Set the ATS retransfer delay to avoid generator hunt.',
+              'Redundancy: N+1 for important loads, 2N for critical (data centres, hospitals). Mirror the topology, not just the unit.',
+            ]}
+          />
 
-        {/* Section 1: UPS Types */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            UPS Types and Topologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 560.6.1"
+            clause="The following electrical sources for safety services are recognized: (a) primary batteries; (b) stationary secondary batteries; (c) other generating sets independent of the normal supply; (d) a separate feeder of the supply network that is effectively independent of the normal feeder."
+            meaning={
+              <>
+                When a UPS is part of a safety service (emergency lighting, fire alarm, smoke
+                control), it must be a recognised source under Reg 560.6.1 — typically option (b)
+                stationary secondary batteries — and per Reg 560.6.12 must conform to BS EN 50171
+                in addition to the BS EN [IEC] 62040 series. Standby UPS for general IT/business
+                continuity sits outside Chapter 56, but the safety-services compliance check is
+                always the designer’s call.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 560.6.1."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="UPS Types and Topologies">
             <p>
               UPS systems are classified by their topology, which determines transfer time,
               efficiency, and level of power conditioning. Understanding each type enables correct
               specification for different applications.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UPS Topology Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Transfer Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Efficiency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Offline (Standby)</td>
-                      <td className="border border-white/10 px-3 py-2">5-12ms</td>
-                      <td className="border border-white/10 px-3 py-2">95-98%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Desktop PCs, basic protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Line-interactive</td>
-                      <td className="border border-white/10 px-3 py-2">2-4ms</td>
-                      <td className="border border-white/10 px-3 py-2">94-97%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Servers, network equipment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Online (Double-conversion)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0ms</td>
-                      <td className="border border-white/10 px-3 py-2">90-96%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Data centres, critical loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rotary</td>
-                      <td className="border border-white/10 px-3 py-2">0ms</td>
-                      <td className="border border-white/10 px-3 py-2">95-97%</td>
-                      <td className="border border-white/10 px-3 py-2">Large industrial, motors</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Online UPS Operation</p>
-              <p className="text-sm text-white mb-2">In double-conversion mode:</p>
-              <ul className="text-sm text-white space-y-1">
-                <li>1. Rectifier converts AC mains to DC</li>
-                <li>2. DC charges batteries and feeds inverter</li>
-                <li>3. Inverter converts DC back to clean AC</li>
-                <li>4. Load always receives inverter output</li>
-                <li>5. On mains failure, batteries supply inverter - no interruption</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>UPS topology comparison (type / transfer time / efficiency / best for):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Offline (Standby) — 5-12ms — 95-98% — desktop PCs, basic protection</li>
+              <li>Line-interactive — 2-4ms — 94-97% — servers, network equipment</li>
+              <li>Online (Double-conversion) — 0ms — 90-96% — data centres, critical loads</li>
+              <li>Rotary — 0ms — 95-97% — large industrial, motors</li>
+            </ul>
+            <p>
+              <strong>Online UPS operation — in double-conversion mode:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Rectifier converts AC mains to DC</li>
+              <li>DC charges batteries and feeds inverter</li>
+              <li>Inverter converts DC back to clean AC</li>
+              <li>Load always receives inverter output</li>
+              <li>On mains failure, batteries supply inverter — no interruption</li>
+            </ul>
+            <p>
               <strong>Application guide:</strong> Use online UPS for critical IT, medical and
               process loads. Line-interactive suits general commercial. Offline only for basic
               desktop protection.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Battery Sizing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Battery Sizing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Battery Sizing">
             <p>
-              Battery capacity determines UPS autonomy time - how long the system can support the
+              Battery capacity determines UPS autonomy time — how long the system can support the
               load without mains power. Correct sizing balances autonomy requirements against cost
               and space constraints.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Battery Sizing Steps</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Determine load power (VA and kW)</li>
-                <li className="pl-1">Define required autonomy time (minutes)</li>
-                <li className="pl-1">Calculate energy required (kWh)</li>
-                <li className="pl-1">Apply efficiency factor (typically 80-85%)</li>
-                <li className="pl-1">Account for discharge rate (Peukert effect)</li>
-                <li className="pl-1">Allow for battery ageing (20% capacity loss)</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Battery Technologies</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Life (years)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cost</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VRLA-AGM</td>
-                      <td className="border border-white/10 px-3 py-2">3-5</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most common, maintenance-free
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VRLA-Gel</td>
-                      <td className="border border-white/10 px-3 py-2">5-8</td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Better temperature tolerance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lithium-ion</td>
-                      <td className="border border-white/10 px-3 py-2">10-15</td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighter, longer life, fast charge
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flooded lead-acid</td>
-                      <td className="border border-white/10 px-3 py-2">15-20</td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Requires maintenance, ventilation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Temperature Effects on Battery Life
-              </p>
-              <ul className="text-sm text-white space-y-1">
-                <li>Battery life halves for every 10°C above 20°C</li>
-                <li>Ideal temperature: 20-25°C</li>
-                <li>Maximum: 35°C (with significant derating)</li>
-                <li>Air conditioning often required for battery rooms</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Battery sizing steps:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Determine load power (VA and kW)</li>
+              <li>Define required autonomy time (minutes)</li>
+              <li>Calculate energy required (kWh)</li>
+              <li>Apply efficiency factor (typically 80-85%)</li>
+              <li>Account for discharge rate (Peukert effect)</li>
+              <li>Allow for battery ageing (20% capacity loss)</li>
+            </ul>
+            <p>
+              <strong>Battery technologies (type / life years / cost / notes):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>VRLA-AGM — 3-5 — low — most common, maintenance-free</li>
+              <li>VRLA-Gel — 5-8 — medium — better temperature tolerance</li>
+              <li>Lithium-ion — 10-15 — high — lighter, longer life, fast charge</li>
+              <li>Flooded lead-acid — 15-20 — medium — requires maintenance, ventilation</li>
+            </ul>
+            <p>
+              <strong>Temperature effects on battery life:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Battery life halves for every 10°C above 20°C</li>
+              <li>Ideal temperature: 20-25°C</li>
+              <li>Maximum: 35°C (with significant derating)</li>
+              <li>Air conditioning often required for battery rooms</li>
+            </ul>
+            <p>
               <strong>Design rule:</strong> Specify battery capacity for end-of-life conditions (80%
               of new capacity) to ensure autonomy throughout service life.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Generator Coordination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Generator Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Generator Coordination">
             <p>
               Standby generators provide extended backup beyond UPS battery capacity. Proper
               coordination between UPS and generator ensures seamless power continuity for critical
               loads.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Generator-UPS Sequence</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Event</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Power Source</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0s</td>
-                      <td className="border border-white/10 px-3 py-2">Mains failure detected</td>
-                      <td className="border border-white/10 px-3 py-2">UPS battery</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0-3s</td>
-                      <td className="border border-white/10 px-3 py-2">Generator start signal</td>
-                      <td className="border border-white/10 px-3 py-2">UPS battery</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10-15s</td>
-                      <td className="border border-white/10 px-3 py-2">Generator at rated speed</td>
-                      <td className="border border-white/10 px-3 py-2">UPS battery</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">15-20s</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generator voltage/frequency stable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">UPS battery</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">20-30s</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ATS transfers to generator
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Generator</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">30s+</td>
-                      <td className="border border-white/10 px-3 py-2">UPS recharges batteries</td>
-                      <td className="border border-white/10 px-3 py-2">Generator</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Generator Sizing for UPS
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Generator kW = UPS kW × 1.25 minimum</li>
-                  <li className="pl-1">Account for UPS input power factor</li>
-                  <li className="pl-1">Include battery recharging load</li>
-                  <li className="pl-1">Size for step load acceptance</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Compatibility Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Generator must accept UPS harmonic distortion</li>
-                  <li className="pl-1">Voltage regulation: ±10% typical</li>
-                  <li className="pl-1">Frequency tolerance: ±2Hz</li>
-                  <li className="pl-1">Synchronisation for parallel operation</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Generator-UPS sequence (time / event / power source):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>0s — mains failure detected — UPS battery</li>
+              <li>0-3s — generator start signal — UPS battery</li>
+              <li>10-15s — generator at rated speed — UPS battery</li>
+              <li>15-20s — generator voltage/frequency stable — UPS battery</li>
+              <li>20-30s — ATS transfers to generator — generator</li>
+              <li>30s+ — UPS recharges batteries — generator</li>
+            </ul>
+            <p>
+              <strong>Generator sizing for UPS:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Generator kW = UPS kW × 1.25 minimum</li>
+              <li>Account for UPS input power factor</li>
+              <li>Include battery recharging load</li>
+              <li>Size for step load acceptance</li>
+            </ul>
+            <p>
+              <strong>Compatibility requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Generator must accept UPS harmonic distortion</li>
+              <li>Voltage regulation: ±10% typical</li>
+              <li>Frequency tolerance: ±2Hz</li>
+              <li>Synchronisation for parallel operation</li>
+            </ul>
+            <p>
               <strong>Coordination tip:</strong> Specify generator with electronic governor for
               stable frequency. Older mechanical governors may not meet UPS input requirements.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 4: Automatic Transfer Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Automatic Transfer Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Automatic Transfer Systems">
             <p>
               Automatic Transfer Switches (ATS) manage the changeover between normal and standby
               power supplies. They are essential for coordinating mains, generator and UPS systems
               in resilient power architectures.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">ATS Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Transfer Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open transition</td>
-                      <td className="border border-white/10 px-3 py-2">100-500ms</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard commercial/industrial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Closed transition</td>
-                      <td className="border border-white/10 px-3 py-2">0ms (overlap)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical loads, no break required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Soft load transfer</td>
-                      <td className="border border-white/10 px-3 py-2">Progressive</td>
-                      <td className="border border-white/10 px-3 py-2">Large motor loads</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Static transfer</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;4ms</td>
-                      <td className="border border-white/10 px-3 py-2">Data centres, IT loads</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">ATS Transfer Sequence</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Monitor mains supply continuously</li>
-                <li className="pl-1">Detect failure (under-voltage, over-voltage, frequency)</li>
-                <li className="pl-1">Time delay (2-10s) to avoid nuisance transfers</li>
-                <li className="pl-1">Signal generator to start</li>
-                <li className="pl-1">Wait for generator to stabilise</li>
-                <li className="pl-1">Transfer load to generator</li>
-                <li className="pl-1">Monitor mains for return</li>
-                <li className="pl-1">Retransfer after mains stable (adjustable delay)</li>
-                <li className="pl-1">Generator cool-down and shutdown</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>ATS types (type / transfer time / application):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Open transition — 100-500ms — standard commercial/industrial</li>
+              <li>Closed transition — 0ms (overlap) — critical loads, no break required</li>
+              <li>Soft load transfer — progressive — large motor loads</li>
+              <li>Static transfer — &lt;4ms — data centres, IT loads</li>
+            </ul>
+            <p>
+              <strong>ATS transfer sequence:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Monitor mains supply continuously</li>
+              <li>Detect failure (under-voltage, over-voltage, frequency)</li>
+              <li>Time delay (2-10s) to avoid nuisance transfers</li>
+              <li>Signal generator to start</li>
+              <li>Wait for generator to stabilise</li>
+              <li>Transfer load to generator</li>
+              <li>Monitor mains for return</li>
+              <li>Retransfer after mains stable (adjustable delay)</li>
+              <li>Generator cool-down and shutdown</li>
+            </ul>
+            <p>
               <strong>Closed transition:</strong> Requires synchronisation between sources. Used
               where any break is unacceptable, but more complex and costly.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — UPS sizing:</strong> Size UPS for server room with 30kW IT load
+              requiring 15 minutes autonomy.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>IT load: 30kW</li>
+              <li>Assume power factor 0.9</li>
+              <li>UPS VA = 30kW ÷ 0.9 = 33.3kVA</li>
+              <li>Add 20% margin: 33.3 × 1.2 = 40kVA</li>
+              <li>
+                Specification: <strong>40kVA online UPS</strong> with 15-minute battery autonomy
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — battery capacity:</strong> Calculate battery Ah for 40kVA UPS, 15
+              minutes, 384V DC bus.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Load = 40000VA × 0.9pf = 36kW</li>
+              <li>Energy for 15 min = 36kW × 0.25h = 9kWh</li>
+              <li>At 85% efficiency: 9 ÷ 0.85 = 10.6kWh</li>
+              <li>Ah at 384V = 10600Wh ÷ 384V = 27.6Ah</li>
+              <li>Apply 1.25 ageing factor: 27.6 × 1.25 = 34.5Ah</li>
+              <li>
+                Apply discharge rate factor ×2: <strong>69Ah minimum</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — generator sizing:</strong> Size generator for 100kVA UPS with
+              battery recharge requirement.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>UPS input power = 100kVA at 0.9 input pf</li>
+              <li>UPS input = 100 × 0.9 = 90kW</li>
+              <li>Add UPS losses (10%): 90 × 1.1 = 99kW</li>
+              <li>Add recharge current (10%): 99 × 1.1 = 109kW</li>
+              <li>Generator derating (0.8 pf load): 109 ÷ 0.8 = 136kVA</li>
+              <li>
+                Specification: <strong>150kVA diesel generator</strong> — next standard size with
+                margin
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: UPS Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size UPS for server room with 30kW IT load requiring 15
-                minutes autonomy.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>IT load: 30kW</p>
-                <p>Assume power factor 0.9</p>
-                <p>UPS VA = 30kW ÷ 0.9 = 33.3kVA</p>
-                <p className="mt-2">Add 20% margin: 33.3 × 1.2 = 40kVA</p>
-                <p className="mt-2">
-                  Specification: <strong>40kVA online UPS</strong>
-                </p>
-                <p>With 15-minute battery autonomy</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Battery Capacity
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate battery Ah for 40kVA UPS, 15 minutes, 384V DC
-                bus.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Load = 40000VA × 0.9pf = 36kW</p>
-                <p>Energy for 15 min = 36kW × 0.25h = 9kWh</p>
-                <p>At 85% efficiency: 9 ÷ 0.85 = 10.6kWh</p>
-                <p>Ah at 384V = 10600Wh ÷ 384V = 27.6Ah</p>
-                <p className="mt-2">Apply 1.25 ageing factor: 27.6 × 1.25 = 34.5Ah</p>
-                <p>
-                  Apply discharge rate factor ×2: <strong>69Ah minimum</strong>
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Redundancy configurations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>N:</strong> No redundancy — single UPS for load
+              </li>
+              <li>
+                <strong>N+1:</strong> One extra module — industry standard
+              </li>
+              <li>
+                <strong>2N:</strong> Fully duplicated systems — data centres
+              </li>
+              <li>
+                <strong>2(N+1):</strong> Maximum resilience — Tier 4 facilities
+              </li>
+            </ul>
+            <p>
+              <strong>Testing requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Monthly: UPS self-test, generator no-load run</li>
+              <li>Quarterly: Generator load test (30 minutes minimum)</li>
+              <li>Annual: Full transfer test, battery capacity test</li>
+              <li>Document all tests and results</li>
+            </ul>
+            <p>
+              <strong>Typical autonomy:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                With generator: <strong>5-15 minutes</strong>
+              </li>
+              <li>
+                Without generator: <strong>30-60 minutes</strong>
+              </li>
+              <li>
+                Extended: <strong>2-8 hours</strong>
+              </li>
+              <li>Size for end-of-life capacity</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Generator Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size generator for 100kVA UPS with battery recharge
-                requirement.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>UPS input power = 100kVA at 0.9 input pf</p>
-                <p>UPS input = 100 × 0.9 = 90kW</p>
-                <p>Add UPS losses (10%): 90 × 1.1 = 99kW</p>
-                <p>Add recharge current (10%): 99 × 1.1 = 109kW</p>
-                <p className="mt-2">Generator derating (0.8 pf load): 109 ÷ 0.8 = 136kVA</p>
-                <p className="mt-2">
-                  Specification: <strong>150kVA diesel generator</strong>
-                </p>
-                <p className="text-white">Next standard size with margin</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Redundancy Configurations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>N:</strong> No redundancy - single UPS for load
+          <CommonMistake
+            title="Common design errors"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Undersized generator</strong> — must handle UPS input plus recharge
                 </li>
-                <li className="pl-1">
-                  <strong>N+1:</strong> One extra module - industry standard
+                <li>
+                  <strong>No battery room cooling</strong> — shortens battery life dramatically
                 </li>
-                <li className="pl-1">
-                  <strong>2N:</strong> Fully duplicated systems - data centres
+                <li>
+                  <strong>Block loading generator</strong> — causes transients and trips
                 </li>
-                <li className="pl-1">
-                  <strong>2(N+1):</strong> Maximum resilience - Tier 4 facilities
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Testing Requirements</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Monthly: UPS self-test, generator no-load run</li>
-                <li className="pl-1">Quarterly: Generator load test (30 minutes minimum)</li>
-                <li className="pl-1">Annual: Full transfer test, battery capacity test</li>
-                <li className="pl-1">Document all tests and results</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Design Errors</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Undersized generator</strong> - Must handle UPS input plus recharge
-                </li>
-                <li className="pl-1">
-                  <strong>No battery room cooling</strong> - Shortens battery life dramatically
-                </li>
-                <li className="pl-1">
-                  <strong>Block loading generator</strong> - Causes transients and trips
-                </li>
-                <li className="pl-1">
-                  <strong>Insufficient autonomy</strong> - Generator needs time to start
+                <li>
+                  <strong>Insufficient autonomy</strong> — generator needs time to start
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Size the generator including UPS losses and battery recharge load, condition the battery room to 20-25°C, apply load in steps (or use soft-load transfer), and set UPS autonomy that genuinely covers generator start-and-stabilise time with margin."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="80 kVA UPS + 200 kVA generator on a small data hall"
+            situation={
+              <>
+                A 60 kW IT load in a small server room needs N+1 UPS resilience and full generator
+                backup. Critical load 60 kW @ 0.95 PF, mechanical cooling 25 kW (also critical
+                during outage), small power 8 kW. Site has a single DNO supply. Battery room can
+                hold ~1,000 kg of VRLA cells. You’re sizing UPS, generator and ATS for the design
+                review.
+              </>
+            }
+            whatToDo={
+              <>
+                UPS: online double-conversion, modular 2× 80 kVA in N+1 (one carries full load,
+                second is redundant). Battery autonomy: generator typically starts and accepts
+                load in 30 s, but allow 5 min for resilience and to ride through brief faults
+                without runtime depletion. Generator: critical 85 kW + cooling 25 kW + small
+                power 8 kW = 118 kW; add UPS recharge load (≈ 25 % of UPS rating ≈ 40 kW for
+                first 30 min) and 25 % engineering margin → 200 kVA prime-rated set. ATS:
+                4-pole, mechanically interlocked, with adjustable retransfer delay (typically 5
+                min) to stop the generator hunting if the DNO supply is unstable. Spec the UPS to
+                BS EN [IEC] 62040 (plus BS EN 50171 if any safety load is hung off it). Battery
+                room conditioned to 20–25 °C — VRLA life halves for every 10 °C above 25.
+                Step-load test the generator at commissioning. All this lands on the load
+                schedule with a clear ATS sequence-of-operation diagram in the O&amp;M.
+              </>
+            }
+            whyItMatters={
+              <>
+                Most outages aren’t loss of supply — they’re an underspecified ATS that hunts on a
+                noisy DNO, or a generator that can’t carry UPS recharge load and trips on
+                overload at the worst moment. Coordination is the deliverable, not the kit.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">UPS Types</p>
-                <ul className="space-y-0.5">
-                  <li>Online: 0ms transfer, best protection</li>
-                  <li>Line-interactive: 2-4ms, voltage reg</li>
-                  <li>Offline: 5-12ms, basic backup</li>
-                  <li>Rotary: Large industrial loads</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Typical Autonomy</p>
-                <ul className="space-y-0.5">
-                  <li>With generator: 5-15 minutes</li>
-                  <li>Without generator: 30-60 minutes</li>
-                  <li>Extended: 2-8 hours</li>
-                  <li>Size for end-of-life capacity</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              'UPS topology choice: online double-conversion is the default for IT and critical loads; line-interactive for mid-range; offline for non-critical only.',
+              'When a UPS supplies a safety service, it must be a recognised source under Reg 560.6.1 and conform to BS EN 50171 (Reg 560.6.12) in addition to BS EN [IEC] 62040.',
+              'Battery autonomy = generator start + stabilise + load step + safety margin. 5–10 min typical with a generator; 15+ min stand-alone.',
+              'Generator sizing: critical load + cooling + UPS recharge + engineering margin. Don’t forget the recharge load — it’s 20–25 % of UPS rating in the first half hour.',
+              'ATS: 4-pole, mechanically interlocked, retransfer delay tuned to prevent hunting on noisy DNO supplies.',
+              'Redundancy: N+1 for important, 2N for critical. Mirror the whole topology (UPS + battery + ATS), not just one unit.',
+              'Battery room thermal conditioning is non-negotiable — VRLA life halves every 10 °C above 25 °C.',
+              'Step-load test the generator at commissioning; thermographic scan the UPS bypass and ATS at handover.',
+            ]}
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section5-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Busbar Systems
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section5-5">
-              Next: Power Quality
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section5-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Busbar systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section5-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Power quality
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

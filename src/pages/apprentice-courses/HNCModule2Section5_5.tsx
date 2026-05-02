@@ -1,8 +1,27 @@
-import { ArrowLeft, Users, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 5 · Subsection 5 — Thermal Comfort
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Fanger PMV/PPD model, operative temperature, adaptive comfort and TM52/TM59
+ *   overheating criteria — the framework that turns subjective comfort into
+ *   defendable design targets.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Thermal Comfort - HNC Module 2 Section 5.5';
@@ -231,751 +250,470 @@ const faqs = [
 ];
 
 const HNCModule2Section5_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Users className="h-4 w-4" />
-            <span>Module 2.5.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Thermal Comfort
-          </h1>
-          <p className="text-white">
-            Understanding and achieving comfortable thermal environments for building occupants
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 5 · Subsection 5"
+            title="Thermal Comfort"
+            description="Understanding and achieving comfortable thermal environments for building occupants."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>PMV:</strong> Predicted Mean Vote (-3 to +3 scale)
-              </li>
-              <li className="pl-1">
-                <strong>PPD:</strong> Predicted Percentage Dissatisfied
-              </li>
-              <li className="pl-1">
-                <strong>Operative temp:</strong> Average of air and radiant
-              </li>
-              <li className="pl-1">
-                <strong>Adaptive:</strong> Occupants adapt to local climate
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC design:</strong> Target conditions for sizing
-              </li>
-              <li className="pl-1">
-                <strong>Part O:</strong> Overheating risk in dwellings
-              </li>
-              <li className="pl-1">
-                <strong>TM52/TM59:</strong> Overheating assessment methods
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> Setpoints and dead bands
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You apply the Fanger PMV/PPD model — six factors (air T, MRT, air velocity, RH, clothing clo, metabolic met) — to size mechanical conditioning.',
+              'You target PMV ±0.5 and PPD ≤ 10% for Cat A office comfort, per BS EN ISO 7730 and CIBSE Guide A.',
+              'You distinguish operative temperature (Top) from air temperature and use Top in glazed/perimeter zones where MRT diverges.',
+              'You apply CIBSE TM52 (non-domestic) and TM59 (homes) adaptive overheating criteria for naturally-ventilated and mixed-mode designs.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS EN ISO 7730 — Ergonomics of the thermal environment (PMV/PPD); CIBSE TM52 / TM59 (Overheating)"
+            clause="Methods for predicted mean vote (PMV) and predicted percentage dissatisfied (PPD) using Fanger&rsquo;s model; TM52 / TM59 adaptive overheating criteria for non-domestic and domestic buildings respectively."
+            meaning={
+              <>
+                BS EN ISO 7730 + CIBSE TM52/TM59 are the reference standards for sizing
+                conditioning and assessing overheating risk. As HNC engineer you cite them
+                in the design risk register, in the TM52 study report, and in any planning
+                Net-Zero submission where overheating is in scope.
+              </>
+            }
+            cite="Source: BS EN ISO 7730:2005; CIBSE TM52:2013 The Limits of Thermal Comfort; CIBSE TM59:2017 Design Methodology for Overheating in Homes; CIBSE Guide A — Environmental Design."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               "Apply Fanger's six-factor thermal comfort model",
               'Calculate and interpret PMV and PPD',
               'Determine operative temperature for comfort assessment',
               'Use CIBSE comfort criteria for different building types',
               'Understand adaptive comfort for natural ventilation',
               'Apply TM52/TM59 overheating assessment criteria',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Fanger's Model */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Fanger's PMV/PPD Model
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Fanger's PMV/PPD Model"
+            plainEnglish="Fanger boiled comfort down to six factors and a vote scale from -3 (cold) to +3 (hot). PPD tells you what fraction of people will moan whatever you do."
+          >
             <p>
               Professor Ole Fanger developed the most widely used thermal comfort model, based on
               heat balance between the human body and its environment. The model predicts average
               thermal sensation and percentage of dissatisfied occupants.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                The six factors affecting thermal comfort:
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                    Environmental Factors
-                  </p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      <strong>Air temperature (Ta):</strong> °C
-                    </li>
-                    <li className="pl-1">
-                      <strong>Mean radiant temp (Tr):</strong> °C
-                    </li>
-                    <li className="pl-1">
-                      <strong>Relative humidity (RH):</strong> %
-                    </li>
-                    <li className="pl-1">
-                      <strong>Air velocity (v):</strong> m/s
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-2">Personal Factors</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      <strong>Metabolic rate (M):</strong> Met
-                    </li>
-                    <li className="pl-1">
-                      <strong>Clothing insulation (Icl):</strong> clo
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PMV Scale (Predicted Mean Vote)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">PMV Value</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Thermal Sensation
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">PPD (%)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">-3</td>
-                      <td className="border border-white/10 px-3 py-2">Cold</td>
-                      <td className="border border-white/10 px-3 py-2">~100%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">-2</td>
-                      <td className="border border-white/10 px-3 py-2">Cool</td>
-                      <td className="border border-white/10 px-3 py-2">~75%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">-1</td>
-                      <td className="border border-white/10 px-3 py-2">Slightly cool</td>
-                      <td className="border border-white/10 px-3 py-2">~25%</td>
-                    </tr>
-                    <tr className="bg-green-500/10">
-                      <td className="border border-white/10 px-3 py-2">0</td>
-                      <td className="border border-white/10 px-3 py-2">Neutral</td>
-                      <td className="border border-white/10 px-3 py-2">5%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">+1</td>
-                      <td className="border border-white/10 px-3 py-2">Slightly warm</td>
-                      <td className="border border-white/10 px-3 py-2">~25%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">+2</td>
-                      <td className="border border-white/10 px-3 py-2">Warm</td>
-                      <td className="border border-white/10 px-3 py-2">~75%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">+3</td>
-                      <td className="border border-white/10 px-3 py-2">Hot</td>
-                      <td className="border border-white/10 px-3 py-2">~100%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>The six factors affecting thermal comfort:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Environmental:</strong> Air temperature (Ta °C), Mean radiant temp (Tr °C),
+                Relative humidity (RH %), Air velocity (v m/s)
+              </li>
+              <li>
+                <strong>Personal:</strong> Metabolic rate (M, Met), Clothing insulation (Icl, clo)
+              </li>
+            </ul>
+            <p>
+              <strong>PMV scale (Predicted Mean Vote) - PMV / sensation / PPD%:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>-3 / Cold / ~100%</li>
+              <li>-2 / Cool / ~75%</li>
+              <li>-1 / Slightly cool / ~25%</li>
+              <li>0 / Neutral / 5%</li>
+              <li>+1 / Slightly warm / ~25%</li>
+              <li>+2 / Warm / ~75%</li>
+              <li>+3 / Hot / ~100%</li>
+            </ul>
+            <p>
               <strong>Note:</strong> Even at PMV = 0 (neutral), 5% of people will be dissatisfied
               due to individual variation. Perfect comfort for everyone is impossible; design aims
               for acceptable levels.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Operative Temperature */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Operative Temperature and CIBSE Criteria
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Operative Temperature and CIBSE Criteria"
+            plainEnglish="Operative temperature is the average of air and radiant - what you actually feel. CIBSE gives you target ranges by building type."
+          >
             <p>
               Operative temperature combines air and radiant temperatures into a single value
               representing what occupants actually experience. CIBSE Guide A provides recommended
               comfort ranges for different building types and seasons.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operative Temperature</p>
-              <p className="font-mono text-center text-sm mb-2">
-                T<sub>op</sub> = (T<sub>a</sub> + T<sub>r</sub>) / 2
-              </p>
-              <p className="text-xs text-white text-center">
-                For low air velocity (&lt;0.2 m/s). More complex formula for higher velocities.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE Recommended Operative Temperatures
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Winter (°C)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Summer (°C)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office (sedentary)</td>
-                      <td className="border border-white/10 px-3 py-2">21-23</td>
-                      <td className="border border-white/10 px-3 py-2">23-25</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail</td>
-                      <td className="border border-white/10 px-3 py-2">19-21</td>
-                      <td className="border border-white/10 px-3 py-2">21-23</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Teaching space</td>
-                      <td className="border border-white/10 px-3 py-2">19-21</td>
-                      <td className="border border-white/10 px-3 py-2">21-25</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital ward</td>
-                      <td className="border border-white/10 px-3 py-2">22-24</td>
-                      <td className="border border-white/10 px-3 py-2">23-25</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sports hall</td>
-                      <td className="border border-white/10 px-3 py-2">13-16</td>
-                      <td className="border border-white/10 px-3 py-2">14-18</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Factory (light work)</td>
-                      <td className="border border-white/10 px-3 py-2">16-19</td>
-                      <td className="border border-white/10 px-3 py-2">18-21</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Comfort categories (ISO 7730):</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Category A (high):</strong> PMV ±0.2, PPD &lt;6% (hospitals, care homes)
-                </li>
-                <li className="pl-1">
-                  <strong>Category B (normal):</strong> PMV ±0.5, PPD &lt;10% (offices, schools)
-                </li>
-                <li className="pl-1">
-                  <strong>Category C (moderate):</strong> PMV ±0.7, PPD &lt;15% (retail, light
-                  industry)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Operative temperature:</strong> Top = (Ta + Tr) / 2. For low air velocity
+              (&lt;0.2 m/s). More complex formula for higher velocities.
+            </p>
+            <p>
+              <strong>CIBSE recommended operative temperatures (winter / summer °C):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Office (sedentary): 21-23 / 23-25</li>
+              <li>Retail: 19-21 / 21-23</li>
+              <li>Teaching space: 19-21 / 21-25</li>
+              <li>Hospital ward: 22-24 / 23-25</li>
+              <li>Sports hall: 13-16 / 14-18</li>
+              <li>Factory (light work): 16-19 / 18-21</li>
+            </ul>
+            <p>
+              <strong>Comfort categories (ISO 7730):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Category A (high):</strong> PMV ±0.2, PPD &lt;6% (hospitals, care homes)
+              </li>
+              <li>
+                <strong>Category B (normal):</strong> PMV ±0.5, PPD &lt;10% (offices, schools)
+              </li>
+              <li>
+                <strong>Category C (moderate):</strong> PMV ±0.7, PPD &lt;15% (retail, light industry)
+              </li>
+            </ul>
+            <p>
               <strong>Design note:</strong> Summer temperatures can be 2°C higher than winter
               because occupants wear lighter clothing (lower clo value), maintaining thermal balance
               at higher air temperature.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Adaptive Comfort */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Adaptive Comfort Model
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Adaptive Comfort Model"
+            plainEnglish="In nat-vent buildings, people adapt - they roll up sleeves, open windows, accept wider ranges. The adaptive model lets you raise the comfort ceiling when it's hot outside."
+          >
             <p>
               The adaptive comfort model recognises that occupants in naturally ventilated buildings
               adapt to seasonal conditions by adjusting clothing, opening windows, and accepting
               wider temperature ranges. This approach is central to Part O and TM59 overheating
               assessment.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key principles of adaptive comfort:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Expectation:</strong> Occupants expect wider ranges in free-running
-                  buildings
-                </li>
-                <li className="pl-1">
-                  <strong>Adaptation:</strong> Clothing adjustment, window operation, activity
-                  modification
-                </li>
-                <li className="pl-1">
-                  <strong>Running mean:</strong> Comfort limit varies with recent outdoor
-                  temperature
-                </li>
-                <li className="pl-1">
-                  <strong>Control:</strong> Having personal control increases acceptable range
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Adaptive Comfort Temperature
-              </p>
-              <p className="font-mono text-center text-sm mb-2">
-                T<sub>comf</sub> = 0.33 × θ<sub>rm</sub> + 18.8
-              </p>
-              <p className="text-xs text-white text-center">
-                Where θrm = exponentially weighted running mean outdoor temperature
-              </p>
-              <p className="text-xs text-white text-center mt-2">
-                Upper limit (Cat II) = Tcomf + 3°C; Lower limit = Tcomf - 4°C
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Comparison: PMV vs Adaptive
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">PMV/PPD</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Adaptive</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building type</td>
-                      <td className="border border-white/10 px-3 py-2">Mechanically conditioned</td>
-                      <td className="border border-white/10 px-3 py-2">Naturally ventilated</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Temperature range</td>
-                      <td className="border border-white/10 px-3 py-2">Fixed narrow band</td>
-                      <td className="border border-white/10 px-3 py-2">Varies with outdoor temp</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Occupant control</td>
-                      <td className="border border-white/10 px-3 py-2">Not considered</td>
-                      <td className="border border-white/10 px-3 py-2">Central assumption</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy implication</td>
-                      <td className="border border-white/10 px-3 py-2">Higher energy use</td>
-                      <td className="border border-white/10 px-3 py-2">Lower energy use</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key principles of adaptive comfort:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Expectation:</strong> Occupants expect wider ranges in free-running buildings
+              </li>
+              <li>
+                <strong>Adaptation:</strong> Clothing adjustment, window operation, activity modification
+              </li>
+              <li>
+                <strong>Running mean:</strong> Comfort limit varies with recent outdoor temperature
+              </li>
+              <li>
+                <strong>Control:</strong> Having personal control increases acceptable range
+              </li>
+            </ul>
+            <p>
+              <strong>Adaptive comfort temperature:</strong> Tcomf = 0.33 × θrm + 18.8. Where θrm =
+              exponentially weighted running mean outdoor temperature. Upper limit (Cat II) = Tcomf
+              + 3°C; Lower limit = Tcomf - 4°C.
+            </p>
+            <p>
+              <strong>Comparison: PMV vs adaptive:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Building type:</strong> PMV - mechanically conditioned; adaptive - naturally ventilated
+              </li>
+              <li>
+                <strong>Temperature range:</strong> PMV - fixed narrow band; adaptive - varies with outdoor temp
+              </li>
+              <li>
+                <strong>Occupant control:</strong> PMV - not considered; adaptive - central assumption
+              </li>
+              <li>
+                <strong>Energy implication:</strong> PMV - higher energy use; adaptive - lower energy use
+              </li>
+            </ul>
+            <p>
               <strong>Mixed-mode buildings:</strong> Can use adaptive approach when in natural
               ventilation mode, switching to PMV criteria when mechanical cooling operates.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Overheating Assessment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Overheating Assessment (TM52/TM59/Part O)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Overheating Assessment (TM52/TM59/Part O)"
+            plainEnglish="UK buildings are getting hotter and tighter, so overheating is now a real compliance risk. TM52/TM59 use adaptive limits and three pass/fail criteria."
+          >
             <p>
               Overheating has become a major concern in UK buildings, driven by climate change,
               tighter construction, and increased glazing. Building Regulations Part O and CIBSE
               TM52/TM59 provide assessment methods and compliance criteria.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TM52 Criteria (Non-Domestic Buildings)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Criterion</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Measure</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Hours of exceedance</td>
-                      <td className="border border-white/10 px-3 py-2">Max 3% occupied hours</td>
-                      <td className="border border-white/10 px-3 py-2">ΔT &gt; 1K above limit</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Daily weighted</td>
-                      <td className="border border-white/10 px-3 py-2">Max We = 6 on any day</td>
-                      <td className="border border-white/10 px-3 py-2">Severity × hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Upper limit</td>
-                      <td className="border border-white/10 px-3 py-2">ΔT never &gt; 4K</td>
-                      <td className="border border-white/10 px-3 py-2">Absolute maximum</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TM59 Additional Criteria (Domestic)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Living areas:</strong> TM52 Criteria 1 and 2 apply
-                </li>
-                <li className="pl-1">
-                  <strong>Bedrooms (night):</strong> Max 3% hours over 26°C (23:00-07:00)
-                </li>
-                <li className="pl-1">
-                  <strong>Vulnerable occupants:</strong> Fixed 26°C threshold (not adaptive)
-                </li>
-                <li className="pl-1">
-                  <strong>Noise constraint:</strong> Check if windows can realistically be opened
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part O Compliance Routes
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Simplified Method</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Glazing area limits by orientation</li>
-                    <li className="pl-1">Maximum g-value requirements</li>
-                    <li className="pl-1">Minimum free area for ventilation</li>
-                    <li className="pl-1">Cross-ventilation required</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Dynamic Simulation</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Full TM59 assessment</li>
-                    <li className="pl-1">DSY weather file required</li>
-                    <li className="pl-1">All three criteria assessed</li>
-                    <li className="pl-1">More design flexibility</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>TM52 criteria (non-domestic buildings):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Hours of exceedance:</strong> Max 3% occupied hours where ΔT &gt; 1K above limit
+              </li>
+              <li>
+                <strong>2. Daily weighted:</strong> Max We = 6 on any day (severity × hours)
+              </li>
+              <li>
+                <strong>3. Upper limit:</strong> ΔT never &gt; 4K (absolute maximum)
+              </li>
+            </ul>
+            <p>
+              <strong>TM59 additional criteria (domestic):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Living areas:</strong> TM52 Criteria 1 and 2 apply
+              </li>
+              <li>
+                <strong>Bedrooms (night):</strong> Max 3% hours over 26°C (23:00-07:00)
+              </li>
+              <li>
+                <strong>Vulnerable occupants:</strong> Fixed 26°C threshold (not adaptive)
+              </li>
+              <li>
+                <strong>Noise constraint:</strong> Check if windows can realistically be opened
+              </li>
+            </ul>
+            <p>
+              <strong>Part O compliance routes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Simplified method:</strong> Glazing area limits by orientation, max g-value, min free area for ventilation, cross-vent required
+              </li>
+              <li>
+                <strong>Dynamic simulation:</strong> Full TM59 assessment, DSY weather file required, all three criteria assessed, more design flexibility
+              </li>
+            </ul>
+            <p>
               <strong>Climate change:</strong> TM59 recommends using DSY1 (2020s high emissions) or
               DSY2/3 for future-proofing. What passes today may not remain comfortable by 2050.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Four sums covering operative temperature, adaptive limits from running mean, the velocity offset rule, and a TM52 Criterion 1 hours-of-exceedance check."
+          >
+            <p>
+              <strong>Example 1 - Operative temperature:</strong> An office has air temperature
+              22°C and mean radiant temperature 24°C (due to warm ceiling). Calculate operative
+              temperature.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>For low air velocity, Top = (Ta + Tr) / 2</li>
+              <li>Top = (22 + 24) / 2 = <strong>23°C</strong></li>
+              <li>Within CIBSE summer comfort range for offices (23-25°C)</li>
+            </ul>
+            <p>
+              <strong>Example 2 - Adaptive comfort limit:</strong> The running mean outdoor
+              temperature is 18°C. Calculate the Category II adaptive comfort upper limit.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Comfort temperature: Tcomf = 0.33 × θrm + 18.8</li>
+              <li>Tcomf = 0.33 × 18 + 18.8 = 24.7°C</li>
+              <li>Upper limit (Cat II) = Tcomf + 3 = 24.7 + 3 = <strong>27.7°C</strong></li>
+              <li>Temperatures above 27.7°C count as overheating hours</li>
+            </ul>
+            <p>
+              <strong>Example 3 - Velocity offset:</strong> If air velocity increases from 0.1 to
+              0.4 m/s, approximately how much higher temperature can be tolerated while maintaining
+              comfort?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Rule of thumb: 0.3°C per 0.1 m/s increase</li>
+              <li>Velocity increase = 0.4 - 0.1 = 0.3 m/s</li>
+              <li>Temperature offset = 0.3 × 3 = <strong>~0.9°C higher acceptable</strong></li>
+              <li>Ceiling fans can extend acceptable range by 2-3°C in summer</li>
+            </ul>
+            <p>
+              <strong>Example 4 - TM52 Criterion 1 check:</strong> A building is occupied 3000
+              hours per year. Dynamic simulation shows 120 hours above the adaptive comfort limit.
+              Does it pass Criterion 1?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Criterion 1 limit = 3% of occupied hours</li>
+              <li>3% of 3000 = 90 hours maximum</li>
+              <li>Actual exceedance = 120 hours</li>
+              <li><strong>FAIL:</strong> 120 &gt; 90 hours (4% exceedance)</li>
+              <li>Building requires design changes to reduce overheating</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Operative Temperature
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An office has air temperature 22°C and mean radiant
-                temperature 24°C (due to warm ceiling). Calculate operative temperature.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>For low air velocity, Top = (Ta + Tr) / 2</p>
-                <p>
-                  Top = (22 + 24) / 2 = <strong>23°C</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Within CIBSE summer comfort range for offices (23-25°C)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Adaptive Comfort Limit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> The running mean outdoor temperature is 18°C. Calculate
-                the Category II adaptive comfort upper limit.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Comfort temperature: Tcomf = 0.33 × θrm + 18.8</p>
-                <p>Tcomf = 0.33 × 18 + 18.8 = 24.7°C</p>
-                <p className="mt-2">
-                  Upper limit (Cat II) = Tcomf + 3 = 24.7 + 3 = <strong>27.7°C</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Temperatures above 27.7°C count as overheating hours
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The PMV/PPD targets, operative ranges and overheating limits you'll be quoted against in design reviews."
+          >
+            <p>
+              <strong>Essential values:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1 clo:</strong> Business suit + accessories (0.155 m²K/W)
+              </li>
+              <li>
+                <strong>1 Met:</strong> 58.2 W/m² body area (~105W/person)
+              </li>
+              <li>
+                <strong>PMV target:</strong> ±0.5 for Category B (normal) comfort
+              </li>
+              <li>
+                <strong>Office winter:</strong> 21-23°C operative
+              </li>
+              <li>
+                <strong>Office summer:</strong> 23-25°C operative
+              </li>
+            </ul>
+            <p>
+              <strong>Key formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Top = (Ta + Tr) / 2:</strong> Operative temperature (low velocity)
+              </li>
+              <li>
+                <strong>Tcomf = 0.33θrm + 18.8:</strong> Adaptive comfort temperature
+              </li>
+              <li>
+                <strong>Upper limit = Tcomf + 3:</strong> Category II adaptive limit
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Velocity Offset
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> If air velocity increases from 0.1 to 0.4 m/s,
-                approximately how much higher temperature can be tolerated while maintaining
-                comfort?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Rule of thumb: 0.3°C per 0.1 m/s increase</p>
-                <p>Velocity increase = 0.4 - 0.1 = 0.3 m/s</p>
-                <p>
-                  Temperature offset = 0.3 × 3 = <strong>~0.9°C higher acceptable</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Ceiling fans can extend acceptable range by 2-3°C in summer
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: TM52 Criterion 1 Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A building is occupied 3000 hours per year. Dynamic
-                simulation shows 120 hours above the adaptive comfort limit. Does it pass Criterion
-                1?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Criterion 1 limit = 3% of occupied hours</p>
-                <p>3% of 3000 = 90 hours maximum</p>
-                <p>Actual exceedance = 120 hours</p>
-                <p className="mt-2 text-red-400">FAIL: 120 &gt; 90 hours (4% exceedance)</p>
-                <p className="mt-2 text-white">
-                  Building requires design changes to reduce overheating
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Values</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1 clo:</strong> Business suit + accessories (0.155 m²K/W)
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Using air temp only:</strong> Radiant effects significant near windows/walls
                 </li>
-                <li className="pl-1">
-                  <strong>1 Met:</strong> 58.2 W/m² body area (~105W/person)
-                </li>
-                <li className="pl-1">
-                  <strong>PMV target:</strong> ±0.5 for Category B (normal) comfort
-                </li>
-                <li className="pl-1">
-                  <strong>Office winter:</strong> 21-23°C operative
-                </li>
-                <li className="pl-1">
-                  <strong>Office summer:</strong> 23-25°C operative
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Top = (Ta + Tr) / 2:</strong> Operative temperature (low velocity)
-                </li>
-                <li className="pl-1">
-                  <strong>Tcomf = 0.33θrm + 18.8:</strong> Adaptive comfort temperature
-                </li>
-                <li className="pl-1">
-                  <strong>Upper limit = Tcomf + 3:</strong> Category II adaptive limit
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using air temp only:</strong> Radiant effects significant near
-                  windows/walls
-                </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring adaptation:</strong> PMV too strict for free-running buildings
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Fixed overheating limit:</strong> TM52/59 use adaptive limits, not 26°C
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Bedroom hours:</strong> TM59 uses fixed 26°C at night
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always work with operative temperature near glazing and walls, use the adaptive model for nat-vent buildings, apply the running-mean adaptive limit for TM52/59, and switch to a fixed 26°C threshold for bedrooms at night."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="TM59 overheating assessment for a Build-to-Rent residential block"
+            situation={
+              <>
+                A 96-unit BtR residential block in central London is going through planning.
+                The local plan requires a CIBSE TM59 overheating assessment for all
+                naturally-ventilated bedrooms. Initial dynamic simulation shows three
+                south-west aspect bedrooms failing TM59 Criterion A (operative temperature
+                threshold).
+              </>
+            }
+            whatToDo={
+              <>
+                Verify the TM59 weather file (DSY1 London for 2020s) and the bedroom
+                occupancy profile (8 hours single occupancy 23:00–07:00). Identify the
+                fail driver: solar gain through glazing or insufficient night ventilation.
+                Apply mitigation in priority order: external shading (brise-soleil or
+                shutters), reduced g-value glazing, increased openable area, then mechanical
+                cooling as a last resort. Re-run the simulation. Document the design
+                decisions in the TM59 report submitted with the planning application.
+              </>
+            }
+            whyItMatters={
+              <>
+                A TM59 fail blocks planning consent. Once the building is occupied and
+                overheating is confirmed, the developer is exposed to litigation under the
+                Homes (Fitness for Human Habitation) Act 2018. Getting TM59 right at design
+                stage is a multi-million-pound risk-reduction exercise.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Comfort Parameters</p>
-                <ul className="space-y-0.5">
-                  <li>PMV: -0.5 to +0.5 (Cat B)</li>
-                  <li>PPD: &lt;10% (Cat B)</li>
-                  <li>Office: 21-23°C winter, 23-25°C summer</li>
-                  <li>Velocity offset: ~0.3°C per 0.1 m/s</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Overheating (TM52)</p>
-                <ul className="space-y-0.5">
-                  <li>Criterion 1: &lt;3% hours ΔT &gt; 1K</li>
-                  <li>Criterion 2: Daily We &lt; 6</li>
-                  <li>Criterion 3: ΔT never &gt; 4K</li>
-                  <li>Fail any criterion = overheating</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Fanger PMV combines six factors: air temperature, MRT, air velocity, RH, clothing (clo), metabolic rate (met).',
+              'Comfort target Cat A: PMV ±0.5, PPD ≤ 10%.',
+              'Operative temperature Top ≈ (Tair + MRT)/2 — better comfort proxy than air temperature alone.',
+              'Adaptive comfort: occupants tolerate wider ranges if they have control (windows, blinds, fans).',
+              'Clo values: light office wear ≈ 0.5–1.0 clo; met values: seated office work ≈ 1.0–1.2 met.',
+              'CIBSE TM52 — three criteria for non-domestic overheating; pass two of three.',
+              'CIBSE TM59 — adaptive method for residential, with bedroom and living-room thresholds.',
+              'BS EN ISO 7730 is the international standard for the PMV/PPD method.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section5-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section5-6">
-              Next: Building Fabric Performance
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Air infiltration and ventilation
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Building fabric performance
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

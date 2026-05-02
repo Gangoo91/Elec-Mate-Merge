@@ -1,8 +1,26 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 2 · Subsection 3 — Phase Angle and Phasor Diagrams
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   The graphical and complex-number language for AC analysis — phasors collapse a sinusoid
+ *   into a magnitude and angle so the engineer can add voltages and currents like vectors.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Phase Angle and Phasor Diagrams - HNC Module 3 Section 2.3';
@@ -207,932 +225,627 @@ const faqs = [
 ];
 
 const HNCModule3Section2_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Phase Angle and Phasor Diagrams
-          </h1>
-          <p className="text-white">
-            Understanding AC phase relationships and graphical analysis techniques for building
-            services circuits
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 2 · Subsection 3"
+            title="Phase Angle and Phasor Diagrams"
+            description="Understanding AC phase relationships and graphical analysis techniques for building services circuits"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Phase angle (phi):</strong> Angular difference between waveforms
-              </li>
-              <li className="pl-1">
-                <strong>Phasors:</strong> Rotating vectors representing AC quantities
-              </li>
-              <li className="pl-1">
-                <strong>Leading:</strong> Waveform peaks before reference (positive phi)
-              </li>
-              <li className="pl-1">
-                <strong>Lagging:</strong> Waveform peaks after reference (negative phi)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Motor circuits:</strong> Current lags voltage (inductive)
-              </li>
-              <li className="pl-1">
-                <strong>Capacitor banks:</strong> Power factor correction
-              </li>
-              <li className="pl-1">
-                <strong>Discharge lighting:</strong> Requires PF correction
-              </li>
-              <li className="pl-1">
-                <strong>VFDs:</strong> Complex harmonic phase relationships
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can represent any sinusoidal voltage or current as a phasor (magnitude \u2220 angle) and convert between time-domain v(t) = V_max sin(\u03c9t + \u03c6) and phasor V \u2220 \u03c6.',
+              'You can add and subtract phasors graphically (head-to-tail) and analytically (rectangular: a + jb, polar: r \u2220 \u03b8).',
+              'You can construct the impedance triangle (R, X, Z) and the power triangle (P, Q, S) and read the phase angle off either.',
+              'You can use phasor analysis to combine three-phase voltages 120\u00b0 apart and prove that a balanced linear three-phase load has zero neutral current.',
+              'You can spot leading and lagging power factors from the relative angle of I to V \u2014 the basis of every PFC calculation.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS EN 60044-1 / IEC 60044-1 — Instrument transformers (Current transformers)"
+            clause="The phase displacement of an instrument current transformer is the difference in phase between the primary and secondary current vectors, expressed in centiradians or minutes, with the convention that displacement is positive when the secondary current vector leads the primary."
+            meaning={
+              <>
+                Power-quality and energy-monitoring CTs in a building services switchroom
+                are specified by accuracy class AND phase displacement. A phase error of even
+                a few minutes shows up as an apparent power-factor offset on the BMS metering
+                screen \u2014 phasor arithmetic is the only way to interpret what the readings
+                actually mean.
+              </>
+            }
+            cite="Source: BS EN 60044-1; superseded by BS EN 61869 series for new equipment."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Express sinusoidal waveforms using v = Vm sin(omega t + phi)',
               'Interpret and calculate phase angles in degrees and radians',
               'Construct phasor diagrams for AC voltages and currents',
               'Add and subtract phasors graphically and mathematically',
               'Determine voltage-current phase relationships in R, L, and C',
               'Apply phasor analysis to motor starting and capacitor correction',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Sinusoidal Waveforms */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Sinusoidal Waveforms and Phase Angle
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="Phase angle measures the angular difference between AC waveforms; phasors are rotating vectors that make AC analysis easier."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Phase angle (phi):</strong> Angular difference between waveforms
+              </li>
+              <li>
+                <strong>Phasors:</strong> Rotating vectors representing AC quantities
+              </li>
+              <li>
+                <strong>Leading:</strong> Waveform peaks before reference (positive phi)
+              </li>
+              <li>
+                <strong>Lagging:</strong> Waveform peaks after reference (negative phi)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor circuits:</strong> Current lags voltage (inductive)
+              </li>
+              <li>
+                <strong>Capacitor banks:</strong> Power factor correction
+              </li>
+              <li>
+                <strong>Discharge lighting:</strong> Requires PF correction
+              </li>
+              <li>
+                <strong>VFDs:</strong> Complex harmonic phase relationships
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Sinusoidal Waveforms and Phase Angle">
             <p>
               Alternating current varies sinusoidally with time. The instantaneous value at any
               moment depends on the peak value, angular frequency, and phase angle - all captured in
               the standard sinusoidal equation.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Sinusoidal Equation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                v = V<sub>m</sub> sin(omega t + phi)
-              </p>
-              <div className="text-xs text-white space-y-1 mt-3">
-                <p>
-                  <strong>v</strong> = instantaneous voltage at time t
-                </p>
-                <p>
-                  <strong>
-                    V<sub>m</sub>
-                  </strong>{' '}
-                  = peak (maximum) voltage
-                </p>
-                <p>
-                  <strong>omega</strong> = angular frequency = 2 pi f (rad/s)
-                </p>
-                <p>
-                  <strong>t</strong> = time (seconds)
-                </p>
-                <p>
-                  <strong>phi</strong> = phase angle at t = 0 (degrees or radians)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key relationships:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Angular frequency:</strong> omega = 2 pi f = 2 x 3.14159 x 50 = 314 rad/s
-                  (UK)
-                </li>
-                <li className="pl-1">
-                  <strong>Period:</strong> T = 1/f = 1/50 = 0.02s = 20ms
-                </li>
-                <li className="pl-1">
-                  <strong>RMS value:</strong> V<sub>RMS</sub> = V<sub>m</sub> / root 2 = 0.707 x V
-                  <sub>m</sub>
-                </li>
-                <li className="pl-1">
-                  <strong>UK mains:</strong> V<sub>m</sub> = 230 x root 2 = 325V peak
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Phase Angle Interpretation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Phase Angle</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Waveform Shift</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">phi = 0 degrees</td>
-                      <td className="border border-white/10 px-3 py-2">In phase with reference</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No shift - standard sine wave
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">phi = +30 degrees</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Leads reference by 30 degrees
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shifted left (earlier in time)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">phi = -45 degrees</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lags reference by 45 degrees
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shifted right (later in time)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">phi = +90 degrees</td>
-                      <td className="border border-white/10 px-3 py-2">Leads by quarter cycle</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Starts at peak (cosine wave)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">phi = 180 degrees</td>
-                      <td className="border border-white/10 px-3 py-2">In anti-phase</td>
-                      <td className="border border-white/10 px-3 py-2">Inverted waveform</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">The Sinusoidal Equation</p>
+            <p>
+              v = V<sub>m</sub> sin(omega t + phi)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>v</strong> = instantaneous voltage at time t</li>
+              <li><strong>V<sub>m</sub></strong> = peak (maximum) voltage</li>
+              <li><strong>omega</strong> = angular frequency = 2 pi f (rad/s)</li>
+              <li><strong>t</strong> = time (seconds)</li>
+              <li><strong>phi</strong> = phase angle at t = 0 (degrees or radians)</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Key relationships:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Angular frequency:</strong> omega = 2 pi f = 2 x 3.14159 x 50 = 314 rad/s
+                (UK)
+              </li>
+              <li>
+                <strong>Period:</strong> T = 1/f = 1/50 = 0.02s = 20ms
+              </li>
+              <li>
+                <strong>RMS value:</strong> V<sub>RMS</sub> = V<sub>m</sub> / root 2 = 0.707 x V
+                <sub>m</sub>
+              </li>
+              <li>
+                <strong>UK mains:</strong> V<sub>m</sub> = 230 x root 2 = 325V peak
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Phase Angle Interpretation</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>phi = 0 degrees:</strong> In phase with reference — No shift, standard sine wave
+              </li>
+              <li>
+                <strong>phi = +30 degrees:</strong> Leads reference by 30 degrees — Shifted left (earlier in time)
+              </li>
+              <li>
+                <strong>phi = -45 degrees:</strong> Lags reference by 45 degrees — Shifted right (later in time)
+              </li>
+              <li>
+                <strong>phi = +90 degrees:</strong> Leads by quarter cycle — Starts at peak (cosine wave)
+              </li>
+              <li>
+                <strong>phi = 180 degrees:</strong> In anti-phase — Inverted waveform
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Conversion:</strong> To convert degrees to radians, multiply by pi/180. For
               example, 90 degrees = 90 x pi/180 = pi/2 radians.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Phasor Representation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Phasor Representation of AC Quantities
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Phasor Representation of AC Quantities">
             <p>
               A phasor is a rotating vector that represents a sinusoidal quantity. The length
               represents magnitude (peak or RMS), and the angle represents phase. All phasors in a
               circuit rotate at the same angular frequency omega, so we can "freeze" them and
               analyse their relative positions.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Phasor fundamentals:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Length:</strong> Represents peak or RMS magnitude
-                </li>
-                <li className="pl-1">
-                  <strong>Angle:</strong> Measured anti-clockwise from positive x-axis (reference)
-                </li>
-                <li className="pl-1">
-                  <strong>Rotation:</strong> All phasors rotate anti-clockwise at omega rad/s
-                </li>
-                <li className="pl-1">
-                  <strong>Projection:</strong> Vertical component gives instantaneous value
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Phasor Notation</p>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium mb-1">Polar form:</p>
-                  <p className="font-mono">V = |V| angle phi</p>
-                  <p className="text-white text-xs mt-1">e.g., 230V angle 30 degrees</p>
-                </div>
-                <div>
-                  <p className="font-medium mb-1">Rectangular form:</p>
-                  <p className="font-mono">V = a + jb</p>
-                  <p className="text-white text-xs mt-1">
-                    where a = |V| cos phi, b = |V| sin phi
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Drawing Phasor Diagrams
-                </p>
-                <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                  <li className="pl-1">Choose a reference phasor (usually voltage)</li>
-                  <li className="pl-1">Draw reference horizontally to the right (0 degrees)</li>
-                  <li className="pl-1">Draw other phasors at correct angle and length</li>
-                  <li className="pl-1">Leading angles: anti-clockwise from reference</li>
-                  <li className="pl-1">Lagging angles: clockwise from reference</li>
-                </ol>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Converting Forms</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Polar to rectangular:</strong>
-                    <br />a = |V| cos phi, b = |V| sin phi
-                  </li>
-                  <li className="pl-1">
-                    <strong>Rectangular to polar:</strong>
-                    <br />
-                    |V| = root(a squared + b squared)
-                    <br />
-                    phi = arctan(b/a)
-                  </li>
-                </ul>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-white">Phasor fundamentals:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Length:</strong> Represents peak or RMS magnitude
+              </li>
+              <li>
+                <strong>Angle:</strong> Measured anti-clockwise from positive x-axis (reference)
+              </li>
+              <li>
+                <strong>Rotation:</strong> All phasors rotate anti-clockwise at omega rad/s
+              </li>
+              <li>
+                <strong>Projection:</strong> Vertical component gives instantaneous value
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Phasor Notation</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Polar form:</strong> V = |V| angle phi (e.g., 230V angle 30 degrees)
+              </li>
+              <li>
+                <strong>Rectangular form:</strong> V = a + jb (where a = |V| cos phi, b = |V| sin phi)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Drawing Phasor Diagrams</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Choose a reference phasor (usually voltage)</li>
+              <li>Draw reference horizontally to the right (0 degrees)</li>
+              <li>Draw other phasors at correct angle and length</li>
+              <li>Leading angles: anti-clockwise from reference</li>
+              <li>Lagging angles: clockwise from reference</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Converting Forms</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Polar to rectangular:</strong> a = |V| cos phi, b = |V| sin phi
+              </li>
+              <li>
+                <strong>Rectangular to polar:</strong> |V| = root(a squared + b squared); phi = arctan(b/a)
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Convention:</strong> In building services, we typically use RMS values for
               phasor magnitudes unless otherwise stated.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Phase Relationships in R, L, C */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Voltage-Current Phase Relationships in R, L, C
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Voltage-Current Phase Relationships in R, L, C">
             <p>
               Each circuit element - resistor, inductor, and capacitor - has a characteristic phase
               relationship between voltage and current. Understanding these is essential for
               analysing AC circuits in building services.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Component Phase Behaviour
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Phase Relationship
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reason</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Services Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Resistor (R)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        V and I in phase
-                        <br />
-                        (phi = 0 degrees)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ohm's law: V = IR at all instants
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electric heaters, incandescent lamps
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Inductor (L)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        I lags V by 90 degrees
-                        <br />
-                        (V leads I)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Induced EMF opposes current change
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor windings, chokes, transformers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Capacitor (C)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        I leads V by 90 degrees
-                        <br />
-                        (V lags I)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current flows to charge plates before voltage builds
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PF correction capacitors, filter circuits
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">The CIVIL Mnemonic</p>
-              <p className="text-sm text-white">
-                <strong>C-I-V-I-L:</strong> In a <strong>C</strong>apacitor, <strong>I</strong>{' '}
-                leads <strong>V</strong>. In an <strong>I</strong>nductor (<strong>L</strong>),{' '}
-                <strong>V</strong> leads <strong>I</strong>.
-              </p>
-              <p className="text-xs text-white mt-2">
-                The middle letters show which quantity leads: "IV" (I leads V) for capacitor, "VI"
-                (V leads I) for inductor.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Combined Circuits</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>RL circuit:</strong> Current lags voltage by angle between 0 degrees and
-                  90 degrees
-                </li>
-                <li className="pl-1">
-                  <strong>RC circuit:</strong> Current leads voltage by angle between 0 degrees and
-                  90 degrees
-                </li>
-                <li className="pl-1">
-                  <strong>RLC circuit:</strong> Current may lead or lag depending on whether X
-                  <sub>L</sub> &gt; X<sub>C</sub> or X<sub>C</sub> &gt; X<sub>L</sub>
-                </li>
-                <li className="pl-1">
-                  <strong>At resonance:</strong> X<sub>L</sub> = X<sub>C</sub>, phase angle = 0
-                  degrees (purely resistive)
-                </li>
-              </ul>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Component Phase Behaviour</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Resistor (R):</strong> V and I in phase (phi = 0 degrees). Ohm's law: V = IR at all instants. Example: Electric heaters, incandescent lamps
+              </li>
+              <li>
+                <strong>Inductor (L):</strong> I lags V by 90 degrees (V leads I). Induced EMF opposes current change. Example: Motor windings, chokes, transformers
+              </li>
+              <li>
+                <strong>Capacitor (C):</strong> I leads V by 90 degrees (V lags I). Current flows to charge plates before voltage builds. Example: PF correction capacitors, filter circuits
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">The CIVIL Mnemonic</p>
+            <p>
+              <strong>C-I-V-I-L:</strong> In a <strong>C</strong>apacitor, <strong>I</strong>{' '}
+              leads <strong>V</strong>. In an <strong>I</strong>nductor (<strong>L</strong>),{' '}
+              <strong>V</strong> leads <strong>I</strong>.
+            </p>
+            <p>
+              The middle letters show which quantity leads: "IV" (I leads V) for capacitor, "VI"
+              (V leads I) for inductor.
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Combined Circuits</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>RL circuit:</strong> Current lags voltage by angle between 0 degrees and
+                90 degrees
+              </li>
+              <li>
+                <strong>RC circuit:</strong> Current leads voltage by angle between 0 degrees and
+                90 degrees
+              </li>
+              <li>
+                <strong>RLC circuit:</strong> Current may lead or lag depending on whether X
+                <sub>L</sub> &gt; X<sub>C</sub> or X<sub>C</sub> &gt; X<sub>L</sub>
+              </li>
+              <li>
+                <strong>At resonance:</strong> X<sub>L</sub> = X<sub>C</sub>, phase angle = 0
+                degrees (purely resistive)
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Power factor:</strong> cos(phi) where phi is the phase angle between V and I.
               Unity power factor (pf = 1) means V and I are in phase.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Phasor Addition and Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Phasor Addition and Building Services Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Phasor Addition and Building Services Applications">
             <p>
               Phasor addition is essential for calculating resultant voltages and currents in AC
               circuits. In building services, this applies to voltage drops in circuits, parallel
               branch currents, and power factor correction.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Phasor Addition Methods
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-sm mb-2">Graphical (Parallelogram)</p>
-                  <ol className="text-xs text-white space-y-1 list-decimal list-outside ml-4">
-                    <li>Draw first phasor from origin</li>
-                    <li>Draw second phasor from origin</li>
-                    <li>Complete parallelogram</li>
-                    <li>Diagonal from origin = resultant</li>
-                  </ol>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-sm mb-2">Mathematical (Rectangular)</p>
-                  <ol className="text-xs text-white space-y-1 list-decimal list-outside ml-4">
-                    <li>Convert each phasor to a + jb form</li>
-                    <li>
-                      Add real parts: a<sub>total</sub> = a<sub>1</sub> + a<sub>2</sub>
-                    </li>
-                    <li>
-                      Add imaginary parts: b<sub>total</sub> = b<sub>1</sub> + b<sub>2</sub>
-                    </li>
-                    <li>Convert back to polar if needed</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Formula for Two Phasors at Angle theta
-              </p>
-              <p className="font-mono text-center text-sm mb-2">
-                |V<sub>R</sub>| = root(V<sub>1</sub>
-                <sup>2</sup> + V<sub>2</sub>
-                <sup>2</sup> + 2V<sub>1</sub>V<sub>2</sub>cos theta)
-              </p>
-              <p className="text-xs text-white text-center">
-                Special cases: theta = 0 degrees gives V<sub>1</sub> + V<sub>2</sub>; theta = 90
-                degrees gives root(V<sub>1</sub>
-                <sup>2</sup> + V<sub>2</sub>
-                <sup>2</sup>); theta = 180 degrees gives |V<sub>1</sub> - V<sub>2</sub>|
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Applications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Phasor Analysis Use
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motor starting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High inductive current (6-8x full load) at 0.2-0.3 pf; current phasor nearly
-                        90 degrees behind voltage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Power factor correction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Capacitor current (leading) cancels inductive current (lagging); resultant
-                        closer to voltage reference
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Series voltage drops</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        V<sub>R</sub>, V<sub>L</sub>, V<sub>C</sub> add as phasors; supply = phasor
-                        sum of component voltages
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Parallel branch currents</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Total current = phasor sum of branch currents (different phases)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-phase systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Line voltages = phasor difference between phases (120 degrees apart)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Phasor Addition Methods</p>
+            <p className="text-sm font-medium text-white">Graphical (Parallelogram)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Draw first phasor from origin</li>
+              <li>Draw second phasor from origin</li>
+              <li>Complete parallelogram</li>
+              <li>Diagonal from origin = resultant</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Mathematical (Rectangular)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Convert each phasor to a + jb form</li>
+              <li>
+                Add real parts: a<sub>total</sub> = a<sub>1</sub> + a<sub>2</sub>
+              </li>
+              <li>
+                Add imaginary parts: b<sub>total</sub> = b<sub>1</sub> + b<sub>2</sub>
+              </li>
+              <li>Convert back to polar if needed</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Formula for Two Phasors at Angle theta
+            </p>
+            <p>
+              |V<sub>R</sub>| = root(V<sub>1</sub>
+              <sup>2</sup> + V<sub>2</sub>
+              <sup>2</sup> + 2V<sub>1</sub>V<sub>2</sub>cos theta)
+            </p>
+            <p>
+              Special cases: theta = 0 degrees gives V<sub>1</sub> + V<sub>2</sub>; theta = 90
+              degrees gives root(V<sub>1</sub>
+              <sup>2</sup> + V<sub>2</sub>
+              <sup>2</sup>); theta = 180 degrees gives |V<sub>1</sub> - V<sub>2</sub>|
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Building Services Applications
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor starting:</strong> High inductive current (6-8x full load) at 0.2-0.3 pf; current phasor nearly 90 degrees behind voltage
+              </li>
+              <li>
+                <strong>Power factor correction:</strong> Capacitor current (leading) cancels inductive current (lagging); resultant closer to voltage reference
+              </li>
+              <li>
+                <strong>Series voltage drops:</strong> V<sub>R</sub>, V<sub>L</sub>, V<sub>C</sub> add as phasors; supply = phasor sum of component voltages
+              </li>
+              <li>
+                <strong>Parallel branch currents:</strong> Total current = phasor sum of branch currents (different phases)
+              </li>
+              <li>
+                <strong>Three-phase systems:</strong> Line voltages = phasor difference between phases (120 degrees apart)
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Practical note:</strong> When correcting power factor from 0.7 to 0.95 on a
               50kVA load, current reduces from 71A to 53A - allowing smaller cables or more capacity
               from existing infrastructure.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">Example 1: Sinusoidal Expression</p>
+            <p>
+              <strong>Question:</strong> UK mains voltage has RMS value 230V at 50Hz, referenced
+              as 0 degrees. Write the expression for instantaneous voltage.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Peak voltage: V<sub>m</sub> = V<sub>RMS</sub> x root 2
+              </li>
+              <li>
+                V<sub>m</sub> = 230 x 1.414 = <strong>325V</strong>
+              </li>
+              <li>Angular frequency: omega = 2 pi f</li>
+              <li>
+                omega = 2 x 3.14159 x 50 = <strong>314 rad/s</strong>
+              </li>
+              <li>Phase angle: phi = 0 degrees (reference)</li>
+              <li><strong>v = 325 sin(314t) volts</strong></li>
+              <li>or equivalently: v = 325 sin(100 pi t) volts</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 2: Phase Angle from Power Factor</p>
+            <p>
+              <strong>Question:</strong> An AHU motor operates at 0.85 power factor lagging.
+              Calculate the phase angle and describe the current phasor position.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Power factor = cos(phi)</li>
+              <li>0.85 = cos(phi)</li>
+              <li>
+                phi = arccos(0.85) = <strong>31.8 degrees</strong>
+              </li>
+              <li>Since power factor is lagging (inductive load):</li>
+              <li>Current lags voltage by 31.8 degrees</li>
+              <li>On phasor diagram: draw voltage at 0 degrees, current at -31.8 degrees (clockwise from voltage)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 3: Phasor Addition for Series RL Circuit</p>
+            <p>
+              <strong>Question:</strong> A series RL circuit has V<sub>R</sub> = 120V and V
+              <sub>L</sub> = 90V. Calculate the supply voltage.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                In series RL: V<sub>R</sub> is in phase with current
+              </li>
+              <li>
+                V<sub>L</sub> leads current (and V<sub>R</sub>) by 90 degrees
+              </li>
+              <li>
+                Since V<sub>R</sub> and V<sub>L</sub> are 90 degrees apart:
+              </li>
+              <li>
+                V<sub>S</sub> = root(V<sub>R</sub>
+                <sup>2</sup> + V<sub>L</sub>
+                <sup>2</sup>)
+              </li>
+              <li>
+                V<sub>S</sub> = root(120<sup>2</sup> + 90<sup>2</sup>)
+              </li>
+              <li>
+                V<sub>S</sub> = root(14400 + 8100) = root(22500)
+              </li>
+              <li>
+                <strong>V<sub>S</sub> = 150V</strong>
+              </li>
+              <li>
+                Phase angle: phi = arctan(V<sub>L</sub>/V<sub>R</sub>) = arctan(90/120) = 36.87
+                degrees
+              </li>
+              <li>Supply leads current by 36.87 degrees</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 4: Motor Starting Current Analysis</p>
+            <p>
+              <strong>Question:</strong> A 7.5kW motor has full-load current of 15A at 0.85 pf.
+              Starting current is 6 times FLC at 0.25 pf. Analyse the starting condition.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Full-load condition:</strong></li>
+              <li>
+                I<sub>FL</sub> = 15A at pf = 0.85
+              </li>
+              <li>Phase angle = arccos(0.85) = 31.8 degrees lagging</li>
+              <li><strong>Starting condition:</strong></li>
+              <li>
+                I<sub>start</sub> = 6 x 15 = <strong>90A</strong>
+              </li>
+              <li>
+                Phase angle = arccos(0.25) = <strong>75.5 degrees lagging</strong>
+              </li>
+              <li>At start, current is nearly in quadrature with voltage</li>
+              <li>(75.5 degrees vs 90 degrees for pure inductor)</li>
+              <li>Warning: This 90A starting current causes significant voltage drop on supply cables and may require star-delta or soft starter for larger installations</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 5: Power Factor Correction with Capacitors</p>
+            <p>
+              <strong>Question:</strong> A 20kW load operates at 0.7 pf lagging. Calculate the
+              capacitor kVAr needed to improve pf to 0.95 lagging.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Original condition (pf = 0.7):</strong></li>
+              <li>
+                phi<sub>1</sub> = arccos(0.7) = 45.6 degrees
+              </li>
+              <li>
+                kVA<sub>1</sub> = kW / pf = 20 / 0.7 = 28.6 kVA
+              </li>
+              <li>
+                kVAr<sub>1</sub> = kVA x sin(phi) = 28.6 x sin(45.6) = 20.4 kVAr (lagging)
+              </li>
+              <li><strong>Target condition (pf = 0.95):</strong></li>
+              <li>
+                phi<sub>2</sub> = arccos(0.95) = 18.2 degrees
+              </li>
+              <li>
+                kVAr<sub>2</sub> = kW x tan(phi<sub>2</sub>) = 20 x tan(18.2) = 6.6 kVAr (lagging)
+              </li>
+              <li><strong>Capacitor required:</strong></li>
+              <li>
+                kVAr<sub>C</sub> = kVAr<sub>1</sub> - kVAr<sub>2</sub> = 20.4 - 6.6
+              </li>
+              <li><strong>Capacitor bank required: 13.8 kVAr (leading)</strong></li>
+              <li>Current reduction: from 28.6 / 0.23 = 124A to 21.1 / 0.23 = 92A (26% reduction)</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Sinusoidal Expression
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> UK mains voltage has RMS value 230V at 50Hz, referenced
-                as 0 degrees. Write the expression for instantaneous voltage.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Peak voltage: V<sub>m</sub> = V<sub>RMS</sub> x root 2
-                </p>
-                <p>
-                  V<sub>m</sub> = 230 x 1.414 = <strong>325V</strong>
-                </p>
-                <p className="mt-2">Angular frequency: omega = 2 pi f</p>
-                <p>
-                  omega = 2 x 3.14159 x 50 = <strong>314 rad/s</strong>
-                </p>
-                <p className="mt-2">Phase angle: phi = 0 degrees (reference)</p>
-                <p className="mt-2 text-green-400">v = 325 sin(314t) volts</p>
-                <p className="text-white mt-1">or equivalently: v = 325 sin(100 pi t) volts</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Phase Angle from Power Factor
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An AHU motor operates at 0.85 power factor lagging.
-                Calculate the phase angle and describe the current phasor position.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Power factor = cos(phi)</p>
-                <p>0.85 = cos(phi)</p>
-                <p>
-                  phi = arccos(0.85) = <strong>31.8 degrees</strong>
-                </p>
-                <p className="mt-2">Since power factor is lagging (inductive load):</p>
-                <p>Current lags voltage by 31.8 degrees</p>
-                <p className="mt-2 text-white">On phasor diagram: draw voltage at 0 degrees,</p>
-                <p className="text-white">current at -31.8 degrees (clockwise from voltage)</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>v = V<sub>m</sub> sin(omega t + phi)</strong> - Instantaneous voltage
+              </li>
+              <li>
+                <strong>omega = 2 pi f</strong> - Angular frequency (314 rad/s at 50Hz)
+              </li>
+              <li>
+                <strong>V<sub>RMS</sub> = V<sub>m</sub> / root 2</strong> - RMS from peak
+              </li>
+              <li>
+                <strong>phi = arccos(pf)</strong> - Phase angle from power factor
+              </li>
+              <li>
+                <strong>pf = cos(phi)</strong> - Power factor from phase angle
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Phasor Diagram Rules</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Choose voltage as reference (0 degrees) unless stated otherwise</li>
+              <li>Phasors rotate anti-clockwise; leading = anti-clockwise from reference</li>
+              <li>In series circuits: current is common - draw current then add voltage phasors</li>
+              <li>In parallel circuits: voltage is common - draw voltage then add current phasors</li>
+              <li>Resultant = phasor sum using parallelogram or component method</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Values to Remember</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                UK mains: omega = <strong>314 rad/s</strong>, T = <strong>20ms</strong>
+              </li>
+              <li>
+                UK mains: V<sub>peak</sub> = <strong>325V</strong>, V<sub>RMS</sub> ={' '}
+                <strong>230V</strong>
+              </li>
+              <li>
+                Pure R: phi = <strong>0 degrees</strong>, pf = 1
+              </li>
+              <li>
+                Pure L: phi = <strong>90 degrees lagging</strong>, pf = 0
+              </li>
+              <li>
+                Pure C: phi = <strong>90 degrees leading</strong>, pf = 0
+              </li>
+              <li>
+                Typical motor pf: <strong>0.8-0.9</strong> lagging (running)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Phasor Addition for Series RL Circuit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A series RL circuit has V<sub>R</sub> = 120V and V
-                <sub>L</sub> = 90V. Calculate the supply voltage.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  In series RL: V<sub>R</sub> is in phase with current
-                </p>
-                <p>
-                  V<sub>L</sub> leads current (and V<sub>R</sub>) by 90 degrees
-                </p>
-                <p className="mt-2">
-                  Since V<sub>R</sub> and V<sub>L</sub> are 90 degrees apart:
-                </p>
-                <p>
-                  V<sub>S</sub> = root(V<sub>R</sub>
-                  <sup>2</sup> + V<sub>L</sub>
-                  <sup>2</sup>)
-                </p>
-                <p>
-                  V<sub>S</sub> = root(120<sup>2</sup> + 90<sup>2</sup>)
-                </p>
-                <p>
-                  V<sub>S</sub> = root(14400 + 8100) = root(22500)
-                </p>
-                <p className="mt-2 text-green-400">
-                  V<sub>S</sub> = 150V
-                </p>
-                <p className="mt-2 text-white">
-                  Phase angle: phi = arctan(V<sub>L</sub>/V<sub>R</sub>) = arctan(90/120) = 36.87
-                  degrees
-                </p>
-                <p className="text-white">Supply leads current by 36.87 degrees</p>
-              </div>
-            </div>
+          <CommonMistake
+            title="Common phasor and phase angle mistakes"
+            whatHappens={
+              <>
+                Confusing lead/lag relationships. Adding magnitudes directly when phasors are not in
+                phase. Calculator in wrong mode (degrees vs radians). Forgetting to state whether
+                the result is leading or lagging. Mixing RMS and peak values in the same
+                calculation.
+              </>
+            }
+            doInstead={
+              <>
+                Use CIVIL: C = I leads V, L = V leads I. Only add magnitudes directly when in
+                phase; otherwise use phasor sum. Check calculator mode before using arccos/arctan.
+                Always state direction (leading/lagging). Be explicit which value (RMS or peak) is
+                being used.
+              </>
+            }
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Motor Starting Current Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 7.5kW motor has full-load current of 15A at 0.85 pf.
-                Starting current is 6 times FLC at 0.25 pf. Analyse the starting condition.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Full-load condition:</strong>
-                </p>
-                <p>
-                  I<sub>FL</sub> = 15A at pf = 0.85
-                </p>
-                <p>Phase angle = arccos(0.85) = 31.8 degrees lagging</p>
-                <p className="mt-2">
-                  <strong>Starting condition:</strong>
-                </p>
-                <p>
-                  I<sub>start</sub> = 6 x 15 = <strong>90A</strong>
-                </p>
-                <p>
-                  Phase angle = arccos(0.25) = <strong>75.5 degrees lagging</strong>
-                </p>
-                <p className="mt-3 text-white">
-                  At start, current is nearly in quadrature with voltage
-                </p>
-                <p className="text-white">(75.5 degrees vs 90 degrees for pure inductor)</p>
-                <p className="mt-2 text-orange-400">
-                  Warning: This 90A starting current causes significant
-                </p>
-                <p className="text-orange-400">voltage drop on supply cables and may require</p>
-                <p className="text-orange-400">
-                  star-delta or soft starter for larger installations
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 5: Power Factor Correction with Capacitors
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 20kW load operates at 0.7 pf lagging. Calculate the
-                capacitor kVAr needed to improve pf to 0.95 lagging.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Original condition (pf = 0.7):</strong>
-                </p>
-                <p>
-                  phi<sub>1</sub> = arccos(0.7) = 45.6 degrees
-                </p>
-                <p>
-                  kVA<sub>1</sub> = kW / pf = 20 / 0.7 = 28.6 kVA
-                </p>
-                <p>
-                  kVAr<sub>1</sub> = kVA x sin(phi) = 28.6 x sin(45.6) = 20.4 kVAr (lagging)
-                </p>
-                <p className="mt-2">
-                  <strong>Target condition (pf = 0.95):</strong>
-                </p>
-                <p>
-                  phi<sub>2</sub> = arccos(0.95) = 18.2 degrees
-                </p>
-                <p>
-                  kVAr<sub>2</sub> = kW x tan(phi<sub>2</sub>) = 20 x tan(18.2) = 6.6 kVAr (lagging)
-                </p>
-                <p className="mt-2">
-                  <strong>Capacitor required:</strong>
-                </p>
-                <p>
-                  kVAr<sub>C</sub> = kVAr<sub>1</sub> - kVAr<sub>2</sub> = 20.4 - 6.6
-                </p>
-                <p className="mt-2 text-green-400">Capacitor bank required: 13.8 kVAr (leading)</p>
-                <p className="mt-2 text-white">Current reduction: from 28.6 / 0.23 = 124A</p>
-                <p className="text-white">to 21.1 / 0.23 = 92A (26% reduction)</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Diagnosing a phase-rotation alarm on a new VFD-driven AHU"
+            situation={
+              <>
+                You have just energised a new variable-speed AHU fed from a 400 V three-phase
+                VFD. The drive is showing a phase-rotation alarm and refusing to run. The
+                building services BMS metering on the same supply reads correct line voltages
+                but flags an unusual reverse-power indication on one of the CTs.
+              </>
+            }
+            whatToDo={
+              <>
+                Sketch the supply phasor diagram \u2014 in a healthy 400 V system, V_L1, V_L2,
+                V_L3 sit 120\u00b0 apart in positive sequence (L1 \u2192 L2 \u2192 L3 anticlockwise).
+                Verify with a phase-rotation meter at the panel terminals. If the meter
+                confirms reverse rotation, swap any two phases at the upstream feeder. The CT
+                reverse-power flag is the same problem expressed in phasor terms \u2014 the
+                current phasor on the misconnected channel is sitting 180\u00b0 from where the
+                BMS expects it. Re-check after the swap and clear both alarms.
+              </>
+            }
+            whyItMatters={
+              <>
+                Phasor diagrams turn an abstract \u201cphase rotation\u201d alarm into a picture you
+                can fix. Without phasor reasoning you would be guessing at terminations \u2014
+                with it, the diagnosis is one sketch and one swap.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <FAQ items={faqs} />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>
-                    v = V<sub>m</sub> sin(omega t + phi)
-                  </strong>{' '}
-                  - Instantaneous voltage
-                </li>
-                <li className="pl-1">
-                  <strong>omega = 2 pi f</strong> - Angular frequency (314 rad/s at 50Hz)
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    V<sub>RMS</sub> = V<sub>m</sub> / root 2
-                  </strong>{' '}
-                  - RMS from peak
-                </li>
-                <li className="pl-1">
-                  <strong>phi = arccos(pf)</strong> - Phase angle from power factor
-                </li>
-                <li className="pl-1">
-                  <strong>pf = cos(phi)</strong> - Power factor from phase angle
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Phasor Diagram Rules</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Choose voltage as reference (0 degrees) unless stated otherwise
-                </li>
-                <li className="pl-1">
-                  Phasors rotate anti-clockwise; leading = anti-clockwise from reference
-                </li>
-                <li className="pl-1">
-                  In series circuits: current is common - draw current then add voltage phasors
-                </li>
-                <li className="pl-1">
-                  In parallel circuits: voltage is common - draw voltage then add current phasors
-                </li>
-                <li className="pl-1">
-                  Resultant = phasor sum using parallelogram or component method
-                </li>
-              </ul>
-            </div>
+          <KeyTakeaways
+            points={[
+              'A phasor is a frozen snapshot of a sinusoid \u2014 magnitude (RMS) and angle (phase). Time disappears, geometry takes over.',
+              'Time-to-phasor: v(t) = V_max sin(\u03c9t + \u03c6) \u2192 V = V_RMS \u2220 \u03c6.',
+              'Polar to rectangular: r \u2220 \u03b8 = r cos\u03b8 + j r sin\u03b8. Use rectangular for addition; use polar for multiplication and division.',
+              'Phasor addition obeys the parallelogram rule \u2014 the sum of two AC voltages is NOT just the arithmetic sum unless they are in phase.',
+              'Three-phase balanced linear load: I_L1 + I_L2 + I_L3 = 0 by phasor sum \u2014 the basis of zero neutral current and the equilateral phasor triangle.',
+              'Impedance triangle (R, X_L\u2212X_C, Z) and power triangle (P, Q, S) share the same phase angle \u03c6.',
+              'Lagging PF (inductive load) \u2192 current phasor sits behind voltage phasor. Leading PF (capacitive load) \u2192 current phasor sits ahead.',
+              'CT phase displacement (BS EN 61869 / IEC 60044-1) shows up directly as a power-factor error on the metering screen \u2014 phasor arithmetic decodes it.',
+            ]}
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  UK mains: omega = <strong>314 rad/s</strong>, T = <strong>20ms</strong>
-                </li>
-                <li className="pl-1">
-                  UK mains: V<sub>peak</sub> = <strong>325V</strong>, V<sub>RMS</sub> ={' '}
-                  <strong>230V</strong>
-                </li>
-                <li className="pl-1">
-                  Pure R: phi = <strong>0 degrees</strong>, pf = 1
-                </li>
-                <li className="pl-1">
-                  Pure L: phi = <strong>90 degrees lagging</strong>, pf = 0
-                </li>
-                <li className="pl-1">
-                  Pure C: phi = <strong>90 degrees leading</strong>, pf = 0
-                </li>
-                <li className="pl-1">
-                  Typical motor pf: <strong>0.8-0.9</strong> lagging (running)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Confusing lead/lag</strong> - Remember CIVIL: C = I leads V, L = V leads I
-                </li>
-                <li className="pl-1">
-                  <strong>Adding magnitudes directly</strong> - Only valid when phasors are in phase
-                </li>
-                <li className="pl-1">
-                  <strong>Degrees vs radians</strong> - Calculator must be in correct mode
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting direction</strong> - State whether leading or lagging
-                </li>
-                <li className="pl-1">
-                  <strong>RMS vs peak</strong> - Be clear which is being used in calculations
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Sinusoidal Quantities</p>
-                <ul className="space-y-0.5">
-                  <li>
-                    v = V<sub>m</sub> sin(omega t + phi)
-                  </li>
-                  <li>omega = 2 pi f = 314 rad/s (50Hz)</li>
-                  <li>
-                    V<sub>RMS</sub> = V<sub>m</sub> / root 2
-                  </li>
-                  <li>UK: 325V peak, 230V RMS</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Phase Relationships</p>
-                <ul className="space-y-0.5">
-                  <li>Resistor: V and I in phase</li>
-                  <li>Inductor: I lags V by 90 degrees</li>
-                  <li>Capacitor: I leads V by 90 degrees</li>
-                  <li>pf = cos(phi)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section2-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Capacitance
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section2-4">
-              Next: Complex Notation
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Capacitance
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Complex Notation
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

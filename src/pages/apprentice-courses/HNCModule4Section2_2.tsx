@@ -1,8 +1,26 @@
-import { ArrowLeft, TrendingDown, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 2 · Subsection 2 — Voltage Drop Calculations
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   BS 7671 voltage drop limits (3% lighting, 5% power), the mV/A/m method, three-phase
+ *   formulas and motor starting / long-run mitigations.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Voltage Drop Calculations - HNC Module 4 Section 2.2';
@@ -207,708 +225,446 @@ const faqs = [
 ];
 
 const HNCModule4Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <TrendingDown className="h-4 w-4" />
-            <span>Module 4.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Voltage Drop Calculations
-          </h1>
-          <p className="text-white">
-            Ensuring adequate voltage at the load through proper cable sizing and route planning
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 2 · Subsection 2"
+            title="Voltage Drop Calculations"
+            description="Ensuring adequate voltage at the load through proper cable sizing and route planning."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Power circuits:</strong> Maximum 5% drop (11.5V at 230V)
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> Maximum 3% drop (6.9V at 230V)
-              </li>
-              <li className="pl-1">
-                <strong>Formula:</strong> Vd = (mV/A/m × I × L) / 1000
-              </li>
-              <li className="pl-1">
-                <strong>Solution:</strong> Increase cable size or reduce length
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Long risers:</strong> Often voltage drop critical
-              </li>
-              <li className="pl-1">
-                <strong>Motor starting:</strong> Transient drops to consider
-              </li>
-              <li className="pl-1">
-                <strong>LED lighting:</strong> Sensitive to supply voltage
-              </li>
-              <li className="pl-1">
-                <strong>Sub-mains:</strong> Allocate drop wisely
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'BS 7671 Appendix 4, Section 6.4 sets the voltage-drop limits: 3% lighting, 5% other circuits, on installations supplied from the public LV network.',
+              'V_d = (mV/A/m × I_b × L) / 1000 — the mV/A/m figures come straight from Appendix 4 cable tables and already account for cable type and reference method.',
+              'Voltage drop is cumulative — sub-main + final circuit must together stay inside the limit. Allocate ≈ 1–2% to sub-mains, leaving ≈ 3% for the final circuit.',
+              'For long runs, motor inrush, EV chargers and other reactive loads, the mV/A/m must be the impedance value (mV/A/m_z), not just resistance.',
+              'BS 7671 Reg 525.202 confirms compliance is &lsquo;deemed satisfied&rsquo; when measured V_d at the socket or fixed-equipment terminals does not exceed Appendix 4 limits.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 525.202 (Voltage drop in consumers' installations)"
+            clause="The voltage drop between the origin of the installation (usually the supply terminals) and a socket-outlet or the terminals of fixed current-using equipment shall not exceed the values stated in Appendix 4, Section 6.4. This requirement is deemed to be satisfied when those values are met."
+            meaning={
+              <>
+                Reg 525.202 makes voltage-drop compliance a measured outcome at the end of the
+                cable, not just a calculation. The Appendix 4 limits (3% lighting, 5% other) are
+                cumulative from the supply origin to the final outlet. As the designer, your
+                budget split — typically 1–2% on the sub-main, 3% on the final circuit — has to
+                add up. Long runs, high power-factor loads and grouped circuits all eat the
+                budget faster than the basic tables suggest.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 525.202; BS 7671 Appendix 4, Section 6.4."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Apply BS 7671 voltage drop limits for different circuit types',
               'Use the mV/A/m method for voltage drop calculations',
               'Calculate voltage drop for single and three-phase circuits',
               'Account for power factor in reactive load calculations',
               'Size cables for long cable runs and motor circuits',
               'Allocate voltage drop between mains and final circuits',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: BS 7671 Voltage Drop Limits */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BS 7671 Voltage Drop Limits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="BS 7671 Voltage Drop Limits">
             <p>
               BS 7671 Appendix 4 specifies maximum voltage drop limits to ensure equipment operates
               correctly and efficiently. These limits apply from the origin of the installation to
               the most distant point.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Permitted Voltage Drop Limits
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Circuit Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Limit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">At 230V</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">At 400V</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">3%</td>
-                      <td className="border border-white/10 px-3 py-2">6.9V</td>
-                      <td className="border border-white/10 px-3 py-2">12V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Other circuits (power)</td>
-                      <td className="border border-white/10 px-3 py-2">5%</td>
-                      <td className="border border-white/10 px-3 py-2">11.5V</td>
-                      <td className="border border-white/10 px-3 py-2">20V</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Allocating Voltage Drop
-              </p>
-              <p className="text-sm text-white mb-2">
-                The total permitted drop can be split between different parts of the installation:
-              </p>
-              <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Sub-main</p>
-                  <p className="text-white">Origin to DB</p>
-                  <p className="text-lg mt-1">2-3%</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">+</p>
-                  <p className="text-white opacity-0">spacer</p>
-                  <p className="text-lg mt-1">&nbsp;</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Final Circuit</p>
-                  <p className="text-white">DB to load</p>
-                  <p className="text-lg mt-1">2-3%</p>
-                </div>
-              </div>
-              <p className="text-xs text-white mt-2 text-center">
-                Combined total must not exceed 5% (power) or 3% (lighting)
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Permitted voltage drop limits (limit / at 230V / at 400V):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lighting:</strong> 3% / 6.9V / 12V
+              </li>
+              <li>
+                <strong>Other circuits (power):</strong> 5% / 11.5V / 20V
+              </li>
+            </ul>
+            <p>
+              <strong>Allocating voltage drop:</strong> the total permitted drop can be split
+              between different parts of the installation:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sub-main (origin to DB):</strong> 2-3%
+              </li>
+              <li>
+                <strong>Final circuit (DB to load):</strong> 2-3%
+              </li>
+              <li>Combined total must not exceed 5% (power) or 3% (lighting)</li>
+            </ul>
+            <p>
               <strong>Design tip:</strong> Allow 2.5% for sub-mains and 2.5% for final circuits as a
               balanced starting point.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: The mV/A/m Method */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The mV/A/m Method
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="The mV/A/m Method">
             <p>
               BS 7671 Appendix 4 provides mV/A/m values for each cable type and size. This method
               simplifies voltage drop calculations by combining cable resistance and reactance into
               a single value.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voltage Drop Formulas</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-center text-sm">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Single-Phase</p>
-                  <p className="font-mono">Vd = (mV/A/m × I × L) / 1000</p>
-                  <p className="text-white text-xs mt-1">Result in Volts</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Three-Phase</p>
-                  <p className="font-mono">Vd = (mV/A/m × I × L) / 1000</p>
-                  <p className="text-white text-xs mt-1">Use 3φ column values</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical mV/A/m Values (PVC/copper at 70°C)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Cable Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">2-core 1φ</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">3/4-core 3φ</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.5mm²</td>
-                      <td className="border border-white/10 px-3 py-2">29</td>
-                      <td className="border border-white/10 px-3 py-2">25</td>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2.5mm²</td>
-                      <td className="border border-white/10 px-3 py-2">18</td>
-                      <td className="border border-white/10 px-3 py-2">15</td>
-                      <td className="border border-white/10 px-3 py-2">Sockets, FCUs</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4mm²</td>
-                      <td className="border border-white/10 px-3 py-2">11</td>
-                      <td className="border border-white/10 px-3 py-2">9.5</td>
-                      <td className="border border-white/10 px-3 py-2">Water heaters</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6mm²</td>
-                      <td className="border border-white/10 px-3 py-2">7.3</td>
-                      <td className="border border-white/10 px-3 py-2">6.4</td>
-                      <td className="border border-white/10 px-3 py-2">Showers, cookers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10mm²</td>
-                      <td className="border border-white/10 px-3 py-2">4.4</td>
-                      <td className="border border-white/10 px-3 py-2">3.8</td>
-                      <td className="border border-white/10 px-3 py-2">Sub-mains</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">16mm²</td>
-                      <td className="border border-white/10 px-3 py-2">2.8</td>
-                      <td className="border border-white/10 px-3 py-2">2.4</td>
-                      <td className="border border-white/10 px-3 py-2">Distribution</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25mm²</td>
-                      <td className="border border-white/10 px-3 py-2">1.75</td>
-                      <td className="border border-white/10 px-3 py-2">1.5</td>
-                      <td className="border border-white/10 px-3 py-2">Main distribution</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Voltage drop formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single-phase:</strong> Vd = (mV/A/m × I × L) / 1000 — result in volts
+              </li>
+              <li>
+                <strong>Three-phase:</strong> Vd = (mV/A/m × I × L) / 1000 — use 3φ column values
+              </li>
+            </ul>
+            <p>
+              <strong>Typical mV/A/m values (PVC/copper at 70°C, 2-core 1φ / 3-4-core 3φ /
+              typical use):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1.5mm²: 29 / 25 / lighting</li>
+              <li>2.5mm²: 18 / 15 / sockets, FCUs</li>
+              <li>4mm²: 11 / 9.5 / water heaters</li>
+              <li>6mm²: 7.3 / 6.4 / showers, cookers</li>
+              <li>10mm²: 4.4 / 3.8 / sub-mains</li>
+              <li>16mm²: 2.8 / 2.4 / distribution</li>
+              <li>25mm²: 1.75 / 1.5 / main distribution</li>
+            </ul>
+            <p>
               <strong>Note:</strong> XLPE cables have slightly lower mV/A/m values than PVC due to
               lower resistance at operating temperature.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Three-Phase Calculations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Three-Phase Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Three-Phase Calculations">
             <p>
               Three-phase voltage drop calculations use the same formula but with different mV/A/m
               values. The result is the line-to-line voltage drop, which is compared against the
               400V supply.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Three-Phase Voltage Drop
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center font-mono">
-                <p className="text-lg">
-                  Vd = (mV/A/m<sub>3φ</sub> × I<sub>L</sub> × L) / 1000
-                </p>
-              </div>
-              <p className="text-xs text-white mt-2 text-center">
-                Where IL is the line current and L is the cable length in metres
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Balanced Three-Phase</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Use 3-core or 4-core cable values</li>
-                  <li className="pl-1">No neutral current in balanced loads</li>
-                  <li className="pl-1">Compare drop against 400V line voltage</li>
-                  <li className="pl-1">5% limit = 20V at 400V</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Unbalanced Three-Phase
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Neutral carries unbalanced current</li>
-                  <li className="pl-1">Calculate each phase separately</li>
-                  <li className="pl-1">Worst-case phase determines cable size</li>
-                  <li className="pl-1">Consider harmonic currents in neutrals</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Reactive Loads - Power Factor Correction
-              </p>
-              <p className="text-sm text-white mb-2">
-                For inductive loads (motors), calculate effective mV/A/m using resistance (r) and
-                reactance (x) components:
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center font-mono text-sm">
-                <p>mV/A/m = (r × cos φ) + (x × sin φ)</p>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Where cos φ is the power factor. For pf = 0.85: sin φ = 0.527
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Three-phase voltage drop:</strong> Vd = (mV/A/m₃φ × IL × L) / 1000, where IL
+              is the line current and L is the cable length in metres.
+            </p>
+            <p>
+              <strong>Balanced three-phase:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use 3-core or 4-core cable values</li>
+              <li>No neutral current in balanced loads</li>
+              <li>Compare drop against 400V line voltage</li>
+              <li>5% limit = 20V at 400V</li>
+            </ul>
+            <p>
+              <strong>Unbalanced three-phase:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Neutral carries unbalanced current</li>
+              <li>Calculate each phase separately</li>
+              <li>Worst-case phase determines cable size</li>
+              <li>Consider harmonic currents in neutrals</li>
+            </ul>
+            <p>
+              <strong>Reactive loads — power factor correction:</strong> For inductive loads
+              (motors), calculate effective mV/A/m using resistance (r) and reactance (x)
+              components: mV/A/m = (r × cos φ) + (x × sin φ). Where cos φ is the power factor; for
+              pf = 0.85, sin φ = 0.527.
+            </p>
+            <p>
               <strong>Design note:</strong> Three-phase mV/A/m values are approximately 0.866 (√3/2)
               times single-phase values due to the phase relationship.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 4: Motor Starting and Long Cable Runs */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Motor Starting and Long Cable Runs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Motor Starting and Long Cable Runs">
             <p>
               Motor starting currents and long cable runs present special challenges for voltage
               drop. These situations often determine the final cable size rather than
               current-carrying capacity.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Motor Starting Considerations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Starting Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Starting Current
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Voltage Drop Impact
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Direct-on-line (DOL)</td>
-                      <td className="border border-white/10 px-3 py-2">6-8 × FLC</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">Highest</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Star-delta</td>
-                      <td className="border border-white/10 px-3 py-2">2-3 × FLC</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Soft starter</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 × FLC</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-300">
-                        Controlled
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VSD/inverter</td>
-                      <td className="border border-white/10 px-3 py-2">1-1.5 × FLC</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Minimal</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Long Cable Run Strategies
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Increase cable size:</strong> Lower resistance = lower drop (most common
-                  solution)
-                </li>
-                <li className="pl-1">
-                  <strong>Local sub-distribution:</strong> Reduce final circuit lengths by adding
-                  local DBs
-                </li>
-                <li className="pl-1">
-                  <strong>Higher voltage distribution:</strong> Use 400V 3φ to local transformers
-                </li>
-                <li className="pl-1">
-                  <strong>Parallel cables:</strong> Two smaller cables share current (complex
-                  installation)
-                </li>
-                <li className="pl-1">
-                  <strong>Copper vs aluminium:</strong> Copper has lower resistance per mm²
-                </li>
-              </ol>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Motor Starting Drop Example
-              </p>
-              <div className="text-sm text-white">
-                <p>15kW motor, FLC = 26A, 50m cable run, 10mm² cable (mV/A/m = 3.8)</p>
-                <p className="mt-2">
-                  <strong>Running:</strong> Vd = (3.8 × 26 × 50) / 1000 ={' '}
-                  <span className="text-green-400">4.9V (1.2%)</span>
-                </p>
-                <p>
-                  <strong>DOL start (7× FLC):</strong> Vd = (3.8 × 182 × 50) / 1000 ={' '}
-                  <span className="text-orange-400">34.6V (8.7%)</span>
-                </p>
-                <p className="mt-2 text-white">
-                  → Running voltage drop acceptable; consider soft starter or VSD for starting
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Motor starting considerations (starting current / voltage drop impact):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Direct-on-line (DOL):</strong> 6-8 × FLC — highest impact
+              </li>
+              <li>
+                <strong>Star-delta:</strong> 2-3 × FLC — moderate impact
+              </li>
+              <li>
+                <strong>Soft starter:</strong> 2-4 × FLC — controlled
+              </li>
+              <li>
+                <strong>VSD/inverter:</strong> 1-1.5 × FLC — minimal
+              </li>
+            </ul>
+            <p>
+              <strong>Long cable run strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Increase cable size:</strong> lower resistance = lower drop (most common
+                solution)
+              </li>
+              <li>
+                <strong>Local sub-distribution:</strong> reduce final circuit lengths by adding
+                local DBs
+              </li>
+              <li>
+                <strong>Higher voltage distribution:</strong> use 400V 3φ to local transformers
+              </li>
+              <li>
+                <strong>Parallel cables:</strong> two smaller cables share current (complex
+                installation)
+              </li>
+              <li>
+                <strong>Copper vs aluminium:</strong> copper has lower resistance per mm²
+              </li>
+            </ul>
+            <p>
+              <strong>Motor starting drop example:</strong> 15kW motor, FLC = 26A, 50m cable run,
+              10mm² cable (mV/A/m = 3.8).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Running:</strong> Vd = (3.8 × 26 × 50) / 1000 = 4.9V (1.2%)
+              </li>
+              <li>
+                <strong>DOL start (7× FLC):</strong> Vd = (3.8 × 182 × 50) / 1000 = 34.6V (8.7%)
+              </li>
+              <li>Running voltage drop acceptable; consider soft starter or VSD for starting</li>
+            </ul>
+            <p>
               <strong>Remember:</strong> Motor starting drops are transient (seconds) and equipment
               may tolerate brief dips. Check manufacturer specifications for minimum starting
               voltage.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — single-phase socket circuit:</strong> A 32A radial circuit uses
+              4mm² cable for a 35m run. Calculate voltage drop and check compliance.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>mV/A/m for 4mm² 2-core = 11</li>
+              <li>Vd = (11 × 32 × 35) / 1000</li>
+              <li>
+                Vd = 12,320 / 1000 = <strong>12.3V</strong>
+              </li>
+              <li>
+                As percentage: (12.3 / 230) × 100 = <strong>5.35%</strong>
+              </li>
+              <li>Exceeds 5% limit for final circuit</li>
+              <li>Solution: upgrade to 6mm² (mV/A/m = 7.3)</li>
+              <li>
+                Vd = (7.3 × 32 × 35) / 1000 = <strong>8.2V (3.6%)</strong> — within limits
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — lighting circuit:</strong> A lighting circuit serves luminaires
+              45m from the DB. Maximum current 8A. What cable size?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lighting limit: 3% of 230V = 6.9V maximum</li>
+              <li>Try 1.5mm² (mV/A/m = 29): Vd = (29 × 8 × 45) / 1000 = 10.4V — exceeds 3% limit</li>
+              <li>Try 2.5mm² (mV/A/m = 18): Vd = (18 × 8 × 45) / 1000 = 6.5V (2.8%) — within 3% limit</li>
+              <li>2.5mm² required despite 1.5mm² having adequate current capacity</li>
+            </ul>
+            <p>
+              <strong>Example 3 — three-phase sub-main:</strong> Size a 3-phase sub-main for 80A
+              balanced load, 60m length, allocated 2.5% drop.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Maximum Vd = 2.5% of 400V = <strong>10V</strong>
+              </li>
+              <li>Required mV/A/m = (Vd × 1000) / (I × L)</li>
+              <li>
+                Required mV/A/m = (10 × 1000) / (80 × 60) = <strong>2.08</strong>
+              </li>
+              <li>From tables (3φ values): 16mm² = 2.4 mV/A/m (too high), 25mm² = 1.5 mV/A/m (adequate)</li>
+              <li>
+                Check: Vd = (1.5 × 80 × 60) / 1000 = <strong>7.2V (1.8%)</strong>
+              </li>
+              <li>Select 25mm² 4-core XLPE/SWA</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Single-Phase Socket Circuit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 32A radial circuit uses 4mm² cable for a 35m run.
-                Calculate voltage drop and check compliance.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>mV/A/m for 4mm² 2-core = 11</p>
-                <p className="mt-2">Vd = (11 × 32 × 35) / 1000</p>
-                <p>
-                  Vd = 12,320 / 1000 = <strong>12.3V</strong>
-                </p>
-                <p className="mt-2">
-                  As percentage: (12.3 / 230) × 100 = <strong>5.35%</strong>
-                </p>
-                <p className="mt-2 text-orange-400">✗ Exceeds 5% limit for final circuit</p>
-                <p className="mt-2">Solution: Upgrade to 6mm² (mV/A/m = 7.3)</p>
-                <p>
-                  Vd = (7.3 × 32 × 35) / 1000 = <strong>8.2V (3.6%)</strong>
-                </p>
-                <p className="text-green-400">✓ Within limits</p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Lighting Circuit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A lighting circuit serves luminaires 45m from the DB.
-                Maximum current 8A. What cable size?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Lighting limit: 3% of 230V = 6.9V maximum</p>
-                <p className="mt-2">Try 1.5mm² (mV/A/m = 29):</p>
-                <p>
-                  Vd = (29 × 8 × 45) / 1000 = <strong>10.4V</strong>
-                </p>
-                <p className="text-orange-400">✗ Exceeds 3% limit</p>
-                <p className="mt-2">Try 2.5mm² (mV/A/m = 18):</p>
-                <p>
-                  Vd = (18 × 8 × 45) / 1000 = <strong>6.5V (2.8%)</strong>
-                </p>
-                <p className="text-green-400">✓ Within 3% limit</p>
-                <p className="mt-2 text-white">
-                  → 2.5mm² required despite 1.5mm² having adequate current capacity
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Three-Phase Sub-Main
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Size a 3-phase sub-main for 80A balanced load, 60m
-                length, allocated 2.5% drop.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Maximum Vd = 2.5% of 400V = <strong>10V</strong>
-                </p>
-                <p className="mt-2">Required mV/A/m = (Vd × 1000) / (I × L)</p>
-                <p>
-                  Required mV/A/m = (10 × 1000) / (80 × 60) = <strong>2.08</strong>
-                </p>
-                <p className="mt-2">From tables (3φ values):</p>
-                <p>16mm² = 2.4 mV/A/m (too high)</p>
-                <p>25mm² = 1.5 mV/A/m (adequate)</p>
-                <p className="mt-2">
-                  Check: Vd = (1.5 × 80 × 60) / 1000 = <strong>7.2V (1.8%)</strong>
-                </p>
-                <p className="text-green-400">✓ Select 25mm² 4-core XLPE/SWA</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Vd = (mV/A/m × I × L) / 1000</strong> — basic voltage drop
+              </li>
+              <li>
+                <strong>Vd% = (Vd / Uo) × 100</strong> — percentage drop
+              </li>
+              <li>
+                <strong>Max mV/A/m = (Vd max × 1000) / (I × L)</strong> — for cable selection
+              </li>
+              <li>
+                <strong>mV/A/m = (r × cos φ) + (x × sin φ)</strong> — power factor adjusted
+              </li>
+            </ul>
+            <p>
+              <strong>Building services best practice:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Calculate voltage drop early in design — it often determines cable size</li>
+              <li>Consider future load growth when allocating voltage drop budgets</li>
+              <li>Use XLPE cables for long runs — slightly better mV/A/m values</li>
+              <li>Position distribution boards to minimise final circuit lengths</li>
+              <li>Document voltage drop calculations in design records</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Vd = (mV/A/m × I × L) / 1000</strong> — Basic voltage drop
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Doubling mV/A/m</strong> — values already include both conductors
                 </li>
-                <li className="pl-1">
-                  <strong>Vd% = (Vd / Uo) × 100</strong> — Percentage drop
+                <li>
+                  <strong>Wrong column</strong> — use 1φ values for single-phase, 3φ for three-phase
                 </li>
-                <li className="pl-1">
-                  <strong>Max mV/A/m = (Vd max × 1000) / (I × L)</strong> — For cable selection
+                <li>
+                  <strong>Forgetting to convert</strong> — divide by 1000 to get volts
                 </li>
-                <li className="pl-1">
-                  <strong>mV/A/m = (r × cosφ) + (x × sinφ)</strong> — Power factor adjusted
+                <li>
+                  <strong>Ignoring sub-main drop</strong> — total must include all sections
                 </li>
               </ul>
-            </div>
+            }
+            doInstead="Trust the BS 7671 column for the system you have, divide by 1000 once, and always sum the sub-main drop together with the final circuit drop against the 3% / 5% limit."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Best Practice
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Calculate voltage drop early in design - it often determines cable size
-                </li>
-                <li className="pl-1">
-                  Consider future load growth when allocating voltage drop budgets
-                </li>
-                <li className="pl-1">
-                  Use XLPE cables for long runs - slightly better mV/A/m values
-                </li>
-                <li className="pl-1">
-                  Position distribution boards to minimise final circuit lengths
-                </li>
-                <li className="pl-1">Document voltage drop calculations in design records</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Doubling mV/A/m</strong> — Values already include both conductors
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong column</strong> — Use 1φ values for single-phase, 3φ for three-phase
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting to convert</strong> — Divide by 1000 to get Volts
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring sub-main drop</strong> — Total must include all sections
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Long sub-main to a remote workshop — sizing for a 5% budget"
+            situation={
+              <>
+                A new workshop is being added to an existing site. The 100&nbsp;A 400&nbsp;V
+                three-phase sub-main runs 75&nbsp;m from the main switchroom to the workshop DB.
+                Connected design current I_b = 80&nbsp;A. The site target is 1.5% V_d on the
+                sub-main, leaving 3.5% headroom for the workshop final circuits (a CNC machine
+                with a high-inertia motor among them).
+              </>
+            }
+            whatToDo={
+              <>
+                V_d_max = 1.5% × 400 = 6&nbsp;V. Required mV/A/m = (V_d × 1000) / (I_b × L) =
+                (6 × 1000) / (80 × 75) = 1.0&nbsp;mV/A/m. From Appendix 4 Table 4D1B reference
+                method E, three-phase XLPE: 25&nbsp;mm² gives ≈ 1.5&nbsp;mV/A/m, 35&nbsp;mm²
+                gives ≈ 1.1&nbsp;mV/A/m, 50&nbsp;mm² gives ≈ 0.81&nbsp;mV/A/m. Pick
+                50&nbsp;mm². Verify the impedance value (z) — the CNC has a low-pf inrush so
+                use the mV/A/m_z column, not just the resistive r column. Document on the cable
+                schedule against Reg 525.202.
+              </>
+            }
+            whyItMatters={
+              <>
+                Reg 525.202 makes the V_d limit a deemed-to-satisfy compliance test. Skimp on
+                the sub-main and every final circuit downstream starts with less budget — the
+                CNC then sees voltage dips on motor inrush, trips on under-voltage relays, and
+                the workshop loses production hours. Larger cable upfront is cheaper than a
+                rip-and-replace later.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Voltage Drop Limits</p>
-                <ul className="space-y-0.5">
-                  <li>Lighting: 3% (6.9V at 230V)</li>
-                  <li>Power: 5% (11.5V at 230V)</li>
-                  <li>Three-phase: 5% (20V at 400V)</li>
-                  <li>Total = sub-main + final circuit</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Quick mV/A/m Values (PVC Cu)</p>
-                <ul className="space-y-0.5">
-                  <li>1.5mm²: 29 (1φ), 25 (3φ)</li>
-                  <li>2.5mm²: 18 (1φ), 15 (3φ)</li>
-                  <li>4mm²: 11 (1φ), 9.5 (3φ)</li>
-                  <li>6mm²: 7.3 (1φ), 6.4 (3φ)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              'Appendix 4, Section 6.4 limits: 3% lighting, 5% other for installations supplied from the public LV distribution network.',
+              'Reg 525.202 makes V_d compliance a deemed-to-satisfy measured outcome — the limit is cumulative from origin to outlet.',
+              'V_d = (mV/A/m × I_b × L) / 1000. mV/A/m comes from Appendix 4 cable tables — pick r (resistance) for unity pf or z (impedance) for reactive loads.',
+              'Allocate the budget across the design: typically 1–2% sub-main, leaving ≈ 3% for final circuits.',
+              'For motor circuits: include the inrush in the V_d check — voltage dip on starting can drop sensitive equipment off-line elsewhere on the board.',
+              'Long runs go thicker than current alone needs — V_d, not thermal capacity, is usually the binding constraint.',
+              'Three-phase: V_d uses √3 in the denominator and is per-phase; balance loads to minimise neutral current and per-phase drop.',
+              'Always document the V_d figure on the cable schedule alongside I_b, I_n, I_z — it is what verification under Part 6 checks.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: Current-Carrying Capacity
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2-3">
-              Next: Thermal Constraints
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Current-carrying capacity
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Thermal constraints
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

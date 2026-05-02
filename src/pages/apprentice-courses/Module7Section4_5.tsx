@@ -38,7 +38,7 @@ const quickCheckQuestions = [
     options: ['0.8Ω', '1.2Ω', '1.6Ω', '2.0Ω'],
     correctIndex: 3,
     explanation:
-      'Maximum Zs for 32A Type B MCB is 1.44Ω. A reading of 2.0Ω exceeds this limit and requires investigation.',
+      'Maximum Zs for 32A Type B MCB is 1.37Ω (BS 7671:2018+A4:2026 Table 41.3). A reading of 2.0Ω exceeds this limit and requires investigation.',
   },
 ];
 

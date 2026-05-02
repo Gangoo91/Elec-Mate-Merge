@@ -1,8 +1,27 @@
-import { ArrowLeft, Thermometer, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 5 · Subsection 2 — Heat Gains and Losses
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Internal gains from occupants, equipment and lighting; external fabric losses;
+ *   diversity factors and the sensible/latent split — the heat-balance numbers
+ *   behind every heating and cooling load schedule.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Heat Gains and Losses - HNC Module 2 Section 5.2';
@@ -214,784 +233,503 @@ const faqs = [
 ];
 
 const HNCModule2Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Thermometer className="h-4 w-4" />
-            <span>Module 2.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Heat Gains and Losses
-          </h1>
-          <p className="text-white">
-            Internal gains from occupants, equipment and lighting, plus external fabric heat flows
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 5 · Subsection 2"
+            title="Heat Gains and Losses"
+            description="Internal gains from occupants, equipment and lighting, plus external fabric heat flows."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Occupants:</strong> 90-200W each (sensible + latent)
-              </li>
-              <li className="pl-1">
-                <strong>Equipment:</strong> All electrical power becomes heat
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> 10-25 W/m² depending on type
-              </li>
-              <li className="pl-1">
-                <strong>Fabric:</strong> Q = U × A × ΔT for conductive flow
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Cooling load:</strong> Sum of all simultaneous gains
-              </li>
-              <li className="pl-1">
-                <strong>Heating load:</strong> Fabric + ventilation losses
-              </li>
-              <li className="pl-1">
-                <strong>Diversity:</strong> Not all loads peak together
-              </li>
-              <li className="pl-1">
-                <strong>CIBSE data:</strong> Benchmark values for design
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You compute occupant gains by activity (75 W sensible + 55 W latent for light office work; 165 W + 145 W for heavy work) — quoted from CIBSE Guide A.',
+              'You apply equipment and lighting power densities (typical office: 15 W/m² IT, 8 W/m² lighting) and never use installed kW without a diversity factor.',
+              'You compute fabric losses Q = U × A × ΔT for each element (walls, glazing, roof, floor) and sum them for the heating-coil duty.',
+              'You separate sensible and latent loads — critical for cooling coil sizing and humidifier selection.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Guide A — Environmental Design (Internal Gains, Heat Loss)"
+            clause="Recommended internal heat gain values for occupants by activity, equipment by space type, lighting by application; UK external winter and summer design temperatures by region; methodology for fabric heat-loss calculations."
+            meaning={
+              <>
+                CIBSE Guide A is the master reference for the input values that go into
+                every heating and cooling load calculation in the UK. Cite it on the load
+                schedule alongside Guide B sizing methods so the calculation is auditable
+                end-to-end.
+              </>
+            }
+            cite="Source: CIBSE Guide A — Environmental Design; CIBSE Guide B1 — Heating; BS EN 12831-1 Energy performance of buildings — Method for calculation of the design heat load."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate heat gains from occupants for different activities',
               'Determine equipment and lighting gains using CIBSE data',
               'Apply diversity factors for realistic peak loads',
               'Calculate fabric heat losses for heating system sizing',
               'Understand steady-state versus dynamic analysis',
               'Distinguish sensible and latent heat components',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Internal Gains - People */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Internal Gains - People
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Internal Gains - People"
+            plainEnglish="Bodies put out heat in two flavours: sensible (warms the air) and latent (adds moisture). The harder people work, the more goes into latent."
+          >
             <p>
               Occupants are significant heat sources, emitting both sensible heat (warming the air)
               and latent heat (adding moisture). The emission rate varies substantially with
               activity level and environmental conditions.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key concepts:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sensible heat:</strong> Raises air dry-bulb temperature, handled by
-                  cooling coils
-                </li>
-                <li className="pl-1">
-                  <strong>Latent heat:</strong> Adds moisture, increases humidity, requires
-                  dehumidification
-                </li>
-                <li className="pl-1">
-                  <strong>Metabolic rate:</strong> Expressed in 'Met' units (1 Met = 58.2 W/m² body
-                  area)
-                </li>
-                <li className="pl-1">
-                  <strong>Environmental effect:</strong> Higher room temperatures shift emission
-                  towards latent
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Heat Emission by Activity (CIBSE Guide A)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Total (W)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Sensible (W)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Latent (W)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Seated at rest</td>
-                      <td className="border border-white/10 px-3 py-2">115</td>
-                      <td className="border border-white/10 px-3 py-2">70</td>
-                      <td className="border border-white/10 px-3 py-2">45</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sedentary office work</td>
-                      <td className="border border-white/10 px-3 py-2">130</td>
-                      <td className="border border-white/10 px-3 py-2">75</td>
-                      <td className="border border-white/10 px-3 py-2">55</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standing, light work</td>
-                      <td className="border border-white/10 px-3 py-2">150</td>
-                      <td className="border border-white/10 px-3 py-2">80</td>
-                      <td className="border border-white/10 px-3 py-2">70</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Walking (retail)</td>
-                      <td className="border border-white/10 px-3 py-2">180</td>
-                      <td className="border border-white/10 px-3 py-2">90</td>
-                      <td className="border border-white/10 px-3 py-2">90</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Factory bench work</td>
-                      <td className="border border-white/10 px-3 py-2">235</td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                      <td className="border border-white/10 px-3 py-2">135</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gymnasium exercise</td>
-                      <td className="border border-white/10 px-3 py-2">400+</td>
-                      <td className="border border-white/10 px-3 py-2">120</td>
-                      <td className="border border-white/10 px-3 py-2">280+</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Occupant Gain Calculation
-              </p>
-              <p className="font-mono text-center text-sm mb-2">
-                Q<sub>occ</sub> = N × q × D
-              </p>
-              <p className="text-xs text-white text-center">
-                Where N = number of occupants, q = heat emission (W/person), D = diversity factor
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key concepts:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sensible heat:</strong> Raises air dry-bulb temperature, handled by cooling coils
+              </li>
+              <li>
+                <strong>Latent heat:</strong> Adds moisture, increases humidity, requires dehumidification
+              </li>
+              <li>
+                <strong>Metabolic rate:</strong> Expressed in 'Met' units (1 Met = 58.2 W/m² body area)
+              </li>
+              <li>
+                <strong>Environmental effect:</strong> Higher room temperatures shift emission towards latent
+              </li>
+            </ul>
+            <p>
+              <strong>Heat emission by activity (CIBSE Guide A) - total / sensible / latent in W:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Seated at rest: 115 / 70 / 45</li>
+              <li>Sedentary office work: 130 / 75 / 55</li>
+              <li>Standing, light work: 150 / 80 / 70</li>
+              <li>Walking (retail): 180 / 90 / 90</li>
+              <li>Factory bench work: 235 / 100 / 135</li>
+              <li>Gymnasium exercise: 400+ / 120 / 280+</li>
+            </ul>
+            <p>
+              <strong>Occupant gain calculation:</strong> Q_occ = N × q × D. Where N = number of
+              occupants, q = heat emission (W/person), D = diversity factor.
+            </p>
+            <p>
               <strong>Diversity note:</strong> Peak occupancy rarely occurs simultaneously with peak
               equipment use. Diversity factors of 0.75-0.90 are typical for office occupancy.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Internal Gains - Equipment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Internal Gains - Equipment and Lighting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Internal Gains - Equipment and Lighting"
+            plainEnglish="Every watt that goes into equipment or lighting comes back out as heat. Modern offices often have more equipment heat than people heat."
+          >
             <p>
               Electrical equipment and lighting convert electrical energy to heat. In modern
               offices, equipment gains often exceed occupant gains and can dominate cooling loads,
               particularly in IT-intensive spaces.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Equipment principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>First law:</strong> All electrical energy becomes heat (conservation of
-                  energy)
-                </li>
-                <li className="pl-1">
-                  <strong>Nameplate vs actual:</strong> Equipment rarely runs at rated power
-                  continuously
-                </li>
-                <li className="pl-1">
-                  <strong>Diversity:</strong> Not all equipment operates simultaneously at peak
-                </li>
-                <li className="pl-1">
-                  <strong>Standby power:</strong> Modern equipment has significant standby
-                  consumption
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  CIBSE Equipment Benchmarks
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Cellular office: 15-20 W/m²</li>
-                  <li className="pl-1">Open-plan office: 20-25 W/m²</li>
-                  <li className="pl-1">Dealing room: 35-50 W/m²</li>
-                  <li className="pl-1">Server/comms room: 200-500 W/m²</li>
-                  <li className="pl-1">Classroom: 5-10 W/m²</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Typical Equipment Heat
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Desktop PC: 80-150W (operation)</li>
-                  <li className="pl-1">Laptop: 30-60W</li>
-                  <li className="pl-1">Monitor (LED 24"): 25-40W</li>
-                  <li className="pl-1">Laser printer (active): 400-600W</li>
-                  <li className="pl-1">Multifunction copier: 200-500W</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Lighting Heat Gains</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">LED (W/m²)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Fluorescent (W/m²)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office</td>
-                      <td className="border border-white/10 px-3 py-2">10-12</td>
-                      <td className="border border-white/10 px-3 py-2">15-18</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corridors/circulation</td>
-                      <td className="border border-white/10 px-3 py-2">5-8</td>
-                      <td className="border border-white/10 px-3 py-2">8-12</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail sales floor</td>
-                      <td className="border border-white/10 px-3 py-2">15-25</td>
-                      <td className="border border-white/10 px-3 py-2">20-35</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial/warehouse</td>
-                      <td className="border border-white/10 px-3 py-2">5-10</td>
-                      <td className="border border-white/10 px-3 py-2">8-15</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Equipment principles:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>First law:</strong> All electrical energy becomes heat (conservation of energy)
+              </li>
+              <li>
+                <strong>Nameplate vs actual:</strong> Equipment rarely runs at rated power continuously
+              </li>
+              <li>
+                <strong>Diversity:</strong> Not all equipment operates simultaneously at peak
+              </li>
+              <li>
+                <strong>Standby power:</strong> Modern equipment has significant standby consumption
+              </li>
+            </ul>
+            <p>
+              <strong>CIBSE equipment benchmarks:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cellular office: 15-20 W/m²</li>
+              <li>Open-plan office: 20-25 W/m²</li>
+              <li>Dealing room: 35-50 W/m²</li>
+              <li>Server/comms room: 200-500 W/m²</li>
+              <li>Classroom: 5-10 W/m²</li>
+            </ul>
+            <p>
+              <strong>Typical equipment heat:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Desktop PC: 80-150W (operation)</li>
+              <li>Laptop: 30-60W</li>
+              <li>Monitor (LED 24"): 25-40W</li>
+              <li>Laser printer (active): 400-600W</li>
+              <li>Multifunction copier: 200-500W</li>
+            </ul>
+            <p>
+              <strong>Lighting heat gains (W/m² - LED / fluorescent):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>General office: 10-12 / 15-18</li>
+              <li>Corridors/circulation: 5-8 / 8-12</li>
+              <li>Retail sales floor: 15-25 / 20-35</li>
+              <li>Industrial/warehouse: 5-10 / 8-15</li>
+            </ul>
+            <p>
               <strong>All lighting is heat:</strong> The visible light portion (20-25%) is absorbed
               by surfaces and becomes heat anyway. For cooling calculations, use the full electrical
               power.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: External Heat Flow */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            External Heat Gains and Losses
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="External Heat Gains and Losses"
+            plainEnglish="Heat through the fabric is mostly loss in winter, gain in summer. Sol-air temperature is your shortcut for solar-warmed roofs and walls."
+          >
             <p>
               Heat flows through the building fabric due to temperature differences between inside
               and outside. In winter this is predominantly heat loss; in summer, gains can occur
               through the fabric, particularly through glazing and poorly insulated roofs.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Steady-State Heat Transfer
-              </p>
-              <p className="font-mono text-center text-sm mb-2">
-                Q = U × A × (T<sub>i</sub> - T<sub>o</sub>)
-              </p>
-              <p className="text-xs text-white text-center">
-                Where U = thermal transmittance (W/m²K), A = area (m²), T = temperatures (°C)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Components of fabric heat flow:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Walls:</strong> External, party walls to unconditioned spaces,
-                  ground-contact
-                </li>
-                <li className="pl-1">
-                  <strong>Roof:</strong> Significant in summer due to solar absorption (sol-air
-                  temperature)
-                </li>
-                <li className="pl-1">
-                  <strong>Floor:</strong> Ground contact or to unheated spaces below
-                </li>
-                <li className="pl-1">
-                  <strong>Glazing:</strong> High U-value but also solar gains (see Section 5.1)
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal bridges:</strong> Junctions, lintels, reveals increase effective
-                  U-value
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sol-Air Temperature Concept
-              </p>
-              <p className="text-sm text-white mb-2">
-                In summer, external surfaces are heated by solar radiation above air temperature.
-                The sol-air temperature accounts for this absorbed radiation when calculating heat
-                gain through opaque elements.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Surface/Orientation
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Sol-Air (°C)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dark horizontal roof</td>
-                      <td className="border border-white/10 px-3 py-2">50-60</td>
-                      <td className="border border-white/10 px-3 py-2">Peak summer midday</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Light horizontal roof</td>
-                      <td className="border border-white/10 px-3 py-2">35-45</td>
-                      <td className="border border-white/10 px-3 py-2">Reflective surface helps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">South-facing wall</td>
-                      <td className="border border-white/10 px-3 py-2">30-40</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower due to lower incidence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">North-facing wall</td>
-                      <td className="border border-white/10 px-3 py-2">≈ Air temp</td>
-                      <td className="border border-white/10 px-3 py-2">Minimal direct radiation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Steady-state heat transfer:</strong> Q = U × A × (Ti - To). Where U = thermal
+              transmittance (W/m²K), A = area (m²), T = temperatures (°C).
+            </p>
+            <p>
+              <strong>Components of fabric heat flow:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Walls:</strong> External, party walls to unconditioned spaces, ground-contact
+              </li>
+              <li>
+                <strong>Roof:</strong> Significant in summer due to solar absorption (sol-air temperature)
+              </li>
+              <li>
+                <strong>Floor:</strong> Ground contact or to unheated spaces below
+              </li>
+              <li>
+                <strong>Glazing:</strong> High U-value but also solar gains (see Section 5.1)
+              </li>
+              <li>
+                <strong>Thermal bridges:</strong> Junctions, lintels, reveals increase effective U-value
+              </li>
+            </ul>
+            <p>
+              <strong>Sol-air temperature concept:</strong> In summer, external surfaces are heated
+              by solar radiation above air temperature. The sol-air temperature accounts for this
+              absorbed radiation when calculating heat gain through opaque elements.
+            </p>
+            <p>
+              <strong>Typical sol-air values:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Dark horizontal roof: 50-60°C (peak summer midday)</li>
+              <li>Light horizontal roof: 35-45°C (reflective surface helps)</li>
+              <li>South-facing wall: 30-40°C (lower due to lower incidence)</li>
+              <li>North-facing wall: ≈ air temp (minimal direct radiation)</li>
+            </ul>
+            <p>
               <strong>Heating design:</strong> Heat loss calculations use steady-state method with
               external design temperature (typically -4°C to -1°C UK depending on location). Include
               a margin for morning boost.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Steady State vs Dynamic */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Steady State vs Dynamic Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Steady State vs Dynamic Analysis"
+            plainEnglish="Steady-state assumes nothing's changing. Dynamic models hour-by-hour. Use steady-state for heating loads and quick estimates, dynamic for cooling and overheating."
+          >
             <p>
               Building thermal calculations can be performed using simple steady-state methods or
               complex dynamic simulations. The choice depends on building complexity, required
               accuracy, and regulatory requirements.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Comparison of methods:</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Steady-State</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Dynamic Simulation
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Time variation</td>
-                      <td className="border border-white/10 px-3 py-2">Assumes equilibrium</td>
-                      <td className="border border-white/10 px-3 py-2">Hour-by-hour/sub-hourly</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal mass</td>
-                      <td className="border border-white/10 px-3 py-2">Not modelled</td>
-                      <td className="border border-white/10 px-3 py-2">Fully accounted</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Weather data</td>
-                      <td className="border border-white/10 px-3 py-2">Design conditions only</td>
-                      <td className="border border-white/10 px-3 py-2">Annual weather file</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Complexity</td>
-                      <td className="border border-white/10 px-3 py-2">Spreadsheet/hand calc</td>
-                      <td className="border border-white/10 px-3 py-2">Specialist software</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Best use</td>
-                      <td className="border border-white/10 px-3 py-2">Heating loads, estimates</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cooling, overheating, energy
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  CIBSE Admittance Method
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Semi-dynamic manual method</li>
-                  <li className="pl-1">Uses Y-value (admittance) for storage</li>
-                  <li className="pl-1">Swing in temperature calculation</li>
-                  <li className="pl-1">Good for simple single-zone spaces</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Dynamic Simulation Tools
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">IES-VE (UK industry standard)</li>
-                  <li className="pl-1">EnergyPlus (US DOE)</li>
-                  <li className="pl-1">TRNSYS (research applications)</li>
-                  <li className="pl-1">DesignBuilder (simplified interface)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Dynamic Simulation is Required
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Part L compliance (SBEM or DSM for complex buildings)</li>
-                <li className="pl-1">Part O overheating assessment (TM59 method)</li>
-                <li className="pl-1">BREEAM energy credits</li>
-                <li className="pl-1">Heavyweight buildings with significant thermal mass</li>
-                <li className="pl-1">Mixed-mode or naturally ventilated buildings</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Comparison of methods (steady-state vs dynamic simulation):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Time variation:</strong> Steady-state assumes equilibrium; dynamic uses hour-by-hour/sub-hourly
+              </li>
+              <li>
+                <strong>Thermal mass:</strong> Steady-state not modelled; dynamic fully accounted
+              </li>
+              <li>
+                <strong>Weather data:</strong> Steady-state design conditions only; dynamic uses annual weather file
+              </li>
+              <li>
+                <strong>Complexity:</strong> Steady-state spreadsheet/hand calc; dynamic specialist software
+              </li>
+              <li>
+                <strong>Best use:</strong> Steady-state for heating loads, estimates; dynamic for cooling, overheating, energy
+              </li>
+            </ul>
+            <p>
+              <strong>CIBSE admittance method:</strong> Semi-dynamic manual method using Y-value
+              (admittance) for storage, swing in temperature calculation, good for simple
+              single-zone spaces.
+            </p>
+            <p>
+              <strong>Dynamic simulation tools:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>IES-VE (UK industry standard)</li>
+              <li>EnergyPlus (US DOE)</li>
+              <li>TRNSYS (research applications)</li>
+              <li>DesignBuilder (simplified interface)</li>
+            </ul>
+            <p>
+              <strong>When dynamic simulation is required:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Part L compliance (SBEM or DSM for complex buildings)</li>
+              <li>Part O overheating assessment (TM59 method)</li>
+              <li>BREEAM energy credits</li>
+              <li>Heavyweight buildings with significant thermal mass</li>
+              <li>Mixed-mode or naturally ventilated buildings</li>
+            </ul>
+            <p>
               <strong>Practical tip:</strong> Use steady-state for initial sizing and feasibility,
               then validate with dynamic simulation for detailed design. This saves time while
               ensuring accuracy.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Four numerical walk-throughs covering total internal gains, the impact of diversity, fabric heat loss, and sensible/latent splits for high-activity spaces."
+          >
+            <p>
+              <strong>Example 1 - Office internal gains:</strong> Calculate the total internal heat
+              gains for a 200m² open-plan office with 20 occupants (sedentary), LED lighting at
+              12 W/m², and equipment at 22 W/m².
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Occupant gains = 20 × 130W = 2600W</li>
+              <li>Lighting gains = 200m² × 12 W/m² = 2400W</li>
+              <li>Equipment gains = 200m² × 22 W/m² = 4400W</li>
+              <li>Total = 2600 + 2400 + 4400 = <strong>9400W = 9.4kW</strong></li>
+              <li>Heat gain density = 9400/200 = 47 W/m² (typical for modern office)</li>
+            </ul>
+            <p>
+              <strong>Example 2 - With diversity applied:</strong> Apply typical diversity factors
+              to the above example: occupancy 0.85, lighting 0.90, equipment 0.70.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Occupant gains = 2600W × 0.85 = 2210W</li>
+              <li>Lighting gains = 2400W × 0.90 = 2160W</li>
+              <li>Equipment gains = 4400W × 0.70 = 3080W</li>
+              <li>Total with diversity = 2210 + 2160 + 3080 = <strong>7450W = 7.5kW</strong></li>
+              <li>Reduction from diversity = 9.4 - 7.5 = 1.9kW (20%)</li>
+            </ul>
+            <p>
+              <strong>Example 3 - Fabric heat loss:</strong> A room has 15m² external wall (U=0.25),
+              8m² double glazing (U=1.4), and 25m² roof (U=0.18). Calculate heat loss at Ti=21°C,
+              To=-3°C.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>ΔT = 21 - (-3) = 24K</li>
+              <li>Wall loss = 0.25 × 15 × 24 = 90W</li>
+              <li>Glazing loss = 1.4 × 8 × 24 = 269W</li>
+              <li>Roof loss = 0.18 × 25 × 24 = 108W</li>
+              <li>Total fabric loss = 90 + 269 + 108 = <strong>467W</strong></li>
+              <li>Note: Glazing dominates despite smaller area (high U-value)</li>
+            </ul>
+            <p>
+              <strong>Example 4 - Sensible vs total cooling:</strong> A gym has 30 people exercising
+              (200W sensible, 250W latent each). What are the sensible and total cooling loads from
+              occupants?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sensible load = 30 × 200W = <strong>6000W = 6kW sensible</strong></li>
+              <li>Latent load = 30 × 250W = 7500W = 7.5kW latent</li>
+              <li>Total = 6 + 7.5 = <strong>13.5kW total</strong></li>
+              <li>Sensible Heat Ratio = 6/13.5 = 0.44 (very low, needs dehumidification)</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Internal Gains
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the total internal heat gains for a 200m²
-                open-plan office with 20 occupants (sedentary), LED lighting at 12 W/m², and
-                equipment at 22 W/m².
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Occupant gains = 20 × 130W = 2600W</p>
-                <p>Lighting gains = 200m² × 12 W/m² = 2400W</p>
-                <p>Equipment gains = 200m² × 22 W/m² = 4400W</p>
-                <p className="mt-2">
-                  Total = 2600 + 2400 + 4400 = <strong>9400W = 9.4kW</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Heat gain density = 9400/200 = 47 W/m² (typical for modern office)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: With Diversity Applied
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Apply typical diversity factors to the above example:
-                occupancy 0.85, lighting 0.90, equipment 0.70.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Occupant gains = 2600W × 0.85 = 2210W</p>
-                <p>Lighting gains = 2400W × 0.90 = 2160W</p>
-                <p>Equipment gains = 4400W × 0.70 = 3080W</p>
-                <p className="mt-2">
-                  Total with diversity = 2210 + 2160 + 3080 = <strong>7450W = 7.5kW</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  Reduction from diversity = 9.4 - 7.5 = 1.9kW (20%)
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The handful of formulas and standard values you'll lean on for heating and cooling load sums."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fabric loss:</strong> Q = U × A × ΔT
+              </li>
+              <li>
+                <strong>Total internal:</strong> Q = Qpeople + Qlighting + Qequipment
+              </li>
+              <li>
+                <strong>With diversity:</strong> Q = Σ(Qi × Di)
+              </li>
+              <li>
+                <strong>Ventilation loss:</strong> Q = ρ × cp × V × ΔT = 0.33 × n × Vol × ΔT
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Sedentary occupant: <strong>130W</strong> (75W sensible)
+              </li>
+              <li>
+                Office equipment: <strong>15-25 W/m²</strong>
+              </li>
+              <li>
+                LED lighting: <strong>10-12 W/m²</strong> (office)
+              </li>
+              <li>
+                Occupancy density: <strong>10 m²/person</strong> (typical office)
+              </li>
+              <li>
+                Equipment diversity: <strong>0.5-0.7</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Fabric Heat Loss
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A room has 15m² external wall (U=0.25), 8m² double
-                glazing (U=1.4), and 25m² roof (U=0.18). Calculate heat loss at Ti=21°C, To=-3°C.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>ΔT = 21 - (-3) = 24K</p>
-                <p className="mt-2">Wall loss = 0.25 × 15 × 24 = 90W</p>
-                <p>Glazing loss = 1.4 × 8 × 24 = 269W</p>
-                <p>Roof loss = 0.18 × 25 × 24 = 108W</p>
-                <p className="mt-2">
-                  Total fabric loss = 90 + 269 + 108 = <strong>467W</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Note: Glazing dominates despite smaller area (high U-value)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Sensible vs Total Cooling
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A gym has 30 people exercising (200W sensible, 250W
-                latent each). What are the sensible and total cooling loads from occupants?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Sensible load = 30 × 200W = <strong>6000W = 6kW sensible</strong>
-                </p>
-                <p>Latent load = 30 × 250W = 7500W = 7.5kW latent</p>
-                <p className="mt-2">
-                  Total = 6 + 7.5 = <strong>13.5kW total</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Sensible Heat Ratio = 6/13.5 = 0.44 (very low, needs dehumidification)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fabric loss:</strong> Q = U × A × ΔT
-                </li>
-                <li className="pl-1">
-                  <strong>Total internal:</strong> Q = Qpeople + Qlighting + Qequipment
-                </li>
-                <li className="pl-1">
-                  <strong>With diversity:</strong> Q = Σ(Qi × Di)
-                </li>
-                <li className="pl-1">
-                  <strong>Ventilation loss:</strong> Q = ρ × cp × V × ΔT = 0.33 × n × Vol × ΔT
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Sedentary occupant: <strong>130W</strong> (75W sensible)
-                </li>
-                <li className="pl-1">
-                  Office equipment: <strong>15-25 W/m²</strong>
-                </li>
-                <li className="pl-1">
-                  LED lighting: <strong>10-12 W/m²</strong> (office)
-                </li>
-                <li className="pl-1">
-                  Occupancy density: <strong>10 m²/person</strong> (typical office)
-                </li>
-                <li className="pl-1">
-                  Equipment diversity: <strong>0.5-0.7</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Forgetting latent:</strong> High-activity spaces need dehumidification
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>No diversity:</strong> Summing all peaks overestimates loads by 20-30%
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring thermal mass:</strong> Heavyweight buildings store heat
                 </li>
-                <li className="pl-1">
-                  <strong>Solar as loss offset:</strong> Solar gains help winter but cause summer
-                  problems
+                <li>
+                  <strong>Solar as loss offset:</strong> Solar gains help winter but cause summer problems
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always split sensible and latent for high-activity spaces, apply realistic diversity factors (0.5-0.7 for equipment), account for thermal mass in cooling and overheating analysis, and treat winter solar gain and summer overheating as separate design issues."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Heat-loss calculation for a 6-bed care home extension"
+            situation={
+              <>
+                A new 6-bed care-home extension (220 m² treated floor area) needs a heating
+                load schedule for the LPHW boiler and rad-circuit design. External winter
+                design is -3 °C (CIBSE Guide A, southern UK); internal target 22 °C
+                bedrooms, 24 °C bathrooms (HBN 08-02 dementia-friendly).
+              </>
+            }
+            whatToDo={
+              <>
+                Calculate fabric losses room-by-room: Q_fabric = Σ(U × A × ΔT) for
+                walls, windows, roof, floor and party elements. Add ventilation loss
+                Q_vent = 0.33 × n × V × ΔT (n = ach, V = room volume). Add a 10–15%
+                margin for intermittent heating and a 1.2 boost factor for
+                dementia-friendly continuous-temperature operation. Sum to get peak heating
+                load. Check against installed radiator output at 50 °C mean water
+                temperature (low-temperature hot water for ASHP-readiness).
+              </>
+            }
+            whyItMatters={
+              <>
+                Care-home heating must hit setpoint reliably for vulnerable occupants — a
+                regulated welfare requirement under CQC standards. Undersized at design
+                stage means cold rooms in winter and a CQC observation. Oversized means
+                cycling, poor ASHP efficiency, and a chunky bill. The CIBSE Guide A method
+                gives the defendable middle ground.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Internal Gains</p>
-                <ul className="space-y-0.5">
-                  <li>People: 115-400W depending on activity</li>
-                  <li>Equipment: 15-25 W/m² typical office</li>
-                  <li>Lighting: 10-12 W/m² LED office</li>
-                  <li>Apply diversity 0.5-0.9</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Fabric Heat Flow</p>
-                <ul className="space-y-0.5">
-                  <li>Q = U × A × ΔT</li>
-                  <li>Include walls, roof, floor, glazing</li>
-                  <li>Sol-air temp for summer roof gains</li>
-                  <li>Thermal bridges add ~10-15%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Internal gains: people, equipment, lighting — each split sensible/latent (people only).',
+              'Office occupant: 75 W sensible + 55 W latent ≈ 130 W total per person at light work.',
+              'Equipment gain ≈ installed power × diversity factor (typically 0.4–0.6 for office IT).',
+              'Lighting gain = installed lighting power × usage factor (post-LED retrofit, often &lt; 5 W/m²).',
+              'Fabric loss Q = U × A × ΔT for each element; sum over the envelope.',
+              'Ventilation loss Q = 0.33 × n × V × ΔT (ach × volume × ΔT × 0.33).',
+              'Apply infiltration factor for naturally ventilated buildings (typical 0.5–1.0 ach winter).',
+              'Always calculate sensible and latent separately for cooling — different equipment selection.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section5-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section5-3">
-              Next: Thermal Mass and Time Lag
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Solar radiation
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Thermal mass and time lag
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -61,16 +61,22 @@ async function buildUnsubLink(email: string, campaignId: string): Promise<string
 
 async function appendUnsubFooter(
   html: string,
-  _email: string,
-  _campaignId: string
+  email: string,
+  campaignId: string
 ): Promise<string> {
-  // Reply-based opt-out: recipient just replies with STOP or UNSUBSCRIBE and
-  // we remove them. Gmail / Outlook also get the native "Unsubscribe" button
-  // from the List-Unsubscribe-Post header (mailto auto-reply with subject
-  // "unsubscribe"). No web confirmation page to click through.
+  // Per-recipient HMAC-signed unsub link. Lands on /outreach-unsubscribe,
+  // confirms (anti-prefetcher), then suppresses + redirects to the branded
+  // unsubscribed.html page on elec-mate.com.
+  const unsubUrl = await buildUnsubLink(email, campaignId);
+  const safeUnsub = unsubUrl
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
   const footer = `
     <div style="margin-top:24px;padding:16px 32px 32px;text-align:center;font-size:12px;color:#71717a;background:#000;">
-      <p style="margin:0 0 8px">Don't want these emails? Just reply <strong style="color:#a1a1aa">STOP</strong> or <strong style="color:#a1a1aa">UNSUBSCRIBE</strong> and I'll remove you.</p>
+      <p style="margin:0 0 10px">Don't want these emails? <a href="${safeUnsub}" style="color:#a1a1aa;text-decoration:underline">Unsubscribe</a> &middot; or reply <strong style="color:#a1a1aa">STOP</strong> and I'll remove you.</p>
     </div>`;
   if (html.includes('</body>')) return html.replace('</body>', `${footer}</body>`);
   return html + footer;

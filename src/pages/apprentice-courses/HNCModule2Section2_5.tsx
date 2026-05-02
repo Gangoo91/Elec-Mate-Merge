@@ -1,8 +1,27 @@
-import { ArrowLeft, Droplets, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 2 · Subsection 5 — Pump Characteristics
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Pump types, performance curves, efficiency, the affinity laws, NPSH. Engineer-in-training
+ *   perspective: how an HNC designer selects, sizes and protects a pump on a building services
+ *   water system.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  SectionRule,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Pump Characteristics - HNC Module 2 Section 2.5';
@@ -243,821 +262,375 @@ const faqs = [
 ];
 
 const HNCModule2Section2_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Droplets className="h-4 w-4" />
-            <span>Module 2.2.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Pump Characteristics
-          </h1>
-          <p className="text-white">
-            Understanding pump curves, types, efficiency and NPSH for building services design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 2 · Subsection 5"
+            title="Pump Characteristics"
+            description="Pump types, performance curves, efficiency, the affinity laws, and NPSH for building services design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>H-Q Curve:</strong> Shows head vs flow rate relationship
+          <TLDR
+            points={[
+              'You will read a pump curve (head vs flow), efficiency curve and power curve and pick the duty point that sits in the high-efficiency region (BEP, best efficiency point).',
+              'You apply the affinity laws (Q ∝ N, H ∝ N², P ∝ N³) when changing speed via VSD — and you understand why VSD operation saves so much energy at part load.',
+              'You calculate Net Positive Suction Head Available (NPSHa) and check it exceeds NPSHr from the pump curve, with margin, to prevent cavitation.',
+              'You select between centrifugal (head-flow trade-off, smooth curve), positive-displacement (constant flow, variable head) and turbine (high efficiency at fixed duty) for the application.',
+            ]}
+          />
+
+          <RegsCallout
+            source="CIBSE Guide H — Building Control Systems; CIBSE Guide B1 — Heating; ErP Directive — pump efficiency"
+            clause="Centrifugal circulator pumps for building services water systems must meet the minimum efficiency index (MEI) and energy efficiency index (EEI) requirements of the EU Ecodesign / UK ErP framework. Variable-speed control is recommended on systems with significant load variation, with operating point selection based on the system curve and the pump performance curve at the design speed."
+            meaning={
+              <>
+                The ErP framework sets minimum efficiency for circulator pumps. As an HNC
+                designer your pump selection must be both technically correct (BEP, NPSH) and
+                regulatorily compliant (MEI, EEI ≤ 0.23 for glandless circulators).
+              </>
+            }
+            cite="Source: CIBSE Guide H; CIBSE Guide B1; UK Ecodesign for Energy-Related Products Regulations 2010; EU 641/2009 (glandless circulators)"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Identify common pump types and select appropriately for an application',
+              'Read pump H-Q, efficiency, and power curves',
+              'Calculate hydraulic, shaft and electrical power',
+              'Apply the affinity laws for variable speed operation',
+              'Calculate NPSHa and verify against pump NPSHr',
+              'Recognise multi-stage and parallel pump arrangements',
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Pump types"
+            plainEnglish="Most HVAC pumps are centrifugal — they spin water round and fling it outwards. Positive displacement pumps trap fixed volumes — used for dosing or high pressure."
+          >
+            <p>
+              <strong>Centrifugal (rotodynamic):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>End-suction, inline, split-case, multi-stage variants</li>
+              <li>Smooth, pulsation-free flow</li>
+              <li>Moderate head, good with variable speed</li>
+              <li>Standard for HVAC heating, chilled water, condenser water</li>
+            </ul>
+            <p>
+              <strong>Positive displacement:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Gear, vane, piston, diaphragm types</li>
+              <li>Fixed volume per revolution — flow nearly independent of pressure</li>
+              <li>Good for dosing, viscous fluids, high pressure / low flow</li>
+              <li>Pulsating flow — needs damping</li>
+            </ul>
+            <p>
+              <strong>Multi-stage centrifugal:</strong> Multiple impellers in series. Flow stays
+              the same, heads add together. Used for high-rise buildings, booster sets, pressure
+              boosting.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Pump performance curves"
+            plainEnglish="Manufacturers publish curves showing how head, efficiency and power vary with flow. Find the BEP — that's where you want to operate."
+          >
+            <p>
+              A pump performance chart usually shows three curves overlaid: head (H) versus flow
+              (Q), efficiency (η) versus Q, and power (P) versus Q.
+            </p>
+            <p>
+              <strong>H-Q curve (head-flow):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Slopes downward — high head at low flow, low head at high flow</li>
+              <li>Maximum (shutoff) head at Q = 0</li>
+              <li>The curve intersects the system curve at the operating point</li>
+            </ul>
+            <p>
+              <strong>Efficiency curve:</strong> Bell-shaped, with the peak at the Best Efficiency
+              Point (BEP). Operating far from BEP wastes energy and shortens pump life.
+            </p>
+            <p>
+              <strong>Power curve:</strong> Power increases with flow. Useful for sizing the motor
+              and checking it isn't overloaded across the full operating range.
+            </p>
+            <p>
+              <strong>Trimmed impellers:</strong> Most curves show several impeller diameters.
+              Trimming reduces head and power without changing the pump body — used to fine-tune
+              to the duty point.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Power, efficiency and the affinity laws"
+            plainEnglish="Three power numbers: hydraulic (useful), shaft (after pump losses), electrical (after motor losses). Pump speed cubed = power — that's why VSDs save so much energy."
+          >
+            <p>
+              <strong>Hydraulic (water) power:</strong> Ph = ρgQH. The useful power delivered to
+              the fluid.
+            </p>
+            <p>
+              <strong>Shaft power:</strong> Ps = Ph / ηpump. Power required at the pump shaft.
+            </p>
+            <p>
+              <strong>Electrical power:</strong> Pe = Ps / ηmotor. Power drawn from the supply.
+            </p>
+            <p>
+              <strong>Affinity laws (centrifugal pumps):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Q ∝ N (flow proportional to speed)</li>
+              <li>H ∝ N² (head proportional to speed squared)</li>
+              <li>P ∝ N³ (power proportional to speed cubed)</li>
+              <li>Same relationships hold for impeller diameter D</li>
+            </ul>
+            <p>
+              <strong>Why VSDs save energy:</strong> Reducing pump speed by 20% drops power to
+              0.8³ = 0.51 — nearly half. This is why variable speed drives are standard on
+              variable-volume HVAC systems.
+            </p>
+            <p>
+              <strong>BEP (Best Efficiency Point):</strong> The flow at which the pump runs most
+              efficiently. Aim to operate within ±20% of BEP. Outside that band, vibration and
+              wear increase.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="NPSH and cavitation"
+            plainEnglish="If the suction pressure drops below the water's boiling point at that temperature, water turns to vapour at the impeller. Bubbles collapse, metal erodes, pump dies. NPSH stops that."
+          >
+            <p>
+              Cavitation occurs when local pressure inside the pump falls below the fluid's vapour
+              pressure. Vapour bubbles form, then collapse violently, causing noise, vibration,
+              and erosion of impeller metal.
+            </p>
+            <p>
+              <strong>NPSH available (NPSHa):</strong> What the system delivers to the pump
+              suction. NPSHa = (Patm + ρgHs - Pvap) / ρg - Hf. Where Hs = static head above pump
+              suction, Pvap = vapour pressure at fluid temperature, Hf = suction friction losses.
+            </p>
+            <p>
+              <strong>NPSH required (NPSHr):</strong> Specified by pump manufacturer for each
+              duty. Increases with flow rate.
+            </p>
+            <p>
+              <strong>Rule:</strong> NPSHa &gt; NPSHr + safety margin (typically 0.5-1.0 m).
+            </p>
+            <p>
+              <strong>To improve NPSHa:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reduce suction pipe friction (larger pipe, fewer fittings)</li>
+              <li>Lower the pump (more static head above)</li>
+              <li>Reduce fluid temperature (lower vapour pressure)</li>
+              <li>Pressurise the suction tank</li>
+            </ul>
+            <p>
+              <strong>Starting centrifugal pumps:</strong> Start against a closed (or throttled)
+              discharge valve. This minimises starting current — pump runs at shutoff head, low
+              power. Open the valve once the motor is at full speed.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three classic pump calcs: hydraulic power, shaft power from efficiency, and the affinity laws applied to speed reduction."
+          >
+            <p>
+              <strong>Example 1 - hydraulic power:</strong> Pump duty 12 l/s at 25 m head.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ph = ρgQH = 1000 × 9.81 × 0.012 × 25 = <strong>2.94 kW</strong></li>
+            </ul>
+            <p>
+              <strong>Example 2 - shaft power from efficiency:</strong> Same duty, pump efficiency
+              72%.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ps = 2.94 / 0.72 = <strong>4.08 kW</strong></li>
+              <li>Motor must deliver at least this much, with margin</li>
+            </ul>
+            <p>
+              <strong>Example 3 - affinity laws (speed reduction):</strong> Duty point 15 l/s at
+              20 m head. Reduce speed to 80%.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Q₂ = 0.8 × 15 = <strong>12 l/s</strong></li>
+              <li>H₂ = 0.8² × 20 = <strong>12.8 m</strong></li>
+              <li>P₂ / P₁ = 0.8³ = <strong>0.512</strong> (49% energy saving)</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="Five formulas, the affinity laws, and the BEP / NPSH rules to keep pumps alive and efficient."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ph = ρgQH</strong> — Hydraulic power (W)
               </li>
-              <li className="pl-1">
-                <strong>BEP:</strong> Best Efficiency Point - optimal operation
+              <li>
+                <strong>Ps = Ph / ηpump</strong> — Shaft power
               </li>
-              <li className="pl-1">
-                <strong>Affinity Laws:</strong> Q∝N, H∝N², P∝N³
+              <li>
+                <strong>Pe = Ps / ηmotor</strong> — Electrical power
               </li>
-              <li className="pl-1">
-                <strong>NPSH:</strong> Suction conditions to prevent cavitation
+              <li>
+                <strong>Q ∝ N, H ∝ N², P ∝ N³</strong> — Affinity laws
+              </li>
+              <li>
+                <strong>NPSHa &gt; NPSHr + margin</strong> — Cavitation rule
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
+            <p>
+              <strong>Key design values:</strong>
             </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC:</strong> Centrifugal pumps for heating/chilled water
-              </li>
-              <li className="pl-1">
-                <strong>Boosters:</strong> Multi-stage for high-rise buildings
-              </li>
-              <li className="pl-1">
-                <strong>VSDs:</strong> Variable speed drives for energy savings
-              </li>
-              <li className="pl-1">
-                <strong>Selection:</strong> Match BEP to system duty point
-              </li>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Operating range: <strong>±20% of BEP flow</strong></li>
+              <li>NPSH safety margin: <strong>0.5-1.0 m</strong></li>
+              <li>Min VSD speed: <strong>30-40%</strong></li>
+              <li>Pump efficiency: <strong>typically 60-80%</strong></li>
+              <li>Motor efficiency: <strong>typically 85-95%</strong></li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Interpret pump performance curves (H-Q, efficiency, power)',
-              'Apply the pump affinity laws for speed and impeller changes',
-              'Calculate hydraulic power, shaft power and absorbed power',
-              'Understand NPSH requirements and cavitation prevention',
-              'Select appropriate pump types for different applications',
-              'Determine pump efficiency and operating costs',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Pump Types */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Pump Types and Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Pumps are broadly classified into centrifugal (rotodynamic) and positive displacement
-              types. The choice depends on flow rate, head, fluid properties, and control
-              requirements.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Centrifugal Pumps</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Convert rotational kinetic energy into fluid pressure energy
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Oversizing</strong> — Operating far left of BEP wastes energy and shortens life
                 </li>
-                <li className="pl-1">
-                  Smooth, pulsation-free flow ideal for HVAC and domestic water
+                <li>
+                  <strong>Ignoring NPSH</strong> — Hot or high-up suctions cavitate without warning
                 </li>
-                <li className="pl-1">Flow varies with system resistance (head-flow curve)</li>
-                <li className="pl-1">Excellent for variable speed control and energy savings</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Centrifugal Pump Types in Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Head</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">End-suction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HVAC primary/secondary circuits
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-60m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inline (glandless)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic heating, small HVAC
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-15m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Split-case</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large HVAC, district heating
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-100m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Multi-stage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-rise boosters, pressure sets
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">50-300m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Submersible</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Drainage, sewage, borehole
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5-200m</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Positive Displacement Pumps
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Gear pumps:</strong> Oil transfer, lubrication systems
+                <li>
+                  <strong>Wrong control method</strong> — Throttling wastes energy; use VSD where flow varies
                 </li>
-                <li className="pl-1">
-                  <strong>Diaphragm:</strong> Chemical dosing, water treatment
-                </li>
-                <li className="pl-1">
-                  <strong>Peristaltic:</strong> Precise metering, sensitive fluids
-                </li>
-                <li className="pl-1">Flow nearly independent of discharge pressure</li>
-                <li className="pl-1">Self-priming capability (can draw suction lift)</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>HVAC Design:</strong> 90%+ of building services pumping uses centrifugal pumps
-              due to their efficiency, controllability, and suitability for closed-loop water
-              systems.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Pump Performance Curves */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Pump Performance Curves (H-Q Curves)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Pump performance curves show the relationship between head, flow, efficiency, and
-              power. Understanding these curves is essential for proper pump selection and system
-              matching.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key curve characteristics:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>H-Q curve:</strong> Head decreases as flow increases
-                </li>
-                <li className="pl-1">
-                  <strong>Shutoff head:</strong> Maximum head at zero flow
-                </li>
-                <li className="pl-1">
-                  <strong>Efficiency curve:</strong> Peaks at Best Efficiency Point (BEP)
-                </li>
-                <li className="pl-1">
-                  <strong>Power curve:</strong> Usually increases with flow
+                <li>
+                  <strong>Misreading affinity laws</strong> — Power is cubed, not linear, with speed
                 </li>
               </ul>
-            </div>
+            }
+            doInstead="Pick a pump with BEP at or near the duty point, calculate NPSHa and check against NPSHr, fit a VSD where flow varies, and remember power scales with the cube of speed."
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Best Efficiency Point (BEP)
-              </p>
-              <p className="text-sm text-white mb-3">
-                The BEP is where pump efficiency is maximum. For optimal operation:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Select pumps with BEP close to the design duty point</li>
-                <li className="pl-1">Acceptable operating range: typically 70-120% of BEP flow</li>
-                <li className="pl-1">
-                  Operating far from BEP causes increased wear, noise, vibration
-                </li>
-                <li className="pl-1">
-                  Variable speed operation shifts the BEP along affinity law lines
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reading a Pump Curve</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Curve Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">What It Shows</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Design Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">H-Q line</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Head vs flow relationship
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Determine operating point
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Efficiency islands</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contours of equal efficiency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Select pump for best efficiency
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Power curves</td>
-                      <td className="border border-white/10 px-3 py-2">Absorbed power vs flow</td>
-                      <td className="border border-white/10 px-3 py-2">Size motor correctly</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">NPSHr curve</td>
-                      <td className="border border-white/10 px-3 py-2">Required NPSH vs flow</td>
-                      <td className="border border-white/10 px-3 py-2">Check cavitation margin</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Impeller diameters</td>
-                      <td className="border border-white/10 px-3 py-2">Multiple H-Q lines</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trim impeller to match duty
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <Scenario
+            title="Pump cavitation on a chilled-water riser pump"
+            situation={
+              <>
+                A chilled-water riser pump has been replaced. After commissioning the pump
+                makes a rattling noise and head drops 25% intermittently. Suction is from a
+                10 m vertical rise off a buffer vessel at 5 °C; pump is at the top of the rise.
+              </>
+            }
+            whatToDo={
+              <>
+                Diagnose as cavitation. Calculate NPSHa = (P_atm + P_static - P_vapour)/ρg -
+                friction loss in suction. With 10 m suction lift, only ~0 m static head is
+                left after the lift; NPSHa likely below NPSHr. Reposition pump below the
+                vessel to gain suction head, increase suction pipe size to reduce friction
+                loss, or add a small booster on the suction. Recheck NPSHa &gt; NPSHr + 0.5 m
+                margin. Document the change in the as-built.
+              </>
+            }
+            whyItMatters={
+              <>
+                Cavitation pits the impeller, drops efficiency and shortens pump life from
+                15 years to 18 months. NPSH is the single most-overlooked pump-selection
+                check on a building services design.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Selection tip:</strong> Choose a pump where the duty point falls on an
-              efficiency contour of 70% or higher, and within 20% of the BEP flow rate.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <FAQ items={faqs} />
 
-        {/* Section 3: Affinity Laws and Power Calculations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Affinity Laws and Power Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              The affinity laws describe how pump performance changes with speed or impeller
-              diameter. They are fundamental to understanding variable speed pump operation and
-              energy savings.
-            </p>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Pump Affinity Laws</p>
-              <div className="grid grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Q₂/Q₁ = N₂/N₁</p>
-                  <p className="text-white text-xs">Flow ∝ Speed</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">H₂/H₁ = (N₂/N₁)²</p>
-                  <p className="text-white text-xs">Head ∝ Speed²</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">P₂/P₁ = (N₂/N₁)³</p>
-                  <p className="text-white text-xs">Power ∝ Speed³</p>
-                </div>
-              </div>
-            </div>
+          <KeyTakeaways
+            points={[
+              'Pump curve: head H vs volumetric flow Q at fixed impeller speed.',
+              'Operating point = intersection of pump curve and system curve. Aim for the BEP (best efficiency point).',
+              'Affinity laws: Q ∝ N, H ∝ N², P ∝ N³ — halving the speed cuts power to one-eighth.',
+              'NPSHa &gt; NPSHr + margin (typically 0.5 m) — otherwise cavitation, noise, impeller damage, head loss.',
+              'NPSHa = (P_atm + P_static_suction - P_vapour)/ρg - friction loss in suction line.',
+              'Centrifugal: smooth Q-H curve, common in building services (LTHW, CHW, DCWS booster).',
+              'Positive displacement: constant flow regardless of head, used for chemical dosing and high-pressure cleaning.',
+              'ErP: glandless circulators must meet EEI ≤ 0.23 (UK Ecodesign Regulations); part-load VSD operation usually required to comply.',
+            ]}
+          />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Speed reduction energy savings:</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Speed Reduction
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Flow</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Head</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Power</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100% (full speed)</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">80%</td>
-                      <td className="border border-white/10 px-3 py-2">80%</td>
-                      <td className="border border-white/10 px-3 py-2">64%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">51%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60%</td>
-                      <td className="border border-white/10 px-3 py-2">60%</td>
-                      <td className="border border-white/10 px-3 py-2">36%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">22%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                      <td className="border border-white/10 px-3 py-2">25%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">12.5%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pump Power Calculations
-              </p>
-              <div className="bg-black/30 p-4 rounded text-sm">
-                <p className="font-mono text-white mb-2">
-                  Hydraulic Power: P<sub>h</sub> = ρgQH
-                </p>
-                <p className="text-white text-xs mb-3">
-                  Where ρ = 1000 kg/m³ (water), g = 9.81 m/s², Q in m³/s, H in metres
-                </p>
-
-                <p className="font-mono text-white mb-2">
-                  Shaft Power: P<sub>s</sub> = P<sub>h</sub> / η<sub>pump</sub>
-                </p>
-                <p className="text-white text-xs mb-3">
-                  Accounts for pump mechanical and hydraulic efficiency
-                </p>
-
-                <p className="font-mono text-white mb-2">
-                  Electrical Power: P<sub>e</sub> = P<sub>s</sub> / η<sub>motor</sub>
-                </p>
-                <p className="text-white text-xs">Total power consumed from electrical supply</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Quick estimate:</strong> P(kW) ≈ (Q × H) / 100, where Q is in l/s and H in
-              metres, assuming 70% combined pump/motor efficiency.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 4: NPSH and Cavitation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            NPSH and Cavitation Prevention
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Net Positive Suction Head (NPSH) determines whether a pump will operate satisfactorily
-              or suffer from cavitation - the formation and collapse of vapour bubbles that damages
-              impellers.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Understanding NPSH:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>NPSHa:</strong> Available from the system installation
-                </li>
-                <li className="pl-1">
-                  <strong>NPSHr:</strong> Required by the pump (from manufacturer)
-                </li>
-                <li className="pl-1">
-                  <strong>Rule:</strong> NPSHa must exceed NPSHr by at least 0.5-1.0m margin
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Calculating NPSHa</p>
-              <p className="font-mono text-center text-lg mb-2">
-                NPSHa = P<sub>atm</sub>/ρg + h<sub>s</sub> - h<sub>f</sub> - P<sub>v</sub>/ρg
-              </p>
-              <div className="text-xs text-white mt-3">
-                <p>
-                  <strong>
-                    P<sub>atm</sub>/ρg
-                  </strong>{' '}
-                  = Atmospheric pressure head ≈ 10.3m at sea level
-                </p>
-                <p>
-                  <strong>
-                    h<sub>s</sub>
-                  </strong>{' '}
-                  = Static suction head (+ve if pump below water, -ve if above)
-                </p>
-                <p>
-                  <strong>
-                    h<sub>f</sub>
-                  </strong>{' '}
-                  = Friction losses in suction pipework
-                </p>
-                <p>
-                  <strong>
-                    P<sub>v</sub>/ρg
-                  </strong>{' '}
-                  = Vapour pressure head (0.24m for water at 20°C)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Vapour Pressure of Water
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Temperature (°C)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Vapour Pressure (kPa)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Vapour Head (m)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">20</td>
-                      <td className="border border-white/10 px-3 py-2">2.34</td>
-                      <td className="border border-white/10 px-3 py-2">0.24</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">40</td>
-                      <td className="border border-white/10 px-3 py-2">7.38</td>
-                      <td className="border border-white/10 px-3 py-2">0.75</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60</td>
-                      <td className="border border-white/10 px-3 py-2">19.9</td>
-                      <td className="border border-white/10 px-3 py-2">2.03</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">80</td>
-                      <td className="border border-white/10 px-3 py-2">47.4</td>
-                      <td className="border border-white/10 px-3 py-2">4.83</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                      <td className="border border-white/10 px-3 py-2">101.3</td>
-                      <td className="border border-white/10 px-3 py-2">10.3</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Cavitation Warning Signs</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Noise:</strong> Crackling/rattling sound like pumping gravel
-                </li>
-                <li className="pl-1">
-                  <strong>Vibration:</strong> Increased bearing and seal wear
-                </li>
-                <li className="pl-1">
-                  <strong>Performance drop:</strong> Reduced head and flow
-                </li>
-                <li className="pl-1">
-                  <strong>Damage:</strong> Pitting/erosion of impeller surfaces
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Hot water systems:</strong> Higher water temperatures significantly increase
-              vapour pressure. LTHW at 80°C has vapour head of 4.8m, reducing available NPSH
-              compared to cold water systems.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Pump Power Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the electrical power consumption for a pump
-                delivering 15 l/s at 22m head. Pump efficiency is 74%, motor efficiency is 92%.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Convert flow: Q = 15 l/s = 0.015 m³/s</p>
-                <p className="mt-2">Hydraulic power:</p>
-                <p>
-                  P<sub>h</sub> = ρgQH = 1000 × 9.81 × 0.015 × 22 = <strong>3237W = 3.24 kW</strong>
-                </p>
-                <p className="mt-2">Shaft power:</p>
-                <p>
-                  P<sub>s</sub> = P<sub>h</sub> / η<sub>pump</sub> = 3.24 / 0.74 ={' '}
-                  <strong>4.38 kW</strong>
-                </p>
-                <p className="mt-2">Electrical power:</p>
-                <p>
-                  P<sub>e</sub> = P<sub>s</sub> / η<sub>motor</sub> = 4.38 / 0.92 ={' '}
-                  <strong>4.76 kW</strong>
-                </p>
-                <p className="mt-2 text-white">→ Select 5.5 kW motor to allow starting margin</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Affinity Law Application
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A pump runs at 1450 rpm delivering 20 l/s at 30m head
-                consuming 8 kW. What is the performance at 1160 rpm (80% speed)?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Speed ratio: N₂/N₁ = 1160/1450 = 0.80</p>
-                <p className="mt-2">New flow: Q₂ = Q₁ × (N₂/N₁)</p>
-                <p>
-                  Q₂ = 20 × 0.80 = <strong>16 l/s</strong>
-                </p>
-                <p className="mt-2">New head: H₂ = H₁ × (N₂/N₁)²</p>
-                <p>
-                  H₂ = 30 × 0.64 = <strong>19.2m</strong>
-                </p>
-                <p className="mt-2">New power: P₂ = P₁ × (N₂/N₁)³</p>
-                <p>
-                  P₂ = 8 × 0.512 = <strong>4.1 kW</strong>
-                </p>
-                <p className="mt-2 text-green-400">✓ 49% power reduction for 20% speed reduction</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: NPSH Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A pump with NPSHr = 3.0m draws water at 60°C from a tank
-                1.5m below pump centreline. Suction pipe friction loss is 0.8m. Is NPSHa adequate?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  NPSHa = P<sub>atm</sub>/ρg + h<sub>s</sub> - h<sub>f</sub> - P<sub>v</sub>/ρg
-                </p>
-                <p className="mt-2">
-                  P<sub>atm</sub>/ρg = 10.3m (atmospheric)
-                </p>
-                <p>
-                  h<sub>s</sub> = -1.5m (pump above water = negative)
-                </p>
-                <p>
-                  h<sub>f</sub> = 0.8m (friction loss)
-                </p>
-                <p>
-                  P<sub>v</sub>/ρg = 2.03m (vapour pressure at 60°C)
-                </p>
-                <p className="mt-2">
-                  NPSHa = 10.3 - 1.5 - 0.8 - 2.03 = <strong>5.97m</strong>
-                </p>
-                <p className="mt-2">Margin = NPSHa - NPSHr = 5.97 - 3.0 = 2.97m</p>
-                <p className="mt-2 text-green-400">✓ Adequate - margin exceeds 0.5m minimum</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>
-                    P<sub>h</sub> = ρgQH
-                  </strong>{' '}
-                  — Hydraulic power (W)
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    P<sub>s</sub> = P<sub>h</sub>/η<sub>pump</sub>
-                  </strong>{' '}
-                  — Shaft power
-                </li>
-                <li className="pl-1">
-                  <strong>Q₂/Q₁ = N₂/N₁</strong> — Flow affinity law
-                </li>
-                <li className="pl-1">
-                  <strong>H₂/H₁ = (N₂/N₁)²</strong> — Head affinity law
-                </li>
-                <li className="pl-1">
-                  <strong>P₂/P₁ = (N₂/N₁)³</strong> — Power affinity law
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Design Values</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Atmospheric pressure: <strong>10.3m</strong> head at sea level
-                </li>
-                <li className="pl-1">
-                  Water density: <strong>1000 kg/m³</strong>
-                </li>
-                <li className="pl-1">
-                  NPSH margin: <strong>≥0.5m</strong> (1.0m preferred)
-                </li>
-                <li className="pl-1">
-                  BEP operating range: <strong>70-120%</strong> of rated flow
-                </li>
-                <li className="pl-1">
-                  Typical pump efficiency: <strong>65-85%</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Oversizing pumps</strong> — Operates far from BEP, wastes energy
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring vapour pressure</strong> — Critical for hot water NPSH
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong units</strong> — l/s must convert to m³/s for power calc
-                </li>
-                <li className="pl-1">
-                  <strong>No NPSH check</strong> — Leads to cavitation damage
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Pump Performance</p>
-                <ul className="space-y-0.5">
-                  <li>H-Q curve - head decreases with flow</li>
-                  <li>BEP - maximum efficiency point</li>
-                  <li>NPSHr - minimum suction head needed</li>
-                  <li>Power increases with flow rate</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Affinity Laws</p>
-                <ul className="space-y-0.5">
-                  <li>Flow ∝ Speed (linear)</li>
-                  <li>Head ∝ Speed² (square)</li>
-                  <li>Power ∝ Speed³ (cube)</li>
-                  <li>50% speed = 12.5% power</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Pipe Sizing
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2-6">
-              Next: System Curves
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Pipe sizing
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                System curves and operating points
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

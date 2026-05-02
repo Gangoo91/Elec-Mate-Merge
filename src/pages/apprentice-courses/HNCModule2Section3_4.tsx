@@ -1,8 +1,27 @@
-import { ArrowLeft, Thermometer, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 3 · Subsection 4 — Air Conditioning Processes
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Sensible heating and cooling, humidification, dehumidification and air mixing —
+ *   the four canonical AHU processes the HNC engineer specifies, sizes and verifies
+ *   on commercial HVAC projects.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Air Conditioning Processes - HNC Module 2 Section 3.4';
@@ -238,671 +257,454 @@ const faqs = [
 ];
 
 const HNCModule2Section3_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-cyan-400 text-sm mb-3">
-            <Thermometer className="h-4 w-4" />
-            <span>Module 2.3.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Air Conditioning Processes
-          </h1>
-          <p className="text-white">
-            Understanding heating, cooling, humidification and dehumidification for HVAC system
-            design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 3 · Subsection 4"
+            title="Air Conditioning Processes"
+            description="Understanding heating, cooling, humidification and dehumidification for HVAC system design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-cyan-400/5 border-l-2 border-cyan-400/50">
-            <p className="text-cyan-400 text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Sensible:</strong> Temperature change only (Qs = ṁcpΔT)
-              </li>
-              <li className="pl-1">
-                <strong>Latent:</strong> Moisture change only (QL = ṁΔghfg)
-              </li>
-              <li className="pl-1">
-                <strong>Total:</strong> Qt = Qs + QL (or ṁΔh)
-              </li>
-              <li className="pl-1">
-                <strong>SHR:</strong> Qs/Qt - defines process direction
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-cyan-400/5 border-l-2 border-cyan-400/50">
-            <p className="text-cyan-400/90 text-sm font-medium mb-2">Building Services Context</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Heating coils:</strong> Sensible heating in winter
-              </li>
-              <li className="pl-1">
-                <strong>Cooling coils:</strong> Cooling + dehumidification
-              </li>
-              <li className="pl-1">
-                <strong>Humidifiers:</strong> Steam or spray types
-              </li>
-              <li className="pl-1">
-                <strong>Mixing:</strong> Outside and return air
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You size sensible heating and cooling using Q̇s = ṁ × cp × ΔT and latent loads using Q̇l = ṁ × hfg × Δg.',
+              'You select humidifier type (steam, spray, evaporative pad) by tracking the process line on the psychrometric chart against the design moisture target.',
+              'You apply the apparatus dew point (ADP) and contact factor (β) when sizing a cooling coil — not just sensible duty.',
+              'You calculate Sensible Heat Ratio (SHR = Q̇s / Q̇total) to match coil performance to the building&rsquo;s sensible:latent split.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Guide B1 — Heating; Guide B3 — Air-Conditioning, Air Handling and Refrigeration"
+            clause="Recommended methods for sizing AHU coils, selecting humidification, and verifying sensible/latent split via the psychrometric chart and the cooling-coil contact factor."
+            meaning={
+              <>
+                CIBSE Guide B is the design code of practice for the four canonical AHU
+                processes. As HNC engineer you reference Guide B1/B3 when selecting plant
+                schedules, especially when the architect questions why coils, humidifiers
+                or fan sizes have been upgraded against the original concept.
+              </>
+            }
+            cite="Source: CIBSE Guide B1 — Heating; CIBSE Guide B3 — Air-Conditioning, Air Handling and Refrigeration."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate sensible and latent heat loads',
               'Plot heating and cooling processes on the psychrometric chart',
               'Understand humidification methods and their chart representation',
               'Analyse cooling with dehumidification processes',
               'Calculate mixed air conditions',
               'Determine sensible heat ratio for system design',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-cyan-400/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Sensible Heating and Cooling */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">01</span>
-            Sensible Heating and Cooling
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Sensible Heating and Cooling"
+            plainEnglish="Add or remove heat without touching the moisture. The chart line stays horizontal — temperature changes, moisture doesn't."
+          >
             <p>
               Sensible processes change only the temperature of air, without adding or removing
               moisture. On the psychrometric chart, these appear as horizontal lines.
             </p>
+            <p>
+              <strong>Sensible Heat Equation:</strong> Qs = ṁ × cp × ΔT
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Qs = sensible heat rate (kW)</li>
+              <li>ṁ = mass flow rate (kg/s)</li>
+              <li>cp = 1.005 kJ/kg·K (dry air)</li>
+              <li>ΔT = temperature change (°C or K)</li>
+            </ul>
+            <p>
+              <strong>Sensible Process Characteristics:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sensible heating:</strong> Horizontal right →. T↑, RH↓, h↑, g constant
+              </li>
+              <li>
+                <strong>Sensible cooling:</strong> Horizontal left ←. T↓, RH↑, h↓, g constant
+              </li>
+            </ul>
+            <p>
+              <strong>Heating Equipment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>LTHW heating coils (70-80°C flow)</li>
+              <li>Electric heater batteries</li>
+              <li>Direct gas-fired heaters</li>
+              <li>Heat recovery coils</li>
+            </ul>
+            <p>
+              <strong>Cooling Equipment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Chilled water coils (6-12°C)</li>
+              <li>Direct expansion (DX) coils</li>
+              <li>Chilled beams (sensible only)</li>
+              <li>Free cooling coils</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">Sensible Heat Equation</p>
-              <p className="font-mono text-center text-lg mb-2">
-                Q<sub>s</sub> = ṁ × c<sub>p</sub> × ΔT
-              </p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>Qs = sensible heat rate (kW)</p>
-                <p>ṁ = mass flow rate (kg/s)</p>
-                <p>cp = 1.005 kJ/kg·K (dry air)</p>
-                <p>ΔT = temperature change (°C or K)</p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Sensible Process Characteristics
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Process</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Chart Direction
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Property Changes
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sensible heating</td>
-                      <td className="border border-white/10 px-3 py-2">Horizontal right →</td>
-                      <td className="border border-white/10 px-3 py-2">T↑, RH↓, h↑, g constant</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sensible cooling</td>
-                      <td className="border border-white/10 px-3 py-2">Horizontal left ←</td>
-                      <td className="border border-white/10 px-3 py-2">T↓, RH↑, h↓, g constant</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">Heating Equipment</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">LTHW heating coils (70-80°C flow)</li>
-                  <li className="pl-1">Electric heater batteries</li>
-                  <li className="pl-1">Direct gas-fired heaters</li>
-                  <li className="pl-1">Heat recovery coils</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">Cooling Equipment</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Chilled water coils (6-12°C)</li>
-                  <li className="pl-1">Direct expansion (DX) coils</li>
-                  <li className="pl-1">Chilled beams (sensible only)</li>
-                  <li className="pl-1">Free cooling coils</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Humidification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">02</span>
-            Humidification Processes
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Humidification Processes"
+            plainEnglish="Two ways to wet the air: shoot steam in (heats it slightly), or evaporate water off a wet surface (cools it). Same end result, different chart paths."
+          >
             <p>
               Humidification adds water vapour to air to increase moisture content and relative
               humidity. The two main methods produce different paths on the psychrometric chart.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Humidification Methods Compared
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Chart Path</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Temperature Change
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Energy Source</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Steam injection</td>
-                      <td className="border border-white/10 px-3 py-2">Near vertical ↑</td>
-                      <td className="border border-white/10 px-3 py-2">Slight increase</td>
-                      <td className="border border-white/10 px-3 py-2">Boiler/steam generator</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Adiabatic spray</td>
-                      <td className="border border-white/10 px-3 py-2">Along wet bulb ↙</td>
-                      <td className="border border-white/10 px-3 py-2">Decrease (cooling)</td>
-                      <td className="border border-white/10 px-3 py-2">Air's sensible heat</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wetted media</td>
-                      <td className="border border-white/10 px-3 py-2">Along wet bulb ↙</td>
-                      <td className="border border-white/10 px-3 py-2">Decrease (cooling)</td>
-                      <td className="border border-white/10 px-3 py-2">Air's sensible heat</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ultrasonic</td>
-                      <td className="border border-white/10 px-3 py-2">Near vertical ↑</td>
-                      <td className="border border-white/10 px-3 py-2">Very slight change</td>
-                      <td className="border border-white/10 px-3 py-2">Electrical</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Adiabatic Saturation Efficiency
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                η = (T<sub>1</sub> - T<sub>2</sub>) / (T<sub>1</sub> - T<sub>wb</sub>)
-              </p>
-              <p className="text-xs text-white text-center">
-                Efficiency typically 70-90% for spray/media systems
-              </p>
-            </div>
-
-            <p className="text-sm text-cyan-400/70">
+            <p>
+              <strong>Humidification Methods Compared:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Steam injection:</strong> Chart path near vertical ↑, slight temperature
+                increase, energy from boiler/steam generator
+              </li>
+              <li>
+                <strong>Adiabatic spray:</strong> Chart path along wet bulb ↙, temperature decrease
+                (cooling), energy from air's sensible heat
+              </li>
+              <li>
+                <strong>Wetted media:</strong> Chart path along wet bulb ↙, temperature decrease
+                (cooling), energy from air's sensible heat
+              </li>
+              <li>
+                <strong>Ultrasonic:</strong> Chart path near vertical ↑, very slight temperature
+                change, electrical energy
+              </li>
+            </ul>
+            <p>
+              <strong>Adiabatic Saturation Efficiency:</strong> η = (T1 - T2) / (T1 - Twb).
+              Efficiency typically 70-90% for spray/media systems.
+            </p>
+            <p>
               <strong>Note:</strong> Adiabatic humidification has a natural limit at the wet bulb
               temperature (100% saturation efficiency would reach saturation at the wet bulb).
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Dehumidification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">03</span>
-            Dehumidification Processes
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Dehumidification Processes"
+            plainEnglish="Either chill the air below its dew point and let water condense out, or run it through a desiccant that grabs the moisture chemically."
+          >
             <p>
               Dehumidification removes moisture from air, essential for comfort cooling in humid
               conditions and for process applications requiring low humidity.
             </p>
+            <p>
+              <strong>Dehumidification Methods:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cooling coil:</strong> Surface below dew point. Chart path toward ADP. Used
+                in most HVAC systems.
+              </li>
+              <li>
+                <strong>Desiccant:</strong> Moisture absorption. Chart path down-right (g↓, T↑).
+                Used for low humidity needs.
+              </li>
+            </ul>
+            <p>
+              <strong>Latent Heat Equation:</strong> QL = ṁ × Δg × hfg
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>QL = latent heat rate (kW)</li>
+              <li>Δg = moisture content change (kg/kg)</li>
+              <li>hfg ≈ 2450 kJ/kg (at typical conditions)</li>
+            </ul>
+            <p>
+              <strong>Cooling Coil Dehumidification:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Coil must be below air dew point</li>
+              <li>Process line aims toward ADP</li>
+              <li>Condensate must be drained</li>
+              <li>Often followed by reheat</li>
+            </ul>
+            <p>
+              <strong>Total Cooling Load:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Qt = Qs + QL</li>
+              <li>Or: Qt = ṁ × Δh</li>
+              <li>SHR = Qs / Qt</li>
+              <li>Typical comfort: SHR 0.7-0.9</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">Dehumidification Methods</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Principle</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Chart Path</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooling coil</td>
-                      <td className="border border-white/10 px-3 py-2">Surface below dew point</td>
-                      <td className="border border-white/10 px-3 py-2">Toward ADP</td>
-                      <td className="border border-white/10 px-3 py-2">Most HVAC systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Desiccant</td>
-                      <td className="border border-white/10 px-3 py-2">Moisture absorption</td>
-                      <td className="border border-white/10 px-3 py-2">Down-right (g↓, T↑)</td>
-                      <td className="border border-white/10 px-3 py-2">Low humidity needs</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">Latent Heat Equation</p>
-              <p className="font-mono text-center text-lg mb-2">
-                Q<sub>L</sub> = ṁ × Δg × h<sub>fg</sub>
-              </p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>QL = latent heat rate (kW)</p>
-                <p>Δg = moisture content change (kg/kg)</p>
-                <p>hfg ≈ 2450 kJ/kg (at typical conditions)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                  Cooling Coil Dehumidification
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Coil must be below air dew point</li>
-                  <li className="pl-1">Process line aims toward ADP</li>
-                  <li className="pl-1">Condensate must be drained</li>
-                  <li className="pl-1">Often followed by reheat</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">Total Cooling Load</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Qt = Qs + QL</li>
-                  <li className="pl-1">Or: Qt = ṁ × Δh</li>
-                  <li className="pl-1">SHR = Qs / Qt</li>
-                  <li className="pl-1">Typical comfort: SHR 0.7-0.9</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Mixing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">04</span>
-            Air Mixing Processes
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Air Mixing Processes"
+            plainEnglish="Two air streams meet, the mixture sits on a straight line between them. Where on the line? Closer to the bigger flow."
+          >
             <p>
               Mixing occurs when two air streams combine, such as fresh outside air with
               recirculated return air. The mixed condition lies on a straight line between the two
               original states.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">Mixing Equations</p>
-              <div className="font-mono text-center text-sm space-y-2 mb-3">
-                <p>
-                  T<sub>m</sub> = (ṁ<sub>1</sub>T<sub>1</sub> + ṁ<sub>2</sub>T<sub>2</sub>) / (ṁ
-                  <sub>1</sub> + ṁ<sub>2</sub>)
-                </p>
-                <p>
-                  g<sub>m</sub> = (ṁ<sub>1</sub>g<sub>1</sub> + ṁ<sub>2</sub>g<sub>2</sub>) / (ṁ
-                  <sub>1</sub> + ṁ<sub>2</sub>)
-                </p>
-                <p>
-                  h<sub>m</sub> = (ṁ<sub>1</sub>h<sub>1</sub> + ṁ<sub>2</sub>h<sub>2</sub>) / (ṁ
-                  <sub>1</sub> + ṁ<sub>2</sub>)
-                </p>
-              </div>
-              <p className="text-xs text-white text-center">
-                All properties mix by mass-weighted average
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Graphical Mixing (Lever Rule)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plot both air states on the chart
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Draw a straight line between them
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Divide line by inverse mass ratio
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mixed state is closer to larger mass flow
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-cyan-400/70">
+            <p>
+              <strong>Mixing Equations</strong> (all properties mix by mass-weighted average):
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Tm = (ṁ1·T1 + ṁ2·T2) / (ṁ1 + ṁ2)</li>
+              <li>gm = (ṁ1·g1 + ṁ2·g2) / (ṁ1 + ṁ2)</li>
+              <li>hm = (ṁ1·h1 + ṁ2·h2) / (ṁ1 + ṁ2)</li>
+            </ul>
+            <p>
+              <strong>Graphical Mixing (Lever Rule):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Plot both air states on the chart</li>
+              <li>Step 2: Draw a straight line between them</li>
+              <li>Step 3: Divide line by inverse mass ratio</li>
+              <li>Step 4: Mixed state is closer to larger mass flow</li>
+            </ul>
+            <p>
               <strong>Caution:</strong> If the mixing line crosses the saturation curve, fog or
               condensation may form in the mixing chamber. This can occur in cold climates when very
               cold dry air mixes with warm humid return air.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Heating coil sizing, cooling with dehumidification, mixing, and steam humidification — the four classic AHU calcs."
+          >
+            <p>
+              <strong>Example 1: Heating Coil Capacity.</strong> An AHU supplies 4.5 kg/s of air.
+              Calculate the heating coil capacity to raise temperature from 10°C to 24°C.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Given: ṁ = 4.5 kg/s, T₁ = 10°C, T₂ = 24°C, cp = 1.005 kJ/kg·K</li>
+              <li>Qs = ṁ × cp × ΔT = 4.5 × 1.005 × (24 - 10) = 4.5 × 1.005 × 14</li>
+              <li>
+                Qs = <strong>63.3 kW</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2: Cooling with Dehumidification.</strong> Air at 28°C, 12 g/kg enters
+              a cooling coil and leaves at 14°C, 9 g/kg. Calculate sensible, latent and total load
+              for 3 kg/s.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Sensible: Qs = ṁ × cp × ΔT = 3 × 1.005 × (28 - 14) = <strong>42.2 kW</strong>
+              </li>
+              <li>Latent: QL = ṁ × Δg × hfg = 3 × (12-9)/1000 × 2450 = 3 × 0.003 × 2450</li>
+              <li>
+                QL = <strong>22.1 kW</strong>
+              </li>
+              <li>
+                Total: Qt = Qs + QL = 42.2 + 22.1 = <strong>64.3 kW</strong>
+              </li>
+              <li>
+                SHR = 42.2/64.3 = <strong>0.66</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3: Air Mixing.</strong> 1.5 kg/s outside air (32°C, 18 g/kg) mixes
+              with 4.5 kg/s return air (24°C, 10 g/kg). Find mixed conditions.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Total flow: ṁt = 1.5 + 4.5 = 6.0 kg/s</li>
+              <li>
+                Mixed temperature: Tm = (1.5×32 + 4.5×24) / 6.0 = (48 + 108) / 6 ={' '}
+                <strong>26°C</strong>
+              </li>
+              <li>
+                Mixed moisture content: gm = (1.5×18 + 4.5×10) / 6.0 = (27 + 45) / 6 ={' '}
+                <strong>12 g/kg</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 4: Steam Humidification.</strong> How much steam (kg/h) is needed to
+              raise 2 kg/s of air from 5 g/kg to 8 g/kg moisture content?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Moisture addition rate: Δg = 8 - 5 = 3 g/kg = 0.003 kg/kg</li>
+              <li>Steam flow rate: ṁsteam = ṁair × Δg = 2 × 0.003 = 0.006 kg/s</li>
+              <li>
+                Converting to kg/h: ṁsteam = 0.006 × 3600 = <strong>21.6 kg/h</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 1: Heating Coil Capacity
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An AHU supplies 4.5 kg/s of air. Calculate the heating
-                coil capacity to raise temperature from 10°C to 24°C.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given: ṁ = 4.5 kg/s, T₁ = 10°C, T₂ = 24°C</p>
-                <p>cp = 1.005 kJ/kg·K</p>
-                <p className="mt-2">Qs = ṁ × cp × ΔT</p>
-                <p>Qs = 4.5 × 1.005 × (24 - 10)</p>
-                <p>Qs = 4.5 × 1.005 × 14</p>
-                <p>
-                  Qs = <strong>63.3 kW</strong>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 2: Cooling with Dehumidification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Air at 28°C, 12 g/kg enters a cooling coil and leaves at
-                14°C, 9 g/kg. Calculate sensible, latent and total load for 3 kg/s.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Sensible: Qs = ṁ × cp × ΔT</p>
-                <p>
-                  Qs = 3 × 1.005 × (28 - 14) = <strong>42.2 kW</strong>
-                </p>
-                <p className="mt-2">Latent: QL = ṁ × Δg × hfg</p>
-                <p>QL = 3 × (12-9)/1000 × 2450</p>
-                <p>
-                  QL = 3 × 0.003 × 2450 = <strong>22.1 kW</strong>
-                </p>
-                <p className="mt-2">Total: Qt = Qs + QL</p>
-                <p>
-                  Qt = 42.2 + 22.1 = <strong>64.3 kW</strong>
-                </p>
-                <p className="mt-2">
-                  SHR = 42.2/64.3 = <strong>0.66</strong>
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The four equations and the typical SHR figures you'll quote on every project."
+          >
+            <p>
+              <strong>Essential Equations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Qs = ṁcpΔT</strong> — Sensible heat (kW)
+              </li>
+              <li>
+                <strong>QL = ṁΔghfg</strong> — Latent heat (kW)
+              </li>
+              <li>
+                <strong>Qt = ṁΔh</strong> — Total heat (kW)
+              </li>
+              <li>
+                <strong>SHR = Qs/Qt</strong> — Sensible heat ratio
+              </li>
+            </ul>
+            <p>
+              <strong>Typical SHR Values:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Offices:</strong> 0.85-0.95 (mostly sensible)
+              </li>
+              <li>
+                <strong>Retail:</strong> 0.80-0.90
+              </li>
+              <li>
+                <strong>Restaurants:</strong> 0.70-0.80
+              </li>
+              <li>
+                <strong>Swimming pools:</strong> 0.50-0.65 (high latent)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">Example 3: Air Mixing</h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> 1.5 kg/s outside air (32°C, 18 g/kg) mixes with 4.5 kg/s
-                return air (24°C, 10 g/kg). Find mixed conditions.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Total flow: ṁt = 1.5 + 4.5 = 6.0 kg/s</p>
-                <p className="mt-2">Mixed temperature:</p>
-                <p>Tm = (1.5×32 + 4.5×24) / 6.0</p>
-                <p>
-                  Tm = (48 + 108) / 6 = <strong>26°C</strong>
-                </p>
-                <p className="mt-2">Mixed moisture content:</p>
-                <p>gm = (1.5×18 + 4.5×10) / 6.0</p>
-                <p>
-                  gm = (27 + 45) / 6 = <strong>12 g/kg</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 4: Steam Humidification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> How much steam (kg/h) is needed to raise 2 kg/s of air
-                from 5 g/kg to 8 g/kg moisture content?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Moisture addition rate:</p>
-                <p>Δg = 8 - 5 = 3 g/kg = 0.003 kg/kg</p>
-                <p className="mt-2">Steam flow rate:</p>
-                <p>ṁsteam = ṁair × Δg</p>
-                <p>ṁsteam = 2 × 0.003 = 0.006 kg/s</p>
-                <p className="mt-2">Converting to kg/h:</p>
-                <p>
-                  ṁsteam = 0.006 × 3600 = <strong>21.6 kg/h</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">Essential Equations</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Qs = ṁcpΔT</strong> — Sensible heat (kW)
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Units for Δg:</strong> Must be kg/kg in equation, not g/kg
                 </li>
-                <li className="pl-1">
-                  <strong>QL = ṁΔghfg</strong> — Latent heat (kW)
+                <li>
+                  <strong>Forgetting reheat:</strong> After dehumidification if too cold
                 </li>
-                <li className="pl-1">
-                  <strong>Qt = ṁΔh</strong> — Total heat (kW)
+                <li>
+                  <strong>Mixing by volume:</strong> Must use mass flow rates
                 </li>
-                <li className="pl-1">
-                  <strong>SHR = Qs/Qt</strong> — Sensible heat ratio
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">Typical SHR Values</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Offices:</strong> 0.85-0.95 (mostly sensible)
-                </li>
-                <li className="pl-1">
-                  <strong>Retail:</strong> 0.80-0.90
-                </li>
-                <li className="pl-1">
-                  <strong>Restaurants:</strong> 0.70-0.80
-                </li>
-                <li className="pl-1">
-                  <strong>Swimming pools:</strong> 0.50-0.65 (high latent)
+                <li>
+                  <strong>Assuming sensible only:</strong> Check if coil below dew point
                 </li>
               </ul>
-            </div>
+            }
+            doInstead="Always convert Δg to kg/kg before the latent equation, design reheat into any high-humidity-control scheme, mix on a mass-flow basis, and check coil surface vs entering-air dew point before assuming purely sensible cooling."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Units for Δg</strong> — Must be kg/kg in equation, not g/kg
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting reheat</strong> — After dehumidification if too cold
-                </li>
-                <li className="pl-1">
-                  <strong>Mixing by volume</strong> — Must use mass flow rates
-                </li>
-                <li className="pl-1">
-                  <strong>Assuming sensible only</strong> — Check if coil below dew point
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Scenario
+            title="Specifying summer comfort cooling for a south-facing dealing-room"
+            situation={
+              <>
+                A 220 m² City dealing-room with full-height south glazing has 65 occupants
+                and 80 kW of IT load. Summer design is 30 °C, 50% RH ambient; internal
+                target is 22 °C, 50% RH. The original concept used sensible-only chilled
+                beams and now overheats by mid-afternoon.
+              </>
+            }
+            whatToDo={
+              <>
+                Calculate the sensible load (occupants 75 W each + IT 80 kW + solar gain).
+                Calculate the latent load from occupant moisture generation (≈55 g/h
+                each at light office work). Compute SHR. If SHR &lt; 0.85, chilled beams
+                alone are insufficient — recommend a 4-pipe FCU or AHU coil with active
+                dehumidification. Plot the supply-air state on the chart and document the
+                ADP and contact factor in the schedule.
+              </>
+            }
+            whyItMatters={
+              <>
+                A latent-blind design strands the building at high RH and warm operative
+                temperature. Productivity drops, the FM team field complaints, and
+                retrofitting active dehumidification in occupied dealing rooms is brutally
+                expensive. The chart-based SHR check catches the gap at design stage.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Process Equations</p>
-                <ul className="space-y-0.5">
-                  <li>Sensible: Qs = ṁcpΔT</li>
-                  <li>Latent: QL = ṁΔghfg</li>
-                  <li>Total: Qt = ṁΔh</li>
-                  <li>Mixing: Tm = Σ(ṁT)/Σṁ</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Values</p>
-                <ul className="space-y-0.5">
-                  <li>cp (air): 1.005 kJ/kg·K</li>
-                  <li>hfg: ~2450 kJ/kg</li>
-                  <li>Comfort SHR: 0.7-0.9</li>
-                  <li>Office SHR: 0.85-0.95</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Sensible processes change tdb only — moisture content g constant; horizontal on the chart.',
+              'Sensible heat: Q̇s = ṁ × cp × ΔT (cp = 1.005 kJ/kg·K).',
+              'Latent processes change moisture content only at constant tdb — vertical on the chart.',
+              'Latent heat: Q̇l = ṁ × hfg × Δg (use hfg ≈ 2,501 kJ/kg, Δg in kg/kg).',
+              'Cooling coil with dehumidification needs surface T &lt; entering-air dew point — characterised by ADP and contact factor β.',
+              'Sensible Heat Ratio SHR = Q̇s / Q̇total — drives coil and humidifier selection.',
+              'Adiabatic humidification (sprays, evaporative pads): along constant-enthalpy line, tdb falls.',
+              'Mixing of two streams = straight line by mass-flow lever rule, never by volume.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section3-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Psychrometric Charts
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-cyan-500 text-white hover:bg-cyan-500/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section3-5">
-              Next: Cooling and Heating Coils
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section3-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Psychrometric Charts
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section3-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Cooling and Heating Coils
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

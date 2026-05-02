@@ -108,9 +108,57 @@ const handler = async (req: Request): Promise<Response> => {
     const realIp = req.headers.get('x-real-ip');
     const clientIp = forwardedFor?.split(',')[0] || realIp || 'Unknown';
 
+    // ELE-954 — Compute deposit if accepting and sparky has a default % set
+    // on their company profile. Quote-level override would live on
+    // quote.settings.depositPercentage (existing field). We snapshot the
+    // amount onto the quote so future changes to defaults don't drift.
+    let depositInfo: {
+      required: boolean;
+      amountPennies: number;
+      invoiceId: string | null;
+      payUrl: string | null;
+    } = { required: false, amountPennies: 0, invoiceId: null, payUrl: null };
+
+    if (action === 'accept') {
+      try {
+        const { data: companyProfile } = await supabase
+          .from('company_profiles')
+          .select('deposit_percentage, company_name, currency')
+          .eq('user_id', quote.user_id)
+          .maybeSingle();
+
+        const quoteSettings = (quote.settings || {}) as Record<string, unknown>;
+        const settingsDepositPct = Number(quoteSettings.depositPercentage);
+        const profileDepositPct = Number(companyProfile?.deposit_percentage);
+        const depositPct =
+          Number.isFinite(settingsDepositPct) && settingsDepositPct > 0
+            ? settingsDepositPct
+            : Number.isFinite(profileDepositPct) && profileDepositPct > 0
+              ? profileDepositPct
+              : 0;
+
+        if (depositPct > 0 && (quote.total || 0) > 0) {
+          const totalPennies = Math.round(Number(quote.total) * 100);
+          const depositPennies = Math.round((totalPennies * depositPct) / 100);
+          depositInfo.required = true;
+          depositInfo.amountPennies = depositPennies;
+        }
+      } catch (depositErr) {
+        console.error('Deposit lookup failed (non-fatal):', depositErr);
+      }
+    }
+
     // Update quote status
     const newStatus = action === 'accept' ? 'approved' : 'rejected';
-    const acceptanceStatus = action === 'accept' ? 'accepted' : 'rejected';
+    // ELE-954 — accept-with-deposit uses 'accepted_pending_deposit' so the
+    // booking isn't fully confirmed until the deposit lands. Stripe webhook
+    // flips it to 'accepted' once paid.
+    const acceptanceStatus =
+      action === 'accept'
+        ? depositInfo.required
+          ? 'accepted_pending_deposit'
+          : 'accepted'
+        : 'rejected';
 
     const { error: updateError } = await supabase
       .from('quotes')
@@ -123,6 +171,8 @@ const handler = async (req: Request): Promise<Response> => {
         accepted_by_email: clientEmail,
         accepted_ip: clientIp,
         accepted_user_agent: userAgent,
+        deposit_required: depositInfo.required,
+        deposit_amount_pennies: depositInfo.required ? depositInfo.amountPennies : null,
         updated_at: new Date().toISOString(),
       })
       .eq('id', quoteView.quote_id);
@@ -133,6 +183,82 @@ const handler = async (req: Request): Promise<Response> => {
         'Update Failed',
         'Unable to process your response. Please try again or contact us directly.'
       );
+    }
+
+    // ELE-954 — If deposit required, create a deposit invoice and a Stripe
+    // payment link. Failures here are non-fatal: the quote stays accepted
+    // pending deposit, sparky can manually request the deposit later.
+    if (depositInfo.required && action === 'accept') {
+      try {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+        const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+
+        const depositAmount = depositInfo.amountPennies / 100;
+        const depositInvoiceNumber = `DEP-${quote.quote_number || quote.id.slice(0, 8)}`;
+        const dueDate = new Date(Date.now() + 48 * 60 * 60 * 1000); // 48h to pay
+
+        // Create deposit invoice row
+        const { data: depositInvoice, error: invoiceErr } = await supabase
+          .from('invoices')
+          .insert({
+            user_id: quote.user_id,
+            client_id: quote.client_id,
+            client: quote.client,
+            quote_id: quote.id,
+            parent_quote_id: quote.id,
+            deposit_for_quote: true,
+            invoice_number: depositInvoiceNumber,
+            invoice_status: 'sent',
+            invoice_date: new Date().toISOString(),
+            invoice_due_date: dueDate.toISOString(),
+            subtotal: depositAmount,
+            total: depositAmount,
+            items: [
+              {
+                id: crypto.randomUUID(),
+                description: `Deposit · Quote ${quote.quote_number || ''}`.trim(),
+                quantity: 1,
+                unit: 'each',
+                unitPrice: depositAmount,
+                totalPrice: depositAmount,
+                category: 'manual',
+              },
+            ],
+            settings: { vatRegistered: false, paymentTerms: '48 hours' },
+          })
+          .select('id')
+          .single();
+
+        if (invoiceErr) {
+          console.error('Deposit invoice insert failed:', invoiceErr);
+        } else if (depositInvoice?.id) {
+          depositInfo.invoiceId = depositInvoice.id;
+
+          // Persist the deposit invoice ref on the parent quote
+          await supabase
+            .from('quotes')
+            .update({ deposit_invoice_id: depositInvoice.id })
+            .eq('id', quote.id);
+
+          // Generate Stripe pay link via existing infra
+          const linkRes = await fetch(`${supabaseUrl}/functions/v1/create-invoice-payment-link`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${serviceRoleKey}`,
+            },
+            body: JSON.stringify({ invoiceId: depositInvoice.id }),
+          });
+          if (linkRes.ok) {
+            const { url } = await linkRes.json();
+            if (url) depositInfo.payUrl = url;
+          } else {
+            console.error('Stripe pay link generation failed:', await linkRes.text());
+          }
+        }
+      } catch (depErr) {
+        console.error('Deposit invoice creation failed (non-fatal):', depErr);
+      }
     }
 
     // Mark token as used (one-time use protection)
@@ -215,7 +341,17 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Return success page to customer
     if (action === 'accept') {
-      return acceptSuccessPage(quote.quote_number, clientName, isExpired);
+      // ELE-955 — if no deposit required, send the client straight to the
+      // slot picker. With a deposit, the picker is reached after Stripe
+      // payment success (success_url on Checkout) on the deposit invoice.
+      const appUrl = 'https://www.elec-mate.com';
+      const slotPickerUrl = `${appUrl}/book-slot/${quote.id}`;
+      return acceptSuccessPage(quote.quote_number, clientName, isExpired, {
+        depositRequired: depositInfo.required,
+        depositAmount: depositInfo.amountPennies / 100,
+        depositPayUrl: depositInfo.payUrl,
+        slotPickerUrl,
+      });
     } else {
       return rejectSuccessPage(quote.quote_number, clientName);
     }
@@ -541,9 +677,30 @@ async function sendRejectionThankYouEmail(quote: any, clientEmail: string, clien
 }
 
 /**
- * Success page for accepted quotes
+ * Success page for accepted quotes.
+ *
+ * ELE-954 — when a deposit is required, the page shows a "Pay £X deposit
+ * to confirm your booking" CTA wired to the Stripe Checkout link the
+ * caller already generated. If `depositPayUrl` is null (Stripe Connect not
+ * set up, or pay-link generation failed) we fall back to the original
+ * "we'll be in touch" message and the sparky requests the deposit
+ * manually later.
  */
-function acceptSuccessPage(quoteNumber: string, clientName: string, isExpired: boolean): Response {
+function acceptSuccessPage(
+  quoteNumber: string,
+  clientName: string,
+  isExpired: boolean,
+  deposit?: {
+    depositRequired: boolean;
+    depositAmount: number;
+    depositPayUrl: string | null;
+    slotPickerUrl?: string;
+  }
+): Response {
+  const showDeposit = !!deposit?.depositRequired && !!deposit.depositPayUrl;
+  const showDepositManual = !!deposit?.depositRequired && !deposit.depositPayUrl;
+  const showSlotPicker = !deposit?.depositRequired && !!deposit?.slotPickerUrl;
+  const depositAmtFmt = `£${(deposit?.depositAmount ?? 0).toFixed(2)}`;
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -686,22 +843,61 @@ h1 {
   <h1>Quote Accepted!</h1>
   <div class="quote-number">${quoteNumber}</div>
   ${isExpired ? `<div class="note-box"><strong>Note:</strong> This quote had expired, but we've recorded your acceptance and will contact you to confirm details.</div>` : ''}
+  ${
+    showDeposit
+      ? `
+  <p class="message">
+    Thank you for accepting. To confirm your booking, please pay the deposit below — secure payment, takes seconds.
+  </p>
+  <div class="info-box" style="background: #fef3c7; border-left-color: #f59e0b;">
+    <strong style="color: #92400e;">Deposit due to confirm booking</strong>
+    <div style="font-size: 28px; font-weight: 700; color: #1f2937; margin-top: 4px;">${depositAmtFmt}</div>
+    <div style="font-size: 13px; color: #92400e; margin-top: 4px;">Balance payable on completion.</div>
+  </div>
+  <a href="${deposit?.depositPayUrl}" class="button" style="text-decoration: none;">
+    Pay deposit ${depositAmtFmt} →
+  </a>
+  <p class="message" style="font-size: 13px; margin-top: 24px; color: #6b7280;">
+    Powered by Stripe. We don't store your card details.
+  </p>
+  `
+      : showDepositManual
+        ? `
+  <p class="message">
+    Thank you for accepting our quote. We'll be in touch shortly with bank details to arrange the deposit and confirm your booking.
+  </p>
+  <button class="button" onclick="window.close(); return false;">Close Window</button>
+  `
+        : showSlotPicker
+          ? `
+  <p class="message">
+    Thank you for accepting. Pick a time below and we'll lock it in instantly.
+  </p>
+  <a href="${deposit?.slotPickerUrl}" class="button" style="text-decoration: none;">
+    Pick your time →
+  </a>
+  `
+          : `
   <p class="message">
     Thank you for accepting our quote. We've sent you a confirmation email with all the details.<br><br>
     <strong>What happens next?</strong><br>
     Our team will be in touch within 24 hours to schedule the work and answer any questions you may have.
   </p>
-  <button class="button" onclick="window.close(); return false;">
-    Close Window
-  </button>
+  <button class="button" onclick="window.close(); return false;">Close Window</button>
+  `
+  }
   <div class="footer">
-    ElecMate Professional Suite | A confirmation email has been sent
+    Elec-Mate · A confirmation email has been sent
   </div>
 </div>
-<script>
-  // Auto-close after 10 seconds
+${
+  showDeposit
+    ? ''
+    : `<script>
+  // Auto-close after 10 seconds (only when no deposit step is open)
   setTimeout(() => window.close(), 10000);
-</script>
+</script>`
+}
 </body>
 </html>`;
 

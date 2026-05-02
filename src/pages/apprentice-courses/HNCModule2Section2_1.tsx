@@ -1,8 +1,27 @@
-import { ArrowLeft, Droplets, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 2 · Subsection 1 — Fluid Properties and Pressure
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Density, viscosity, compressibility, hydrostatic pressure, gauge vs absolute. The
+ *   foundation of every pump-curve, pipe-sizing and pressure-budget calculation on a
+ *   building services water or gas system.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  SectionRule,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Fluid Properties and Pressure - HNC Module 2 Section 2.1';
@@ -205,714 +224,455 @@ const faqs = [
 ];
 
 const HNCModule2Section2_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Droplets className="h-4 w-4" />
-            <span>Module 2.2.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Fluid Properties and Pressure
-          </h1>
-          <p className="text-white">
-            Understanding the fundamental properties of fluids and pressure principles essential for
-            hydraulic system design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 2 · Subsection 1"
+            title="Fluid Properties and Pressure"
+            description="Understanding the fundamental properties of fluids and pressure principles essential for hydraulic system design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Density (ρ):</strong> Mass per volume, water ≈ 1000 kg/m³
-              </li>
-              <li className="pl-1">
-                <strong>Viscosity (μ):</strong> Resistance to flow, decreases with temperature
-              </li>
-              <li className="pl-1">
-                <strong>Pressure:</strong> Force per area, measured in Pa, bar, or psi
-              </li>
-              <li className="pl-1">
-                <strong>Hydrostatic:</strong> P = ρgh (pressure from fluid column)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>LPHW systems:</strong> Static head affects component ratings
-              </li>
-              <li className="pl-1">
-                <strong>Chilled water:</strong> Viscosity affects pump sizing
-              </li>
-              <li className="pl-1">
-                <strong>Pressurisation:</strong> Maintains system above vapour pressure
-              </li>
-              <li className="pl-1">
-                <strong>Cold water:</strong> Mains pressure typically 2-4 bar
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will work with the four fundamental fluid properties — density (ρ), dynamic viscosity (µ), kinematic viscosity (ν), bulk modulus — and apply them in pipe-flow and pump calculations.',
+              'You can convert between gauge and absolute pressure and between Pa, kPa, bar, m head — without dropping a factor of 10 in the SI unit chain.',
+              'You apply the hydrostatic pressure equation (P = ρgh) and the principle that pressure at depth depends only on density and elevation, not container shape.',
+              'You recognise temperature dependence — water density and viscosity change materially across LTHW operating range, and the calculation must reflect that.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Guide C — Reference Data"
+            clause="Fluid property data for water and other building services fluids (density, dynamic viscosity, kinematic viscosity, specific heat capacity, thermal conductivity, vapour pressure) are tabulated against temperature and pressure for use in hydraulic and thermal design calculations."
+            meaning={
+              <>
+                CIBSE Guide C is the UK reference for fluid properties used in building
+                services design. As an HNC engineer your pump curves, pipe sizing and pressure
+                budgets all start from these tables — interpolated to the actual operating
+                temperature and pressure.
+              </>
+            }
+            cite="Source: CIBSE Guide C — Reference Data; BS EN 12831 (heat load) for fluid property assumptions"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Define density, specific gravity, and viscosity with correct SI units',
               'Distinguish between absolute, gauge, and atmospheric pressure',
               "Apply Pascal's law to hydraulic system analysis",
               'Calculate hydrostatic pressure in building systems',
               'Understand how temperature affects fluid properties',
               'Apply fluid property knowledge to HVAC system design',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Density and Specific Gravity */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Density and Specific Gravity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Density and Specific Gravity"
+            plainEnglish="Density = mass per cubic metre. Water = 1000 kg/m³. Specific gravity = how heavy your fluid is compared to water (a dimensionless number)."
+          >
             <p>
               Density is the most fundamental fluid property - it describes how much mass is
               contained in a given volume. All hydraulic calculations in building services start
               with density.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key definitions:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Density (ρ):</strong> Mass per unit volume (kg/m³)
-                </li>
-                <li className="pl-1">
-                  <strong>Specific gravity (SG):</strong> Ratio of fluid density to water density
-                  (dimensionless)
-                </li>
-                <li className="pl-1">
-                  <strong>Specific volume:</strong> Volume per unit mass = 1/ρ (m³/kg)
-                </li>
-                <li className="pl-1">
-                  <strong>Specific weight:</strong> Weight per unit volume = ρg (N/m³)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Fluid Densities in Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Fluid</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Density (kg/m³)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water (4°C)</td>
-                      <td className="border border-white/10 px-3 py-2">1000</td>
-                      <td className="border border-white/10 px-3 py-2">Reference standard</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water (20°C)</td>
-                      <td className="border border-white/10 px-3 py-2">998</td>
-                      <td className="border border-white/10 px-3 py-2">Chilled water systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water (80°C)</td>
-                      <td className="border border-white/10 px-3 py-2">972</td>
-                      <td className="border border-white/10 px-3 py-2">LPHW heating systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">30% glycol solution</td>
-                      <td className="border border-white/10 px-3 py-2">1040</td>
-                      <td className="border border-white/10 px-3 py-2">Frost protection</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air (20°C, 1 atm)</td>
-                      <td className="border border-white/10 px-3 py-2">1.2</td>
-                      <td className="border border-white/10 px-3 py-2">Ventilation systems</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key definitions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Density (ρ):</strong> Mass per unit volume (kg/m³)
+              </li>
+              <li>
+                <strong>Specific gravity (SG):</strong> Ratio of fluid density to water density (dimensionless)
+              </li>
+              <li>
+                <strong>Specific volume:</strong> Volume per unit mass = 1/ρ (m³/kg)
+              </li>
+              <li>
+                <strong>Specific weight:</strong> Weight per unit volume = ρg (N/m³)
+              </li>
+            </ul>
+            <p>
+              <strong>Common fluid densities in building services:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Water (4°C): 1000 kg/m³ — reference standard</li>
+              <li>Water (20°C): 998 kg/m³ — chilled water systems</li>
+              <li>Water (80°C): 972 kg/m³ — LPHW heating systems</li>
+              <li>30% glycol solution: 1040 kg/m³ — frost protection</li>
+              <li>Air (20°C, 1 atm): 1.2 kg/m³ — ventilation systems</li>
+            </ul>
+            <p>
               <strong>Remember:</strong> Water density decreases as temperature rises. A system
               designed for 80°C water will have slightly different flow characteristics than at
               20°C.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Viscosity */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Viscosity - Resistance to Flow
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Viscosity - Resistance to Flow"
+            plainEnglish="Viscosity is how much a fluid fights when you try to move it. Water at 20°C is the benchmark. Heat it up, viscosity drops; add glycol, viscosity climbs."
+          >
             <p>
               Viscosity describes a fluid's internal friction - its resistance to flowing or being
               deformed. It directly affects pipe friction losses and pump power requirements.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Types of viscosity:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Dynamic (absolute) viscosity (μ):</strong> Measured in Pa·s or kg/(m·s)
-                </li>
-                <li className="pl-1">
-                  <strong>Kinematic viscosity (ν):</strong> ν = μ/ρ, measured in m²/s or Stokes
-                </li>
-                <li className="pl-1">Kinematic viscosity is used in the Reynolds number formula</li>
-                <li className="pl-1">Water viscosity decreases significantly with temperature</li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Water Viscosity vs Temperature
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>10°C:</strong> μ = 1.31 mPa·s
-                  </li>
-                  <li className="pl-1">
-                    <strong>20°C:</strong> μ = 1.00 mPa·s
-                  </li>
-                  <li className="pl-1">
-                    <strong>40°C:</strong> μ = 0.65 mPa·s
-                  </li>
-                  <li className="pl-1">
-                    <strong>60°C:</strong> μ = 0.47 mPa·s
-                  </li>
-                  <li className="pl-1">
-                    <strong>80°C:</strong> μ = 0.35 mPa·s
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Practical Implications
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Lower viscosity = less friction loss</li>
-                  <li className="pl-1">LPHW systems have lower losses than CHW</li>
-                  <li className="pl-1">Glycol increases viscosity significantly</li>
-                  <li className="pl-1">Cold start-up has highest resistance</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Kinematic Viscosity Relationship
-              </p>
-              <p className="font-mono text-center text-lg mb-2">ν = μ / ρ</p>
-              <p className="text-xs text-white text-center">
-                Where ν is in m²/s, μ in Pa·s, and ρ in kg/m³
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Types of viscosity:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Dynamic (absolute) viscosity (μ):</strong> Measured in Pa·s or kg/(m·s)
+              </li>
+              <li>
+                <strong>Kinematic viscosity (ν):</strong> ν = μ/ρ, measured in m²/s or Stokes
+              </li>
+              <li>Kinematic viscosity is used in the Reynolds number formula</li>
+              <li>Water viscosity decreases significantly with temperature</li>
+            </ul>
+            <p>
+              <strong>Water viscosity vs temperature:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>10°C:</strong> μ = 1.31 mPa·s
+              </li>
+              <li>
+                <strong>20°C:</strong> μ = 1.00 mPa·s
+              </li>
+              <li>
+                <strong>40°C:</strong> μ = 0.65 mPa·s
+              </li>
+              <li>
+                <strong>60°C:</strong> μ = 0.47 mPa·s
+              </li>
+              <li>
+                <strong>80°C:</strong> μ = 0.35 mPa·s
+              </li>
+            </ul>
+            <p>
+              <strong>Practical implications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lower viscosity = less friction loss</li>
+              <li>LPHW systems have lower losses than CHW</li>
+              <li>Glycol increases viscosity significantly</li>
+              <li>Cold start-up has highest resistance</li>
+            </ul>
+            <p>
+              <strong>Kinematic viscosity relationship:</strong> ν = μ / ρ. Where ν is in m²/s, μ in
+              Pa·s, and ρ in kg/m³.
+            </p>
+            <p>
               <strong>Design tip:</strong> When using glycol solutions, expect 15-25% higher
               friction losses and size pumps accordingly.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Pressure Fundamentals */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Pressure Types and Measurement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Pressure Types and Measurement"
+            plainEnglish="Three flavours of pressure: atmospheric (around you), gauge (what your meter reads relative to that), and absolute (from true vacuum). Add atmospheric to gauge to get absolute."
+          >
             <p>
               Pressure is force per unit area. Understanding the different types of pressure and
               their relationships is crucial for specifying equipment and ensuring safe system
               operation.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pressure Relationships</p>
-              <div className="grid grid-cols-1 gap-3 text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">
-                    Absolute Pressure = Gauge Pressure + Atmospheric Pressure
-                  </p>
-                  <p className="text-white text-xs">
-                    P<sub>abs</sub> = P<sub>gauge</sub> + P<sub>atm</sub>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pressure Units Conversion
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Unit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Value (1 atm)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Common Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pascal (Pa)</td>
-                      <td className="border border-white/10 px-3 py-2">101,325</td>
-                      <td className="border border-white/10 px-3 py-2">SI unit, calculations</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Kilopascal (kPa)</td>
-                      <td className="border border-white/10 px-3 py-2">101.325</td>
-                      <td className="border border-white/10 px-3 py-2">HVAC specifications</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bar</td>
-                      <td className="border border-white/10 px-3 py-2">1.013</td>
-                      <td className="border border-white/10 px-3 py-2">Industrial equipment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Metres head (mH₂O)</td>
-                      <td className="border border-white/10 px-3 py-2">10.33</td>
-                      <td className="border border-white/10 px-3 py-2">Pump specifications</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PSI</td>
-                      <td className="border border-white/10 px-3 py-2">14.7</td>
-                      <td className="border border-white/10 px-3 py-2">American equipment</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-bold text-white mb-1">Atmospheric</p>
-                <p className="text-white text-xs">101.3 kPa at sea level</p>
-                <p className="text-white text-xs">Reference for gauges</p>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-bold text-white mb-1">Gauge</p>
-                <p className="text-white text-xs">Relative to atmosphere</p>
-                <p className="text-white text-xs">Most common readings</p>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-bold text-white mb-1">Absolute</p>
-                <p className="text-white text-xs">From true zero (vacuum)</p>
-                <p className="text-white text-xs">Thermodynamic calcs</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Useful conversion:</strong> 1 bar ≈ 100 kPa ≈ 10 metres head of water (exact:
-              10.2 mH₂O)
+            <p>
+              <strong>Pressure relationships:</strong> Pabs = Pgauge + Patm. Absolute pressure =
+              gauge pressure + atmospheric pressure.
             </p>
-          </div>
-        </section>
+            <p>
+              <strong>Pressure units conversion (1 atm reference):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pascal (Pa): 101,325 — SI unit, calculations</li>
+              <li>Kilopascal (kPa): 101.325 — HVAC specifications</li>
+              <li>Bar: 1.013 — industrial equipment</li>
+              <li>Metres head (mH₂O): 10.33 — pump specifications</li>
+              <li>PSI: 14.7 — American equipment</li>
+            </ul>
+            <p>
+              <strong>Three pressure types compared:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Atmospheric:</strong> 101.3 kPa at sea level — reference for gauges
+              </li>
+              <li>
+                <strong>Gauge:</strong> Relative to atmosphere — most common readings
+              </li>
+              <li>
+                <strong>Absolute:</strong> From true zero (vacuum) — thermodynamic calcs
+              </li>
+            </ul>
+            <p>
+              <strong>Useful conversion:</strong> 1 bar ≈ 100 kPa ≈ 10 metres head of water (exact:
+              10.2 mH₂O).
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Pascal's Law and Hydrostatic Pressure */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Pascal's Law and Hydrostatic Pressure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Pascal's Law and Hydrostatic Pressure"
+            plainEnglish="Squeeze a sealed fluid and the squeeze travels everywhere equally — that's Pascal. Stack water 10 m high and you've got 1 bar at the bottom — that's hydrostatic."
+          >
             <p>
               Pascal's law and hydrostatic pressure are fundamental principles that govern how
               pressure behaves in fluids. These principles are essential for understanding building
               services systems.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pascal's Law</p>
-              <p className="text-sm mb-2">
-                Pressure applied to a confined fluid is transmitted undiminished and equally in all
-                directions throughout the fluid.
-              </p>
-              <p className="text-xs text-white">
-                This enables hydraulic force multiplication: F₂/F₁ = A₂/A₁
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Hydrostatic Pressure Equation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">P = ρgh</p>
-              <p className="text-xs text-white text-center">
-                Where P = pressure (Pa), ρ = density (kg/m³), g = 9.81 m/s², h = height (m)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Hydrostatic Pressure in Buildings
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Height
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Static Pressure
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Design Consideration
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10 m (3 storey)</td>
-                      <td className="border border-white/10 px-3 py-2">~1.0 bar</td>
-                      <td className="border border-white/10 px-3 py-2">Standard equipment OK</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">30 m (10 storey)</td>
-                      <td className="border border-white/10 px-3 py-2">~3.0 bar</td>
-                      <td className="border border-white/10 px-3 py-2">Check valve/pipe ratings</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60 m (20 storey)</td>
-                      <td className="border border-white/10 px-3 py-2">~6.0 bar</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Consider pressure break tanks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100 m (high-rise)</td>
-                      <td className="border border-white/10 px-3 py-2">~10 bar</td>
-                      <td className="border border-white/10 px-3 py-2">Zoned systems required</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Practical applications in building services:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Static head:</strong> Components at lower levels experience higher
-                  pressure
-                </li>
-                <li className="pl-1">
-                  <strong>Pressurisation:</strong> Systems maintained above atmospheric to prevent
-                  air ingress
-                </li>
-                <li className="pl-1">
-                  <strong>Cold water:</strong> Gravity-fed systems rely on hydrostatic head
-                </li>
-                <li className="pl-1">
-                  <strong>Expansion vessels:</strong> Pre-charge set to balance static head
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Pascal's Law:</strong> Pressure applied to a confined fluid is transmitted
+              undiminished and equally in all directions throughout the fluid. This enables
+              hydraulic force multiplication: F₂/F₁ = A₂/A₁.
+            </p>
+            <p>
+              <strong>Hydrostatic pressure equation:</strong> P = ρgh. Where P = pressure (Pa), ρ =
+              density (kg/m³), g = 9.81 m/s², h = height (m).
+            </p>
+            <p>
+              <strong>Hydrostatic pressure in buildings:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>10 m (3 storey): ~1.0 bar — standard equipment OK</li>
+              <li>30 m (10 storey): ~3.0 bar — check valve/pipe ratings</li>
+              <li>60 m (20 storey): ~6.0 bar — consider pressure break tanks</li>
+              <li>100 m (high-rise): ~10 bar — zoned systems required</li>
+            </ul>
+            <p>
+              <strong>Practical applications in building services:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Static head:</strong> Components at lower levels experience higher pressure
+              </li>
+              <li>
+                <strong>Pressurisation:</strong> Systems maintained above atmospheric to prevent air ingress
+              </li>
+              <li>
+                <strong>Cold water:</strong> Gravity-fed systems rely on hydrostatic head
+              </li>
+              <li>
+                <strong>Expansion vessels:</strong> Pre-charge set to balance static head
+              </li>
+            </ul>
+            <p>
               <strong>Rule of thumb:</strong> Each 10 metres of water column adds approximately 1
               bar (100 kPa) of static pressure.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three quick numbers: static pressure in a tall building, gauge vs absolute, and a kinematic viscosity calc."
+          >
+            <p>
+              <strong>Example 1 - static pressure in a tall building:</strong> A 45m tall building
+              has a header tank at roof level. Calculate the static pressure at ground floor level.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>P = ρgh = 1000 × 9.81 × 45 = 441,450 Pa = <strong>441.45 kPa</strong></li>
+              <li>Converting to bar: 441.45 / 100 = <strong>4.41 bar</strong></li>
+              <li>Components must be rated for at least 6 bar working pressure</li>
+            </ul>
+            <p>
+              <strong>Example 2 - absolute vs gauge pressure:</strong> A sealed heating system shows
+              2.5 bar on the pressure gauge. What is the absolute pressure?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pabs = Pgauge + Patm = 2.5 bar + 1.013 bar = <strong>3.513 bar absolute</strong></li>
+              <li>This absolute pressure must exceed the vapour pressure at system temperature</li>
+            </ul>
+            <p>
+              <strong>Example 3 - kinematic viscosity calculation:</strong> Calculate the kinematic
+              viscosity of water at 60°C (μ = 0.47 mPa·s, ρ = 983 kg/m³).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>ν = μ / ρ = 0.47 × 10⁻³ Pa·s / 983 kg/m³</li>
+              <li>ν = 4.78 × 10⁻⁷ m²/s = <strong>0.478 mm²/s (or 0.478 cSt)</strong></li>
+              <li>This value is used in Reynolds number calculations</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Static Pressure in a Tall Building
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 45m tall building has a header tank at roof level.
-                Calculate the static pressure at ground floor level.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using P = ρgh</p>
-                <p>P = 1000 kg/m³ × 9.81 m/s² × 45 m</p>
-                <p>
-                  P = 441,450 Pa = <strong>441.45 kPa</strong>
-                </p>
-                <p className="mt-2">
-                  Converting to bar: 441.45 / 100 = <strong>4.41 bar</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Components must be rated for at least 6 bar working pressure
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Absolute vs Gauge Pressure
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A sealed heating system shows 2.5 bar on the pressure
-                gauge. What is the absolute pressure?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Absolute = Gauge + Atmospheric</p>
-                <p>
-                  P<sub>abs</sub> = 2.5 bar + 1.013 bar
-                </p>
-                <p>
-                  P<sub>abs</sub> = <strong>3.513 bar</strong> (absolute)
-                </p>
-                <p className="mt-2 text-white">
-                  → This absolute pressure must exceed the vapour pressure at system temperature
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Kinematic Viscosity Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the kinematic viscosity of water at 60°C (μ =
-                0.47 mPa·s, ρ = 983 kg/m³).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>ν = μ / ρ</p>
-                <p>ν = 0.47 × 10⁻³ Pa·s / 983 kg/m³</p>
-                <p>ν = 4.78 × 10⁻⁷ m²/s</p>
-                <p>
-                  ν = <strong>0.478 mm²/s</strong> (or 0.478 cSt)
-                </p>
-                <p className="mt-2 text-white">
-                  → This value is used in Reynolds number calculations
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="Five formulas, five values, and the unit conversions you'll lean on most."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>ρ = m/V</strong> — Density (kg/m³)
+              </li>
+              <li>
+                <strong>P = F/A</strong> — Pressure definition (Pa)
+              </li>
+              <li>
+                <strong>P = ρgh</strong> — Hydrostatic pressure (Pa)
+              </li>
+              <li>
+                <strong>ν = μ/ρ</strong> — Kinematic viscosity (m²/s)
+              </li>
+              <li>
+                <strong>Pabs = Pgauge + Patm</strong> — Pressure relationship
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Water density: <strong>~1000 kg/m³</strong>
+              </li>
+              <li>
+                Atmospheric pressure: <strong>101.3 kPa = 1.013 bar</strong>
+              </li>
+              <li>
+                10 m water column = <strong>~1 bar</strong>
+              </li>
+              <li>
+                Water viscosity at 20°C: <strong>1.0 mPa·s</strong>
+              </li>
+              <li>
+                g = <strong>9.81 m/s²</strong> (often use 10 for quick calcs)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>ρ = m/V</strong> — Density (kg/m³)
-                </li>
-                <li className="pl-1">
-                  <strong>P = F/A</strong> — Pressure definition (Pa)
-                </li>
-                <li className="pl-1">
-                  <strong>P = ρgh</strong> — Hydrostatic pressure (Pa)
-                </li>
-                <li className="pl-1">
-                  <strong>ν = μ/ρ</strong> — Kinematic viscosity (m²/s)
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    P<sub>abs</sub> = P<sub>gauge</sub> + P<sub>atm</sub>
-                  </strong>{' '}
-                  — Pressure relationship
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Water density: <strong>~1000 kg/m³</strong>
-                </li>
-                <li className="pl-1">
-                  Atmospheric pressure: <strong>101.3 kPa = 1.013 bar</strong>
-                </li>
-                <li className="pl-1">
-                  10 m water column = <strong>~1 bar</strong>
-                </li>
-                <li className="pl-1">
-                  Water viscosity at 20°C: <strong>1.0 mPa·s</strong>
-                </li>
-                <li className="pl-1">
-                  g = <strong>9.81 m/s²</strong> (often use 10 for quick calcs)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Confusing gauge and absolute</strong> — Know which your gauge reads
                 </li>
-                <li className="pl-1">
-                  <strong>Forgetting temperature effects</strong> — Density and viscosity change
-                  with temperature
+                <li>
+                  <strong>Forgetting temperature effects</strong> — Density and viscosity change with temperature
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring static head</strong> — Critical in tall buildings
                 </li>
-                <li className="pl-1">
-                  <strong>Using wrong viscosity type</strong> — Dynamic for shear, kinematic for
-                  Reynolds
+                <li>
+                  <strong>Using wrong viscosity type</strong> — Dynamic for shear, kinematic for Reynolds
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always note whether a gauge reads gauge or absolute, use the correct fluid temperature for property lookup, add static head when sizing components on lower floors, and pick dynamic vs kinematic viscosity based on what the formula needs."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Setting the static pressure for a 30-storey LTHW system"
+            situation={
+              <>
+                You are commissioning the LTHW system in a 30-storey building. The plant
+                room is in the basement; the highest emitter is on Level 28 (95 m above
+                plant). You need to set the static pressure to keep all parts of the system
+                pressurised above ~20 kPa to prevent air ingress and pump cavitation.
+              </>
+            }
+            whatToDo={
+              <>
+                Calculate the static head: P = ρgh = 970 × 9.81 × 95 ≈ 904 kPa = 9.04 bar at
+                the basement plant for the highest point to sit at zero. Add a safety margin
+                (20-30 kPa) and account for system temperature (use 80 °C density). Set the
+                expansion vessel pre-charge accordingly. Specify pipework, valves and gaskets
+                rated to PN10 or PN16 as appropriate. Document the pressure budget on a
+                pressure-elevation diagram for handover.
+              </>
+            }
+            whyItMatters={
+              <>
+                Tall-building LTHW systems often hit pressure ratings as the design
+                constraint. Get the static head wrong and you either under-pressurise (air
+                in, cavitation) or over-pressurise (pipework rating breach, fitting failures).
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Fluid Properties</p>
-                <ul className="space-y-0.5">
-                  <li>Density (ρ) - kg/m³ - Mass per volume</li>
-                  <li>Viscosity (μ) - Pa·s - Resistance to flow</li>
-                  <li>Kinematic visc (ν) - m²/s - μ/ρ</li>
-                  <li>
-                    Specific gravity - Dimensionless - ρ/ρ<sub>water</sub>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Pressure Values</p>
-                <ul className="space-y-0.5">
-                  <li>Atmospheric: 101.3 kPa = 1.013 bar</li>
-                  <li>10 m head = 1 bar = 100 kPa</li>
-                  <li>1 bar = 14.5 psi</li>
-                  <li>Hydrostatic: P = ρgh</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Density ρ (kg/m³): water 1000 at 4 °C, 970 at 80 °C — temperature matters in LTHW.',
+              'Dynamic viscosity µ (Pa·s) and kinematic viscosity ν = µ/ρ (m²/s) — both fall sharply with temperature.',
+              'Pressure: 1 bar = 100 kPa = 10⁵ Pa ≈ 10 m water head; gauge = absolute - atmospheric.',
+              'Hydrostatic pressure: P = ρgh — depends only on density and depth, not container shape.',
+              'Compressibility: water&rsquo;s bulk modulus is high (~2.2 GPa) — usually treated as incompressible in building services.',
+              'Vapour pressure rises with temperature — drives cavitation risk on pump suction at high LTHW temperatures.',
+              'CIBSE Guide C tables are the UK reference — interpolate to actual operating conditions.',
+              'Pressure rating of pipework and components (PN6, PN10, PN16, PN25) must exceed the static + dynamic + safety margin maximum.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2-2">
-              Next: Flow Characteristics
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Fluid mechanics
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Flow characteristics
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

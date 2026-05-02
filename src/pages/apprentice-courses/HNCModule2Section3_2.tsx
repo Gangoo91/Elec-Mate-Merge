@@ -1,8 +1,27 @@
-import { ArrowLeft, Droplets, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 3 · Subsection 2 — Humidity and Moisture Content
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Relative humidity, specific humidity (g/kg), dew point and wet-bulb measurement —
+ *   the moisture toolkit underpinning condensation risk, comfort design and AHU
+ *   coil selection on every building services project.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Humidity and Moisture Content - HNC Module 2 Section 3.2';
@@ -235,672 +254,475 @@ const faqs = [
 ];
 
 const HNCModule2Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-cyan-400 text-sm mb-3">
-            <Droplets className="h-4 w-4" />
-            <span>Module 2.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Humidity and Moisture Content
-          </h1>
-          <p className="text-white">
-            Understanding humidity measurement and its role in HVAC system design and comfort
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 3 · Subsection 2"
+            title="Humidity and Moisture Content"
+            description="Understanding humidity measurement and its role in HVAC system design and comfort."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-cyan-400/5 border-l-2 border-cyan-400/50">
-            <p className="text-cyan-400 text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Relative humidity:</strong> % of saturation capacity
-              </li>
-              <li className="pl-1">
-                <strong>Moisture content:</strong> g water per kg dry air
-              </li>
-              <li className="pl-1">
-                <strong>Dew point:</strong> Temperature where condensation begins
-              </li>
-              <li className="pl-1">
-                <strong>Wet bulb:</strong> Evaporative cooling temperature
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-cyan-400/5 border-l-2 border-cyan-400/50">
-            <p className="text-cyan-400/90 text-sm font-medium mb-2">Building Services Context</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Comfort:</strong> 40-60% RH for occupied spaces
-              </li>
-              <li className="pl-1">
-                <strong>Condensation:</strong> Prevent by staying above dew point
-              </li>
-              <li className="pl-1">
-                <strong>Cooling coils:</strong> Dehumidify when below dew point
-              </li>
-              <li className="pl-1">
-                <strong>Humidifiers:</strong> Add moisture in winter
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You distinguish RH (% — temperature-dependent) from moisture content g/kg (absolute) and use the right one for each calculation step.',
+              'You compute moisture content from g = 0.622 × pv/(P − pv) and read saturation vapour pressures off CIBSE Guide C tables.',
+              'You assess condensation risk by comparing surface temperature to room dew point — a project sign-off competence on glazing, ducts and cold stores.',
+              'You use wet-bulb depression from a sling psychrometer to verify BMS humidity sensors during commissioning.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Guide A — Environmental Design (latest edition)"
+            clause="Recommended internal humidity range of 40–60% RH for general office and similar comfort applications, with surface temperatures kept above the room dew point to avoid condensation, mould growth and damage to fabric."
+            meaning={
+              <>
+                Comfort RH bands and dew-point control are CIBSE Guide A&rsquo;s anchor
+                recommendations. As the HNC engineer you cite these when defending humidity
+                setpoints to the architect, when sizing humidifiers, and when justifying
+                glazing or insulation upgrades to eliminate condensation black-spots.
+              </>
+            }
+            cite="Source: CIBSE Guide A — Environmental Design; CIBSE Guide C — Reference Data."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Define relative humidity and explain its significance',
               'Calculate moisture content from given conditions',
               'Explain dew point and its importance in condensation control',
               'Describe wet bulb temperature measurement',
               'Relate humidity to thermal comfort',
               'Convert between different humidity measures',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-cyan-400/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Relative Humidity */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">01</span>
-            Relative Humidity (RH)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Relative Humidity (RH)"
+            plainEnglish="RH is a percentage that says how full the air is with water vapour. 100% means it can't hold any more — anything extra falls out as condensation."
+          >
             <p>
               Relative humidity is the most commonly quoted humidity measure, expressing how close
               air is to being saturated with water vapour at its current temperature.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Relative Humidity Definition
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                RH = (p<sub>v</sub> / p<sub>s</sub>) × 100%
-              </p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>
-                  p<sub>v</sub> = actual partial pressure of water vapour (Pa)
-                </p>
-                <p>
-                  p<sub>s</sub> = saturation vapour pressure at that temperature (Pa)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Saturation Vapour Pressure at Different Temperatures
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Temperature (°C)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        p<sub>s</sub> (kPa)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Saturation g/kg
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0</td>
-                      <td className="border border-white/10 px-3 py-2">0.611</td>
-                      <td className="border border-white/10 px-3 py-2">3.8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10</td>
-                      <td className="border border-white/10 px-3 py-2">1.228</td>
-                      <td className="border border-white/10 px-3 py-2">7.6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">20</td>
-                      <td className="border border-white/10 px-3 py-2">2.339</td>
-                      <td className="border border-white/10 px-3 py-2">14.7</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25</td>
-                      <td className="border border-white/10 px-3 py-2">3.169</td>
-                      <td className="border border-white/10 px-3 py-2">20.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">30</td>
-                      <td className="border border-white/10 px-3 py-2">4.246</td>
-                      <td className="border border-white/10 px-3 py-2">27.2</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-cyan-400/70">
+            <p>
+              <strong>Relative Humidity Definition:</strong> RH = (pv / ps) × 100%
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>pv = actual partial pressure of water vapour (Pa)</li>
+              <li>ps = saturation vapour pressure at that temperature (Pa)</li>
+            </ul>
+            <p>
+              <strong>Saturation Vapour Pressure at Different Temperatures:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>0°C:</strong> ps = 0.611 kPa, saturation 3.8 g/kg
+              </li>
+              <li>
+                <strong>10°C:</strong> ps = 1.228 kPa, saturation 7.6 g/kg
+              </li>
+              <li>
+                <strong>20°C:</strong> ps = 2.339 kPa, saturation 14.7 g/kg
+              </li>
+              <li>
+                <strong>25°C:</strong> ps = 3.169 kPa, saturation 20.0 g/kg
+              </li>
+              <li>
+                <strong>30°C:</strong> ps = 4.246 kPa, saturation 27.2 g/kg
+              </li>
+            </ul>
+            <p>
               <strong>Key insight:</strong> Saturation capacity roughly doubles every 10°C. This is
               why warm humid air causes condensation when it contacts cold surfaces.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Moisture Content */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">02</span>
-            Moisture Content (Specific Humidity)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Moisture Content (Specific Humidity)"
+            plainEnglish="Moisture content is the actual weight of water in each kilo of dry air. Heat the air, the number doesn't change. That's why HVAC engineers love it."
+          >
             <p>
               Moisture content is the absolute measure of water vapour in air, expressed as grams of
               water per kilogram of dry air. Unlike RH, it remains constant during sensible heating
               or cooling.
             </p>
+            <p>
+              <strong>Moisture Content Equation:</strong> g = 0.622 × pv / (P - pv)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>g = moisture content (kg/kg dry air, multiply by 1000 for g/kg)</li>
+              <li>pv = partial pressure of water vapour (kPa)</li>
+              <li>P = total atmospheric pressure (kPa)</li>
+              <li>0.622 = ratio of molecular masses (18/29)</li>
+            </ul>
+            <p>
+              <strong>Why Use Moisture Content?</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Stays constant during sensible heating/cooling</li>
+              <li>Directly used in latent heat calculations</li>
+              <li>Represents actual water mass in air</li>
+              <li>Essential for psychrometric chart plotting</li>
+            </ul>
+            <p>
+              <strong>Typical Values (g/kg):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>UK winter outdoor:</strong> 3-6 g/kg
+              </li>
+              <li>
+                <strong>Office comfort:</strong> 7-10 g/kg
+              </li>
+              <li>
+                <strong>UK summer outdoor:</strong> 8-12 g/kg
+              </li>
+              <li>
+                <strong>Tropical outdoor:</strong> 15-20 g/kg
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">Moisture Content Equation</p>
-              <p className="font-mono text-center text-lg mb-2">
-                g = 0.622 × p<sub>v</sub> / (P - p<sub>v</sub>)
-              </p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>g = moisture content (kg/kg dry air, multiply by 1000 for g/kg)</p>
-                <p>
-                  p<sub>v</sub> = partial pressure of water vapour (kPa)
-                </p>
-                <p>P = total atmospheric pressure (kPa)</p>
-                <p>0.622 = ratio of molecular masses (18/29)</p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                  Why Use Moisture Content?
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Stays constant during sensible heating/cooling</li>
-                  <li className="pl-1">Directly used in latent heat calculations</li>
-                  <li className="pl-1">Represents actual water mass in air</li>
-                  <li className="pl-1">Essential for psychrometric chart plotting</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">Typical Values (g/kg)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>UK winter outdoor:</strong> 3-6 g/kg
-                  </li>
-                  <li className="pl-1">
-                    <strong>Office comfort:</strong> 7-10 g/kg
-                  </li>
-                  <li className="pl-1">
-                    <strong>UK summer outdoor:</strong> 8-12 g/kg
-                  </li>
-                  <li className="pl-1">
-                    <strong>Tropical outdoor:</strong> 15-20 g/kg
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Dew Point Temperature */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">03</span>
-            Dew Point Temperature
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Dew Point Temperature"
+            plainEnglish="Cool air enough and water stops floating around as vapour and starts dripping out. That tipping point is the dew point."
+          >
             <p>
               The dew point is the temperature at which air becomes saturated (100% RH) if cooled at
               constant pressure and moisture content. Below this temperature, water vapour
               condenses.
             </p>
+            <p>
+              <strong>Dew Point Relationship:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>At dew point: pv = ps (at dew point temperature)</li>
+              <li>If surface temperature &lt; dew point → condensation occurs</li>
+              <li>If surface temperature &gt; dew point → no condensation</li>
+            </ul>
+            <p>
+              <strong>Example Dew Points for 22°C Dry Bulb:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>30% RH:</strong> moisture content 5.0 g/kg, dew point 3.5°C
+              </li>
+              <li>
+                <strong>50% RH:</strong> moisture content 8.3 g/kg, dew point 11.1°C
+              </li>
+              <li>
+                <strong>70% RH:</strong> moisture content 11.6 g/kg, dew point 16.3°C
+              </li>
+              <li>
+                <strong>100% RH:</strong> moisture content 16.6 g/kg, dew point 22.0°C
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Applications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Window condensation:</strong> Occurs if glass temperature falls below room
+                dew point
+              </li>
+              <li>
+                <strong>Cold bridges:</strong> Poorly insulated areas may reach dew point
+              </li>
+              <li>
+                <strong>Cooling coils:</strong> Must operate below dew point for dehumidification
+              </li>
+              <li>
+                <strong>Ductwork:</strong> External surfaces may need insulation to prevent
+                condensation
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">Dew Point Relationship</p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  At dew point: p<sub>v</sub> = p<sub>s</sub> (at dew point temperature)
-                </p>
-                <p>If surface temperature &lt; dew point → condensation occurs</p>
-                <p>If surface temperature &gt; dew point → no condensation</p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example Dew Points for 22°C Dry Bulb
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Relative Humidity
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Moisture Content
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Dew Point</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">30%</td>
-                      <td className="border border-white/10 px-3 py-2">5.0 g/kg</td>
-                      <td className="border border-white/10 px-3 py-2">3.5°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                      <td className="border border-white/10 px-3 py-2">8.3 g/kg</td>
-                      <td className="border border-white/10 px-3 py-2">11.1°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">70%</td>
-                      <td className="border border-white/10 px-3 py-2">11.6 g/kg</td>
-                      <td className="border border-white/10 px-3 py-2">16.3°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">16.6 g/kg</td>
-                      <td className="border border-white/10 px-3 py-2">22.0°C</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Building Services Applications:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Window condensation:</strong> Occurs if glass temperature falls below room
-                  dew point
-                </li>
-                <li className="pl-1">
-                  <strong>Cold bridges:</strong> Poorly insulated areas may reach dew point
-                </li>
-                <li className="pl-1">
-                  <strong>Cooling coils:</strong> Must operate below dew point for dehumidification
-                </li>
-                <li className="pl-1">
-                  <strong>Ductwork:</strong> External surfaces may need insulation to prevent
-                  condensation
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Wet Bulb Temperature */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">04</span>
-            Wet Bulb Temperature
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Wet Bulb Temperature"
+            plainEnglish="A thermometer with a wet sock on it. Drier air evaporates more water, so the temperature drops more. The size of the drop tells you how dry the air is."
+          >
             <p>
               Wet bulb temperature is measured by a thermometer with its bulb covered by a wet wick
               in moving air. Evaporation from the wick causes cooling proportional to the air's
               humidity.
             </p>
+            <p>
+              <strong>Wet Bulb Depression:</strong> Depression = tdb - twb
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Larger depression = lower RH (more evaporation)</li>
+              <li>Zero depression = 100% RH (saturated, no evaporation)</li>
+            </ul>
+            <p>
+              <strong>Measurement Methods:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sling psychrometer:</strong> Manual, rotated by hand
+              </li>
+              <li>
+                <strong>Aspirated psychrometer:</strong> Fan-driven airflow
+              </li>
+              <li>
+                <strong>Screen psychrometer:</strong> In weather stations
+              </li>
+              <li>Requires 3-5 m/s airflow over wet bulb</li>
+            </ul>
+            <p>
+              <strong>Relationship to Other Properties:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Dew point ≤ Wet bulb ≤ Dry bulb (always)</li>
+              <li>All three equal at 100% RH</li>
+              <li>Wet bulb ≈ constant along adiabatic saturation</li>
+              <li>Used to determine other properties on chart</li>
+            </ul>
+            <p>
+              <strong>Example: Determining RH from Dry and Wet Bulb (at 22°C dry bulb):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>22°C wet bulb:</strong> 0°C depression, ~100% RH
+              </li>
+              <li>
+                <strong>18°C wet bulb:</strong> 4°C depression, ~67% RH
+              </li>
+              <li>
+                <strong>15°C wet bulb:</strong> 7°C depression, ~47% RH
+              </li>
+              <li>
+                <strong>12°C wet bulb:</strong> 10°C depression, ~30% RH
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">Wet Bulb Depression</p>
-              <p className="font-mono text-center text-lg mb-2">
-                Depression = t<sub>db</sub> - t<sub>wb</sub>
-              </p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>Larger depression = lower RH (more evaporation)</p>
-                <p>Zero depression = 100% RH (saturated, no evaporation)</p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">Measurement Methods</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Sling psychrometer:</strong> Manual, rotated by hand
-                  </li>
-                  <li className="pl-1">
-                    <strong>Aspirated psychrometer:</strong> Fan-driven airflow
-                  </li>
-                  <li className="pl-1">
-                    <strong>Screen psychrometer:</strong> In weather stations
-                  </li>
-                  <li className="pl-1">Requires 3-5 m/s airflow over wet bulb</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                  Relationship to Other Properties
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Dew point ≤ Wet bulb ≤ Dry bulb (always)</li>
-                  <li className="pl-1">All three equal at 100% RH</li>
-                  <li className="pl-1">Wet bulb ≈ constant along adiabatic saturation</li>
-                  <li className="pl-1">Used to determine other properties on chart</li>
-                </ul>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example: Determining RH from Dry and Wet Bulb
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Dry Bulb</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Wet Bulb</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Depression</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Approx RH</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">22°C</td>
-                      <td className="border border-white/10 px-3 py-2">22°C</td>
-                      <td className="border border-white/10 px-3 py-2">0°C</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">22°C</td>
-                      <td className="border border-white/10 px-3 py-2">18°C</td>
-                      <td className="border border-white/10 px-3 py-2">4°C</td>
-                      <td className="border border-white/10 px-3 py-2">67%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">22°C</td>
-                      <td className="border border-white/10 px-3 py-2">15°C</td>
-                      <td className="border border-white/10 px-3 py-2">7°C</td>
-                      <td className="border border-white/10 px-3 py-2">47%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">22°C</td>
-                      <td className="border border-white/10 px-3 py-2">12°C</td>
-                      <td className="border border-white/10 px-3 py-2">10°C</td>
-                      <td className="border border-white/10 px-3 py-2">30%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Run the equations through real numbers — moisture content, dew point, RH after heating, condensation risk."
+          >
+            <p>
+              <strong>Example 1: Calculating Moisture Content.</strong> Air at 25°C has RH of 60%.
+              The saturation vapour pressure at 25°C is 3.169 kPa. Find the moisture content.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Find actual vapour pressure. pv = RH × ps = 0.60 × 3.169 = 1.901 kPa</li>
+              <li>Step 2: Calculate moisture content. g = 0.622 × pv / (P - pv)</li>
+              <li>g = 0.622 × 1.901 / (101.325 - 1.901) = 1.182 / 99.424 = 0.01189 kg/kg</li>
+              <li>
+                g = <strong>11.9 g/kg</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2: Finding Dew Point.</strong> Air at 20°C, 50% RH. At what
+              temperature will condensation occur on a cold surface?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>At 20°C: ps = 2.339 kPa</li>
+              <li>Actual vapour pressure: pv = 0.50 × 2.339 = 1.170 kPa</li>
+              <li>Dew point is where ps equals 1.170 kPa</li>
+              <li>
+                From tables or chart: this occurs at approximately <strong>9.3°C</strong>
+              </li>
+              <li>Any surface below 9.3°C will have condensation</li>
+            </ul>
+            <p>
+              <strong>Example 3: Effect of Heating on RH.</strong> Winter air at 5°C, 80% RH is
+              heated to 21°C. Find the new RH.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>At 5°C: ps = 0.872 kPa, pv = 0.80 × 0.872 = 0.698 kPa</li>
+              <li>Moisture content = 0.622 × 0.698/100.627 = 4.3 g/kg</li>
+              <li>After heating to 21°C (moisture unchanged): ps at 21°C = 2.487 kPa</li>
+              <li>
+                New RH = pv/ps = 0.698/2.487 = <strong>28%</strong>
+              </li>
+              <li>This is why heated buildings feel dry in winter</li>
+            </ul>
+            <p>
+              <strong>Example 4: Condensation Risk Assessment.</strong> Room at 22°C, 55% RH. Single
+              glazing has inner surface at 8°C. Will condensation occur?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Find dew point of room air. At 22°C: ps = 2.645 kPa</li>
+              <li>pv = 0.55 × 2.645 = 1.455 kPa</li>
+              <li>
+                Dew point (from tables) ≈ <strong>12.5°C</strong>
+              </li>
+              <li>Glass surface: 8°C &lt; Dew point: 12.5°C</li>
+              <li>
+                <strong>Yes — condensation WILL occur on the glass.</strong> Solution: improve
+                glazing or reduce humidity.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The relationships and comfort numbers you'll quote on every job."
+          >
+            <p>
+              <strong>Essential Relationships:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>RH = pv/ps × 100%</strong> — Relative humidity definition
+              </li>
+              <li>
+                <strong>g = 0.622 pv/(P-pv)</strong> — Moisture content
+              </li>
+              <li>
+                <strong>Dew point ≤ Wet bulb ≤ Dry bulb</strong> — Always true
+              </li>
+              <li>At saturation: all three temperatures equal</li>
+            </ul>
+            <p>
+              <strong>Comfort Guidelines (CIBSE):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Recommended RH: <strong>40-60%</strong>
+              </li>
+              <li>Below 40%: dry skin, static electricity</li>
+              <li>Above 60%: stuffy feeling, mould risk</li>
+              <li>Above 70%: definite condensation risk</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 1: Calculating Moisture Content
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Air at 25°C has RH of 60%. The saturation vapour pressure
-                at 25°C is 3.169 kPa. Find the moisture content.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Find actual vapour pressure</p>
-                <p>pv = RH × ps = 0.60 × 3.169 = 1.901 kPa</p>
-                <p className="mt-2">Step 2: Calculate moisture content</p>
-                <p>g = 0.622 × pv / (P - pv)</p>
-                <p>g = 0.622 × 1.901 / (101.325 - 1.901)</p>
-                <p>g = 1.182 / 99.424 = 0.01189 kg/kg</p>
-                <p className="mt-2">
-                  g = <strong>11.9 g/kg</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 2: Finding Dew Point
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Air at 20°C, 50% RH. At what temperature will
-                condensation occur on a cold surface?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>At 20°C: ps = 2.339 kPa</p>
-                <p>Actual vapour pressure: pv = 0.50 × 2.339 = 1.170 kPa</p>
-                <p className="mt-2">Dew point is where ps equals 1.170 kPa</p>
-                <p>
-                  From tables or chart: this occurs at approximately <strong>9.3°C</strong>
-                </p>
-                <p className="mt-2 text-white">Any surface below 9.3°C will have condensation</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 3: Effect of Heating on RH
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Winter air at 5°C, 80% RH is heated to 21°C. Find the new
-                RH.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>At 5°C: ps = 0.872 kPa</p>
-                <p>pv = 0.80 × 0.872 = 0.698 kPa</p>
-                <p>Moisture content = 0.622 × 0.698/100.627 = 4.3 g/kg</p>
-                <p className="mt-2">After heating to 21°C (moisture unchanged):</p>
-                <p>ps at 21°C = 2.487 kPa</p>
-                <p>
-                  New RH = pv/ps = 0.698/2.487 = <strong>28%</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This is why heated buildings feel dry in winter
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 4: Condensation Risk Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Room at 22°C, 55% RH. Single glazing has inner surface at
-                8°C. Will condensation occur?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Find dew point of room air:</p>
-                <p>At 22°C: ps = 2.645 kPa</p>
-                <p>pv = 0.55 × 2.645 = 1.455 kPa</p>
-                <p className="mt-2">
-                  Dew point (from tables) ≈ <strong>12.5°C</strong>
-                </p>
-                <p className="mt-2">Glass surface: 8°C &lt; Dew point: 12.5°C</p>
-                <p className="mt-2 text-red-400">Yes - condensation WILL occur on the glass</p>
-                <p className="text-white">Solution: improve glazing or reduce humidity</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">Essential Relationships</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>RH = pv/ps × 100%</strong> — Relative humidity definition
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Confusing RH and g:</strong> RH changes with temperature, g does not
                 </li>
-                <li className="pl-1">
-                  <strong>g = 0.622 pv/(P-pv)</strong> — Moisture content
+                <li>
+                  <strong>Assuming RH stays constant:</strong> It drops when air is heated
                 </li>
-                <li className="pl-1">
-                  <strong>Dew point ≤ Wet bulb ≤ Dry bulb</strong> — Always true
+                <li>
+                  <strong>Ignoring dew point:</strong> Critical for condensation assessment
                 </li>
-                <li className="pl-1">At saturation: all three temperatures equal</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Comfort Guidelines (CIBSE)
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Recommended RH: <strong>40-60%</strong>
-                </li>
-                <li className="pl-1">Below 40%: dry skin, static electricity</li>
-                <li className="pl-1">Above 60%: stuffy feeling, mould risk</li>
-                <li className="pl-1">Above 70%: definite condensation risk</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Confusing RH and g</strong> — RH changes with temperature, g does not
-                </li>
-                <li className="pl-1">
-                  <strong>Assuming RH stays constant</strong> — It drops when air is heated
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring dew point</strong> — Critical for condensation assessment
-                </li>
-                <li className="pl-1">
-                  <strong>Wet bulb measurement</strong> — Needs adequate airflow (3-5 m/s)
+                <li>
+                  <strong>Wet bulb measurement:</strong> Needs adequate airflow (3-5 m/s)
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Track moisture content (g/kg) through processes — it's invariant under sensible heating. Always check surface temperatures against dew point before approving a build-up. Maintain at least 3 m/s airflow over the wet bulb wick when measuring with a sling or aspirated psychrometer."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Investigating winter glazing condensation in a refurbished meeting room"
+            situation={
+              <>
+                A client reports persistent condensation on the inside face of single-glazed
+                Crittall windows in a heritage meeting room. Internal conditions are 21 °C
+                and 55% RH (post-MVHR retrofit). The architect insists the glazing must be
+                retained. You are asked to write the technical brief.
+              </>
+            }
+            whatToDo={
+              <>
+                Calculate room dew point: at 21 °C, ps ≈ 2.487 kPa, pv = 0.55 × 2.487
+                ≈ 1.368 kPa, dew point ≈ 11.7 °C. Estimate the inner glass surface
+                temperature using the glazing U-value and design external temperature. Where
+                surface T &lt; dew point, recommend either secondary glazing (raises surface
+                temperature) or a humidity setpoint reduction (lowers dew point). Document
+                the trade-off in the project risk register.
+              </>
+            }
+            whyItMatters={
+              <>
+                Sustained condensation rots the timber subframe, voids any heritage-fabric
+                warranty and triggers mould-growth complaints under the Homes (Fitness for
+                Human Habitation) Act 2018. The dew-point calculation puts a defendable
+                number on the choice between glazing upgrade and humidity control.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Humidity Measures</p>
-                <ul className="space-y-0.5">
-                  <li>RH: % of saturation (0-100%)</li>
-                  <li>Moisture content: g/kg dry air</li>
-                  <li>Dew point: condensation temperature</li>
-                  <li>Wet bulb: evaporative temperature</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Values</p>
-                <ul className="space-y-0.5">
-                  <li>Comfort RH: 40-60%</li>
-                  <li>Typical office: 7-10 g/kg</li>
-                  <li>hfg (latent heat): 2501 kJ/kg</li>
-                  <li>Molecular ratio: 0.622</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Relative humidity RH = pv/ps — varies with temperature; moisture content g/kg is invariant under sensible heating/cooling.',
+              'Saturation vapour pressure roughly doubles every 10 °C — driver behind summer condensation problems.',
+              'Moisture content g = 0.622 × pv/(P − pv) — quote in g/kg dry air to track moisture through AHU processes.',
+              'Dew point = the temperature at which the room air becomes saturated; surfaces below dew point will condense.',
+              'Wet-bulb depression (tdb − twb) is the field test for RH using a sling or aspirated psychrometer.',
+              'CIBSE Guide A recommends 40–60% RH for office comfort — below 40% feels dry, above 60% feels stuffy.',
+              'Always check duct, glazing and cold-bridge surface temperatures against room dew point before sign-off.',
+              'Latent heat of vaporisation hfg ≈ 2,501 kJ/kg at 0 °C — the energy currency in humidification and dehumidification calculations.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section3-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Air Composition
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-cyan-500 text-white hover:bg-cyan-500/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section3-3">
-              Next: Psychrometric Charts
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section3-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Air Composition
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section3-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Psychrometric Charts
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

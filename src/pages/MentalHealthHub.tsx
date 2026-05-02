@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Flame, Lock, Phone, RefreshCw, Send } from 'lucide-react';
 
 import { useAuth } from '@/contexts/AuthContext';
@@ -503,6 +503,7 @@ const quickActions: QuickAction[] = [
 
 export default function MentalHealthHub() {
   const { profile } = useAuth();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSection = searchParams.get('section') || null;
 
@@ -704,6 +705,18 @@ export default function MentalHealthHub() {
       <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
         <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
           <PageFrame>
+            {/* Back to dashboard — small ghost affordance, sits above the
+                hero so it doesn't compete with the page title */}
+            <button
+              type="button"
+              onClick={() => navigate('/dashboard')}
+              className="group inline-flex items-center gap-2 h-9 -ml-1 px-2 rounded-lg text-[12.5px] font-medium text-white/60 hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
+              aria-label="Back to dashboard"
+            >
+              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+              <span>Dashboard</span>
+            </button>
+
             <PageHero
               eyebrow="Wellbeing"
               title="Mental health"

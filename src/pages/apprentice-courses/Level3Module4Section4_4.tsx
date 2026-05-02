@@ -84,11 +84,11 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'A lighting circuit protected by a 6A Type B MCB requires a maximum Zs of 7.67 ohms (from BS 7671). Using the 80% rule, what is the maximum acceptable measured value?',
-    options: ['7.67 ohms', '6.14 ohms', '9.59 ohms', '5.00 ohms'],
+      'A lighting circuit protected by a 6A Type B MCB requires a maximum Zs of 7.28 ohms (BS 7671:2018+A4:2026 Table 41.3). Using the 80% rule, what is the maximum acceptable measured value?',
+    options: ['7.28 ohms', '5.82 ohms', '9.10 ohms', '5.00 ohms'],
     correctAnswer: 1,
     explanation:
-      'Maximum measured Zs = 0.8 x 7.67 = 6.14 ohms. The measured value must be at or below this to account for increased resistance when conductors reach operating temperature.',
+      'Maximum measured Zs = 0.8 x 7.28 = 5.82 ohms. The measured value must be at or below this to account for increased resistance when conductors reach operating temperature.',
   },
   {
     id: 3,
@@ -124,7 +124,7 @@ const quizQuestions = [
     options: ['0.86 ohms', '1.15 ohms', '1.37 ohms', '1.50 ohms'],
     correctAnswer: 2,
     explanation:
-      'BS 7671 Table 41.3 gives 1.37 ohms for a 32A Type B MCB at 0.4s. This is derived from Zs = Uo/(5 x In) for Type B, where Uo = 230V and In = 32A. 230/(5 x 32) = 1.44 ohms, adjusted for 5% supply tolerance gives approximately 1.37 ohms.',
+      'BS 7671:2018+A4:2026 Table 41.3 gives 1.37 ohms for a 32A Type B MCB at 0.4s. This is derived from Zs = (Uo × Cmin) / (5 × In) for Type B, where Uo = 230V, Cmin = 0.95, and In = 32A. (230 × 0.95) / (5 × 32) = 218.5 / 160 = 1.366 ≈ 1.37 ohms. The older pre-A4 figure of 1.44 ohms (without Cmin) is now obsolete.',
   },
   {
     id: 6,
@@ -446,21 +446,22 @@ const Level3Module4Section4_4 = () => {
             </p>
 
             <div className="my-6">
+              {/* Zs values from canonical source: src/lib/calculators/bs7671-data/protectiveDevices.ts (BS 7671:2018+A4:2026 Table 41.3) */}
               <p className="text-sm font-medium text-white mb-2">
-                Common maximum Zs values (Type B MCBs, 0.4s):
+                Common maximum Zs values (Type B MCBs, 0.4s — A4:2026):
               </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>
-                  <strong>6A Type B:</strong> 7.67 ohms (measured max: 6.14 ohms)
+                  <strong>6A Type B:</strong> 7.28 ohms (measured max: 5.82 ohms)
                 </li>
                 <li>
-                  <strong>10A Type B:</strong> 4.60 ohms (measured max: 3.68 ohms)
+                  <strong>10A Type B:</strong> 4.37 ohms (measured max: 3.50 ohms)
                 </li>
                 <li>
-                  <strong>16A Type B:</strong> 2.87 ohms (measured max: 2.30 ohms)
+                  <strong>16A Type B:</strong> 2.73 ohms (measured max: 2.18 ohms)
                 </li>
                 <li>
-                  <strong>20A Type B:</strong> 2.30 ohms (measured max: 1.84 ohms)
+                  <strong>20A Type B:</strong> 2.19 ohms (measured max: 1.75 ohms)
                 </li>
                 <li>
                   <strong>32A Type B:</strong> 1.37 ohms (measured max: 1.10 ohms)
@@ -610,8 +611,8 @@ const Level3Module4Section4_4 = () => {
               <div>
                 <p className="font-medium text-white mb-1">Max Zs (Type B, 0.4s, with 80% rule)</p>
                 <ul className="space-y-0.5">
-                  <li>6A: 7.67 ohms (measured: 6.14 ohms max)</li>
-                  <li>16A: 2.87 ohms (measured: 2.30 ohms max)</li>
+                  <li>6A: 7.28 ohms (measured: 5.82 ohms max)</li>
+                  <li>16A: 2.73 ohms (measured: 2.18 ohms max)</li>
                   <li>32A: 1.37 ohms (measured: 1.10 ohms max)</li>
                   <li>40A: 1.09 ohms (measured: 0.87 ohms max)</li>
                 </ul>

@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 1 · Subsection 5 — Kirchhoff's Laws
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   The two conservation laws (KCL for current at a node, KVL for voltage round a loop)
+ *   that underpin distribution-board balancing, fault-current sharing and voltage-drop accounting.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = "Kirchhoff's Laws - HNC Module 3 Section 1.5";
@@ -202,735 +221,503 @@ const faqs = [
 ];
 
 const HNCModule3Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Kirchhoff's Laws
-          </h1>
-          <p className="text-white">
-            Fundamental circuit analysis laws for current and voltage in complex electrical networks
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 1 · Subsection 5"
+            title="Kirchhoff's Laws"
+            description="Fundamental circuit analysis laws for current and voltage in complex electrical networks"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">
-              Kirchhoff's Current Law (KCL)
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">Sum of currents at any node equals zero</li>
-              <li className="pl-1">Currents entering = Currents leaving</li>
-              <li className="pl-1">Based on conservation of charge</li>
-              <li className="pl-1">Used for node (junction) analysis</li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Kirchhoff's Voltage Law (KVL)
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">Sum of voltages around any closed loop equals zero</li>
-              <li className="pl-1">Voltage rises = Voltage drops</li>
-              <li className="pl-1">Based on conservation of energy</li>
-              <li className="pl-1">Used for mesh (loop) analysis</li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can apply Kirchhoff\u2019s Current Law (KCL: \u03a3I = 0 at a node) to balance currents at a distribution board, busbar or fault point.',
+              'You can apply Kirchhoff\u2019s Voltage Law (KVL: \u03a3V = 0 round a loop) to account for source voltage against every drop in a circuit.',
+              'You can use both laws together to solve mesh and nodal equations for any network the simple series/parallel rules cannot handle.',
+              'You can use KCL to size a neutral on a three-phase distribution board with imbalanced single-phase loads.',
+              'You can use KVL to verify that supply voltage minus the sum of cable and load drops still leaves enough voltage at the most remote terminal.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671 — Section 543 (Protective conductors) & Section 524 (Cross-sectional areas)"
+            clause="The cross-sectional area of every protective conductor shall be calculated to satisfy the adiabatic equation, or selected from Table 54.7. Where conductors carry harmonic currents, the neutral conductor cross-sectional area shall be considered (Section 524)."
+            meaning={
+              <>
+                KCL at a three-phase node says \u03a3I = 0. With balanced linear loads the
+                neutral current is zero; with single-phase imbalance or triplen-harmonic
+                content (LED drivers, VFDs) the neutral can carry as much as or more than the
+                phase current. KCL is the arithmetic that proves the neutral conductor
+                selection is fit for purpose.
+              </>
+            }
+            cite="Source: BS 7671 (latest edition incl. A4:2026) Regulation 524.1; IEC 60364-5-52."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               "State and explain Kirchhoff's Current Law with mathematical form",
               "State and explain Kirchhoff's Voltage Law with mathematical form",
               'Apply KCL to analyse current distribution at nodes',
               'Apply KVL to calculate voltage drops around circuit loops',
               'Use systematic methods for complex circuit analysis',
               'Apply both laws to building services scenarios',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Kirchhoff's Current Law */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Kirchhoff's Current Law (KCL)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="KCL: currents in = currents out at any node. KVL: voltages around any closed loop sum to zero."
+          >
+            <p className="text-sm font-medium text-elec-yellow/80">Kirchhoff's Current Law (KCL)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sum of currents at any node equals zero</li>
+              <li>Currents entering = Currents leaving</li>
+              <li>Based on conservation of charge</li>
+              <li>Used for node (junction) analysis</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Kirchhoff's Voltage Law (KVL)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sum of voltages around any closed loop equals zero</li>
+              <li>Voltage rises = Voltage drops</li>
+              <li>Based on conservation of energy</li>
+              <li>Used for mesh (loop) analysis</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Kirchhoff's Current Law (KCL)">
             <p>
               Kirchhoff's Current Law, also known as Kirchhoff's first law or the junction rule, is
               based on the principle of conservation of electric charge. Since charge cannot be
               created or destroyed, all charge entering a junction must leave it.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mathematical Statement</p>
-              <p className="font-mono text-center text-lg mb-2">ΣI = 0</p>
-              <p className="text-xs text-white text-center">
-                The algebraic sum of currents at any node equals zero
-              </p>
-              <p className="font-mono text-center text-lg mt-3 mb-2">
-                ΣI<sub>in</sub> = ΣI<sub>out</sub>
-              </p>
-              <p className="text-xs text-white text-center">
-                Currents entering a node equal currents leaving
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Understanding nodes:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Node:</strong> Any point where two or more circuit elements connect
-                </li>
-                <li className="pl-1">
-                  <strong>Junction:</strong> A node where three or more branches meet
-                </li>
-                <li className="pl-1">
-                  Current is assigned positive entering the node, negative leaving (or vice versa -
-                  be consistent)
-                </li>
-                <li className="pl-1">
-                  KCL applies to every node in a circuit, no matter how complex
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Node Analysis Diagram (Text Description)
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
-                <p className="mb-2">Consider a node with four branches:</p>
-                <pre className="text-xs">
-                  {`           I1 = 10A
-              |
-              v
-    I4 = 3A -> * <- I2 = 5A
-              ^
-              |
-           I3 = ?
-
-At the node:  I1 + I2 = I3 + I4
-              10 + 5 = I3 + 3
-              I3 = 12A (leaving the node)`}
-                </pre>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Mathematical Statement</p>
+            <p>
+              <strong>ΣI = 0</strong> — The algebraic sum of currents at any node equals zero.
+            </p>
+            <p>
+              <strong>ΣI<sub>in</sub> = ΣI<sub>out</sub></strong> — Currents entering a node equal
+              currents leaving.
+            </p>
+            <p className="text-sm font-medium text-white">Understanding nodes:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Node:</strong> Any point where two or more circuit elements connect
+              </li>
+              <li>
+                <strong>Junction:</strong> A node where three or more branches meet
+              </li>
+              <li>Current is assigned positive entering the node, negative leaving (or vice versa - be consistent)</li>
+              <li>KCL applies to every node in a circuit, no matter how complex</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Worked node example</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>I1 = 10A enters; I2 = 5A enters; I4 = 3A leaves</li>
+              <li>By KCL: I1 + I2 = I3 + I4 → 10 + 5 = I3 + 3</li>
+              <li>I3 = <strong>12A</strong> leaving the node</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Remember:</strong> KCL must be satisfied at every instant in time, for both DC
               and AC circuits.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Kirchhoff's Voltage Law */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Kirchhoff's Voltage Law (KVL)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Kirchhoff's Voltage Law (KVL)">
             <p>
               Kirchhoff's Voltage Law, also known as Kirchhoff's second law or the loop rule, is
               based on the conservation of energy. The work done on a charge around any closed path
               must equal zero - energy gained equals energy lost.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mathematical Statement</p>
-              <p className="font-mono text-center text-lg mb-2">ΣV = 0</p>
-              <p className="text-xs text-white text-center">
-                The algebraic sum of voltages around any closed loop equals zero
-              </p>
-              <p className="font-mono text-center text-lg mt-3 mb-2">
-                ΣV<sub>rises</sub> = ΣV<sub>drops</sub>
-              </p>
-              <p className="text-xs text-white text-center">
-                EMF sources equal the sum of IR drops around the loop
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Sign conventions for KVL:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Voltage rise:</strong> Crossing a source from - to + (positive EMF)
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage drop:</strong> Crossing a resistor in the direction of current
-                  (positive drop)
-                </li>
-                <li className="pl-1">
-                  Choose a consistent direction to traverse each loop (clockwise or anticlockwise)
-                </li>
-                <li className="pl-1">Apply the sign convention consistently throughout</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mesh Analysis Diagram (Text Description)
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
-                <p className="mb-2">Series circuit with 230V supply and three resistors:</p>
-                <pre className="text-xs">
-                  {`    +230V-    -V1-     -V2-     -V3-
-    [===]-----|R1|-----|R2|-----|R3|----
-     EMF       |        |        |
-              80V      100V      50V
-
-Going clockwise: +230 - 80 - 100 - 50 = 0
-Supply EMF = Sum of voltage drops`}
-                </pre>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Mathematical Statement</p>
+            <p>
+              <strong>ΣV = 0</strong> — The algebraic sum of voltages around any closed loop equals
+              zero.
+            </p>
+            <p>
+              <strong>ΣV<sub>rises</sub> = ΣV<sub>drops</sub></strong> — EMF sources equal the sum
+              of IR drops around the loop.
+            </p>
+            <p className="text-sm font-medium text-white">Sign conventions for KVL:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Voltage rise:</strong> Crossing a source from - to + (positive EMF)
+              </li>
+              <li>
+                <strong>Voltage drop:</strong> Crossing a resistor in the direction of current (positive drop)
+              </li>
+              <li>Choose a consistent direction to traverse each loop (clockwise or anticlockwise)</li>
+              <li>Apply the sign convention consistently throughout</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Worked loop example</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Series circuit: 230V supply with three resistors dropping 80V, 100V, 50V</li>
+              <li>Going clockwise: +230 - 80 - 100 - 50 = 0 ✓</li>
+              <li>Supply EMF = sum of voltage drops</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Remember:</strong> KVL applies to any closed path, whether it contains a
               source or not. It's the basis for voltage drop calculations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Applying KCL and KVL */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Applying KCL and KVL
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Applying KCL and KVL">
             <p>
               Complex circuits often require the systematic application of both laws. Two main
               approaches exist: node voltage analysis (primarily using KCL) and mesh current
               analysis (primarily using KVL).
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Step-by-Step Method for Circuit Analysis
-              </p>
-              <div className="space-y-3">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">Step 1: Identify and Label</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Label all nodes (junctions) with letters (A, B, C...)</li>
-                    <li className="pl-1">Assign current directions to all branches (arrows)</li>
-                    <li className="pl-1">Mark voltage polarities across components</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">Step 2: Apply KCL at Nodes</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      Write KCL equation for each node (except reference node)
-                    </li>
-                    <li className="pl-1">Express branch currents in terms of unknowns</li>
-                    <li className="pl-1">Gives (n-1) equations for n nodes</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">
-                    Step 3: Apply KVL around Loops
-                  </p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Identify independent loops (meshes)</li>
-                    <li className="pl-1">Write KVL equation for each loop</li>
-                    <li className="pl-1">Use Ohm's Law: V = IR for resistor drops</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">Step 4: Solve the System</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Combine KCL and KVL equations</li>
-                    <li className="pl-1">Solve simultaneous equations for unknowns</li>
-                    <li className="pl-1">
-                      Negative results indicate opposite direction to assumed
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Node Voltage vs Mesh Current Analysis
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Primary Law</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Node Voltage</td>
-                      <td className="border border-white/10 px-3 py-2">KCL</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circuits with fewer nodes than loops
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mesh Current</td>
-                      <td className="border border-white/10 px-3 py-2">KVL</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circuits with fewer loops than nodes
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Step-by-Step Method for Circuit Analysis</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1: Identify and Label</strong> — Label all nodes (A, B, C…), assign
+                current directions to all branches, mark voltage polarities across components
+              </li>
+              <li>
+                <strong>Step 2: Apply KCL at Nodes</strong> — Write KCL equation for each node
+                (except reference). Express branch currents in terms of unknowns. Gives (n-1)
+                equations for n nodes
+              </li>
+              <li>
+                <strong>Step 3: Apply KVL around Loops</strong> — Identify independent loops
+                (meshes), write KVL equation for each loop, use Ohm's Law (V = IR) for resistor
+                drops
+              </li>
+              <li>
+                <strong>Step 4: Solve the System</strong> — Combine KCL and KVL equations, solve
+                simultaneous equations. Negative results indicate opposite direction to assumed
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Node Voltage vs Mesh Current Analysis</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Node Voltage:</strong> Primary law KCL. Best for circuits with fewer nodes than loops.
+              </li>
+              <li>
+                <strong>Mesh Current:</strong> Primary law KVL. Best for circuits with fewer loops than nodes.
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Tip:</strong> For building services, most practical problems can be solved by
               direct application of Ohm's Law with either KCL or KVL, without needing full mesh
               analysis.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Building Services Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Distribution Board Analysis">
             <p>
               Kirchhoff's Laws are essential for practical building services calculations. From
               sizing main cables at distribution boards to calculating earth fault loop impedance,
               these laws underpin safe electrical installation design.
             </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Main busbar:</strong> Acts as a node where KCL applies
+              </li>
+              <li>
+                <strong>Incoming supply current:</strong> Sum of all outgoing circuit currents
+              </li>
+              <li>
+                <strong>Diversity:</strong> Not all circuits at full load simultaneously
+              </li>
+              <li>
+                <strong>Three-phase balance:</strong> KCL at star point determines neutral current
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">DB Load Calculation Example</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lighting circuits: 2 × 10A = 20A</li>
+              <li>Socket circuits: 4 × 20A = 80A</li>
+              <li>Cooker circuit: 1 × 32A = 32A</li>
+              <li>Immersion heater: 1 × 16A = 16A</li>
+              <li>Total (no diversity): <strong>148A</strong></li>
+              <li>With diversity (BS 7671): ~85A</li>
+              <li>Main switch rating: 100A</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Distribution Board Analysis
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Main busbar:</strong> Acts as a node where KCL applies
-                </li>
-                <li className="pl-1">
-                  <strong>Incoming supply current:</strong> Sum of all outgoing circuit currents
-                </li>
-                <li className="pl-1">
-                  <strong>Diversity:</strong> Not all circuits at full load simultaneously
-                </li>
-                <li className="pl-1">
-                  <strong>Three-phase balance:</strong> KCL at star point determines neutral current
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Fault Current Paths">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Earth fault loop:</strong> Closed path for fault current to flow
+              </li>
+              <li>
+                <strong>KCL at fault:</strong> Fault current equals return current through earth
+              </li>
+              <li>
+                <strong>KVL around loop:</strong> Supply voltage = sum of IR drops in loop
+              </li>
+              <li>
+                <strong>Fault current:</strong> If = U₀ / Zs
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Earth Loop Calculation (applying KVL)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Supply EMF: 230V</li>
+              <li>External (Ze): 0.35 Ω</li>
+              <li>Line conductor: 0.40 Ω</li>
+              <li>CPC: 0.65 Ω</li>
+              <li>Total Zs: <strong>1.40 Ω</strong></li>
+              <li>Fault current: If = 230 / 1.40 = <strong>164A</strong></li>
+              <li>For 32A Type B MCB: requires &gt;160A — OK</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DB Load Calculation Example
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
-                <pre className="text-xs">
-                  {`Distribution Board Loads:
---------------------------
-Lighting circuits:     2 x 10A = 20A
-Socket circuits:       4 x 20A = 80A
-Cooker circuit:        1 x 32A = 32A
-Immersion heater:      1 x 16A = 16A
-                       -----------
-Total (no diversity):           148A
-
-With diversity (BS 7671):       ~85A
-Main switch rating:             100A`}
-                </pre>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fault Current Paths</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Earth fault loop:</strong> Closed path for fault current to flow
-                </li>
-                <li className="pl-1">
-                  <strong>KCL at fault:</strong> Fault current equals return current through earth
-                </li>
-                <li className="pl-1">
-                  <strong>KVL around loop:</strong> Supply voltage = sum of IR drops in loop
-                </li>
-                <li className="pl-1">
-                  <strong>Fault current:</strong> If = U0 / Zs
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Earth Loop Calculation</p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
-                <pre className="text-xs">
-                  {`Earth Fault Loop (applying KVL):
---------------------------------
-Supply EMF:           230V
-
-Loop impedances:
-- External (Ze):      0.35 Ohm
-- Line conductor:     0.40 Ohm
-- CPC:                0.65 Ohm
---------------------------------
-Total Zs:             1.40 Ohm
-
-Fault current: If = 230 / 1.40 = 164A
-
-For 32A Type B MCB:  Requires >160A (OK)`}
-                </pre>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Parallel Branch Currents
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
-                <pre className="text-xs">
-                  {`Two parallel heating elements (230V supply):
---------------------------------------------
-Element 1: R1 = 23 Ohm -> I1 = 230/23 = 10A
-Element 2: R2 = 46 Ohm -> I2 = 230/46 = 5A
-
-By KCL at junction:
-Supply current = I1 + I2 = 10 + 5 = 15A
-
-Combined resistance: 1/R = 1/23 + 1/46
-                    R = 15.33 Ohm
-Check: I = 230/15.33 = 15A (OK)`}
-                </pre>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Voltage Drop Calculations (KVL)
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
-                <pre className="text-xs">
-                  {`Circuit: 230V supply, 25m cable run, 3kW load
-----------------------------------------------
-Cable: 2.5mm2 (7.41 mOhm/m, L+N)
-
-Load current: I = 3000/230 = 13.04A
-Cable resistance: R = 25 x 2 x 7.41/1000 = 0.37 Ohm
-
-By KVL around loop:
-230V = V_cable + V_load
-
-V_cable = I x R = 13.04 x 0.37 = 4.8V
-V_load = 230 - 4.8 = 225.2V
-
-Voltage drop: 4.8V (2.1%) - Within 5% limit`}
-                </pre>
-              </div>
-            </div>
-
+          <ConceptBlock title="Parallel Branch Currents and Voltage Drop (KVL)">
+            <p className="text-sm font-medium text-elec-yellow/80">Two parallel heating elements (230V supply)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Element 1: R1 = 23 Ω → I1 = 230/23 = 10A</li>
+              <li>Element 2: R2 = 46 Ω → I2 = 230/46 = 5A</li>
+              <li>By KCL at junction: Supply current = I1 + I2 = 10 + 5 = 15A</li>
+              <li>Combined resistance: 1/R = 1/23 + 1/46 → R = 15.33 Ω</li>
+              <li>Check: I = 230/15.33 = 15A ✓</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Voltage drop calculation (KVL)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Circuit: 230V supply, 25m cable run, 3kW load. Cable: 2.5mm² (7.41 mΩ/m, L+N)</li>
+              <li>Load current: I = 3000/230 = 13.04A</li>
+              <li>Cable resistance: R = 25 × 2 × 7.41/1000 = 0.37 Ω</li>
+              <li>By KVL around loop: 230V = V<sub>cable</sub> + V<sub>load</sub></li>
+              <li>V<sub>cable</sub> = I × R = 13.04 × 0.37 = 4.8V</li>
+              <li>V<sub>load</sub> = 230 - 4.8 = 225.2V</li>
+              <li>Voltage drop: 4.8V (2.1%) — within 5% limit</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key insight:</strong> Every BS 7671 voltage drop and fault loop calculation is
               an application of Kirchhoff's Laws.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">Example 1: Distribution Board Load Analysis</p>
+            <p>
+              <strong>Question:</strong> A single-phase DB supplies: 3 lighting circuits (6A, 8A,
+              4A), 2 socket circuits (18A, 22A), and a 3kW immersion heater. Calculate the main
+              switch rating required.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Immersion current: I = P/V = 3000/230 = 13A</li>
+              <li>Apply KCL at main busbar: I_main = I1 + I2 + I3 + I4 + I5 + I6</li>
+              <li>I_main = 6 + 8 + 4 + 18 + 22 + 13 = <strong>71A</strong></li>
+              <li>Result: 80A main switch minimum (100A typical)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 2: Parallel Branch Current Division</p>
+            <p>
+              <strong>Question:</strong> Three resistors (10 Ω, 20 Ω, 40 Ω) are connected in
+              parallel across a 20V supply. Calculate each branch current and the total supply
+              current.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>By KVL: same voltage across each parallel branch</li>
+              <li>I1 = V/R1 = 20/10 = 2A</li>
+              <li>I2 = V/R2 = 20/20 = 1A</li>
+              <li>I3 = V/R3 = 20/40 = 0.5A</li>
+              <li>By KCL at junction: I_total = I1 + I2 + I3 = 2 + 1 + 0.5 = <strong>3.5A</strong></li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 3: Series Circuit Voltage Drops</p>
+            <p>
+              <strong>Question:</strong> A 230V supply feeds three series resistors (15 Ω, 25 Ω, 6
+              Ω). Calculate the current and voltage drop across each resistor.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Total resistance: R_T = 15 + 25 + 6 = 46 Ω</li>
+              <li>Circuit current: I = V/R_T = 230/46 = <strong>5A</strong></li>
+              <li>V1 = I × R1 = 5 × 15 = 75V</li>
+              <li>V2 = I × R2 = 5 × 25 = 125V</li>
+              <li>V3 = I × R3 = 5 × 6 = 30V</li>
+              <li>Verify with KVL: 230V = 75 + 125 + 30 = 230V ✓</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 4: Earth Fault Loop Impedance</p>
+            <p>
+              <strong>Question:</strong> An installation has Ze = 0.30 Ω. The circuit uses 30m of
+              2.5mm² cable (r1 = 7.41 mΩ/m, r2 = 12.1 mΩ/m for 1.5mm² CPC). Calculate Zs and fault
+              current.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Line resistance: R1 = 30 × 7.41/1000 = 0.222 Ω</li>
+              <li>CPC resistance: R2 = 30 × 12.1/1000 = 0.363 Ω</li>
+              <li>By KVL around fault loop: Zs = Ze + R1 + R2 = 0.30 + 0.222 + 0.363 = <strong>0.885 Ω</strong></li>
+              <li>Fault current: If = 230/0.885 = <strong>260A</strong></li>
+              <li>OK — sufficient for 32A Type B MCB (requires &gt;160A)</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Distribution Board Load Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A single-phase DB supplies: 3 lighting circuits (6A, 8A,
-                4A), 2 socket circuits (18A, 22A), and a 3kW immersion heater. Calculate the main
-                switch rating required.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Immersion current: I = P/V = 3000/230 = 13A</p>
-                <p className="mt-2">Apply KCL at main busbar:</p>
-                <p>I_main = I1 + I2 + I3 + I4 + I5 + I6</p>
-                <p>
-                  I_main = 6 + 8 + 4 + 18 + 22 + 13 = <strong>71A</strong>
-                </p>
-                <p className="mt-2 text-white">Result: 80A main switch minimum (100A typical)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Parallel Branch Current Division
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Three resistors (10 Ohm, 20 Ohm, 40 Ohm) are connected in
-                parallel across a 20V supply. Calculate each branch current and the total supply
-                current.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>By KVL: Same voltage across each parallel branch</p>
-                <p className="mt-2">Branch currents (Ohm's Law):</p>
-                <p>I1 = V/R1 = 20/10 = 2A</p>
-                <p>I2 = V/R2 = 20/20 = 1A</p>
-                <p>I3 = V/R3 = 20/40 = 0.5A</p>
-                <p className="mt-2">By KCL at junction:</p>
-                <p>
-                  I_total = I1 + I2 + I3 = 2 + 1 + 0.5 = <strong>3.5A</strong>
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>KCL:</strong> Sum of I_in = Sum of I_out (at any node)
+              </li>
+              <li>
+                <strong>KVL:</strong> Sum of V = 0 (around any closed loop)
+              </li>
+              <li>
+                <strong>Combined:</strong> V = IR applied at each component
+              </li>
+              <li>
+                <strong>Fault current:</strong> If = U₀ / Zs
+              </li>
+              <li>
+                <strong>Voltage drop:</strong> Vd = I × R × L (for cables)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">When to Use Each Law</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>KCL:</strong> Finding how current splits between parallel paths
+              </li>
+              <li>
+                <strong>KCL:</strong> Calculating main cable current from circuit loads
+              </li>
+              <li>
+                <strong>KVL:</strong> Finding voltage drops in series circuits
+              </li>
+              <li>
+                <strong>KVL:</strong> Earth fault loop and protective device verification
+              </li>
+              <li>
+                <strong>Both:</strong> Complex circuits with multiple sources or loops
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Series Circuit Voltage Drops
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 230V supply feeds three series resistors (15 Ohm, 25
-                Ohm, 6 Ohm). Calculate the current and voltage drop across each resistor.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Total resistance: R_T = 15 + 25 + 6 = 46 Ohm</p>
-                <p>
-                  Circuit current: I = V/R_T = 230/46 = <strong>5A</strong>
-                </p>
-                <p className="mt-2">Voltage drops (Ohm's Law):</p>
-                <p>V1 = I x R1 = 5 x 15 = 75V</p>
-                <p>V2 = I x R2 = 5 x 25 = 125V</p>
-                <p>V3 = I x R3 = 5 x 6 = 30V</p>
-                <p className="mt-2">Verify with KVL:</p>
-                <p>230V = 75 + 125 + 30 = 230V (OK)</p>
-              </div>
-            </div>
+          <CommonMistake
+            title="Common KCL/KVL mistakes"
+            whatHappens={
+              <>
+                Sign errors from inconsistent current direction conventions. Missing components in
+                KVL loops (forgetting CPC in fault loops). Applying KCL along wires instead of at
+                junctions. Forgetting to convert mΩ/m to Ω.
+              </>
+            }
+            doInstead={
+              <>
+                Pick a direction convention and stick to it — negative answers just mean the actual
+                current flows the other way. List every element in the loop. Apply KCL only at
+                junctions. Convert all resistance units before substituting.
+              </>
+            }
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Earth Fault Loop Impedance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An installation has Ze = 0.30 Ohm. The circuit uses 30m
-                of 2.5mm2 cable (r1 = 7.41 mOhm/m, r2 = 12.1 mOhm/m for 1.5mm2 CPC). Calculate Zs
-                and fault current.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Line resistance: R1 = 30 x 7.41/1000 = 0.222 Ohm</p>
-                <p>CPC resistance: R2 = 30 x 12.1/1000 = 0.363 Ohm</p>
-                <p className="mt-2">By KVL around fault loop:</p>
-                <p>
-                  Zs = Ze + R1 + R2 = 0.30 + 0.222 + 0.363 = <strong>0.885 Ohm</strong>
-                </p>
-                <p className="mt-2">
-                  Fault current: If = 230/0.885 = <strong>260A</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  OK - Sufficient for 32A Type B MCB (requires &gt;160A)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Checking neutral current on a three-phase board with imbalanced LED lighting"
+            situation={
+              <>
+                A three-phase 400 V distribution board feeds three single-phase lighting
+                circuits: L1 carries 18 A, L2 carries 12 A, L3 carries 22 A \u2014 all LED
+                luminaires with switched-mode drivers known to inject third-harmonic current.
+                You need to confirm the existing 16 mm\u00b2 neutral is adequate.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply KCL at the neutral node. For balanced linear loads the neutral current
+                would be |I_L1 + I_L2 + I_L3| (vectorially) at the phase angles 0\u00b0,
+                120\u00b0, 240\u00b0 \u2014 about 8.7 A here. But with significant third-harmonic
+                content the triplen harmonics from each phase add arithmetically in the
+                neutral, so the harmonic component in the neutral can exceed the fundamental
+                phase current. Reference BS 7671 Section 524 and IEC 61000-3-2 limits, then
+                size the neutral for the worst-case combined fundamental + harmonic current.
+                If the existing neutral is undersized, derate the circuit, upgrade to the
+                next conductor size or fit harmonic mitigation.
+              </>
+            }
+            whyItMatters={
+              <>
+                Kirchhoff\u2019s laws are not abstract theory \u2014 they are how you spot a
+                neutral that is hot to the touch even though every phase MCB is well within
+                rating. Failing to apply KCL with harmonic content has caused neutral fires in
+                LED-retrofit office buildings.
+              </>
+            }
+          />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <SectionRule />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>KCL:</strong> Sum of I_in = Sum of I_out (at any node)
-                </li>
-                <li className="pl-1">
-                  <strong>KVL:</strong> Sum of V = 0 (around any closed loop)
-                </li>
-                <li className="pl-1">
-                  <strong>Combined:</strong> V = IR applied at each component
-                </li>
-                <li className="pl-1">
-                  <strong>Fault current:</strong> If = U0 / Zs
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage drop:</strong> Vd = I x R x L (for cables)
-                </li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use Each Law</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>KCL:</strong> Finding how current splits between parallel paths
-                </li>
-                <li className="pl-1">
-                  <strong>KCL:</strong> Calculating main cable current from circuit loads
-                </li>
-                <li className="pl-1">
-                  <strong>KVL:</strong> Finding voltage drops in series circuits
-                </li>
-                <li className="pl-1">
-                  <strong>KVL:</strong> Earth fault loop and protective device verification
-                </li>
-                <li className="pl-1">
-                  <strong>Both:</strong> Complex circuits with multiple sources or loops
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sign errors:</strong> Be consistent with current direction conventions
-                </li>
-                <li className="pl-1">
-                  <strong>Missing components:</strong> Include ALL elements in the loop for KVL
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong nodes:</strong> KCL applies at junctions, not along wires
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting return path:</strong> Include both L and CPC in fault loops
-                </li>
-                <li className="pl-1">
-                  <strong>Unit confusion:</strong> mOhm/m must convert to Ohm for calculations
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'KCL: \u03a3I = 0 at any node \u2014 current in equals current out. The arithmetic behind every distribution board, every fault-current split and every neutral sizing.',
+              'KVL: \u03a3V = 0 round any closed loop \u2014 supply voltage equals the sum of every cable and load drop. The basis of every voltage-drop check.',
+              'The two laws together solve any linear network the simple series/parallel rules cannot \u2014 mesh analysis (KVL) and nodal analysis (KCL).',
+              'Sign convention matters: pick a positive direction for currents and voltages and stay consistent round the loop or at the node.',
+              'Three-phase balanced linear loads: phasor sum of phase currents = 0, so the neutral carries no fundamental current.',
+              'Three-phase non-linear loads (LED drivers, VFDs): triplen harmonics add arithmetically in the neutral \u2014 the neutral can exceed the phase current, driving a Section 524 sizing check.',
+              'KVL applied across a fault loop is the source of I_f = U\u2080 / Z_s \u2014 the protective device disconnection check.',
+              'Both laws are conservation laws \u2014 charge (KCL) and energy (KVL) cannot be created or destroyed. They hold for AC, DC and any waveform.',
+            ]}
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Kirchhoff's Laws</p>
-                <ul className="space-y-0.5">
-                  <li>KCL: Sum of I = 0 at any node</li>
-                  <li>KVL: Sum of V = 0 around any loop</li>
-                  <li>KCL is based on conservation of charge</li>
-                  <li>KVL is based on conservation of energy</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Services</p>
-                <ul className="space-y-0.5">
-                  <li>DB loads: Sum of circuit currents</li>
-                  <li>Fault loop: Zs = Ze + R1 + R2</li>
-                  <li>Fault current: If = 230/Zs</li>
-                  <li>Balanced 3-phase: Neutral current = 0</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-6">
-              Next: Measurement Errors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Parallel Circuits
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Network Theorems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

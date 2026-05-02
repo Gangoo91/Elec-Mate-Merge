@@ -1,8 +1,27 @@
-import { ArrowLeft, BarChart3, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 3 · Subsection 3 — Psychrometric Charts
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Reading the CIBSE psychrometric chart, plotting state points and visualising
+ *   AHU processes — the graphical literacy that turns moisture-content equations
+ *   into a defendable AHU schematic.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Psychrometric Charts - HNC Module 2 Section 3.3';
@@ -231,744 +250,506 @@ const faqs = [
 ];
 
 const HNCModule2Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-cyan-400 text-sm mb-3">
-            <BarChart3 className="h-4 w-4" />
-            <span>Module 2.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Psychrometric Charts
-          </h1>
-          <p className="text-white">
-            The essential graphical tool for analysing and designing air conditioning processes
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 3 · Subsection 3"
+            title="Psychrometric Charts"
+            description="The essential graphical tool for analysing and designing air conditioning processes."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-cyan-400/5 border-l-2 border-cyan-400/50">
-            <p className="text-cyan-400 text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>X-axis:</strong> Dry bulb temperature (°C)
-              </li>
-              <li className="pl-1">
-                <strong>Y-axis:</strong> Moisture content (g/kg)
-              </li>
-              <li className="pl-1">
-                <strong>Saturation curve:</strong> 100% RH boundary
-              </li>
-              <li className="pl-1">
-                <strong>Two properties:</strong> Fix all others
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-cyan-400/5 border-l-2 border-cyan-400/50">
-            <p className="text-cyan-400/90 text-sm font-medium mb-2">Building Services Context</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Design tool:</strong> Plot AHU processes
-              </li>
-              <li className="pl-1">
-                <strong>Coil sizing:</strong> Determine load requirements
-              </li>
-              <li className="pl-1">
-                <strong>Mixing:</strong> Calculate mixed air conditions
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Verify system performance
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can plot any air state on a CIBSE chart from two known properties (typically tdb + RH or tdb + twb) and read the rest off the intersection.',
+              'You recognise process directions instinctively: horizontal = sensible, vertical = latent, along wet-bulb = adiabatic, toward saturation = cooling coil.',
+              'You apply the lever rule for mixed air streams in a return-air AHU and verify the mixed condition before sizing the coil.',
+              'You use the chart as a comms tool with architects and BMS engineers — a one-page picture of every AHU process state.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Guide C — Reference Data (latest edition)"
+            clause="Standard psychrometric chart for the UK at 101.325 kPa (sea-level pressure), with property scales for dry-bulb temperature, moisture content, relative humidity, wet-bulb temperature, enthalpy and specific volume."
+            meaning={
+              <>
+                The CIBSE chart is the de facto reference for UK HVAC design. As HNC engineer
+                you should annotate every AHU schematic with its psychrometric process line
+                so the commissioning engineer and BMS programmer can verify performance
+                against design intent.
+              </>
+            }
+            cite="Source: CIBSE Guide C — Reference Data; CIBSE Guide A — Environmental Design."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Identify all lines and scales on a psychrometric chart',
               'Plot air conditions from given property pairs',
               'Read all properties from a plotted state point',
               'Understand the construction and limitations of charts',
               'Use charts to analyse air conditioning processes',
               'Apply CIBSE chart conventions for UK practice',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-cyan-400/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Chart Construction */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">01</span>
-            Chart Construction and Axes
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Chart Construction and Axes"
+            plainEnglish="One chart, every air property. Dry bulb across the bottom, moisture up the side, saturation curve on top — everything else fills the middle."
+          >
             <p>
               The psychrometric chart is a graphical representation of the thermodynamic properties
               of moist air. It allows engineers to visualise and analyse air conditioning processes.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-3">Chart Structure</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium mb-2">Primary Axes:</p>
-                  <ul className="space-y-1 text-white">
-                    <li>• Horizontal: Dry bulb temperature (°C)</li>
-                    <li>• Vertical: Moisture content (g/kg dry air)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium mb-2">Chart Boundaries:</p>
-                  <ul className="space-y-1 text-white">
-                    <li>• Upper curve: Saturation line (100% RH)</li>
-                    <li>• Lower bound: 0 g/kg (dry air)</li>
-                    <li>• Left/Right: Temperature range</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                CIBSE Chart Specifications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Specification</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pressure</td>
-                      <td className="border border-white/10 px-3 py-2">101.325 kPa</td>
-                      <td className="border border-white/10 px-3 py-2">Sea level standard</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Temperature range</td>
-                      <td className="border border-white/10 px-3 py-2">-10°C to +60°C</td>
-                      <td className="border border-white/10 px-3 py-2">Covers UK conditions</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Moisture range</td>
-                      <td className="border border-white/10 px-3 py-2">0 to 30 g/kg</td>
-                      <td className="border border-white/10 px-3 py-2">Typical maximum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Enthalpy reference</td>
-                      <td className="border border-white/10 px-3 py-2">0°C dry air = 0 kJ/kg</td>
-                      <td className="border border-white/10 px-3 py-2">Datum point</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-cyan-400/70">
+            <p>
+              <strong>Chart Structure — Primary Axes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Horizontal: Dry bulb temperature (°C)</li>
+              <li>Vertical: Moisture content (g/kg dry air)</li>
+            </ul>
+            <p>
+              <strong>Chart Boundaries:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Upper curve: Saturation line (100% RH)</li>
+              <li>Lower bound: 0 g/kg (dry air)</li>
+              <li>Left/Right: Temperature range</li>
+            </ul>
+            <p>
+              <strong>CIBSE Chart Specifications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pressure:</strong> 101.325 kPa (sea level standard)
+              </li>
+              <li>
+                <strong>Temperature range:</strong> -10°C to +60°C (covers UK conditions)
+              </li>
+              <li>
+                <strong>Moisture range:</strong> 0 to 30 g/kg (typical maximum)
+              </li>
+              <li>
+                <strong>Enthalpy reference:</strong> 0°C dry air = 0 kJ/kg (datum point)
+              </li>
+            </ul>
+            <p>
               <strong>Important:</strong> The chart only shows states below the saturation curve.
               Points above this curve represent super-saturated conditions (fog) which are not
               normally encountered in HVAC systems.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Property Lines */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">02</span>
-            Property Lines on the Chart
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Property Lines on the Chart"
+            plainEnglish="Stack of overlay lines, one per property. Find any two and the rest fall into place at the intersection."
+          >
             <p>
               Multiple property lines are overlaid on the basic chart grid, allowing all
               psychrometric properties to be read from a single state point.
             </p>
+            <p>
+              <strong>Types of Lines on the Chart:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Dry bulb temperature:</strong> Vertical straight lines, from bottom upward
+              </li>
+              <li>
+                <strong>Moisture content:</strong> Horizontal straight lines, from left to right
+              </li>
+              <li>
+                <strong>Relative humidity:</strong> Curved lines, parallel to saturation curve
+              </li>
+              <li>
+                <strong>Wet bulb / Enthalpy:</strong> Diagonal straight lines, slope down left to
+                right
+              </li>
+              <li>
+                <strong>Specific volume:</strong> Near-vertical lines, slight slope to right
+              </li>
+            </ul>
+            <p>
+              <strong>Reading the Chart:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Start with two known properties</li>
+              <li>Find intersection of their lines</li>
+              <li>Read other properties from that point</li>
+              <li>Use interpolation between printed lines</li>
+            </ul>
+            <p>
+              <strong>Common Starting Pairs:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>tdb + RH</strong> — weather data
+              </li>
+              <li>
+                <strong>tdb + twb</strong> — psychrometer reading
+              </li>
+              <li>
+                <strong>tdb + g</strong> — design conditions
+              </li>
+              <li>
+                <strong>tdb + h</strong> — energy calculations
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Types of Lines on the Chart
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Line Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Appearance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Direction</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dry bulb temperature</td>
-                      <td className="border border-white/10 px-3 py-2">Vertical straight lines</td>
-                      <td className="border border-white/10 px-3 py-2">From bottom upward</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Moisture content</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Horizontal straight lines
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">From left to right</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Relative humidity</td>
-                      <td className="border border-white/10 px-3 py-2">Curved lines</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Parallel to saturation curve
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wet bulb / Enthalpy</td>
-                      <td className="border border-white/10 px-3 py-2">Diagonal straight lines</td>
-                      <td className="border border-white/10 px-3 py-2">Slope down left to right</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Specific volume</td>
-                      <td className="border border-white/10 px-3 py-2">Near-vertical lines</td>
-                      <td className="border border-white/10 px-3 py-2">Slight slope to right</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">Reading the Chart</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Start with two known properties</li>
-                  <li className="pl-1">Find intersection of their lines</li>
-                  <li className="pl-1">Read other properties from that point</li>
-                  <li className="pl-1">Use interpolation between printed lines</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">Common Starting Pairs</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>
-                      t<sub>db</sub> + RH
-                    </strong>{' '}
-                    — weather data
-                  </li>
-                  <li className="pl-1">
-                    <strong>
-                      t<sub>db</sub> + t<sub>wb</sub>
-                    </strong>{' '}
-                    — psychrometer reading
-                  </li>
-                  <li className="pl-1">
-                    <strong>
-                      t<sub>db</sub> + g
-                    </strong>{' '}
-                    — design conditions
-                  </li>
-                  <li className="pl-1">
-                    <strong>
-                      t<sub>db</sub> + h
-                    </strong>{' '}
-                    — energy calculations
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Plotting Points */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">03</span>
-            Plotting Air States
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Plotting Air States"
+            plainEnglish="Two known properties = one point on the chart = every other property in seconds."
+          >
             <p>
               Any air state within the chart boundaries can be precisely located using two known
               properties. The intersection of the corresponding lines defines the state point.
             </p>
+            <p>
+              <strong>Step-by-Step Plotting:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify the two known properties</li>
+              <li>Locate the line for the first property</li>
+              <li>Locate the line for the second property</li>
+              <li>Mark the intersection point clearly</li>
+              <li>Read all other properties from this point</li>
+            </ul>
+            <p>
+              <strong>Example: Plotting 22°C db, 50% RH:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Dry bulb:</strong> Given - vertical line at 22°C → reads 22°C
+              </li>
+              <li>
+                <strong>Relative humidity:</strong> Given - curved 50% line → reads 50%
+              </li>
+              <li>
+                <strong>Moisture content:</strong> Read horizontally to y-axis → reads 8.3 g/kg
+              </li>
+              <li>
+                <strong>Wet bulb:</strong> Follow diagonal to saturation → reads 15.5°C
+              </li>
+              <li>
+                <strong>Dew point:</strong> Move left horizontal to saturation → reads 11°C
+              </li>
+              <li>
+                <strong>Enthalpy:</strong> Read from diagonal scale → reads 43 kJ/kg
+              </li>
+              <li>
+                <strong>Specific volume:</strong> Interpolate between v lines → reads 0.845 m³/kg
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">Step-by-Step Plotting</p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-inside">
-                <li>Identify the two known properties</li>
-                <li>Locate the line for the first property</li>
-                <li>Locate the line for the second property</li>
-                <li>Mark the intersection point clearly</li>
-                <li>Read all other properties from this point</li>
-              </ol>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example: Plotting 22°C db, 50% RH
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Property</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">How to Find</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Value Read</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dry bulb</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Given - vertical line at 22°C
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">22°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Relative humidity</td>
-                      <td className="border border-white/10 px-3 py-2">Given - curved 50% line</td>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Moisture content</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Read horizontally to y-axis
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">8.3 g/kg</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wet bulb</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Follow diagonal to saturation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15.5°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dew point</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Move left horizontal to saturation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">11°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Enthalpy</td>
-                      <td className="border border-white/10 px-3 py-2">Read from diagonal scale</td>
-                      <td className="border border-white/10 px-3 py-2">43 kJ/kg</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Specific volume</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Interpolate between v lines
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.845 m³/kg</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Process Lines */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-cyan-400/80 text-sm font-normal">04</span>
-            Plotting Processes
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Plotting Processes"
+            plainEnglish="Each AC process moves your point in a predictable direction. Heat right, cool left, humidify up, dehumidify down. Once you know the direction, you can plot the whole AHU."
+          >
             <p>
               Air conditioning processes appear as lines connecting state points on the chart. Each
               type of process produces a characteristic direction of movement.
             </p>
+            <p>
+              <strong>Basic Process Directions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sensible heating:</strong> Horizontal right →. tdb↑, RH↓, g constant
+              </li>
+              <li>
+                <strong>Sensible cooling:</strong> Horizontal left ←. tdb↓, RH↑, g constant
+              </li>
+              <li>
+                <strong>Humidification (isothermal):</strong> Vertical up ↑. g↑, RH↑, tdb constant
+              </li>
+              <li>
+                <strong>Dehumidification:</strong> Vertical down ↓. g↓, RH↓, tdb constant
+              </li>
+              <li>
+                <strong>Adiabatic humidification:</strong> Along wet bulb line ↙. g↑, tdb↓, h
+                constant
+              </li>
+              <li>
+                <strong>Cooling with dehumidification:</strong> Diagonal toward saturation ↙. tdb↓,
+                g↓, follows coil
+              </li>
+              <li>
+                <strong>Mixing two air streams:</strong> Straight line between states. Position by
+                mass ratio
+              </li>
+            </ul>
+            <p>
+              <strong>Using Process Lines:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Plot initial state from known conditions</li>
+              <li>Apply process direction rules</li>
+              <li>Find final state from equipment capacity</li>
+              <li>Calculate loads from property changes</li>
+            </ul>
+            <p>
+              <strong>Typical AHU Sequence:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Outside air state (design condition)</li>
+              <li>2. Mixed air (after recirculation)</li>
+              <li>3. Off-coil state (after cooling/heating)</li>
+              <li>4. Supply state (after fan heat gain)</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-cyan-400/80 mb-2">Basic Process Directions</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Process</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Direction on Chart
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">What Changes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sensible heating</td>
-                      <td className="border border-white/10 px-3 py-2">Horizontal right →</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        t<sub>db</sub>↑, RH↓, g constant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sensible cooling</td>
-                      <td className="border border-white/10 px-3 py-2">Horizontal left ←</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        t<sub>db</sub>↓, RH↑, g constant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Humidification (isothermal)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Vertical up ↑</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        g↑, RH↑, t<sub>db</sub> constant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dehumidification</td>
-                      <td className="border border-white/10 px-3 py-2">Vertical down ↓</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        g↓, RH↓, t<sub>db</sub> constant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Adiabatic humidification</td>
-                      <td className="border border-white/10 px-3 py-2">Along wet bulb line ↙</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        g↑, t<sub>db</sub>↓, h constant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cooling with dehumidification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Diagonal toward saturation ↙
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        t<sub>db</sub>↓, g↓, follows coil
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mixing two air streams</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Straight line between states
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Position by mass ratio</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">Using Process Lines</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Plot initial state from known conditions</li>
-                  <li className="pl-1">Apply process direction rules</li>
-                  <li className="pl-1">Find final state from equipment capacity</li>
-                  <li className="pl-1">Calculate loads from property changes</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-cyan-400/80 mb-2">Typical AHU Sequence</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">1. Outside air state (design condition)</li>
-                  <li className="pl-1">2. Mixed air (after recirculation)</li>
-                  <li className="pl-1">3. Off-coil state (after cooling/heating)</li>
-                  <li className="pl-1">4. Supply state (after fan heat gain)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Plot, read, mix, dehumidify — same chart, four different jobs."
+          >
+            <p>
+              <strong>Example 1: Finding All Properties.</strong> A sling psychrometer reads 24°C
+              dry bulb and 17°C wet bulb. Find RH, moisture content, dew point and enthalpy.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Plot the state point. Find vertical line at 24°C dry bulb. Find
+              diagonal wet bulb line at 17°C. Mark intersection.</li>
+              <li>Step 2: Read properties from intersection.</li>
+              <li>
+                RH (follow curved line): <strong>50%</strong>
+              </li>
+              <li>
+                Moisture content (horizontal to y-axis): <strong>9.4 g/kg</strong>
+              </li>
+              <li>
+                Dew point (horizontal left to saturation): <strong>13°C</strong>
+              </li>
+              <li>
+                Enthalpy (from diagonal scale): <strong>48 kJ/kg</strong>
+              </li>
+              <li>
+                Specific volume: <strong>0.855 m³/kg</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2: Sensible Heating Process.</strong> Air at 12°C, 70% RH is heated to
+              22°C. Find the new RH and verify moisture content is unchanged.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Plot initial state (12°C, 70% RH). Read initial moisture content: 6.2
+              g/kg.</li>
+              <li>Step 2: Move horizontally to 22°C. Sensible heating = horizontal line (constant
+              g).</li>
+              <li>Step 3: Read final state at 22°C.</li>
+              <li>
+                New RH: <strong>38%</strong> (much lower)
+              </li>
+              <li>
+                Moisture content: <strong>6.2 g/kg</strong> (unchanged ✓)
+              </li>
+              <li>Enthalpy increased from 27.5 to 37.5 kJ/kg</li>
+            </ul>
+            <p>
+              <strong>Example 3: Mixing Two Air Streams.</strong> 3 kg/s of outside air (30°C, 60%
+              RH) mixes with 7 kg/s of return air (24°C, 50% RH). Find the mixed condition.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Plot both states. Outside (O): 30°C, 60% RH → g = 16.0 g/kg. Return
+              (R): 24°C, 50% RH → g = 9.4 g/kg.</li>
+              <li>Step 2: Draw line between O and R.</li>
+              <li>Step 3: Find mixed point (M) by lever rule. Mass ratio: 3:7 (outside:return). M
+              is 3/10 of distance from R toward O.</li>
+              <li>Step 4: Read mixed state properties.</li>
+              <li>
+                Mixed dry bulb: <strong>25.8°C</strong>
+              </li>
+              <li>
+                Mixed moisture: <strong>11.4 g/kg</strong>
+              </li>
+              <li>
+                Mixed RH: <strong>53%</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 4: Determining Dew Point for Condensation.</strong> Room air is 21°C,
+              55% RH. What is the minimum surface temperature to avoid condensation?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Plot room condition (21°C, 55% RH). Moisture content from chart: 8.6
+              g/kg.</li>
+              <li>Step 2: Find dew point. Move horizontally left to saturation curve. Read
+              temperature at intersection.</li>
+              <li>
+                Dew point = <strong>11.5°C</strong>
+              </li>
+              <li>Any surface at or below 11.5°C will have condensation. Keep surfaces above 12°C
+              for safety margin.</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="A few habits that turn chart-reading from guess work into a tool you trust."
+          >
+            <p>
+              <strong>Chart Reading Tips:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use a sharp pencil and clear ruler</li>
+              <li>Interpolate carefully between printed lines</li>
+              <li>Check readings by using different property paths</li>
+              <li>Mark state points clearly for process plotting</li>
+            </ul>
+            <p>
+              <strong>Process Directions to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Horizontal</strong> = sensible heat only (g constant)
+              </li>
+              <li>
+                <strong>Vertical</strong> = latent heat only (tdb constant)
+              </li>
+              <li>
+                <strong>Along wet bulb line</strong> = adiabatic (h constant)
+              </li>
+              <li>
+                <strong>Toward saturation</strong> = cooling coil operation
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 1: Finding All Properties
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A sling psychrometer reads 24°C dry bulb and 17°C wet
-                bulb. Find RH, moisture content, dew point and enthalpy.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Plot the state point</p>
-                <p>• Find vertical line at 24°C dry bulb</p>
-                <p>• Find diagonal wet bulb line at 17°C</p>
-                <p>• Mark intersection</p>
-                <p className="mt-2">Step 2: Read properties from intersection</p>
-                <p>
-                  • RH (follow curved line): <strong>50%</strong>
-                </p>
-                <p>
-                  • Moisture content (horizontal to y-axis): <strong>9.4 g/kg</strong>
-                </p>
-                <p>
-                  • Dew point (horizontal left to saturation): <strong>13°C</strong>
-                </p>
-                <p>
-                  • Enthalpy (from diagonal scale): <strong>48 kJ/kg</strong>
-                </p>
-                <p>
-                  • Specific volume: <strong>0.855 m³/kg</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 2: Sensible Heating Process
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Air at 12°C, 70% RH is heated to 22°C. Find the new RH
-                and verify moisture content is unchanged.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Plot initial state (12°C, 70% RH)</p>
-                <p>• Read initial moisture content: 6.2 g/kg</p>
-                <p className="mt-2">Step 2: Move horizontally to 22°C</p>
-                <p>• Sensible heating = horizontal line (constant g)</p>
-                <p className="mt-2">Step 3: Read final state at 22°C</p>
-                <p>
-                  • New RH: <strong>38%</strong> (much lower)
-                </p>
-                <p>
-                  • Moisture content: <strong>6.2 g/kg</strong> (unchanged ✓)
-                </p>
-                <p>• Enthalpy increased from 27.5 to 37.5 kJ/kg</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 3: Mixing Two Air Streams
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> 3 kg/s of outside air (30°C, 60% RH) mixes with 7 kg/s of
-                return air (24°C, 50% RH). Find the mixed condition.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Plot both states</p>
-                <p>• Outside (O): 30°C, 60% RH → g = 16.0 g/kg</p>
-                <p>• Return (R): 24°C, 50% RH → g = 9.4 g/kg</p>
-                <p className="mt-2">Step 2: Draw line between O and R</p>
-                <p className="mt-2">Step 3: Find mixed point (M) by lever rule</p>
-                <p>• Mass ratio: 3:7 (outside:return)</p>
-                <p>• M is 3/10 of distance from R toward O</p>
-                <p className="mt-2">Step 4: Read mixed state properties</p>
-                <p>
-                  • Mixed dry bulb: <strong>25.8°C</strong>
-                </p>
-                <p>
-                  • Mixed moisture: <strong>11.4 g/kg</strong>
-                </p>
-                <p>
-                  • Mixed RH: <strong>53%</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Example 4: Determining Dew Point for Condensation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Room air is 21°C, 55% RH. What is the minimum surface
-                temperature to avoid condensation?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Plot room condition (21°C, 55% RH)</p>
-                <p>• Moisture content from chart: 8.6 g/kg</p>
-                <p className="mt-2">Step 2: Find dew point</p>
-                <p>• Move horizontally left to saturation curve</p>
-                <p>• Read temperature at intersection</p>
-                <p className="mt-2">
-                  Dew point = <strong>11.5°C</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Any surface at or below 11.5°C will have condensation
-                </p>
-                <p className="text-white">Keep surfaces above 12°C for safety margin</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">Chart Reading Tips</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Use a sharp pencil and clear ruler</li>
-                <li className="pl-1">Interpolate carefully between printed lines</li>
-                <li className="pl-1">Check readings by using different property paths</li>
-                <li className="pl-1">Mark state points clearly for process plotting</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-cyan-400/80 mb-2">
-                Process Directions to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Horizontal</strong> = sensible heat only (g constant)
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Wrong chart pressure:</strong> Use sea level for UK lowlands
                 </li>
-                <li className="pl-1">
-                  <strong>Vertical</strong> = latent heat only (t<sub>db</sub> constant)
-                </li>
-                <li className="pl-1">
-                  <strong>Along wet bulb line</strong> = adiabatic (h constant)
-                </li>
-                <li className="pl-1">
-                  <strong>Toward saturation</strong> = cooling coil operation
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wrong chart pressure</strong> — Use sea level for UK lowlands
-                </li>
-                <li className="pl-1">
-                  <strong>Confusing wet bulb and enthalpy lines</strong> — Nearly parallel but
+                <li>
+                  <strong>Confusing wet bulb and enthalpy lines:</strong> Nearly parallel but
                   distinct
                 </li>
-                <li className="pl-1">
-                  <strong>Plotting above saturation</strong> — Not physically possible
+                <li>
+                  <strong>Plotting above saturation:</strong> Not physically possible
                 </li>
-                <li className="pl-1">
-                  <strong>Mixing line position</strong> — Divide by mass, not volume
+                <li>
+                  <strong>Mixing line position:</strong> Divide by mass, not volume
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Pick a chart matching your site's atmospheric pressure, treat wet bulb and enthalpy as related but separate scales, never plot above the saturation curve, and always apply the lever rule by mass flow not volume flow."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Plotting a return-air mixing AHU on the CIBSE chart"
+            situation={
+              <>
+                You inherit a partial design for a 12,000 l/s mixed-air AHU serving a 4-floor
+                office. The schematic shows 30% outside air at 32 °C, 60% RH (CIBSE summer
+                design) mixed with 70% return air at 24 °C, 50% RH. The cooling coil is
+                provisionally sized at 180 kW. You need to verify before tender.
+              </>
+            }
+            whatToDo={
+              <>
+                Plot the outside-air state and the return-air state on the chart. Apply the
+                lever rule (by mass flow, not volume): mixed point is 30% of the way from
+                return to outside. Read the mixed-air enthalpy and moisture content. Plot the
+                off-coil state from the supply temperature and required moisture content,
+                read enthalpy. Calculate Q̇coil = ṁsupply × Δh. Compare to the
+                provisional 180 kW.
+              </>
+            }
+            whyItMatters={
+              <>
+                Sizing a cooling coil from sensible duty alone (ignoring latent load) typically
+                undersizes it by 25–40% in the UK summer. The chart visualises both
+                sensible and latent legs of the process — undeniable on a peer review and
+                cheaper than swapping the coil after commissioning.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Chart Axes</p>
-                <ul className="space-y-0.5">
-                  <li>X-axis: Dry bulb (°C)</li>
-                  <li>Y-axis: Moisture (g/kg)</li>
-                  <li>Curved: RH lines (%)</li>
-                  <li>Diagonal: Wet bulb / enthalpy</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Process Directions</p>
-                <ul className="space-y-0.5">
-                  <li>Heating: → (right)</li>
-                  <li>Cooling: ← (left)</li>
-                  <li>Humidify: ↑ (up)</li>
-                  <li>Dehumidify: ↓ (down)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Two independent properties uniquely fix any air state on the chart — pick the pair that matches your data source.',
+              'Horizontal axis = dry bulb (°C); vertical axis = moisture content (g/kg dry air).',
+              'Saturation curve = 100% RH — no plot above it; constant-RH lines are curved parallels.',
+              'Wet-bulb and enthalpy lines slope down-right; specific-volume lines slope slightly right of vertical.',
+              'Sensible heating/cooling = horizontal; isothermal humidification = vertical; adiabatic humidification = along wet-bulb.',
+              'Mixing two air streams = straight line; position by lever rule using mass flow ratio.',
+              'CIBSE chart is constructed for 101.325 kPa — apply altitude correction above ~500 m or use a charted altitude variant.',
+              'Annotate every AHU schematic with a psychrometric process trace — invaluable at commissioning and handover.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Humidity
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-cyan-500 text-white hover:bg-cyan-500/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section3-4">
-              Next: Air Conditioning Processes
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section3-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Humidity
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section3-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Air Conditioning Processes
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

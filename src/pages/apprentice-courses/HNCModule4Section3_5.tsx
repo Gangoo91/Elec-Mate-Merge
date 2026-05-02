@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 3 · Subsection 5 — Earth Fault Protection
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   RCD types AC / A / F / B, Type S time-delayed selectivity, BS 7671 Regulation 411
+ *   automatic disconnection in TN / TT systems, Regulation 415 additional protection
+ *   (≤30mA), RA × IΔn ≤ 50V for TT systems and Type B requirement for EV charging.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Earth Fault Protection - HNC Module 4 Section 3.5';
@@ -81,10 +100,10 @@ const quizQuestions = [
     id: 3,
     question:
       'In a TN-S system, what is the maximum Zs for a 32A Type B MCB with 0.4s disconnection?',
-    options: ['0.72Ω', '1.15Ω', '1.44Ω', '2.30Ω'],
+    options: ['0.72Ω', '1.15Ω', '1.37Ω (A4:2026)', '1.44Ω (pre-A4)'],
     correctAnswer: 2,
     explanation:
-      'From BS 7671 Table 41.3, a 32A Type B MCB requires maximum Zs of 1.44Ω for 0.4s disconnection at 230V. This ensures sufficient fault current (160A minimum) flows for guaranteed magnetic operation.',
+      'BS 7671:2018+A4:2026 Table 41.3 gives 1.37Ω for B32 at 230V — the older 1.44Ω figure is the pre-A4 value before Cmin = 0.95 was applied to U0. Use 1.37Ω on current designs and verification.',
   },
   {
     id: 4,
@@ -96,11 +115,12 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'A 30mA RCD must trip within 40ms at what test current?',
-    options: ['15mA', '30mA', '150mA (5 × IΔn)', '300mA'],
+    question:
+      'Under BS 7671:2018+A4:2026, what is the maximum operating time for a general 30mA RCD at the AC test current of IΔn?',
+    options: ['40ms', '130ms', '300ms', '500ms'],
     correctAnswer: 2,
     explanation:
-      'At 5 × IΔn (150mA for a 30mA RCD), the maximum operating time is 40ms. This fast response at higher fault currents provides enhanced shock protection.',
+      'A4:2026 redrafted Reg 643.3 and deleted Table 3A — the verification test is now a single AC test at rated residual operating current (IΔn), with a 300ms maximum operating time for a general (instantaneous) RCD. The older 5×IΔn test (which had a 40ms limit) is no longer required for compliance.',
   },
   {
     id: 6,
@@ -178,7 +198,7 @@ const faqs = [
   {
     question: 'How do I test RCDs on site?',
     answer:
-      'Use a calibrated RCD tester that applies test current between line and earth. Test at IΔn and 5 × IΔn, recording operating time. For 30mA RCDs: at 30mA, maximum 300ms; at 150mA, maximum 40ms. Also test the integral test button (verifies mechanical operation) and no-trip test at 50% IΔn. For time-delayed RCDs, verify both minimum and maximum operating times.',
+      'Under BS 7671:2018+A4:2026 (Reg 643.3 redrafted, Table 3A deleted): use a calibrated RCD tester that applies an AC test current between line and earth at the rated residual operating current (IΔn) — regardless of RCD Type. For 30mA RCDs the maximum operating time is 300ms. Also operate the integral test button (verifies mechanical operation) and run the no-trip test at 0.5 × IΔn. For time-delayed (Type S) RCDs, verify both minimum (130ms) and maximum operating times. The older 5 × IΔn shot is no longer part of the BS 7671 verification methodology.',
   },
   {
     question: 'What is RCD discrimination and how is it achieved?',
@@ -193,861 +213,499 @@ const faqs = [
 ];
 
 const HNCModule4Section3_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.3.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Earth Fault Protection
-          </h1>
-          <p className="text-white">
-            RCD types, applications, and earth fault protection requirements for different earthing
-            systems
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 3 · Subsection 5"
+            title="Earth Fault Protection"
+            description="RCD types, applications, and earth fault protection requirements for different earthing systems."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Type AC:</strong> Sinusoidal AC only - limited use
-              </li>
-              <li className="pl-1">
-                <strong>Type A:</strong> AC + pulsating DC - general purpose
-              </li>
-              <li className="pl-1">
-                <strong>Type F:</strong> AC + pulsating DC + VSD frequencies
-              </li>
-              <li className="pl-1">
-                <strong>Type B:</strong> All types including smooth DC - EV chargers
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Socket outlets:</strong> 30mA additional protection
-              </li>
-              <li className="pl-1">
-                <strong>TT systems:</strong> RCD essential - RA × IΔn ≤ 50V
-              </li>
-              <li className="pl-1">
-                <strong>VSDs/motors:</strong> Type F or Type B required
-              </li>
-              <li className="pl-1">
-                <strong>Fire protection:</strong> 300mA for fixed equipment
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'BS 7671 Reg 411.3.3 (revised in A4:2026) requires 30&nbsp;mA RCD additional protection on socket-outlets ≤ 32&nbsp;A — exception for non-dwellings with documented risk assessment.',
+              'BS 7671 Reg 411.3.4 (introduced in A4:2026) requires 30&nbsp;mA RCD on AC final circuits supplying luminaires within domestic (household) premises.',
+              'RCD types: AC (resistive only), A (AC + pulsating DC), F (A + high freq for VSDs), B (A + smooth DC for EV chargers, PV, BMS).',
+              'Test: A4:2026 revised RCD test methodology — single-shot 1×IΔn (NOT 5×IΔn as in older guidance) — verifies disconnection within 300&nbsp;ms.',
+              'For TT systems: R_A × IΔn ≤ 50&nbsp;V — earth electrode resistance must be low enough that residual current trips before touch voltage exceeds 50&nbsp;V.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 411.3.3 (Additional protection by RCD on socket-outlets)"
+            clause="Regulation 411.3.3 has been revised and now applies to socket-outlets with a rated current not exceeding 32 A. There is an exception to omit RCD protection where, other than for a dwelling, a documented risk assessment determines that RCD protection is not necessary."
+            meaning={
+              <>
+                A4:2026 widened Reg 411.3.3 from 20&nbsp;A to 32&nbsp;A — the 30&nbsp;mA RCD
+                additional protection requirement now bites on more circuits. The only escape
+                is a documented risk assessment in non-dwellings. Reg 411.3.4, also new in
+                A4:2026, additionally requires 30&nbsp;mA RCDs on AC final circuits supplying
+                luminaires in domestic premises. For kitchens (multiple wet appliances) and
+                bathrooms (zone restrictions), specify Type A or F RCBOs as default — Type AC
+                is now obsolete in most modern installations because of the prevalence of
+                pulsating-DC fault paths from electronics.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 411.3.3 and 411.3.4; BS 7671 Section 415; BS EN 61008/61009 (RCD/RCBO standards)."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Differentiate between RCD types (AC, A, F, B) and their applications',
               'Apply BS 7671 requirements for additional protection',
               'Verify earth fault protection for TN and TT systems',
               'Use time-delayed RCDs for discrimination',
               'Calculate maximum Zs and RA values for compliant installations',
               'Select appropriate RCDs for different load types',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: RCD Types */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            RCD Types and Characteristics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="RCD Types and Characteristics">
             <p>
               Residual Current Devices (RCDs) detect imbalance between line and neutral currents,
               indicating current flowing to earth. Different types detect different waveforms.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                RCD Type Classification
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Detects</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Applications</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Type AC</td>
-                      <td className="border border-white/10 px-3 py-2">Sinusoidal AC only</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limited - resistive loads only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Type A</td>
-                      <td className="border border-white/10 px-3 py-2">AC + pulsating DC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General purpose, electronics, IT
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Type F</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Type A + high frequencies
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        VSDs, inverters, motor controls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Type B</td>
-                      <td className="border border-white/10 px-3 py-2">All types + smooth DC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EV chargers, 3-phase rectifiers
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                RCD Sensitivity Ratings (IΔn)
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">High Sensitivity (≤30mA)</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">30mA - Additional protection</li>
-                    <li className="pl-1">10mA - Enhanced protection (medical)</li>
-                    <li className="pl-1">Provides shock protection</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">
-                    Medium Sensitivity (100-500mA)
-                  </p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">100mA - Fire protection</li>
-                    <li className="pl-1">300mA - Fire protection</li>
-                    <li className="pl-1">500mA - Sub-main protection</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">RCD Operating Times</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Current</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        General (instantaneous)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Type S (time-delayed)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IΔn</td>
-                      <td className="border border-white/10 px-3 py-2">≤300ms</td>
-                      <td className="border border-white/10 px-3 py-2">130ms - 500ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2 × IΔn</td>
-                      <td className="border border-white/10 px-3 py-2">≤150ms</td>
-                      <td className="border border-white/10 px-3 py-2">60ms - 200ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5 × IΔn</td>
-                      <td className="border border-white/10 px-3 py-2">≤40ms</td>
-                      <td className="border border-white/10 px-3 py-2">50ms - 150ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.5 × IΔn</td>
-                      <td className="border border-white/10 px-3 py-2" colSpan={2}>
-                        Must NOT trip
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Selection guide:</strong> Type A minimum for most applications. Type F for VSD
-              circuits. Type B for EV charging and three-phase rectifiers.
+            <p>
+              <strong>RCD type classification (type / detects / applications):</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Type AC:</strong> sinusoidal AC only — limited, resistive loads only
+              </li>
+              <li>
+                <strong>Type A:</strong> AC + pulsating DC — general purpose, electronics, IT
+              </li>
+              <li>
+                <strong>Type F:</strong> Type A + high frequencies — VSDs, inverters, motor controls
+              </li>
+              <li>
+                <strong>Type B:</strong> all types + smooth DC — EV chargers, 3-phase rectifiers
+              </li>
+            </ul>
+            <p>
+              <strong>RCD sensitivity ratings (IΔn) — high sensitivity (≤30mA):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>30mA — additional protection</li>
+              <li>10mA — enhanced protection (medical)</li>
+              <li>Provides shock protection</li>
+            </ul>
+            <p>
+              <strong>Medium sensitivity (100-500mA):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>100mA — fire protection</li>
+              <li>300mA — fire protection</li>
+              <li>500mA — sub-main protection</li>
+            </ul>
+            <p>
+              <strong>RCD operating times — BS 7671:2018+A4:2026 verification (test current / general instantaneous / Type S time-delayed):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>IΔn (single AC test per Reg 643.3) — ≤300ms — 130ms - 500ms</li>
+              <li>0.5 × IΔn — must NOT trip (both types)</li>
+            </ul>
+            <p className="text-sm text-white/70">
+              A4:2026 redrafted Reg 643.3 and deleted Appendix 3 Table 3A. Regardless of RCD Type,
+              an AC test at IΔn is used to verify effectiveness — the older 5 × IΔn shot (≤40ms)
+              is no longer part of BS 7671 verification. Manufacturer product standards
+              (BS EN 61008/61009) still set the 40ms figure at 5 × IΔn for type-test purposes.
+            </p>
+            <p>
+              <strong>Selection guide:</strong> Type A minimum for most applications. Type F for
+              VSD circuits. Type B for EV charging and three-phase rectifiers.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Additional Protection Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Additional Protection (Regulation 415)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Additional Protection (Regulation 415)">
             <p>
               Additional protection using 30mA RCDs is required as a secondary measure for certain
-              circuits where there's increased risk of direct contact or where basic protection may
-              be compromised.
+              circuits where there's increased risk of direct contact or where basic protection
+              may be compromised.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Circuits Requiring 30mA RCD Protection
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Socket outlets with rated current ≤32A</li>
-                  <li className="pl-1">Mobile equipment used outdoors with current ≤32A</li>
-                  <li className="pl-1">
-                    Cables installed in walls at depth &lt;50mm without mechanical protection
-                  </li>
-                  <li className="pl-1">
-                    Cables in walls/partitions containing metal parts (any depth)
-                  </li>
-                  <li className="pl-1">
-                    Circuits in locations with increased shock risk (bathrooms, etc.)
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Regulation 411.3.3 Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Domestic sockets</td>
-                      <td className="border border-white/10 px-3 py-2">30mA RCD mandatory</td>
-                      <td className="border border-white/10 px-3 py-2">All socket outlets</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Commercial sockets ≤32A</td>
-                      <td className="border border-white/10 px-3 py-2">30mA RCD mandatory</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unless specific exemption
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outdoor equipment</td>
-                      <td className="border border-white/10 px-3 py-2">30mA RCD mandatory</td>
-                      <td className="border border-white/10 px-3 py-2">Mobile equipment ≤32A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cables in walls</td>
-                      <td className="border border-white/10 px-3 py-2">30mA RCD if shallow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &lt;50mm or metal present
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Exemptions from 30mA</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Specific labelled socket (supervised use)</li>
-                  <li className="pl-1">Risk assessment shows RCD creates hazard</li>
-                  <li className="pl-1">FELV circuits</li>
-                  <li className="pl-1">Certain industrial applications</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Exemption Examples
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Freezer circuit (labelled socket)</li>
-                  <li className="pl-1">Fire alarm supply</li>
-                  <li className="pl-1">Emergency lighting feed</li>
-                  <li className="pl-1">Medical equipment circuits</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> Additional protection is NOT a substitute for fault
-              protection - both must be provided where required.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: TN and TT System Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            TN and TT System Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Earth fault protection requirements differ significantly between TN systems (where the
-              supply network provides the earth return) and TT systems (where a local earth
+              <strong>Circuits requiring 30mA RCD protection:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Socket outlets with rated current ≤32A</li>
+              <li>Mobile equipment used outdoors with current ≤32A</li>
+              <li>Cables installed in walls at depth &lt;50mm without mechanical protection</li>
+              <li>Cables in walls/partitions containing metal parts (any depth)</li>
+              <li>Circuits in locations with increased shock risk (bathrooms, etc.)</li>
+            </ul>
+            <p>
+              <strong>BS 7671 Regulation 411.3.3 requirements (application / requirement / notes):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Domestic sockets — 30mA RCD mandatory — all socket outlets</li>
+              <li>Commercial sockets ≤32A — 30mA RCD mandatory — unless specific exemption</li>
+              <li>Outdoor equipment — 30mA RCD mandatory — mobile equipment ≤32A</li>
+              <li>Cables in walls — 30mA RCD if shallow — &lt;50mm or metal present</li>
+            </ul>
+            <p>
+              <strong>Exemptions from 30mA:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Specific labelled socket (supervised use)</li>
+              <li>Risk assessment shows RCD creates hazard</li>
+              <li>FELV circuits</li>
+              <li>Certain industrial applications</li>
+            </ul>
+            <p>
+              <strong>Common exemption examples:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Freezer circuit (labelled socket)</li>
+              <li>Fire alarm supply</li>
+              <li>Emergency lighting feed</li>
+              <li>Medical equipment circuits</li>
+            </ul>
+            <p>
+              <strong>Important:</strong> Additional protection is NOT a substitute for fault
+              protection — both must be provided where required.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="TN and TT System Requirements">
+            <p>
+              Earth fault protection requirements differ significantly between TN systems (where
+              the supply network provides the earth return) and TT systems (where a local earth
               electrode is used).
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TN System Earth Fault Protection
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white mb-3">
-                  In TN systems, earth fault loop impedance is low because the return path is
-                  through the supply neutral. Overcurrent devices can provide earth fault protection
-                  if Zs is low enough.
-                </p>
-                <div className="font-mono text-center text-lg mb-2">
-                  Zs ≤ U<sub>o</sub> / I<sub>a</sub>
-                </div>
-                <p className="text-xs text-white text-center">
-                  Where Ia is the current causing automatic disconnection in required time
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TN System Maximum Zs Values (230V, 0.4s)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">6A</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">16A</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">32A</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type B MCB</td>
-                      <td className="border border-white/10 px-3 py-2">7.67Ω</td>
-                      <td className="border border-white/10 px-3 py-2">2.87Ω</td>
-                      <td className="border border-white/10 px-3 py-2">1.44Ω</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type C MCB</td>
-                      <td className="border border-white/10 px-3 py-2">3.83Ω</td>
-                      <td className="border border-white/10 px-3 py-2">1.44Ω</td>
-                      <td className="border border-white/10 px-3 py-2">0.72Ω</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type D MCB</td>
-                      <td className="border border-white/10 px-3 py-2">1.92Ω</td>
-                      <td className="border border-white/10 px-3 py-2">0.72Ω</td>
-                      <td className="border border-white/10 px-3 py-2">0.36Ω</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TT System Earth Fault Protection
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white mb-3">
-                  In TT systems, the earth fault path includes the installation's earth electrode
-                  resistance (RA), which is typically much higher than the TN metallic path. RCDs
-                  are almost always required.
-                </p>
-                <div className="font-mono text-center text-lg mb-2">
-                  R<sub>A</sub> × I<sub>Δn</sub> ≤ 50V
-                </div>
-                <p className="text-xs text-white text-center">
-                  This limits touch voltage on exposed-conductive-parts during a fault
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TT System Maximum RA Values
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        RCD Rating (IΔn)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Maximum RA</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">30mA</td>
-                      <td className="border border-white/10 px-3 py-2">1667Ω</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Final circuits with additional protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100mA</td>
-                      <td className="border border-white/10 px-3 py-2">500Ω</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire protection, sub-distribution
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">300mA</td>
-                      <td className="border border-white/10 px-3 py-2">166Ω</td>
-                      <td className="border border-white/10 px-3 py-2">Fire protection only</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">500mA</td>
-                      <td className="border border-white/10 px-3 py-2">100Ω</td>
-                      <td className="border border-white/10 px-3 py-2">Main incomer protection</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>TN system earth fault protection:</strong> In TN systems, earth fault loop
+              impedance is low because the return path is through the supply neutral. Overcurrent
+              devices can provide earth fault protection if Zs is low enough.
+            </p>
+            <p>
+              <strong>Formula:</strong> Zs ≤ U<sub>o</sub> / I<sub>a</sub> — where Ia is the
+              current causing automatic disconnection in required time.
+            </p>
+            <p>
+              <strong>TN system maximum Zs values — BS 7671:2018+A4:2026 Table 41.3 (230V, 0.4s):</strong>
+            </p>
+            <p>
+              For Type B 32A the maximum Zs is <strong>1.37Ω</strong> (the older 1.44Ω was the
+              pre-A4 figure before Cmin = 0.95 was applied to U<sub>0</sub> in Reg 411.4.4).
+              Read all other device ratings directly from the current Table 41.3 — A4:2026
+              reduced every tabulated maximum by ~5% versus pre-A4. Do not work from memorised
+              pre-A4 values on design or verification.
+            </p>
+            <p>
+              <strong>TT system earth fault protection:</strong> In TT systems, the earth fault
+              path includes the installation's earth electrode resistance (RA), which is typically
+              much higher than the TN metallic path. RCDs are almost always required.
+            </p>
+            <p>
+              <strong>Formula:</strong> R<sub>A</sub> × I<sub>Δn</sub> ≤ 50V — limits touch
+              voltage on exposed-conductive-parts during a fault.
+            </p>
+            <p>
+              <strong>TT system maximum RA values (RCD rating IΔn / maximum RA / typical use):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>30mA — 1667Ω — final circuits with additional protection</li>
+              <li>100mA — 500Ω — fire protection, sub-distribution</li>
+              <li>300mA — 166Ω — fire protection only</li>
+              <li>500mA — 100Ω — main incomer protection</li>
+            </ul>
+            <p>
               <strong>Key point:</strong> TT systems require RCDs because fault currents are
               typically too low to operate overcurrent devices within required times.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Time-Delayed RCDs and Discrimination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Time-Delayed RCDs and Discrimination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Time-Delayed RCDs and Discrimination">
             <p>
-              Time-delayed (selective or Type S) RCDs allow discrimination in earth fault protection
-              systems by deliberately delaying operation to let downstream RCDs trip first.
+              Time-delayed (selective or Type S) RCDs allow discrimination in earth fault
+              protection systems by deliberately delaying operation to let downstream RCDs trip
+              first.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                RCD Discrimination Methods
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Current discrimination:</strong> Upstream IΔn &gt; downstream IΔn (e.g.,
-                    100mA vs 30mA)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Time discrimination:</strong> Upstream Type S (delayed) vs downstream
-                    instantaneous
-                  </li>
-                  <li className="pl-1">
-                    <strong>Combined:</strong> Both current and time - most reliable
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Discrimination Arrangement
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">RCD Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">IΔn</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Main incomer</td>
-                      <td className="border border-white/10 px-3 py-2">Type S (delayed)</td>
-                      <td className="border border-white/10 px-3 py-2">300mA</td>
-                      <td className="border border-white/10 px-3 py-2">300-500ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sub-distribution</td>
-                      <td className="border border-white/10 px-3 py-2">Type S (delayed)</td>
-                      <td className="border border-white/10 px-3 py-2">100mA</td>
-                      <td className="border border-white/10 px-3 py-2">150-200ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final circuits</td>
-                      <td className="border border-white/10 px-3 py-2">Instantaneous</td>
-                      <td className="border border-white/10 px-3 py-2">30mA</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;40ms @ 5×IΔn</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Discrimination Benefits
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Only affected circuit trips</li>
-                  <li className="pl-1">Supply maintained to other circuits</li>
-                  <li className="pl-1">Easier fault location</li>
-                  <li className="pl-1">Reduced disruption</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Discrimination Verification
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Check time characteristics overlap</li>
-                  <li className="pl-1">Allow 50ms minimum margin</li>
-                  <li className="pl-1">Consider current ranges</li>
-                  <li className="pl-1">Test on site with calibrated tester</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                RCBO vs Split-Load Boards
-              </p>
-              <p className="text-sm text-white">
-                RCBOs (combined RCD + MCB) offer better discrimination than split-load boards
-                because each circuit has independent RCD protection. A fault on one circuit doesn't
-                affect others. Split-load boards with shared RCDs will disconnect all circuits on
-                that RCD for any single circuit fault.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>RCD discrimination methods:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Current discrimination:</strong> upstream IΔn &gt; downstream IΔn (e.g.,
+                100mA vs 30mA)
+              </li>
+              <li>
+                <strong>Time discrimination:</strong> upstream Type S (delayed) vs downstream
+                instantaneous
+              </li>
+              <li>
+                <strong>Combined:</strong> both current and time — most reliable
+              </li>
+            </ul>
+            <p>
+              <strong>Typical discrimination arrangement (level / RCD type / IΔn / time):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Main incomer — Type S (delayed) — 300mA — 300-500ms</li>
+              <li>Sub-distribution — Type S (delayed) — 100mA — 150-200ms</li>
+              <li>Final circuits — instantaneous — 30mA — ≤300ms @ IΔn (BS 7671 A4:2026 verification per Reg 643.3)</li>
+            </ul>
+            <p>
+              <strong>Discrimination benefits:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Only affected circuit trips</li>
+              <li>Supply maintained to other circuits</li>
+              <li>Easier fault location</li>
+              <li>Reduced disruption</li>
+            </ul>
+            <p>
+              <strong>Discrimination verification:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Check time characteristics overlap</li>
+              <li>Allow 50ms minimum margin</li>
+              <li>Consider current ranges</li>
+              <li>Test on site with calibrated tester</li>
+            </ul>
+            <p>
+              <strong>RCBO vs split-load boards:</strong> RCBOs (combined RCD + MCB) offer better
+              discrimination than split-load boards because each circuit has independent RCD
+              protection. A fault on one circuit doesn't affect others. Split-load boards with
+              shared RCDs will disconnect all circuits on that RCD for any single circuit fault.
+            </p>
+            <p>
               <strong>Design consideration:</strong> For critical installations, use individual
               RCBOs or dedicated RCDs per circuit to maximise discrimination and supply
               availability.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — TN system Zs verification:</strong> A 32A Type B MCB protects a
+              circuit with measured Zs = 0.85Ω at the furthest point. Is disconnection time
+              adequate?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>From BS 7671:2018+A4:2026 Table 41.3:</li>
+              <li>
+                32A Type B MCB max Zs = <strong>1.37Ω</strong> for 0.4s (Cmin = 0.95 applied to U<sub>0</sub>)
+              </li>
+              <li>Apply temperature correction:</li>
+              <li>
+                Design Zs = 0.85 × 1.2 = <strong>1.02Ω</strong>
+              </li>
+              <li>1.02Ω &lt; 1.37Ω — disconnection time adequate</li>
+            </ul>
+            <p>
+              <strong>Example 2 — TT system RCD selection:</strong> A TT installation has earth
+              electrode resistance RA = 85Ω. What RCD rating is required for fault protection?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Requirement: RA × IΔn ≤ 50V</li>
+              <li>Rearranging: IΔn ≤ 50V / RA</li>
+              <li>
+                IΔn ≤ 50 / 85 = <strong>0.588A = 588mA</strong>
+              </li>
+              <li>500mA: 85 × 0.5 = 42.5V &lt; 50V — pass</li>
+              <li>300mA: 85 × 0.3 = 25.5V &lt; 50V — pass</li>
+              <li>100mA: 85 × 0.1 = 8.5V &lt; 50V — pass</li>
+              <li>30mA: 85 × 0.03 = 2.55V &lt; 50V — pass</li>
+              <li>30mA provides best protection and additional protection</li>
+            </ul>
+            <p>
+              <strong>Example 3 — RCD type selection for VSD circuit:</strong> A 7.5kW variable
+              speed drive supplies an AHU fan. What RCD type is required?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>VSD characteristics: rectifier stage produces DC components</li>
+              <li>PWM output creates high-frequency components</li>
+              <li>Earth faults may include smooth DC</li>
+              <li>Type AC: detects AC only — not suitable</li>
+              <li>Type A: AC + pulsating DC — marginal</li>
+              <li>Type F: AC + pulsating DC + HF — suitable</li>
+              <li>Type B: all types including smooth DC — best</li>
+              <li>Select Type F minimum, Type B preferred</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: TN System Zs Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 32A Type B MCB protects a circuit with measured Zs =
-                0.85Ω at the furthest point. Is disconnection time adequate?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>From BS 7671 Table 41.3:</p>
-                <p>
-                  32A Type B MCB max Zs = <strong>1.44Ω</strong> for 0.4s
-                </p>
-                <p className="mt-2">Apply temperature correction:</p>
-                <p>
-                  Design Zs = 0.85 × 1.2 = <strong>1.02Ω</strong>
-                </p>
-                <p className="mt-2">
-                  1.02Ω &lt; 1.44Ω <span className="text-green-400">✓</span>
-                </p>
-                <p className="mt-2 text-green-400">✓ Disconnection time adequate</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: TT System RCD Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A TT installation has earth electrode resistance RA =
-                85Ω. What RCD rating is required for fault protection?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Requirement: RA × IΔn ≤ 50V</p>
-                <p className="mt-2">Rearranging: IΔn ≤ 50V / RA</p>
-                <p>
-                  IΔn ≤ 50 / 85 = <strong>0.588A = 588mA</strong>
-                </p>
-                <p className="mt-2">Options available:</p>
-                <p>
-                  - 500mA: 85 × 0.5 = 42.5V &lt; 50V <span className="text-green-400">✓</span>
-                </p>
-                <p>
-                  - 300mA: 85 × 0.3 = 25.5V &lt; 50V <span className="text-green-400">✓</span>
-                </p>
-                <p>
-                  - 100mA: 85 × 0.1 = 8.5V &lt; 50V <span className="text-green-400">✓</span>
-                </p>
-                <p>
-                  - 30mA: 85 × 0.03 = 2.55V &lt; 50V <span className="text-green-400">✓</span>
-                </p>
-                <p className="mt-2 text-white">
-                  → 30mA provides best protection and additional protection
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>RCD selection summary:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>General circuits:</strong> Type A, 30mA
+              </li>
+              <li>
+                <strong>VSD/inverter:</strong> Type F minimum, 30mA
+              </li>
+              <li>
+                <strong>EV charging:</strong> Type B, or Type A + 6mA DC
+              </li>
+              <li>
+                <strong>Fire protection:</strong> Type A, 100-300mA
+              </li>
+              <li>
+                <strong>Discrimination:</strong> Type S (time-delayed) upstream
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Additional protection: <strong>≤30mA</strong>
+              </li>
+              <li>
+                TT requirement: <strong>RA × IΔn ≤ 50V</strong>
+              </li>
+              <li>
+                30mA RCD max trip time at 150mA: <strong>40ms</strong>
+              </li>
+              <li>
+                Type S minimum delay at IΔn: <strong>130ms</strong>
+              </li>
+              <li>
+                No-trip test current: <strong>0.5 × IΔn</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: RCD Type Selection for VSD Circuit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 7.5kW variable speed drive supplies an AHU fan. What
-                RCD type is required?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>VSD characteristics:</p>
-                <p>- Rectifier stage produces DC components</p>
-                <p>- PWM output creates high-frequency components</p>
-                <p>- Earth faults may include smooth DC</p>
-                <p className="mt-2">RCD type analysis:</p>
-                <p>
-                  - Type AC: Detects AC only <span className="text-red-400">✗ Not suitable</span>
-                </p>
-                <p>
-                  - Type A: AC + pulsating DC <span className="text-yellow-400">⚠ Marginal</span>
-                </p>
-                <p>
-                  - Type F: AC + pulsating DC + HF{' '}
-                  <span className="text-green-400">✓ Suitable</span>
-                </p>
-                <p>
-                  - Type B: All types including smooth DC{' '}
-                  <span className="text-green-400">✓ Best</span>
-                </p>
-                <p className="mt-2 text-green-400">→ Select Type F minimum, Type B preferred</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                RCD Selection Summary
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>General circuits:</strong> Type A, 30mA
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Type AC for electronics</strong> — use Type A minimum
                 </li>
-                <li className="pl-1">
-                  <strong>VSD/inverter:</strong> Type F minimum, 30mA
+                <li>
+                  <strong>Ignoring RCD type for VSDs</strong> — need Type F or B
                 </li>
-                <li className="pl-1">
-                  <strong>EV charging:</strong> Type B, or Type A + 6mA DC
+                <li>
+                  <strong>TT without RCD</strong> — almost always required
                 </li>
-                <li className="pl-1">
-                  <strong>Fire protection:</strong> Type A, 100-300mA
-                </li>
-                <li className="pl-1">
-                  <strong>Discrimination:</strong> Type S (time-delayed) upstream
+                <li>
+                  <strong>No discrimination planning</strong> — multiple RCDs need coordination
                 </li>
               </ul>
-            </div>
+            }
+            doInstead="Specify Type A as the floor for any circuit feeding electronics, step up to Type F or Type B where VSDs / EV chargers are present, fit an RCD on every TT final circuit and verify RA × IΔn ≤ 50V, and plan RCD discrimination using Type S upstream of instantaneous downstream devices."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Additional protection: <strong>≤30mA</strong>
-                </li>
-                <li className="pl-1">
-                  TT requirement: <strong>RA × IΔn ≤ 50V</strong>
-                </li>
-                <li className="pl-1">
-                  30mA RCD max trip time at 150mA: <strong>40ms</strong>
-                </li>
-                <li className="pl-1">
-                  Type S minimum delay at IΔn: <strong>130ms</strong>
-                </li>
-                <li className="pl-1">
-                  No-trip test current: <strong>0.5 × IΔn</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Type AC for electronics</strong> — Use Type A minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring RCD type for VSDs</strong> — Need Type F or B
-                </li>
-                <li className="pl-1">
-                  <strong>TT without RCD</strong> — Almost always required
-                </li>
-                <li className="pl-1">
-                  <strong>No discrimination planning</strong> — Multiple RCDs need coordination
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Domestic kitchen and bathroom — RCD coordination under A4:2026"
+            situation={
+              <>
+                A new-build dwelling. Kitchen has socket-outlets serving the worktop, an
+                integrated dishwasher, washing machine, induction hob and downlighters. Bathroom
+                has shower, towel rail, mirror demister, fan and downlighters. The client wants
+                fewer nuisance trips — one RCD covering everything has caused the whole upstairs
+                to lose power on a single dishwasher fault.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply Reg 411.3.3 (A4:2026): 30&nbsp;mA RCD on every socket-outlet ≤ 32&nbsp;A.
+                Apply Reg 411.3.4 (A4:2026): 30&nbsp;mA RCD on every AC final circuit supplying
+                luminaires in the dwelling. Specify individual 30&nbsp;mA Type A RCBOs per
+                circuit — not shared RCDs. This means a fault on the dishwasher trips only the
+                dishwasher, not the kitchen lights or the bathroom. For the induction hob (often
+                30+&nbsp;A), confirm if it&rsquo;s a 32&nbsp;A or 40&nbsp;A circuit — Reg 411.3.3
+                applies up to 32&nbsp;A. Test under A4:2026 method: single-shot 1×IΔn (NOT
+                5×IΔn — that was older guidance), confirm disconnection within 300&nbsp;ms.
+              </>
+            }
+            whyItMatters={
+              <>
+                Sharing one RCD across multiple circuits guarantees nuisance trips and complaints.
+                A4:2026 widened the 411.3.3 socket-outlet RCD requirement to 32&nbsp;A and
+                introduced 411.3.4 for luminaires in dwellings — both push the design toward
+                per-circuit RCBOs. Use the older 5×IΔn test method on certification and the
+                EICR is technically non-compliant.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">RCD Types</p>
-                <ul className="space-y-0.5">
-                  <li>Type AC: Sinusoidal AC only</li>
-                  <li>Type A: AC + pulsating DC</li>
-                  <li>Type F: Type A + VSD frequencies</li>
-                  <li>Type B: All including smooth DC</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">System Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>TN: Verify Zs ≤ maximum for device</li>
-                  <li>TT: RA × IΔn ≤ 50V (RCD essential)</li>
-                  <li>Additional: ≤30mA for sockets etc.</li>
-                  <li>Fire protection: 100-300mA</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              'Reg 411.3.3 (A4:2026): 30&nbsp;mA RCD additional protection on every socket-outlet ≤ 32&nbsp;A — only escape is a documented risk assessment in non-dwellings.',
+              'Reg 411.3.4 (A4:2026, NEW): 30&nbsp;mA RCD additional protection on every AC final circuit supplying luminaires in domestic premises.',
+              'RCD types: AC (resistive only — now largely obsolete), A (AC + pulsating DC, general purpose), F (A + high freq, for VSDs), B (A + smooth DC, for EV / PV / BMS).',
+              'Per-circuit RCBOs preferred over shared RCDs — fault on one circuit trips only that circuit, no cascade nuisance.',
+              'Test methodology under A4:2026: single-shot 1×IΔn (NOT 5×IΔn — that was older guidance), verifies disconnection within 300&nbsp;ms.',
+              'TT systems: R_A × IΔn ≤ 50&nbsp;V — earth electrode resistance must be low enough that touch voltage stays below 50&nbsp;V.',
+              'Time-delayed (S-type) RCDs at sub-main level give discrimination with downstream 30&nbsp;mA RCDs — fault stays local.',
+              'Z_s_max under Table 41.3 (A4:2026): B32 = 1.37&nbsp;Ω (NOT 1.44 — older value), C32 = 0.68&nbsp;Ω, B16 = 2.73&nbsp;Ω.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section3-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Discrimination and Coordination
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section3-6">
-              Next: Arc Fault Detection
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Discrimination and coordination
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Arc fault detection
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

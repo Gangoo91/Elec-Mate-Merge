@@ -272,13 +272,27 @@ export const generateQuotePDF = async (quote: Partial<Quote>, companyProfile?: C
   currentY += 15;
 
   // Main table with line items only
+  // ELE-888 — append per-item adjustment annotation to description if set
   const tableData =
-    quote.items?.map((item) => [
-      item.description,
-      item.quantity.toString(),
-      `£${item.unitPrice.toFixed(2)}`,
-      `£${item.totalPrice.toFixed(2)}`,
-    ]) || [];
+    quote.items?.map((item) => {
+      let descriptionWithAdjustment = item.description;
+      if (
+        typeof item.itemAdjustmentPercent === 'number' &&
+        item.itemAdjustmentPercent !== 0
+      ) {
+        const sign = item.itemAdjustmentPercent > 0 ? '+' : '';
+        const note = item.itemAdjustmentLabel
+          ? `${sign}${item.itemAdjustmentPercent}% · ${item.itemAdjustmentLabel}`
+          : `${sign}${item.itemAdjustmentPercent}%`;
+        descriptionWithAdjustment = `${item.description}\n(${note})`;
+      }
+      return [
+        descriptionWithAdjustment,
+        item.quantity.toString(),
+        `£${item.unitPrice.toFixed(2)}`,
+        `£${item.totalPrice.toFixed(2)}`,
+      ];
+    }) || [];
 
   autoTable(doc, {
     startY: currentY,

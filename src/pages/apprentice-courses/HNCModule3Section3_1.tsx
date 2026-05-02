@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 3 · Subsection 1 — AC Waveform Characteristics (RMS, Average, Peak)
+ * HNC Electrical Engineering for Building Services (Pearson U4019)
+ *   Sinusoidal AC fundamentals — peak/RMS/average values, form and crest factors,
+ *   meter selection. Foundation for every BSE engineer&rsquo;s power, voltage drop and
+ *   insulation coordination calculation.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'AC Waveform Characteristics (RMS, Average, Peak Values) - HNC Module 3 Section 3.1';
@@ -207,900 +226,443 @@ const faqs = [
 ];
 
 const HNCModule3Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            AC Waveform Characteristics
-          </h1>
-          <p className="text-white">
-            RMS, average and peak values - understanding the sinusoidal waveforms that power
-            building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 3 · Subsection 1"
+            title="AC Waveform Characteristics"
+            description="RMS, average and peak values - understanding the sinusoidal waveforms that power building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Peak (Vm):</strong> Maximum instantaneous value = 325V for UK mains
-              </li>
-              <li className="pl-1">
-                <strong>RMS:</strong> 0.707 x Peak - equivalent DC heating effect
-              </li>
-              <li className="pl-1">
-                <strong>Average:</strong> 0.637 x Peak - over half-cycle only
-              </li>
-              <li className="pl-1">
-                <strong>UK supply:</strong> 230V RMS = 325V peak = 650V peak-to-peak
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Meter readings:</strong> All standard meters display RMS
-              </li>
-              <li className="pl-1">
-                <strong>Insulation rating:</strong> Must withstand peak voltage
-              </li>
-              <li className="pl-1">
-                <strong>Power calculations:</strong> Use RMS values directly
-              </li>
-              <li className="pl-1">
-                <strong>Harmonics:</strong> Affect RMS/average relationship
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will work with RMS values for every power calculation, voltage drop sum and cable rating on a building services project — RMS is the equivalent DC heating value.',
+              'You can convert peak (325 V) ↔ RMS (230 V) ↔ peak-to-peak (650 V) ↔ half-cycle average (207 V) for the UK 230 V single-phase supply.',
+              'You select true-RMS instruments for any circuit feeding LED lighting, VSDs or switch-mode loads — average-responding meters lie on distorted waveforms.',
+              'You specify equipment insulation against peak voltage with margin (400 V class for 230 V RMS), not RMS — switching transients can reach 2&ndash;3&times; nominal peak.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 525.1 (Voltage at terminals of equipment)"
+            clause="In the absence of any other consideration, under normal service conditions the voltage at the terminals of any fixed current-using equipment shall be greater than the lower limit corresponding to the product standard relevant to the equipment."
+            meaning={
+              <>
+                BS 7671 expresses voltage limits at equipment terminals in RMS values
+                because product standards (BS EN 60898 for MCBs, BS EN 60947 for switchgear)
+                are RMS-rated. As a BSE designer you must convert from peak only when
+                checking insulation withstand (BS 7671 443.4 / equipment data sheets) — not
+                for the voltage-drop calculation in Appendix 4.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026, Reg 525.1; BS EN 50160 (supply voltage characteristics, &plusmn;10 %)"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Describe sinusoidal AC waveform generation and characteristics',
               'Calculate peak, RMS and average values and convert between them',
               'Explain why RMS values are used for power calculations',
               'Apply form factor and crest factor to verify waveform quality',
               'Relate UK supply voltages to peak and RMS values',
               'Select appropriate meters for different measurement applications',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Sinusoidal AC Waveforms */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Sinusoidal AC Waveforms - Generation and Characteristics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Sinusoidal AC Waveforms - Generation and Characteristics">
             <p>
               Alternating current (AC) is generated when a conductor rotates through a magnetic
               field, producing a voltage that varies sinusoidally with time. This is the fundamental
               principle behind all power station generators and forms the basis of UK electricity
               supply.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key characteristics of sinusoidal waveforms:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Voltage varies smoothly between positive and negative peak values
-                </li>
-                <li className="pl-1">One complete cycle takes 20ms at 50Hz (UK frequency)</li>
-                <li className="pl-1">
-                  Instantaneous voltage: v = Vm sin(omega t) where omega = 2 pi f
-                </li>
-                <li className="pl-1">Waveform repeats indefinitely with constant frequency</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Sinusoidal Equation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                v = V<sub>m</sub> sin(omega t) = V<sub>m</sub> sin(2 pi f t)
-              </p>
-              <div className="grid grid-cols-2 gap-2 text-xs text-white mt-3">
-                <div>
-                  <strong>v</strong> = instantaneous voltage (V)
-                </div>
-                <div>
-                  <strong>Vm</strong> = peak voltage (V)
-                </div>
-                <div>
-                  <strong>omega</strong> = angular frequency (rad/s)
-                </div>
-                <div>
-                  <strong>f</strong> = frequency (Hz)
-                </div>
-                <div>
-                  <strong>t</strong> = time (seconds)
-                </div>
-                <div>
-                  <strong>2 pi f</strong> = 314 rad/s at 50Hz
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                AC Waveform Terminology
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Term</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cycle</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        One complete positive and negative alternation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Period</td>
-                      <td className="border border-white/10 px-3 py-2">T</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Time for one cycle: T = 1/f = 20ms at 50Hz
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Frequency</td>
-                      <td className="border border-white/10 px-3 py-2">f</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cycles per second: 50Hz in UK
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Angular frequency</td>
-                      <td className="border border-white/10 px-3 py-2">omega</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Radians per second: omega = 2 pi f = 314 rad/s
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Amplitude</td>
-                      <td className="border border-white/10 px-3 py-2">Vm, Im</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maximum value (peak) from zero
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>Key characteristics of sinusoidal waveforms:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Voltage varies smoothly between positive and negative peak values</li>
+              <li>One complete cycle takes 20ms at 50Hz (UK frequency)</li>
+              <li>Instantaneous voltage: v = Vm sin(omega t) where omega = 2 pi f</li>
+              <li>Waveform repeats indefinitely with constant frequency</li>
+            </ul>
+            <p>
+              <strong>The Sinusoidal Equation:</strong> v = Vm sin(omega t) = Vm sin(2 pi f t)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>v</strong> = instantaneous voltage (V)</li>
+              <li><strong>Vm</strong> = peak voltage (V)</li>
+              <li><strong>omega</strong> = angular frequency (rad/s)</li>
+              <li><strong>f</strong> = frequency (Hz)</li>
+              <li><strong>t</strong> = time (seconds)</li>
+              <li><strong>2 pi f</strong> = 314 rad/s at 50Hz</li>
+            </ul>
+            <p>
+              <strong>AC Waveform Terminology:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Cycle</strong> — One complete positive and negative alternation</li>
+              <li><strong>Period (T)</strong> — Time for one cycle: T = 1/f = 20ms at 50Hz</li>
+              <li><strong>Frequency (f)</strong> — Cycles per second: 50Hz in UK</li>
+              <li><strong>Angular frequency (omega)</strong> — Radians per second: omega = 2 pi f = 314 rad/s</li>
+              <li><strong>Amplitude (Vm, Im)</strong> — Maximum value (peak) from zero</li>
+            </ul>
+            <p>
               <strong>Remember:</strong> The sinusoidal waveform is the 'purest' AC waveform. Any
               other periodic waveform can be represented as a combination of sinusoids at different
               frequencies (harmonics).
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Peak and RMS Values */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Peak and RMS Values
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Peak and RMS Values">
             <p>
               The peak value (Vm or Im) is the maximum instantaneous value reached by the waveform.
               The RMS value is the effective value that produces the same heating effect as an
               equivalent DC supply - this is why AC voltages and currents are always quoted as RMS
               values.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fundamental Relationships (Sinusoidal Only)
-              </p>
-              <div className="grid sm:grid-cols-2 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">
-                    V<sub>RMS</sub> = V<sub>peak</sub> / sqrt(2)
-                  </p>
-                  <p className="text-white text-xs">
-                    = 0.707 x V<sub>peak</sub>
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">
-                    V<sub>peak</sub> = V<sub>RMS</sub> x sqrt(2)
-                  </p>
-                  <p className="text-white text-xs">
-                    = 1.414 x V<sub>RMS</sub>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Why RMS is used for power calculations:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">RMS gives the equivalent DC heating effect in a resistor</li>
-                <li className="pl-1">
-                  Power formula P = V squared / R works directly with RMS values
-                </li>
-                <li className="pl-1">
-                  A 230V RMS AC supply delivers the same power as 230V DC to a resistor
-                </li>
-                <li className="pl-1">All standard electrical equipment is rated in RMS values</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UK Supply Voltage Values
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Value Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Single-Phase</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Three-Phase (Line)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RMS (nominal)</td>
-                      <td className="border border-white/10 px-3 py-2">230V</td>
-                      <td className="border border-white/10 px-3 py-2">400V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Peak</td>
-                      <td className="border border-white/10 px-3 py-2">325V</td>
-                      <td className="border border-white/10 px-3 py-2">566V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Peak-to-peak</td>
-                      <td className="border border-white/10 px-3 py-2">650V</td>
-                      <td className="border border-white/10 px-3 py-2">1131V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Half-cycle average</td>
-                      <td className="border border-white/10 px-3 py-2">207V</td>
-                      <td className="border border-white/10 px-3 py-2">358V</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mathematical Definition of RMS
-              </p>
-              <p className="font-mono text-center text-base mb-2">
-                V<sub>RMS</sub> = sqrt(1/T integral from 0 to T of v squared dt)
-              </p>
-              <p className="text-xs text-white text-center">
-                For a sine wave, this evaluates to V<sub>peak</sub>/sqrt(2) = 0.707 x V
-                <sub>peak</sub>
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Fundamental Relationships (Sinusoidal Only):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>VRMS = Vpeak / sqrt(2) = 0.707 x Vpeak</li>
+              <li>Vpeak = VRMS x sqrt(2) = 1.414 x VRMS</li>
+            </ul>
+            <p>Why RMS is used for power calculations:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>RMS gives the equivalent DC heating effect in a resistor</li>
+              <li>Power formula P = V squared / R works directly with RMS values</li>
+              <li>A 230V RMS AC supply delivers the same power as 230V DC to a resistor</li>
+              <li>All standard electrical equipment is rated in RMS values</li>
+            </ul>
+            <p>
+              <strong>UK Supply Voltage Values:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single-phase RMS (nominal): 230V — Three-phase line: 400V</li>
+              <li>Single-phase peak: 325V — Three-phase line peak: 566V</li>
+              <li>Single-phase peak-to-peak: 650V — Three-phase line peak-to-peak: 1131V</li>
+              <li>Single-phase half-cycle average: 207V — Three-phase line half-cycle average: 358V</li>
+            </ul>
+            <p>
+              <strong>Mathematical Definition of RMS:</strong> VRMS = sqrt(1/T integral from 0 to T
+              of v squared dt). For a sine wave, this evaluates to Vpeak/sqrt(2) = 0.707 x Vpeak.
+            </p>
+            <p>
               <strong>Key point:</strong> 230V RMS means the supply voltage varies between +325V and
               -325V, but delivers the same power as 230V DC would to a resistive load.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Average Value, Form Factor and Crest Factor */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Average Value, Form Factor and Crest Factor
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Average Value, Form Factor and Crest Factor">
             <p>
               The average value over a complete cycle of a symmetrical AC waveform is zero (positive
               and negative halves cancel). However, the half-cycle average is meaningful and used in
               rectifier calculations. Form factor and crest factor characterise waveform shape.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Average Value (Half-Cycle)
-              </p>
-              <div className="p-3 rounded bg-white/5 text-center">
-                <p className="font-bold text-elec-yellow mb-1">
-                  V<sub>avg</sub> = 0.637 x V<sub>peak</sub> = (2/pi) x V<sub>peak</sub>
-                </p>
-                <p className="text-white text-xs">
-                  Only applies to half-cycle (rectified) waveforms
-                </p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Form Factor</p>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-2">Form Factor = RMS / Average</p>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>
-                      Pure sine wave: 0.707/0.637 = <strong>1.11</strong>
-                    </li>
-                    <li>Square wave: 1.0</li>
-                    <li>Triangular wave: 1.15</li>
-                    <li>Values not equal to 1.11 indicate non-sinusoidal</li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Crest Factor</p>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-2">Crest Factor = Peak / RMS</p>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>
-                      Pure sine wave: 1/0.707 = <strong>1.414</strong> (sqrt(2))
-                    </li>
-                    <li>Square wave: 1.0</li>
-                    <li>High crest factor = 'peaky' waveform</li>
-                    <li>Important for surge protection</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Waveform Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Waveform</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">RMS/Peak</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Form Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Crest Factor</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sine wave</td>
-                      <td className="border border-white/10 px-3 py-2">0.707</td>
-                      <td className="border border-white/10 px-3 py-2">1.11</td>
-                      <td className="border border-white/10 px-3 py-2">1.414</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Square wave</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Triangle wave</td>
-                      <td className="border border-white/10 px-3 py-2">0.577</td>
-                      <td className="border border-white/10 px-3 py-2">1.15</td>
-                      <td className="border border-white/10 px-3 py-2">1.73</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distorted sine</td>
-                      <td className="border border-white/10 px-3 py-2">Varies</td>
-                      <td className="border border-white/10 px-3 py-2">Not 1.11</td>
-                      <td className="border border-white/10 px-3 py-2">Greater than 1.414</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Average Value (Half-Cycle):</strong> Vavg = 0.637 x Vpeak = (2/pi) x Vpeak.
+              Only applies to half-cycle (rectified) waveforms.
+            </p>
+            <p>
+              <strong>Form Factor</strong> = RMS / Average:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pure sine wave: 0.707/0.637 = <strong>1.11</strong></li>
+              <li>Square wave: 1.0</li>
+              <li>Triangular wave: 1.15</li>
+              <li>Values not equal to 1.11 indicate non-sinusoidal</li>
+            </ul>
+            <p>
+              <strong>Crest Factor</strong> = Peak / RMS:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pure sine wave: 1/0.707 = <strong>1.414</strong> (sqrt(2))</li>
+              <li>Square wave: 1.0</li>
+              <li>High crest factor = 'peaky' waveform</li>
+              <li>Important for surge protection</li>
+            </ul>
+            <p>
+              <strong>Waveform Comparison:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sine wave — RMS/Peak: 0.707, Form Factor: 1.11, Crest Factor: 1.414</li>
+              <li>Square wave — RMS/Peak: 1.0, Form Factor: 1.0, Crest Factor: 1.0</li>
+              <li>Triangle wave — RMS/Peak: 0.577, Form Factor: 1.15, Crest Factor: 1.73</li>
+              <li>Distorted sine — RMS/Peak: Varies, Form Factor: Not 1.11, Crest Factor: Greater than 1.414</li>
+            </ul>
+            <p>
               <strong>Practical application:</strong> Comparing true RMS and average-responding
               meter readings can reveal waveform distortion. If they differ significantly, harmonics
               are present.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Practical Applications in Building Services */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Practical Applications in Building Services
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Practical Applications in Building Services">
             <p>
               Understanding AC waveform characteristics is essential for correct equipment
               selection, meter interpretation, and troubleshooting in modern building services where
               non-linear loads increasingly distort supply waveforms.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Meter Types and Applications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Meter Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">How It Works</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Average-responding (scaled)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measures average, scales by 1.11
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Pure sinusoidal supplies</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">True RMS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Calculates actual RMS mathematically
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Any waveform, VSDs, LEDs</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Peak-reading</td>
-                      <td className="border border-white/10 px-3 py-2">Captures maximum value</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transient detection, surges
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Moving coil (analogue)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Responds to average DC value
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DC only (needs rectifier for AC)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>LED lighting:</strong> Switch-mode drivers draw non-sinusoidal current -
-                  true RMS meters essential
-                </li>
-                <li className="pl-1">
-                  <strong>Variable speed drives:</strong> PWM outputs are not sinusoidal -
-                  average-responding meters give wrong readings
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation testing:</strong> Test voltages must consider peak values (500V
-                  DC test is comparable to 354V AC RMS)
-                </li>
-                <li className="pl-1">
-                  <strong>Harmonic surveys:</strong> Form factor deviation from 1.11 indicates
-                  harmonic content
-                </li>
-                <li className="pl-1">
-                  <strong>Supply quality:</strong> Crest factor greater than 1.5 suggests voltage
-                  distortion issues
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Meter Operation</p>
-              <p className="text-sm text-white mb-2">
-                Building energy meters measure real power (kW) and energy (kWh) using voltage and
-                current transformers. They sample instantaneous v and i, multiply them, and
-                integrate over time to give true energy consumption regardless of waveform
-                distortion.
-              </p>
-              <p className="text-xs text-white">
-                Modern meters also measure kVA (apparent power), kVAr (reactive power), power
-                factor, and total harmonic distortion (THD).
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Insulation and Voltage Ratings
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Equipment insulation must withstand <strong>peak voltage</strong>, not just RMS
-                </li>
-                <li className="pl-1">
-                  230V RMS system has 325V peaks - insulation needs safety margin above this
-                </li>
-                <li className="pl-1">
-                  400V rated insulation provides adequate margin for 230V RMS systems
-                </li>
-                <li className="pl-1">
-                  Transient overvoltages can reach 2-3 times normal peak during switching
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Meter Types and Applications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Average-responding (scaled) — Measures average, scales by 1.11. Best for: Pure sinusoidal supplies</li>
+              <li>True RMS — Calculates actual RMS mathematically. Best for: Any waveform, VSDs, LEDs</li>
+              <li>Peak-reading — Captures maximum value. Best for: Transient detection, surges</li>
+              <li>Moving coil (analogue) — Responds to average DC value. Best for: DC only (needs rectifier for AC)</li>
+            </ul>
+            <p>
+              <strong>Building Services Considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>LED lighting:</strong> Switch-mode drivers draw non-sinusoidal current - true RMS meters essential</li>
+              <li><strong>Variable speed drives:</strong> PWM outputs are not sinusoidal - average-responding meters give wrong readings</li>
+              <li><strong>Insulation testing:</strong> Test voltages must consider peak values (500V DC test is comparable to 354V AC RMS)</li>
+              <li><strong>Harmonic surveys:</strong> Form factor deviation from 1.11 indicates harmonic content</li>
+              <li><strong>Supply quality:</strong> Crest factor greater than 1.5 suggests voltage distortion issues</li>
+            </ul>
+            <p>
+              <strong>Energy Meter Operation:</strong> Building energy meters measure real power
+              (kW) and energy (kWh) using voltage and current transformers. They sample
+              instantaneous v and i, multiply them, and integrate over time to give true energy
+              consumption regardless of waveform distortion. Modern meters also measure kVA
+              (apparent power), kVAr (reactive power), power factor, and total harmonic distortion
+              (THD).
+            </p>
+            <p>
+              <strong>Insulation and Voltage Ratings:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Equipment insulation must withstand <strong>peak voltage</strong>, not just RMS</li>
+              <li>230V RMS system has 325V peaks - insulation needs safety margin above this</li>
+              <li>400V rated insulation provides adequate margin for 230V RMS systems</li>
+              <li>Transient overvoltages can reach 2-3 times normal peak during switching</li>
+            </ul>
+            <p>
               <strong>Design tip:</strong> When specifying equipment for buildings with significant
               LED or VSD loads, always use true RMS instruments for measurements and consider
               harmonic filters if THD exceeds 5%.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1: UK Supply Values.</strong> Calculate all voltage values for the UK
+              230V supply.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Given: VRMS = 230V</li>
+              <li>Vpeak = VRMS x sqrt(2) = 230 x 1.414 = <strong>325V</strong></li>
+              <li>Vp-p = 2 x Vpeak = 2 x 325 = <strong>650V</strong></li>
+              <li>Vavg (half-cycle) = 0.637 x Vpeak = 0.637 x 325 = <strong>207V</strong></li>
+            </ul>
+            <p>
+              <strong>Example 2: Finding Peak from RMS Current.</strong> A circuit draws 13A RMS.
+              What is the peak current and what current capacity must the cable withstand?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ipeak = IRMS x sqrt(2) = 13 x 1.414 = <strong>18.4A</strong></li>
+              <li>Cable rated for 13A RMS (continuous rating)</li>
+              <li>Thermal effects based on I squared R use RMS value</li>
+              <li>Peak current is brief and does not cause additional heating</li>
+              <li>Select cable based on 13A RMS, not peak</li>
+            </ul>
+            <p>
+              <strong>Example 3: Form Factor Verification.</strong> A true RMS meter reads 228V
+              while an average-responding meter reads 243V on the same circuit. What does this
+              indicate?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Average-responding meter assumes form factor 1.11</li>
+              <li>If pure sine: both meters should read same value</li>
+              <li>Measured average = 243 / 1.11 = 219V (what meter actually sensed)</li>
+              <li>Actual form factor = True RMS / Average = 228 / 219 = <strong>1.04</strong></li>
+              <li>Form factor less than 1.11 indicates flat-topped waveform</li>
+              <li>Likely cause: harmonic distortion from non-linear loads</li>
+              <li>Investigation needed if THD exceeds 5%</li>
+            </ul>
+            <p>
+              <strong>Example 4: Three-Phase Peak Voltages.</strong> Calculate peak voltages for a
+              400V three-phase supply.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>VL(RMS) = 400V — VL(peak) = 400 x 1.414 = <strong>566V</strong></li>
+              <li>VP(RMS) = 400 / sqrt(3) = 231V — VP(peak) = 231 x 1.414 = <strong>327V</strong></li>
+              <li>Three-phase equipment must withstand 566V peaks between lines</li>
+            </ul>
+            <p>
+              <strong>Example 5: Power Calculation Using RMS.</strong> A 46 ohm heating element is
+              connected to 230V RMS. Calculate the power dissipation.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Using P = V squared / R with RMS values directly</li>
+              <li>P = (230) squared / 46 = 52900 / 46 = <strong>1150W</strong></li>
+              <li>RMS values allow direct use of DC power formulas</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: UK Supply Values
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate all voltage values for the UK 230V supply.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Given: V<sub>RMS</sub> = 230V
-                </p>
-                <p className="mt-2">Peak voltage:</p>
-                <p>
-                  V<sub>peak</sub> = V<sub>RMS</sub> x sqrt(2) = 230 x 1.414 = <strong>325V</strong>
-                </p>
-                <p className="mt-2">Peak-to-peak voltage:</p>
-                <p>
-                  V<sub>p-p</sub> = 2 x V<sub>peak</sub> = 2 x 325 = <strong>650V</strong>
-                </p>
-                <p className="mt-2">Half-cycle average:</p>
-                <p>
-                  V<sub>avg</sub> = 0.637 x V<sub>peak</sub> = 0.637 x 325 = <strong>207V</strong>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Finding Peak from RMS Current
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A circuit draws 13A RMS. What is the peak current and
-                what current capacity must the cable withstand?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Peak current:</p>
-                <p>
-                  I<sub>peak</sub> = I<sub>RMS</sub> x sqrt(2) = 13 x 1.414 = <strong>18.4A</strong>
-                </p>
-                <p className="mt-2">Cable selection:</p>
-                <p>Cable rated for 13A RMS (continuous rating)</p>
-                <p>Thermal effects based on I squared R use RMS value</p>
-                <p>Peak current is brief and does not cause additional heating</p>
-                <p className="mt-2 text-white">Select cable based on 13A RMS, not peak</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical Guidance">
+            <p>
+              <strong>Essential Conversion Factors (Sine Wave):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>RMS = Peak x 0.707</strong> (or Peak / sqrt(2))</li>
+              <li><strong>Peak = RMS x 1.414</strong> (or RMS x sqrt(2))</li>
+              <li><strong>Average = Peak x 0.637</strong> (half-cycle only)</li>
+              <li><strong>Peak-to-peak = Peak x 2</strong></li>
+              <li><strong>Form factor = 1.11</strong> (RMS/Average)</li>
+              <li><strong>Crest factor = 1.414</strong> (Peak/RMS)</li>
+            </ul>
+            <p>
+              <strong>Key UK Values to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single-phase: <strong>230V RMS = 325V peak</strong></li>
+              <li>Three-phase line: <strong>400V RMS = 566V peak</strong></li>
+              <li>Three-phase phase: <strong>230V RMS = 325V peak</strong></li>
+              <li>Frequency: <strong>50Hz</strong> (T = 20ms)</li>
+              <li>Angular frequency: <strong>omega = 314 rad/s</strong></li>
+            </ul>
+            <p>
+              <strong>When to Use True RMS Meters:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Measuring VSD/inverter output voltages or currents</li>
+              <li>Circuits supplying LED lighting loads</li>
+              <li>Any circuit with electronic/switch-mode equipment</li>
+              <li>Power quality investigations</li>
+              <li>When form factor differs from 1.11</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Form Factor Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A true RMS meter reads 228V while an average-responding
-                meter reads 243V on the same circuit. What does this indicate?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Average-responding meter assumes form factor 1.11</p>
-                <p>If pure sine: both meters should read same value</p>
-                <p className="mt-2">Actual form factor:</p>
-                <p>Measured average = 243 / 1.11 = 219V (what meter actually sensed)</p>
-                <p>
-                  Actual form factor = True RMS / Average = 228 / 219 = <strong>1.04</strong>
-                </p>
-                <p className="mt-2">Conclusion:</p>
-                <p className="text-white">
-                  Form factor less than 1.11 indicates flat-topped waveform
-                </p>
-                <p className="text-white">
-                  Likely cause: harmonic distortion from non-linear loads
-                </p>
-                <p className="text-white">Investigation needed if THD exceeds 5%</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Three-Phase Peak Voltages
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate peak voltages for a 400V three-phase supply.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Line voltage (phase-to-phase):</p>
-                <p>
-                  V<sub>L(RMS)</sub> = 400V
-                </p>
-                <p>
-                  V<sub>L(peak)</sub> = 400 x 1.414 = <strong>566V</strong>
-                </p>
-                <p className="mt-2">Phase voltage (phase-to-neutral):</p>
-                <p>
-                  V<sub>P(RMS)</sub> = 400 / sqrt(3) = 231V
-                </p>
-                <p>
-                  V<sub>P(peak)</sub> = 231 x 1.414 = <strong>327V</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Three-phase equipment must withstand 566V peaks between lines
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 5: Power Calculation Using RMS
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 46 ohm heating element is connected to 230V RMS.
-                Calculate the power dissipation.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using P = V squared / R with RMS values directly:</p>
-                <p>
-                  P = (230) squared / 46 = 52900 / 46 = <strong>1150W</strong>
-                </p>
-                <p className="mt-2">Verification using peak values would require integration:</p>
-                <p>
-                  P = (1/T) integral of v squared / R dt = V<sub>RMS</sub> squared / R
-                </p>
-                <p className="mt-2 text-green-400">
-                  RMS values allow direct use of DC power formulas
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Conversion Factors (Sine Wave)
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>RMS = Peak x 0.707</strong> (or Peak / sqrt(2))
-                </li>
-                <li className="pl-1">
-                  <strong>Peak = RMS x 1.414</strong> (or RMS x sqrt(2))
-                </li>
-                <li className="pl-1">
-                  <strong>Average = Peak x 0.637</strong> (half-cycle only)
-                </li>
-                <li className="pl-1">
-                  <strong>Peak-to-peak = Peak x 2</strong>
-                </li>
-                <li className="pl-1">
-                  <strong>Form factor = 1.11</strong> (RMS/Average)
-                </li>
-                <li className="pl-1">
-                  <strong>Crest factor = 1.414</strong> (Peak/RMS)
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using peak for power:</strong> P = V x I uses RMS, not peak values</li>
+                <li><strong>Confusing average types:</strong> Full-cycle average is zero; half-cycle average is 0.637 x peak</li>
+                <li><strong>Wrong meter choice:</strong> Average-responding meters give errors on distorted waveforms</li>
+                <li><strong>Ignoring peaks for insulation:</strong> Insulation must withstand peak voltage, not RMS</li>
+                <li><strong>Assuming sine wave:</strong> Modern loads distort waveforms - verify with true RMS</li>
               </ul>
-            </div>
+            }
+            doInstead="Use RMS values for all power and heating calculations. Always remember the half-cycle average factor (0.637) only applies to rectified waveforms. Use true RMS instruments on any circuit feeding electronic, LED, or VSD loads. Specify insulation to withstand peak voltage with margin (400V class for 230V RMS systems)."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key UK Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Single-phase: <strong>230V RMS = 325V peak</strong>
-                </li>
-                <li className="pl-1">
-                  Three-phase line: <strong>400V RMS = 566V peak</strong>
-                </li>
-                <li className="pl-1">
-                  Three-phase phase: <strong>230V RMS = 325V peak</strong>
-                </li>
-                <li className="pl-1">
-                  Frequency: <strong>50Hz</strong> (T = 20ms)
-                </li>
-                <li className="pl-1">
-                  Angular frequency: <strong>omega = 314 rad/s</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When to Use True RMS Meters
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Measuring VSD/inverter output voltages or currents</li>
-                <li className="pl-1">Circuits supplying LED lighting loads</li>
-                <li className="pl-1">Any circuit with electronic/switch-mode equipment</li>
-                <li className="pl-1">Power quality investigations</li>
-                <li className="pl-1">When form factor differs from 1.11</li>
-              </ul>
-            </div>
+          <Scenario
+            title="Choosing the right meter for an LED retrofit commissioning"
+            situation={
+              <>
+                You are commissioning a 240-luminaire LED retrofit on a single 100 A
+                three-phase distribution board. Your average-responding multimeter reads
+                238 V on L1 but the energy meter logs the same circuit at 230 V true-RMS.
+                The Class C LED drivers draw heavily distorted current (5th and 7th
+                harmonics typical 25&ndash;40 %).
+              </>
+            }
+            whatToDo={
+              <>
+                Switch to a true-RMS meter for every voltage and current reading on this
+                board (Fluke 87V, Megger DCM340 or equivalent). Record line current with a
+                clamp meter that supports true-RMS bandwidth to at least the 13th harmonic.
+                Compare true-RMS phase currents to the neutral current — if the neutral
+                exceeds 1.0&times; phase current you have triplen aggregation and need to
+                size the neutral up under BS 7671 Appendix 4 / IEC 61000-3-2 considerations.
+              </>
+            }
+            whyItMatters={
+              <>
+                An average-responding meter is calibrated for a pure sine form factor of
+                1.11. A 25 % THD waveform throws the reading off by 5&ndash;10 %. That can
+                mean you sign off a board as compliant when the true neutral current is
+                already above its design rating, leading to overheating, RCBO nuisance
+                tripping and breach of BS 7671 132.2.1 (suitability for service conditions).
+              </>
+            }
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using peak for power:</strong> P = V x I uses RMS, not peak values
-                </li>
-                <li className="pl-1">
-                  <strong>Confusing average types:</strong> Full-cycle average is zero; half-cycle
-                  average is 0.637 x peak
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong meter choice:</strong> Average-responding meters give errors on
-                  distorted waveforms
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring peaks for insulation:</strong> Insulation must withstand peak
-                  voltage, not RMS
-                </li>
-                <li className="pl-1">
-                  <strong>Assuming sine wave:</strong> Modern loads distort waveforms - verify with
-                  true RMS
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Sinusoidal Relationships</p>
-                <ul className="space-y-0.5">
-                  <li>RMS = 0.707 x Peak (Peak/sqrt(2))</li>
-                  <li>Peak = 1.414 x RMS (RMS x sqrt(2))</li>
-                  <li>Average = 0.637 x Peak (half-cycle)</li>
-                  <li>Form factor = 1.11 (RMS/Avg)</li>
-                  <li>Crest factor = 1.414 (Peak/RMS)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">UK Supply Values</p>
-                <ul className="space-y-0.5">
-                  <li>Single-phase: 230V RMS, 325V peak</li>
-                  <li>Three-phase line: 400V RMS, 566V peak</li>
-                  <li>Frequency: 50Hz, Period: 20ms</li>
-                  <li>omega = 2 pi f = 314 rad/s</li>
-                  <li>Tolerance: +10%/-6% (216V-253V)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'RMS = peak / &radic;2 = peak &times; 0.707 — the value that produces the same heating effect as DC of the same magnitude.',
+              'UK single-phase: 230 V RMS &harr; 325 V peak &harr; 650 V peak-to-peak &harr; 207 V half-cycle average.',
+              'UK three-phase line: 400 V RMS &harr; 566 V peak — equipment insulation must withstand the 566 V peak with margin.',
+              'Form factor 1.11 (RMS/avg) and crest factor 1.414 (peak/RMS) confirm a pure sine — deviations indicate harmonic distortion.',
+              'P = V&sup2;/R works directly with RMS values — never use peak for power, never use full-cycle average (which is zero).',
+              'Half-cycle average (0.637 &times; peak) only applies to rectified waveforms — used in DC bus calculations for VSD inputs.',
+              'True-RMS meters mandatory for LED, VSD, SMPS and any non-linear load — average-responding meters give wrong readings on distorted waveforms.',
+              'Building Regs Part L energy meters log true RMS power — this is your source of truth for kWh consumption regardless of waveform shape.',
+            ]}
+          />
 
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section2-7">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Section 2.7
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section3-2">
-              Next: Section 3.2
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2-7')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 2.7
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section3-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Frequency, Period and Amplitude
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

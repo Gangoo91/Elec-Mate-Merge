@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 3 · Subsection 4 — Discrimination and Coordination
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Full vs partial discrimination, time discrimination via MCCB STD settings, current
+ *   discrimination using cable impedance reduction, energy let-through (I²t),
+ *   selectivity tables, cascade (back-up) protection and Zone Selective Interlocking.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Discrimination and Coordination - HNC Module 4 Section 3.4';
@@ -218,798 +237,486 @@ const faqs = [
 ];
 
 const HNCModule4Section3_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.3.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Discrimination and Coordination
-          </h1>
-          <p className="text-white">
-            Achieving selective protection to minimise disruption and maintain supply continuity
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 3 · Subsection 4"
+            title="Discrimination and Coordination"
+            description="Achieving selective protection to minimise disruption and maintain supply continuity."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Discrimination:</strong> Only device nearest fault operates
-              </li>
-              <li className="pl-1">
-                <strong>Time-based:</strong> Upstream delays longer than downstream
-              </li>
-              <li className="pl-1">
-                <strong>Current-based:</strong> Uses fault current reduction along cables
-              </li>
-              <li className="pl-1">
-                <strong>Cascade:</strong> Upstream assists downstream in clearing faults
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Main switchboard:</strong> Critical discrimination point
-              </li>
-              <li className="pl-1">
-                <strong>Sub-distribution:</strong> Partial discrimination may suffice
-              </li>
-              <li className="pl-1">
-                <strong>Critical loads:</strong> Full discrimination required
-              </li>
-              <li className="pl-1">
-                <strong>HRC fuse/MCB:</strong> Preferred combination
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Discrimination (selectivity) ensures only the device closest to a fault operates — the upstream stays in, only the affected circuit loses supply.',
+              'Three discrimination methods: time (delayed upstream trip), current (different rated currents), energy (current-limiting upstream — fuse vs MCB I²t).',
+              'Rule-of-thumb: 2:1 current ratio between upstream and downstream for fuse-fuse, 3:1 for fuse-MCB, manufacturer tables for MCB-MCB and MCCB-MCB.',
+              'Cascade (back-up) protection: a device with lower breaking capacity is &lsquo;backed up&rsquo; by an upstream higher-capacity device — accept loss of discrimination at high fault levels.',
+              'BS 7671 Reg 536.4.202 (redrafted in A4:2026) explicitly covers coordination between LV switchgear and overload protective device, including discrimination.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 536.4.202 (Coordination of overload protective devices)"
+            clause="Coordination under Regulation 536.4.202 shall include the sequence of operation and discrimination (selectivity) between upstream and downstream overload protective devices so that disconnection is restricted to the smallest possible part of the installation."
+            meaning={
+              <>
+                Reg 536.4.202 was redrafted in BS 7671:2018+A4:2026 and now explicitly requires
+                coordination between LV switchgear and overload protective devices, including
+                discrimination, so that fault disconnection is restricted to the smallest
+                possible part of the installation. As designer you must demonstrate the
+                coordination — typically using manufacturer selectivity tables, time-current
+                characteristic overlays, or computed I²t comparisons. Document the analysis
+                alongside the cable schedule.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 536.4.202; manufacturer selectivity / discrimination tables; BEAMA Guide to Discrimination."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the importance of discrimination in building services',
               'Apply time and current discrimination principles',
               "Use manufacturers' selectivity tables for device coordination",
               'Understand cascade (back-up) protection and its applications',
               'Calculate energy let-through for cable protection verification',
               'Specify devices for full or partial discrimination',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Discrimination Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Discrimination Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Discrimination Fundamentals">
             <p>
-              Discrimination (or selectivity) ensures that when a fault occurs, only the protective
-              device immediately upstream of the fault operates. This maintains supply to unaffected
-              circuits and minimises disruption.
+              Discrimination (or selectivity) ensures that when a fault occurs, only the
+              protective device immediately upstream of the fault operates. This maintains supply
+              to unaffected circuits and minimises disruption.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Benefits of Good Discrimination
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Minimises extent of supply interruption during faults</li>
-                <li className="pl-1">Aids rapid fault location (affected circuit is obvious)</li>
-                <li className="pl-1">
-                  Maintains supply to critical loads during downstream faults
-                </li>
-                <li className="pl-1">Reduces system restoration time after faults</li>
-                <li className="pl-1">Required for essential services (hospitals, data centres)</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Discrimination
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Full (Total) Discrimination</p>
-                  <p className="text-sm text-white">
-                    The downstream device always operates before the upstream device, regardless of
-                    fault current level up to the system maximum.
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Partial Discrimination</p>
-                  <p className="text-sm text-white">
-                    Discrimination achieved up to a specific fault current level. Above this, both
-                    devices may operate together.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Discrimination Study Hierarchy
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Devices
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Discrimination Priority
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Utility incomer</td>
-                      <td className="border border-white/10 px-3 py-2">DNO fuse/ACB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical - affects entire supply
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Main switchboard</td>
-                      <td className="border border-white/10 px-3 py-2">MCCB/ACB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High - affects building section
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sub-distribution</td>
-                      <td className="border border-white/10 px-3 py-2">MCCB/HRC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medium - affects floor/zone
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final circuits</td>
-                      <td className="border border-white/10 px-3 py-2">MCB/RCBO</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower - single circuit only
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Benefits of good discrimination:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimises extent of supply interruption during faults</li>
+              <li>Aids rapid fault location (affected circuit is obvious)</li>
+              <li>Maintains supply to critical loads during downstream faults</li>
+              <li>Reduces system restoration time after faults</li>
+              <li>Required for essential services (hospitals, data centres)</li>
+            </ul>
+            <p>
+              <strong>Full (total) discrimination:</strong> The downstream device always operates
+              before the upstream device, regardless of fault current level up to the system
+              maximum.
+            </p>
+            <p>
+              <strong>Partial discrimination:</strong> Discrimination achieved up to a specific
+              fault current level. Above this, both devices may operate together.
+            </p>
+            <p>
+              <strong>Discrimination study hierarchy (level / typical devices / discrimination priority):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Utility incomer — DNO fuse/ACB — critical, affects entire supply</li>
+              <li>Main switchboard — MCCB/ACB — high, affects building section</li>
+              <li>Sub-distribution — MCCB/HRC — medium, affects floor/zone</li>
+              <li>Final circuits — MCB/RCBO — lower, single circuit only</li>
+            </ul>
+            <p>
               <strong>Key principle:</strong> Invest most discrimination effort at higher levels
               where fault impact is greatest.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Time Discrimination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Time Discrimination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Time Discrimination">
             <p>
-              Time discrimination relies on the upstream device having a longer operating time than
-              the downstream device at the same fault current. The downstream device clears the
-              fault before the upstream device has time to operate.
+              Time discrimination relies on the upstream device having a longer operating time
+              than the downstream device at the same fault current. The downstream device clears
+              the fault before the upstream device has time to operate.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Time Discrimination Requirement
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                t<sub>upstream</sub> &gt; t<sub>downstream</sub> + Δt
-              </p>
-              <p className="text-xs text-white text-center">
-                Where Δt is a margin for tolerance (typically 50-100ms)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Achieving Time Discrimination
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Device Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inherent time grading</td>
-                      <td className="border border-white/10 px-3 py-2">HRC fuses (2:1 ratio)</td>
-                      <td className="border border-white/10 px-3 py-2">Distribution boards</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Short-time delay (STD)</td>
-                      <td className="border border-white/10 px-3 py-2">MCCBs, ACBs</td>
-                      <td className="border border-white/10 px-3 py-2">Main switchboards</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Zone selective interlock</td>
-                      <td className="border border-white/10 px-3 py-2">Electronic trip MCCBs</td>
-                      <td className="border border-white/10 px-3 py-2">Critical systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Different characteristics
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Fuse + MCB combination</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sub-distribution to finals
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">MCCB Time Settings</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Instantaneous (I):</strong> No intentional delay
-                  </li>
-                  <li className="pl-1">
-                    <strong>Short-time (S):</strong> 50-500ms delay
-                  </li>
-                  <li className="pl-1">
-                    <strong>Long-time (L):</strong> Overload timing
-                  </li>
-                  <li className="pl-1">
-                    <strong>Ground (G):</strong> Earth fault timing
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Time Steps</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Final circuit MCB: instantaneous</li>
-                  <li className="pl-1">Sub-board MCCB: 100ms</li>
-                  <li className="pl-1">Main board MCCB: 200ms</li>
-                  <li className="pl-1">Incomer: 300-500ms</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Time discrimination requirement:</strong> t<sub>upstream</sub> &gt; t
+              <sub>downstream</sub> + Δt — where Δt is a margin for tolerance (typically 50-100ms).
+            </p>
+            <p>
+              <strong>Achieving time discrimination (method / device type / application):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Inherent time grading — HRC fuses (2:1 ratio) — distribution boards</li>
+              <li>Short-time delay (STD) — MCCBs, ACBs — main switchboards</li>
+              <li>Zone selective interlock — electronic trip MCCBs — critical systems</li>
+              <li>
+                Different characteristics — fuse + MCB combination — sub-distribution to finals
+              </li>
+            </ul>
+            <p>
+              <strong>MCCB time settings:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Instantaneous (I):</strong> no intentional delay
+              </li>
+              <li>
+                <strong>Short-time (S):</strong> 50-500ms delay
+              </li>
+              <li>
+                <strong>Long-time (L):</strong> overload timing
+              </li>
+              <li>
+                <strong>Ground (G):</strong> earth fault timing
+              </li>
+            </ul>
+            <p>
+              <strong>Typical time steps:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Final circuit MCB: instantaneous</li>
+              <li>Sub-board MCCB: 100ms</li>
+              <li>Main board MCCB: 200ms</li>
+              <li>Incomer: 300-500ms</li>
+            </ul>
+            <p>
               <strong>Caution:</strong> Time delays allow fault current to flow longer, requiring
-              equipment to withstand the thermal stress. Verify Icw (short-time withstand) rating of
-              MCCBs.
+              equipment to withstand the thermal stress. Verify Icw (short-time withstand) rating
+              of MCCBs.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Current Discrimination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Current Discrimination and Energy Let-Through
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Current Discrimination and Energy Let-Through">
             <p>
               Current discrimination exploits the natural reduction in fault current along cable
-              runs. The upstream device is set to operate at a current higher than the maximum fault
-              current downstream.
+              runs. The upstream device is set to operate at a current higher than the maximum
+              fault current downstream.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Current Discrimination Principle
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Fault current is highest at the supply source</li>
-                  <li className="pl-1">Cable impedance reduces fault current along the run</li>
-                  <li className="pl-1">
-                    Downstream fault current may be below upstream instantaneous setting
-                  </li>
-                  <li className="pl-1">
-                    Upstream device operates on thermal characteristic (slower)
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example: Current Discrimination
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Main board MCCB: 100A, Im = 10 × Ir = 800A</p>
-                <p>Sub-board after 30m 35mm² cable:</p>
-                <p className="mt-2">Ipf at sub-board = 5kA</p>
-                <p>Sub-board MCB: 32A Type C (Im at 320A)</p>
-                <p className="mt-2">Final circuit fault at end: 400A</p>
-                <p className="mt-2">MCB operates magnetically at 400A (instant)</p>
-                <p>MCCB sees 400A - below 800A threshold</p>
-                <p className="text-green-400">✓ MCCB stays closed - discrimination achieved</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Let-Through (I²t)
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white mb-3">
-                  I²t represents the energy passing through a device during fault clearance. For
-                  discrimination, the downstream device must clear with lower I²t than the upstream
-                  device's let-through threshold.
-                </p>
-                <div className="overflow-x-auto">
-                  <table className="text-sm text-white w-full border-collapse">
-                    <thead>
-                      <tr className="bg-white/5">
-                        <th className="border border-white/10 px-3 py-2 text-left">Device</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">I²t (A²s)</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">32A MCB Type B</td>
-                        <td className="border border-white/10 px-3 py-2">15,000</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Let-through at 6kA fault
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">63A BS 88 fuse</td>
-                        <td className="border border-white/10 px-3 py-2">35,000</td>
-                        <td className="border border-white/10 px-3 py-2">Prearcing at 6kA fault</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">100A MCCB</td>
-                        <td className="border border-white/10 px-3 py-2">80,000</td>
-                        <td className="border border-white/10 px-3 py-2">Withstand capability</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Current discrimination principle:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Fault current is highest at the supply source</li>
+              <li>Cable impedance reduces fault current along the run</li>
+              <li>Downstream fault current may be below upstream instantaneous setting</li>
+              <li>Upstream device operates on thermal characteristic (slower)</li>
+            </ul>
+            <p>
+              <strong>Example — current discrimination:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Main board MCCB: 100A, Im = 10 × Ir = 800A</li>
+              <li>Sub-board after 30m 35mm² cable: Ipf at sub-board = 5kA</li>
+              <li>Sub-board MCB: 32A Type C (Im at 320A)</li>
+              <li>Final circuit fault at end: 400A</li>
+              <li>MCB operates magnetically at 400A (instant)</li>
+              <li>MCCB sees 400A — below 800A threshold</li>
+              <li>MCCB stays closed — discrimination achieved</li>
+            </ul>
+            <p>
+              <strong>Energy let-through (I²t):</strong> I²t represents the energy passing through
+              a device during fault clearance. For discrimination, the downstream device must
+              clear with lower I²t than the upstream device's let-through threshold.
+            </p>
+            <p>
+              <strong>Typical I²t values (device / I²t A²s / notes):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>32A MCB Type B — 15,000 — let-through at 6kA fault</li>
+              <li>63A BS 88 fuse — 35,000 — prearcing at 6kA fault</li>
+              <li>100A MCCB — 80,000 — withstand capability</li>
+            </ul>
+            <p>
               <strong>Remember:</strong> For cable protection, the device I²t let-through must not
               exceed the cable's thermal withstand: I²t ≤ k²S².
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 4: Cascade Protection and Selectivity Tables */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Cascade Protection and Selectivity Tables
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Cascade Protection and Selectivity Tables">
             <p>
               Cascade (back-up) protection allows a downstream device with lower breaking capacity
               to be used where the prospective fault current exceeds its rating, provided an
               upstream device with adequate capacity assists in fault clearance.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cascade Protection Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Upstream device must have adequate breaking capacity for maximum Ipf
-                </li>
-                <li className="pl-1">
-                  Combined let-through I²t must not exceed downstream cable k²S²
-                </li>
-                <li className="pl-1">Manufacturer must confirm the cascade combination is valid</li>
-                <li className="pl-1">
-                  Both devices may operate - coordination, not discrimination
-                </li>
-                <li className="pl-1">
-                  Devices should be from same manufacturer for validated combinations
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Reading Selectivity Tables
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Table Entry</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">T</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Total discrimination at all fault levels
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">15</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discrimination up to 15kA
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">—</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No discrimination / not tested
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">P</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Partial discrimination (see notes)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example Selectivity Table (Simplified)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Upstream</th>
-                      <th className="border border-white/10 px-3 py-2 text-center">16A Type B</th>
-                      <th className="border border-white/10 px-3 py-2 text-center">32A Type B</th>
-                      <th className="border border-white/10 px-3 py-2 text-center">32A Type C</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100A HRC</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">T</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">T</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">T</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">63A HRC</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">T</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">15kA</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">10kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">40A MCB</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">3kA</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">—</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">—</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Example only - always use actual manufacturer data
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Best Practice Device Combinations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>HRC fuse → MCB:</strong> Excellent discrimination, 2:1 ratio typically
-                  sufficient
-                </li>
-                <li className="pl-1">
-                  <strong>MCCB (STD) → MCB:</strong> Good discrimination with time delay setting
-                </li>
-                <li className="pl-1">
-                  <strong>ACB → MCCB → MCB:</strong> Multi-tier with progressive time settings
-                </li>
-                <li className="pl-1">
-                  <strong>MCB → MCB:</strong> Poor discrimination in magnetic region, avoid
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Cascade protection requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Upstream device must have adequate breaking capacity for maximum Ipf</li>
+              <li>Combined let-through I²t must not exceed downstream cable k²S²</li>
+              <li>Manufacturer must confirm the cascade combination is valid</li>
+              <li>Both devices may operate — coordination, not discrimination</li>
+              <li>Devices should be from same manufacturer for validated combinations</li>
+            </ul>
+            <p>
+              <strong>Reading selectivity tables (table entry / meaning):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>T</strong> — total discrimination at all fault levels
+              </li>
+              <li>
+                <strong>15</strong> — discrimination up to 15kA
+              </li>
+              <li>
+                <strong>—</strong> — no discrimination / not tested
+              </li>
+              <li>
+                <strong>P</strong> — partial discrimination (see notes)
+              </li>
+            </ul>
+            <p>
+              <strong>Example selectivity table — simplified (upstream / 16A Type B / 32A Type B / 32A Type C):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>100A HRC — T — T — T</li>
+              <li>63A HRC — T — 15kA — 10kA</li>
+              <li>40A MCB — 3kA — — — —</li>
+            </ul>
+            <p>Example only — always use actual manufacturer data.</p>
+            <p>
+              <strong>Best practice device combinations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>HRC fuse → MCB:</strong> excellent discrimination, 2:1 ratio typically
+                sufficient
+              </li>
+              <li>
+                <strong>MCCB (STD) → MCB:</strong> good discrimination with time delay setting
+              </li>
+              <li>
+                <strong>ACB → MCCB → MCB:</strong> multi-tier with progressive time settings
+              </li>
+              <li>
+                <strong>MCB → MCB:</strong> poor discrimination in magnetic region, avoid
+              </li>
+            </ul>
+            <p>
               <strong>Design note:</strong> Always verify discrimination using manufacturer's
               specific tables for the actual devices specified. Generic guidance may not apply to
               all combinations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — discrimination check:</strong> A 100A BS 88 fuse protects a
+              sub-board with 32A Type B MCBs. Ipf at sub-board is 8kA. Verify discrimination.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>From manufacturer selectivity table:</li>
+              <li>
+                100A HRC vs 32A Type B = <strong>"T" (Total)</strong>
+              </li>
+              <li>This means full discrimination at all fault levels</li>
+              <li>Verify Ipf (8kA) is within device ratings:</li>
+              <li>100A HRC: 80kA breaking — pass</li>
+              <li>32A MCB: 6kA (with cascade from fuse) — pass</li>
+              <li>Full discrimination achieved</li>
+            </ul>
+            <p>
+              <strong>Example 2 — time discrimination setting:</strong> Set time discrimination
+              between main MCCB (400A) and sub-board MCCB (100A). Sub-board MCBs operate
+              instantaneously.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Final circuit MCBs: instantaneous (~10ms)</li>
+              <li>Sub-board 100A MCCB settings: STD = 100ms (allows MCBs to clear first); Im = 10 × Ir</li>
+              <li>Main 400A MCCB settings: STD = 250ms (allows sub-board to clear); Im = 8 × Ir</li>
+              <li>Time margin: 250 - 100 = 150ms</li>
+              <li>Adequate margin for tolerance</li>
+            </ul>
+            <p>
+              <strong>Example 3 — cascade back-up verification:</strong> A 6kA MCB is used where
+              Ipf = 10kA. Verify cascade protection with 80A HRC fuse upstream. Cable is 4mm²
+              PVC/copper.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Check cascade table: 80A HRC + 32A MCB at 10kA</li>
+              <li>
+                Combined I²t let-through = <strong>25,000 A²s</strong>
+              </li>
+              <li>Cable thermal withstand:</li>
+              <li>
+                k²S² = 115² × 4² = 13,225 × 16 = <strong>211,600 A²s</strong>
+              </li>
+              <li>25,000 &lt; 211,600 — pass</li>
+              <li>Cascade protection valid; cable protected from thermal damage</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Discrimination Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 100A BS 88 fuse protects a sub-board with 32A Type B
-                MCBs. Ipf at sub-board is 8kA. Verify discrimination.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>From manufacturer selectivity table:</p>
-                <p>
-                  100A HRC vs 32A Type B = <strong>"T" (Total)</strong>
-                </p>
-                <p className="mt-2">This means full discrimination at all fault levels</p>
-                <p className="mt-2">Verify Ipf (8kA) is within device ratings:</p>
-                <p>
-                  - 100A HRC: 80kA breaking <span className="text-green-400">✓</span>
-                </p>
-                <p>
-                  - 32A MCB: 6kA (with cascade from fuse) <span className="text-green-400">✓</span>
-                </p>
-                <p className="mt-2 text-green-400">✓ Full discrimination achieved</p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Time Discrimination Setting
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Set time discrimination between main MCCB (400A) and
-                sub-board MCCB (100A). Sub-board MCBs operate instantaneously.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Final circuit MCBs: Instantaneous (~10ms)</p>
-                <p className="mt-2">Sub-board 100A MCCB settings:</p>
-                <p>- STD = 100ms (allows MCBs to clear first)</p>
-                <p>- Im = 10 × Ir (magnetic threshold)</p>
-                <p className="mt-2">Main 400A MCCB settings:</p>
-                <p>- STD = 250ms (allows sub-board to clear)</p>
-                <p>- Im = 8 × Ir</p>
-                <p className="mt-2">Time margin: 250 - 100 = 150ms</p>
-                <p className="text-green-400">✓ Adequate margin for tolerance</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Cascade Back-up Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 6kA MCB is used where Ipf = 10kA. Verify cascade
-                protection with 80A HRC fuse upstream. Cable is 4mm² PVC/copper.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Check cascade table: 80A HRC + 32A MCB at 10kA</p>
-                <p>
-                  Combined I²t let-through = <strong>25,000 A²s</strong>
-                </p>
-                <p className="mt-2">Cable thermal withstand:</p>
-                <p>
-                  k²S² = 115² × 4² = 13225 × 16 = <strong>211,600 A²s</strong>
-                </p>
-                <p className="mt-2">
-                  25,000 &lt; 211,600 <span className="text-green-400">✓</span>
-                </p>
-                <p className="mt-2 text-green-400">✓ Cascade protection valid</p>
-                <p className="text-white">Cable protected from thermal damage</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Discrimination design steps:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> calculate Ipf at all distribution levels
+              </li>
+              <li>
+                <strong>Step 2:</strong> select device types (fuse, MCB, MCCB)
+              </li>
+              <li>
+                <strong>Step 3:</strong> check manufacturer selectivity tables
+              </li>
+              <li>
+                <strong>Step 4:</strong> verify discrimination limit exceeds Ipf
+              </li>
+              <li>
+                <strong>Step 5:</strong> confirm cable thermal withstand if using cascade
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                HRC fuse ratio: <strong>2:1</strong> for discrimination
+              </li>
+              <li>
+                Time margin: <strong>≥50ms</strong> between levels
+              </li>
+              <li>
+                MCB-MCB: <strong>no reliable discrimination</strong> (magnetic region)
+              </li>
+              <li>
+                MCCB STD typical: <strong>100-500ms</strong>
+              </li>
+              <li>
+                Cable thermal: <strong>I²t ≤ k²S²</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Discrimination Design Steps
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Calculate Ipf at all distribution levels
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Assuming MCBs discriminate</strong> — they don't in magnetic region
                 </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Select device types (fuse, MCB, MCCB)
+                <li>
+                  <strong>Ignoring fault level changes</strong> — check at each board location
                 </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Check manufacturer selectivity tables
+                <li>
+                  <strong>Using generic tables</strong> — use specific manufacturer data
                 </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Verify discrimination limit exceeds Ipf
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Confirm cable thermal withstand if using cascade
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  HRC fuse ratio: <strong>2:1</strong> for discrimination
-                </li>
-                <li className="pl-1">
-                  Time margin: <strong>≥50ms</strong> between levels
-                </li>
-                <li className="pl-1">
-                  MCB-MCB: <strong>No reliable discrimination</strong> (magnetic region)
-                </li>
-                <li className="pl-1">
-                  MCCB STD typical: <strong>100-500ms</strong>
-                </li>
-                <li className="pl-1">
-                  Cable thermal: <strong>I²t ≤ k²S²</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Assuming MCBs discriminate</strong> — They don't in magnetic region
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring fault level changes</strong> — Check at each board location
-                </li>
-                <li className="pl-1">
-                  <strong>Using generic tables</strong> — Use specific manufacturer data
-                </li>
-                <li className="pl-1">
+                <li>
                   <strong>Forgetting Icw</strong> — MCCB must withstand fault during STD
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Use HRC fuse / MCCB STD upstream of MCBs rather than relying on MCB-MCB selectivity, recompute Ipf at each board level, look up the actual device combination in the manufacturer's selectivity table, and confirm the upstream MCCB's Icw rating covers the chosen short-time delay."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Hospital — discrimination in a ward DB to prevent cascade tripping"
+            situation={
+              <>
+                A 200&nbsp;A 400&nbsp;V three-phase sub-main feeds a ward DB carrying critical
+                medical equipment. The DB has 20 × MCBs (mostly C16 and C20). The current design
+                has a 200&nbsp;A Type B MCCB upstream. A short on a single C16 has tripped both
+                the C16 and the upstream MCCB — taking out the entire ward including
+                life-support equipment.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply Reg 536.4.202: coordination must restrict disconnection to the smallest
+                possible part of the installation. Replace the upstream MCCB with one that has
+                an adjustable instantaneous trip set above the maximum let-through of the
+                downstream C16 / C20 (typically 10–12 × I_n_downstream = ≈ 200&nbsp;A on the
+                C20). Or specify an HRC fuse upstream (BS 88) — HRC discriminates more reliably
+                with downstream MCBs because of its sharply current-limiting let-through. Verify
+                with the manufacturer&rsquo;s selectivity table for the actual device pairing.
+                Document the discrimination analysis in the design submission.
+              </>
+            }
+            whyItMatters={
+              <>
+                In a hospital, loss of supply to critical care is a life-safety event. Reg
+                536.4.202 explicitly requires coordination so that disconnection is restricted
+                to the smallest possible part. A discrimination analysis is design evidence, not
+                a nice-to-have, and forms part of the Part 6 verification.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Discrimination Methods</p>
-                <ul className="space-y-0.5">
-                  <li>Time: upstream delays longer</li>
-                  <li>Current: fault drops along cables</li>
-                  <li>Energy: downstream I²t lower</li>
-                  <li>ZSI: communication between devices</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Best Combinations</p>
-                <ul className="space-y-0.5">
-                  <li>HRC → MCB: excellent (2:1 ratio)</li>
-                  <li>MCCB (STD) → MCB: good</li>
-                  <li>MCB → MCB: poor (avoid)</li>
-                  <li>ACB → MCCB → MCB: tiered</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Discrimination (selectivity) restricts disconnection to the smallest possible part of the installation — Reg 536.4.202 (redrafted A4:2026).',
+              'Three methods: time (delayed upstream trip), current (different rated currents), energy (current-limiting upstream like HRC fuse).',
+              'Rule-of-thumb ratios: 2:1 for fuse-fuse, 3:1 for fuse-MCB. For MCB-MCB and MCCB-MCB, use manufacturer selectivity tables.',
+              'HRC fuses (BS 88) discriminate most reliably with downstream MCBs — sharply current-limiting let-through reduces I²t to the upstream.',
+              'Cascade (back-up) protection is the deliberate trade-off: lower-capacity downstream backed up by higher-capacity upstream — accept loss of discrimination at high fault levels.',
+              'Discrimination analysis is design evidence — overlay time-current curves, compare I²t, or use manufacturer selectivity tables.',
+              'Critical installations (hospitals, data centres, continuous processes) need full discrimination at the maximum prospective fault current.',
+              'Reg 536.5 requires documentation of device-coordination selection in the design documentation per Reg 132.13.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section3-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Fault Current Calculations
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section3-5">
-              Next: Earth Fault Protection
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Fault current calculations
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Earth fault protection
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

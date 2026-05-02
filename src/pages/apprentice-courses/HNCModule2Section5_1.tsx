@@ -1,8 +1,27 @@
-import { ArrowLeft, Sun, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 5 · Subsection 1 — Solar Radiation
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Solar geometry, irradiance, direct and diffuse components — the input data
+ *   for every solar gain, overheating-risk and PV yield calculation on a UK
+ *   building services project.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Solar Radiation - HNC Module 2 Section 5.1';
@@ -218,792 +237,517 @@ const faqs = [
 ];
 
 const HNCModule2Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Sun className="h-4 w-4" />
-            <span>Module 2.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Solar Radiation
-          </h1>
-          <p className="text-white">
-            Understanding solar geometry, irradiance, and solar heat gains for building thermal
-            design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 5 · Subsection 1"
+            title="Solar Radiation"
+            description="Understanding solar geometry, irradiance, and solar heat gains for building thermal design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Solar altitude:</strong> Vertical angle of sun above horizon
-              </li>
-              <li className="pl-1">
-                <strong>Solar azimuth:</strong> Horizontal direction (clockwise from north)
-              </li>
-              <li className="pl-1">
-                <strong>Irradiance:</strong> Instantaneous power per area (W/m²)
-              </li>
-              <li className="pl-1">
-                <strong>Solar gain:</strong> Heat entering building through glazing
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Cooling loads:</strong> Solar gains drive summer peak loads
-              </li>
-              <li className="pl-1">
-                <strong>Daylighting:</strong> Direct vs diffuse light design
-              </li>
-              <li className="pl-1">
-                <strong>Overheating:</strong> Part O compliance assessment
-              </li>
-              <li className="pl-1">
-                <strong>Renewables:</strong> PV and solar thermal sizing
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You compute solar altitude (β) and azimuth (γs) for the project site (latitude, declination, hour angle) and use them to project beam irradiance onto any surface.',
+              'You separate global horizontal irradiance into direct beam (Ib) and diffuse (Id) components — the raw inputs for cooling-load and overheating risk modelling.',
+              'You read CIBSE Guide A solar irradiance tables for UK design days and apply them in TM52/TM59 overheating studies.',
+              'You translate solar geometry into facade orientation, glazing g-value and shading device decisions during early-stage design.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Guide A — Environmental Design (Solar Data)"
+            clause="Recommended UK design solar irradiance values (W/m²) on horizontal, vertical and inclined surfaces, by latitude, month and orientation, for use in cooling load and overheating-risk calculations."
+            meaning={
+              <>
+                CIBSE Guide A is the canonical UK source for design irradiance. As HNC
+                engineer you cite it on the load schedule so the architect, BREEAM assessor
+                and PV/solar-thermal sub-contractor are all working from the same numbers.
+              </>
+            }
+            cite="Source: CIBSE Guide A — Environmental Design (latest edition); CIBSE TM52 Limits of Thermal Comfort; CIBSE TM59 Design Methodology for Overheating in Homes."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate solar altitude and azimuth for any location and time',
               'Distinguish between direct beam and diffuse solar radiation',
               'Apply irradiance data for different surface orientations',
               'Calculate solar heat gains through glazed elements',
               'Use CIBSE solar data for cooling load calculations',
               'Understand factors affecting solar energy reaching buildings',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Solar Geometry */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Solar Geometry - Position of the Sun
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Solar Geometry - Position of the Sun"
+            plainEnglish="Where the sun sits in the sky at any moment is set by two angles - altitude (how high) and azimuth (which direction). Get these right and you can predict solar gain on any surface."
+          >
             <p>
               Understanding where the sun is in the sky at any given time is fundamental to
               calculating solar heat gains. The sun's position is defined by two angles measured
               from any point on Earth.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key solar angles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Solar altitude (α):</strong> Vertical angle between the sun and the
-                  horizon (0° = horizon, 90° = overhead)
-                </li>
-                <li className="pl-1">
-                  <strong>Solar azimuth (γ):</strong> Horizontal angle measured clockwise from true
-                  north (0° = north, 90° = east, 180° = south)
-                </li>
-                <li className="pl-1">
-                  <strong>Declination (δ):</strong> Angle between sun's rays and equatorial plane
-                  (varies -23.5° to +23.5° annually)
-                </li>
-                <li className="pl-1">
-                  <strong>Hour angle (ω):</strong> Angular displacement of sun from solar noon (15°
-                  per hour)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Solar Altitude at Different Times (London, 51.5°N)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Date</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Solar Noon Altitude
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Sunrise/Sunset</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Day Length</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">21 June (Summer)</td>
-                      <td className="border border-white/10 px-3 py-2">62°</td>
-                      <td className="border border-white/10 px-3 py-2">04:43 / 21:21</td>
-                      <td className="border border-white/10 px-3 py-2">16h 38m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">21 March/Sept (Equinox)</td>
-                      <td className="border border-white/10 px-3 py-2">38.5°</td>
-                      <td className="border border-white/10 px-3 py-2">06:00 / 18:00</td>
-                      <td className="border border-white/10 px-3 py-2">12h 00m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">21 December (Winter)</td>
-                      <td className="border border-white/10 px-3 py-2">15°</td>
-                      <td className="border border-white/10 px-3 py-2">08:04 / 15:53</td>
-                      <td className="border border-white/10 px-3 py-2">7h 49m</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Altitude Calculation</p>
-              <p className="font-mono text-center text-sm mb-2">
-                sin(α) = sin(φ)sin(δ) + cos(φ)cos(δ)cos(ω)
-              </p>
-              <p className="text-xs text-white text-center">
-                Where φ = latitude, δ = declination, ω = hour angle
-              </p>
-              <p className="text-xs text-white text-center mt-2">
-                At solar noon (ω = 0): α = 90° - φ + δ
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key solar angles:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Solar altitude (α):</strong> Vertical angle between the sun and the horizon
+                (0° = horizon, 90° = overhead)
+              </li>
+              <li>
+                <strong>Solar azimuth (γ):</strong> Horizontal angle measured clockwise from true
+                north (0° = north, 90° = east, 180° = south)
+              </li>
+              <li>
+                <strong>Declination (δ):</strong> Angle between sun's rays and equatorial plane
+                (varies -23.5° to +23.5° annually)
+              </li>
+              <li>
+                <strong>Hour angle (ω):</strong> Angular displacement of sun from solar noon (15°
+                per hour)
+              </li>
+            </ul>
+            <p>
+              <strong>Solar Altitude at Different Times (London, 51.5°N):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>21 June (Summer): noon altitude 62°, sunrise/sunset 04:43 / 21:21, day length 16h 38m</li>
+              <li>21 March/Sept (Equinox): noon altitude 38.5°, sunrise/sunset 06:00 / 18:00, day length 12h 00m</li>
+              <li>21 December (Winter): noon altitude 15°, sunrise/sunset 08:04 / 15:53, day length 7h 49m</li>
+            </ul>
+            <p>
+              <strong>Altitude calculation:</strong> sin(α) = sin(φ)sin(δ) + cos(φ)cos(δ)cos(ω). Where
+              φ = latitude, δ = declination, ω = hour angle. At solar noon (ω = 0): α = 90° - φ + δ.
+            </p>
+            <p>
               <strong>UK context:</strong> The sun never reaches directly overhead (90° altitude) in
               the UK. Maximum altitude varies from ~62° in summer to ~15° in winter at London's
               latitude.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 2: Irradiance and Radiation Types */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Irradiance - Measuring Solar Energy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Irradiance - Measuring Solar Energy"
+            plainEnglish="Irradiance is the power of sunshine landing on a surface right now (W/m²). Split it into direct beam, diffuse, and ground-reflected and you can size cooling, PV, or solar thermal accurately."
+          >
             <p>
               Irradiance is the instantaneous solar power received per unit area, measured in watts
               per square metre (W/m²). Understanding irradiance components is essential for accurate
               cooling load and renewable energy calculations.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Components of solar radiation:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Direct beam (Ib):</strong> Radiation arriving directly from the sun's disc
-                  in parallel rays
-                </li>
-                <li className="pl-1">
-                  <strong>Diffuse (Id):</strong> Radiation scattered by atmosphere, clouds, arriving
-                  from all sky directions
-                </li>
-                <li className="pl-1">
-                  <strong>Ground reflected:</strong> Radiation reflected from surrounding surfaces
-                  (albedo effect)
-                </li>
-                <li className="pl-1">
-                  <strong>Global (I):</strong> Total radiation = Direct + Diffuse + Ground reflected
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Typical UK Irradiance Values
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Clear summer noon: 800-900 W/m² horizontal</li>
-                  <li className="pl-1">Overcast summer: 100-300 W/m²</li>
-                  <li className="pl-1">Clear winter noon: 200-400 W/m²</li>
-                  <li className="pl-1">Overcast winter: 50-100 W/m²</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Diffuse Fraction</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Clear sky: 10-20% diffuse</li>
-                  <li className="pl-1">Partly cloudy: 30-50% diffuse</li>
-                  <li className="pl-1">Overcast: 90-100% diffuse</li>
-                  <li className="pl-1">UK annual average: ~55% diffuse</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Annual Solar Irradiation by Region (Horizontal Surface)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Annual (kWh/m²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Summer Peak Day
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">South England</td>
-                      <td className="border border-white/10 px-3 py-2">1000-1100</td>
-                      <td className="border border-white/10 px-3 py-2">6-7 kWh/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Midlands</td>
-                      <td className="border border-white/10 px-3 py-2">900-1000</td>
-                      <td className="border border-white/10 px-3 py-2">5.5-6.5 kWh/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scotland</td>
-                      <td className="border border-white/10 px-3 py-2">800-950</td>
-                      <td className="border border-white/10 px-3 py-2">5-6 kWh/m²</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Components of solar radiation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Direct beam (Ib):</strong> Radiation arriving directly from the sun's disc
+                in parallel rays
+              </li>
+              <li>
+                <strong>Diffuse (Id):</strong> Radiation scattered by atmosphere, clouds, arriving
+                from all sky directions
+              </li>
+              <li>
+                <strong>Ground reflected:</strong> Radiation reflected from surrounding surfaces
+                (albedo effect)
+              </li>
+              <li>
+                <strong>Global (I):</strong> Total radiation = Direct + Diffuse + Ground reflected
+              </li>
+            </ul>
+            <p>
+              <strong>Typical UK irradiance values:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Clear summer noon: 800-900 W/m² horizontal</li>
+              <li>Overcast summer: 100-300 W/m²</li>
+              <li>Clear winter noon: 200-400 W/m²</li>
+              <li>Overcast winter: 50-100 W/m²</li>
+            </ul>
+            <p>
+              <strong>Diffuse fraction:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Clear sky: 10-20% diffuse</li>
+              <li>Partly cloudy: 30-50% diffuse</li>
+              <li>Overcast: 90-100% diffuse</li>
+              <li>UK annual average: ~55% diffuse</li>
+            </ul>
+            <p>
+              <strong>Annual solar irradiation by region (horizontal surface):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>South England: 1000-1100 kWh/m² annual, 6-7 kWh/m² summer peak day</li>
+              <li>Midlands: 900-1000 kWh/m² annual, 5.5-6.5 kWh/m² summer peak day</li>
+              <li>Scotland: 800-950 kWh/m² annual, 5-6 kWh/m² summer peak day</li>
+            </ul>
+            <p>
               <strong>Design note:</strong> UK has high diffuse fraction compared to Mediterranean
               climates. This means north-facing glazing still receives significant radiation from
               the sky dome.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 3: Direct and Diffuse Radiation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Direct and Diffuse Radiation Behaviour
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Direct and Diffuse Radiation Behaviour"
+            plainEnglish="Direct radiation comes from the sun's disc - sharp shadows, strong cosine law. Diffuse comes from the whole sky - no shadows, much harder to shade out. Get the split wrong and your shading design fails."
+          >
             <p>
               Direct and diffuse radiation behave differently on building surfaces. Understanding
               this distinction is crucial for accurate cooling load calculations and appropriate
               shading design.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Characteristics comparison:</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Direct Beam</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Diffuse</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Direction</td>
-                      <td className="border border-white/10 px-3 py-2">From sun's disc only</td>
-                      <td className="border border-white/10 px-3 py-2">From all sky directions</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Shading effectiveness</td>
-                      <td className="border border-white/10 px-3 py-2">Highly effective</td>
-                      <td className="border border-white/10 px-3 py-2">Limited effect</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Incidence angle effect</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Strong cosine relationship
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Minimal angle dependence</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Weather dependence</td>
-                      <td className="border border-white/10 px-3 py-2">Zero when overcast</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Always present (daylight)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Shadow formation</td>
-                      <td className="border border-white/10 px-3 py-2">Creates sharp shadows</td>
-                      <td className="border border-white/10 px-3 py-2">No shadows</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Irradiance on Tilted Surface
-              </p>
-              <p className="font-mono text-center text-sm mb-2">
-                I<sub>surface</sub> = I<sub>bn</sub> × cos(θ) + I<sub>d</sub> × F<sub>sky</sub> + I
-                <sub>g</sub> × ρ × F<sub>ground</sub>
-              </p>
-              <p className="text-xs text-white text-center">
-                Where θ = angle of incidence, F = view factors, ρ = ground reflectance (albedo)
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Orientation Effects (UK)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>South vertical:</strong> Peak in winter, less in summer
-                  </li>
-                  <li className="pl-1">
-                    <strong>East/West vertical:</strong> Strong summer AM/PM peaks
-                  </li>
-                  <li className="pl-1">
-                    <strong>North vertical:</strong> Diffuse only, relatively constant
-                  </li>
-                  <li className="pl-1">
-                    <strong>Horizontal:</strong> Maximum in summer at noon
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Air Mass Effect</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">AM 1.0: Sun directly overhead (0° zenith)</li>
-                  <li className="pl-1">AM 1.5: Standard test condition (48° altitude)</li>
-                  <li className="pl-1">AM 2.0: 30° altitude (UK winter noon)</li>
-                  <li className="pl-1">Higher AM = more atmospheric absorption</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Characteristics comparison (direct beam vs diffuse):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Direction:</strong> Direct - from sun's disc only; Diffuse - from all sky directions
+              </li>
+              <li>
+                <strong>Shading effectiveness:</strong> Direct - highly effective; Diffuse - limited effect
+              </li>
+              <li>
+                <strong>Incidence angle effect:</strong> Direct - strong cosine relationship; Diffuse - minimal angle dependence
+              </li>
+              <li>
+                <strong>Weather dependence:</strong> Direct - zero when overcast; Diffuse - always present (daylight)
+              </li>
+              <li>
+                <strong>Shadow formation:</strong> Direct - creates sharp shadows; Diffuse - no shadows
+              </li>
+            </ul>
+            <p>
+              <strong>Irradiance on tilted surface:</strong> I_surface = I_bn × cos(θ) + I_d × F_sky + I_g × ρ × F_ground.
+              Where θ = angle of incidence, F = view factors, ρ = ground reflectance (albedo).
+            </p>
+            <p>
+              <strong>Orientation effects (UK):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>South vertical:</strong> Peak in winter, less in summer
+              </li>
+              <li>
+                <strong>East/West vertical:</strong> Strong summer AM/PM peaks
+              </li>
+              <li>
+                <strong>North vertical:</strong> Diffuse only, relatively constant
+              </li>
+              <li>
+                <strong>Horizontal:</strong> Maximum in summer at noon
+              </li>
+            </ul>
+            <p>
+              <strong>Air mass effect:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>AM 1.0: Sun directly overhead (0° zenith)</li>
+              <li>AM 1.5: Standard test condition (48° altitude)</li>
+              <li>AM 2.0: 30° altitude (UK winter noon)</li>
+              <li>Higher AM = more atmospheric absorption</li>
+            </ul>
+            <p>
               <strong>Shading design:</strong> External shading is highly effective against direct
               radiation but has limited impact on diffuse gains. For overheating control, consider
               glazing g-values alongside shading.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Solar Gains Through Glazing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Solar Gains Through Glazing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Solar Gains Through Glazing"
+            plainEnglish="Solar gain through windows usually drives summer cooling loads. Multiply irradiance × area × g-value × frame × shading and you've got the watts heading inside."
+          >
             <p>
               Solar gains through windows often dominate summer cooling loads in commercial
               buildings. Understanding the factors affecting solar heat gain is essential for HVAC
               sizing and overheating prevention.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Solar Heat Gain Calculation
-              </p>
-              <p className="font-mono text-center text-sm mb-2">
-                Q<sub>solar</sub> = I × A × SHGC × F<sub>frame</sub> × F<sub>shading</sub>
-              </p>
-              <p className="text-xs text-white text-center">
-                Where I = irradiance, A = glass area, SHGC = solar heat gain coefficient
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key glazing properties:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>SHGC (g-value):</strong> Fraction of incident solar energy entering as
-                  heat (0 to 1)
-                </li>
-                <li className="pl-1">
-                  <strong>Light transmittance (τv):</strong> Visible light transmission through
-                  glass
-                </li>
-                <li className="pl-1">
-                  <strong>Selectivity:</strong> Ratio of light to solar transmittance (τv/g) -
-                  higher is better
-                </li>
-                <li className="pl-1">
-                  <strong>Shading coefficient (SC):</strong> Older term, SC = SHGC/0.87
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Glazing Performance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Glazing Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">g-value</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Light Trans.</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">U-value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single clear</td>
-                      <td className="border border-white/10 px-3 py-2">0.85</td>
-                      <td className="border border-white/10 px-3 py-2">0.90</td>
-                      <td className="border border-white/10 px-3 py-2">5.7</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Double clear</td>
-                      <td className="border border-white/10 px-3 py-2">0.75</td>
-                      <td className="border border-white/10 px-3 py-2">0.81</td>
-                      <td className="border border-white/10 px-3 py-2">2.8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Double Low-E (argon)</td>
-                      <td className="border border-white/10 px-3 py-2">0.63</td>
-                      <td className="border border-white/10 px-3 py-2">0.76</td>
-                      <td className="border border-white/10 px-3 py-2">1.4</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Solar control double</td>
-                      <td className="border border-white/10 px-3 py-2">0.35-0.45</td>
-                      <td className="border border-white/10 px-3 py-2">0.50-0.70</td>
-                      <td className="border border-white/10 px-3 py-2">1.3-1.6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Triple glazed</td>
-                      <td className="border border-white/10 px-3 py-2">0.50</td>
-                      <td className="border border-white/10 px-3 py-2">0.70</td>
-                      <td className="border border-white/10 px-3 py-2">0.8</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Shading Factors</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">External louvres: 0.10-0.20</li>
-                  <li className="pl-1">External awning: 0.25-0.40</li>
-                  <li className="pl-1">Mid-pane blind: 0.40-0.60</li>
-                  <li className="pl-1">Internal blind (white): 0.45-0.65</li>
-                  <li className="pl-1">Internal blind (dark): 0.80-0.95</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Frame Factor Adjustment
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Aluminium frame: 0.75-0.80</li>
-                  <li className="pl-1">Timber frame: 0.70-0.75</li>
-                  <li className="pl-1">uPVC frame: 0.70-0.80</li>
-                  <li className="pl-1">Curtain walling: 0.60-0.85</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Solar heat gain calculation:</strong> Q_solar = I × A × SHGC × F_frame × F_shading.
+              Where I = irradiance, A = glass area, SHGC = solar heat gain coefficient.
+            </p>
+            <p>
+              <strong>Key glazing properties:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>SHGC (g-value):</strong> Fraction of incident solar energy entering as heat (0 to 1)
+              </li>
+              <li>
+                <strong>Light transmittance (τv):</strong> Visible light transmission through glass
+              </li>
+              <li>
+                <strong>Selectivity:</strong> Ratio of light to solar transmittance (τv/g) - higher is better
+              </li>
+              <li>
+                <strong>Shading coefficient (SC):</strong> Older term, SC = SHGC/0.87
+              </li>
+            </ul>
+            <p>
+              <strong>Typical glazing performance (g-value / light transmittance / U-value):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single clear: 0.85 / 0.90 / 5.7</li>
+              <li>Double clear: 0.75 / 0.81 / 2.8</li>
+              <li>Double Low-E (argon): 0.63 / 0.76 / 1.4</li>
+              <li>Solar control double: 0.35-0.45 / 0.50-0.70 / 1.3-1.6</li>
+              <li>Triple glazed: 0.50 / 0.70 / 0.8</li>
+            </ul>
+            <p>
+              <strong>Shading factors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>External louvres: 0.10-0.20</li>
+              <li>External awning: 0.25-0.40</li>
+              <li>Mid-pane blind: 0.40-0.60</li>
+              <li>Internal blind (white): 0.45-0.65</li>
+              <li>Internal blind (dark): 0.80-0.95</li>
+            </ul>
+            <p>
+              <strong>Frame factor adjustment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Aluminium frame: 0.75-0.80</li>
+              <li>Timber frame: 0.70-0.75</li>
+              <li>uPVC frame: 0.70-0.80</li>
+              <li>Curtain walling: 0.60-0.85</li>
+            </ul>
+            <p>
               <strong>Part O consideration:</strong> Building Regulations Part O limits solar gains
               to prevent overheating. Maximum g-value limits apply to residential glazing based on
               orientation and area.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Four numerical walk-throughs covering solar altitude, peak window gain, the impact of external shading, and PV sizing using annual irradiation."
+          >
+            <p>
+              <strong>Example 1 - Solar altitude calculation:</strong> Calculate the solar altitude
+              at solar noon on 21st June in Birmingham (latitude 52.5°N).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>At solar noon, altitude = 90° - latitude + declination</li>
+              <li>Declination on 21st June = +23.5°</li>
+              <li>α = 90° - 52.5° + 23.5° = <strong>61°</strong></li>
+              <li>The sun reaches maximum altitude of 61° above the southern horizon</li>
+            </ul>
+            <p>
+              <strong>Example 2 - Peak solar gain through window:</strong> A south-facing office has
+              20m² of solar control glazing (g-value 0.40, frame factor 0.75). Peak irradiance on
+              the facade is 450 W/m². Calculate the solar heat gain.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Solar gain = Irradiance × Area × g-value × Frame factor</li>
+              <li>Q = 450 W/m² × 20m² × 0.40 × 0.75</li>
+              <li>Q = <strong>2700W = 2.7kW</strong></li>
+              <li>This is the instantaneous peak solar gain requiring cooling</li>
+            </ul>
+            <p>
+              <strong>Example 3 - Effect of external shading:</strong> The same window (Example 2)
+              has external louvres installed with shading factor 0.15. What is the new solar gain?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Shaded solar gain = Unshaded gain × Shading factor</li>
+              <li>Q = 2700W × 0.15 = <strong>405W</strong></li>
+              <li>Reduction = 2700 - 405 = 2295W (85% reduction)</li>
+              <li>External shading is highly effective at blocking direct solar gains</li>
+            </ul>
+            <p>
+              <strong>Example 4 - Annual irradiation for PV sizing:</strong> A roof-mounted PV
+              array in London faces south at 35° tilt. Annual irradiation is 1050 kWh/m². What
+              energy yield can 20m² of panels (18% efficiency) produce?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Annual energy = Irradiation × Area × Efficiency × Performance ratio</li>
+              <li>Assume performance ratio = 0.80 (typical)</li>
+              <li>E = 1050 × 20 × 0.18 × 0.80</li>
+              <li>E = <strong>3024 kWh/year</strong></li>
+              <li>Equivalent to ~3600W peak system (20m² × 180W/m²)</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Solar Altitude Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the solar altitude at solar noon on 21st June
-                in Birmingham (latitude 52.5°N).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>At solar noon, altitude = 90° - latitude + declination</p>
-                <p>Declination on 21st June = +23.5°</p>
-                <p className="mt-2">
-                  α = 90° - 52.5° + 23.5° = <strong>61°</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  The sun reaches maximum altitude of 61° above the southern horizon
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Peak Solar Gain Through Window
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A south-facing office has 20m² of solar control glazing
-                (g-value 0.40, frame factor 0.75). Peak irradiance on the facade is 450 W/m².
-                Calculate the solar heat gain.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Solar gain = Irradiance × Area × g-value × Frame factor</p>
-                <p className="mt-2">Q = 450 W/m² × 20m² × 0.40 × 0.75</p>
-                <p>
-                  Q = <strong>2700W = 2.7kW</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This is the instantaneous peak solar gain requiring cooling
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The handful of formulas and standard values you'll actually pull off the page in design."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Solar altitude at noon:</strong> α = 90° - φ + δ
+              </li>
+              <li>
+                <strong>Air mass:</strong> AM = 1 / sin(α)
+              </li>
+              <li>
+                <strong>Solar gain:</strong> Q = I × A × SHGC × Fframe × Fshade
+              </li>
+              <li>
+                <strong>Direct on surface:</strong> Isurf = Ibn × cos(θ)
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Solar constant: <strong>1367 W/m²</strong> (outside atmosphere)
+              </li>
+              <li>
+                UK peak irradiance: <strong>800-900 W/m²</strong> (clear summer)
+              </li>
+              <li>
+                UK annual irradiation: <strong>900-1100 kWh/m²</strong> (tilted south)
+              </li>
+              <li>
+                Summer noon altitude (London): <strong>62°</strong>
+              </li>
+              <li>
+                Winter noon altitude (London): <strong>15°</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Effect of External Shading
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> The same window (Example 2) has external louvres
-                installed with shading factor 0.15. What is the new solar gain?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Shaded solar gain = Unshaded gain × Shading factor</p>
-                <p className="mt-2">
-                  Q = 2700W × 0.15 = <strong>405W</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  Reduction = 2700 - 405 = 2295W (85% reduction)
-                </p>
-                <p className="mt-2 text-white">
-                  External shading is highly effective at blocking direct solar gains
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Annual Irradiation for PV Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A roof-mounted PV array in London faces south at 35°
-                tilt. Annual irradiation is 1050 kWh/m². What energy yield can 20m² of panels (18%
-                efficiency) produce?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Annual energy = Irradiation × Area × Efficiency × Performance ratio</p>
-                <p className="mt-2">Assume performance ratio = 0.80 (typical)</p>
-                <p>E = 1050 × 20 × 0.18 × 0.80</p>
-                <p>
-                  E = <strong>3024 kWh/year</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Equivalent to ~3600W peak system (20m² × 180W/m²)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Solar altitude at noon:</strong> α = 90° - φ + δ
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Forgetting diffuse:</strong> Even shaded surfaces receive diffuse radiation
                 </li>
-                <li className="pl-1">
-                  <strong>Air mass:</strong> AM = 1 / sin(α)
+                <li>
+                  <strong>Wrong orientation:</strong> South-facing vertical gets more in winter than summer
                 </li>
-                <li className="pl-1">
-                  <strong>Solar gain:</strong> Q = I × A × SHGC × Fframe × Fshade
-                </li>
-                <li className="pl-1">
-                  <strong>Direct on surface:</strong> Isurf = Ibn × cos(θ)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Solar constant: <strong>1367 W/m²</strong> (outside atmosphere)
-                </li>
-                <li className="pl-1">
-                  UK peak irradiance: <strong>800-900 W/m²</strong> (clear summer)
-                </li>
-                <li className="pl-1">
-                  UK annual irradiation: <strong>900-1100 kWh/m²</strong> (tilted south)
-                </li>
-                <li className="pl-1">
-                  Summer noon altitude (London): <strong>62°</strong>
-                </li>
-                <li className="pl-1">
-                  Winter noon altitude (London): <strong>15°</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Forgetting diffuse:</strong> Even shaded surfaces receive diffuse
-                  radiation
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong orientation:</strong> South-facing vertical gets more in winter than
-                  summer
-                </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring frame:</strong> Frame factor reduces effective glass area 15-30%
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Clock vs solar time:</strong> BST means solar noon is ~13:00, not 12:00
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always include a diffuse component even on shaded surfaces, check seasonal behaviour for vertical glazing, apply a realistic frame factor (15-30% reduction), and convert clock time to solar time before plotting altitude/azimuth."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Solar gain study for a south-facing glazed atrium"
+            situation={
+              <>
+                A new mixed-use scheme has a 6-storey south-facing glass atrium (480 m²
+                glazing, double-glazed g = 0.65). Early-stage cooling load is provisional;
+                the architect is pushing back on external brise-soleil for aesthetic
+                reasons. You need to quantify the no-shading penalty.
+              </>
+            }
+            whatToDo={
+              <>
+                Pick July 21 12:00 noon as the design moment. Look up CIBSE Guide A direct
+                and diffuse irradiance for vertical south-facing glazing at the site
+                latitude (~51 °N). Compute solar gain Q = A × g × (Ib + Id). Repeat for
+                09:00 and 15:00 to capture the daily peak. Compare against the with-shading
+                case (brise-soleil reducing direct beam by ~70%). Quote the cooling-coil
+                upsize required to handle the no-shade case.
+              </>
+            }
+            whyItMatters={
+              <>
+                Solar gain on a south facade can easily exceed the entire occupant + IT
+                load. A no-shade decision driven by aesthetics costs the project a larger
+                chiller, fatter ductwork, more electrical infrastructure and a worse EPC.
+                CIBSE-grounded numbers turn the conversation from style preference into
+                cost trade-off.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Solar Geometry</p>
-                <ul className="space-y-0.5">
-                  <li>Altitude: 0° (horizon) to 90° (overhead)</li>
-                  <li>Azimuth: Clockwise from North</li>
-                  <li>Declination: ±23.5° annual variation</li>
-                  <li>Hour angle: 15° per hour from noon</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Glazing Performance</p>
-                <ul className="space-y-0.5">
-                  <li>g-value 0.75: Standard double</li>
-                  <li>g-value 0.35-0.45: Solar control</li>
-                  <li>External shading: 80-90% effective</li>
-                  <li>Internal blind: 35-55% effective</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Solar altitude β and azimuth γs fix the sun&rsquo;s position; both are functions of latitude, declination and hour angle.',
+              'Solar declination δ varies sinusoidally between +23.45° (summer solstice) and -23.45° (winter solstice).',
+              'Global irradiance G = Ib + Id (direct beam + diffuse).',
+              'Solar constant ≈ 1361 W/m² at top of atmosphere; surface peak ≈ 1000 W/m² on a clear day.',
+              'Surface irradiance Iθ = Ib × cos θ where θ = angle of incidence on the surface.',
+              'Vertical south-facing glazing receives most winter sun in the northern hemisphere.',
+              'Solar gain through glass Q = A × g-value × incident irradiance — driver of summer overheating.',
+              'CIBSE Guide A and TM52/TM59 are the UK reference standards for solar data and overheating assessment.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section5-2">
-              Next: Heat Gains and Losses
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Environmental physics in buildings
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Heat gains and losses
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

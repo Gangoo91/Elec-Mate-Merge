@@ -1,8 +1,28 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 1 · Subsection 6 — Network Theorems
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   Superposition, Thevenin and Norton — the analysis tools that let the HNC engineer
+ *   reduce a multi-source UPS / generator / mains system to a single equivalent for fault and
+ *   load-flow studies.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Network Theorems - HNC Module 3 Section 1.6';
@@ -213,750 +233,528 @@ const faqs = [
 ];
 
 const HNCModule3Section1_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.1.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Network Theorems
-          </h1>
-          <p className="text-white">
-            Powerful analysis techniques for multi-source circuits in building electrical systems
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 1 · Subsection 6"
+            title="Network Theorems"
+            description="Powerful analysis techniques for multi-source circuits in building electrical systems"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Superposition:</strong> Analyse each source separately, sum results
-              </li>
-              <li className="pl-1">
-                <strong>Thévenin:</strong> Simplify network to voltage source + series resistance
-              </li>
-              <li className="pl-1">
-                <strong>Norton:</strong> Simplify network to current source + parallel resistance
-              </li>
-              <li className="pl-1">
-                <strong>Conversion:</strong> VTh = IN × RTh, RTh = RN
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Applications
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Backup power:</strong> Generator paralleling analysis
-              </li>
-              <li className="pl-1">
-                <strong>Renewables:</strong> Solar PV + grid interaction
-              </li>
-              <li className="pl-1">
-                <strong>UPS systems:</strong> Load sharing and transfer analysis
-              </li>
-              <li className="pl-1">
-                <strong>Emergency systems:</strong> Dual-source supply design
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can apply superposition to any linear network with multiple sources \u2014 analyse one source at a time, sum the responses, get the answer.',
+              'You can reduce any complex linear network to a Thevenin equivalent (V_TH in series with R_TH) seen from any pair of terminals.',
+              'You can convert between Thevenin and Norton equivalents using I_N = V_TH / R_TH \u2014 useful when the rest of the system is naturally a current source (e.g. PV array, current-limited supply).',
+              'You can use Thevenin equivalents to estimate prospective fault current at any point in a multi-source distribution system (mains plus generator plus UPS).',
+              'You can apply maximum-power-transfer (R_load = R_TH) to PV / battery / signal-conditioning interface design.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="IEC 60909 — Short-circuit currents in three-phase a.c. systems"
+            clause="The initial symmetrical short-circuit current I''_k at a fault location is calculated using an equivalent voltage source at the fault location, in accordance with the Thevenin theorem applied to the positive-sequence network up to the fault point."
+            meaning={
+              <>
+                IEC 60909 is the international standard for fault-level studies. It is
+                Thevenin\u2019s theorem applied at scale \u2014 every transformer, cable and
+                source upstream of the fault point is collapsed into one equivalent voltage
+                and one equivalent impedance. The HNC engineer uses the same idea on a
+                building-services scale to size switchgear and protective devices.
+              </>
+            }
+            cite="Source: IEC 60909-0 (latest edition); BS 7671 Section 434 for I_cn / I_cu requirements."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Apply superposition to circuits with multiple independent sources',
               'Derive Thévenin equivalent circuits for complex networks',
               'Derive Norton equivalent circuits and convert between forms',
               'Analyse parallel generator systems using network theorems',
               'Calculate load behaviour in solar + grid installations',
               'Design and analyse UPS and emergency power systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 01: Superposition Theorem */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Superposition Theorem
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="Three tools for multi-source circuits: superposition (analyse one source at a time), Thévenin (one voltage source + series R), Norton (one current source + parallel R)."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Superposition:</strong> Analyse each source separately, sum results
+              </li>
+              <li>
+                <strong>Thévenin:</strong> Simplify network to voltage source + series resistance
+              </li>
+              <li>
+                <strong>Norton:</strong> Simplify network to current source + parallel resistance
+              </li>
+              <li>
+                <strong>Conversion:</strong> VTh = IN × RTh, RTh = RN
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Applications</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Backup power:</strong> Generator paralleling analysis
+              </li>
+              <li>
+                <strong>Renewables:</strong> Solar PV + grid interaction
+              </li>
+              <li>
+                <strong>UPS systems:</strong> Load sharing and transfer analysis
+              </li>
+              <li>
+                <strong>Emergency systems:</strong> Dual-source supply design
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Superposition Theorem">
             <p>
               The superposition theorem states that in a linear circuit with multiple independent
               sources, the total response (current or voltage) at any point equals the algebraic sum
               of the responses caused by each source acting alone.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Application Steps:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Select one source to remain active
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Deactivate all other independent sources:
-                  <ul className="mt-1 ml-4 list-disc list-outside">
-                    <li className="pl-1">Voltage sources → replace with short circuits (0Ω)</li>
-                    <li className="pl-1">Current sources → replace with open circuits (∞Ω)</li>
-                  </ul>
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Calculate the response (V or I) due to the active source
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Repeat for each source
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Sum all individual responses algebraically (consider
-                  directions)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Circuit must be <strong>linear</strong> (resistors, capacitors, inductors only)
-                </li>
-                <li className="pl-1">
-                  Does not apply to circuits with diodes, transistors, or other non-linear elements
-                </li>
-                <li className="pl-1">
-                  Power cannot be calculated by superposition (P is non-linear: P = I²R)
-                </li>
-                <li className="pl-1">Calculate power after finding total current/voltage</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Example: Solar PV + Mains
-              </p>
-              <p className="text-sm text-white mb-3">
-                A commercial building has mains supply (230V, 0.5Ω source impedance) and solar PV
-                inverter (230V, 2Ω output impedance) feeding a common busbar with 10Ω lighting load.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Analysis Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Calculation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Result</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mains only (PV shorted)</td>
-                      <td className="border border-white/10 px-3 py-2">I₁ = 230 / (0.5 + 2||10)</td>
-                      <td className="border border-white/10 px-3 py-2">I₁ = 92.9A total</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Load current from mains</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current divider: I = 92.9 × 2/12
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">I_load1 = 15.5A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PV only (mains shorted)</td>
-                      <td className="border border-white/10 px-3 py-2">I₂ = 230 / (2 + 0.5||10)</td>
-                      <td className="border border-white/10 px-3 py-2">I₂ = 86.8A total</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Load current from PV</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current divider: I = 86.8 × 0.5/10.5
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">I_load2 = 4.1A</td>
-                    </tr>
-                    <tr className="bg-elec-yellow/10">
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Total load current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15.5A + 4.1A</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">19.6A</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-white">Application Steps:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Select one source to remain active
+              </li>
+              <li>
+                <strong>Step 2:</strong> Deactivate all other independent sources — voltage sources
+                → replace with short circuits (0Ω); current sources → replace with open circuits (∞Ω)
+              </li>
+              <li>
+                <strong>Step 3:</strong> Calculate the response (V or I) due to the active source
+              </li>
+              <li>
+                <strong>Step 4:</strong> Repeat for each source
+              </li>
+              <li>
+                <strong>Step 5:</strong> Sum all individual responses algebraically (consider directions)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Requirements</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Circuit must be <strong>linear</strong> (resistors, capacitors, inductors only)</li>
+              <li>Does not apply to circuits with diodes, transistors, or other non-linear elements</li>
+              <li>Power cannot be calculated by superposition (P is non-linear: P = I²R)</li>
+              <li>Calculate power after finding total current/voltage</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Example: Solar PV + Mains</p>
+            <p>
+              A commercial building has mains supply (230V, 0.5Ω source impedance) and solar PV
+              inverter (230V, 2Ω output impedance) feeding a common busbar with 10Ω lighting load.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Mains only (PV shorted):</strong> I₁ = 230 / (0.5 + 2||10) → I₁ = 92.9A total
+              </li>
+              <li>
+                <strong>Load current from mains:</strong> Current divider I = 92.9 × 2/12 → I_load1 = 15.5A
+              </li>
+              <li>
+                <strong>PV only (mains shorted):</strong> I₂ = 230 / (2 + 0.5||10) → I₂ = 86.8A total
+              </li>
+              <li>
+                <strong>Load current from PV:</strong> Current divider I = 86.8 × 0.5/10.5 → I_load2 = 4.1A
+              </li>
+              <li>
+                <strong>Total load current:</strong> 15.5A + 4.1A = <strong>19.6A</strong>
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key insight:</strong> Superposition reveals how much current each source
               contributes. The mains (lower impedance) supplies more current to the load than the PV
               inverter.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Thévenin's Theorem */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Thévenin's Theorem
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Thévenin's Theorem">
             <p>
               Thévenin's theorem states that any linear network can be replaced by an equivalent
               circuit consisting of a voltage source (VTh) in series with a resistance (RTh). This
               dramatically simplifies load analysis.
             </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Finding Thévenin Equivalent</p>
+            <p className="text-sm font-medium text-white">VTh (Thévenin Voltage)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Open-circuit the terminals (remove load)</li>
+              <li>Calculate voltage across open terminals</li>
+              <li>This is the open-circuit voltage Voc = VTh</li>
+            </ul>
+            <p className="text-sm font-medium text-white">RTh (Thévenin Resistance)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Deactivate all independent sources</li>
+              <li>Voltage sources → short circuit</li>
+              <li>Current sources → open circuit</li>
+              <li>Calculate resistance seen from terminals</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Once you have VTh and RTh:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Load current: <strong>IL = VTh / (RTh + RL)</strong>
+              </li>
+              <li>
+                Load voltage: <strong>VL = IL × RL = VTh × RL / (RTh + RL)</strong>
+              </li>
+              <li>Easy to analyse different loads without recalculating entire network</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Alternative Method for RTh</p>
+            <p>If the network contains dependent sources, use the test source method:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Deactivate independent sources only</li>
+              <li>Apply test voltage VTest across terminals</li>
+              <li>Calculate resulting current ITest</li>
+              <li>RTh = VTest / ITest</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Practical Application: Distribution Board Analysis</p>
+            <p>
+              A distribution board is fed by a 230V supply through 50m of 10mm² cable (R =
+              1.83mΩ/m). Find the Thévenin equivalent at the DB terminals.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cable resistance = 50m × 2 × 1.83mΩ/m = 0.183Ω</li>
+              <li>VTh = 230V (supply voltage, assuming ideal source)</li>
+              <li>RTh = 0.183Ω (cable resistance + source impedance)</li>
+              <li>For a 46Ω load (5kW heater): IL = 230 / (0.183 + 46) = <strong>4.98A</strong></li>
+              <li>VL = 4.98 × 46 = <strong>229.1V</strong> (0.4% voltage drop)</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Finding Thévenin Equivalent
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">VTh (Thévenin Voltage)</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Open-circuit the terminals (remove load)</li>
-                    <li className="pl-1">Calculate voltage across open terminals</li>
-                    <li className="pl-1">This is the open-circuit voltage Voc = VTh</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">RTh (Thévenin Resistance)</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Deactivate all independent sources</li>
-                    <li className="pl-1">Voltage sources → short circuit</li>
-                    <li className="pl-1">Current sources → open circuit</li>
-                    <li className="pl-1">Calculate resistance seen from terminals</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Once you have VTh and RTh:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Load current: <strong>IL = VTh / (RTh + RL)</strong>
-                </li>
-                <li className="pl-1">
-                  Load voltage: <strong>VL = IL × RL = VTh × RL / (RTh + RL)</strong>
-                </li>
-                <li className="pl-1">
-                  Easy to analyse different loads without recalculating entire network
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Alternative Method for RTh
-              </p>
-              <p className="text-sm text-white mb-2">
-                If the network contains dependent sources, use the test source method:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Deactivate independent sources only</li>
-                <li className="pl-1">Apply test voltage VTest across terminals</li>
-                <li className="pl-1">Calculate resulting current ITest</li>
-                <li className="pl-1">RTh = VTest / ITest</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Application: Distribution Board Analysis
-              </p>
-              <p className="text-sm text-white mb-3">
-                A distribution board is fed by a 230V supply through 50m of 10mm² cable (R =
-                1.83mΩ/m). Find the Thévenin equivalent at the DB terminals.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Cable resistance = 50m × 2 × 1.83mΩ/m = 0.183Ω</p>
-                <p className="mt-2">VTh = 230V (supply voltage, assuming ideal source)</p>
-                <p>RTh = 0.183Ω (cable resistance + source impedance)</p>
-                <p className="mt-2 text-white">For a 46Ω load (5kW heater):</p>
-                <p>
-                  IL = 230 / (0.183 + 46) = 230 / 46.183 = <strong>4.98A</strong>
-                </p>
-                <p>
-                  VL = 4.98 × 46 = <strong>229.1V</strong> (0.4% voltage drop)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 03: Norton's Theorem */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Norton's Theorem
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Norton's Theorem">
             <p>
               Norton's theorem provides an alternative equivalent circuit: a current source (IN) in
               parallel with a resistance (RN). This is often more convenient for parallel circuit
               analysis and current source networks.
             </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Finding Norton Equivalent</p>
+            <p className="text-sm font-medium text-white">IN (Norton Current)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Short-circuit the terminals</li>
+              <li>Calculate current through short circuit</li>
+              <li>This is the short-circuit current Isc = IN</li>
+            </ul>
+            <p className="text-sm font-medium text-white">RN (Norton Resistance)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Same process as Thévenin resistance</li>
+              <li>RN = RTh (they are identical)</li>
+              <li>Deactivate sources, find equivalent R</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Thévenin ↔ Norton Conversion</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>VTh = IN × RN</strong> — Norton to Thévenin
+              </li>
+              <li>
+                <strong>IN = VTh / RTh</strong> — Thévenin to Norton
+              </li>
+              <li>Note: RTh = RN (resistance is always the same value)</li>
+            </ul>
+            <p className="text-sm font-medium text-white">When to Use Norton vs Thévenin:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Thévenin:</strong> Better for series circuits and voltage analysis
+              </li>
+              <li>
+                <strong>Norton:</strong> Better for parallel circuits and current analysis
+              </li>
+              <li>
+                <strong>Norton:</strong> Parallel current sources simply add
+              </li>
+              <li>
+                <strong>Thévenin:</strong> Series voltage sources simply add
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Conversion Example</p>
+            <p>A network has Thévenin equivalent: VTh = 120V, RTh = 8Ω. Find the Norton equivalent.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>IN = VTh / RTh = 120V / 8Ω = <strong>15A</strong></li>
+              <li>RN = RTh = <strong>8Ω</strong></li>
+              <li>Norton equivalent: 15A current source in parallel with 8Ω</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Finding Norton Equivalent
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">IN (Norton Current)</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Short-circuit the terminals</li>
-                    <li className="pl-1">Calculate current through short circuit</li>
-                    <li className="pl-1">This is the short-circuit current Isc = IN</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">RN (Norton Resistance)</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Same process as Thévenin resistance</li>
-                    <li className="pl-1">RN = RTh (they are identical)</li>
-                    <li className="pl-1">Deactivate sources, find equivalent R</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Thévenin ↔ Norton Conversion
-              </p>
-              <div className="grid grid-cols-2 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">VTh = IN × RN</p>
-                  <p className="text-white text-xs">Norton to Thévenin</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">IN = VTh / RTh</p>
-                  <p className="text-white text-xs">Thévenin to Norton</p>
-                </div>
-              </div>
-              <p className="text-sm text-white mt-3 text-center">
-                Note: RTh = RN (resistance is always the same value)
-              </p>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">When to Use Norton vs Thévenin:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Thévenin:</strong> Better for series circuits and voltage analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Norton:</strong> Better for parallel circuits and current analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Norton:</strong> Parallel current sources simply add
-                </li>
-                <li className="pl-1">
-                  <strong>Thévenin:</strong> Series voltage sources simply add
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Conversion Example</p>
-              <p className="text-sm text-white mb-3">
-                A network has Thévenin equivalent: VTh = 120V, RTh = 8Ω. Find the Norton equivalent.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  IN = VTh / RTh = 120V / 8Ω = <strong>15A</strong>
-                </p>
-                <p>
-                  RN = RTh = <strong>8Ω</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Norton equivalent: 15A current source in parallel with 8Ω
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 04: Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Building Services Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Building Services Applications">
             <p>
               Network theorems are essential tools for analysing modern building electrical systems,
               particularly those with multiple power sources, backup systems, and renewable energy
               integration.
             </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Backup Power Systems</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Generator paralleling:</strong> Use Thévenin equivalents to analyse load
+                sharing between paralleled generators with slightly different voltages
+              </li>
+              <li>
+                <strong>Circulating current:</strong> Small voltage differences cause circulating
+                currents proportional to ΔV/Rtotal between generators
+              </li>
+              <li>
+                <strong>Load transfer:</strong> Superposition helps analyse transition currents
+                during load transfer between mains and generator
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Solar + Grid Analysis</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Export vs import:</strong> Superposition determines whether the building imports from or exports to the grid
+              </li>
+              <li>
+                <strong>Inverter interaction:</strong> Multiple PV inverters can be modelled as parallel Norton sources
+              </li>
+              <li>
+                <strong>Grid impedance effects:</strong> Thévenin equivalent of grid helps predict voltage rise during high export conditions
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">UPS Systems</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Double conversion:</strong> Model rectifier input and inverter output as separate Thévenin circuits
+              </li>
+              <li>
+                <strong>Parallel redundancy:</strong> Norton equivalents simplify analysis of N+1 parallel UPS modules
+              </li>
+              <li>
+                <strong>Transfer switching:</strong> Analyse voltage/current transients during static transfer switch operation
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Dual-Source Emergency System</p>
+            <p>
+              Hospital critical power: mains (230V, 0.3Ω impedance) and generator (232V, 0.8Ω
+              impedance) can be paralleled briefly during transfer. Analyse the circulating current.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Voltage difference creates circulating current: ΔV = 232V - 230V = 2V</li>
+              <li>Rtotal = 0.3Ω + 0.8Ω = 1.1Ω</li>
+              <li>Icirculating = ΔV / Rtotal = 2V / 1.1Ω = <strong>1.82A</strong></li>
+              <li>This current flows from generator to mains, not through the load — it's wasted power</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Backup Power Systems</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Generator paralleling:</strong> Use Thévenin equivalents to analyse load
-                  sharing between paralleled generators with slightly different voltages
-                </li>
-                <li className="pl-1">
-                  <strong>Circulating current:</strong> Small voltage differences cause circulating
-                  currents proportional to ΔV/Rtotal between generators
-                </li>
-                <li className="pl-1">
-                  <strong>Load transfer:</strong> Superposition helps analyse transition currents
-                  during load transfer between mains and generator
-                </li>
-              </ul>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Solar + Grid Analysis</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Export vs import:</strong> Superposition determines whether the building
-                  imports from or exports to the grid
-                </li>
-                <li className="pl-1">
-                  <strong>Inverter interaction:</strong> Multiple PV inverters can be modelled as
-                  parallel Norton sources
-                </li>
-                <li className="pl-1">
-                  <strong>Grid impedance effects:</strong> Thévenin equivalent of grid helps predict
-                  voltage rise during high export conditions
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">UPS Systems</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Double conversion:</strong> Model rectifier input and inverter output as
-                  separate Thévenin circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Parallel redundancy:</strong> Norton equivalents simplify analysis of N+1
-                  parallel UPS modules
-                </li>
-                <li className="pl-1">
-                  <strong>Transfer switching:</strong> Analyse voltage/current transients during
-                  static transfer switch operation
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">Example 1: Generator Paralleling</p>
+            <p>
+              <strong>Question:</strong> Two 400V generators are paralleled to supply a 50kW load.
+              Generator 1 has internal resistance 0.6Ω, Generator 2 has 0.9Ω. If Gen 1's voltage
+              rises to 402V, find the current from each generator.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Load resistance: RL = V²/P = 400²/50000 = 3.2Ω</li>
+              <li>Combine using Thévenin: VTh = (402/0.6 + 400/0.9) / (1/0.6 + 1/0.9)</li>
+              <li>VTh = (670 + 444.4) / (1.67 + 1.11) = 1114.4 / 2.78 = <strong>400.9V</strong></li>
+              <li>RTh = 1 / (1/0.6 + 1/0.9) = 0.36Ω</li>
+              <li>Load current: IL = 400.9 / (0.36 + 3.2) = <strong>112.6A</strong></li>
+              <li>Gen 1 current: I1 = (402 - 400.9) / 0.6 + (112.6 × 0.36/0.6) ≈ <strong>69A</strong></li>
+              <li>Gen 2 current: I2 = 112.6 - 69 = <strong>43.6A</strong> (plus some circulating)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 2: UPS Load Analysis</p>
+            <p>
+              <strong>Question:</strong> A 10kVA UPS has inverter output impedance of 0.5Ω. Find
+              the Thévenin equivalent and calculate voltage regulation when loaded to 80%.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>UPS Thévenin equivalent: VTh = 230V (nominal output); RTh = 0.5Ω (output impedance)</li>
+              <li>At 80% load (8kVA, pf=0.8 → 6.4kW): IL = 6400 / 230 = 27.8A (assuming unity pf)</li>
+              <li>Voltage drop: Vdrop = IL × RTh = 27.8 × 0.5 = <strong>13.9V</strong></li>
+              <li>Output voltage: VL = 230 - 13.9 = <strong>216.1V</strong></li>
+              <li>Regulation = (230 - 216.1) / 230 × 100 = <strong>6.0%</strong></li>
+              <li>Exceeds typical 5% limit — UPS may need larger capacity</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 3: Dual-Source Emergency Lighting</p>
+            <p>
+              <strong>Question:</strong> Emergency lighting can be fed from mains (230V, 1Ω) or
+              battery inverter (228V, 3Ω). Using Norton equivalents, find total current to a 20Ω
+              load when both sources are active.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mains: IN1 = 230/1 = 230A, RN1 = 1Ω</li>
+              <li>Battery: IN2 = 228/3 = 76A, RN2 = 3Ω</li>
+              <li>Combine Norton sources (parallel): IN_total = 230 + 76 = 306A; RN_total = 1 || 3 = 0.75Ω</li>
+              <li>Convert back to Thévenin: VTh = 306 × 0.75 = 229.5V</li>
+              <li>Load current: IL = 229.5 / (0.75 + 20) = <strong>11.06A</strong></li>
+              <li>Load power: P = 11.06² × 20 = <strong>2.45kW</strong></li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Dual-Source Emergency System
-              </p>
-              <p className="text-sm text-white mb-3">
-                Hospital critical power: mains (230V, 0.3Ω impedance) and generator (232V, 0.8Ω
-                impedance) can be paralleled briefly during transfer. Analyse the circulating
-                current.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Voltage difference creates circulating current:</p>
-                <p className="mt-2">ΔV = 232V - 230V = 2V</p>
-                <p>Rtotal = 0.3Ω + 0.8Ω = 1.1Ω</p>
-                <p className="mt-2">
-                  Icirculating = ΔV / Rtotal = 2V / 1.1Ω = <strong>1.82A</strong>
-                </p>
-                <p className="mt-2 text-white">This current flows from generator to mains,</p>
-                <p className="text-white">not through the load - it's wasted power.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>VTh = Voc</strong> — Open-circuit voltage across terminals
+              </li>
+              <li>
+                <strong>IN = Isc</strong> — Short-circuit current through terminals
+              </li>
+              <li>
+                <strong>RTh = RN = Voc / Isc</strong> — Equivalent resistance
+              </li>
+              <li>
+                <strong>VTh = IN × RN</strong> — Conversion formula
+              </li>
+              <li>
+                <strong>IL = VTh / (RTh + RL)</strong> — Load current calculation
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Deactivating Sources</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Voltage source → Short circuit</strong> (replace with wire)
+              </li>
+              <li>
+                <strong>Current source → Open circuit</strong> (remove from circuit)
+              </li>
+              <li>
+                <strong>Dependent sources</strong> — Keep active (they depend on circuit values)
+              </li>
+              <li>
+                <strong>Internal resistance</strong> — Remains in circuit when source is deactivated
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <CommonMistake
+            title="Common network theorem mistakes"
+            whatHappens={
+              <>
+                Applying these to non-linear circuits (diodes/transistors invalidate them).
+                Superposing power (it's V×I — non-linear, so you can't). Forgetting internal source
+                impedance. Replacing voltage sources with open circuits instead of shorts. Sign
+                errors when summing.
+              </>
+            }
+            doInstead={
+              <>
+                Confirm linearity first. Calculate total V or I, then compute power. Always include
+                source impedance. Voltage source → short, current source → open. Pick a current
+                direction convention and stick to it across all sub-circuits.
+              </>
+            }
+          />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <SectionRule />
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Generator Paralleling
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Two 400V generators are paralleled to supply a 50kW load.
-                Generator 1 has internal resistance 0.6Ω, Generator 2 has 0.9Ω. If Gen 1's voltage
-                rises to 402V, find the current from each generator.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using superposition on the parallel system:</p>
-                <p className="mt-2">Load resistance: RL = V²/P = 400²/50000 = 3.2Ω</p>
-                <p className="mt-2 text-white">With both sources active:</p>
-                <p>Combine using Thévenin: VTh = (402/0.6 + 400/0.9) / (1/0.6 + 1/0.9)</p>
-                <p>
-                  VTh = (670 + 444.4) / (1.67 + 1.11) = 1114.4 / 2.78 = <strong>400.9V</strong>
-                </p>
-                <p>RTh = 1 / (1/0.6 + 1/0.9) = 0.36Ω</p>
-                <p className="mt-2">
-                  Load current: IL = 400.9 / (0.36 + 3.2) = <strong>112.6A</strong>
-                </p>
-                <p className="mt-2">Gen 1 current: I1 = (402 - 400.9) / 0.6 + (112.6 × 0.36/0.6)</p>
-                <p>
-                  I1 ≈ <strong>69A</strong>
-                </p>
-                <p>
-                  Gen 2 current: I2 = 112.6 - 69 = <strong>43.6A</strong> (plus some circulating)
-                </p>
-              </div>
-            </div>
+          <Scenario
+            title="Picking switchgear breaking capacity for a UPS-and-mains parallel transfer"
+            situation={
+              <>
+                A data-hall switchboard is fed from the building mains via a 1000 kVA
+                transformer (impedance 5 %) and from a 200 kVA static UPS in static-bypass
+                mode. During the millisecond they overlap on transfer, both sources can
+                contribute to a downstream fault. You are picking the I_cu rating of the
+                outgoing MCCBs.
+              </>
+            }
+            whatToDo={
+              <>
+                Use Thevenin to collapse each source down to its equivalent: mains
+                contribution from R_TH(mains) and UPS contribution from R_TH(UPS), referred
+                to the switchboard busbar. Add the two prospective fault currents (or treat
+                them as parallel sources by superposition) to get worst-case I''_k at the
+                busbar. Pick MCCBs with I_cu greater than that combined PSCC, applying any
+                cascading or coordination rules per BS 7671 Section 434 / IEC 60947-2.
+                Document the calculation in the short-circuit study.
+              </>
+            }
+            whyItMatters={
+              <>
+                Switchgear under-rated for the actual prospective short-circuit current is
+                lethal \u2014 it can rupture, arc-flash and fail to interrupt the fault.
+                Thevenin and superposition are the working tools that let you defend the
+                I_cu choice in the design report.
+              </>
+            }
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: UPS Load Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 10kVA UPS has inverter output impedance of 0.5Ω. Find
-                the Thévenin equivalent and calculate voltage regulation when loaded to 80%.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>UPS Thévenin equivalent:</p>
-                <p>VTh = 230V (nominal output)</p>
-                <p>RTh = 0.5Ω (output impedance)</p>
-                <p className="mt-2">At 80% load (8kVA, pf=0.8 → 6.4kW):</p>
-                <p>IL = 6400 / 230 = 27.8A (assuming unity pf for simplicity)</p>
-                <p className="mt-2">
-                  Voltage drop: Vdrop = IL × RTh = 27.8 × 0.5 = <strong>13.9V</strong>
-                </p>
-                <p>
-                  Output voltage: VL = 230 - 13.9 = <strong>216.1V</strong>
-                </p>
-                <p className="mt-2">
-                  Regulation = (230 - 216.1) / 230 × 100 = <strong>6.0%</strong>
-                </p>
-                <p className="text-amber-400 mt-2">
-                  ⚠ Exceeds typical 5% limit - UPS may need larger capacity
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Dual-Source Emergency Lighting
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Emergency lighting can be fed from mains (230V, 1Ω) or
-                battery inverter (228V, 3Ω). Using Norton equivalents, find total current to a 20Ω
-                load when both sources are active.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Convert each source to Norton equivalent:</p>
-                <p className="mt-2">Mains: IN1 = 230/1 = 230A, RN1 = 1Ω</p>
-                <p>Battery: IN2 = 228/3 = 76A, RN2 = 3Ω</p>
-                <p className="mt-2">Combine Norton sources (parallel):</p>
-                <p>IN_total = 230 + 76 = 306A (currents add)</p>
-                <p>RN_total = 1 || 3 = 0.75Ω</p>
-                <p className="mt-2">Convert back to Thévenin for load calc:</p>
-                <p>VTh = 306 × 0.75 = 229.5V</p>
-                <p className="mt-2">
-                  Load current: IL = 229.5 / (0.75 + 20) = <strong>11.06A</strong>
-                </p>
-                <p>
-                  Load power: P = 11.06² × 20 = <strong>2.45kW</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <KeyTakeaways
+            points={[
+              'Superposition: in any linear network with multiple sources, analyse one source at a time (others replaced by their internal impedance) and sum the responses.',
+              'Thevenin: any linear two-terminal network reduces to one voltage source V_TH in series with one resistance R_TH \u2014 the working model behind every fault-level study.',
+              'Norton: dual of Thevenin \u2014 one current source I_N in parallel with R_N. Convert with I_N = V_TH / R_TH.',
+              'V_TH = open-circuit voltage at the terminals. R_TH = resistance seen from the terminals with all sources de-energised (voltage sources shorted, current sources opened).',
+              'Maximum power transfer: load receives most power when R_load = R_TH \u2014 used in PV, battery and signal-interface design (less common in mains distribution where efficiency matters more).',
+              'Network theorems only apply to linear networks \u2014 do not use them on circuits dominated by diodes, switching power supplies or saturated transformers without piecewise analysis.',
+              'IEC 60909 short-circuit calculation is Thevenin applied at scale \u2014 the standard reference for fault-level studies on three-phase systems.',
+              'Network theorems compress complex multi-source systems (mains + UPS + generator) into a single equivalent for protective device coordination and switchgear selection.',
+            ]}
+          />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>VTh = Voc</strong> — Open-circuit voltage across terminals
-                </li>
-                <li className="pl-1">
-                  <strong>IN = Isc</strong> — Short-circuit current through terminals
-                </li>
-                <li className="pl-1">
-                  <strong>RTh = RN = Voc / Isc</strong> — Equivalent resistance
-                </li>
-                <li className="pl-1">
-                  <strong>VTh = IN × RN</strong> — Conversion formula
-                </li>
-                <li className="pl-1">
-                  <strong>IL = VTh / (RTh + RL)</strong> — Load current calculation
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Deactivating Sources</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Voltage source → Short circuit</strong> (replace with wire)
-                </li>
-                <li className="pl-1">
-                  <strong>Current source → Open circuit</strong> (remove from circuit)
-                </li>
-                <li className="pl-1">
-                  <strong>Dependent sources</strong> — Keep active (they depend on circuit values)
-                </li>
-                <li className="pl-1">
-                  <strong>Internal resistance</strong> — Remains in circuit when source is
-                  deactivated
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Applying to non-linear circuits</strong> — Diodes, transistors invalidate
-                  these theorems
-                </li>
-                <li className="pl-1">
-                  <strong>Superposition with power</strong> — Cannot superpose power (it's V×I,
-                  non-linear)
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting internal resistance</strong> — Must include source impedance
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong source replacement</strong> — Voltage→short, NOT open
-                </li>
-                <li className="pl-1">
-                  <strong>Sign errors</strong> — Watch current directions when summing
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Superposition</p>
-                <ul className="space-y-0.5">
-                  <li>One source active at a time</li>
-                  <li>Voltage sources → short circuit</li>
-                  <li>Current sources → open circuit</li>
-                  <li>Sum all responses algebraically</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Thévenin / Norton</p>
-                <ul className="space-y-0.5">
-                  <li>VTh = open-circuit voltage</li>
-                  <li>IN = short-circuit current</li>
-                  <li>RTh = RN = VTh / IN</li>
-                  <li>IL = VTh / (RTh + RL)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-7">
-              Next: Section 1.7
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Kirchhoff's Laws
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-7')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Building services applications
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

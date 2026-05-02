@@ -63,7 +63,7 @@ const checks = [
     options: [
       '1.37 Ω — the same as the table maximum.',
       '0.8 × 1.37 = 1.096 Ω, often rounded to ~1.10 Ω. The acceptance criterion is "measured Zs ≤ 0.8 × Table 41.3 max" because the measurement is at ambient temperature (cable cold) but the table value was calculated at conductor operating temperature (cable hot at ~70 °C).',
-      '1.37 / 0.95 = 1.37 Ω — the pre-A4 figure.',
+      '1.37 / 0.95 ≈ 1.44 Ω — the pre-A4 figure.',
       '1.0 Ω — the rounded design target.',
     ],
     correctIndex: 1,
@@ -135,13 +135,13 @@ const quizQuestions = [
       'BS 7671 A4:2026 made what specific numerical change to the Table 41.3 figures compared to pre-A4 editions?',
     options: [
       'No change.',
-      'A4:2026 formally applied the Cmin = 0.95 voltage factor to the calculation of maximum Zs, tightening the published figures by ~5 percent. So B32 went from 1.37 Ω (pre-A4) to 1.37 Ω (A4:2026).',
+      'A4:2026 formally applied the Cmin = 0.95 voltage factor to the calculation of maximum Zs, tightening the published figures by ~5 percent. So B32 went from 1.44 Ω (pre-A4) to 1.37 Ω (A4:2026).',
       'A4:2026 doubled all the figures.',
       'A4:2026 removed Table 41.3 entirely.',
     ],
     correctAnswer: 1,
     explanation:
-      'A4:2026 formalised the Cmin treatment that had been informal in earlier editions. The voltage factor Cmin = 0.95 is now formally applied to U0 in the calculation that produces Table 41.3, which tightens every figure by ~5 percent. B32 dropped from 1.37 Ω to 1.37 Ω. B16 dropped from 2.87 Ω to roughly 2.73 Ω. C-curve and D-curve figures shifted similarly. Always work from the current Table 41.3 — older study material with the pre-A4 figures is unsafe.',
+      'A4:2026 formalised the Cmin treatment that had been informal in earlier editions. The voltage factor Cmin = 0.95 is now formally applied to U0 in the calculation that produces Table 41.3, which tightens every figure by ~5 percent. B32 dropped from 1.44 Ω to 1.37 Ω. B16 dropped from 2.87 Ω to roughly 2.73 Ω. C-curve and D-curve figures shifted similarly. Always work from the current Table 41.3 — older study material with the pre-A4 figures is unsafe.',
   },
   {
     id: 5,
@@ -258,7 +258,7 @@ export default function Sub3() {
 
           <TLDR
             points={[
-              'BS 7671 Table 41.3 publishes the maximum permitted Zs for each protective device type and rating. A4:2026 tightened these figures by formally applying Cmin = 0.95 to U0 in the underlying calculation — so B32 = 1.37 Ω now (it was 1.37 Ω pre-A4). The pre-A4 figure is obsolete for design and verification under the current standard.',
+              'BS 7671 Table 41.3 publishes the maximum permitted Zs for each protective device type and rating. A4:2026 tightened these figures by formally applying Cmin = 0.95 to U0 in the underlying calculation — so B32 = 1.37 Ω now (it was 1.44 Ω pre-A4). The pre-A4 figure is obsolete for design and verification under the current standard.',
               'Design-stage Zs is calculated at the conductor operating temperature (R1 + R2 cold × ~1.20 for 70 °C thermoplastic) and compared directly to Table 41.3. Verification-stage Zs is measured at ambient with the cable cold, and compared to 0.8 × Table 41.3 to allow for the temperature difference plus measurement uncertainty.',
               'Reg 411.4.5 in BS 7671 A4:2026 (redrafted in this amendment) carries the acceptance criterion for ADS in TN systems. The 0.8 rule is the practical implementation: measured Zs ≤ 0.8 × Table 41.3 max means the hot Zs in service will still be inside the table figure and ADS will work at worst case.',
             ]}
@@ -354,7 +354,7 @@ export default function Sub3() {
 
           <ConceptBlock
             title="Table 41.3 maxima — A4:2026 tightening due to Cmin = 0.95"
-            plainEnglish="A4:2026 formally applied the Cmin voltage factor of 0.95 to the calculation that produces Table 41.3. This tightened every figure by ~5 percent. The pre-A4 numbers (1.37 Ω for B32 etc) are now obsolete. Always work from the live A4:2026 Table 41.3."
+            plainEnglish="A4:2026 formally applied the Cmin voltage factor of 0.95 to the calculation that produces Table 41.3. This tightened every figure by ~5 percent. The pre-A4 numbers (1.44 Ω for B32 etc) are now obsolete. Always work from the live A4:2026 Table 41.3."
             onSite="Many older textbooks, OSG editions and apprentice memory still carry the pre-A4 figures. They are wrong for design and verification under the current standard. Print the A4:2026 Table 41.3 and stick it inside the front cover of your van clipboard."
           >
             <p>
@@ -368,7 +368,7 @@ export default function Sub3() {
               <li><strong>B16:</strong> ≈ 2.73 Ω (was 2.87 pre-A4)</li>
               <li><strong>B20:</strong> ≈ 2.19 Ω (was 2.30 pre-A4)</li>
               <li><strong>B25:</strong> ≈ 1.75 Ω (was 1.84 pre-A4)</li>
-              <li><strong>B32:</strong> ≈ 1.37 Ω (was 1.44 pre-A4) — the most-quoted figure on a typical domestic radial.</li>
+              <li><strong>B32:</strong> = 1.37 Ω (was 1.44 pre-A4) — the most-quoted figure on a typical domestic radial.</li>
               <li><strong>B40:</strong> ≈ 1.09 Ω (was 1.15 pre-A4)</li>
               <li><strong>B50:</strong> ≈ 0.87 Ω (was 0.92 pre-A4) — typical for shower circuits.</li>
               <li><strong>B63:</strong> ≈ 0.69 Ω (was 0.73 pre-A4)</li>
@@ -381,7 +381,7 @@ export default function Sub3() {
               curve at the required disconnection time.
             </p>
             <p>
-              The historical 1.37 Ω figure for B32 is what most apprentices remember from
+              The historical 1.44 Ω figure for B32 is what most apprentices remember from
               training material printed before A4:2026. It is wrong for current design and
               verification. The 1.37 Ω A4:2026 figure is what you must use.
             </p>
@@ -636,12 +636,12 @@ export default function Sub3() {
           <ContentEyebrow>Things that catch people out</ContentEyebrow>
 
           <CommonMistake
-            title="Quoting the pre-A4 1.37 Ω figure for B32 max Zs"
+            title="Quoting the pre-A4 1.44 Ω figure for B32 max Zs"
             whatHappens={
               <>
-                The apprentice memorised 1.37 Ω from older training material, OSG editions or
+                The apprentice memorised 1.44 Ω from older training material, OSG editions or
                 online "BS 7671 cheat sheets" that have not been updated for A4:2026. They use
-                1.37 Ω in design calculations and at verification. A circuit measuring 1.40 Ω
+                1.44 Ω in design calculations and at verification. A circuit measuring 1.40 Ω
                 gets accepted because "it’s under 1.44". The hot Zs in service will be
                 approximately 1.68 Ω, comfortably exceeding the actual A4:2026 max of 1.37 Ω.
                 ADS may not clear in time under fault conditions.
@@ -653,7 +653,7 @@ export default function Sub3() {
                 pre-A4 reference material. The A4:2026 figures are tighter by ~5 percent across
                 the board because the Cmin = 0.95 voltage factor is now formally applied to U0
                 in the underlying calculation. Print the current Table 41.3 and pin it to the
-                inside cover of your van clipboard. If you see 1.37 Ω quoted anywhere, that
+                inside cover of your van clipboard. If you see 1.44 Ω quoted anywhere, that
                 source is out of date.
               </>
             }
@@ -784,7 +784,7 @@ export default function Sub3() {
 
           <KeyTakeaways
             points={[
-              'BS 7671 A4:2026 Table 41.3 max Zs for B32 at 230 V = 1.37 Ω. The pre-A4 figure of 1.37 Ω is now obsolete. The change is due to the formal application of Cmin = 0.95 to U0 in the underlying calculation.',
+              'BS 7671 A4:2026 Table 41.3 max Zs for B32 at 230 V = 1.37 Ω. The pre-A4 figure of 1.44 Ω is now obsolete. The change is due to the formal application of Cmin = 0.95 to U0 in the underlying calculation.',
               'Design-stage Zs = Ze + (R1 + R2 cold × temperature multiplier). For 70 °C thermoplastic the multiplier is 1.20; for 90 °C thermosetting it is 1.28. Zs(design) ≤ Table 41.3 max means ADS will work at worst case.',
               'Verification-stage Zs is measured at ambient temperature with the cable cold. The cold measurement is roughly 0.83 of the equivalent hot value. Acceptance criterion: measured ≤ 0.8 × Table 41.3 max.',
               'The 0.8 figure rounds 0.833 down conservatively and adds margin for measurement uncertainty (~±10 percent), ambient variation, supply variation and future degradation.',

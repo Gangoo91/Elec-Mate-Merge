@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 6 · Subsection 5 — Smart Controls and Building Automation
+ * HNC Electrical Engineering for Building Services (Pearson U4019)
+ *   BMS / BAS architectures, PID control, BACnet / Modbus / KNX / DALI protocols,
+ *   integration of HVAC + lighting + security + metering. The control layer that
+ *   turns a high-spec BSE installation into a high-performance building.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Smart Controls and Building Automation - HNC Module 3 Section 6.5';
@@ -213,114 +232,73 @@ const faqs = [
 ];
 
 const HNCModule3Section6_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.6.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Smart Controls and Building Automation
-          </h1>
-          <p className="text-white">
-            Intelligent systems for optimising energy use, comfort, and operational efficiency in
-            modern buildings
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 6 · Subsection 5"
+            title="Smart controls and building automation"
+            description="Intelligent systems for optimising energy use, comfort, and operational efficiency in modern buildings"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BMS:</strong> Centralised monitoring and control of building services
-              </li>
-              <li className="pl-1">
-                <strong>Control strategies:</strong> PID control, optimum start/stop, scheduling
-              </li>
-              <li className="pl-1">
-                <strong>Protocols:</strong> BACnet, Modbus, KNX, DALI for interoperability
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> HVAC, lighting, security unified management
-              </li>
+          <TLDR
+            points={[
+              'You design the BMS / BAS architecture in three layers &mdash; field (sensors / actuators), automation (controllers + PID loops), management (head-end + analytics) &mdash; for any modern BSE project.',
+              'You specify open protocols (BACnet IP at management/automation, BACnet MS/TP or Modbus RTU at field, KNX or DALI for lighting) for vendor independence and lifecycle replaceability.',
+              'You evaluate ASHRAE Guideline 36 / BSRIA BG-29 sequence-of-operation libraries on every new HVAC plant &mdash; supersedes bespoke sequences, enables better commissioning.',
+              'You document the BMS controls strategy in CIBSE Commissioning Code C / TM39 framework so the building can be M&amp;V&rsquo;d, recommissioned and audited under ESOS.',
+            ]}
+          />
+
+          <RegsCallout
+            source="Building Regulations 2010 — Approved Document L Volume 2 (2021): Buildings other than dwellings — controls and commissioning"
+            clause="Fixed building services should have effective controls so as to enable the achievement of reasonable standards of energy efficiency. The building services should be commissioned by testing and adjustment as necessary to ensure they use no more fuel and power than is reasonable in the circumstances and a notice giving particulars of the commissioning should be given to the building control body."
+            meaning={
+              <>
+                Approved Document L 2021 makes BMS / BAS controls and commissioning
+                evidence a Building Control submission item. As BSE designer you specify
+                the controls and write the commissioning brief; the M&amp;V evidence
+                feeds into the Part L log book and any subsequent EPC / DEC. Wrong /
+                missing controls is one of the commonest reasons buildings underperform
+                their design SBEM model in operation.
+              </>
+            }
+            cite="Source: Building Regulations 2010 + Approved Document L Volume 2 (2021); CIBSE Commissioning Code C; CIBSE TM39 (energy metering); ASHRAE Guideline 36 (high-performance HVAC sequences); BSRIA BG-29 (commissioning); BS EN ISO 16484 (BACS)"
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="In 30 seconds">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BMS:</strong> Centralised monitoring and control of building services</li>
+              <li><strong>Control strategies:</strong> PID control, optimum start/stop, scheduling</li>
+              <li><strong>Protocols:</strong> BACnet, Modbus, KNX, DALI for interoperability</li>
+              <li><strong>Integration:</strong> HVAC, lighting, security unified management</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Energy savings:</strong> 15-30% reduction in operational costs
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> Part L, BREEAM, NABERS requirements
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Essential for achieving design performance
-              </li>
-              <li className="pl-1">
-                <strong>Maintenance:</strong> Fault detection and diagnostic capabilities
-              </li>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Energy savings:</strong> 15-30% reduction in operational costs</li>
+              <li><strong>Compliance:</strong> Part L, BREEAM, NABERS requirements</li>
+              <li><strong>Commissioning:</strong> Essential for achieving design performance</li>
+              <li><strong>Maintenance:</strong> Fault detection and diagnostic capabilities</li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Describe BMS architecture and component functions',
-              'Explain PID control theory and tuning principles',
-              'Compare BACnet, Modbus, KNX and DALI protocols',
-              'Design control strategies for HVAC and lighting systems',
-              'Specify sensors for temperature, occupancy and light level',
-              'Understand BMS commissioning and energy monitoring requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: BMS Overview */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Building Management Systems (BMS) Overview
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Building Management Systems (BMS) Overview">
             <p>
               A Building Management System (BMS) is a computer-based control system that monitors
               and manages a building's mechanical and electrical equipment. Modern BMS installations
@@ -328,1397 +306,869 @@ const HNCModule3Section6_5 = () => {
               management platform.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 BMS Architecture Levels
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Components</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Management</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Workstations, servers, web interface
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Operator interface, data storage, analytics, reporting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Automation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Controllers, outstations, DDC panels
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Execute control strategies, local processing, network communication
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Field</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sensors, actuators, valves, dampers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measure conditions, execute control actions on plant
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Management</strong> — Workstations, servers, web interface — Operator interface, data storage, analytics, reporting</li>
+              <li><strong>Automation</strong> — Controllers, outstations, DDC panels — Execute control strategies, local processing, network communication</li>
+              <li><strong>Field</strong> — Sensors, actuators, valves, dampers — Measure conditions, execute control actions on plant</li>
+            </ul>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-white mb-2">Key BMS Benefits</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Centralised monitoring and control</li>
-                  <li className="pl-1">Automatic fault detection and alarms</li>
-                  <li className="pl-1">Energy consumption tracking</li>
-                  <li className="pl-1">Scheduled operation and optimisation</li>
-                  <li className="pl-1">Historical trend logging and analysis</li>
-                  <li className="pl-1">Remote access and management</li>
+              
+                <p className="text-sm font-medium text-white">Key BMS Benefits</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Centralised monitoring and control</li>
+                  <li>Automatic fault detection and alarms</li>
+                  <li>Energy consumption tracking</li>
+                  <li>Scheduled operation and optimisation</li>
+                  <li>Historical trend logging and analysis</li>
+                  <li>Remote access and management</li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-white mb-2">Typical Systems Controlled</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">HVAC: AHUs, chillers, boilers, FCUs</li>
-                  <li className="pl-1">Lighting: general, emergency, external</li>
-                  <li className="pl-1">Metering: electricity, gas, water, heat</li>
-                  <li className="pl-1">Fire: interface and status monitoring</li>
-                  <li className="pl-1">Access control and security integration</li>
-                  <li className="pl-1">Lifts and vertical transportation</li>
-                </ul>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+              
+                <p className="text-sm font-medium text-white">Typical Systems Controlled</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>HVAC: AHUs, chillers, boilers, FCUs</li>
+                  <li>Lighting: general, emergency, external</li>
+                  <li>Metering: electricity, gas, water, heat</li>
+                  <li>Fire: interface and status monitoring</li>
+                  <li>Access control and security integration</li>
+                  <li>Lifts and vertical transportation</li>
+                </ul>
+
+            
+
+            <p>
               <strong>Industry standard:</strong> BSRIA Guide BG6 provides comprehensive guidance on
               BMS design, commissioning, and operation for UK building services.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Sensors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Sensors: Temperature, Occupancy, Light Level
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Sensors: Temperature, Occupancy, Light Level">
             <p>
               Sensors provide the input data that BMS controllers use to make control decisions.
               Selecting appropriate sensors with correct accuracy, range, and response time is
               critical for effective building automation.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Temperature Sensors</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Accuracy</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Room sensor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        NTC thermistor, Pt100/Pt1000
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Space temperature control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">±0.3°C to ±0.5°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Duct sensor</td>
-                      <td className="border border-white/10 px-3 py-2">Pt100 averaging element</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supply/return air temperature
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">±0.2°C to ±0.5°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pipe sensor</td>
-                      <td className="border border-white/10 px-3 py-2">Pt100 pocket or strap-on</td>
-                      <td className="border border-white/10 px-3 py-2">CHW/HHW flow temperature</td>
-                      <td className="border border-white/10 px-3 py-2">±0.2°C to ±0.5°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outside air</td>
-                      <td className="border border-white/10 px-3 py-2">Pt100/Pt1000 in housing</td>
-                      <td className="border border-white/10 px-3 py-2">Weather compensation</td>
-                      <td className="border border-white/10 px-3 py-2">±0.5°C</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <p className="text-sm font-medium text-elec-yellow/80">Temperature Sensors</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Room sensor</strong> — NTC thermistor, Pt100/Pt1000 — Space temperature control — ±0.3°C to ±0.5°C</li>
+              <li><strong>Duct sensor</strong> — Pt100 averaging element — Supply/return air temperature — ±0.2°C to ±0.5°C</li>
+              <li><strong>Pipe sensor</strong> — Pt100 pocket or strap-on — CHW/HHW flow temperature — ±0.2°C to ±0.5°C</li>
+              <li><strong>Outside air</strong> — Pt100/Pt1000 in housing — Weather compensation — ±0.5°C</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Occupancy Sensors</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Detection Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Best Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PIR (Passive Infrared)</td>
-                      <td className="border border-white/10 px-3 py-2">Body heat movement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Corridors, toilets, meeting rooms
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Microwave</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Doppler shift from movement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Areas requiring through-partition detection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dual-tech (PIR + MW)</td>
-                      <td className="border border-white/10 px-3 py-2">Both must trigger</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open-plan offices, reducing false triggers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ultrasonic</td>
-                      <td className="border border-white/10 px-3 py-2">Sound wave reflection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Partitioned spaces, cubicles
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CO2 sensor (proxy)</td>
-                      <td className="border border-white/10 px-3 py-2">Exhaled CO2 accumulation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Demand-controlled ventilation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <p className="text-sm font-medium text-elec-yellow/80">Occupancy Sensors</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>PIR (Passive Infrared)</strong> — Body heat movement — Corridors, toilets, meeting rooms</li>
+              <li><strong>Microwave</strong> — Doppler shift from movement — Areas requiring through-partition detection</li>
+              <li><strong>Dual-tech (PIR + MW)</strong> — Both must trigger — Open-plan offices, reducing false triggers</li>
+              <li><strong>Ultrasonic</strong> — Sound wave reflection — Partitioned spaces, cubicles</li>
+              <li><strong>CO2 sensor (proxy)</strong> — Exhaled CO2 accumulation — Demand-controlled ventilation</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Light Level Sensors (Photocells)
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Ceiling-mounted:</strong> Measure combined daylight and artificial light
                   on working plane (typical 300-500 lux target)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>External:</strong> Measure external daylight for facade or blind control
                   (0-100,000 lux range)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Spectral response:</strong> Should match human eye response (photopic) for
                   accurate lux measurement
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Calibration:</strong> Regular verification against calibrated lux meter
                   recommended
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Sensor placement:</strong> Position temperature sensors away from heat
               sources, draughts, and direct sunlight. Mount occupancy sensors to cover the required
               detection zone without obstructions.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Control Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Control Strategies: PID, Optimum Start/Stop
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Control Strategies: PID, Optimum Start/Stop">
             <p>
               Control strategies determine how the BMS responds to sensor inputs to maintain desired
               conditions. Understanding these strategies is essential for specifying, commissioning,
               and optimising building automation systems.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">PID Control</p>
-              <p className="text-sm text-white mb-3">
+              <p className="text-sm font-medium text-elec-yellow/80">PID Control</p>
+              <p>
                 PID (Proportional-Integral-Derivative) control is the most widely used feedback
                 control algorithm. It calculates an error value as the difference between measured
                 value and setpoint, then applies correction based on three terms:
               </p>
-              <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
+
+                
                   <p className="font-bold text-elec-yellow mb-1">P - Proportional</p>
                   <p className="text-white text-xs">Output proportional to error</p>
                   <p className="text-white text-xs mt-1">
                     Responds immediately but leaves offset
                   </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
+
+                
                   <p className="font-bold text-elec-yellow mb-1">I - Integral</p>
                   <p className="text-white text-xs">Accumulates error over time</p>
                   <p className="text-white text-xs mt-1">Eliminates steady-state error</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
+
+                
                   <p className="font-bold text-elec-yellow mb-1">D - Derivative</p>
                   <p className="text-white text-xs">Rate of change of error</p>
                   <p className="text-white text-xs mt-1">Anticipates and dampens overshoot</p>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">PID Tuning Parameters</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              
+
+              <p className="text-sm font-medium text-elec-yellow/80">PID Tuning Parameters</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Proportional band (PB):</strong> Range over which output varies from
                   0-100%. Narrow PB = aggressive response
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Integral time (Ti):</strong> Time to repeat proportional action. Shorter
                   Ti = faster error elimination
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Derivative time (Td):</strong> Time to anticipate error change. Often set
                   to zero for HVAC (noise sensitivity)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Rule of thumb:</strong> Start with P-only, add I to eliminate offset, add
                   D only if oscillation persists
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Optimum Start/Stop Control
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Energy Benefit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Optimum Start
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Calculates latest start time to reach setpoint at occupancy
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Avoids over-early heating; adapts to thermal mass and weather
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Optimum Stop</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shuts down plant before end of occupancy using thermal storage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Utilises building thermal mass; reduces run hours
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Night Setback
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintains minimum temperature (e.g., 12°C) overnight
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevents frost damage; reduces morning preheat time
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Free Cooling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Uses outside air for cooling when conditions permit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduces chiller operation; significant energy savings
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Optimum Start</strong> — Calculates latest start time to reach setpoint at occupancy — Avoids over-early heating; adapts to thermal mass and weather</li>
+              <li><strong>Optimum Stop</strong> — Shuts down plant before end of occupancy using thermal storage — Utilises building thermal mass; reduces run hours</li>
+              <li><strong>Night Setback</strong> — Maintains minimum temperature (e.g., 12°C) overnight — Prevents frost damage; reduces morning preheat time</li>
+              <li><strong>Free Cooling</strong> — Uses outside air for cooling when conditions permit — Reduces chiller operation; significant energy savings</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Adaptive control:</strong> Modern optimum start algorithms learn building
               thermal characteristics over time, automatically adjusting preheat periods based on
               historical performance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Network Protocols */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Network Protocols: BACnet, Modbus, KNX
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Network Protocols: BACnet, Modbus, KNX">
             <p>
               Communication protocols enable devices from different manufacturers to exchange data
               and work together. Selecting appropriate protocols affects system flexibility, cost,
               and long-term maintainability.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Protocol Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Protocol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Physical Layer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">BACnet</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open standard (ASHRAE/ISO)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">HVAC, BMS integration</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ethernet (IP), RS-485 (MS/TP)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Modbus</td>
-                      <td className="border border-white/10 px-3 py-2">Open de facto standard</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Metering, industrial equipment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RS-485 (RTU), Ethernet (TCP)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">KNX</td>
-                      <td className="border border-white/10 px-3 py-2">Open standard (ISO/IEC)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighting, blinds, room control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Twisted pair, IP, RF, PLC
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">DALI</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open standard (IEC 62386)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lighting control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two-wire bus (max 64 devices)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">LonWorks</td>
-                      <td className="border border-white/10 px-3 py-2">Open standard (ISO/IEC)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General building automation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Twisted pair, IP, power line
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <p className="text-sm font-medium text-elec-yellow/80">Protocol Comparison</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BACnet</strong> — Open standard (ASHRAE/ISO) — HVAC, BMS integration — Ethernet (IP), RS-485 (MS/TP)</li>
+              <li><strong>Modbus</strong> — Open de facto standard — Metering, industrial equipment — RS-485 (RTU), Ethernet (TCP)</li>
+              <li><strong>KNX</strong> — Open standard (ISO/IEC) — Lighting, blinds, room control — Twisted pair, IP, RF, PLC</li>
+              <li><strong>DALI</strong> — Open standard (IEC 62386) — Lighting control — Two-wire bus (max 64 devices)</li>
+              <li><strong>LonWorks</strong> — Open standard (ISO/IEC) — General building automation — Twisted pair, IP, power line</li>
+            </ul>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">BACnet Features</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">BACnet Features</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     Object-oriented data model (analog input, binary output, schedule, etc.)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     Standard services: read/write property, COV, alarms, scheduling
                   </li>
-                  <li className="pl-1">Device interoperability profiles (BIBBs)</li>
-                  <li className="pl-1">BTL certification for tested compliance</li>
+                  <li>Device interoperability profiles (BIBBs)</li>
+                  <li>BTL certification for tested compliance</li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modbus Features</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Simple register-based data model</li>
-                  <li className="pl-1">Master-slave communication</li>
-                  <li className="pl-1">RTU: RS-485, up to 247 devices</li>
-                  <li className="pl-1">TCP: Ethernet, port 502</li>
-                </ul>
-              </div>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">KNX System Overview</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Modbus Features</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Simple register-based data model</li>
+                  <li>Master-slave communication</li>
+                  <li>RTU: RS-485, up to 247 devices</li>
+                  <li>TCP: Ethernet, port 502</li>
+                </ul>
+
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">KNX System Overview</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Bus voltage:</strong> 29V DC (21-30V tolerance) supplied by KNX power
                   supply
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Topology:</strong> Line, area, and backbone structure; 64 devices per
                   line, 15 lines per area
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Addressing:</strong> Individual address (1.2.3) and group addresses for
                   functions
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Programming:</strong> ETS (Engineering Tool Software) required for
                   configuration
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Cable:</strong> Twisted pair, typically green LSZH sheathed, max 1000m per
                   line
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Specification tip:</strong> Always specify open protocols (BACnet, KNX, DALI)
               to avoid vendor lock-in and ensure long-term system flexibility and maintainability.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 5: HVAC Control Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            HVAC Control Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="HVAC Control Strategies">
             <p>
               HVAC systems represent the largest energy consumer in most commercial buildings.
               Effective control strategies can reduce HVAC energy consumption by 20-40% while
               maintaining or improving occupant comfort.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Air Handling Unit (AHU) Control
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Control Loop</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Measured Variable
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Controlled Element
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Supply air temperature</td>
-                      <td className="border border-white/10 px-3 py-2">Duct temperature sensor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating/cooling valve, mixing dampers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Supply air pressure</td>
-                      <td className="border border-white/10 px-3 py-2">Duct pressure sensor</td>
-                      <td className="border border-white/10 px-3 py-2">Supply fan VSD</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fresh air quantity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CO2 sensor, air flow station
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Fresh air damper</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Room temperature</td>
-                      <td className="border border-white/10 px-3 py-2">Room sensor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        VAV box damper, reheat coil
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Humidity</td>
-                      <td className="border border-white/10 px-3 py-2">Humidity sensor</td>
-                      <td className="border border-white/10 px-3 py-2">Humidifier, cooling coil</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Supply air temperature</strong> — Duct temperature sensor — Heating/cooling valve, mixing dampers</li>
+              <li><strong>Supply air pressure</strong> — Duct pressure sensor — Supply fan VSD</li>
+              <li><strong>Fresh air quantity</strong> — CO2 sensor, air flow station — Fresh air damper</li>
+              <li><strong>Room temperature</strong> — Room sensor — VAV box damper, reheat coil</li>
+              <li><strong>Humidity</strong> — Humidity sensor — Humidifier, cooling coil</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heating System Control</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-elec-yellow/80">Heating System Control</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Weather compensation:</strong> Adjusts flow temperature based on external
                   conditions
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Sequencing:</strong> Stages multiple boilers to meet load efficiently
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Return temperature limiting:</strong> Ensures condensing boiler operation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Frost protection:</strong> Maintains minimum temperatures to prevent
                   damage
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>DHW priority:</strong> Prioritises domestic hot water heating when
                   required
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Chilled Water System Control
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Load-based sequencing:</strong> Stages chillers to match building cooling
                   load
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Supply temperature reset:</strong> Raises CHW temperature when full
                   cooling not needed
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Free cooling:</strong> Uses cooling towers when wet bulb permits
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Differential pressure control:</strong> Modulates pump speed to maintain
                   system delta-P
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Dead Band and Changeover
               </p>
-              <p className="text-sm text-white mb-2">
+              <p>
                 Dead band prevents simultaneous heating and cooling (fighting), which wastes energy.
                 Typical settings provide a 4°C neutral zone:
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Heating setpoint:</strong> 20°C - heating enabled below this
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Cooling setpoint:</strong> 24°C - cooling enabled above this
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Dead band:</strong> 20-24°C - neither heating nor cooling operates
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Energy consideration:</strong> Every 1°C reduction in heating setpoint or
               increase in cooling setpoint saves approximately 8-10% on HVAC energy consumption.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 6: Lighting Control Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Lighting Control Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Lighting Control Systems">
             <p>
               Lighting control can reduce lighting energy consumption by 30-60% through occupancy
               sensing, daylight harvesting, scheduling, and task tuning. Integration with the BMS
               enables coordinated control with HVAC and security systems.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 DALI (Digital Addressable Lighting Interface)
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Specification</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bus topology</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two-wire, polarity-independent, daisy-chain or star
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maximum devices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        64 addresses per DALI line (drivers, sensors, switches)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dimming range</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        0.1-100% with logarithmic curve (matches human perception)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Groups/scenes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        16 groups, 16 scenes per device
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI-2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enhanced standard with mandatory features, improved interoperability
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Bus topology</strong> — Two-wire, polarity-independent, daisy-chain or star</li>
+              <li><strong>Maximum devices</strong> — 64 addresses per DALI line (drivers, sensors, switches)</li>
+              <li><strong>Dimming range</strong> — 0.1-100% with logarithmic curve (matches human perception)</li>
+              <li><strong>Groups/scenes</strong> — 16 groups, 16 scenes per device</li>
+              <li><strong>DALI-2</strong> — Enhanced standard with mandatory features, improved interoperability</li>
+            </ul>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Lighting Control Strategies
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Occupancy control:</strong> PIR/microwave sensors switch or dim lighting
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Daylight harvesting:</strong> Photocells dim artificial lighting near
                     windows
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Time scheduling:</strong> Automated on/off based on building occupancy
                     patterns
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Task tuning:</strong> Set maximum output below 100% where full light not
                     needed
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Scene control:</strong> Pre-set combinations for different activities
                   </li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Typical Energy Savings
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Occupancy sensing:</strong> 20-30% (offices), 40-60% (corridors/toilets)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Daylight harvesting:</strong> 20-40% (perimeter zones)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Time scheduling:</strong> 10-20% (depends on baseline)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Task tuning:</strong> 10-20% (when over-lit areas identified)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Combined strategies:</strong> 40-60% total reduction
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Emergency Lighting Integration
               </p>
-              <p className="text-sm text-white mb-2">
+              <p>
                 DALI emergency luminaires (Type 1) provide addressable monitoring and testing:
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Automated function testing (monthly) and duration testing (annually)
                 </li>
-                <li className="pl-1">Battery and lamp status monitoring via DALI bus</li>
-                <li className="pl-1">Automatic test logging for compliance documentation</li>
-                <li className="pl-1">
+                <li>Battery and lamp status monitoring via DALI bus</li>
+                <li>Automatic test logging for compliance documentation</li>
+                <li>
                   Rest mode: extinguish in mains-healthy condition to extend battery life
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Compliance note:</strong> Part L requires lighting controls in new
               non-domestic buildings. BREEAM credits available for metering, zoning, and occupant
               controls.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 7: Integration and Interoperability */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
-            Integration and Interoperability
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Integration and Interoperability">
             <p>
               Modern buildings require integration between multiple systems - HVAC, lighting,
               security, fire, access control, and metering. Successful integration enables
               coordinated operation, unified monitoring, and enhanced energy management.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Integration Architecture
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Native protocol
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Direct communication on same protocol
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BACnet-to-BACnet device integration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Protocol gateway
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Translates between protocols
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modbus meter to BACnet BMS
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Hard-wired I/O
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Volt-free contacts, 0-10V, 4-20mA
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire alarm interface (status/trips)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        API/middleware
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Software integration layer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building analytics platforms, IoT
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Native protocol</strong> — Direct communication on same protocol — BACnet-to-BACnet device integration</li>
+              <li><strong>Protocol gateway</strong> — Translates between protocols — Modbus meter to BACnet BMS</li>
+              <li><strong>Hard-wired I/O</strong> — Volt-free contacts, 0-10V, 4-20mA — Fire alarm interface (status/trips)</li>
+              <li><strong>API/middleware</strong> — Software integration layer — Building analytics platforms, IoT</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Typical System Integrations
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Fire alarm interface:</strong> BMS receives fire status, initiates smoke
                   control, releases doors, activates smoke extract
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Security/access control:</strong> Occupancy data triggers HVAC and
                   lighting modes; after-hours access activates local services
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Lighting and HVAC:</strong> Shared occupancy sensors; coordinated
                   scheduling; lighting scenes trigger temperature setpoints
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Metering:</strong> Sub-metering data aggregated for tenant billing, energy
                   dashboards, and automated M&T reports
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Lifts:</strong> Status monitoring, fault alarms, energy consumption
                   tracking
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Interoperability Considerations
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Protocol standardisation:</strong> Specify open protocols to enable
                   multi-vendor integration
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Points list coordination:</strong> Define all integrated points,
                   addresses, and data formats in specification
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Cybersecurity:</strong> Segment BMS networks; implement access control,
                   encryption, and monitoring
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Testing:</strong> Factory acceptance testing (FAT) with simulated
                   integration; site witness testing
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Documentation:</strong> System architecture diagrams, integration
                   matrices, data flow documentation
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Specification requirement:</strong> Include a detailed integration matrix in
               contract documents showing all system interfaces, protocols, responsible parties, and
               testing requirements.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 8: Commissioning and Energy Monitoring */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
-            Building Services: Commissioning BMS, Energy Monitoring
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Building Services: Commissioning BMS, Energy Monitoring">
             <p>
               Effective BMS commissioning is essential to achieve design energy performance. Studies
               show that 15-30% of building energy is wasted due to poor commissioning and inadequate
               ongoing monitoring.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 BMS Commissioning Stages
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activities</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Documentation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Pre-commissioning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable testing, power-on checks, software upload
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Installation check sheets
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Point-to-point
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify each sensor/actuator displays/operates correctly
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Points commissioning sheets
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Loop testing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify control loops operate correctly (setpoint changes)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Control loop test records
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Functional testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Test sequences of operation, interlocks, alarms
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Functional test scripts and results
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Optimisation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tune PID loops, adjust schedules, optimum start parameters
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trend logs, tuning records
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Seasonal</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify heating and cooling modes over full year
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Seasonal commissioning reports
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pre-commissioning</strong> — Cable testing, power-on checks, software upload — Installation check sheets</li>
+              <li><strong>Point-to-point</strong> — Verify each sensor/actuator displays/operates correctly — Points commissioning sheets</li>
+              <li><strong>Loop testing</strong> — Verify control loops operate correctly (setpoint changes) — Control loop test records</li>
+              <li><strong>Functional testing</strong> — Test sequences of operation, interlocks, alarms — Functional test scripts and results</li>
+              <li><strong>Optimisation</strong> — Tune PID loops, adjust schedules, optimum start parameters — Trend logs, tuning records</li>
+              <li><strong>Seasonal</strong> — Verify heating and cooling modes over full year — Seasonal commissioning reports</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Energy Monitoring Features
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Sub-metering:</strong> Separate meters for major end uses (HVAC, lighting,
                   small power, lifts, catering)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Automatic meter reading:</strong> BMS polls meters (typically Modbus) for
                   half-hourly data
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Energy dashboards:</strong> Real-time and historical consumption display
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Benchmarking:</strong> Compare performance against CIBSE TM46, DEC, NABERS
                   benchmarks
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Automated M&T:</strong> Target setting, CUSUM analysis, exception
                   reporting
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Tenant billing:</strong> Apportionment data for recoverable costs
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Key Performance Indicators (KPIs)
               </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Energy Use Intensity:</strong> kWh/m²/year
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Carbon intensity:</strong> kgCO2/m²/year
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Baseload ratio:</strong> Out-of-hours vs occupied consumption
                   </li>
                 </ul>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Comfort compliance:</strong> % time within setpoint tolerance
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>System efficiency:</strong> COP, SEER for cooling plant
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Run hours:</strong> Plant utilisation tracking
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Soft Landings and Aftercare
               </p>
-              <p className="text-sm text-white mb-2">
+              <p>
                 BSRIA Soft Landings framework extends BMS commissioning with:
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Extended aftercare:</strong> Design team involvement for first year of
                   operation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Post-occupancy evaluation:</strong> User satisfaction surveys and energy
                   analysis
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Performance gap analysis:</strong> Compare predicted vs actual energy
                   consumption
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Continuous improvement:</strong> Identify and implement energy saving
                   opportunities
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Industry guidance:</strong> BSRIA BG6 (BMS Design Guide), BG49 (Soft
               Landings), and CIBSE TM63 (Operational Energy) provide comprehensive commissioning and
               energy monitoring guidance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">
                 Example 1: PID Controller Output Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A room temperature controller has setpoint 21°C, measured
                 temperature 19°C, proportional band 4°C, and integral time 300 seconds. Calculate
                 the proportional output.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   Error = Setpoint - Measured = 21 - 19 = <strong>2°C</strong>
                 </p>
-                <p className="mt-2">Proportional output = (Error / Proportional Band) × 100%</p>
+                <p>Proportional output = (Error / Proportional Band) × 100%</p>
                 <p>
                   = (2 / 4) × 100% = <strong>50% output</strong>
                 </p>
-                <p className="mt-2 text-white">The heating valve opens to 50% position</p>
+                <p>The heating valve opens to 50% position</p>
                 <p className="text-white">
                   Integral action will gradually increase output if error persists
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 2: Daylight Harvesting Savings
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A 200m² perimeter zone has lighting load of 12 W/m².
                 Daylight harvesting achieves 35% average dimming over 2,500 occupied hours.
                 Calculate annual energy saving.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   Lighting load = 200m² × 12 W/m² = <strong>2,400W = 2.4kW</strong>
                 </p>
-                <p className="mt-2">Without dimming: 2.4kW × 2,500h = 6,000 kWh/year</p>
+                <p>Without dimming: 2.4kW × 2,500h = 6,000 kWh/year</p>
                 <p>With 35% average dimming: 6,000 × (1 - 0.35) = 3,900 kWh/year</p>
-                <p className="mt-2">
+                <p>
                   Annual saving = 6,000 - 3,900 = <strong>2,100 kWh/year</strong>
                 </p>
-                <p className="mt-2 text-white">At £0.30/kWh = £630 annual cost saving</p>
-              </div>
-            </div>
+                <p>At £0.30/kWh = £630 annual cost saving</p>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 3: Optimum Start Time Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> Building requires 3 hours to preheat from 12°C to 21°C
                 when outside temperature is 5°C. Occupancy starts at 08:00. When should heating
                 start?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   Required preheat time = <strong>3 hours</strong>
                 </p>
                 <p>Occupancy start = 08:00</p>
-                <p className="mt-2">
+                <p>
                   Heating start time = 08:00 - 3h = <strong>05:00</strong>
                 </p>
-                <p className="mt-2 text-white">Adaptive algorithm adjusts based on:</p>
+                <p>Adaptive algorithm adjusts based on:</p>
                 <p className="text-white">
                   - Actual external temperature (warmer = later start)
                 </p>
                 <p className="text-white">- Previous day's performance data</p>
                 <p className="text-white">- Building thermal mass characteristics</p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 4: CO2-Based Ventilation Saving
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A meeting room designed for 20 people typically has
                 average occupancy of 8. Fresh air rate is 10 l/s/person. Calculate the ventilation
                 reduction with demand control.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   Design fresh air = 20 people × 10 l/s = <strong>200 l/s</strong>
                 </p>
                 <p>
                   Average actual need = 8 people × 10 l/s = <strong>80 l/s</strong>
                 </p>
-                <p className="mt-2">
+                <p>
                   Reduction = (200 - 80) / 200 × 100% = <strong>60% reduction</strong>
                 </p>
-                <p className="mt-2 text-white">Plus fan energy savings (cube law):</p>
+                <p>Plus fan energy savings (cube law):</p>
                 <p className="text-white">Fan power at 40% = (0.4)³ = 6.4% of full power</p>
                 <p className="text-white">Fan energy saving ≈ 93% during reduced occupancy</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">
                 BMS Specification Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Define open protocols (BACnet, KNX, DALI) for all major systems
                 </li>
-                <li className="pl-1">
+                <li>
                   Include detailed points list with addresses, descriptions, and engineering units
                 </li>
-                <li className="pl-1">Specify control sequences of operation for all plant</li>
-                <li className="pl-1">
+                <li>Specify control sequences of operation for all plant</li>
+                <li>
                   Define graphics requirements, alarm priorities, and trend logging
                 </li>
-                <li className="pl-1">Include integration matrix for all interfaced systems</li>
-                <li className="pl-1">
+                <li>Include integration matrix for all interfaced systems</li>
+                <li>
                   Specify commissioning requirements including seasonal testing
                 </li>
               </ul>
-            </div>
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Energy Monitoring Best Practice
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Sub-meter major end uses: HVAC, lighting, small power, lifts, catering
                 </li>
-                <li className="pl-1">
+                <li>
                   Collect half-hourly data minimum (15-minute for detailed analysis)
                 </li>
-                <li className="pl-1">Establish baselines and set reduction targets</li>
-                <li className="pl-1">
+                <li>Establish baselines and set reduction targets</li>
+                <li>
                   Monitor baseload (out-of-hours) consumption as key efficiency indicator
                 </li>
-                <li className="pl-1">
+                <li>
                   Implement automated exception reporting for consumption anomalies
                 </li>
               </ul>
-            </div>
+          </ConceptBlock>
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common BMS Problems</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sensor drift:</strong> Regular calibration checks essential, especially
-                  humidity sensors
-                </li>
-                <li className="pl-1">
-                  <strong>Control hunting:</strong> PID tuning required; check for oversized
-                  actuators
-                </li>
-                <li className="pl-1">
-                  <strong>Override abuse:</strong> Monitor and time-limit manual overrides
-                </li>
-                <li className="pl-1">
-                  <strong>Schedule drift:</strong> Regular review of time schedules against actual
-                  occupancy
-                </li>
-                <li className="pl-1">
-                  <strong>Integration failures:</strong> Gateway issues; protocol mismatches;
-                  address conflicts
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">BMS Architecture</p>
-                <ul className="space-y-0.5">
+          <ConceptBlock title="Quick Reference">
+            <p className="text-sm font-medium text-elec-yellow/80">BMS Architecture</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Management level - workstations, servers</li>
                   <li>Automation level - controllers, outstations</li>
                   <li>Field level - sensors, actuators</li>
                   <li>Open protocols: BACnet, KNX, DALI, Modbus</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Control Strategies</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Control Strategies</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>PID: Proportional-Integral-Derivative</li>
                   <li>Optimum start/stop - adaptive preheat</li>
                   <li>Weather compensation - flow temp reset</li>
                   <li>Dead band - prevent heating/cooling conflict</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Protocol Selection</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Protocol Selection</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>BACnet - HVAC, BMS backbone</li>
                   <li>KNX - lighting, room controls</li>
                   <li>DALI - addressable lighting</li>
                   <li>Modbus - metering, industrial</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Key Standards</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>BSRIA BG6 - BMS design guide</li>
                   <li>BSRIA BG49 - Soft Landings</li>
                   <li>CIBSE TM63 - Operational energy</li>
                   <li>IEC 62386 - DALI standard</li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <Scenario
+            title="University lecture-block AHU sequence &mdash; ASHRAE Guideline 36 implementation"
+            situation={
+              <>
+                A new university lecture-block has 6 dual-duct AHUs serving 18 lecture
+                theatres. Original BMS contractor proposes a bespoke control sequence
+                with PID loops on each AHU damper. The BSE consultant insists on
+                ASHRAE Guideline 36 (G36) high-performance sequences instead.
+              </>
+            }
+            whatToDo={
+              <>
+                G36 sequences are pre-engineered, peer-reviewed, energy-optimised
+                templates for AHUs, VAVs, central plant. They include trim-and-respond
+                static-pressure reset, demand-controlled outdoor air, supply-air
+                temperature reset, fault detection and diagnostics &mdash; all of which
+                routinely save 15&ndash;30 % energy over bespoke sequences with no
+                trade-off in comfort. Specify G36 sequences with BACnet IP automation
+                controllers; include FDD (fault detection &amp; diagnosis) modules;
+                require the contractor to provide the M&amp;V evidence for
+                comparison against the SBEM model.
+              </>
+            }
+            whyItMatters={
+              <>
+                Bespoke BMS sequences are the source of most building underperformance
+                vs design intent &mdash; the &ldquo;performance gap&rdquo; documented in
+                CIBSE TM54. G36 (and the equivalent BSRIA BG29 in UK practice) closes
+                the gap by encoding best-in-class control logic. The HNC engineer who
+                insists on G36 unlocks the 20&ndash;30 % energy saving the SBEM model
+                already promised but the building rarely delivers.
+              </>
+            }
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'BMS / BAS three-layer architecture: field (sensors / actuators / VSDs) &rarr; automation (controllers + PID) &rarr; management (head-end + analytics).',
+              'PID control: proportional + integral + derivative &mdash; tune for stability vs response on every modulating loop.',
+              'Open protocols: BACnet IP (management/automation), BACnet MS/TP or Modbus RTU (field), KNX or DALI (lighting), MQTT / API (cloud).',
+              'BS EN ISO 16484 (BACS): the umbrella standard for building automation and control systems.',
+              'ASHRAE Guideline 36 / BSRIA BG-29: pre-engineered high-performance sequences that close the design vs operational performance gap.',
+              'Optimum start / stop, trim-and-respond, demand-controlled OA, supply-air-temperature reset &mdash; the standard energy-saving sequences of modern BMS.',
+              'CIBSE TM39 covers metering strategy &mdash; sub-meter at floor / department / system level for ESOS evidence.',
+              'Approved Document L 2021 expects BMS controls + commissioning evidence in the Part L log book.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section6-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Motor and Lighting Design
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section6-6">
-              Next: BS7671, CIBSE and Part L
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section6-4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Energy-efficient motor and lighting design
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section6-6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                BS 7671, CIBSE and Part L requirements for energy efficiency
+              </div>
+            </button>
+          </div>
+
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,26 @@
-import { ArrowLeft, Thermometer, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 2 · Subsection 3 — Thermal Constraints
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   The three derating factors a designer must compound: Ca (ambient), Cg (grouping)
+ *   and Ci (thermal insulation), and how they multiply together to define the safe Iz.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Thermal Constraints - HNC Module 4 Section 2.3';
@@ -208,788 +226,462 @@ const faqs = [
 ];
 
 const HNCModule4Section2_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Thermometer className="h-4 w-4" />
-            <span>Module 4.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Thermal Constraints
-          </h1>
-          <p className="text-white">
-            Understanding derating factors for ambient temperature, grouping and thermal insulation
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 2 · Subsection 3"
+            title="Thermal Constraints"
+            description="Understanding derating factors for ambient temperature, grouping and thermal insulation."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Ca:</strong> Ambient temperature correction
-              </li>
-              <li className="pl-1">
-                <strong>Cg:</strong> Grouping (multiple cables) correction
-              </li>
-              <li className="pl-1">
-                <strong>Ci:</strong> Thermal insulation correction
-              </li>
-              <li className="pl-1">
-                <strong>Combined:</strong> Iz = It × Ca × Cg × Ci
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Plant rooms:</strong> High ambient (Ca critical)
-              </li>
-              <li className="pl-1">
-                <strong>Cable tray:</strong> Grouping factors (Cg)
-              </li>
-              <li className="pl-1">
-                <strong>Ceiling voids:</strong> Insulation contact (Ci)
-              </li>
-              <li className="pl-1">
-                <strong>Risers:</strong> Multiple derating factors
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Appendix 4 cable ratings are tabulated for an ambient of 30&nbsp;°C, single circuit, no thermal insulation. Real installations rarely match.',
+              'C_a corrects for ambient temperature, C_g for grouping, C_i for thermal insulation, C_f for harmonics — all multiplied to give effective I_z.',
+              'Plant rooms run 35–45&nbsp;°C in summer; ceiling voids 35–40&nbsp;°C with downlighters; risers grouped 6–12 circuits — every one of those eats capacity.',
+              'A 70&nbsp;°C thermoplastic cable in 45&nbsp;°C ambient with 6 circuits grouped can lose 50%+ of its tabulated rating — design for the real environment.',
+              'BS 7671 Reg 311.1 ties cable sizing to thermal limits; Reg 434.5.2 ties device characteristics to fault-current protection — both depend on honest derating.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 434.5.2 (Operating characteristic of fault-current protective device)"
+            clause="Where Regulation 434.2.2 permits installation of the protective device on the supply side of a change, that device shall possess an operating characteristic such that it protects the wiring situated on the load side against fault current, in accordance with Regulation 434.5.2. See Regulation 434.5.2 for the detailed requirements on operating characteristics and protection levels."
+            meaning={
+              <>
+                Reg 434.5.2 requires the protective device to clear a fault before the cable
+                reaches its limiting temperature. That calculation (the &lsquo;adiabatic
+                equation&rsquo; in Reg 434.5.2) uses the cable&rsquo;s real I_z — derated for
+                ambient, grouping, thermal insulation and harmonic content. Skip a derating
+                factor and the device may &lsquo;protect&rsquo; on paper but fail to clear the
+                fault before insulation breakdown in reality.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 434.5.2; BS 7671 Appendix 4 (current-carrying capacity); Appendix 11 (harmonic effects)."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Apply ambient temperature correction factors (Ca) from BS 7671',
               'Determine and apply grouping factors (Cg) for multiple cables',
               'Apply thermal insulation factors (Ci) for insulated routes',
               'Calculate combined derating for complex installations',
               'Recognise situations requiring multiple correction factors',
               'Select cables accounting for all thermal constraints',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Ambient Temperature (Ca) */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Ambient Temperature Correction (Ca)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Ambient Temperature Correction (Ca)">
             <p>
               Cable current ratings in BS 7671 are based on an ambient temperature of 30°C. When the
               surrounding air temperature differs, the correction factor Ca adjusts the cable's
               effective current-carrying capacity.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ambient Temperature Factors (Table 4B1)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Ambient °C</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">PVC (70°C)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">XLPE (90°C)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Mineral (70°C)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">1.03</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">1.02</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">1.03</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">30</td>
-                      <td className="border border-white/10 px-3 py-2">1.00</td>
-                      <td className="border border-white/10 px-3 py-2">1.00</td>
-                      <td className="border border-white/10 px-3 py-2">1.00</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">35</td>
-                      <td className="border border-white/10 px-3 py-2">0.94</td>
-                      <td className="border border-white/10 px-3 py-2">0.96</td>
-                      <td className="border border-white/10 px-3 py-2">0.94</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">40</td>
-                      <td className="border border-white/10 px-3 py-2">0.87</td>
-                      <td className="border border-white/10 px-3 py-2">0.91</td>
-                      <td className="border border-white/10 px-3 py-2">0.87</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">45</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">0.79</td>
-                      <td className="border border-white/10 px-3 py-2">0.87</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">0.79</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">0.71</td>
-                      <td className="border border-white/10 px-3 py-2">0.82</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">0.71</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">55</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.61</td>
-                      <td className="border border-white/10 px-3 py-2">0.76</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.61</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical High-Temperature Locations
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <ul className="text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Boiler rooms: 40-50°C</li>
-                    <li className="pl-1">Plant rooms: 35-45°C</li>
-                    <li className="pl-1">Kitchen extracts: 40-55°C</li>
-                  </ul>
-                </div>
-                <div>
-                  <ul className="text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Roof spaces (summer): 40-50°C</li>
-                    <li className="pl-1">Server rooms: 25-30°C (cooled)</li>
-                    <li className="pl-1">Cold stores: 0-5°C (Ca &gt; 1)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Ambient temperature factors (Table 4B1) — ambient °C / PVC (70°C) / XLPE
+              (90°C) / Mineral (70°C):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>25 / 1.03 / 1.02 / 1.03</li>
+              <li>30 / 1.00 / 1.00 / 1.00</li>
+              <li>35 / 0.94 / 0.96 / 0.94</li>
+              <li>40 / 0.87 / 0.91 / 0.87</li>
+              <li>45 / 0.79 / 0.87 / 0.79</li>
+              <li>50 / 0.71 / 0.82 / 0.71</li>
+              <li>55 / 0.61 / 0.76 / 0.61</li>
+            </ul>
+            <p>
+              <strong>Typical high-temperature locations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Boiler rooms: 40-50°C</li>
+              <li>Plant rooms: 35-45°C</li>
+              <li>Kitchen extracts: 40-55°C</li>
+              <li>Roof spaces (summer): 40-50°C</li>
+              <li>Server rooms: 25-30°C (cooled)</li>
+              <li>Cold stores: 0-5°C (Ca &gt; 1)</li>
+            </ul>
+            <p>
               <strong>XLPE advantage:</strong> At 50°C ambient, XLPE (Ca = 0.82) retains
               significantly more capacity than PVC (Ca = 0.71), making it preferred for hot
               locations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Grouping Factors (Cg) */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Grouping Factors (Cg)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Grouping Factors (Cg)">
             <p>
-              When multiple cables are installed together, each cable's heat adds to its neighbours,
-              reducing the ability to dissipate heat. The grouping factor Cg accounts for this
-              mutual heating effect.
+              When multiple cables are installed together, each cable's heat adds to its
+              neighbours, reducing the ability to dissipate heat. The grouping factor Cg accounts
+              for this mutual heating effect.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Grouping Factors (Table 4C1) - Cables Touching
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">No. Circuits</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Bunched</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Single Layer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Perforated Tray
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">1.00</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">1.00</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">1.00</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">0.80</td>
-                      <td className="border border-white/10 px-3 py-2">0.85</td>
-                      <td className="border border-white/10 px-3 py-2">0.88</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">0.70</td>
-                      <td className="border border-white/10 px-3 py-2">0.79</td>
-                      <td className="border border-white/10 px-3 py-2">0.82</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">0.65</td>
-                      <td className="border border-white/10 px-3 py-2">0.75</td>
-                      <td className="border border-white/10 px-3 py-2">0.77</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">0.57</td>
-                      <td className="border border-white/10 px-3 py-2">0.73</td>
-                      <td className="border border-white/10 px-3 py-2">0.73</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">9</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">0.50</td>
-                      <td className="border border-white/10 px-3 py-2">0.72</td>
-                      <td className="border border-white/10 px-3 py-2">0.72</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">12</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.45</td>
-                      <td className="border border-white/10 px-3 py-2">0.70</td>
-                      <td className="border border-white/10 px-3 py-2">0.70</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                What Counts as a 'Circuit'?
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Single-phase:</strong> One 2-core cable or L+N singles = 1 circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Three-phase:</strong> One 3/4-core cable or L1+L2+L3(+N) singles = 1
-                  circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Ring final:</strong> Count as 2 circuits (outgoing and return)
-                </li>
-                <li className="pl-1">
-                  <strong>Spare cables:</strong> Do not count if not loaded
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Improving Cg Factors</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Space cables by one diameter (Table 4C1 Note 4)</li>
-                  <li className="pl-1">Use perforated tray instead of solid</li>
-                  <li className="pl-1">Install in single layer not bunched</li>
-                  <li className="pl-1">Separate routes for high-current circuits</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Where Cg Doesn't Apply
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Cables spaced &gt; 2× diameter apart</li>
-                  <li className="pl-1">Single cable run (obviously)</li>
-                  <li className="pl-1">Cables in separate conduits/trunking</li>
-                  <li className="pl-1">With adequate thermal barriers</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Grouping factors (Table 4C1) — cables touching (no. circuits / bunched /
+              single layer / perforated tray):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1 / 1.00 / 1.00 / 1.00</li>
+              <li>2 / 0.80 / 0.85 / 0.88</li>
+              <li>3 / 0.70 / 0.79 / 0.82</li>
+              <li>4 / 0.65 / 0.75 / 0.77</li>
+              <li>6 / 0.57 / 0.73 / 0.73</li>
+              <li>9 / 0.50 / 0.72 / 0.72</li>
+              <li>12 / 0.45 / 0.70 / 0.70</li>
+            </ul>
+            <p>
+              <strong>What counts as a 'circuit'?</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single-phase:</strong> one 2-core cable or L+N singles = 1 circuit
+              </li>
+              <li>
+                <strong>Three-phase:</strong> one 3/4-core cable or L1+L2+L3(+N) singles = 1 circuit
+              </li>
+              <li>
+                <strong>Ring final:</strong> count as 2 circuits (outgoing and return)
+              </li>
+              <li>
+                <strong>Spare cables:</strong> do not count if not loaded
+              </li>
+            </ul>
+            <p>
+              <strong>Improving Cg factors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Space cables by one diameter (Table 4C1 Note 4)</li>
+              <li>Use perforated tray instead of solid</li>
+              <li>Install in single layer not bunched</li>
+              <li>Separate routes for high-current circuits</li>
+            </ul>
+            <p>
+              <strong>Where Cg doesn't apply:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cables spaced &gt; 2× diameter apart</li>
+              <li>Single cable run (obviously)</li>
+              <li>Cables in separate conduits/trunking</li>
+              <li>With adequate thermal barriers</li>
+            </ul>
+            <p>
               <strong>Design tip:</strong> For heavily grouped risers, consider XLPE cables on
               perforated tray to maximise capacity.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Thermal Insulation (Ci) */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Thermal Insulation Correction (Ci)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Thermal Insulation Correction (Ci)">
             <p>
               Thermal insulation material severely restricts heat dissipation from cables. When
               cables pass through or are surrounded by thermal insulation, significant derating is
               required to prevent dangerous overheating.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Thermal Insulation Factors (Table 52.2)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Cable Position</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Length in Insulation
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Ci Factor</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">In contact with surface</td>
-                      <td className="border border-white/10 px-3 py-2">50mm</td>
-                      <td className="border border-white/10 px-3 py-2">0.89</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">In contact with surface</td>
-                      <td className="border border-white/10 px-3 py-2">100mm</td>
-                      <td className="border border-white/10 px-3 py-2">0.81</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">In contact with surface</td>
-                      <td className="border border-white/10 px-3 py-2">200mm</td>
-                      <td className="border border-white/10 px-3 py-2">0.68</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">In contact with surface</td>
-                      <td className="border border-white/10 px-3 py-2">400mm</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">0.55</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Totally surrounded
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Any length</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.5</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Critical: Totally Surrounded
-              </p>
-              <p className="text-sm text-white">
-                A cable totally surrounded by thermal insulation can only carry{' '}
-                <strong>50% of its normal current</strong>. This applies to:
-              </p>
-              <ul className="text-sm text-white mt-2 space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Cables run through loft insulation laid over joists</li>
-                <li className="pl-1">Cables in insulated cavity walls</li>
-                <li className="pl-1">Cables enclosed by sprayed insulation</li>
-                <li className="pl-1">
-                  Any route where cable is fully enclosed by thermal material
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Strategies to Avoid Severe Ci Derating
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Route above insulation:</strong> Clip cables to joists above loft
-                  insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Use conduit/trunking:</strong> Create air gap around cables
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal barriers:</strong> Install non-combustible board between cable and
-                  insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Upsize cables:</strong> Where unavoidable, select larger cable for
-                  required capacity
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Thermal insulation factors (Table 52.2) — cable position / length in
+              insulation / Ci factor:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>In contact with surface / 50mm / 0.89</li>
+              <li>In contact with surface / 100mm / 0.81</li>
+              <li>In contact with surface / 200mm / 0.68</li>
+              <li>In contact with surface / 400mm / 0.55</li>
+              <li>Totally surrounded / any length / 0.5</li>
+            </ul>
+            <p>
+              <strong>Critical — totally surrounded:</strong> A cable totally surrounded by thermal
+              insulation can only carry 50% of its normal current. This applies to:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cables run through loft insulation laid over joists</li>
+              <li>Cables in insulated cavity walls</li>
+              <li>Cables enclosed by sprayed insulation</li>
+              <li>Any route where cable is fully enclosed by thermal material</li>
+            </ul>
+            <p>
+              <strong>Strategies to avoid severe Ci derating:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Route above insulation:</strong> clip cables to joists above loft insulation
+              </li>
+              <li>
+                <strong>Use conduit/trunking:</strong> create air gap around cables
+              </li>
+              <li>
+                <strong>Thermal barriers:</strong> install non-combustible board between cable and
+                insulation
+              </li>
+              <li>
+                <strong>Upsize cables:</strong> where unavoidable, select larger cable for required
+                capacity
+              </li>
+            </ul>
+            <p>
               <strong>Regulation:</strong> BS 7671 522.5 requires cables passing through thermal
               insulation to be suitably rated or protected.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Combined Derating */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Combined Derating Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Combined Derating Calculations">
             <p>
               In practice, multiple thermal constraints often apply simultaneously. The correction
               factors are multiplied together, potentially resulting in severe cumulative derating.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Combined Factor Formula
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center font-mono text-lg">
-                <p>
-                  I<sub>z</sub> = I<sub>t</sub> × C<sub>a</sub> × C<sub>g</sub> × C<sub>i</sub>
-                </p>
-              </div>
-              <p className="text-xs text-white mt-2 text-center">
-                Or rearranged for selection: Min I<sub>t</sub> = I<sub>n</sub> / (C<sub>a</sub> × C
-                <sub>g</sub> × C<sub>i</sub>)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Combined Factor Examples
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Scenario</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Ca</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cg</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Ci</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Combined</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standard conditions</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">1.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3 cables in trunking</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">0.70</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">0.70</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plant room (40°C) + 4 cables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.87</td>
-                      <td className="border border-white/10 px-3 py-2">0.65</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">0.57</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Loft (35°C) in insulation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.94</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">0.5</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">0.47</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hot riser (45°C) + 6 cables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.79</td>
-                      <td className="border border-white/10 px-3 py-2">0.57</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.45</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Worked Example: Hot Plant Room with Grouping
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Circuit: 32A MCB, 45°C ambient, 6 circuits grouped (PVC cable)</p>
-                <p className="mt-2">Ca (45°C PVC) = 0.79</p>
-                <p>Cg (6 circuits bunched) = 0.57</p>
-                <p>Ci = 1.0 (no thermal insulation)</p>
-                <p className="mt-2">
-                  Combined factor = 0.79 × 0.57 × 1.0 = <strong>0.45</strong>
-                </p>
-                <p className="mt-2">
-                  Min It = 32 / 0.45 = <strong>71.1A</strong>
-                </p>
-                <p className="mt-2">Table 4D2A: Need 16mm² cable (It = 76A)</p>
-                <p className="text-white">
-                  → Severe derating requires much larger cable than 32A would suggest
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Combined factor formula:</strong> Iz = It × Ca × Cg × Ci. Or rearranged for
+              selection: Min It = In / (Ca × Cg × Ci).
+            </p>
+            <p>
+              <strong>Combined factor examples (scenario / Ca / Cg / Ci / combined):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Standard conditions / 1.0 / 1.0 / 1.0 / 1.0</li>
+              <li>3 cables in trunking / 1.0 / 0.70 / 1.0 / 0.70</li>
+              <li>Plant room (40°C) + 4 cables / 0.87 / 0.65 / 1.0 / 0.57</li>
+              <li>Loft (35°C) in insulation / 0.94 / 1.0 / 0.5 / 0.47</li>
+              <li>Hot riser (45°C) + 6 cables / 0.79 / 0.57 / 1.0 / 0.45</li>
+            </ul>
+            <p>
+              <strong>Worked example — hot plant room with grouping (32A MCB, 45°C ambient, 6
+              circuits grouped, PVC cable):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ca (45°C PVC) = 0.79</li>
+              <li>Cg (6 circuits bunched) = 0.57</li>
+              <li>Ci = 1.0 (no thermal insulation)</li>
+              <li>
+                Combined factor = 0.79 × 0.57 × 1.0 = <strong>0.45</strong>
+              </li>
+              <li>
+                Min It = 32 / 0.45 = <strong>71.1A</strong>
+              </li>
+              <li>Table 4D2A: need 16mm² cable (It = 76A)</li>
+              <li>Severe derating requires much larger cable than 32A would suggest</li>
+            </ul>
+            <p>
               <strong>Cost consideration:</strong> The combined factor example above requires 16mm²
               for a 32A circuit. Consider XLPE (Ca = 0.87), better routing (lower Cg), or separate
               cable runs to reduce cable costs.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — domestic loft lighting circuit:</strong> A 6A lighting circuit
+              runs through 300mm of loft insulation. Ambient 35°C in summer. What cable size?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ca (35°C) = 0.94</li>
+              <li>Cg = 1.0 (single circuit)</li>
+              <li>Ci (300mm through insulation) = interpolate ~0.60</li>
+              <li>
+                Combined = 0.94 × 1.0 × 0.60 = <strong>0.56</strong>
+              </li>
+              <li>
+                Min It = 6 / 0.56 = <strong>10.7A</strong>
+              </li>
+              <li>Table 4D2A: 1.0mm² = 11A (marginal)</li>
+              <li>1.5mm² provides adequate margin (14.5A)</li>
+            </ul>
+            <p>
+              <strong>Example 2 — commercial riser:</strong> 8 × 63A three-phase circuits in a
+              riser, ambient 35°C. XLPE/SWA on tray. What size?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ca (35°C XLPE) = 0.96</li>
+              <li>Cg (8 circuits, single layer tray) = 0.72</li>
+              <li>Ci = 1.0</li>
+              <li>
+                Combined = 0.96 × 0.72 × 1.0 = <strong>0.69</strong>
+              </li>
+              <li>
+                Min It = 63 / 0.69 = <strong>91.3A</strong>
+              </li>
+              <li>Table 4E2A Method E: 25mm² = 110A — 25mm² 4-core XLPE/SWA adequate</li>
+            </ul>
+            <p>
+              <strong>Example 3 — comparing PVC vs XLPE:</strong> 50°C plant room, 4 circuits
+              grouped. Compare cable sizes for 32A circuit.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>PVC cable:</strong> Ca = 0.71, Cg = 0.65 → combined = 0.46; min It = 32 /
+                0.46 = 69.6A → need 16mm²
+              </li>
+              <li>
+                <strong>XLPE cable:</strong> Ca = 0.82, Cg = 0.65 → combined = 0.53; min It = 32 /
+                0.53 = 60.4A → need 10mm²
+              </li>
+              <li>XLPE allows smaller cable in hot environments</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Domestic Loft Lighting Circuit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 6A lighting circuit runs through 300mm of loft
-                insulation. Ambient 35°C in summer. What cable size?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Ca (35°C) = 0.94</p>
-                <p>Cg = 1.0 (single circuit)</p>
-                <p>Ci (300mm through insulation) = interpolate ~0.60</p>
-                <p className="mt-2">
-                  Combined = 0.94 × 1.0 × 0.60 = <strong>0.56</strong>
-                </p>
-                <p className="mt-2">
-                  Min It = 6 / 0.56 = <strong>10.7A</strong>
-                </p>
-                <p className="mt-2">Table 4D2A: 1.0mm² = 11A (marginal)</p>
-                <p className="text-green-400">→ 1.5mm² provides adequate margin (14.5A)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Commercial Riser
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> 8 × 63A three-phase circuits in a riser, ambient 35°C.
-                XLPE/SWA on tray. What size?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Ca (35°C XLPE) = 0.96</p>
-                <p>Cg (8 circuits, single layer tray) = 0.72</p>
-                <p>Ci = 1.0</p>
-                <p className="mt-2">
-                  Combined = 0.96 × 0.72 × 1.0 = <strong>0.69</strong>
-                </p>
-                <p className="mt-2">
-                  Min It = 63 / 0.69 = <strong>91.3A</strong>
-                </p>
-                <p className="mt-2">Table 4E2A Method E: 25mm² = 110A</p>
-                <p className="text-green-400">→ 25mm² 4-core XLPE/SWA adequate</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Key correction factor tables:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Table 4B1:</strong> ambient temperature (Ca)
+              </li>
+              <li>
+                <strong>Table 4C1:</strong> grouping factors (Cg)
+              </li>
+              <li>
+                <strong>Table 52.2:</strong> thermal insulation (Ci)
+              </li>
+              <li>
+                <strong>Table 4B2:</strong> ground temperature (buried cables)
+              </li>
+            </ul>
+            <p>
+              <strong>Building services best practice:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Survey ambient temperatures during hottest operation</li>
+              <li>Design cable routes to minimise grouping where possible</li>
+              <li>Use XLPE cables in plant rooms and risers</li>
+              <li>Avoid routing through thermal insulation where practical</li>
+              <li>Document all correction factors in design calculations</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Comparing PVC vs XLPE
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> 50°C plant room, 4 circuits grouped. Compare cable sizes
-                for 32A circuit.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">PVC Cable:</p>
-                <p>Ca = 0.71, Cg = 0.65 → Combined = 0.46</p>
-                <p>Min It = 32 / 0.46 = 69.6A → Need 16mm²</p>
-                <p className="mt-3 text-white">XLPE Cable:</p>
-                <p>Ca = 0.82, Cg = 0.65 → Combined = 0.53</p>
-                <p>Min It = 32 / 0.53 = 60.4A → Need 10mm²</p>
-                <p className="mt-2 text-green-400">
-                  → XLPE allows smaller cable in hot environments
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Correction Factor Tables
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Table 4B1:</strong> Ambient temperature (Ca)
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Adding factors:</strong> they must be multiplied, not added
                 </li>
-                <li className="pl-1">
-                  <strong>Table 4C1:</strong> Grouping factors (Cg)
+                <li>
+                  <strong>Forgetting partial insulation:</strong> even 50mm contact needs Ci
                 </li>
-                <li className="pl-1">
-                  <strong>Table 52.2:</strong> Thermal insulation (Ci)
-                </li>
-                <li className="pl-1">
-                  <strong>Table 4B2:</strong> Ground temperature (buried cables)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Best Practice
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Survey ambient temperatures during hottest operation</li>
-                <li className="pl-1">Design cable routes to minimise grouping where possible</li>
-                <li className="pl-1">Use XLPE cables in plant rooms and risers</li>
-                <li className="pl-1">Avoid routing through thermal insulation where practical</li>
-                <li className="pl-1">Document all correction factors in design calculations</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Adding factors:</strong> They must be multiplied, not added
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting partial insulation:</strong> Even 50mm contact needs Ci
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong Cg arrangement:</strong> Bunched vs single layer differ
+                <li>
+                  <strong>Wrong Cg arrangement:</strong> bunched vs single layer differ
                   significantly
                 </li>
-                <li className="pl-1">
-                  <strong>Using summer ambient in winter:</strong> Design for worst case (usually
+                <li>
+                  <strong>Using summer ambient in winter:</strong> design for worst case (usually
                   hot)
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always multiply Ca × Cg × Ci, look up the actual installation arrangement (bunched / single layer / spaced) in Table 4C1, and design the cable for the hottest expected ambient and the worst-case insulation contact along the route."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Plant-room sub-mains — combining ambient, grouping and harmonic derating"
+            situation={
+              <>
+                A plant room contains 8 grouped XLPE/SWA sub-main cables on a perforated tray,
+                each feeding a different floor DB. Ambient 40&nbsp;°C in summer (poor ventilation,
+                heat from boilers and chillers). Each cable carries a load with measured 25%
+                3rd-harmonic content from LED lighting and IT.
+              </>
+            }
+            whatToDo={
+              <>
+                C_a (40&nbsp;°C, 90&nbsp;°C XLPE) ≈ 0.91 (Appendix 4 Table 4B1). C_g (8 circuits
+                grouped on tray) ≈ 0.52 (Table 4C1). 3rd harmonic 15–33%: Appendix 11 derate
+                applies to neutral-loaded circuits — use the line-current rating without
+                adjustment unless &gt; 33%, where the derating bites. Combined: I_z = I_t × 0.91
+                × 0.52 = 0.47 × I_t. A 70&nbsp;mm² XLPE rated at 254&nbsp;A clipped becomes
+                ≈ 119&nbsp;A in this environment. Document on the cable schedule and feed the
+                derated I_z into the Reg 434.5.2 adiabatic check for fault-current protection.
+              </>
+            }
+            whyItMatters={
+              <>
+                Grouping is the most-missed factor in real designs. A 100&nbsp;A MCB on a cable
+                that has lost 50% of its capacity is a long-term fire risk — and the protective
+                device&rsquo;s operating characteristic under Reg 434.5.2 has been calculated
+                against the wrong I_z. Get the derating right at design, not after a fire
+                investigator arrives.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Correction Factors</p>
-                <ul className="space-y-0.5">
-                  <li>Ca - Ambient temperature (ref: 30°C)</li>
-                  <li>Cg - Grouping (no. of circuits)</li>
-                  <li>Ci - Thermal insulation contact</li>
-                  <li>Combined = Ca × Cg × Ci</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Critical Values</p>
-                <ul className="space-y-0.5">
-                  <li>45°C PVC: Ca = 0.79</li>
-                  <li>6 circuits bunched: Cg = 0.57</li>
-                  <li>Totally in insulation: Ci = 0.5</li>
-                  <li>XLPE better than PVC when hot</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Appendix 4 cable ratings assume 30&nbsp;°C ambient, single circuit, no thermal insulation — real installations almost never match.',
+              'C_a corrects for ambient temperature; pick the right column for cable insulation type (70&nbsp;°C TP vs 90&nbsp;°C XLPE).',
+              'C_g corrects for grouping — 6 cables grouped typically loses 40–45%, 9 cables loses 50%+.',
+              'C_i applies when cables run through thermal insulation (loft, wall void, floor) — a single &lsquo;buried in insulation&rsquo; cable can lose 50%.',
+              'C_f (Appendix 11) applies for 3rd-harmonic content above 33% — affects three-phase circuits with neutral loading.',
+              'Multiply all applicable factors: I_z = I_t × C_a × C_g × C_i × C_f. Pick the combination that applies, do not just take the lowest.',
+              'Reg 311.1 ties cable sizing to thermal limits; Reg 434.5.2 ties device characteristics to fault-current protection — both rely on honest I_z.',
+              'Document every derating factor on the cable schedule for verification under Part 6 — auditors check the workings, not just the final figure.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: Voltage Drop Calculations
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2-4">
-              Next: Short-Circuit Withstand
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Voltage drop calculations
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Short-circuit withstand
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

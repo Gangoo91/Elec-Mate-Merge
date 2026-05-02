@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 1 · Subsection 6 — Building Services Load Profiles
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   How HVAC, lighting, small power and process loads stack up across 24 hours and
+ *   across the seasons. Drives accurate maximum demand, tariff selection, BESS / PV
+ *   sizing and demand-side response strategy.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Building Services Load Profiles - HNC Module 4 Section 1.6';
@@ -206,952 +225,512 @@ const faqs = [
 ];
 
 const HNCModule4Section1_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.1.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Building Services Load Profiles
-          </h1>
-          <p className="text-white">
-            Analysing how electrical demand varies by time, season, and building type in commercial
-            installations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 1 · Subsection 6"
+            title="Building Services Load Profiles"
+            description="Analysing how electrical demand varies by time, season, and building type in commercial installations."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Load profile:</strong> Demand variation over time
-              </li>
-              <li className="pl-1">
-                <strong>HVAC:</strong> Typically 30-50% of office load
-              </li>
-              <li className="pl-1">
-                <strong>Peak timing:</strong> Usually mid-afternoon (cooling)
-              </li>
-              <li className="pl-1">
-                <strong>Load factor:</strong> Average ÷ peak demand
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Office peak:</strong> 10am-4pm weekdays
-              </li>
-              <li className="pl-1">
-                <strong>Retail peak:</strong> Consistent during trading
-              </li>
-              <li className="pl-1">
-                <strong>Hospital:</strong> 24-hour, flatter profile
-              </li>
-              <li className="pl-1">
-                <strong>Seasonal:</strong> Summer cooling dominant
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'A load profile maps demand over time — daily, weekly, seasonal — and exposes the gap between connected load and real maximum demand.',
+              'HVAC dominates commercial building load: 40–60% of total energy, peaking mid-morning to early afternoon as solar gain and occupancy combine.',
+              'Lighting drops from 30% to 15% of total with LED + occupancy / daylight controls — but still drives a sharp morning-on, evening-off step.',
+              'Profiles are the basis of both DNO supply sizing and load-management strategies (peak shaving, BESS, demand response, tariff optimisation).',
+              'BS 7671 Reg 311.1 mandates that maximum demand be determined for economic and reliable design — an honest profile is the only defendable basis.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 311.1 (Maximum demand and diversity)"
+            clause="Regulation headings indicate that 'Maximum demand and diversity' are addressed under clause 311. This entails determining the maximum electrical demand of an installation and applying diversity factors where appropriate so that conductor and protective device selection matches realistic loading rather than absolute connected load."
+            meaning={
+              <>
+                Reg 311.1 requires the designer to base sizing on realistic loading, not
+                absolute connected load. Load profiles are the evidence that diversity has been
+                applied honestly: peak overlap (HVAC + lighting + small power coincident at
+                10:00–14:00), seasonal extremes (winter heating vs summer cooling), and
+                tariff-driven dispatch (battery / demand response). Without a profile, your
+                diversity numbers are guesses.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 311.1; CIBSE Guide F (Energy efficiency in buildings); CIBSE TM54."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Analyse HVAC load patterns and their drivers',
               'Understand lighting profiles with daylight and occupancy controls',
               'Apply small power diversity based on usage patterns',
               'Construct 24-hour load profiles for different building types',
               'Account for seasonal variation in demand',
               'Use load profiles for demand management and tariff optimisation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: HVAC Load Patterns */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            HVAC Load Patterns
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="HVAC Load Patterns">
             <p>
               HVAC systems typically represent the largest single electrical load in commercial
               buildings, and their load profile is highly variable depending on time, weather, and
               building occupancy.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Office HVAC Daily Profile (Summer)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Time Period</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">% of Peak</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">00:00-05:00</td>
-                      <td className="border border-white/10 px-3 py-2">10-20%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Night setback, minimal circulation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">05:00-07:00</td>
-                      <td className="border border-white/10 px-3 py-2">40-60%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-conditioning, building cool-down
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">07:00-09:00</td>
-                      <td className="border border-white/10 px-3 py-2">60-80%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building occupied, fresh air loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">09:00-12:00</td>
-                      <td className="border border-white/10 px-3 py-2">80-95%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rising solar gain, internal gains
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">12:00-16:00</td>
-                      <td className="border border-white/10 px-3 py-2">95-100%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Peak cooling load (afternoon)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">16:00-19:00</td>
-                      <td className="border border-white/10 px-3 py-2">60-80%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Declining occupancy, cooling off
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">19:00-00:00</td>
-                      <td className="border border-white/10 px-3 py-2">15-30%</td>
-                      <td className="border border-white/10 px-3 py-2">Night setback begins</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">HVAC Load Drivers</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">External Factors</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Ambient temperature (heating/cooling)</li>
-                    <li>Solar gain through glazing</li>
-                    <li>Humidity (latent cooling)</li>
-                    <li>Wind (infiltration)</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Internal Factors</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Occupancy (people heat gain)</li>
-                    <li>Equipment (IT, lighting heat)</li>
-                    <li>Fresh air requirement</li>
-                    <li>Process loads (kitchens, labs)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                HVAC System Types and Profiles
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Profile Characteristic
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Diversity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Constant volume</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flat profile when running
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">~1.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        VAV (variable air volume)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Varies with zone demand</td>
-                      <td className="border border-white/10 px-3 py-2">0.7-0.8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fan coil units</td>
-                      <td className="border border-white/10 px-3 py-2">Zone-by-zone variation</td>
-                      <td className="border border-white/10 px-3 py-2">0.6-0.8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VRF/VRV</td>
-                      <td className="border border-white/10 px-3 py-2">Inverter modulation</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-0.7</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chiller plant</td>
-                      <td className="border border-white/10 px-3 py-2">Staged loading</td>
-                      <td className="border border-white/10 px-3 py-2">0.7-0.9</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Typical office HVAC daily profile (summer, % of peak):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>00:00-05:00: 10-20% — night setback, minimal circulation</li>
+              <li>05:00-07:00: 40-60% — pre-conditioning, building cool-down</li>
+              <li>07:00-09:00: 60-80% — building occupied, fresh air loads</li>
+              <li>09:00-12:00: 80-95% — rising solar gain, internal gains</li>
+              <li>12:00-16:00: 95-100% — peak cooling load (afternoon)</li>
+              <li>16:00-19:00: 60-80% — declining occupancy, cooling off</li>
+              <li>19:00-00:00: 15-30% — night setback begins</li>
+            </ul>
+            <p>
+              <strong>HVAC load drivers — external factors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ambient temperature (heating/cooling)</li>
+              <li>Solar gain through glazing</li>
+              <li>Humidity (latent cooling)</li>
+              <li>Wind (infiltration)</li>
+            </ul>
+            <p>
+              <strong>HVAC load drivers — internal factors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Occupancy (people heat gain)</li>
+              <li>Equipment (IT, lighting heat)</li>
+              <li>Fresh air requirement</li>
+              <li>Process loads (kitchens, labs)</li>
+            </ul>
+            <p>
+              <strong>HVAC system types and profiles:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Constant volume:</strong> flat profile when running, diversity ~1.0
+              </li>
+              <li>
+                <strong>VAV (variable air volume):</strong> varies with zone demand, diversity
+                0.7-0.8
+              </li>
+              <li>
+                <strong>Fan coil units:</strong> zone-by-zone variation, diversity 0.6-0.8
+              </li>
+              <li>
+                <strong>VRF/VRV:</strong> inverter modulation, diversity 0.5-0.7
+              </li>
+              <li>
+                <strong>Chiller plant:</strong> staged loading, diversity 0.7-0.9
+              </li>
+            </ul>
+            <p>
               <strong>Key insight:</strong> Modern variable-speed HVAC systems have lower diversity
               than constant-speed systems, providing better part-load efficiency.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Lighting Profiles */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Lighting Load Profiles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Lighting Load Profiles">
             <p>
               Lighting profiles are driven by occupancy patterns and increasingly by daylight-linked
               controls that modulate artificial light based on natural daylight contribution.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Office Lighting Profile (Winter Day)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">% of Installed</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Control Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">00:00-06:00</td>
-                      <td className="border border-white/10 px-3 py-2">5-10%</td>
-                      <td className="border border-white/10 px-3 py-2">Security/emergency only</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">06:00-08:00</td>
-                      <td className="border border-white/10 px-3 py-2">20-40%</td>
-                      <td className="border border-white/10 px-3 py-2">Cleaners, early arrivals</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">08:00-09:00</td>
-                      <td className="border border-white/10 px-3 py-2">60-80%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Staff arriving, daylight low
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">09:00-12:00</td>
-                      <td className="border border-white/10 px-3 py-2">70-85%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full occupancy, some daylight
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">12:00-14:00</td>
-                      <td className="border border-white/10 px-3 py-2">60-75%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lunch break, maximum daylight
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">14:00-17:00</td>
-                      <td className="border border-white/10 px-3 py-2">85-95%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fading daylight, full occupancy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">17:00-19:00</td>
-                      <td className="border border-white/10 px-3 py-2">40-70%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Staff leaving, some working late
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">19:00-00:00</td>
-                      <td className="border border-white/10 px-3 py-2">10-20%</td>
-                      <td className="border border-white/10 px-3 py-2">Late workers, cleaners</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Lighting Control Strategies
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Occupancy sensing:</strong> PIR/ultrasonic sensors switch off in
-                  unoccupied areas (15-30% saving)
-                </li>
-                <li className="pl-1">
-                  <strong>Daylight linking:</strong> Photocells dim lights near windows
-                  proportionally to daylight (20-40% saving)
-                </li>
-                <li className="pl-1">
-                  <strong>Time scheduling:</strong> BMS controls switch off outside occupied hours
-                  (10-20% saving)
-                </li>
-                <li className="pl-1">
-                  <strong>Task/ambient:</strong> Lower general light, higher task light (10-20%
-                  saving)
-                </li>
-                <li className="pl-1">
-                  <strong>Scene setting:</strong> Pre-programmed levels for different activities
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Lighting Profiles by Building Type
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Profile Shape</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Peak Period</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daytime peak, evening decline
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Winter afternoons</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail</td>
-                      <td className="border border-white/10 px-3 py-2">Constant during trading</td>
-                      <td className="border border-white/10 px-3 py-2">All trading hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">School</td>
-                      <td className="border border-white/10 px-3 py-2">Term-time weekdays only</td>
-                      <td className="border border-white/10 px-3 py-2">08:00-16:00</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital</td>
-                      <td className="border border-white/10 px-3 py-2">24-hour, dimmed at night</td>
-                      <td className="border border-white/10 px-3 py-2">07:00-22:00</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse</td>
-                      <td className="border border-white/10 px-3 py-2">Shift-based, high bay</td>
-                      <td className="border border-white/10 px-3 py-2">Operating shifts</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design note:</strong> Peak lighting load rarely coincides with peak HVAC -
+            <p>
+              <strong>Office lighting profile (winter day, % of installed):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>00:00-06:00: 5-10% — security/emergency only</li>
+              <li>06:00-08:00: 20-40% — cleaners, early arrivals</li>
+              <li>08:00-09:00: 60-80% — staff arriving, daylight low</li>
+              <li>09:00-12:00: 70-85% — full occupancy, some daylight</li>
+              <li>12:00-14:00: 60-75% — lunch break, maximum daylight</li>
+              <li>14:00-17:00: 85-95% — fading daylight, full occupancy</li>
+              <li>17:00-19:00: 40-70% — staff leaving, some working late</li>
+              <li>19:00-00:00: 10-20% — late workers, cleaners</li>
+            </ul>
+            <p>
+              <strong>Lighting control strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Occupancy sensing:</strong> PIR/ultrasonic sensors switch off in unoccupied
+                areas (15-30% saving)
+              </li>
+              <li>
+                <strong>Daylight linking:</strong> photocells dim lights near windows proportionally
+                to daylight (20-40% saving)
+              </li>
+              <li>
+                <strong>Time scheduling:</strong> BMS controls switch off outside occupied hours
+                (10-20% saving)
+              </li>
+              <li>
+                <strong>Task/ambient:</strong> lower general light, higher task light (10-20%
+                saving)
+              </li>
+              <li>
+                <strong>Scene setting:</strong> pre-programmed levels for different activities
+              </li>
+            </ul>
+            <p>
+              <strong>Lighting profiles by building type (profile shape / peak period):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Office:</strong> daytime peak, evening decline / winter afternoons
+              </li>
+              <li>
+                <strong>Retail:</strong> constant during trading / all trading hours
+              </li>
+              <li>
+                <strong>School:</strong> term-time weekdays only / 08:00-16:00
+              </li>
+              <li>
+                <strong>Hospital:</strong> 24-hour, dimmed at night / 07:00-22:00
+              </li>
+              <li>
+                <strong>Warehouse:</strong> shift-based, high bay / operating shifts
+              </li>
+            </ul>
+            <p>
+              <strong>Design note:</strong> Peak lighting load rarely coincides with peak HVAC —
               lighting peaks on dark winter days, HVAC peaks on hot summer days.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Small Power Diversity */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Small Power and IT Load Profiles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Small Power and IT Load Profiles">
             <p>
               Small power (socket outlets serving IT equipment, personal devices, and miscellaneous
               loads) has a distinctive profile driven by occupancy and working patterns.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Office Small Power Profile
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">% of Connected</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">00:00-07:00</td>
-                      <td className="border border-white/10 px-3 py-2">5-15%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standby loads, servers, always-on
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">07:00-09:00</td>
-                      <td className="border border-white/10 px-3 py-2">20-40%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Early arrivals booting up
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">09:00-12:00</td>
-                      <td className="border border-white/10 px-3 py-2">35-50%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building to peak occupancy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">12:00-14:00</td>
-                      <td className="border border-white/10 px-3 py-2">30-45%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lunch break, monitors sleep
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">14:00-17:00</td>
-                      <td className="border border-white/10 px-3 py-2">40-55%</td>
-                      <td className="border border-white/10 px-3 py-2">Peak afternoon activity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">17:00-19:00</td>
-                      <td className="border border-white/10 px-3 py-2">25-40%</td>
-                      <td className="border border-white/10 px-3 py-2">Staff leaving, shutdown</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">19:00-00:00</td>
-                      <td className="border border-white/10 px-3 py-2">10-20%</td>
-                      <td className="border border-white/10 px-3 py-2">Late workers, standby</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Small Power Components</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Desk Equipment (per workstation)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>PC/laptop: 50-150W</li>
-                    <li>Monitor(s): 30-80W each</li>
-                    <li>Docking station: 20-40W</li>
-                    <li>Phone chargers: 5-20W</li>
-                    <li>Desk fan/heater: 0-2000W</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Shared Equipment</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Printers/MFDs: 200-1500W</li>
-                    <li>Vending machines: 300-800W</li>
-                    <li>Water coolers: 100-200W</li>
-                    <li>Kettles: 2000-3000W</li>
-                    <li>Microwaves: 800-1500W</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Small Power Benchmarks</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Office Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Connected (W/m²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Diversified (W/m²)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office</td>
-                      <td className="border border-white/10 px-3 py-2">25-35</td>
-                      <td className="border border-white/10 px-3 py-2">10-15</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High density/call centre</td>
-                      <td className="border border-white/10 px-3 py-2">40-60</td>
-                      <td className="border border-white/10 px-3 py-2">20-30</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dealing room</td>
-                      <td className="border border-white/10 px-3 py-2">80-120</td>
-                      <td className="border border-white/10 px-3 py-2">50-80</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hybrid working</td>
-                      <td className="border border-white/10 px-3 py-2">25-35</td>
-                      <td className="border border-white/10 px-3 py-2">8-12</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Office small power profile (% of connected):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>00:00-07:00: 5-15% — standby loads, servers, always-on</li>
+              <li>07:00-09:00: 20-40% — early arrivals booting up</li>
+              <li>09:00-12:00: 35-50% — building to peak occupancy</li>
+              <li>12:00-14:00: 30-45% — lunch break, monitors sleep</li>
+              <li>14:00-17:00: 40-55% — peak afternoon activity</li>
+              <li>17:00-19:00: 25-40% — staff leaving, shutdown</li>
+              <li>19:00-00:00: 10-20% — late workers, standby</li>
+            </ul>
+            <p>
+              <strong>Small power components — desk equipment (per workstation):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>PC/laptop: 50-150W</li>
+              <li>Monitor(s): 30-80W each</li>
+              <li>Docking station: 20-40W</li>
+              <li>Phone chargers: 5-20W</li>
+              <li>Desk fan/heater: 0-2000W</li>
+            </ul>
+            <p>
+              <strong>Small power components — shared equipment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Printers/MFDs: 200-1500W</li>
+              <li>Vending machines: 300-800W</li>
+              <li>Water coolers: 100-200W</li>
+              <li>Kettles: 2000-3000W</li>
+              <li>Microwaves: 800-1500W</li>
+            </ul>
+            <p>
+              <strong>Small power benchmarks (connected / diversified, W/m²):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>General office:</strong> 25-35 / 10-15
+              </li>
+              <li>
+                <strong>High density/call centre:</strong> 40-60 / 20-30
+              </li>
+              <li>
+                <strong>Dealing room:</strong> 80-120 / 50-80
+              </li>
+              <li>
+                <strong>Hybrid working:</strong> 25-35 / 8-12
+              </li>
+            </ul>
+            <p>
               <strong>Trend:</strong> Equipment efficiency improves, but device count increases. Net
               effect is relatively stable demand per workstation, but lower demand per m² as desk
               density increases.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: 24-Hour and Seasonal Profiles */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            24-Hour and Seasonal Variations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="24-Hour and Seasonal Variations">
             <p>
               Understanding both daily and seasonal patterns is essential for accurate maximum
               demand assessment, tariff selection, and demand-side management strategies.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Composite Office Profile (% of Annual Peak)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Period</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Summer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Winter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Night (00:00-06:00)</td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                      <td className="border border-white/10 px-3 py-2">10-20%</td>
-                      <td className="border border-white/10 px-3 py-2">Base loads only</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Morning (06:00-09:00)</td>
-                      <td className="border border-white/10 px-3 py-2">50-70%</td>
-                      <td className="border border-white/10 px-3 py-2">60-80%</td>
-                      <td className="border border-white/10 px-3 py-2">Pre-heat/cool, arrival</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Midday (09:00-14:00)</td>
-                      <td className="border border-white/10 px-3 py-2">80-95%</td>
-                      <td className="border border-white/10 px-3 py-2">70-85%</td>
-                      <td className="border border-white/10 px-3 py-2">Building up to peak</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Afternoon (14:00-18:00)</td>
-                      <td className="border border-white/10 px-3 py-2">90-100%</td>
-                      <td className="border border-white/10 px-3 py-2">75-90%</td>
-                      <td className="border border-white/10 px-3 py-2">Peak period (summer)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Evening (18:00-00:00)</td>
-                      <td className="border border-white/10 px-3 py-2">25-45%</td>
-                      <td className="border border-white/10 px-3 py-2">20-35%</td>
-                      <td className="border border-white/10 px-3 py-2">Declining, late workers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Weekend</td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                      <td className="border border-white/10 px-3 py-2">Base loads, security</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Seasonal Variation by Building Type
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Summer/Winter Ratio
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Driver</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air-conditioned office</td>
-                      <td className="border border-white/10 px-3 py-2">1.3-1.6</td>
-                      <td className="border border-white/10 px-3 py-2">Cooling vs gas heating</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">All-electric office</td>
-                      <td className="border border-white/10 px-3 py-2">0.8-1.2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cooling and heating electric
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail (non-food)</td>
-                      <td className="border border-white/10 px-3 py-2">1.1-1.3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cooling, lighting similar
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Supermarket</td>
-                      <td className="border border-white/10 px-3 py-2">1.0-1.1</td>
-                      <td className="border border-white/10 px-3 py-2">Refrigeration constant</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital</td>
-                      <td className="border border-white/10 px-3 py-2">1.0-1.2</td>
-                      <td className="border border-white/10 px-3 py-2">24-hour, mixed loads</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data centre</td>
-                      <td className="border border-white/10 px-3 py-2">0.95-1.05</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IT constant, cooling varies
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Load Factor Comparison</p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white mb-2">
-                  <strong>Load Factor = Average Demand ÷ Peak Demand</strong>
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Office: 0.35-0.50 (large daily variation)</li>
-                  <li className="pl-1">Retail: 0.50-0.65 (consistent during trading)</li>
-                  <li className="pl-1">Hospital: 0.65-0.80 (24-hour operation)</li>
-                  <li className="pl-1">Data centre: 0.85-0.95 (very consistent)</li>
-                  <li className="pl-1">Industrial (continuous): 0.70-0.85</li>
-                </ul>
-                <p className="text-xs text-white mt-2">
-                  Higher load factor = flatter profile = less diversity benefit but more predictable
-                  demand
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Composite office profile (% of annual peak — summer / winter):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Night (00:00-06:00): 15-25% / 10-20% — base loads only</li>
+              <li>Morning (06:00-09:00): 50-70% / 60-80% — pre-heat/cool, arrival</li>
+              <li>Midday (09:00-14:00): 80-95% / 70-85% — building up to peak</li>
+              <li>Afternoon (14:00-18:00): 90-100% / 75-90% — peak period (summer)</li>
+              <li>Evening (18:00-00:00): 25-45% / 20-35% — declining, late workers</li>
+              <li>Weekend: 15-25% / 15-25% — base loads, security</li>
+            </ul>
+            <p>
+              <strong>Seasonal variation by building type (summer/winter ratio / driver):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Air-conditioned office:</strong> 1.3-1.6 / cooling vs gas heating
+              </li>
+              <li>
+                <strong>All-electric office:</strong> 0.8-1.2 / cooling and heating electric
+              </li>
+              <li>
+                <strong>Retail (non-food):</strong> 1.1-1.3 / cooling, lighting similar
+              </li>
+              <li>
+                <strong>Supermarket:</strong> 1.0-1.1 / refrigeration constant
+              </li>
+              <li>
+                <strong>Hospital:</strong> 1.0-1.2 / 24-hour, mixed loads
+              </li>
+              <li>
+                <strong>Data centre:</strong> 0.95-1.05 / IT constant, cooling varies
+              </li>
+            </ul>
+            <p>
+              <strong>Load factor comparison (Load Factor = Average Demand ÷ Peak Demand):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Office: 0.35-0.50 (large daily variation)</li>
+              <li>Retail: 0.50-0.65 (consistent during trading)</li>
+              <li>Hospital: 0.65-0.80 (24-hour operation)</li>
+              <li>Data centre: 0.85-0.95 (very consistent)</li>
+              <li>Industrial (continuous): 0.70-0.85</li>
+              <li>Higher load factor = flatter profile = less diversity benefit but more predictable demand</li>
+            </ul>
+            <p>
               <strong>Tariff implication:</strong> Buildings with low load factor benefit from
               time-of-use tariffs; high load factor buildings may prefer simple kWh rates.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — office daily profile:</strong> An office has HVAC 200kW, lighting
+              60kW, small power 80kW installed. Estimate 3pm summer demand.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>HVAC: 200kW × 95% (near peak) = 190kW</li>
+              <li>Lighting: 60kW × 70% (daylight available) = 42kW</li>
+              <li>Small power: 80kW × 45% (peak occupancy) = 36kW</li>
+              <li>
+                Total = 190 + 42 + 36 = <strong>268kW</strong>
+              </li>
+              <li>Compare to connected load: 340kW (79% diversity)</li>
+            </ul>
+            <p>
+              <strong>Example 2 — load factor calculation:</strong> An office uses 50,000 kWh/month.
+              Peak demand is 280kW. Calculate load factor.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Hours in month: ~720 hours</li>
+              <li>Average demand = 50,000 kWh ÷ 720h = 69.4kW</li>
+              <li>Load factor = Average ÷ Peak</li>
+              <li>
+                Load factor = 69.4 ÷ 280 = <strong>0.25 (25%)</strong>
+              </li>
+              <li>Low load factor indicates significant daily variation</li>
+              <li>Opportunity for demand management and TOU tariffs</li>
+            </ul>
+            <p>
+              <strong>Example 3 — seasonal variation:</strong> An office has 350kW summer peak
+              (cooling) and 280kW winter peak (gas heating). What supply capacity?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Annual peak = higher of summer/winter = 350kW</li>
+              <li>Summer/winter ratio = 350/280 = 1.25</li>
+              <li>Peak demand: 350kW</li>
+              <li>At 0.9 pf: 350 ÷ 0.9 = 389 kVA</li>
+              <li>With 20% growth: 389 × 1.2 = 467 kVA</li>
+              <li>
+                Request: <strong>500 kVA supply</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Daily Profile
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An office has HVAC 200kW, lighting 60kW, small power 80kW
-                installed. Estimate 3pm summer demand.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>3pm summer estimates:</p>
-                <p>HVAC: 200kW × 95% (near peak) = 190kW</p>
-                <p>Lighting: 60kW × 70% (daylight available) = 42kW</p>
-                <p>Small power: 80kW × 45% (peak occupancy) = 36kW</p>
-                <p className="mt-2">
-                  Total = 190 + 42 + 36 = <strong>268kW</strong>
-                </p>
-                <p className="text-white mt-2">
-                  Compare to connected load: 340kW (79% diversity)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Load Factor Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An office uses 50,000 kWh/month. Peak demand is 280kW.
-                Calculate load factor.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Hours in month: ~720 hours</p>
-                <p>Average demand = 50,000 kWh ÷ 720h = 69.4kW</p>
-                <p className="mt-2">Load factor = Average ÷ Peak</p>
-                <p>
-                  Load factor = 69.4 ÷ 280 = <strong>0.25 (25%)</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Low load factor indicates significant daily variation
-                </p>
-                <p className="text-green-400">Opportunity for demand management and TOU tariffs</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Load profile analysis checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify major load categories (HVAC, lighting, small power)</li>
+              <li>Determine operational patterns for each category</li>
+              <li>Estimate coincident peak (when do loads peak together?)</li>
+              <li>Consider seasonal variation (summer cooling vs winter heating)</li>
+              <li>Calculate load factor from energy data if available</li>
+              <li>Use profiles to inform demand management strategies</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                HVAC: <strong>30-50%</strong> of office load
+              </li>
+              <li>
+                Small power diversity: <strong>30-50%</strong>
+              </li>
+              <li>
+                Office load factor: <strong>0.35-0.50</strong>
+              </li>
+              <li>
+                Summer/winter ratio (AC office): <strong>1.3-1.6</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Seasonal Variation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An office has 350kW summer peak (cooling) and 280kW
-                winter peak (gas heating). What supply capacity?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Annual peak = higher of summer/winter = 350kW</p>
-                <p>Summer/winter ratio = 350/280 = 1.25</p>
-                <p className="mt-2">Supply sizing:</p>
-                <p>Peak demand: 350kW</p>
-                <p>At 0.9 pf: 350 ÷ 0.9 = 389 kVA</p>
-                <p>With 20% growth: 389 × 1.2 = 467 kVA</p>
-                <p className="mt-2">
-                  Request: <strong>500 kVA supply</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Load Profile Analysis Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Identify major load categories (HVAC, lighting, small power)
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Ignoring time patterns</strong> — peak time matters for demand charges
                 </li>
-                <li className="pl-1">Determine operational patterns for each category</li>
-                <li className="pl-1">Estimate coincident peak (when do loads peak together?)</li>
-                <li className="pl-1">
-                  Consider seasonal variation (summer cooling vs winter heating)
-                </li>
-                <li className="pl-1">Calculate load factor from energy data if available</li>
-                <li className="pl-1">Use profiles to inform demand management strategies</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  HVAC: <strong>30-50%</strong> of office load
-                </li>
-                <li className="pl-1">
-                  Small power diversity: <strong>30-50%</strong>
-                </li>
-                <li className="pl-1">
-                  Office load factor: <strong>0.35-0.50</strong>
-                </li>
-                <li className="pl-1">
-                  Summer/winter ratio (AC office): <strong>1.3-1.6</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring time patterns</strong> — Peak time matters for demand charges
-                </li>
-                <li className="pl-1">
-                  <strong>Summing non-coincident peaks</strong> — Lighting and cooling peak
+                <li>
+                  <strong>Summing non-coincident peaks</strong> — lighting and cooling peak
                   differently
                 </li>
-                <li className="pl-1">
-                  <strong>Using annual average for sizing</strong> — Peak demand determines capacity
+                <li>
+                  <strong>Using annual average for sizing</strong> — peak demand determines capacity
                 </li>
-                <li className="pl-1">
-                  <strong>Assuming constant profiles</strong> — Usage patterns change over time
+                <li>
+                  <strong>Assuming constant profiles</strong> — usage patterns change over time
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Plot category profiles separately, find the worst coincident hour rather than adding individual peaks, size against that worst hour, and re-validate the profile after a year of metered data."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Mid-rise office — designing the load profile to justify a 250 kVA reduction"
+            situation={
+              <>
+                A 12,000&nbsp;m² mid-rise office is being refurbished. The previous CIBSE
+                benchmark (90&nbsp;VA/m²) gives 1,080&nbsp;kVA. The client argues the workforce
+                is 60% hybrid, mid-week peak occupancy is 70%, and LED + occupancy controls cut
+                lighting load 50%. They want to argue for a 750–800&nbsp;kVA DNO supply instead
+                of 1,080.
+              </>
+            }
+            whatToDo={
+              <>
+                Build a 24-hour profile per system: HVAC (cooling-led, peaks 12:00–15:00, 60% of
+                connected at peak), lighting (occupancy-modulated, 50% of connected at peak),
+                small power (40% of connected at peak), lifts (cycle-driven, 50%). Overlay them
+                to find the coincident peak. Cross-check against measured half-hourly data from
+                two comparable hybrid-pattern offices. Document the profile as the diversity
+                evidence for Reg 311.1. Lodge a 800&nbsp;kVA DNO request with the profile as
+                appendix — DNO will challenge the numbers, so they have to be defendable.
+              </>
+            }
+            whyItMatters={
+              <>
+                A 280&nbsp;kVA reduction is a smaller DNO TX, smaller switchgear, smaller cables,
+                smaller standby plant — typically £150k–£300k capital saving plus lower DNO
+                connection charge and standing charge. But it has to be evidenced — Reg 311.1
+                makes maximum demand determination mandatory, and the DNO will refuse a
+                under-cooked submission.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Office Load Breakdown</p>
-                <ul className="space-y-0.5">
-                  <li>HVAC: 30-50% of total</li>
-                  <li>Lighting: 15-25% of total</li>
-                  <li>Small power: 20-35% of total</li>
-                  <li>Other: 5-15% of total</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Typical Peak Times</p>
-                <ul className="space-y-0.5">
-                  <li>HVAC: 14:00-16:00 (summer)</li>
-                  <li>Lighting: 15:00-17:00 (winter)</li>
-                  <li>Small power: 14:00-16:00</li>
-                  <li>Overall: 14:00-16:00 (summer)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Load profile = demand vs time. Hourly, daily, weekly, seasonal — different profiles answer different design questions.',
+              'HVAC dominates commercial building electrical load: 40–60% of total energy and the strongest peak driver.',
+              'Office peak: 10:00–14:00 (HVAC + lighting + IT coincident). Retail peak: lunchtime + evening. Hospital: 24-hour with shift transitions.',
+              'Hybrid working has reshaped office profiles: lower midweek peaks (60–70% of pre-2020), Mondays and Fridays much lower than midweek.',
+              'Reg 311.1 requires realistic loading-based sizing — not connected load. A profile is your evidence that diversity is honest.',
+              'Profiles unlock load-management value: peak shaving, BESS dispatch, demand response, off-peak tariff use.',
+              'Always cross-check calculated profiles against measured data from comparable buildings — the gap between design and operation (CIBSE TM54) is real.',
+              'Document the profile as part of the design submission — it is what justifies the diversity figures and supports the DNO application.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section1-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Future Load Allowances
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2">
-              Next: Section 2
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section1-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Future load allowances
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Cable selection and sizing
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

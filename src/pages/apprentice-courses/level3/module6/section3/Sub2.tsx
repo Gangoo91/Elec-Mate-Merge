@@ -139,14 +139,14 @@ const quizQuestions = [
     id: 5,
     question: "BS 7671 A4:2026 Table 41.3 maximum Zs for a Type B 32 A MCB on a 230 V system (Cmin 0.95) is approximately:",
     options: [
-      "1.37 ohms.",
-      "1.37 ohms — this is the A4:2026 figure with Cmin = 0.95 applied. Older editions of BS 7671 had higher values (around 1.37 ohms) before Cmin was reduced.",
-      "2.30 ohms.",
+      "1.44 ohms (pre-A4 figure).",
+      "1.37 ohms — this is the A4:2026 figure with Cmin = 0.95 applied. Older editions of BS 7671 had higher values (around 1.44 ohms) before Cmin was reduced.",
+      "2.19 ohms.",
       "0.45 ohms.",
     ],
     correctAnswer: 1,
     explanation:
-      "BS 7671:2018+A4:2026 Table 41.3 gives the maximum Zs for a Type B 32 A MCB at approximately 1.37 ohms on a 230 V system, calculated with Cmin = 0.95 (worst-case low supply voltage allowance). The value derives from: minimum fault current to ensure 5 x In magnetic trip = 5 x 32 = 160 A; with Cmin x V = 0.95 x 230 = 218.5 V, max Zs = 218.5 / 160 = 1.366 ohms, rounded to 1.37. Older editions used Cmin near 1.0 and quoted around 1.37 ohms; A4:2026 hardened the figure. Always design to the current Table 41.3 from the active edition.",
+      "BS 7671:2018+A4:2026 Table 41.3 gives the maximum Zs for a Type B 32 A MCB at 1.37 ohms on a 230 V system, calculated with Cmin = 0.95 (worst-case low supply voltage allowance). The value derives from: minimum fault current to ensure 5 x In magnetic trip = 5 x 32 = 160 A; with Cmin x V = 0.95 x 230 = 218.5 V, max Zs = 218.5 / 160 = 1.366 ohms, rounded to 1.37. Older editions used Cmin near 1.0 and quoted around 1.44 ohms; A4:2026 hardened the figure. Always design to the current Table 41.3 from the active edition.",
   },
   {
     id: 6,

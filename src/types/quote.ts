@@ -13,6 +13,9 @@ export interface QuoteItem {
   materialCode?: string;
   equipmentCode?: string;
   notes?: string;
+  // ELE-888 — per-item adjustment. Signed percent: +10 = 10% markup, -20 = 20% off.
+  itemAdjustmentPercent?: number;
+  itemAdjustmentLabel?: string;
 }
 
 export interface WorkerType {
@@ -75,6 +78,13 @@ export interface QuoteSettings {
   discountType?: 'percentage' | 'fixed';
   discountValue?: number;
   discountLabel?: string;
+  // ELE-891 — per-category adjustment (e.g. -20 on labour for "mates rate").
+  // Applied AFTER per-item adjustments, BEFORE the global discount.
+  categoryAdjustments?: {
+    labour?: number;
+    materials?: number;
+    equipment?: number;
+  };
 }
 
 export interface Quote {
@@ -90,8 +100,17 @@ export interface Quote {
   discountAmount: number;
   vatAmount: number;
   total: number;
-  status: 'draft' | 'sent' | 'pending' | 'approved' | 'rejected';
+  status: 'draft' | 'sent' | 'pending' | 'approved' | 'rejected' | 'superseded';
   tags?: QuoteTag[];
+  // ELE-956 — Quote versioning + variations
+  user_id?: string;
+  client_id?: string;
+  parent_quote_id?: string | null;
+  version_number?: number;
+  supersedes_id?: string | null;
+  variation_reason?: string | null;
+  variation_type?: 'renegotiation' | 'change_order' | 'addition' | 'deletion' | 'correction' | null;
+  is_active_version?: boolean;
   lastReminderSentAt?: Date;
   createdAt: Date;
   updatedAt: Date;

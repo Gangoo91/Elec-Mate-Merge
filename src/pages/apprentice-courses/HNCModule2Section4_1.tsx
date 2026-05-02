@@ -1,8 +1,27 @@
-import { ArrowLeft, Lightbulb, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 4 · Subsection 1 — Light and Vision
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   The electromagnetic spectrum, photopic vs scotopic vision, colour temperature
+ *   and CRI — the visual-perception foundation behind every lux-level brief and
+ *   every CIBSE LG-compliant lighting scheme.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Light and Vision - HNC Module 2 Section 4.1';
@@ -203,806 +222,546 @@ const faqs = [
 ];
 
 const HNCModule2Section4_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Lightbulb className="h-4 w-4" />
-            <span>Module 2.4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Light and Vision
-          </h1>
-          <p className="text-white">
-            Understanding the electromagnetic spectrum, visual perception, and colour properties
-            essential for building services lighting design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 4 · Subsection 1"
+            title="Light and Vision"
+            description="Understanding the electromagnetic spectrum, visual perception, and colour properties essential for building services lighting design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Visible light:</strong> EM radiation 380-780nm wavelength
-              </li>
-              <li className="pl-1">
-                <strong>Colour temperature:</strong> Warm (2700K) to cool (6500K)
-              </li>
-              <li className="pl-1">
-                <strong>CRI:</strong> Colour accuracy measure (max 100)
-              </li>
-              <li className="pl-1">
-                <strong>Photopic/Scotopic:</strong> Cone vs rod vision
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Office:</strong> 4000K, CRI 80+
-              </li>
-              <li className="pl-1">
-                <strong>Retail:</strong> 3000-4000K, CRI 90+
-              </li>
-              <li className="pl-1">
-                <strong>Healthcare:</strong> 4000K, CRI 90+
-              </li>
-              <li className="pl-1">
-                <strong>External:</strong> Consider mesopic vision
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can place visible light (380–780 nm) within the EM spectrum and explain why luminaire spectral output drives both visual comfort and circadian effect.',
+              'You select correlated colour temperature (CCT) — 3000 K warm, 4000 K neutral, 5000 K cool — to match end-use, and CRI ≥ 80 (Ra80) for general office work, ≥ 90 for retail and clinical.',
+              'You distinguish photopic, mesopic and scotopic vision and apply the relevant V(λ) curve when verifying lux meter readings against design.',
+              'You translate visual-perception theory into a CIBSE LG-compliant lighting design brief.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE/SLL Lighting Guides — LG7 Offices, LG5 Lighting for Education, LG2 Hospitals"
+            clause="Recommended maintained illuminance, glare limits (UGR), CCT and CRI values for each task and space type, plus uniformity ratios for the working plane."
+            meaning={
+              <>
+                The CIBSE/SLL Lighting Guides translate visual-perception theory into the
+                hard numbers you cite on the lighting schedule. As HNC engineer you reference
+                LG7 (offices) when defending a 500 lux maintained design, LG5 in classrooms
+                and LG2 in clinical spaces.
+              </>
+            }
+            cite="Source: CIBSE/SLL LG7 Lighting for Offices; SLL Code for Lighting; BS EN 12464-1 Light and lighting — Lighting of work places."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the position of visible light in the electromagnetic spectrum',
               'Describe how the human eye perceives light and colour',
               'Define colour temperature (K) and its application in lighting design',
               'Explain Colour Rendering Index (CRI) and specify appropriate values',
               'Distinguish between photopic, mesopic, and scotopic vision',
               'Apply visual perception principles to building services lighting',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Electromagnetic Spectrum */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Electromagnetic Spectrum
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="The Electromagnetic Spectrum"
+            plainEnglish="Light is just one slice of the EM spectrum the eye can see. Below it is UV (sunburn, germicidal). Above it is infrared (heat). Lighting design lives in between."
+          >
             <p>
               Light is electromagnetic radiation that travels at approximately 3 × 10⁸ m/s in a
               vacuum. The electromagnetic spectrum spans from radio waves (long wavelength, low
               frequency) to gamma rays (short wavelength, high frequency), with visible light
               occupying a narrow band that the human eye can detect.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key properties of electromagnetic radiation:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Wavelength (λ) measured in nanometres (nm) or micrometres (μm)
-                </li>
-                <li className="pl-1">Frequency (f) measured in Hertz (Hz), where c = f × λ</li>
-                <li className="pl-1">Energy is proportional to frequency (E = hf)</li>
-                <li className="pl-1">Does not require a medium to propagate</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electromagnetic Spectrum for Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Radiation Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Wavelength</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Services Relevance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">UV-C</td>
-                      <td className="border border-white/10 px-3 py-2">100-280nm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Germicidal lamps, HVAC disinfection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">UV-A/B</td>
-                      <td className="border border-white/10 px-3 py-2">280-400nm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Material degradation, skin hazard
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Visible light
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">380-780nm</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        General and task lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Near infrared</td>
-                      <td className="border border-white/10 px-3 py-2">780nm-3μm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat from lamps, solar gain
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Far infrared</td>
-                      <td className="border border-white/10 px-3 py-2">3μm-1mm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Radiant heating, thermal imaging
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Visible Spectrum Colours
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Colour</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Wavelength Range
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Violet</td>
-                      <td className="border border-white/10 px-3 py-2">380-450nm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Blue</td>
-                      <td className="border border-white/10 px-3 py-2">450-495nm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Green</td>
-                      <td className="border border-white/10 px-3 py-2">495-570nm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Yellow</td>
-                      <td className="border border-white/10 px-3 py-2">570-590nm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Orange</td>
-                      <td className="border border-white/10 px-3 py-2">590-620nm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Red</td>
-                      <td className="border border-white/10 px-3 py-2">620-780nm</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key properties of electromagnetic radiation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Wavelength (λ) measured in nanometres (nm) or micrometres (μm)</li>
+              <li>Frequency (f) measured in Hertz (Hz), where c = f × λ</li>
+              <li>Energy is proportional to frequency (E = hf)</li>
+              <li>Does not require a medium to propagate</li>
+            </ul>
+            <p>
+              <strong>Electromagnetic Spectrum for Building Services:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>UV-C:</strong> 100-280nm — Germicidal lamps, HVAC disinfection
+              </li>
+              <li>
+                <strong>UV-A/B:</strong> 280-400nm — Material degradation, skin hazard
+              </li>
+              <li>
+                <strong>Visible light:</strong> 380-780nm — General and task lighting
+              </li>
+              <li>
+                <strong>Near infrared:</strong> 780nm-3μm — Heat from lamps, solar gain
+              </li>
+              <li>
+                <strong>Far infrared:</strong> 3μm-1mm — Radiant heating, thermal imaging
+              </li>
+            </ul>
+            <p>
+              <strong>Visible Spectrum Colours:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Violet:</strong> 380-450nm
+              </li>
+              <li>
+                <strong>Blue:</strong> 450-495nm
+              </li>
+              <li>
+                <strong>Green:</strong> 495-570nm
+              </li>
+              <li>
+                <strong>Yellow:</strong> 570-590nm
+              </li>
+              <li>
+                <strong>Orange:</strong> 590-620nm
+              </li>
+              <li>
+                <strong>Red:</strong> 620-780nm
+              </li>
+            </ul>
+            <p>
               <strong>Remember:</strong> Shorter wavelengths (violet/blue) carry more energy than
               longer wavelengths (red). This affects both visual perception and circadian rhythm
               impacts.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Visual Perception */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Visual Perception and the Human Eye
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Visual Perception and the Human Eye"
+            plainEnglish="Eye + brain = vision. Cones do colour and sharp detail in good light. Rods do peripheral and low-light detection. Lighting designers aim at both."
+          >
             <p>
               The human visual system consists of the eye (optical system) and the brain (image
               processing). Understanding how we perceive light is fundamental to designing effective
               lighting systems that meet both functional and comfort requirements.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key structures of the eye:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cornea:</strong> Transparent front surface providing ~70% of focusing
-                  power
-                </li>
-                <li className="pl-1">
-                  <strong>Iris:</strong> Controls pupil size (2-8mm) to regulate light entry
-                </li>
-                <li className="pl-1">
-                  <strong>Lens:</strong> Adjustable focus (accommodation) for different distances
-                </li>
-                <li className="pl-1">
-                  <strong>Retina:</strong> Light-sensitive layer containing photoreceptors
-                </li>
-                <li className="pl-1">
-                  <strong>Fovea:</strong> Central area of retina with highest acuity
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cone Cells (Photopic Vision)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">~6 million cones concentrated in fovea</li>
-                  <li className="pl-1">Three types: S (blue), M (green), L (red)</li>
-                  <li className="pl-1">High acuity, colour perception</li>
-                  <li className="pl-1">Operate above ~3 cd/m²</li>
-                  <li className="pl-1">Peak sensitivity at 555nm</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Rod Cells (Scotopic Vision)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">~120 million rods in peripheral retina</li>
-                  <li className="pl-1">One type only (monochromatic)</li>
-                  <li className="pl-1">Lower acuity, no colour vision</li>
-                  <li className="pl-1">Operate below ~0.01 cd/m²</li>
-                  <li className="pl-1">Peak sensitivity at 507nm</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Adaptation</p>
-              <p className="text-sm text-white">
-                The eye adapts to different light levels over time. Dark adaptation (entering a dark
-                space) takes 20-30 minutes for full sensitivity. Light adaptation (entering bright
-                light) is much faster at 1-2 minutes. Lighting design must consider adaptation zones
-                at building entrances.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key structures of the eye:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cornea:</strong> Transparent front surface providing ~70% of focusing power
+              </li>
+              <li>
+                <strong>Iris:</strong> Controls pupil size (2-8mm) to regulate light entry
+              </li>
+              <li>
+                <strong>Lens:</strong> Adjustable focus (accommodation) for different distances
+              </li>
+              <li>
+                <strong>Retina:</strong> Light-sensitive layer containing photoreceptors
+              </li>
+              <li>
+                <strong>Fovea:</strong> Central area of retina with highest acuity
+              </li>
+            </ul>
+            <p>
+              <strong>Cone Cells (Photopic Vision):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>~6 million cones concentrated in fovea</li>
+              <li>Three types: S (blue), M (green), L (red)</li>
+              <li>High acuity, colour perception</li>
+              <li>Operate above ~3 cd/m²</li>
+              <li>Peak sensitivity at 555nm</li>
+            </ul>
+            <p>
+              <strong>Rod Cells (Scotopic Vision):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>~120 million rods in peripheral retina</li>
+              <li>One type only (monochromatic)</li>
+              <li>Lower acuity, no colour vision</li>
+              <li>Operate below ~0.01 cd/m²</li>
+              <li>Peak sensitivity at 507nm</li>
+            </ul>
+            <p>
+              <strong>Adaptation:</strong> The eye adapts to different light levels over time. Dark
+              adaptation (entering a dark space) takes 20-30 minutes for full sensitivity. Light
+              adaptation (entering bright light) is much faster at 1-2 minutes. Lighting design must
+              consider adaptation zones at building entrances.
+            </p>
+            <p>
               <strong>Design implication:</strong> Transition zones between bright and dark areas
               should provide gradual changes in light level to allow visual adaptation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Colour Temperature and CRI */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Colour Temperature (K) and Colour Rendering (CRI)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Colour Temperature (K) and Colour Rendering (CRI)"
+            plainEnglish="CCT = how warm or cool the light looks. CRI = how true the colours look under it. They're separate properties — and you spec both."
+          >
             <p>
               Colour temperature and colour rendering are two distinct but related properties of
               light sources. Both significantly impact visual comfort, task performance, and the
               appearance of spaces and objects.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Correlated Colour Temperature (CCT)
-              </p>
-              <p className="text-sm text-white">
-                CCT describes the colour appearance of white light, measured in Kelvin (K). It
-                relates to the colour of light emitted by an ideal black body radiator heated to
-                that temperature. Lower values appear warm (yellow/orange), higher values appear
-                cool (blue/white).
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Colour Temperature Guide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">CCT (K)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Applications
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2700K</td>
-                      <td className="border border-white/10 px-3 py-2">Warm white</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hospitality, residential, restaurants
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3000K</td>
-                      <td className="border border-white/10 px-3 py-2">Warm white</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Retail (warm), hotel lobbies
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4000K</td>
-                      <td className="border border-white/10 px-3 py-2">Neutral/cool white</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Offices, schools, healthcare
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5000K</td>
-                      <td className="border border-white/10 px-3 py-2">Cool white/daylight</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Industrial, colour matching
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6500K</td>
-                      <td className="border border-white/10 px-3 py-2">Daylight</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Colour critical tasks, D65 reference
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Colour Rendering Index (CRI/Ra)
-              </p>
-              <p className="text-sm text-white mb-3">
-                CRI measures how accurately a light source reveals the colours of objects compared
-                to a reference illuminant. It is calculated from colour shifts in 8 test colours
-                (R1-R8), with the average giving Ra. Extended CRI (Re) uses 14 colours including
-                saturated red (R9).
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">CRI 60-70</p>
-                  <p className="text-white text-xs">Basic (industrial)</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">CRI 80</p>
-                  <p className="text-white text-xs">Good (offices)</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">CRI 90</p>
-                  <p className="text-white text-xs">Excellent (retail)</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">CRI 95+</p>
-                  <p className="text-white text-xs">Critical (colour matching)</p>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Correlated Colour Temperature (CCT):</strong> CCT describes the colour
+              appearance of white light, measured in Kelvin (K). It relates to the colour of light
+              emitted by an ideal black body radiator heated to that temperature. Lower values
+              appear warm (yellow/orange), higher values appear cool (blue/white).
+            </p>
+            <p>
+              <strong>Colour Temperature Guide:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>2700K — Warm white:</strong> Hospitality, residential, restaurants
+              </li>
+              <li>
+                <strong>3000K — Warm white:</strong> Retail (warm), hotel lobbies
+              </li>
+              <li>
+                <strong>4000K — Neutral/cool white:</strong> Offices, schools, healthcare
+              </li>
+              <li>
+                <strong>5000K — Cool white/daylight:</strong> Industrial, colour matching
+              </li>
+              <li>
+                <strong>6500K — Daylight:</strong> Colour critical tasks, D65 reference
+              </li>
+            </ul>
+            <p>
+              <strong>Colour Rendering Index (CRI/Ra):</strong> CRI measures how accurately a light
+              source reveals the colours of objects compared to a reference illuminant. It is
+              calculated from colour shifts in 8 test colours (R1-R8), with the average giving Ra.
+              Extended CRI (Re) uses 14 colours including saturated red (R9).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>CRI 60-70:</strong> Basic (industrial)
+              </li>
+              <li>
+                <strong>CRI 80:</strong> Good (offices)
+              </li>
+              <li>
+                <strong>CRI 90:</strong> Excellent (retail)
+              </li>
+              <li>
+                <strong>CRI 95+:</strong> Critical (colour matching)
+              </li>
+            </ul>
+            <p>
               <strong>Kruithof curve:</strong> Research suggests pleasing combinations of light
               level and colour temperature - warm light suits lower levels, cool light suits higher
               levels.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Photopic, Mesopic, Scotopic Vision */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Photopic, Mesopic, and Scotopic Vision
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Photopic, Mesopic, and Scotopic Vision"
+            plainEnglish="Three vision modes for three light levels. Bright = cones (colour). Dim = mix. Very dark = rods (no colour). Outside lighting needs to think about all three."
+          >
             <p>
               The human visual system operates in three distinct modes depending on the ambient
               light level. Understanding these modes is essential for designing lighting for
               different environments, particularly external and emergency lighting where light
               levels may be low.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Vision Modes and Light Levels
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Vision Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Luminance Range
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Photoreceptors</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Peak Sensitivity
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Photopic</td>
-                      <td className="border border-white/10 px-3 py-2">&gt;3 cd/m²</td>
-                      <td className="border border-white/10 px-3 py-2">Cones</td>
-                      <td className="border border-white/10 px-3 py-2">555nm (yellow-green)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mesopic</td>
-                      <td className="border border-white/10 px-3 py-2">0.01-3 cd/m²</td>
-                      <td className="border border-white/10 px-3 py-2">Rods + Cones</td>
-                      <td className="border border-white/10 px-3 py-2">507-555nm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scotopic</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;0.01 cd/m²</td>
-                      <td className="border border-white/10 px-3 py-2">Rods</td>
-                      <td className="border border-white/10 px-3 py-2">507nm (blue-green)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                S/P Ratio (Scotopic/Photopic)
-              </p>
-              <p className="text-sm text-white mb-3">
-                The S/P ratio indicates how effective a light source is under mesopic conditions
-                relative to photopic lumens. Light sources with higher blue content have higher S/P
-                ratios and can appear brighter in peripheral vision at low light levels.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-black/30">
-                      <th className="border border-white/10 px-3 py-2 text-left">Light Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical S/P Ratio
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High-pressure sodium</td>
-                      <td className="border border-white/10 px-3 py-2">0.6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warm white LED (2700K)</td>
-                      <td className="border border-white/10 px-3 py-2">1.1</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Neutral white LED (4000K)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1.4</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cool white LED (5000K)</td>
-                      <td className="border border-white/10 px-3 py-2">1.7</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Metal halide</td>
-                      <td className="border border-white/10 px-3 py-2">1.5</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Design Implications</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Interior lighting: photopic (lux/lumens sufficient)</li>
-                  <li className="pl-1">Street lighting: mesopic (S/P ratio matters)</li>
-                  <li className="pl-1">Emergency escape: may be mesopic/scotopic</li>
-                  <li className="pl-1">External areas: consider mesopic benefits</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Purkinje Shift</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">As light levels fall, sensitivity shifts to blue</li>
-                  <li className="pl-1">Blue objects appear relatively brighter</li>
-                  <li className="pl-1">Red objects appear relatively darker</li>
-                  <li className="pl-1">Affects colour perception at dusk</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Vision Modes and Light Levels:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Photopic:</strong> Luminance &gt;3 cd/m², photoreceptors are cones, peak
+                sensitivity 555nm (yellow-green)
+              </li>
+              <li>
+                <strong>Mesopic:</strong> Luminance 0.01-3 cd/m², photoreceptors are rods + cones,
+                peak sensitivity 507-555nm
+              </li>
+              <li>
+                <strong>Scotopic:</strong> Luminance &lt;0.01 cd/m², photoreceptors are rods, peak
+                sensitivity 507nm (blue-green)
+              </li>
+            </ul>
+            <p>
+              <strong>S/P Ratio (Scotopic/Photopic):</strong> The S/P ratio indicates how effective
+              a light source is under mesopic conditions relative to photopic lumens. Light sources
+              with higher blue content have higher S/P ratios and can appear brighter in peripheral
+              vision at low light levels.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>High-pressure sodium:</strong> S/P ratio ≈ 0.6
+              </li>
+              <li>
+                <strong>Warm white LED (2700K):</strong> S/P ratio ≈ 1.1
+              </li>
+              <li>
+                <strong>Neutral white LED (4000K):</strong> S/P ratio ≈ 1.4
+              </li>
+              <li>
+                <strong>Cool white LED (5000K):</strong> S/P ratio ≈ 1.7
+              </li>
+              <li>
+                <strong>Metal halide:</strong> S/P ratio ≈ 1.5
+              </li>
+            </ul>
+            <p>
+              <strong>Design Implications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Interior lighting: photopic (lux/lumens sufficient)</li>
+              <li>Street lighting: mesopic (S/P ratio matters)</li>
+              <li>Emergency escape: may be mesopic/scotopic</li>
+              <li>External areas: consider mesopic benefits</li>
+            </ul>
+            <p>
+              <strong>Purkinje Shift:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>As light levels fall, sensitivity shifts to blue</li>
+              <li>Blue objects appear relatively brighter</li>
+              <li>Red objects appear relatively darker</li>
+              <li>Affects colour perception at dusk</li>
+            </ul>
+            <p>
               <strong>Practical note:</strong> External lighting calculations increasingly consider
               mesopic lumens rather than just photopic lumens, particularly for road and area
               lighting where peripheral detection is important.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three real specifying decisions: choosing CCT, choosing CRI, and deciding when mesopic effects matter."
+          >
+            <p>
+              <strong>Example 1: Selecting Colour Temperature.</strong> A new open-plan office
+              requires lighting. The design brief specifies a professional, productive atmosphere
+              with good daylight integration. What colour temperature should be specified?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Consider the requirements:</li>
+              <li>Professional appearance: suggests cooler rather than warm</li>
+              <li>Productive atmosphere: 4000K+ supports alertness</li>
+              <li>Daylight integration: artificial light should blend</li>
+              <li>
+                <strong>Recommendation: 4000K neutral white</strong>
+              </li>
+              <li>This balances warmth with alertness and blends well with daylight
+              (5500-6500K).</li>
+            </ul>
+            <p>
+              <strong>Example 2: CRI Specification.</strong> A fashion retailer requires lighting
+              for clothing displays. What CRI should be specified and why?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Retail clothing requirements:</li>
+              <li>Colours must appear accurate (customers check fabric colours)</li>
+              <li>Skin tones must look flattering (changing rooms)</li>
+              <li>High-end brand image expected</li>
+              <li>
+                <strong>Specification: CRI 90 minimum (Ra90), R9 ≥ 50</strong>
+              </li>
+              <li>R9 (saturated red) is particularly important for skin tones and warm fabric
+              colours.</li>
+            </ul>
+            <p>
+              <strong>Example 3: Mesopic Consideration.</strong> A car park operates at 50 lux
+              average. Should mesopic effects be considered in the lighting design?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>At 50 lux with typical surface reflectances:</li>
+              <li>Luminance ≈ 50 × 0.2 / π ≈ 3 cd/m²</li>
+              <li>This is at the photopic/mesopic boundary</li>
+              <li>Peripheral vision will be partly mesopic</li>
+              <li>
+                <strong>Yes — consider S/P ratio.</strong>
+              </li>
+              <li>A 4000K LED (S/P ~1.4) will provide better peripheral visibility than 2700K
+              (S/P ~1.1) at the same photopic lux level.</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Selecting Colour Temperature
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A new open-plan office requires lighting. The design
-                brief specifies a professional, productive atmosphere with good daylight
-                integration. What colour temperature should be specified?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Consider the requirements:</p>
-                <p>- Professional appearance: suggests cooler rather than warm</p>
-                <p>- Productive atmosphere: 4000K+ supports alertness</p>
-                <p>- Daylight integration: artificial light should blend</p>
-                <p className="mt-2">
-                  <strong>Recommendation: 4000K neutral white</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This balances warmth with alertness and blends well with daylight (5500-6500K)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: CRI Specification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A fashion retailer requires lighting for clothing
-                displays. What CRI should be specified and why?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Retail clothing requirements:</p>
-                <p>- Colours must appear accurate (customers check fabric colours)</p>
-                <p>- Skin tones must look flattering (changing rooms)</p>
-                <p>- High-end brand image expected</p>
-                <p className="mt-2">
-                  <strong>Specification: CRI 90 minimum (Ra90), R9 ≥ 50</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  R9 (saturated red) is particularly important for skin tones and warm fabric
-                  colours
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The handful of numbers and CIBSE references you'll lean on for any lighting spec."
+          >
+            <p>
+              <strong>Key Specifications to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Visible spectrum:</strong> 380-780nm
+              </li>
+              <li>
+                <strong>Photopic peak:</strong> 555nm (yellow-green)
+              </li>
+              <li>
+                <strong>Scotopic peak:</strong> 507nm (blue-green)
+              </li>
+              <li>
+                <strong>Office standard:</strong> 4000K, CRI 80+
+              </li>
+              <li>
+                <strong>Retail standard:</strong> 3000-4000K, CRI 90+
+              </li>
+            </ul>
+            <p>
+              <strong>CIBSE References:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>CIBSE LG7:</strong> Office Lighting (CCT and CRI guidance)
+              </li>
+              <li>
+                <strong>CIBSE LG1:</strong> The Industrial Environment
+              </li>
+              <li>
+                <strong>CIBSE LG6:</strong> The Outdoor Environment
+              </li>
+              <li>
+                <strong>SLL Lighting Handbook:</strong> Comprehensive guidance
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Mesopic Consideration
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A car park operates at 50 lux average. Should mesopic
-                effects be considered in the lighting design?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>At 50 lux with typical surface reflectances:</p>
-                <p>- Luminance ≈ 50 × 0.2 / π ≈ 3 cd/m²</p>
-                <p>- This is at the photopic/mesopic boundary</p>
-                <p>- Peripheral vision will be partly mesopic</p>
-                <p className="mt-2">
-                  <strong>Yes - consider S/P ratio</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  A 4000K LED (S/P ~1.4) will provide better peripheral visibility than 2700K (S/P
-                  ~1.1) at the same photopic lux level
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Specifications to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Visible spectrum:</strong> 380-780nm
-                </li>
-                <li className="pl-1">
-                  <strong>Photopic peak:</strong> 555nm (yellow-green)
-                </li>
-                <li className="pl-1">
-                  <strong>Scotopic peak:</strong> 507nm (blue-green)
-                </li>
-                <li className="pl-1">
-                  <strong>Office standard:</strong> 4000K, CRI 80+
-                </li>
-                <li className="pl-1">
-                  <strong>Retail standard:</strong> 3000-4000K, CRI 90+
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">CIBSE References</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>CIBSE LG7:</strong> Office Lighting (CCT and CRI guidance)
-                </li>
-                <li className="pl-1">
-                  <strong>CIBSE LG1:</strong> The Industrial Environment
-                </li>
-                <li className="pl-1">
-                  <strong>CIBSE LG6:</strong> The Outdoor Environment
-                </li>
-                <li className="pl-1">
-                  <strong>SLL Lighting Handbook:</strong> Comprehensive guidance
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Confusing CCT and CRI:</strong> A lamp can be warm (2700K) with poor CRI
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring R9:</strong> Overall CRI can be good but reds may render poorly
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Mixing CCTs:</strong> Different colour temperatures in same space look
                   inconsistent
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Forgetting adaptation:</strong> Transition areas need gradual light level
                   changes
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always spec CCT and CRI separately, ask for R9 numbers on critical jobs, hold one CCT per space, and design transition zones at entrances so eyes can adapt before reaching the bright (or dark) interior."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Specifying CCT and CRI for an open-plan office relight"
+            situation={
+              <>
+                A 1990s open-plan office (1,800 m²) is being relit as part of a Cat-A
+                refurb. The client wants higher comfort, stronger sustainability story and
+                better video-conferencing colour. The existing 4000 K, CRI 80 T8 fluorescent
+                scheme is being replaced.
+              </>
+            }
+            whatToDo={
+              <>
+                Specify 4000 K neutral white as the primary CCT to balance daylight integration
+                and visual comfort. Lift CRI to Ra ≥ 90 (TM-30 Rf ≥ 88, Rg ≥ 95) to
+                handle skin tones on Teams/Zoom calls. Verify maintained illuminance against
+                LG7 (500 lux task, 300 lux background, U₀ ≥ 0.6) and UGR ≤ 19 with the
+                manufacturer&rsquo;s photometric file. Document on the lighting schedule with
+                CIBSE LG7 reference.
+              </>
+            }
+            whyItMatters={
+              <>
+                CCT and CRI are not aesthetic preferences — they drive visual fatigue,
+                wellbeing scores in WELL/BREEAM, and how staff appear on camera. Getting
+                them wrong forces a costly relamp 18 months in. The CIBSE LG-cited
+                specification is auditable and defendable.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Light Properties</p>
-                <ul className="space-y-0.5">
-                  <li>Visible spectrum: 380-780nm</li>
-                  <li>Speed of light: 3 × 10⁸ m/s</li>
-                  <li>Photopic peak: 555nm</li>
-                  <li>Scotopic peak: 507nm</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Design Standards</p>
-                <ul className="space-y-0.5">
-                  <li>Office: 4000K, CRI 80</li>
-                  <li>Retail: 3000K, CRI 90</li>
-                  <li>Healthcare: 4000K, CRI 90</li>
-                  <li>Industry: 4000-5000K, CRI 80</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Visible light = 380–780 nm — a narrow window in the EM spectrum.',
+              'Photopic vision (cones, daylight) peaks at 555 nm; scotopic vision (rods, low light) peaks at 507 nm.',
+              'Correlated Colour Temperature (CCT) in Kelvin: 2700–3000 K warm, 4000 K neutral, 5000–6500 K cool.',
+              'Colour Rendering Index Ra: ≥ 80 general, ≥ 90 retail/clinical, ≥ 95 art and museum.',
+              'TM-30 Rf (fidelity) and Rg (gamut) supersede CRI for accurate colour appraisal.',
+              'Mesopic (street, low-level interior) demands different luminance metrics — relevant to car parks and external lighting.',
+              'CIBSE/SLL Lighting Guides + BS EN 12464-1 set the maintained illuminance and UGR targets the design must meet.',
+              'Spectral output also drives circadian impact — increasingly written into healthcare and education briefs.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section4-2">
-              Next: Illumination Calculations
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Lighting and Acoustics
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Illumination Calculations
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

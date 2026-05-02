@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 7,
     question:
       'For a circuit protected by a 32 A Type B MCB in a TN system, the maximum earth fault loop impedance (Zs) is approximately:',
-    options: ['0.27 ohms', '1.09 ohms', '1.44 ohms', '7.19 ohms'],
+    options: ['0.27 ohms', '1.09 ohms', '1.37 ohms', '7.19 ohms'],
     correctAnswer: 2,
     explanation:
-      'For a Type B MCB, instantaneous magnetic tripping occurs between 3 and 5 times In. Using the worst case (5 × In): the minimum fault current needed = 5 × 32 = 160 A. Maximum Zs = Uo / If = 230 / 160 = 1.4375 ohms (approximately 1.44 ohms). The tabulated value in BS 7671 may differ slightly as it accounts for the specific device characteristics. Always refer to the actual table values.',
+      'For a Type B MCB, instantaneous magnetic tripping occurs between 3 and 5 times In. Using the worst case (5 × In): the minimum fault current needed = 5 × 32 = 160 A. BS 7671:2018+A4:2026 applies Cmin = 0.95 to U0 in the Zs calculation: Maximum Zs = (U0 × Cmin) / Ia = (230 × 0.95) / 160 = 218.5 / 160 = 1.366 ohms ≈ 1.37 ohms (Table 41.3). The pre-A4 figure of 1.44 ohms (without Cmin) is now obsolete.',
   },
   {
     id: 8,

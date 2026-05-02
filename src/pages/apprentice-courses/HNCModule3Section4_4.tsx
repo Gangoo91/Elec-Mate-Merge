@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 4 · Subsection 4 — Calculations of Three-Phase Power (kW, kVA, PF)
+ * HNC Electrical Engineering for Building Services (Pearson U4019)
+ *   Three-phase P, Q, S arithmetic — single- and two-wattmeter measurement, transformer
+ *   and DNO supply sizing, PFC bank specification. The numbers behind every BSE
+ *   distribution and connection-charge calculation.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Calculations of Three-Phase Power (kW, kVA, PF) - HNC Module 3 Section 4.4';
@@ -187,1198 +206,783 @@ const faqs = [
 ];
 
 const HNCModule3Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Calculations of Three-Phase Power
-          </h1>
-          <p className="text-white">
-            Real power (kW), apparent power (kVA), reactive power (kVAr), and power factor in
-            three-phase systems
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 4 · Subsection 4"
+            title="Calculations of Three-Phase Power"
+            description="Real power (kW), apparent power (kVA), reactive power (kVAr), and power factor in three-phase systems"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Real power (P):</strong> √3 × VL × IL × cos φ (kW)
-              </li>
-              <li className="pl-1">
-                <strong>Apparent power (S):</strong> √3 × VL × IL (kVA)
-              </li>
-              <li className="pl-1">
-                <strong>Reactive power (Q):</strong> √3 × VL × IL × sin φ (kVAr)
-              </li>
-              <li className="pl-1">
-                <strong>Power factor:</strong> P/S = cos φ (0 to 1)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Transformer sizing:</strong> Based on kVA not kW
-              </li>
-              <li className="pl-1">
-                <strong>Maximum demand:</strong> Typically 0.8-0.9 pf assumed
-              </li>
-              <li className="pl-1">
-                <strong>Supply agreements:</strong> kVA charges for poor pf
-              </li>
-              <li className="pl-1">
-                <strong>PF correction:</strong> Capacitors to reduce kVA demand
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You apply P = &radic;3 &times; V&#x2097; &times; I&#x2097; &times; cos&phi; on every three-phase calculation — and S = &radic;3 &times; V&#x2097; &times; I&#x2097; for kVA without the pf factor.',
+              'You convert kW &harr; kVA via pf at every transformer, generator and DNO supply sizing exercise — never assume unity pf on real BSE loads.',
+              'You apply two-wattmeter method (3-wire delta) or three-wattmeter method (4-wire star) for measurement on test sheets and energy submetering.',
+              'You size PFC banks via kVAr = kW &times; (tan&phi;&#x2081; &minus; tan&phi;&#x2082;) — target 0.95 pf to clear DNO reactive penalties on commercial tariffs.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 311.2 (Diversity)"
+            clause="In determining the maximum demand of an installation or part thereof, diversity may be taken into account."
+            meaning={
+              <>
+                BS 7671 311.2 lets you apply diversity (CIBSE Guide F or IET On-Site
+                Guide tables) to connected three-phase loads when calculating maximum
+                demand for transformer and DNO supply sizing. As BSE designer your
+                arithmetic chain is: nameplate kW &rarr; diversity factor &rarr; assumed pf
+                &rarr; kVA &rarr; round up to standard transformer/DNO rating. This is the
+                single most commercially significant calculation on the project &mdash;
+                the substation rating is the basis of the connection charge.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026, Reg 311.2; CIBSE Guide F (Energy efficiency in buildings); IET On-Site Guide diversity tables; ENA Engineering Recommendation P28 / G99"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate three-phase real, apparent, and reactive power',
               'Apply the power triangle to solve practical problems',
               'Understand the two-wattmeter method for power measurement',
               'Determine power factor from measurements',
               'Size transformers and main supplies for buildings',
               'Calculate power factor correction requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Three-Phase Power Formula */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Three-Phase Real Power Formula
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="Three-phase power has three forms — real (kW), apparent (kVA) and reactive (kVAr) — linked by the power triangle and power factor."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Real power (P):</strong> √3 × VL × IL × cos φ (kW)
+              </li>
+              <li>
+                <strong>Apparent power (S):</strong> √3 × VL × IL (kVA)
+              </li>
+              <li>
+                <strong>Reactive power (Q):</strong> √3 × VL × IL × sin φ (kVAr)
+              </li>
+              <li>
+                <strong>Power factor:</strong> P/S = cos φ (0 to 1)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Transformer sizing:</strong> Based on kVA not kW
+              </li>
+              <li>
+                <strong>Maximum demand:</strong> Typically 0.8-0.9 pf assumed
+              </li>
+              <li>
+                <strong>Supply agreements:</strong> kVA charges for poor pf
+              </li>
+              <li>
+                <strong>PF correction:</strong> Capacitors to reduce kVA demand
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Three-Phase Real Power Formula">
             <p>
               Three-phase real power (also called true power or active power) represents the actual
               work done by the electrical system - the power that drives motors, heats elements, and
               produces light. It is measured in kilowatts (kW) or watts (W).
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fundamental Three-Phase Power Equation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                P = √3 × V<sub>L</sub> × I<sub>L</sub> × cos φ
-              </p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>P = Real power (watts)</p>
-                <p>VL = Line voltage (400V in UK)</p>
-                <p>IL = Line current (amps)</p>
-                <p>cos φ = Power factor</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Why √3 (1.732)?</p>
-              <p className="text-sm text-white">
-                The √3 factor arises from the 120° phase displacement between the three phases. In a
-                balanced three-phase system, power is delivered continuously (unlike single-phase
-                which pulsates). The mathematical derivation shows that total instantaneous power
-                equals √3 × VL × IL × cos φ at all times.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Alternative Forms</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Uses</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">When to Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        P = √3 × VL × IL × cos φ
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Line values</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most common - direct measurement
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        P = 3 × VP × IP × cos φ
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Phase values</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        When phase values are known
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        P = 3 × IP² × R
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Current and resistance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Resistive loads, cable losses
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Fundamental Three-Phase Power Equation
+            </p>
+            <p>
+              P = √3 × V<sub>L</sub> × I<sub>L</sub> × cos φ
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>P = Real power (watts)</li>
+              <li>VL = Line voltage (400V in UK)</li>
+              <li>IL = Line current (amps)</li>
+              <li>cos φ = Power factor</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Why √3 (1.732)?</p>
+            <p>
+              The √3 factor arises from the 120° phase displacement between the three phases. In a
+              balanced three-phase system, power is delivered continuously (unlike single-phase
+              which pulsates). The mathematical derivation shows that total instantaneous power
+              equals √3 × VL × IL × cos φ at all times.
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Alternative Forms</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>P = √3 × VL × IL × cos φ:</strong> Line values — most common, direct
+                measurement
+              </li>
+              <li>
+                <strong>P = 3 × VP × IP × cos φ:</strong> Phase values — when phase values are known
+              </li>
+              <li>
+                <strong>P = 3 × IP² × R:</strong> Current and resistance — resistive loads, cable
+                losses
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> For a balanced load, the power in each phase is P/3. The
               √3 factor converts between line and phase quantities automatically.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Apparent Power */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Apparent Power (kVA)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Apparent Power (kVA)">
             <p>
               Apparent power represents the total power supplied to the circuit - the combination of
               real power that does useful work and reactive power that sustains magnetic and
               electric fields. It determines the current flowing and hence the capacity required for
               cables, switchgear, and transformers.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Apparent Power Formula</p>
-              <p className="font-mono text-center text-lg mb-2">
-                S = √3 × V<sub>L</sub> × I<sub>L</sub>
-              </p>
-              <p className="text-xs text-white text-center">
-                Unit: Volt-Amperes (VA) or kilovolt-amperes (kVA)
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why kVA Matters</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Transformers are rated in kVA</li>
-                  <li className="pl-1">Generators are rated in kVA</li>
-                  <li className="pl-1">Supply agreements specify kVA</li>
-                  <li className="pl-1">Cable sizing based on current (hence kVA)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">kVA vs kW</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">kVA = kW only at unity pf</li>
-                  <li className="pl-1">kVA {'>'} kW for all other loads</li>
-                  <li className="pl-1">kW/kVA = power factor</li>
-                  <li className="pl-1">Poor pf means higher kVA for same kW</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Equipment Ratings
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rated In</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformers</td>
-                      <td className="border border-white/10 px-3 py-2">kVA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must handle total current regardless of pf
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Generators</td>
-                      <td className="border border-white/10 px-3 py-2">kVA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Alternator heating depends on current
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">UPS systems</td>
-                      <td className="border border-white/10 px-3 py-2">kVA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inverter capacity is current-limited
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motors</td>
-                      <td className="border border-white/10 px-3 py-2">kW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mechanical output is real power
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heaters</td>
-                      <td className="border border-white/10 px-3 py-2">kW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat output is real power (pf ≈ 1)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Apparent Power Formula</p>
+            <p>
+              S = √3 × V<sub>L</sub> × I<sub>L</sub> — Unit: Volt-Amperes (VA) or kilovolt-amperes
+              (kVA)
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Why kVA Matters</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Transformers are rated in kVA</li>
+              <li>Generators are rated in kVA</li>
+              <li>Supply agreements specify kVA</li>
+              <li>Cable sizing based on current (hence kVA)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">kVA vs kW</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>kVA = kW only at unity pf</li>
+              <li>kVA {'>'} kW for all other loads</li>
+              <li>kW/kVA = power factor</li>
+              <li>Poor pf means higher kVA for same kW</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Typical Equipment Ratings</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Transformers:</strong> kVA — must handle total current regardless of pf
+              </li>
+              <li>
+                <strong>Generators:</strong> kVA — alternator heating depends on current
+              </li>
+              <li>
+                <strong>UPS systems:</strong> kVA — inverter capacity is current-limited
+              </li>
+              <li>
+                <strong>Motors:</strong> kW — mechanical output is real power
+              </li>
+              <li>
+                <strong>Heaters:</strong> kW — heat output is real power (pf ≈ 1)
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Design tip:</strong> When specifying transformers, use kVA and assume the load
               power factor. A 500kVA transformer at pf = 0.8 delivers only 400kW of useful power.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Reactive Power */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Reactive Power (kVAr)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Reactive Power (kVAr)">
             <p>
               Reactive power is the power that oscillates between the source and the reactive
               components (inductors and capacitors) of the load. It does no useful work but is
               essential for establishing magnetic fields in motors and transformers.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reactive Power Formula</p>
-              <p className="font-mono text-center text-lg mb-2">
-                Q = √3 × V<sub>L</sub> × I<sub>L</sub> × sin φ
-              </p>
-              <p className="text-xs text-white text-center">
-                Unit: Volt-Amperes Reactive (VAr) or kilovolt-amperes reactive (kVAr)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Power Triangle</p>
-              <div className="p-4 bg-black/30 rounded text-center">
-                <pre className="text-sm font-mono text-white">
-                  {`              S (kVA)
-             /|
-            / |
-           /  |
-          /   | Q (kVAr)
-         /    |
-        /φ    |
-       /______|
-         P (kW)
-
-S² = P² + Q²
-tan φ = Q/P
-cos φ = P/S (Power Factor)`}
-                </pre>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Types of Reactive Power</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Sign Convention
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inductive (QL)</td>
-                      <td className="border border-white/10 px-3 py-2">Motors, transformers</td>
-                      <td className="border border-white/10 px-3 py-2">Current lags voltage</td>
-                      <td className="border border-white/10 px-3 py-2">+Q (consumed)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capacitive (QC)</td>
-                      <td className="border border-white/10 px-3 py-2">Capacitors, long cables</td>
-                      <td className="border border-white/10 px-3 py-2">Current leads voltage</td>
-                      <td className="border border-white/10 px-3 py-2">-Q (supplied)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Reactive Power Formula</p>
+            <p>
+              Q = √3 × V<sub>L</sub> × I<sub>L</sub> × sin φ — Unit: Volt-Amperes Reactive (VAr) or
+              kilovolt-amperes reactive (kVAr)
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">The Power Triangle</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>S² = P² + Q² (hypotenuse equals apparent power)</li>
+              <li>tan φ = Q/P</li>
+              <li>cos φ = P/S (Power Factor)</li>
+              <li>Real power P sits along the horizontal axis (kW)</li>
+              <li>Reactive power Q sits along the vertical axis (kVAr)</li>
+              <li>Apparent power S is the hypotenuse (kVA)</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Types of Reactive Power</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Inductive (QL):</strong> Motors, transformers — current lags voltage; +Q
+                (consumed)
+              </li>
+              <li>
+                <strong>Capacitive (QC):</strong> Capacitors, long cables — current leads voltage;
+                -Q (supplied)
+              </li>
+            </ul>
             <p className="text-sm text-white italic">
               <strong>Net reactive power:</strong> Q<sub>net</sub> = Q<sub>L</sub> - Q<sub>C</sub>.
               Power factor correction adds capacitive kVAr to cancel inductive kVAr.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 4: Two-Wattmeter Method */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Two-Wattmeter Method for Power Measurement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Two-Wattmeter Method for Power Measurement">
             <p>
               The two-wattmeter method is a practical technique for measuring total power in a
               three-phase, three-wire system. It works for both balanced and unbalanced loads and
               can also determine the power factor.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Connection Arrangement</p>
-              <div className="p-4 bg-black/30 rounded">
-                <pre className="text-sm font-mono text-white">
-                  {`Three-Phase Supply          Load
-     L1 ────────┬─────────────┐
-                │             │
-           W1 [===]           │
-                │             │
-     L2 ────────┼─────────────┼──
-                │             │
-           W2 [===]           │
-                │             │
-     L3 ────────┴─────────────┘
-
-W1: Current coil in L1, voltage coil L1-L2
-W2: Current coil in L3, voltage coil L3-L2`}
-                </pre>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Two-Wattmeter Equations
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-mono text-center mb-1">
-                    P<sub>total</sub> = W<sub>1</sub> + W<sub>2</sub>
-                  </p>
-                  <p className="text-xs text-white text-center">Total real power</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-mono text-center mb-1">
-                    tan φ = √3 × (W<sub>1</sub> - W<sub>2</sub>) / (W<sub>1</sub> + W<sub>2</sub>)
-                  </p>
-                  <p className="text-xs text-white text-center">Power factor angle</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Interpreting Wattmeter Readings
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Power Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">W1 Reading</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">W2 Reading</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Relationship</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.0 (unity)</td>
-                      <td className="border border-white/10 px-3 py-2">Positive</td>
-                      <td className="border border-white/10 px-3 py-2">Positive</td>
-                      <td className="border border-white/10 px-3 py-2">W1 = W2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.866</td>
-                      <td className="border border-white/10 px-3 py-2">Positive</td>
-                      <td className="border border-white/10 px-3 py-2">Positive</td>
-                      <td className="border border-white/10 px-3 py-2">W1 = 2 × W2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.5</td>
-                      <td className="border border-white/10 px-3 py-2">Positive</td>
-                      <td className="border border-white/10 px-3 py-2">Zero</td>
-                      <td className="border border-white/10 px-3 py-2">W2 = 0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">{'<'} 0.5</td>
-                      <td className="border border-white/10 px-3 py-2">Positive</td>
-                      <td className="border border-white/10 px-3 py-2">Negative</td>
-                      <td className="border border-white/10 px-3 py-2">W1 + (-W2) = P</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Connection Arrangement</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>W1: Current coil in L1, voltage coil L1-L2</li>
+              <li>W2: Current coil in L3, voltage coil L3-L2</li>
+              <li>L2 is the common reference for both wattmeter voltage coils</li>
+              <li>No connection to the neutral required</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Two-Wattmeter Equations</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>
+                  P<sub>total</sub> = W<sub>1</sub> + W<sub>2</sub>
+                </strong>{' '}
+                — Total real power
+              </li>
+              <li>
+                <strong>
+                  tan φ = √3 × (W<sub>1</sub> - W<sub>2</sub>) / (W<sub>1</sub> + W<sub>2</sub>)
+                </strong>{' '}
+                — Power factor angle
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Interpreting Wattmeter Readings
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>pf = 1.0 (unity):</strong> W1 positive, W2 positive — W1 = W2
+              </li>
+              <li>
+                <strong>pf = 0.866:</strong> W1 positive, W2 positive — W1 = 2 × W2
+              </li>
+              <li>
+                <strong>pf = 0.5:</strong> W1 positive, W2 zero — W2 = 0
+              </li>
+              <li>
+                <strong>pf {'<'} 0.5:</strong> W1 positive, W2 negative — W1 + (-W2) = P
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Practical note:</strong> Modern three-phase power analysers use digital
               sampling and FFT, but the two-wattmeter principle is still useful for understanding
               readings and verification.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 5: Power Factor in Three-Phase Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Power Factor in Three-Phase Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Power Factor in Three-Phase Systems">
             <p>
               Power factor is the ratio of real power to apparent power. It indicates how
               effectively the electrical power is being converted into useful work output. A poor
               power factor means the supply must provide more current (and hence more kVA) to
               deliver the same amount of useful power.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Power Factor Definition
-              </p>
-              <div className="grid grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">pf = P / S</p>
-                  <p className="text-white text-xs">Basic definition</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">pf = cos φ</p>
-                  <p className="text-white text-xs">Phase angle method</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">pf = kW / kVA</p>
-                  <p className="text-white text-xs">Practical form</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Power Factors by Load Type
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Load Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Power Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Nature</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resistive heaters</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">Unity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Incandescent lamps</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">Unity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fluorescent lamps (electronic)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.95-0.98</td>
-                      <td className="border border-white/10 px-3 py-2">Lagging (corrected)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED drivers</td>
-                      <td className="border border-white/10 px-3 py-2">0.90-0.95</td>
-                      <td className="border border-white/10 px-3 py-2">Varies (often corrected)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Induction motors (full load)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.80-0.90</td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Induction motors (light load)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.30-0.50</td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable frequency drives
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.95-0.98</td>
-                      <td className="border border-white/10 px-3 py-2">Near unity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Welding equipment</td>
-                      <td className="border border-white/10 px-3 py-2">0.50-0.70</td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Power Factor Definition</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>pf = P / S</strong> — Basic definition
+              </li>
+              <li>
+                <strong>pf = cos φ</strong> — Phase angle method
+              </li>
+              <li>
+                <strong>pf = kW / kVA</strong> — Practical form
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Typical Power Factors by Load Type
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Resistive heaters:</strong> 1.0 — unity
+              </li>
+              <li>
+                <strong>Incandescent lamps:</strong> 1.0 — unity
+              </li>
+              <li>
+                <strong>Fluorescent lamps (electronic):</strong> 0.95-0.98 — lagging (corrected)
+              </li>
+              <li>
+                <strong>LED drivers:</strong> 0.90-0.95 — varies (often corrected)
+              </li>
+              <li>
+                <strong>Induction motors (full load):</strong> 0.80-0.90 — lagging
+              </li>
+              <li>
+                <strong>Induction motors (light load):</strong> 0.30-0.50 — lagging
+              </li>
+              <li>
+                <strong>Variable frequency drives:</strong> 0.95-0.98 — near unity
+              </li>
+              <li>
+                <strong>Welding equipment:</strong> 0.50-0.70 — lagging
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Economic impact:</strong> Improving power factor from 0.7 to 0.95 reduces the
               current (and hence kVA demand) by 26% for the same kW output.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 6: kW vs kVA in Specifications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            kW vs kVA in Specifications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="kW vs kVA in Specifications">
             <p>
               Understanding when to use kW and when to use kVA is crucial for correct specification
               of electrical equipment. Using the wrong unit can lead to under-sized or over-sized
               equipment, with cost and performance implications.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use Each Unit</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Specify in kW when:</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Describing mechanical output (motors)</li>
-                    <li className="pl-1">Calculating energy consumption (kWh)</li>
-                    <li className="pl-1">Specifying heating loads</li>
-                    <li className="pl-1">Determining electricity costs</li>
-                    <li className="pl-1">Comparing equipment efficiency</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Specify in kVA when:</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Sizing transformers</li>
-                    <li className="pl-1">Specifying generators</li>
-                    <li className="pl-1">Sizing UPS systems</li>
-                    <li className="pl-1">Determining cable sizes</li>
-                    <li className="pl-1">Agreeing supply capacity with DNO</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Conversion Between kW and kVA
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-center">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-mono mb-1">kVA = kW / pf</p>
-                  <p className="text-xs text-white">kW to kVA</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-mono mb-1">kW = kVA × pf</p>
-                  <p className="text-xs text-white">kVA to kW</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example: Sizing a Transformer
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Building load: 200kW at 0.8 power factor</p>
-                <p className="mt-2">
-                  Required kVA = 200 / 0.8 = <strong>250 kVA</strong>
-                </p>
-                <p className="mt-2">
-                  Select transformer: <strong>315 kVA</strong> (next standard size)
-                </p>
-                <p className="mt-2 text-white">This provides ~25% spare capacity for growth</p>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Specify in kW when:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Describing mechanical output (motors)</li>
+              <li>Calculating energy consumption (kWh)</li>
+              <li>Specifying heating loads</li>
+              <li>Determining electricity costs</li>
+              <li>Comparing equipment efficiency</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Specify in kVA when:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sizing transformers</li>
+              <li>Specifying generators</li>
+              <li>Sizing UPS systems</li>
+              <li>Determining cable sizes</li>
+              <li>Agreeing supply capacity with DNO</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Conversion Between kW and kVA</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>kVA = kW / pf</strong> — kW to kVA
+              </li>
+              <li>
+                <strong>kW = kVA × pf</strong> — kVA to kW
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example: Sizing a Transformer</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Building load: 200kW at 0.8 power factor</li>
+              <li>
+                Required kVA = 200 / 0.8 = <strong>250 kVA</strong>
+              </li>
+              <li>
+                Select transformer: <strong>315 kVA</strong> (next standard size)
+              </li>
+              <li>This provides ~25% spare capacity for growth</li>
+            </ul>
             <p className="text-sm text-white italic">
               <strong>Common error:</strong> Specifying a 200kW generator for a 200kW load. At
               0.8pf, this load requires 250kVA, so a 250kVA (200kW) generator would be fully loaded.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 7: Maximum Demand Calculations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
-            Maximum Demand Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Maximum Demand Calculations">
             <p>
               Maximum demand (MD) is the highest load expected to occur at any one time. It
               determines the capacity of the incoming supply, main cables, and distribution
               equipment. Accurate MD assessment is essential for cost-effective design.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maximum Demand Calculation Process
-              </p>
-              <div className="p-4 rounded bg-white/5">
-                <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                  <li className="pl-1">List all connected loads with their ratings</li>
-                  <li className="pl-1">
-                    Apply diversity factors from BS 7671 Appendix 1 or experience
-                  </li>
-                  <li className="pl-1">Sum the diversified loads</li>
-                  <li className="pl-1">
-                    Apply an overall building diversity factor if appropriate
-                  </li>
-                  <li className="pl-1">Convert to kVA using expected power factor</li>
-                  <li className="pl-1">Add margin for future growth (typically 20-25%)</li>
-                </ol>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Diversity Factors
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Load Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Diversity Factor
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">0.90-1.00</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High for offices, lower for warehouses
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Socket outlets (commercial)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.30-0.50</td>
-                      <td className="border border-white/10 px-3 py-2">Depends on usage pattern</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC</td>
-                      <td className="border border-white/10 px-3 py-2">0.80-1.00</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Seasonal peaks considered
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lifts</td>
-                      <td className="border border-white/10 px-3 py-2">0.60-0.80</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not all running simultaneously
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooking equipment</td>
-                      <td className="border border-white/10 px-3 py-2">0.60-0.80</td>
-                      <td className="border border-white/10 px-3 py-2">Thermostatic control</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IT equipment</td>
-                      <td className="border border-white/10 px-3 py-2">0.70-0.90</td>
-                      <td className="border border-white/10 px-3 py-2">Varies with occupancy</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Power Factor Assumptions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Office buildings:</strong> 0.85-0.90 (mixed lighting, IT, HVAC)
-                </li>
-                <li className="pl-1">
-                  <strong>Industrial:</strong> 0.75-0.85 (heavy motor loads)
-                </li>
-                <li className="pl-1">
-                  <strong>Retail:</strong> 0.90-0.95 (mainly lighting, some HVAC)
-                </li>
-                <li className="pl-1">
-                  <strong>Data centres:</strong> 0.95-0.98 (UPS with pf correction)
-                </li>
-              </ul>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Maximum Demand Calculation Process
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>List all connected loads with their ratings</li>
+              <li>Apply diversity factors from BS 7671 Appendix 1 or experience</li>
+              <li>Sum the diversified loads</li>
+              <li>Apply an overall building diversity factor if appropriate</li>
+              <li>Convert to kVA using expected power factor</li>
+              <li>Add margin for future growth (typically 20-25%)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Typical Diversity Factors</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lighting:</strong> 0.90-1.00 — high for offices, lower for warehouses
+              </li>
+              <li>
+                <strong>Socket outlets (commercial):</strong> 0.30-0.50 — depends on usage pattern
+              </li>
+              <li>
+                <strong>HVAC:</strong> 0.80-1.00 — seasonal peaks considered
+              </li>
+              <li>
+                <strong>Lifts:</strong> 0.60-0.80 — not all running simultaneously
+              </li>
+              <li>
+                <strong>Cooking equipment:</strong> 0.60-0.80 — thermostatic control
+              </li>
+              <li>
+                <strong>IT equipment:</strong> 0.70-0.90 — varies with occupancy
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Power Factor Assumptions</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Office buildings:</strong> 0.85-0.90 (mixed lighting, IT, HVAC)
+              </li>
+              <li>
+                <strong>Industrial:</strong> 0.75-0.85 (heavy motor loads)
+              </li>
+              <li>
+                <strong>Retail:</strong> 0.90-0.95 (mainly lighting, some HVAC)
+              </li>
+              <li>
+                <strong>Data centres:</strong> 0.95-0.98 (UPS with pf correction)
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>DNO requirements:</strong> Electricity distributors require power factor of
               0.95 or better. Consumers with poor pf may face kVA-based maximum demand charges.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 8: Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
-            Building Services: Transformer Sizing and Supply Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Building Services: Transformer Sizing and Supply Calculations">
             <p>
               Building services engineers must correctly size electrical infrastructure to meet the
               building's power requirements safely, efficiently, and economically. This involves
               understanding the relationship between connected load, maximum demand, and supply
               capacity.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Transformer Sizing Methodology
-              </p>
-              <div className="bg-black/30 p-4 rounded text-sm text-white">
-                <ol className="space-y-2 list-decimal list-outside ml-5">
-                  <li className="pl-1">Calculate maximum demand (kW) with diversity</li>
-                  <li className="pl-1">Divide by expected power factor: kVA = kW / pf</li>
-                  <li className="pl-1">Add allowance for future growth (typically 20-25%)</li>
-                  <li className="pl-1">Select next standard transformer size</li>
-                  <li className="pl-1">
-                    Verify transformer can handle starting currents (motor loads)
-                  </li>
-                </ol>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Standard UK Transformer Ratings (Oil-Filled)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">kVA Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Full Load Current (A)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                      <td className="border border-white/10 px-3 py-2">144</td>
-                      <td className="border border-white/10 px-3 py-2">Small retail, workshops</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">200</td>
-                      <td className="border border-white/10 px-3 py-2">289</td>
-                      <td className="border border-white/10 px-3 py-2">Medium commercial</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">315</td>
-                      <td className="border border-white/10 px-3 py-2">455</td>
-                      <td className="border border-white/10 px-3 py-2">Small office blocks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">500</td>
-                      <td className="border border-white/10 px-3 py-2">722</td>
-                      <td className="border border-white/10 px-3 py-2">Medium office, retail</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">800</td>
-                      <td className="border border-white/10 px-3 py-2">1155</td>
-                      <td className="border border-white/10 px-3 py-2">Large commercial</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1000</td>
-                      <td className="border border-white/10 px-3 py-2">1443</td>
-                      <td className="border border-white/10 px-3 py-2">Multi-storey, industrial</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1600</td>
-                      <td className="border border-white/10 px-3 py-2">2309</td>
-                      <td className="border border-white/10 px-3 py-2">Large industrial</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Note: Full load current calculated at 400V three-phase: I = kVA × 1000 / (√3 × 400)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Supply Agreement Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Agreed supply capacity (ASC):</strong> The kVA the DNO agrees to provide
-                </li>
-                <li className="pl-1">
-                  <strong>Available capacity:</strong> What the local network can support
-                </li>
-                <li className="pl-1">
-                  <strong>Connection charge:</strong> Based on capacity and distance to network
-                </li>
-                <li className="pl-1">
-                  <strong>Reactive power charges:</strong> Applied if pf {'<'} 0.95
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum demand indicator:</strong> Records peak kVA for billing
-                </li>
-              </ul>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Transformer Sizing Methodology</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Calculate maximum demand (kW) with diversity</li>
+              <li>Divide by expected power factor: kVA = kW / pf</li>
+              <li>Add allowance for future growth (typically 20-25%)</li>
+              <li>Select next standard transformer size</li>
+              <li>Verify transformer can handle starting currents (motor loads)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Standard UK Transformer Ratings (Oil-Filled)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>100 kVA:</strong> Full load 144A — small retail, workshops
+              </li>
+              <li>
+                <strong>200 kVA:</strong> Full load 289A — medium commercial
+              </li>
+              <li>
+                <strong>315 kVA:</strong> Full load 455A — small office blocks
+              </li>
+              <li>
+                <strong>500 kVA:</strong> Full load 722A — medium office, retail
+              </li>
+              <li>
+                <strong>800 kVA:</strong> Full load 1155A — large commercial
+              </li>
+              <li>
+                <strong>1000 kVA:</strong> Full load 1443A — multi-storey, industrial
+              </li>
+              <li>
+                <strong>1600 kVA:</strong> Full load 2309A — large industrial
+              </li>
+              <li>Note: Full load current calculated at 400V three-phase: I = kVA × 1000 / (√3 × 400)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Supply Agreement Considerations
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Agreed supply capacity (ASC):</strong> The kVA the DNO agrees to provide
+              </li>
+              <li>
+                <strong>Available capacity:</strong> What the local network can support
+              </li>
+              <li>
+                <strong>Connection charge:</strong> Based on capacity and distance to network
+              </li>
+              <li>
+                <strong>Reactive power charges:</strong> Applied if pf {'<'} 0.95
+              </li>
+              <li>
+                <strong>Maximum demand indicator:</strong> Records peak kVA for billing
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Cost optimisation:</strong> Accurately sizing supply capacity avoids paying
               for unused capacity while ensuring sufficient headroom for operational peaks and
               future growth.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Example 1: Three-Phase Motor Power Calculation
+            </p>
+            <p>
+              <strong>Question:</strong> A three-phase induction motor draws 45A at 400V with a
+              power factor of 0.85. Calculate the real, apparent, and reactive power.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Apparent power: S = √3 × VL × IL</li>
+              <li>
+                S = 1.732 × 400 × 45 = <strong>31,176 VA = 31.2 kVA</strong>
+              </li>
+              <li>Real power: P = S × cos φ</li>
+              <li>
+                P = 31.2 × 0.85 = <strong>26.5 kW</strong>
+              </li>
+              <li>Reactive power: Q = S × sin φ</li>
+              <li>sin φ = sin(cos⁻¹ 0.85) = 0.527</li>
+              <li>
+                Q = 31.2 × 0.527 = <strong>16.4 kVAr</strong>
+              </li>
+              <li>Check: √(26.5² + 16.4²) = √(702 + 269) = √971 = 31.2 kVA ✓</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Example 2: Two-Wattmeter Method
+            </p>
+            <p>
+              <strong>Question:</strong> Two wattmeters connected to a balanced three-phase load
+              read 42kW and 18kW. Calculate the total power and power factor.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Total power: P = W1 + W2</li>
+              <li>
+                P = 42 + 18 = <strong>60 kW</strong>
+              </li>
+              <li>Power factor angle: tan φ = √3 × (W1 - W2) / (W1 + W2)</li>
+              <li>tan φ = 1.732 × (42 - 18) / (42 + 18)</li>
+              <li>tan φ = 1.732 × 24 / 60 = 0.693</li>
+              <li>φ = tan⁻¹(0.693) = 34.7°</li>
+              <li>
+                Power factor: pf = cos φ = cos(34.7°) = <strong>0.82 lagging</strong>
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Example 3: Building Maximum Demand
+            </p>
+            <p>
+              <strong>Question:</strong> Calculate the transformer size for an office building
+              with: Lighting 80kW, Small power 120kW, HVAC 200kW, Lifts 60kW. Apply appropriate
+              diversity.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Apply diversity factors:</li>
+              <li>Lighting: 80 × 0.95 = 76 kW</li>
+              <li>Small power: 120 × 0.40 = 48 kW</li>
+              <li>HVAC: 200 × 0.85 = 170 kW</li>
+              <li>Lifts: 60 × 0.70 = 42 kW</li>
+              <li>
+                Total diversified load = 76 + 48 + 170 + 42 = <strong>336 kW</strong>
+              </li>
+              <li>
+                At pf = 0.85: kVA = 336 / 0.85 = <strong>395 kVA</strong>
+              </li>
+              <li>
+                Add 20% growth: 395 × 1.2 = <strong>474 kVA</strong>
+              </li>
+              <li>
+                Select: <strong>500 kVA transformer</strong>
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Example 4: Power Factor Correction
+            </p>
+            <p>
+              <strong>Question:</strong> A factory has a load of 500kW at 0.7 power factor.
+              Calculate the capacitor kVAr required to improve pf to 0.95.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Original reactive power:</li>
+              <li>φ1 = cos⁻¹(0.7) = 45.57°</li>
+              <li>
+                Q1 = P × tan φ1 = 500 × tan(45.57°) = 500 × 1.02 = <strong>510 kVAr</strong>
+              </li>
+              <li>Target reactive power:</li>
+              <li>φ2 = cos⁻¹(0.95) = 18.19°</li>
+              <li>
+                Q2 = 500 × tan(18.19°) = 500 × 0.329 = <strong>164 kVAr</strong>
+              </li>
+              <li>Capacitor kVAr required = Q1 - Q2</li>
+              <li>
+                QC = 510 - 164 = <strong>346 kVAr</strong>
+              </li>
+              <li>This reduces kVA from 714 to 526 - a 26% reduction in demand</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Three-Phase Motor Power Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A three-phase induction motor draws 45A at 400V with a
-                power factor of 0.85. Calculate the real, apparent, and reactive power.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Apparent power: S = √3 × VL × IL</p>
-                <p>
-                  S = 1.732 × 400 × 45 = <strong>31,176 VA = 31.2 kVA</strong>
-                </p>
-                <p className="mt-2">Real power: P = S × cos φ</p>
-                <p>
-                  P = 31.2 × 0.85 = <strong>26.5 kW</strong>
-                </p>
-                <p className="mt-2">Reactive power: Q = S × sin φ</p>
-                <p>sin φ = sin(cos⁻¹ 0.85) = 0.527</p>
-                <p>
-                  Q = 31.2 × 0.527 = <strong>16.4 kVAr</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Check: √(26.5² + 16.4²) = √(702 + 269) = √971 = 31.2 kVA ✓
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Two-Wattmeter Method
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Two wattmeters connected to a balanced three-phase load
-                read 42kW and 18kW. Calculate the total power and power factor.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Total power: P = W1 + W2</p>
-                <p>
-                  P = 42 + 18 = <strong>60 kW</strong>
-                </p>
-                <p className="mt-2">Power factor angle: tan φ = √3 × (W1 - W2) / (W1 + W2)</p>
-                <p>tan φ = 1.732 × (42 - 18) / (42 + 18)</p>
-                <p>tan φ = 1.732 × 24 / 60 = 0.693</p>
-                <p>φ = tan⁻¹(0.693) = 34.7°</p>
-                <p className="mt-2">
-                  Power factor: pf = cos φ = cos(34.7°) = <strong>0.82 lagging</strong>
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>P = √3 × VL × IL × cos φ</strong> — Three-phase real power (kW)
+              </li>
+              <li>
+                <strong>S = √3 × VL × IL</strong> — Apparent power (kVA)
+              </li>
+              <li>
+                <strong>Q = √3 × VL × IL × sin φ</strong> — Reactive power (kVAr)
+              </li>
+              <li>
+                <strong>S² = P² + Q²</strong> — Power triangle relationship
+              </li>
+              <li>
+                <strong>pf = P / S = cos φ</strong> — Power factor
+              </li>
+              <li>
+                <strong>P = W1 + W2</strong> — Two-wattmeter total power
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Values to Remember</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                √3 = <strong>1.732</strong>
+              </li>
+              <li>
+                UK three-phase line voltage: <strong>400V</strong>
+              </li>
+              <li>
+                Typical motor pf (full load): <strong>0.85</strong>
+              </li>
+              <li>
+                DNO target power factor: <strong>0.95</strong>
+              </li>
+              <li>
+                Transformer sizing margin: <strong>20-25%</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Building Maximum Demand
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the transformer size for an office building
-                with: Lighting 80kW, Small power 120kW, HVAC 200kW, Lifts 60kW. Apply appropriate
-                diversity.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Apply diversity factors:</p>
-                <p>Lighting: 80 × 0.95 = 76 kW</p>
-                <p>Small power: 120 × 0.40 = 48 kW</p>
-                <p>HVAC: 200 × 0.85 = 170 kW</p>
-                <p>Lifts: 60 × 0.70 = 42 kW</p>
-                <p className="mt-2">
-                  Total diversified load = 76 + 48 + 170 + 42 = <strong>336 kW</strong>
-                </p>
-                <p className="mt-2">
-                  At pf = 0.85: kVA = 336 / 0.85 = <strong>395 kVA</strong>
-                </p>
-                <p className="mt-2">
-                  Add 20% growth: 395 × 1.2 = <strong>474 kVA</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  Select: <strong>500 kVA transformer</strong>
-                </p>
-              </div>
-            </div>
+          <CommonMistake
+            title="Common three-phase power calculation mistakes"
+            whatHappens={
+              <>
+                Confusing kW and kVA when sizing transformers. Forgetting the √3 factor in
+                three-phase formulas. Ignoring power factor — same kW needs more current at low pf.
+                Sizing without diversity factors. Forgetting to add a future-growth margin.
+              </>
+            }
+            doInstead={
+              <>
+                Always size transformers/generators in kVA. Include √3 (1.732) in every three-phase
+                calculation. Convert kW to kVA using the load's expected pf. Apply diversity from
+                BS 7671 Appendix 1 to every load type. Add 20-25% headroom for growth.
+              </>
+            }
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Power Factor Correction
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A factory has a load of 500kW at 0.7 power factor.
-                Calculate the capacitor kVAr required to improve pf to 0.95.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Original reactive power:</p>
-                <p>φ1 = cos⁻¹(0.7) = 45.57°</p>
-                <p>
-                  Q1 = P × tan φ1 = 500 × tan(45.57°) = 500 × 1.02 = <strong>510 kVAr</strong>
-                </p>
-                <p className="mt-2">Target reactive power:</p>
-                <p>φ2 = cos⁻¹(0.95) = 18.19°</p>
-                <p>
-                  Q2 = 500 × tan(18.19°) = 500 × 0.329 = <strong>164 kVAr</strong>
-                </p>
-                <p className="mt-2">Capacitor kVAr required = Q1 - Q2</p>
-                <p>
-                  QC = 510 - 164 = <strong>346 kVAr</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This reduces kVA from 714 to 526 - a 26% reduction in demand
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Hospital MRI suite — three-phase supply assessment"
+            situation={
+              <>
+                A new MRI suite has the following three-phase loads: 80 kVA scanner
+                (helium compressor + RF cabinet) at 0.85 pf, 25 kVA chiller plant at
+                0.78 pf, 12 kW (single-phase, 230 V) lighting/SP at 0.95 pf. The local
+                LV substation feeds the suite via a dedicated 200 A submain. You need to
+                confirm capacity and design the PFC, if required.
+              </>
+            }
+            whatToDo={
+              <>
+                Compute kVA per circuit: scanner 80 kVA, chiller 25 kVA, lighting/SP =
+                12/0.95 = 12.6 kVA. Total connected = 117.6 kVA. Apply diversity (scanner
+                100 % during scans, chiller 100 % when scanning, lighting 80 %): operating
+                kVA &asymp; 115 kVA. Submain capacity at 400 V three-phase: 200 A &times;
+                400 &times; &radic;3 = 138 kVA &mdash; just adequate. Combined pf
+                &asymp; 0.83 &mdash; below 0.95 target. Specify a 25 kVAr detuned PFC bank
+                local to the suite to lift pf to 0.96 and free up busbar headroom.
+              </>
+            }
+            whyItMatters={
+              <>
+                MRI suites are pf-poor, harmonic-rich (RF amplifier), and intolerant of
+                voltage dip (each helium re-fill costs ~&pound;15k). The three-phase
+                arithmetic the BSE engineer signs off here drives the substation kVA, the
+                cable size, the PFC sizing, and the protection coordination upstream &mdash;
+                getting it wrong costs five-figure variations during commissioning.
+              </>
+            }
+          />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <SectionRule />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>P = √3 × VL × IL × cos φ</strong> — Three-phase real power (kW)
-                </li>
-                <li className="pl-1">
-                  <strong>S = √3 × VL × IL</strong> — Apparent power (kVA)
-                </li>
-                <li className="pl-1">
-                  <strong>Q = √3 × VL × IL × sin φ</strong> — Reactive power (kVAr)
-                </li>
-                <li className="pl-1">
-                  <strong>S² = P² + Q²</strong> — Power triangle relationship
-                </li>
-                <li className="pl-1">
-                  <strong>pf = P / S = cos φ</strong> — Power factor
-                </li>
-                <li className="pl-1">
-                  <strong>P = W1 + W2</strong> — Two-wattmeter total power
-                </li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  √3 = <strong>1.732</strong>
-                </li>
-                <li className="pl-1">
-                  UK three-phase line voltage: <strong>400V</strong>
-                </li>
-                <li className="pl-1">
-                  Typical motor pf (full load): <strong>0.85</strong>
-                </li>
-                <li className="pl-1">
-                  DNO target power factor: <strong>0.95</strong>
-                </li>
-                <li className="pl-1">
-                  Transformer sizing margin: <strong>20-25%</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Confusing kW and kVA</strong> — Transformers need kVA rating, not kW
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting √3</strong> — Three-phase formulas require this factor
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring power factor</strong> — Same kW needs more current at low pf
-                </li>
-                <li className="pl-1">
-                  <strong>No diversity</strong> — Not all loads operate simultaneously
-                </li>
-                <li className="pl-1">
-                  <strong>No growth margin</strong> — Always allow for future expansion
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Three-phase real power: P = &radic;3 &times; V&#x2097; &times; I&#x2097; &times; cos&phi; — the &radic;3 catches every apprentice but is non-negotiable.',
+              'Three-phase apparent power: S = &radic;3 &times; V&#x2097; &times; I&#x2097; — the value you size transformers and supply cables to.',
+              'Three-phase reactive power: Q = &radic;3 &times; V&#x2097; &times; I&#x2097; &times; sin&phi; — drives PFC capacitor sizing.',
+              'Two-wattmeter method (3-wire delta): P&#x209c;&#x2092;&#x209c; = W&#x2081; + W&#x2082; — pf can be derived from the wattmeter ratio.',
+              'Three-wattmeter method (4-wire star with neutral): P&#x209c;&#x2092;&#x209c; = W&#x2081; + W&#x2082; + W&#x2083; — required for unbalanced star loads.',
+              'Convert kW &harr; kVA via pf — kVA = kW / pf; sized at the assumed pf for the load mix (0.85 office typical, 0.78 refrigeration, 0.92 lighting).',
+              'PFC sizing: kVAr = kW &times; (tan&phi;&#x2081; &minus; tan&phi;&#x2082;) — target 0.95 pf to clear DNO reactive penalties.',
+              'BS 7671 Reg 311.2 allows diversity in maximum-demand calc — the basis of every transformer and DNO supply sizing.',
+            ]}
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Power Types</p>
-                <ul className="space-y-0.5">
-                  <li>Real (P) - kW - Does useful work</li>
-                  <li>Apparent (S) - kVA - Total supplied</li>
-                  <li>Reactive (Q) - kVAr - Sustains fields</li>
-                  <li>Power factor = kW / kVA</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Services</p>
-                <ul className="space-y-0.5">
-                  <li>Transformers rated in kVA</li>
-                  <li>Target pf: 0.95 or better</li>
-                  <li>Apply diversity factors</li>
-                  <li>Allow 20-25% growth margin</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section4-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Balanced and Unbalanced Loads
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section4-5">
-              Next: Cable Sizing and Voltage Drop
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section4-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Balanced and Unbalanced Loads
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section4-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Cable Sizing and Voltage Drop
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

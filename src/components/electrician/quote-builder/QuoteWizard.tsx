@@ -14,12 +14,21 @@ import { transformCostOutputToQuoteItems } from '@/utils/cost-to-quote-transform
 import { useOptionalVoiceFormContext, FormField } from '@/contexts/VoiceFormContext';
 import type { Quote, QuoteClient, QuoteItem, JobDetails, QuoteSettings } from '@/types/quote';
 
-/** Section header with gradient line — matches certificate form pattern */
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-sm font-bold text-white uppercase tracking-wide">{title}</h2>
-  </div>
+/**
+ * Section header — gradient line + status dot + uppercase title.
+ * Matches the InvoiceWizard pattern so quote/invoice creation reads as the
+ * same product. `completed` toggles the dot from neutral to emerald.
+ */
+const SectionHeader = ({ title, completed }: { title: string; completed?: boolean }) => (
+  <>
+    <div className="mb-3 flex items-center gap-2">
+      <div className="h-[2px] flex-1 rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+      <div
+        className={`w-2 h-2 rounded-full flex-shrink-0 ${completed ? 'bg-emerald-400' : 'bg-white/20'}`}
+      />
+    </div>
+    <h2 className="text-sm font-bold text-white uppercase tracking-wide mb-3">{title}</h2>
+  </>
 );
 
 interface QuoteWizardProps {
@@ -318,18 +327,19 @@ export const QuoteWizard = ({
 
       {/* 1. Client Details */}
       <section>
+        <SectionHeader title="Client Details" completed={!!quote.client?.name} />
         <ClientDetailsStep client={quote.client} onUpdate={updateClient} quoteId={quote.id} />
       </section>
 
       {/* 2. Job Details */}
       <section>
-        <SectionHeader title="Job Details" />
+        <SectionHeader title="Job Details" completed={!!quote.jobDetails?.title} />
         <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />
       </section>
 
       {/* 3. Quote Items */}
       <section>
-        <SectionHeader title="Quote Items" />
+        <SectionHeader title="Quote Items" completed={(quote.items?.length ?? 0) > 0} />
         <EnhancedQuoteItemsStep
           items={quote.items || []}
           onAdd={addItem}
@@ -343,13 +353,13 @@ export const QuoteWizard = ({
 
       {/* 4. Settings & Pricing */}
       <section>
-        <SectionHeader title="Settings" />
+        <SectionHeader title="Settings" completed />
         <QuoteSettingsStep settings={quote.settings} onUpdate={updateSettings} />
       </section>
 
       {/* 5. Review */}
       <section>
-        <SectionHeader title="Quote Summary" />
+        <SectionHeader title="Quote Summary" completed />
         <QuoteReviewStep quote={quote} />
       </section>
 

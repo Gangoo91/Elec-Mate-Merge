@@ -428,7 +428,7 @@ const AM2Module4Section5 = () => {
           >
             <p>
               <strong>Know the Limits:</strong> Memorise maximum Zs values for common MCBs at
-              A4:2026 — B32=1.37Ω, B20=2.19Ω, B16=2.74Ω (Cmin = 0.95 applied). RCD trip limit
+              A4:2026 — B32=1.37Ω, B20=2.19Ω, B16=2.73Ω (Cmin = 0.95 applied). RCD trip limit
               (A4:2026): single AC test at 1×IΔn must trip within 300ms for 30mA devices (the 5×IΔn
               test was deleted at A4:2026). Minimum insulation resistance: 1MΩ for most circuits.
             </p>
@@ -508,8 +508,8 @@ const AM2Module4Section5 = () => {
             }
             doInstead={
               <>
-                Lock in the A4:2026 figures before AM2 day: B-curve at 230 V — B6 ≈ 7.28 Ω · B16 ≈
-                2.74 Ω · <strong>B32 = 1.37 Ω</strong> · B40 ≈ 1.09 Ω. Then apply the 0.8 rule for
+                Lock in the A4:2026 figures before AM2 day: B-curve at 230 V — B6 = 7.28 Ω · B16 =
+                2.73 Ω · <strong>B32 = 1.37 Ω</strong> · B40 = 1.09 Ω. Then apply the 0.8 rule for
                 cold-vs-hot correction: measured cold Zs on a B32 must be ≤ 0.8 × 1.37 = 1.10 Ω.
                 Your 1.40 Ω reading is a non-compliance under both the table max AND the 0.8 rule —
                 state both.

@@ -568,7 +568,7 @@ const HNCModule5Section4_4 = () => {
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Regulatory awareness</td>
                       <td className="border border-white/10 px-3 py-2">
-                        BS 7671 18th Edition, Building Regulations
+                        BS 7671:2018+A4:2026, Building Regulations
                       </td>
                     </tr>
                     <tr>

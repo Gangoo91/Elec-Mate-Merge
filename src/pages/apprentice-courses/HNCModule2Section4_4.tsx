@@ -1,8 +1,27 @@
-import { ArrowLeft, Volume2, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 4 · Subsection 4 — Sound Fundamentals
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Sound as mechanical wave motion, frequency/wavelength, the decibel scale,
+ *   inverse-square law and A-weighting — the acoustic literacy underpinning every
+ *   plant-noise breakout calculation and every NR/NC compliance check.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Sound Fundamentals - HNC Module 2 Section 4.4';
@@ -212,741 +231,498 @@ const faqs = [
 ];
 
 const HNCModule2Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Volume2 className="h-4 w-4" />
-            <span>Module 2.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Sound Fundamentals
-          </h1>
-          <p className="text-white">
-            Frequency, wavelength, decibels, and the physics of sound for building services
-            acoustics
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 4 · Subsection 4"
+            title="Sound Fundamentals"
+            description="Frequency, wavelength, decibels, and the physics of sound for building services acoustics."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Sound:</strong> Pressure waves in air (~343 m/s)
-              </li>
-              <li className="pl-1">
-                <strong>Frequency:</strong> 20 Hz - 20 kHz (audible)
-              </li>
-              <li className="pl-1">
-                <strong>Decibel:</strong> Logarithmic scale (0-140 dB)
-              </li>
-              <li className="pl-1">
-                <strong>Inverse square:</strong> -6 dB per doubling distance
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Plant noise:</strong> Typically 70-95 dB(A)
-              </li>
-              <li className="pl-1">
-                <strong>Office target:</strong> 35-45 dB(A)
-              </li>
-              <li className="pl-1">
-                <strong>Ductwork:</strong> Breakout and regenerated noise
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> dB(A) and NR curves
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You handle the decibel scale fluently — adding sources logarithmically (10 × log₁₀ Σ10^(Lᵢ/10)) rather than arithmetically.',
+              'You apply the inverse-square law (6 dB drop per doubling of distance) to plant breakout calculations and BS 4142 assessments.',
+              'You convert between SPL (Lp) and SWL (Lw) using Lp = Lw − 20 log r − 11 (free field, point source) when the manufacturer&rsquo;s data is given as SWL.',
+              'You apply A-weighting (dBA) for human-response work and C-weighting (dBC) for impulsive/low-frequency plant noise.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 4142:2014+A1:2019 — Methods for rating and assessing industrial and commercial sound"
+            clause="Method for rating sound from industrial and commercial premises (including HVAC plant) by reference to a representative background sound level, with corrections for tonal, impulsive and intermittent character."
+            meaning={
+              <>
+                BS 4142 is the UK reference for assessing whether plant noise is likely to
+                generate complaint at the nearest residential receptor. As HNC engineer you
+                use it for chiller, AHU and dry-cooler positioning, and to brief the
+                acoustic consultant on attenuator selection.
+              </>
+            }
+            cite="Source: BS 4142:2014+A1:2019; CIBSE Guide A — Environmental Design (acoustics chapter); CIBSE Guide B4 — Noise and Vibration Control."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Define sound as mechanical wave motion with frequency and wavelength',
               'Explain the decibel scale and calculate sound pressure levels',
               'Add decibel values from multiple sources correctly',
               'Apply the inverse square law to sound propagation',
               'Understand A-weighting and its significance',
               'Relate frequency to wavelength using c = fλ',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: What is Sound */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What is Sound?
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="What is Sound?"
+            plainEnglish="A pressure wave wobbling through air, water or steel. No medium, no sound — that's why a vacuum is silent."
+          >
             <p>
-              Sound is a mechanical wave - a travelling disturbance in pressure, density, and
+              Sound is a mechanical wave — a travelling disturbance in pressure, density, and
               particle velocity that propagates through an elastic medium. Unlike light, sound
               requires a medium (air, water, solids) and cannot travel through a vacuum.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key properties of sound:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Frequency (f):</strong> Cycles per second, measured in Hertz (Hz)
-                </li>
-                <li className="pl-1">
-                  <strong>Wavelength (λ):</strong> Distance between wave peaks, in metres
-                </li>
-                <li className="pl-1">
-                  <strong>Speed (c):</strong> Propagation velocity, ~343 m/s in air at 20°C
-                </li>
-                <li className="pl-1">
-                  <strong>Amplitude:</strong> Magnitude of pressure variation (relates to loudness)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wave Equation</p>
-              <p className="font-mono text-center text-lg mb-2">c = f × λ</p>
-              <div className="text-xs text-white text-center mt-2">
-                Speed (m/s) = Frequency (Hz) × Wavelength (m)
-              </div>
-              <p className="text-xs text-white text-center mt-2">
-                Rearranged: λ = c/f (wavelength = 343/frequency in air)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Speed of Sound in Different Media
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Medium</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Speed (m/s)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air (20°C)</td>
-                      <td className="border border-white/10 px-3 py-2">343</td>
-                      <td className="border border-white/10 px-3 py-2">Standard reference</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water</td>
-                      <td className="border border-white/10 px-3 py-2">1480</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plumbing noise transmission
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Concrete</td>
-                      <td className="border border-white/10 px-3 py-2">3400</td>
-                      <td className="border border-white/10 px-3 py-2">Structure-borne sound</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Steel</td>
-                      <td className="border border-white/10 px-3 py-2">5100</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pipe and duct transmission
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key properties of sound:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Frequency (f):</strong> Cycles per second, measured in Hertz (Hz)
+              </li>
+              <li>
+                <strong>Wavelength (λ):</strong> Distance between wave peaks, in metres
+              </li>
+              <li>
+                <strong>Speed (c):</strong> Propagation velocity, ~343 m/s in air at 20°C
+              </li>
+              <li>
+                <strong>Amplitude:</strong> Magnitude of pressure variation (relates to loudness)
+              </li>
+            </ul>
+            <p>
+              <strong>Wave Equation:</strong> c = f × λ. Speed (m/s) = Frequency (Hz) × Wavelength
+              (m). Rearranged: λ = c/f (wavelength = 343/frequency in air).
+            </p>
+            <p>
+              <strong>Speed of Sound in Different Media:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Air (20°C):</strong> 343 m/s (standard reference)
+              </li>
+              <li>
+                <strong>Water:</strong> 1480 m/s (plumbing noise transmission)
+              </li>
+              <li>
+                <strong>Concrete:</strong> 3400 m/s (structure-borne sound)
+              </li>
+              <li>
+                <strong>Steel:</strong> 5100 m/s (pipe and duct transmission)
+              </li>
+            </ul>
+            <p>
               <strong>Building services:</strong> Structure-borne sound (through building fabric)
               travels much faster than airborne sound, which is why vibration isolation is critical
               for plant.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 2: Frequency and Wavelength */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Frequency, Wavelength, and Human Hearing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Frequency, Wavelength, and Human Hearing"
+            plainEnglish="Low frequencies = long waves = bass = hard to block. High frequencies = short waves = treble = easy to absorb. Pitch matters when you choose your noise control."
+          >
             <p>
-              Frequency determines the pitch we hear - low frequencies sound bass, high frequencies
+              Frequency determines the pitch we hear — low frequencies sound bass, high frequencies
               sound treble. The human ear can typically detect frequencies from 20 Hz to 20,000 Hz,
               though this range decreases with age.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Frequency Ranges and Wavelengths
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Wavelength</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example Source</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">20 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">17.2 m</td>
-                      <td className="border border-white/10 px-3 py-2">Lowest audible</td>
-                      <td className="border border-white/10 px-3 py-2">Large transformers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">3.4 m</td>
-                      <td className="border border-white/10 px-3 py-2">Low bass</td>
-                      <td className="border border-white/10 px-3 py-2">Fan hum, motors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">500 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">0.69 m</td>
-                      <td className="border border-white/10 px-3 py-2">Mid-range</td>
-                      <td className="border border-white/10 px-3 py-2">Speech fundamentals</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1000 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">0.34 m</td>
-                      <td className="border border-white/10 px-3 py-2">Mid-range (reference)</td>
-                      <td className="border border-white/10 px-3 py-2">Standard test tone</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4000 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">0.086 m</td>
-                      <td className="border border-white/10 px-3 py-2">High (speech clarity)</td>
-                      <td className="border border-white/10 px-3 py-2">Consonant sounds</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">20000 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">0.017 m</td>
-                      <td className="border border-white/10 px-3 py-2">Highest audible</td>
-                      <td className="border border-white/10 px-3 py-2">Above most adults</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Standard Octave Bands</p>
-              <p className="text-sm text-white mb-2">
-                Acoustic analysis uses octave bands with centre frequencies:
-              </p>
-              <p className="font-mono text-sm text-center text-elec-yellow">
-                31.5 | 63 | 125 | 250 | 500 | 1k | 2k | 4k | 8k | 16k Hz
-              </p>
-              <p className="text-xs text-white mt-2 text-center">
-                Each band covers frequencies from 0.707× to 1.414× the centre frequency
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Frequency Ranges and Wavelengths:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>20 Hz:</strong> 17.2 m wavelength, lowest audible, large transformers
+              </li>
+              <li>
+                <strong>100 Hz:</strong> 3.4 m wavelength, low bass, fan hum and motors
+              </li>
+              <li>
+                <strong>500 Hz:</strong> 0.69 m wavelength, mid-range, speech fundamentals
+              </li>
+              <li>
+                <strong>1000 Hz:</strong> 0.34 m wavelength, mid-range (reference), standard test
+                tone
+              </li>
+              <li>
+                <strong>4000 Hz:</strong> 0.086 m wavelength, high (speech clarity), consonant
+                sounds
+              </li>
+              <li>
+                <strong>20000 Hz:</strong> 0.017 m wavelength, highest audible, above most adults
+              </li>
+            </ul>
+            <p>
+              <strong>Standard Octave Bands:</strong> Acoustic analysis uses octave bands with
+              centre frequencies: 31.5 | 63 | 125 | 250 | 500 | 1k | 2k | 4k | 8k | 16k Hz. Each
+              band covers frequencies from 0.707× to 1.414× the centre frequency.
+            </p>
+            <p>
               <strong>Why wavelength matters:</strong> Sound control measures (barriers, absorbers)
               need dimensions comparable to the wavelength. Low frequencies (long λ) are hardest to
               control.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: The Decibel Scale */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            The Decibel Scale
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="The Decibel Scale"
+            plainEnglish="Hearing covers a 10-million-to-1 pressure range. The logarithmic dB scale squashes that into 0-140. +3 dB = double the power. +10 dB = sounds twice as loud."
+          >
             <p>
               The decibel (dB) is a logarithmic unit used to express the ratio of a value to a
               reference value. It is used for sound because human perception of loudness is
               approximately logarithmic, and because sound pressures vary over an enormous range.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sound Pressure Level Formula
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                L<sub>p</sub> = 20 log₁₀(p / p<sub>ref</sub>) dB
-              </p>
-              <div className="text-xs text-white text-center mt-2">
-                Where p<sub>ref</sub> = 20 μPa (threshold of hearing at 1 kHz)
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sound Level Examples</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Subjective</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0 dB</td>
-                      <td className="border border-white/10 px-3 py-2">Threshold of hearing</td>
-                      <td className="border border-white/10 px-3 py-2">Silence</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">30 dB(A)</td>
-                      <td className="border border-white/10 px-3 py-2">Quiet bedroom</td>
-                      <td className="border border-white/10 px-3 py-2">Very quiet</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">45 dB(A)</td>
-                      <td className="border border-white/10 px-3 py-2">Quiet office</td>
-                      <td className="border border-white/10 px-3 py-2">Quiet</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60 dB(A)</td>
-                      <td className="border border-white/10 px-3 py-2">Normal conversation</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">70 dB(A)</td>
-                      <td className="border border-white/10 px-3 py-2">Busy road</td>
-                      <td className="border border-white/10 px-3 py-2">Intrusive</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">85 dB(A)</td>
-                      <td className="border border-white/10 px-3 py-2">Plant room</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Loud (hearing damage risk)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100 dB(A)</td>
-                      <td className="border border-white/10 px-3 py-2">Pneumatic drill</td>
-                      <td className="border border-white/10 px-3 py-2">Very loud</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">140 dB</td>
-                      <td className="border border-white/10 px-3 py-2">Threshold of pain</td>
-                      <td className="border border-white/10 px-3 py-2">Painful</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key decibel relationships:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>+3 dB:</strong> Double the sound power/intensity
-                </li>
-                <li className="pl-1">
-                  <strong>+10 dB:</strong> Perceived as roughly twice as loud
-                </li>
-                <li className="pl-1">
-                  <strong>+20 dB:</strong> Ten times the sound pressure
-                </li>
-                <li className="pl-1">
-                  <strong>-6 dB:</strong> Half the sound pressure (distance doubling)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Sound Pressure Level Formula:</strong> Lp = 20 log₁₀(p / pref) dB. Where pref
+              = 20 μPa (threshold of hearing at 1 kHz).
+            </p>
+            <p>
+              <strong>Sound Level Examples:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>0 dB:</strong> Threshold of hearing — silence
+              </li>
+              <li>
+                <strong>30 dB(A):</strong> Quiet bedroom — very quiet
+              </li>
+              <li>
+                <strong>45 dB(A):</strong> Quiet office — quiet
+              </li>
+              <li>
+                <strong>60 dB(A):</strong> Normal conversation — moderate
+              </li>
+              <li>
+                <strong>70 dB(A):</strong> Busy road — intrusive
+              </li>
+              <li>
+                <strong>85 dB(A):</strong> Plant room — loud (hearing damage risk)
+              </li>
+              <li>
+                <strong>100 dB(A):</strong> Pneumatic drill — very loud
+              </li>
+              <li>
+                <strong>140 dB:</strong> Threshold of pain — painful
+              </li>
+            </ul>
+            <p>
+              <strong>Key decibel relationships:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>+3 dB:</strong> Double the sound power/intensity
+              </li>
+              <li>
+                <strong>+10 dB:</strong> Perceived as roughly twice as loud
+              </li>
+              <li>
+                <strong>+20 dB:</strong> Ten times the sound pressure
+              </li>
+              <li>
+                <strong>-6 dB:</strong> Half the sound pressure (distance doubling)
+              </li>
+            </ul>
+            <p>
               <strong>Perception:</strong> A 10 dB change sounds approximately twice or half as
               loud. A 3 dB change is the smallest difference most people can reliably detect.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 4: dB Addition and Inverse Square Law */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Adding Decibels and the Inverse Square Law
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Adding Decibels and the Inverse Square Law"
+            plainEnglish="Don't add dB like normal numbers. Two equal sources = +3 dB only. And distance: every time you double it, drop another 6 dB outdoors."
+          >
             <p>
               Because decibels are logarithmic, they cannot be added arithmetically. Two 60 dB
               sources do not make 120 dB. Instead, we must convert to linear values (power or
               intensity), add, then convert back.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Adding Decibels</p>
-              <p className="font-mono text-center text-lg mb-2">
-                L<sub>total</sub> = 10 log₁₀(10<sup>L₁/10</sup> + 10<sup>L₂/10</sup> + ...)
-              </p>
-              <div className="mt-3">
-                <p className="text-sm text-white mb-2">
-                  Quick addition guide (add to higher value):
-                </p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-center">
-                  <div className="p-2 rounded bg-black/30">
-                    <p className="text-elec-yellow font-bold">Diff 0-1 dB</p>
-                    <p className="text-white">Add 3 dB</p>
-                  </div>
-                  <div className="p-2 rounded bg-black/30">
-                    <p className="text-elec-yellow font-bold">Diff 2-3 dB</p>
-                    <p className="text-white">Add 2 dB</p>
-                  </div>
-                  <div className="p-2 rounded bg-black/30">
-                    <p className="text-elec-yellow font-bold">Diff 4-9 dB</p>
-                    <p className="text-white">Add 1 dB</p>
-                  </div>
-                  <div className="p-2 rounded bg-black/30">
-                    <p className="text-elec-yellow font-bold">Diff 10+ dB</p>
-                    <p className="text-white">Add 0 dB</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Inverse Square Law</p>
-              <p className="font-mono text-center text-lg mb-2">
-                L<sub>2</sub> = L<sub>1</sub> - 20 log₁₀(r₂/r₁)
-              </p>
-              <p className="text-xs text-white text-center mt-2">
-                For point source in free field: each doubling of distance = -6 dB
-              </p>
-              <div className="mt-3 grid grid-cols-4 gap-2 text-xs text-center">
-                <div className="p-2 rounded bg-black/30">
-                  <p className="text-white">1m</p>
-                  <p className="text-elec-yellow font-bold">80 dB</p>
-                </div>
-                <div className="p-2 rounded bg-black/30">
-                  <p className="text-white">2m</p>
-                  <p className="text-elec-yellow font-bold">74 dB</p>
-                </div>
-                <div className="p-2 rounded bg-black/30">
-                  <p className="text-white">4m</p>
-                  <p className="text-elec-yellow font-bold">68 dB</p>
-                </div>
-                <div className="p-2 rounded bg-black/30">
-                  <p className="text-white">8m</p>
-                  <p className="text-elec-yellow font-bold">62 dB</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Sound Power vs Pressure
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>
-                      L<sub>w</sub> (power):
-                    </strong>{' '}
-                    Source property, constant
-                  </li>
-                  <li className="pl-1">
-                    <strong>
-                      L<sub>p</sub> (pressure):
-                    </strong>{' '}
-                    Measured at a point, varies
-                  </li>
-                  <li className="pl-1">
-                    L<sub>p</sub> = L<sub>w</sub> - 10 log(4πr²) for free field
-                  </li>
-                  <li className="pl-1">
-                    Manufacturer data usually gives L<sub>w</sub>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">A-Weighting</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Adjusts for human ear response</li>
-                  <li className="pl-1">Reduces low frequency contribution</li>
-                  <li className="pl-1">Standard for environmental noise</li>
-                  <li className="pl-1">Expressed as dB(A) or dBA</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Adding Decibels:</strong> L_total = 10 log₁₀(10^(L1/10) + 10^(L2/10) + ...)
+            </p>
+            <p>
+              <strong>Quick addition guide</strong> (add to higher value):
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Difference 0-1 dB → add 3 dB</li>
+              <li>Difference 2-3 dB → add 2 dB</li>
+              <li>Difference 4-9 dB → add 1 dB</li>
+              <li>Difference 10+ dB → add 0 dB</li>
+            </ul>
+            <p>
+              <strong>Inverse Square Law:</strong> L2 = L1 - 20 log₁₀(r2/r1). For point source in
+              free field: each doubling of distance = -6 dB.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1m → 80 dB (reference)</li>
+              <li>2m → 74 dB</li>
+              <li>4m → 68 dB</li>
+              <li>8m → 62 dB</li>
+            </ul>
+            <p>
+              <strong>Sound Power vs Pressure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lw (power):</strong> Source property, constant
+              </li>
+              <li>
+                <strong>Lp (pressure):</strong> Measured at a point, varies
+              </li>
+              <li>Lp = Lw - 10 log(4πr²) for free field</li>
+              <li>Manufacturer data usually gives Lw</li>
+            </ul>
+            <p>
+              <strong>A-Weighting:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Adjusts for human ear response</li>
+              <li>Reduces low frequency contribution</li>
+              <li>Standard for environmental noise</li>
+              <li>Expressed as dB(A) or dBA</li>
+            </ul>
+            <p>
               <strong>In practice:</strong> Indoor spaces have reflections, so sound doesn't decay
               purely by inverse square. The reverberant field maintains levels away from sources.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Find a wavelength, add three plant items, predict outdoor noise at distance — three real acoustics calcs."
+          >
+            <p>
+              <strong>Example 1: Wavelength Calculation.</strong> Calculate the wavelength of fan
+              noise at 250 Hz in air at 20°C.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Using λ = c / f</li>
+              <li>λ = 343 / 250</li>
+              <li>
+                λ = <strong>1.37 metres</strong>
+              </li>
+              <li>This long wavelength explains why low frequency noise is hard to attenuate with
+              thin barriers.</li>
+            </ul>
+            <p>
+              <strong>Example 2: Adding Sound Sources.</strong> A plant room has three pumps
+              producing 72 dB(A), 70 dB(A), and 68 dB(A). What is the combined sound level?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Method: Start with highest, add others sequentially.</li>
+              <li>
+                72 + 70 dB: difference = 2, add 2 → <strong>74 dB</strong>
+              </li>
+              <li>
+                74 + 68 dB: difference = 6, add 1 → <strong>75 dB(A)</strong>
+              </li>
+              <li>Or precisely: 10 log(10^7.2 + 10^7.0 + 10^6.8) = 10 log(15.85×10⁶ + 10×10⁶ +
+              6.31×10⁶)</li>
+              <li>
+                = 10 log(32.16×10⁶) = <strong>75.1 dB(A)</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3: Distance Attenuation.</strong> A cooling tower produces 85 dB(A) at
+              5m. What level would be expected at 40m in open conditions?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Using inverse square law: L2 = L1 - 20 log(r2/r1)</li>
+              <li>L2 = 85 - 20 log(40/5) = 85 - 20 log(8)</li>
+              <li>L2 = 85 - 20 × 0.903 = 85 - 18</li>
+              <li>
+                L2 = <strong>67 dB(A)</strong>
+              </li>
+              <li>Alternative: 5m→10m→20m→40m = 3 doublings = 3×6 = 18 dB reduction.</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Wavelength Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the wavelength of fan noise at 250 Hz in air at
-                20°C.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using λ = c / f</p>
-                <p>λ = 343 / 250</p>
-                <p>
-                  λ = <strong>1.37 metres</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This long wavelength explains why low frequency noise is hard to attenuate with
-                  thin barriers
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Adding Sound Sources
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A plant room has three pumps producing 72 dB(A), 70
-                dB(A), and 68 dB(A). What is the combined sound level?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Method: Start with highest, add others sequentially</p>
-                <p>
-                  72 + 70 dB: difference = 2, add 2 → <strong>74 dB</strong>
-                </p>
-                <p>
-                  74 + 68 dB: difference = 6, add 1 → <strong>75 dB(A)</strong>
-                </p>
-                <p className="mt-2">Or precisely: 10 log(10^7.2 + 10^7.0 + 10^6.8)</p>
-                <p>= 10 log(15.85×10⁶ + 10×10⁶ + 6.31×10⁶)</p>
-                <p>
-                  = 10 log(32.16×10⁶) = <strong>75.1 dB(A)</strong>
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="Four formulas, the CIBSE Guide A targets, and the speed-of-sound trivia you'll quote in any acoustic discussion."
+          >
+            <p>
+              <strong>Key Formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Wave equation:</strong> c = f × λ (343 m/s in air)
+              </li>
+              <li>
+                <strong>SPL:</strong> Lp = 20 log(p/20μPa) dB
+              </li>
+              <li>
+                <strong>dB addition:</strong> L = 10 log(Σ10^(Li/10))
+              </li>
+              <li>
+                <strong>Distance:</strong> ΔL = -20 log(r2/r1) = -6 dB per doubling
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Targets (CIBSE Guide A):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Open plan office:</strong> 45-50 dB(A), NR40-45
+              </li>
+              <li>
+                <strong>Private office:</strong> 35-40 dB(A), NR35-40
+              </li>
+              <li>
+                <strong>Meeting room:</strong> 35-40 dB(A), NR30-35
+              </li>
+              <li>
+                <strong>Plant room:</strong> Hearing protection if &gt;85 dB(A)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Distance Attenuation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A cooling tower produces 85 dB(A) at 5m. What level would
-                be expected at 40m in open conditions?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using inverse square law:</p>
-                <p>L₂ = L₁ - 20 log(r₂/r₁)</p>
-                <p>L₂ = 85 - 20 log(40/5)</p>
-                <p>L₂ = 85 - 20 log(8)</p>
-                <p>L₂ = 85 - 20 × 0.903 = 85 - 18</p>
-                <p>
-                  L₂ = <strong>67 dB(A)</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Alternative: 5m→10m→20m→40m = 3 doublings = 3×6 = 18 dB reduction
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wave equation:</strong> c = f × λ (343 m/s in air)
-                </li>
-                <li className="pl-1">
-                  <strong>SPL:</strong> Lp = 20 log(p/20μPa) dB
-                </li>
-                <li className="pl-1">
-                  <strong>dB addition:</strong> L = 10 log(Σ10^(Li/10))
-                </li>
-                <li className="pl-1">
-                  <strong>Distance:</strong> ΔL = -20 log(r₂/r₁) = -6 dB per doubling
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Targets (CIBSE Guide A)
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Open plan office:</strong> 45-50 dB(A), NR40-45
-                </li>
-                <li className="pl-1">
-                  <strong>Private office:</strong> 35-40 dB(A), NR35-40
-                </li>
-                <li className="pl-1">
-                  <strong>Meeting room:</strong> 35-40 dB(A), NR30-35
-                </li>
-                <li className="pl-1">
-                  <strong>Plant room:</strong> Hearing protection if &gt;85 dB(A)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Adding dB linearly:</strong> 60 + 60 = 63 dB, not 120 dB
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Forgetting distance:</strong> Manufacturer Lw needs conversion to Lp at
                   distance
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring frequency:</strong> Overall dB(A) may mask tonal problems
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Free field assumption:</strong> Indoor levels don't follow simple inverse
                   square
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always add dB logarithmically, convert manufacturer Lw to Lp at the actual receiver distance, look at octave-band data not just the dB(A) total, and use room acoustics models (not pure inverse square) for any indoor calculation."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Roof-mounted chiller breakout to a residential boundary"
+            situation={
+              <>
+                Three air-cooled chillers (each 92 dB(A) SWL at 1 m) are scheduled for the
+                roof of a city-centre office. The nearest residential window is 35 m away.
+                Local planning sets a 5 dB margin above background (40 dB(A) night) — so
+                the chiller contribution at the receptor must be ≤ 45 dB(A).
+              </>
+            }
+            whatToDo={
+              <>
+                Sum the three chiller SWLs logarithmically: 92 + 10 log 3 ≈ 96.8 dB(A).
+                Apply distance attenuation Lp = Lw − 20 log 35 − 11 ≈ 96.8 − 30.9 −
+                11 = 54.9 dB(A). That&rsquo;s 9.9 dB above the limit. Specify acoustic
+                louvres or a duct silencer with insertion loss ≥ 12 dB(A), or relocate
+                plant 15 m further from the boundary, or both. Document the calculation
+                in the BS 4142 assessment.
+              </>
+            }
+            whyItMatters={
+              <>
+                A planning condition breach means a Section 80 abatement notice, possible
+                enforcement action, and an emergency attenuator install at the contractor&rsquo;s
+                cost. The dB-arithmetic done at design stage is what stops a six-figure
+                rework bill.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Sound Basics</p>
-                <ul className="space-y-0.5">
-                  <li>Speed in air: 343 m/s (20°C)</li>
-                  <li>Audible range: 20 Hz - 20 kHz</li>
-                  <li>Reference pressure: 20 μPa</li>
-                  <li>+3 dB = double power</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Distance Rules</p>
-                <ul className="space-y-0.5">
-                  <li>Point source: -6 dB per doubling</li>
-                  <li>Line source: -3 dB per doubling</li>
-                  <li>Indoor: reverberant field limits decay</li>
-                  <li>Use Lw + room acoustics for indoors</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Sound = mechanical pressure wave; speed in air c ≈ 343 m/s at 20 °C.',
+              'Frequency × wavelength = speed: c = fλ.',
+              'Decibel scale is logarithmic; doubling sound power = +3 dB; 10× = +10 dB.',
+              'Add equal sources: 2× = +3 dB, 3× ≈ +4.8 dB, 10× = +10 dB.',
+              'SPL Lp = 20 log(p/p₀) where p₀ = 20 µPa (threshold of hearing).',
+              'Inverse-square law: free field point source loses 6 dB per doubling of distance.',
+              'A-weighting (dBA) approximates human ear response; C-weighting (dBC) for low-frequency or impulsive noise.',
+              'BS 4142 is the UK assessment method for HVAC plant noise at residential receptors.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section4-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Lamp Types and Efficacy
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section4-5">
-              Next: Noise Control Methods
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Lamp Types and Efficacy
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Noise Control Methods
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -87,13 +87,13 @@ const FunctionalSkillsModule4Section1 = () => {
         'A TN-S supply has Ze = 0.8\u03A9. A 20A Type B MCB protects a radial circuit with measured R1+R2 of 1.05\u03A9. Applying the 1.20 correction factor, what is the Zs and does it comply?',
       options: [
         'Zs = 1.85\u03A9 \u2014 does not comply',
-        'Zs = 2.06\u03A9 \u2014 complies (max 2.30\u03A9)',
+        'Zs = 2.06\u03A9 \u2014 complies (max 2.19\u03A9)',
         'Zs = 1.26\u03A9 \u2014 complies easily',
         'Zs = 2.46\u03A9 \u2014 does not comply',
       ],
       correctAnswer: 1,
       explanation:
-        'Zs = Ze + (R1+R2 \u00D7 1.20) = 0.8 + (1.05 \u00D7 1.20) = 0.8 + 1.26 = 2.06\u03A9. Maximum Zs for a 20A Type B MCB = 2.30\u03A9. Since 2.06 < 2.30, it complies.',
+        'Zs = Ze + (R1+R2 \u00D7 1.20) = 0.8 + (1.05 \u00D7 1.20) = 0.8 + 1.26 = 2.06\u03A9. Maximum Zs for a 20A Type B MCB = 2.19\u03A9 (BS 7671:2018+A4:2026 Table 41.3). Since 2.06 < 2.19, it complies.',
     },
   ];
 
@@ -799,33 +799,34 @@ const FunctionalSkillsModule4Section1 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              {/* Zs values from canonical source: src/lib/calculators/bs7671-data/protectiveDevices.ts (BS 7671:2018+A4:2026 Table 41.3) */}
               <h4 className="font-medium text-green-400 mb-2">
-                Maximum Zs Values &mdash; Common Type B MCBs
+                Maximum Zs Values &mdash; Common Type B MCBs (A4:2026)
               </h4>
               <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>6A: 7.67&Omega;</span>
+                  <span>6A: 7.28&Omega;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>10A: 4.60&Omega;</span>
+                  <span>10A: 4.37&Omega;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>16A: 2.87&Omega;</span>
+                  <span>16A: 2.73&Omega;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>20A: 2.30&Omega;</span>
+                  <span>20A: 2.19&Omega;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>32A: 1.44&Omega;</span>
+                  <span>32A: 1.37&Omega;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>40A: 1.15&Omega;</span>
+                  <span>40A: 1.09&Omega;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
@@ -864,12 +865,12 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Max Zs for 32A Type B = 1.44&Omega;</span>
+                  <span>Max Zs for 32A Type B = 1.37&Omega; (A4:2026)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    1.334&Omega; &lt; 1.44&Omega; &mdash;{' '}
+                    1.334&Omega; &lt; 1.37&Omega; &mdash;{' '}
                     <strong className="text-white">Compliant</strong>
                   </span>
                 </li>
@@ -888,12 +889,12 @@ const FunctionalSkillsModule4Section1 = () => {
           question="A TN-S supply has Ze = 0.8\u03A9. A 20A Type B MCB protects a radial circuit with measured R1+R2 of 1.05\u03A9. Applying the 1.20 correction factor, does the Zs comply?"
           options={[
             'Zs = 1.85\u03A9 \u2014 does not comply',
-            'Zs = 2.06\u03A9 \u2014 complies with max 2.30\u03A9',
+            'Zs = 2.06\u03A9 \u2014 complies with max 2.19\u03A9',
             'Zs = 1.26\u03A9 \u2014 complies easily',
             'Cannot be calculated without cable length',
           ]}
           correctIndex={1}
-          explanation="Zs = Ze + (R1+R2 \u00D7 1.20) = 0.8 + (1.05 \u00D7 1.20) = 0.8 + 1.26 = 2.06\u03A9. Max Zs for 20A Type B = 2.30\u03A9. 2.06 < 2.30 so it complies."
+          explanation="Zs = Ze + (R1+R2 \u00D7 1.20) = 0.8 + (1.05 \u00D7 1.20) = 0.8 + 1.26 = 2.06\u03A9. Max Zs for 20A Type B = 2.19\u03A9 (BS 7671:2018+A4:2026 Table 41.3). 2.06 < 2.19 so it complies."
         />
 
         {/* ── 07 Prospective Fault Current ── */}
@@ -1082,7 +1083,7 @@ const FunctionalSkillsModule4Section1 = () => {
                     <br />
                     Zs = 0.35 + (0.216 &times; 1.20) = 0.35 + 0.259 = 0.609&Omega;
                     <br />
-                    Max Zs for 20A Type B = 2.30&Omega; &rarr; 0.609 &lt; 2.30 &mdash; pass
+                    Max Zs for 20A Type B = 2.19&Omega; (A4:2026) &rarr; 0.609 &lt; 2.19 &mdash; pass
                   </p>
                 </div>
                 <div>

@@ -51,16 +51,16 @@ const checks = [
   {
     id: 'cmin-table-impact',
     question:
-      'A B32 MCB on TN had a Table 41.3 max Zs of 1.37 Ω in BS 7671:2018+A4:2026 (the pre-A4 edition). In A4:2026 the value is 1.37 Ω. Why did it change?',
+      'A B32 MCB on TN had a Table 41.3 max Zs of 1.44 Ω in BS 7671:2018+A2:2022 (the pre-A4 edition). In A4:2026 the value is 1.37 Ω. Why did it change?',
     options: [
       'IET wanted to make life harder for designers.',
-      'A4:2026 made Cmin = 0.95 explicit in the calculation. Old: max Zs = U0 / Ia = 230 / 160 = 1.37 Ω (no Cmin). New: max Zs = U0 × Cmin / Ia = 230 × 0.95 / 160 = 1.37 Ω. The 5 percent reduction is the Cmin factor working through.',
+      'A4:2026 made Cmin = 0.95 explicit in the calculation. Old: max Zs = U0 / Ia = 230 / 160 = 1.44 Ω (no Cmin). New: max Zs = U0 × Cmin / Ia = 230 × 0.95 / 160 = 1.37 Ω. The 5 percent reduction is the Cmin factor working through.',
       'The MCB characteristic changed.',
       'It was a typo in the previous edition.',
     ],
     correctIndex: 1,
     explanation:
-      "A4:2026 brought BS 7671 into line with the harmonised European HD 60364-4-41 by making Cmin = 0.95 explicit in the equation and the lookup tables. The numerical impact is straightforward: every Table 41.3 Zs limit is multiplied by 0.95 compared to the pre-A4 value. B32 went from 1.37 Ω to 1.37 Ω. C32 went from 0.72 Ω to 0.69 Ω. D32 went from 0.36 Ω to 0.34 Ω. Borderline pre-A4 designs may now fail; designers using old Zs lookup apps will under-call non-compliance. Always confirm the edition.",
+      "A4:2026 brought BS 7671 into line with the harmonised European HD 60364-4-41 by making Cmin = 0.95 explicit in the equation and the lookup tables. The numerical impact is straightforward: every Table 41.3 Zs limit is multiplied by 0.95 compared to the pre-A4 value. B32 went from 1.44 Ω to 1.37 Ω. C32 went from 0.72 Ω to 0.68 Ω. D32 went from 0.36 Ω to 0.34 Ω. Borderline pre-A4 designs may now fail; designers using old Zs lookup apps will under-call non-compliance. Always confirm the edition.",
   },
   {
     id: 'design-zs-calc-method',
@@ -94,16 +94,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'The pre-A4 BS 7671 (e.g. A2:2022) Table 41.3 value for a B32 MCB on TN was 1.37 Ω. The A4:2026 value is:',
+    question: 'The pre-A4 BS 7671 (e.g. A2:2022) Table 41.3 value for a B32 MCB on TN was 1.44 Ω. The A4:2026 value is:',
     options: [
-      '1.37 Ω (unchanged).',
-      '1.37 Ω — recalculated to incorporate Cmin = 0.95 explicitly. Designers using the old 1.37 Ω value for an A4:2026 design will under-call non-compliance.',
-      '0.72 Ω.',
-      '2.30 Ω.',
+      '1.44 Ω (unchanged).',
+      '1.37 Ω — recalculated to incorporate Cmin = 0.95 explicitly. Designers using the old 1.44 Ω value for an A4:2026 design will under-call non-compliance.',
+      '0.69 Ω.',
+      '2.19 Ω.',
     ],
     correctAnswer: 1,
     explanation:
-      "1.37 Ω = 230 × 0.95 / 160 (where 160 A is the worst-case magnetic trip threshold for a B32 MCB at 5 × In). The pre-A4 figure of 1.37 Ω = 230 / 160 (no Cmin in the calc). The change is 5 percent tighter — material for any borderline circuit. Always verify your Zs lookup app or spreadsheet is on the A4:2026 edition. If you find old design packs with 1.37 Ω limits cited, the safe assumption is they were designed under the old edition and a re-check at the A4 limit is prudent on any safety-critical or high-utilisation circuit.",
+      "1.37 Ω = 230 × 0.95 / 160 (where 160 A is the worst-case magnetic trip threshold for a B32 MCB at 5 × In). The pre-A4 figure of 1.44 Ω = 230 / 160 (no Cmin in the calc). The change is 5 percent tighter — material for any borderline circuit. Always verify your Zs lookup app or spreadsheet is on the A4:2026 edition. If you find old design packs with 1.44 Ω limits cited, the safe assumption is they were designed under the old edition and a re-check at the A4 limit is prudent on any safety-critical or high-utilisation circuit.",
   },
   {
     id: 3,
@@ -138,7 +138,7 @@ const quizQuestions = [
       'Round 1.40 down to 1.37 — close enough.',
       'Redesign — options include increasing the cpc CSA (e.g. from 1.5 mm² to 2.5 mm² as a separate cpc on a single-cable run), shortening the route by relocating the device or the load, dropping to a lower-rated device (B25 max Zs = 1.75 Ω), or fitting a 30 mA RCD as the alternative path under Reg 411.4.204 if the circuit type allows it.',
       'Ignore — the limit is conservative.',
-      'Use the pre-A4 limit of 1.37 Ω instead.',
+      'Use the pre-A4 limit of 1.44 Ω instead.',
     ],
     correctAnswer: 1,
     explanation:
@@ -243,7 +243,7 @@ export default function Sub2() {
           <TLDR
             points={[
               "Cmin 0.95 is the voltage factor minimum — accounts for supply tolerance and source-impedance voltage drop during fault. The available driving voltage in the Zs design check is U0 × Cmin = 230 × 0.95 = 218.5 V, not 230 V.",
-              "BS 7671:2018+A4:2026 made Cmin explicit in Reg 411.4.5 and recalculated all Table 41.3 / 41.2 / 41.4 max Zs values to incorporate it. Every Table 41.3 limit is approximately 5 percent tighter than the pre-A4 value (e.g. B32 was 1.37 Ω, now 1.37 Ω).",
+              "BS 7671:2018+A4:2026 made Cmin explicit in Reg 411.4.5 and recalculated all Table 41.3 / 41.2 / 41.4 max Zs values to incorporate it. Every Table 41.3 limit is approximately 5 percent tighter than the pre-A4 value (e.g. B32 was 1.44 Ω, now 1.37 Ω).",
               "In the field design calc, Cmin appears once — already baked into the Table 41.3 limit. Do NOT also apply Cmin to your design Zs (that double-counts). Design Zs = Ze + (R1 + R2) at 70 degrees C, compared against the A4:2026 Table 41.3 limit.",
             ]}
           />
@@ -316,7 +316,7 @@ export default function Sub2() {
               <li><strong>B6:</strong> Ia = 5 × 6 = 30 A. Max Zs = 218.5 / 30 = 7.28 Ω.</li>
               <li><strong>B10:</strong> Ia = 5 × 10 = 50 A. Max Zs = 218.5 / 50 = 4.37 Ω.</li>
               <li><strong>B16:</strong> Ia = 5 × 16 = 80 A. Max Zs = 218.5 / 80 = 2.73 Ω.</li>
-              <li><strong>B20:</strong> Ia = 5 × 20 = 100 A. Max Zs = 218.5 / 100 = 2.18 Ω.</li>
+              <li><strong>B20:</strong> Ia = 5 × 20 = 100 A. Max Zs = 218.5 / 100 = 2.19 Ω.</li>
               <li><strong>B25:</strong> Ia = 5 × 25 = 125 A. Max Zs = 218.5 / 125 = 1.75 Ω.</li>
               <li><strong>B32:</strong> Ia = 5 × 32 = 160 A. Max Zs = 218.5 / 160 = 1.37 Ω.</li>
               <li><strong>B40:</strong> Ia = 5 × 40 = 200 A. Max Zs = 218.5 / 200 = 1.09 Ω.</li>
@@ -327,15 +327,16 @@ export default function Sub2() {
               Type C MCBs use 10 × In for the magnetic threshold:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              {/* Zs values from canonical source: src/lib/calculators/bs7671-data/protectiveDevices.ts (BS 7671:2018+A4:2026 Table 41.3) */}
               <li><strong>C16:</strong> Ia = 10 × 16 = 160 A. Max Zs = 218.5 / 160 = 1.37 Ω (interesting — a C16 has the same Zs limit as a B32).</li>
-              <li><strong>C32:</strong> Ia = 10 × 32 = 320 A. Max Zs = 218.5 / 320 = 0.683 Ω → rounded to 0.69 Ω.</li>
+              <li><strong>C32:</strong> Ia = 10 × 32 = 320 A. Max Zs = 218.5 / 320 = 0.683 Ω → 0.68 Ω (Table 41.3).</li>
               <li><strong>C40:</strong> Ia = 10 × 40 = 400 A. Max Zs = 218.5 / 400 = 0.55 Ω.</li>
             </ul>
             <p>
               Type D MCBs use 20 × In for the magnetic threshold:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>D16:</strong> Ia = 20 × 16 = 320 A. Max Zs = 218.5 / 320 = 0.683 Ω → rounded to 0.69 Ω.</li>
+              <li><strong>D16:</strong> Ia = 20 × 16 = 320 A. Max Zs = 218.5 / 320 = 0.683 Ω → 0.68 Ω (Table 41.3).</li>
               <li><strong>D32:</strong> Ia = 20 × 32 = 640 A. Max Zs = 218.5 / 640 = 0.341 Ω → rounded to 0.34 Ω.</li>
             </ul>
             <p>
@@ -345,7 +346,7 @@ export default function Sub2() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 → A4:2026 — change record for Table 41.3"
-            clause="Maximum Zs values in Tables 41.2, 41.3 and 41.4 have been recalculated to incorporate the voltage factor minimum Cmin = 0.95 in accordance with Appendix 14. The previous values in BS 7671:2018+A4:2026 (which did not explicitly apply Cmin) are no longer applicable for a design under A4:2026. Designers and inspectors should ensure they are using the current edition limits."
+            clause="Maximum Zs values in Tables 41.2, 41.3 and 41.4 have been recalculated to incorporate the voltage factor minimum Cmin = 0.95 in accordance with Appendix 14. The previous values in BS 7671:2018+A2:2022 (which did not explicitly apply Cmin) are no longer applicable for a design under A4:2026. Designers and inspectors should ensure they are using the current edition limits."
             meaning={
               <>
                 This is the formal change note that explains why the Table 41.3 numbers shifted between A2 and A4:2026. Pre-A4: max Zs = U0 / Ia = 230 / Ia. Post-A4: max Zs = U0 × Cmin / Ia = 230 × 0.95 / Ia = 218.5 / Ia. The 5 percent reduction is the Cmin factor working through. Designs done under A2 with the old (more permissive) limits are not automatically non-compliant — the old limits were valid at the time of design — but any new design or any redesign as part of an EICR remedial must use the A4:2026 numbers. The pre-A4 values like B32 max Zs = 1.37 Ω should now be regarded as obsolete for design purposes.
@@ -454,7 +455,7 @@ export default function Sub2() {
             title="Using a pre-A4 Zs lookup app on an A4:2026 design"
             whatHappens={
               <>
-                Designer uses a free online Zs lookup app (or an old PDF cheat-sheet, or an old spreadsheet) that gives B32 max Zs = 1.37 Ω. Calculates a design Zs of 1.40 Ω — looks like a pass with 0.04 Ω margin. Submits the EIC. Next year an EICR with an updated lookup tool flags the same circuit at 1.40 Ω against the A4:2026 limit of 1.37 Ω — non-compliance with margin failure. The customer is now told their year-old install needs remedial work.
+                Designer uses a free online Zs lookup app (or an old PDF cheat-sheet, or an old spreadsheet) that gives B32 max Zs = 1.44 Ω. Calculates a design Zs of 1.40 Ω — looks like a pass with 0.04 Ω margin. Submits the EIC. Next year an EICR with an updated lookup tool flags the same circuit at 1.40 Ω against the A4:2026 limit of 1.37 Ω — non-compliance with margin failure. The customer is now told their year-old install needs remedial work.
               </>
             }
             doInstead={
@@ -671,7 +672,7 @@ export default function Sub2() {
                 <strong>B32 (BS EN 60898)</strong> — max Zs 1.37 ohms.
               </li>
               <li>
-                <strong>C32 (BS EN 60898)</strong> — max Zs 0.69 ohms.
+                <strong>C32 (BS EN 60898)</strong> — max Zs 0.68 ohms.
               </li>
               <li>
                 <strong>D32 (BS EN 60898)</strong> — max Zs 0.34 ohms.
@@ -705,11 +706,11 @@ export default function Sub2() {
             points={[
               "Cmin = 0.95 is the voltage factor minimum from BS 7671:2018+A4:2026 Appendix 14. It accounts for supply tolerance and source-impedance voltage drop during fault — the available driving voltage in the Zs check is U0 × Cmin = 218.5 V, not 230 V.",
               "Reg 411.4.5 (TN systems): Zs × Ia ≤ U0 × Cmin. Rearranged: max Zs = U0 × Cmin / Ia = 218.5 / Ia. Table 41.3 is this equation pre-solved for common BS EN 60898 MCBs.",
-              "A4:2026 made Cmin explicit and recalculated all Tables 41.2 / 41.3 / 41.4 — every limit is approximately 5 percent tighter than pre-A4. B32 went from 1.37 Ω to 1.37 Ω. C32 went from 0.72 Ω to 0.69 Ω. D32 went from 0.36 Ω to 0.34 Ω.",
+              "A4:2026 made Cmin explicit and recalculated all Tables 41.2 / 41.3 / 41.4 — every limit is approximately 5 percent tighter than pre-A4. B32 went from 1.44 Ω to 1.37 Ω. C32 went from 0.72 Ω to 0.68 Ω. D32 went from 0.36 Ω to 0.34 Ω.",
               "Cmin appears ONCE — in the derivation of the Table 41.3 limit. Do NOT multiply your field design Zs by Cmin (that double-counts). Design Zs = Ze + (R1 + R2) at 70 degrees C, compared against the A4:2026 Table 41.3 limit.",
               "Cmin applies to Zs calcs (low-voltage worst case); Cmax (1.05) applies to fault current calcs for thermal withstand (high-voltage worst case). Same supply, different worst cases for different design checks.",
               "The six-step design Zs method: source Ze → identify cable and route → cold (R1+R2) from OSG Table I1 → apply temperature factor → sum and compare against Table 41.3 → document the trace with citations.",
-              "Pre-A4 Zs lookup apps and cheat-sheets that give the higher (e.g. 1.37 Ω B32) limits are now obsolete for design. Always confirm the tool you use is on the A4:2026 edition with the lower (1.37 Ω B32) values.",
+              "Pre-A4 Zs lookup apps and cheat-sheets that give the higher (e.g. 1.44 Ω B32) limits are now obsolete for design. Always confirm the tool you use is on the A4:2026 edition with the lower (1.37 Ω B32) values.",
               "For TN-C-S domestic supplies with no Form 1, use Ze = 0.35 Ω as the BS 7671 assumed maximum. Document the citation on the design pack so the EIC trace is intact.",
             ]}
           />

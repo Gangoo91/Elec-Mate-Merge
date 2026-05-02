@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 6 · Subsection 3 — Schedules and Data Sheets
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Equipment / DB / cable / luminaire schedules with unique tagging, BS 5266-1 emergency
+ *   lighting schedule requirements, manufacturer data sheets and document coordination
+ *   matrices linking drawings, schedules and specifications.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Schedules and Data Sheets - HNC Module 4 Section 6.3';
@@ -221,662 +240,470 @@ const faqs = [
 ];
 
 const HNCModule4Section6_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.6.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Schedules and Data Sheets
-          </h1>
-          <p className="text-white">
-            Creating comprehensive tabular documentation for building services electrical
-            installations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 6 · Subsection 3"
+            title="Schedules and Data Sheets"
+            description="Creating comprehensive tabular documentation for building services electrical installations."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Schedules:</strong> Tabular lists of equipment with specifications
-              </li>
-              <li className="pl-1">
-                <strong>Data sheets:</strong> Detailed specs for specific products
-              </li>
-              <li className="pl-1">
-                <strong>Purpose:</strong> Complement drawings with detailed data
-              </li>
-              <li className="pl-1">
-                <strong>Coordination:</strong> Must align with drawings and specs
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Equipment:</strong> DBs, switchgear, controls
-              </li>
-              <li className="pl-1">
-                <strong>Cables:</strong> Routes, sizes, types
-              </li>
-              <li className="pl-1">
-                <strong>Luminaires:</strong> Types, quantities, emergency
-              </li>
-              <li className="pl-1">
-                <strong>Small power:</strong> Socket outlets, FCUs
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Create comprehensive equipment schedules',
               'Develop cable schedules with all required information',
               'Produce luminaire schedules including emergency lighting',
               'Understand data sheet requirements and applications',
               'Coordinate schedules with drawings and specifications',
               'Apply consistent formatting and cross-referencing',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <TLDR
+            points={[
+              'Schedules tabulate the design — equipment, cables, luminaires, emergency lights, controls — with unique tags that join drawings and specs.',
+              'Cable schedule is the engineering record: From → To, route, csa, type, length, voltage drop, protective device, fault level. Drives O&amp;M and EIC.',
+              'Luminaire schedule pairs design intent (Em, UGR, Ra, CCT) with product (manufacturer, model code, lamp/driver, mounting, IP). Emergency lighting on its own schedule.',
+              'BS 7671 Appendix 6 schedules (circuit details, test results, inspection schedule) are the legal record at handover — they live alongside the engineer’s schedules, not instead of them.',
+              'Reg 514.12.1 instruction notice (dates of last and next periodic inspection) sits at the DB — it is the schedule of record for the next dutyholder.',
+            ]}
+          />
 
-        {/* Section 1: Equipment Schedules */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Equipment Schedules
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 514.12.1"
+            clause="An instruction notice of such durable material as to be likely to remain easily legible throughout the life of the installation shall be fixed in a prominent position at or near the relevant distribution board or boards upon completion of the work carried out in accordance with Chapter 64 or 65 as applicable. The notice shall be clearly and durably marked and shall read as follows: Important — This installation should be periodically inspected and tested and a report on its condition obtained, as prescribed in BS 7671 Requirements for Electrical Installations. Date of last inspection ............ Recommended date of next inspection ............"
+            meaning={
+              <>
+                The BS 7671 Appendix 6 schedules (Schedule of Inspections, Schedule of Test
+                Results, EIC) get bound into the O&amp;M, but the day-to-day handover schedule
+                lives on the DB as a Reg 514.12.1 notice. The dates of last and next inspection
+                go on it. As the HNC engineer producing the master schedule pack, you specify the
+                notice (durable material, font, fixing) and you record the recommended next-test
+                interval based on your Reg 652.1 frequency assessment.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 514.12.1."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Equipment Schedules">
             <p>
               Equipment schedules provide tabular summaries of all electrical equipment, linking to
               drawings through unique tags and to specifications through product requirements. They
               enable procurement, installation verification and O&M documentation.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Typical equipment schedule content:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Equipment tag:</strong> Unique reference matching drawings
-                </li>
-                <li className="pl-1">
-                  <strong>Description:</strong> Equipment type and function
-                </li>
-                <li className="pl-1">
-                  <strong>Location:</strong> Room/area reference
-                </li>
-                <li className="pl-1">
-                  <strong>Manufacturer/model:</strong> Specified product (if prescriptive)
-                </li>
-                <li className="pl-1">
-                  <strong>Rating/capacity:</strong> Key technical parameters
-                </li>
-                <li className="pl-1">
-                  <strong>Quantity:</strong> Number of units
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Distribution Board Schedule Example
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-2 text-left">Way</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Protection</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Cable</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Load</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">1</td>
-                      <td className="border border-white/10 px-2 py-2">Lighting - Office Area</td>
-                      <td className="border border-white/10 px-2 py-2">6A Type B MCB</td>
-                      <td className="border border-white/10 px-2 py-2">1.5mm² T&E</td>
-                      <td className="border border-white/10 px-2 py-2">0.8kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">2</td>
-                      <td className="border border-white/10 px-2 py-2">Socket Ring - North</td>
-                      <td className="border border-white/10 px-2 py-2">32A Type B RCBO</td>
-                      <td className="border border-white/10 px-2 py-2">2.5mm² T&E</td>
-                      <td className="border border-white/10 px-2 py-2">2.4kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">3</td>
-                      <td className="border border-white/10 px-2 py-2">FCU - Server Rack</td>
-                      <td className="border border-white/10 px-2 py-2">20A Type B MCB</td>
-                      <td className="border border-white/10 px-2 py-2">2.5mm² T&E</td>
-                      <td className="border border-white/10 px-2 py-2">3.0kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">4</td>
-                      <td className="border border-white/10 px-2 py-2">Emergency Lighting</td>
-                      <td className="border border-white/10 px-2 py-2">6A Type B MCB</td>
-                      <td className="border border-white/10 px-2 py-2">1.5mm² FP200</td>
-                      <td className="border border-white/10 px-2 py-2">0.2kW</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Typical equipment schedule content:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Equipment tag:</strong> Unique reference matching drawings
+              </li>
+              <li>
+                <strong>Description:</strong> Equipment type and function
+              </li>
+              <li>
+                <strong>Location:</strong> Room/area reference
+              </li>
+              <li>
+                <strong>Manufacturer/model:</strong> Specified product (if prescriptive)
+              </li>
+              <li>
+                <strong>Rating/capacity:</strong> Key technical parameters
+              </li>
+              <li>
+                <strong>Quantity:</strong> Number of units
+              </li>
+            </ul>
+            <p>
+              <strong>Distribution board schedule example (way / description / protection / cable / load):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1 — Lighting - Office Area — 6A Type B MCB — 1.5mm² T&E — 0.8kW</li>
+              <li>2 — Socket Ring - North — 32A Type B RCBO — 2.5mm² T&E — 2.4kW</li>
+              <li>3 — FCU - Server Rack — 20A Type B MCB — 2.5mm² T&E — 3.0kW</li>
+              <li>4 — Emergency Lighting — 6A Type B MCB — 1.5mm² FP200 — 0.2kW</li>
+            </ul>
+            <p>
               <strong>Key point:</strong> DB schedules should match the physical board layout,
               showing incomer and all outgoing ways.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Cable Schedules */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Cable Schedules
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Cable Schedules">
             <p>
               Cable schedules document all cables in the installation, providing essential
               information for procurement, installation and testing. They link circuit design to
               physical implementation.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Cable schedule requirements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cable reference:</strong> Unique identifier
-                </li>
-                <li className="pl-1">
-                  <strong>Circuit:</strong> Associated circuit description
-                </li>
-                <li className="pl-1">
-                  <strong>From/To:</strong> Origin and destination equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Type:</strong> Cable construction (T&E, SWA, LSF, etc.)
-                </li>
-                <li className="pl-1">
-                  <strong>Size:</strong> Conductor cross-section (mm²)
-                </li>
-                <li className="pl-1">
-                  <strong>Cores:</strong> Number of conductors
-                </li>
-                <li className="pl-1">
-                  <strong>Length:</strong> Route length including allowances
-                </li>
-                <li className="pl-1">
-                  <strong>Protective device:</strong> Associated MCB/MCCB rating
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Schedule Example</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-2 text-left">Ref</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">From</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">To</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Cable Type</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Length</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">C001</td>
-                      <td className="border border-white/10 px-2 py-2">MSB</td>
-                      <td className="border border-white/10 px-2 py-2">DB-01</td>
-                      <td className="border border-white/10 px-2 py-2">4c 25mm² LSF/SWA</td>
-                      <td className="border border-white/10 px-2 py-2">45m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">C002</td>
-                      <td className="border border-white/10 px-2 py-2">MSB</td>
-                      <td className="border border-white/10 px-2 py-2">DB-02</td>
-                      <td className="border border-white/10 px-2 py-2">4c 16mm² LSF/SWA</td>
-                      <td className="border border-white/10 px-2 py-2">32m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">C003</td>
-                      <td className="border border-white/10 px-2 py-2">DB-01/3</td>
-                      <td className="border border-white/10 px-2 py-2">AHU-01</td>
-                      <td className="border border-white/10 px-2 py-2">5c 4mm² LSF/SWA</td>
-                      <td className="border border-white/10 px-2 py-2">28m</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable Length Calculation
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li>Measure route from drawing or model</li>
-                <li>Add vertical drops/rises</li>
-                <li>Include termination allowances (typically 2m each end)</li>
-                <li>Apply contingency (typically 5-10%)</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Cable schedule requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable reference:</strong> Unique identifier
+              </li>
+              <li>
+                <strong>Circuit:</strong> Associated circuit description
+              </li>
+              <li>
+                <strong>From/To:</strong> Origin and destination equipment
+              </li>
+              <li>
+                <strong>Type:</strong> Cable construction (T&E, SWA, LSF, etc.)
+              </li>
+              <li>
+                <strong>Size:</strong> Conductor cross-section (mm²)
+              </li>
+              <li>
+                <strong>Cores:</strong> Number of conductors
+              </li>
+              <li>
+                <strong>Length:</strong> Route length including allowances
+              </li>
+              <li>
+                <strong>Protective device:</strong> Associated MCB/MCCB rating
+              </li>
+            </ul>
+            <p>
+              <strong>Cable schedule example (ref / from / to / cable type / length):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>C001 — MSB — DB-01 — 4c 25mm² LSF/SWA — 45m</li>
+              <li>C002 — MSB — DB-02 — 4c 16mm² LSF/SWA — 32m</li>
+              <li>C003 — DB-01/3 — AHU-01 — 5c 4mm² LSF/SWA — 28m</li>
+            </ul>
+            <p>
+              <strong>Cable length calculation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Measure route from drawing or model</li>
+              <li>Add vertical drops/rises</li>
+              <li>Include termination allowances (typically 2m each end)</li>
+              <li>Apply contingency (typically 5-10%)</li>
+            </ul>
+            <p>
               <strong>Important:</strong> Cable schedules must align with DB schedules and
               single-line diagrams for consistency.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Luminaire Schedules */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Luminaire Schedules
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Luminaire Schedules">
             <p>
               Luminaire schedules document all lighting equipment, linking lighting design
               calculations to specified products. They are essential for procurement, installation
               and demonstrating compliance with lighting standards.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Luminaire schedule content:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Type reference:</strong> Schedule tag (Type A, B, C...)
-                </li>
-                <li className="pl-1">
-                  <strong>Description:</strong> Luminaire type and application
-                </li>
-                <li className="pl-1">
-                  <strong>Manufacturer/model:</strong> Specified product
-                </li>
-                <li className="pl-1">
-                  <strong>Lamp/LED data:</strong> Source type, wattage, colour temp
-                </li>
-                <li className="pl-1">
-                  <strong>Lumen output:</strong> Delivered lumens
-                </li>
-                <li className="pl-1">
-                  <strong>IP rating:</strong> Ingress protection
-                </li>
-                <li className="pl-1">
-                  <strong>Mounting:</strong> Recessed, surface, suspended
-                </li>
-                <li className="pl-1">
-                  <strong>Controls:</strong> DALI, switching, sensors
-                </li>
-                <li className="pl-1">
-                  <strong>Quantity:</strong> Total number
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Emergency Lighting Schedule Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Requirement</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Duration</td>
-                      <td className="border border-white/10 px-2 py-2">1 hour or 3 hour rating</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Mode</td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Maintained / Non-maintained / Sustained
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Test facility</td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Manual / Automatic / Self-test
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Output</td>
-                      <td className="border border-white/10 px-2 py-2">Emergency lumens</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Battery</td>
-                      <td className="border border-white/10 px-2 py-2">NiCd / NiMH / Li-ion</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Calculation Link</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Reference DIALux/Relux calc number</li>
-                  <li className="pl-1">Show achieved lux level</li>
-                  <li className="pl-1">Note uniformity compliance</li>
-                  <li className="pl-1">Include glare rating (UGR)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Coordination</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Match types to layout drawings</li>
-                  <li className="pl-1">Coordinate with ceiling grid</li>
-                  <li className="pl-1">Verify mounting heights</li>
-                  <li className="pl-1">Check HVAC coordination</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Luminaire schedule content:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Type reference:</strong> Schedule tag (Type A, B, C...)
+              </li>
+              <li>
+                <strong>Description:</strong> Luminaire type and application
+              </li>
+              <li>
+                <strong>Manufacturer/model:</strong> Specified product
+              </li>
+              <li>
+                <strong>Lamp/LED data:</strong> Source type, wattage, colour temp
+              </li>
+              <li>
+                <strong>Lumen output:</strong> Delivered lumens
+              </li>
+              <li>
+                <strong>IP rating:</strong> Ingress protection
+              </li>
+              <li>
+                <strong>Mounting:</strong> Recessed, surface, suspended
+              </li>
+              <li>
+                <strong>Controls:</strong> DALI, switching, sensors
+              </li>
+              <li>
+                <strong>Quantity:</strong> Total number
+              </li>
+            </ul>
+            <p>
+              <strong>Emergency lighting schedule requirements (parameter / requirement):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Duration:</strong> 1 hour or 3 hour rating
+              </li>
+              <li>
+                <strong>Mode:</strong> Maintained / Non-maintained / Sustained
+              </li>
+              <li>
+                <strong>Test facility:</strong> Manual / Automatic / Self-test
+              </li>
+              <li>
+                <strong>Output:</strong> Emergency lumens
+              </li>
+              <li>
+                <strong>Battery:</strong> NiCd / NiMH / Li-ion
+              </li>
+            </ul>
+            <p>
+              <strong>Calculation link:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reference DIALux/Relux calc number</li>
+              <li>Show achieved lux level</li>
+              <li>Note uniformity compliance</li>
+              <li>Include glare rating (UGR)</li>
+            </ul>
+            <p>
+              <strong>Coordination:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Match types to layout drawings</li>
+              <li>Coordinate with ceiling grid</li>
+              <li>Verify mounting heights</li>
+              <li>Check HVAC coordination</li>
+            </ul>
+            <p>
               <strong>BS 5266-1:</strong> Requires emergency lighting schedules to demonstrate
               compliance with escape route and open area requirements.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Data Sheets */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Data Sheets and Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Data Sheets and Coordination">
             <p>
               Data sheets provide comprehensive technical information for specific products,
               enabling design verification, installation planning and maintenance. They supplement
               schedules with detailed specifications.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Data sheet content (typical for switchgear):
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>General:</strong> Manufacturer, model, type designation
-                </li>
-                <li className="pl-1">
-                  <strong>Ratings:</strong> Voltage, current, fault level (Icw, Ics, Icu)
-                </li>
-                <li className="pl-1">
-                  <strong>Standards:</strong> BS EN 61439 compliance details
-                </li>
-                <li className="pl-1">
-                  <strong>Dimensions:</strong> Height, width, depth, weight
-                </li>
-                <li className="pl-1">
-                  <strong>Environmental:</strong> IP rating, temperature range
-                </li>
-                <li className="pl-1">
-                  <strong>Accessories:</strong> Available options and modifications
-                </li>
-                <li className="pl-1">
-                  <strong>Certifications:</strong> CE marking, third-party approvals
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Document Coordination Matrix
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-2 text-left">Document</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Shows</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Links To</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Drawings</td>
-                      <td className="border border-white/10 px-2 py-2">Location, quantity</td>
-                      <td className="border border-white/10 px-2 py-2">Schedules via tags</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Schedules</td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Summary specs, quantities
-                      </td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Specifications, data sheets
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Specifications</td>
-                      <td className="border border-white/10 px-2 py-2">Performance requirements</td>
-                      <td className="border border-white/10 px-2 py-2">Standards, schedules</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Data sheets</td>
-                      <td className="border border-white/10 px-2 py-2">Detailed product data</td>
-                      <td className="border border-white/10 px-2 py-2">Manufacturer literature</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Coordination Checks</p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li>Equipment tags consistent across all documents</li>
-                <li>Schedule quantities match drawing count</li>
-                <li>Specified products meet specification requirements</li>
-                <li>Cable schedules align with DB schedules</li>
-                <li>Data sheet dimensions allow for spatial coordination</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Data sheet content (typical for switchgear):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>General:</strong> Manufacturer, model, type designation
+              </li>
+              <li>
+                <strong>Ratings:</strong> Voltage, current, fault level (Icw, Ics, Icu)
+              </li>
+              <li>
+                <strong>Standards:</strong> BS EN 61439 compliance details
+              </li>
+              <li>
+                <strong>Dimensions:</strong> Height, width, depth, weight
+              </li>
+              <li>
+                <strong>Environmental:</strong> IP rating, temperature range
+              </li>
+              <li>
+                <strong>Accessories:</strong> Available options and modifications
+              </li>
+              <li>
+                <strong>Certifications:</strong> CE marking, third-party approvals
+              </li>
+            </ul>
+            <p>
+              <strong>Document coordination matrix (document / shows / links to):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Drawings — location, quantity — schedules via tags</li>
+              <li>Schedules — summary specs, quantities — specifications, data sheets</li>
+              <li>Specifications — performance requirements — standards, schedules</li>
+              <li>Data sheets — detailed product data — manufacturer literature</li>
+            </ul>
+            <p>
+              <strong>Coordination checks:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Equipment tags consistent across all documents</li>
+              <li>Schedule quantities match drawing count</li>
+              <li>Specified products meet specification requirements</li>
+              <li>Cable schedules align with DB schedules</li>
+              <li>Data sheet dimensions allow for spatial coordination</li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Create a document coordination matrix and check all
               links before issue.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Schedule formatting:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use consistent column widths and alignment</li>
+              <li>Include clear headers and units</li>
+              <li>Group related items logically</li>
+              <li>Add subtotals and grand totals where appropriate</li>
+            </ul>
+            <p>
+              <strong>Tagging convention:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>DB-01, DB-02:</strong> Distribution boards
+              </li>
+              <li>
+                <strong>LUM-A, LUM-B:</strong> Luminaire types
+              </li>
+              <li>
+                <strong>C001, C002:</strong> Cable references
+              </li>
+              <li>
+                <strong>AHU-01:</strong> Equipment (linked to mechanical)
+              </li>
+            </ul>
+            <p>
+              <strong>Schedule types — quick reference:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Equipment schedule — general items</li>
+              <li>DB schedule — circuit details</li>
+              <li>Cable schedule — wiring data</li>
+              <li>Luminaire schedule — lighting</li>
+              <li>Small power schedule — outlets</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Schedule Formatting</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Use consistent column widths and alignment</li>
-                <li className="pl-1">Include clear headers and units</li>
-                <li className="pl-1">Group related items logically</li>
-                <li className="pl-1">Add subtotals and grand totals where appropriate</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Mismatched quantities</strong> — schedule says 10, drawing shows 12
+                </li>
+                <li>
+                  <strong>Missing information</strong> — incomplete data for procurement
+                </li>
+                <li>
+                  <strong>Inconsistent tags</strong> — DB01 vs DB-01 vs DB.01
+                </li>
+                <li>
+                  <strong>Outdated revisions</strong> — schedule not updated with drawing changes
+                </li>
               </ul>
-            </div>
+            }
+            doInstead="Run a tag/quantity reconciliation check between schedule and drawing before each issue, fill every column needed for procurement (rating, IP, mounting, controls), enforce a single tag format across the project, and revise schedules in the same pack as the drawings they describe."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Tagging Convention</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>DB-01, DB-02:</strong> Distribution boards
-                </li>
-                <li className="pl-1">
-                  <strong>LUM-A, LUM-B:</strong> Luminaire types
-                </li>
-                <li className="pl-1">
-                  <strong>C001, C002:</strong> Cable references
-                </li>
-                <li className="pl-1">
-                  <strong>AHU-01:</strong> Equipment (linked to mechanical)
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Mismatched quantities</strong> - Schedule says 10, drawing shows 12
-                </li>
-                <li className="pl-1">
-                  <strong>Missing information</strong> - Incomplete data for procurement
-                </li>
-                <li className="pl-1">
-                  <strong>Inconsistent tags</strong> - DB01 vs DB-01 vs DB.01
-                </li>
-                <li className="pl-1">
-                  <strong>Outdated revisions</strong> - Schedule not updated with drawing changes
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Coordinating cable, luminaire and DB schedules at Stage 4 freeze"
+            situation={
+              <>
+                Stage 4 design freeze on a 5-storey commercial building. Drawings are ready.
+                Schedules need to lock down for the contractor and QS. You have: 84 final
+                circuits across 5 floor DBs, 320 luminaires (including 60 emergency), one MSB,
+                two sub-mains. Tagging is mostly consistent but a few items still carry the Stage
+                3 placeholders.
+              </>
+            }
+            whatToDo={
+              <>
+                Run a tag reconciliation: every drawing tag has a row on the right schedule, every
+                schedule row has a tag on the right drawing. Cable schedule columns: Tag / From /
+                To / Route / Csa / Type / Length / Vdrop% / Device rating / Fault level / Notes.
+                Luminaire schedule: Tag / Type code / Manufacturer / Lamp/driver / Em design /
+                UGR / Ra / CCT / IP / Mounting / Quantity / Notes. Emergency luminaires on a
+                separate schedule with duration and self-test/central-battery flag. DB schedules
+                use the BS 7671 Appendix 6 pro-formas (Schedule of Circuit Details, Schedule of
+                Test Results pre-populated for the install team). Specify a Reg 514.12.1 notice
+                on each DB door (durable Traffolyte, A5 minimum, fixing method). Cross-reference
+                the EIC scope to the schedules. Issue all schedules in the same pack as the
+                drawings they describe — same revision, same date.
+              </>
+            }
+            whyItMatters={
+              <>
+                A schedule out-of-step with the drawings means the contractor orders the wrong
+                quantities, the QS prices the wrong items, and the EIC at handover doesn’t match
+                the as-built. Reconciliation is a 2-hour task that saves a 2-week dispute.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Equipment, cable, luminaire and emergency lighting schedules are the engineering ledger — tagged to drawings, referenced from spec.',
+              'Cable schedule columns: Tag, From, To, Route, Csa, Type, Length, Vdrop%, Device rating, Fault level, Notes.',
+              'Luminaire schedule pairs design intent (Em, UGR, Ra, CCT) with product (manufacturer, model, IP, mounting).',
+              'Emergency lighting on its own schedule — duration, source type, self-test/central-battery, BS 5266 zone reference.',
+              'BS 7671 Appendix 6 pro-formas for circuit details, test results and inspection schedule are the legal handover record.',
+              'Reg 514.12.1 periodic-inspection notice on every DB — durable, dated, recommended next test interval.',
+              'Reg 652.1 obliges the designer to set the next-test frequency based on installation type, use and external influences.',
+              'Issue schedules and drawings in the same pack at the same revision — broken cross-refs are how disputes start.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Schedule Types</p>
-                <ul className="space-y-0.5">
-                  <li>Equipment schedule - General items</li>
-                  <li>DB schedule - Circuit details</li>
-                  <li>Cable schedule - Wiring data</li>
-                  <li>Luminaire schedule - Lighting</li>
-                  <li>Small power schedule - Outlets</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Data Sheet Items</p>
-                <ul className="space-y-0.5">
-                  <li>Ratings (voltage, current, fault)</li>
-                  <li>Dimensions and weight</li>
-                  <li>IP rating and environment</li>
-                  <li>Standards compliance</li>
-                  <li>Certifications</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section6-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section6-4">
-              Next: Design Calculations
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Electrical drawings
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Design calculations
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

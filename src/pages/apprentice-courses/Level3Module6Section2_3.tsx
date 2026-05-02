@@ -32,10 +32,10 @@ const quickCheckQuestions = [
     id: 'check-2',
     question:
       'For a 32A Type B MCB protecting a socket circuit in a TN system, the maximum Zs at design stage is:',
-    options: ['1.44 ohms', '1.15 ohms (using 0.8 correction factor)', '0.72 ohms', '2.30 ohms'],
+    options: ['1.37 ohms', '1.10 ohms (using 0.8 correction factor)', '0.69 ohms', '2.19 ohms'],
     correctIndex: 1,
     explanation:
-      'From BS 7671 Table 41.3, maximum Zs for 32A Type B is 1.44 ohms at 0.4s. Applying the 80% rule for design (accounting for conductor temperature rise during fault), the design maximum is 1.44 x 0.8 = 1.15 ohms. Measured values at normal temperature must not exceed this.',
+      'From BS 7671:2018+A4:2026 Table 41.3, maximum Zs for 32A Type B is 1.37 ohms at 0.4s (Cmin = 0.95 applied). Applying the 80% rule for design (accounting for conductor temperature rise during fault), the design maximum is 1.37 x 0.8 = 1.10 ohms. Measured values at normal temperature must not exceed this.',
   },
   {
     id: 'check-3',
@@ -177,16 +177,16 @@ const quizQuestions = [
   {
     id: 11,
     question:
-      'A socket circuit has calculated Zs of 0.98 ohms. With 32A Type B MCB (max Zs = 1.44 ohms at 0.4s), is this acceptable?',
+      'A socket circuit has calculated Zs of 0.98 ohms. With 32A Type B MCB (max Zs = 1.37 ohms at 0.4s, BS 7671:2018+A4:2026 Table 41.3), is this acceptable?',
     options: [
-      'Yes - 0.98 is less than 1.44 ohms',
-      'No - must apply 0.8 factor, so max design Zs is 1.15 ohms, and 0.98 is acceptable',
-      'No - 0.98 exceeds 0.8 x 1.44 = 1.15, not acceptable',
+      'Yes - 0.98 is less than 1.37 ohms',
+      'No - must apply 0.8 factor, so max design Zs is 1.10 ohms, and 0.98 is acceptable',
+      'No - 0.98 exceeds 0.8 x 1.37 = 1.10, not acceptable',
       'Cannot determine without knowing cable length',
     ],
     correctAnswer: 1,
     explanation:
-      'Applying the 0.8 factor: max design Zs = 1.44 x 0.8 = 1.15 ohms. Calculated Zs of 0.98 ohms is less than 1.15 ohms, so the circuit is acceptable. The circuit will disconnect within 0.4 seconds as required.',
+      'Applying the 0.8 factor: max design Zs = 1.37 x 0.8 = 1.10 ohms. Calculated Zs of 0.98 ohms is less than 1.10 ohms, so the circuit is acceptable. The circuit will disconnect within 0.4 seconds as required.',
   },
   {
     id: 12,
@@ -282,21 +282,22 @@ const Level3Module6Section2_3 = () => {
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            {/* Zs values from canonical source: src/lib/calculators/bs7671-data/protectiveDevices.ts (BS 7671:2018+A4:2026 Table 41.3) */}
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Typical Maximum Zs (Type B)
+              Typical Maximum Zs (Type B — A4:2026)
             </p>
             <ul className="text-sm text-white space-y-1">
               <li>
-                <strong>6A:</strong> 7.67 ohms (design: 6.13)
+                <strong>6A:</strong> 7.28 ohms (design: 5.82)
               </li>
               <li>
-                <strong>16A:</strong> 2.87 ohms (design: 2.30)
+                <strong>16A:</strong> 2.73 ohms (design: 2.18)
               </li>
               <li>
-                <strong>32A:</strong> 1.44 ohms (design: 1.15)
+                <strong>32A:</strong> 1.37 ohms (design: 1.10)
               </li>
               <li>
-                <strong>40A:</strong> 1.15 ohms (design: 0.92)
+                <strong>40A:</strong> 1.09 ohms (design: 0.87)
               </li>
             </ul>
           </div>

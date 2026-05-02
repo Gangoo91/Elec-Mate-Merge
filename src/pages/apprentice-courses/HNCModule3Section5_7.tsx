@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 5 · Subsection 7 — Starting and Speed Control Methods for Motors
+ * HNC Electrical Engineering for Building Services (Pearson U4019)
+ *   DOL, star-delta, autotransformer, soft starter, VSD &mdash; the spectrum of
+ *   motor-starting / speed-control technology, the affinity laws that drive HVAC
+ *   energy savings, and harmonic mitigation that comes with VSDs.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Starting and Speed Control Methods for Motors - HNC Module 3 Section 5.7';
@@ -206,1160 +225,689 @@ const faqs = [
 ];
 
 const HNCModule3Section5_7 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.5.7</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Starting and Speed Control Methods for Motors
-          </h1>
-          <p className="text-white">
-            From DOL starters to variable frequency drives - controlling motor starting current and
-            speed for building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 5 · Subsection 7"
+            title="Starting and speed control methods for motors"
+            description="From DOL starters to variable frequency drives - controlling motor starting current and speed for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>DOL:</strong> Simple but high inrush (6-8× FLC) - small motors only
-              </li>
-              <li className="pl-1">
-                <strong>Star-delta:</strong> Reduces current to 1/3 but also torque to 1/3
-              </li>
-              <li className="pl-1">
-                <strong>Soft starters:</strong> Smooth ramp-up, adjustable current limit
-              </li>
-              <li className="pl-1">
-                <strong>VFDs:</strong> Variable speed, massive energy savings on pumps/fans
-              </li>
+          <TLDR
+            points={[
+              'You apply the spectrum: DOL (small motors &lt; 7.5 kW where inrush is acceptable) &rarr; star-delta (legacy) &rarr; soft starter (no speed control) &rarr; VSD (speed + soft start + energy saving).',
+              'You apply the cube affinity law (P &prop; n&sup3;) to fan and pump duty &mdash; running at 80 % speed cuts power demand to 51 %, the headline VSD energy-saving figure.',
+              'You specify VSDs to IES2 efficiency (Ecodesign Reg 2019/1781) and add line reactor / EMC filter / harmonic mitigation against G5/5 limits.',
+              'You design out star-delta on new installations &mdash; replaced by soft starter or VSD which are now the BSE default for fan / pump / compressor duties.',
+            ]}
+          />
+
+          <RegsCallout
+            source="Commission Regulation (EU) 2019/1781 (retained as UK law) — Ecodesign requirements for electric motors and variable speed drives"
+            clause="Variable speed drives placed on the EU/UK market from 1 July 2021 within the scope of the regulation shall meet IES2 efficiency level. The combined motor+drive package efficiency shall be assessed and declared per IEC 61800-9 series."
+            meaning={
+              <>
+                The retained Ecodesign regulation places VSDs on the same legal footing as
+                motors &mdash; IES2 minimum efficiency, declared per IEC 61800-9 packaged
+                drive standard. As BSE designer specifying fan / pump VSDs you must
+                verify the IES2 declaration on the manufacturer&rsquo;s submission and
+                document compliance for the SBEM / Part L 2021 evidence.
+              </>
+            }
+            cite="Source: Commission Regulation (EU) 2019/1781 (retained UK law); BS EN 61800-9 series (drive efficiency); BS EN 61800-3 (EMC for adjustable-speed drives); ENA G5/5 (harmonic limits at the PCC)"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Compare DOL, star-delta, auto-transformer and soft starter methods",
+              "Explain VFD operation, V/f control and vector control principles",
+              "Calculate energy savings using pump and fan affinity laws",
+              "Select appropriate starting methods for building services loads",
+              "Understand harmonic issues and mitigation techniques",
+              "Apply speed control to escalators, conveyors and HVAC systems",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="In 30 seconds">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>DOL:</strong> Simple but high inrush (6-8× FLC) - small motors only</li>
+              <li><strong>Star-delta:</strong> Reduces current to 1/3 but also torque to 1/3</li>
+              <li><strong>Soft starters:</strong> Smooth ramp-up, adjustable current limit</li>
+              <li><strong>VFDs:</strong> Variable speed, massive energy savings on pumps/fans</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC:</strong> AHU fans, chilled water pumps, cooling towers
-              </li>
-              <li className="pl-1">
-                <strong>Pumps:</strong> Affinity laws - P ∝ Speed³ (huge savings)
-              </li>
-              <li className="pl-1">
-                <strong>Escalators:</strong> VFDs for standby mode, regen braking
-              </li>
-              <li className="pl-1">
-                <strong>BMS:</strong> Speed control via 0-10V or Modbus signals
-              </li>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>HVAC:</strong> AHU fans, chilled water pumps, cooling towers</li>
+              <li><strong>Pumps:</strong> Affinity laws - P ∝ Speed³ (huge savings)</li>
+              <li><strong>Escalators:</strong> VFDs for standby mode, regen braking</li>
+              <li><strong>BMS:</strong> Speed control via 0-10V or Modbus signals</li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Compare DOL, star-delta, auto-transformer and soft starter methods',
-              'Explain VFD operation, V/f control and vector control principles',
-              'Calculate energy savings using pump and fan affinity laws',
-              'Select appropriate starting methods for building services loads',
-              'Understand harmonic issues and mitigation techniques',
-              'Apply speed control to escalators, conveyors and HVAC systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: DOL Starting */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Direct-On-Line (DOL) Starting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Direct-On-Line (DOL) Starting">
             <p>
               DOL starting is the simplest method - the motor is connected directly to the full
               supply voltage via a contactor. While straightforward, the high starting current
               (typically 6-8 times full load current) limits its use to smaller motors.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">DOL Starter Components:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">DOL Starter Components:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Main contactor:</strong> Switches all three phases simultaneously
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Overload relay:</strong> Thermal or electronic, trips on sustained
                   overcurrent
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Control circuit:</strong> Start/stop pushbuttons, auxiliary contacts
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Protection:</strong> MCB or fuses sized for starting current
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 DOL Starting Characteristics
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Value</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Starting current</td>
-                      <td className="border border-white/10 px-3 py-2">6-8 × FLC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Can be 4-10× depending on motor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Starting torque</td>
-                      <td className="border border-white/10 px-3 py-2">100-200% FLT</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full torque available from start
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage at motor</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full line voltage applied
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical max size</td>
-                      <td className="border border-white/10 px-3 py-2">7.5-11kW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Depends on supply capacity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost</td>
-                      <td className="border border-white/10 px-3 py-2">Lowest</td>
-                      <td className="border border-white/10 px-3 py-2">Simple, few components</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Starting current</strong> — 6-8 × FLC — Can be 4-10× depending on motor</li>
+              <li><strong>Starting torque</strong> — 100-200% FLT — Full torque available from start</li>
+              <li><strong>Voltage at motor</strong> — 100% — Full line voltage applied</li>
+              <li><strong>Typical max size</strong> — 7.5-11kW — Depends on supply capacity</li>
+              <li><strong>Cost</strong> — Lowest — Simple, few components</li>
+            </ul>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use DOL</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-elec-yellow/80">When to Use DOL</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Small motors (typically under 7.5kW in commercial buildings)
                 </li>
-                <li className="pl-1">
+                <li>
                   Supply can handle inrush without excessive voltage drop (&lt;3%)
                 </li>
-                <li className="pl-1">Load can tolerate sudden mechanical shock at start</li>
-                <li className="pl-1">Infrequent starting (voltage dips acceptable)</li>
+                <li>Load can tolerate sudden mechanical shock at start</li>
+                <li>Infrequent starting (voltage dips acceptable)</li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>DNO notification:</strong> Motors above 5.5kW single-phase or 11kW three-phase
               may require DNO approval due to starting current impact on the local network.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Star-Delta Starting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Star-Delta Starting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Star-Delta Starting">
             <p>
               Star-delta starting reduces starting current by initially connecting motor windings in
               star configuration, then switching to delta once the motor approaches running speed.
               This requires a motor with six terminals (both ends of each winding accessible).
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Star vs Delta Configuration
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">Star (Y) Connection</p>
-                  <ul className="space-y-0.5 text-white">
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Star (Y) Connection</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                     <li>Voltage per winding = VL / √3 = 230V</li>
                     <li>Current per winding = Line current</li>
                     <li>Power = 1/3 of delta power</li>
                     <li>Torque = 1/3 of delta torque</li>
                   </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Delta (Δ) Connection</p>
-                  <ul className="space-y-0.5 text-white">
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Delta (Δ) Connection</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                     <li>Voltage per winding = VL = 400V</li>
                     <li>Current per winding = IL / √3</li>
                     <li>Full rated power</li>
                     <li>Full rated torque</li>
                   </ul>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Star-Delta Starting Sequence
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Configuration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Current</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Torque</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Start</td>
-                      <td className="border border-white/10 px-3 py-2">Star (Y)</td>
-                      <td className="border border-white/10 px-3 py-2">33% of DOL</td>
-                      <td className="border border-white/10 px-3 py-2">33% of DOL</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Accelerate</td>
-                      <td className="border border-white/10 px-3 py-2">Star (Y)</td>
-                      <td className="border border-white/10 px-3 py-2">Decreasing</td>
-                      <td className="border border-white/10 px-3 py-2">Accelerating load</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Changeover</td>
-                      <td className="border border-white/10 px-3 py-2">Open → Delta</td>
-                      <td className="border border-white/10 px-3 py-2">Current spike</td>
-                      <td className="border border-white/10 px-3 py-2">Torque spike</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Run</td>
-                      <td className="border border-white/10 px-3 py-2">Delta (Δ)</td>
-                      <td className="border border-white/10 px-3 py-2">FLC</td>
-                      <td className="border border-white/10 px-3 py-2">100% FLT</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1. Start</strong> — Star (Y) — 33% of DOL — 33% of DOL</li>
+              <li><strong>2. Accelerate</strong> — Star (Y) — Decreasing — Accelerating load</li>
+              <li><strong>3. Changeover</strong> — Open → Delta — Current spike — Torque spike</li>
+              <li><strong>4. Run</strong> — Delta (Δ) — FLC — 100% FLT</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Advantages and Disadvantages:</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-green-400/80 mb-1">Advantages</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Starting current reduced to 1/3 of DOL</li>
-                    <li className="pl-1">Simple, robust, proven technology</li>
-                    <li className="pl-1">No electronics - suitable for harsh environments</li>
-                    <li className="pl-1">Lower cost than soft starters/VFDs</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-red-400/80 mb-1">Disadvantages</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Starting torque also reduced to 1/3</li>
-                    <li className="pl-1">Current transient at changeover</li>
-                    <li className="pl-1">Fixed reduction - not adjustable</li>
-                    <li className="pl-1">Requires 6-terminal motor</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+              <p className="text-sm font-medium text-white">Advantages and Disadvantages:</p>
 
-            <p className="text-sm text-elec-yellow/70">
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Advantages</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Starting current reduced to 1/3 of DOL</li>
+                    <li>Simple, robust, proven technology</li>
+                    <li>No electronics - suitable for harsh environments</li>
+                    <li>Lower cost than soft starters/VFDs</li>
+                  </ul>
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Disadvantages</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Starting torque also reduced to 1/3</li>
+                    <li>Current transient at changeover</li>
+                    <li>Fixed reduction - not adjustable</li>
+                    <li>Requires 6-terminal motor</li>
+                  </ul>
+
+              
+
+            <p>
               <strong>Application note:</strong> Star-delta is suitable for low-inertia loads that
               can accelerate to near running speed in star. High-inertia loads may stall or
               experience severe changeover transients.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Auto-transformer and Soft Starters */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Auto-transformer and Soft Starters
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Auto-transformer and Soft Starters">
             <p>
               Auto-transformer starters and soft starters both provide reduced voltage starting with
               more flexibility than star-delta. Auto-transformers use tapped windings, while soft
               starters use power electronics for smooth, adjustable control.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Auto-transformer Starting
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Uses tapped auto-transformer (typically 50%, 65%, 80% taps)
                 </li>
-                <li className="pl-1">
+                <li>
                   Starting current = (tap%)² × DOL current (e.g., 65% tap = 42% current)
                 </li>
-                <li className="pl-1">Starting torque = (tap%)² × DOL torque</li>
-                <li className="pl-1">Line current is further reduced by transformer action</li>
-                <li className="pl-1">
+                <li>Starting torque = (tap%)² × DOL torque</li>
+                <li>Line current is further reduced by transformer action</li>
+                <li>
                   Used for large motors where star-delta torque is insufficient
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Soft Starter Operation</p>
-              <p className="text-sm text-white mb-3">
+              <p className="text-sm font-medium text-elec-yellow/80">Soft Starter Operation</p>
+              <p>
                 Soft starters use back-to-back thyristors (SCRs) or triacs to control the voltage
                 applied to the motor by phase-angle control. Voltage ramps up gradually from a
                 preset initial value to full voltage over an adjustable time period.
               </p>
-              <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-black/30">
+
+                
                   <p className="font-bold text-elec-yellow mb-1">Ramp Time</p>
                   <p className="text-white text-xs">1-60 seconds typical</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
+
+                
                   <p className="font-bold text-elec-yellow mb-1">Initial Voltage</p>
                   <p className="text-white text-xs">30-70% adjustable</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
+
+                
                   <p className="font-bold text-elec-yellow mb-1">Current Limit</p>
                   <p className="text-white text-xs">200-500% FLC settable</p>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Soft Starter Features</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Benefit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Adjustable ramp time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Match acceleration to load requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Current limiting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Precise control of maximum starting current
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Soft stop</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevents water hammer in pump systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Kick start</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pulse of higher voltage to break static friction
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motor protection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overload, phase loss, phase imbalance, stall
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bypass contactor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thyristors bypassed at full speed (reduces losses)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              
 
-            <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
+              <p className="text-sm font-medium text-elec-yellow/80">Soft Starter Features</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Adjustable ramp time</strong> — Match acceleration to load requirements</li>
+              <li><strong>Current limiting</strong> — Precise control of maximum starting current</li>
+              <li><strong>Soft stop</strong> — Prevents water hammer in pump systems</li>
+              <li><strong>Kick start</strong> — Pulse of higher voltage to break static friction</li>
+              <li><strong>Motor protection</strong> — Overload, phase loss, phase imbalance, stall</li>
+              <li><strong>Bypass contactor</strong> — Thyristors bypassed at full speed (reduces losses)</li>
+            </ul>
+
               <p className="text-sm font-medium text-orange-300 mb-2">
                 Important: Soft Starter Limitations
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Runs at fixed speed once started - no speed control</li>
-                <li className="pl-1">Starting torque still reduced with reduced voltage</li>
-                <li className="pl-1">Generates harmonics during ramp (phase-angle control)</li>
-                <li className="pl-1">Heat dissipation required - adequate ventilation essential</li>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>Runs at fixed speed once started - no speed control</li>
+                <li>Starting torque still reduced with reduced voltage</li>
+                <li>Generates harmonics during ramp (phase-angle control)</li>
+                <li>Heat dissipation required - adequate ventilation essential</li>
               </ul>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 4: Variable Frequency Drives */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Variable Frequency Drives (VFDs/VSDs)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Variable Frequency Drives (VFDs/VSDs)">
             <p>
               Variable Frequency Drives (also called Variable Speed Drives, VSDs, or inverters)
               convert fixed-frequency AC to variable-frequency AC, enabling precise speed control of
               induction motors. They are now the standard for HVAC applications.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">VFD Power Circuit</p>
-              <div className="grid sm:grid-cols-3 gap-4 text-sm text-center">
-                <div className="p-3 rounded bg-black/30">
+              <p className="text-sm font-medium text-elec-yellow/80">VFD Power Circuit</p>
+
+                
                   <p className="font-bold text-white mb-1">Rectifier</p>
                   <p className="text-white text-xs">AC → DC</p>
                   <p className="text-white text-xs mt-1">Diode bridge or active front end</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
+
+                
                   <p className="font-bold text-white mb-1">DC Link</p>
                   <p className="text-white text-xs">Energy storage</p>
                   <p className="text-white text-xs mt-1">Capacitors, smooth DC bus</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
+
+                
                   <p className="font-bold text-white mb-1">Inverter</p>
                   <p className="text-white text-xs">DC → Variable AC</p>
                   <p className="text-white text-xs mt-1">IGBT PWM switching</p>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">VFD Speed Control Principle:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              
+
+              <p className="text-sm font-medium text-white">VFD Speed Control Principle:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Motor speed is proportional to supply frequency: N<sub>s</sub> = 120f/p
                 </li>
-                <li className="pl-1">VFD varies output frequency from 0-50Hz (or higher)</li>
-                <li className="pl-1">
+                <li>VFD varies output frequency from 0-50Hz (or higher)</li>
+                <li>
                   Voltage must be varied with frequency to maintain flux (V/f control)
                 </li>
-                <li className="pl-1">
+                <li>
                   PWM (Pulse Width Modulation) creates sinusoidal current in motor
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">VFD Operating Range</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Frequency Range
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Voltage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Characteristics
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0-50Hz (base speed)</td>
-                      <td className="border border-white/10 px-3 py-2">0-400V (constant V/f)</td>
-                      <td className="border border-white/10 px-3 py-2">Constant torque region</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        50-100Hz (field weakening)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">400V (constant)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Constant power, reduced torque
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <p className="text-sm font-medium text-elec-yellow/80">VFD Operating Range</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>0-50Hz (base speed)</strong> — 0-400V (constant V/f) — Constant torque region</li>
+              <li><strong>50-100Hz (field weakening)</strong> — 400V (constant) — Constant power, reduced torque</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 VFD Advantages for Building Services
               </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Precise speed control (0.1% accuracy)</li>
-                  <li className="pl-1">Soft starting without current spikes</li>
-                  <li className="pl-1">Controlled stopping and positioning</li>
-                  <li className="pl-1">Regenerative braking (active front end)</li>
-                </ul>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Massive energy savings on pumps/fans</li>
-                  <li className="pl-1">Power factor correction (near unity pf)</li>
-                  <li className="pl-1">Comprehensive motor protection</li>
-                  <li className="pl-1">BMS integration via Modbus/BACnet</li>
-                </ul>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Precise speed control (0.1% accuracy)</li>
+                  <li>Soft starting without current spikes</li>
+                  <li>Controlled stopping and positioning</li>
+                  <li>Regenerative braking (active front end)</li>
+                </ul>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Massive energy savings on pumps/fans</li>
+                  <li>Power factor correction (near unity pf)</li>
+                  <li>Comprehensive motor protection</li>
+                  <li>BMS integration via Modbus/BACnet</li>
+                </ul>
+
+            
+
+            <p>
               <strong>Low speed operation:</strong> Standard motors overheat below 20Hz due to
               reduced cooling. Use inverter-duty motors with independent cooling (IC416) or limit
               minimum speed to 20% for standard motors.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 5: V/f and Vector Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            V/f Control and Vector Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="V/f Control and Vector Control">
             <p>
               VFDs use different control strategies depending on application requirements. V/f
               (scalar) control is simpler and suitable for most HVAC applications. Vector control
               provides superior dynamic performance for demanding applications.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 V/f (Volts/Hertz) Control
               </p>
-              <div className="text-sm text-white space-y-2">
+
                 <p>
                   Also called scalar control, V/f maintains a constant ratio of voltage to
                   frequency. This keeps motor flux approximately constant, ensuring rated torque is
                   available across the speed range.
                 </p>
-                <p className="font-mono text-center my-3">V/f = 400V / 50Hz = 8 V/Hz = constant</p>
+                <p><strong>V/f = 400V / 50Hz = 8 V/Hz = constant</strong></p>
                 <p>
                   At 25Hz, voltage would be: 25 × 8 = 200V. At low frequencies (&lt;5Hz), voltage is
                   boosted above the V/f line to compensate for stator resistance voltage drop.
                 </p>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 V/f vs Vector Control Comparison
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">V/f Control</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Vector Control</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control method</td>
-                      <td className="border border-white/10 px-3 py-2">Voltage and frequency</td>
-                      <td className="border border-white/10 px-3 py-2">Flux and torque currents</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Low speed torque</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Poor (voltage boost helps)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Excellent (full torque at zero speed)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dynamic response</td>
-                      <td className="border border-white/10 px-3 py-2">Slow (100-200ms)</td>
-                      <td className="border border-white/10 px-3 py-2">Fast (5-10ms)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Speed accuracy</td>
-                      <td className="border border-white/10 px-3 py-2">±1-3% (open loop)</td>
-                      <td className="border border-white/10 px-3 py-2">±0.01% (with encoder)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Setup complexity</td>
-                      <td className="border border-white/10 px-3 py-2">Simple</td>
-                      <td className="border border-white/10 px-3 py-2">Requires motor auto-tune</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical applications</td>
-                      <td className="border border-white/10 px-3 py-2">Fans, pumps, conveyors</td>
-                      <td className="border border-white/10 px-3 py-2">Hoists, cranes, winders</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Control method</strong> — Voltage and frequency — Flux and torque currents</li>
+              <li><strong>Low speed torque</strong> — Poor (voltage boost helps) — Excellent (full torque at zero speed)</li>
+              <li><strong>Dynamic response</strong> — Slow (100-200ms) — Fast (5-10ms)</li>
+              <li><strong>Speed accuracy</strong> — ±1-3% (open loop) — ±0.01% (with encoder)</li>
+              <li><strong>Setup complexity</strong> — Simple — Requires motor auto-tune</li>
+              <li><strong>Typical applications</strong> — Fans, pumps, conveyors — Hoists, cranes, winders</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Vector Control Types</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">Sensorless Vector</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li className="pl-1">Estimates rotor position from motor currents</li>
-                    <li className="pl-1">No encoder required</li>
-                    <li className="pl-1">Good torque down to ~1Hz</li>
-                    <li className="pl-1">Suitable for most HVAC applications</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">Closed-Loop Vector (FOC)</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li className="pl-1">Uses encoder for rotor position feedback</li>
-                    <li className="pl-1">Full torque at zero speed</li>
-                    <li className="pl-1">Precise positioning capability</li>
-                    <li className="pl-1">Required for lifts, hoists, servo applications</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+              <p className="text-sm font-medium text-elec-yellow/80">Vector Control Types</p>
 
-            <p className="text-sm text-elec-yellow/70">
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Sensorless Vector</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Estimates rotor position from motor currents</li>
+                    <li>No encoder required</li>
+                    <li>Good torque down to ~1Hz</li>
+                    <li>Suitable for most HVAC applications</li>
+                  </ul>
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Closed-Loop Vector (FOC)</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Uses encoder for rotor position feedback</li>
+                    <li>Full torque at zero speed</li>
+                    <li>Precise positioning capability</li>
+                    <li>Required for lifts, hoists, servo applications</li>
+                  </ul>
+
+              
+
+            <p>
               <strong>HVAC applications:</strong> V/f or sensorless vector control is adequate for
               pumps and fans. Closed-loop vector is only needed for lifts, escalators requiring
               precise speed control, or positioning applications.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 6: Energy Savings */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Energy Savings with Variable Speed Drives
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Energy Savings with Variable Speed Drives">
             <p>
               The most compelling reason to use VSDs in building services is energy savings. For
               centrifugal loads like pumps and fans, reducing speed reduces power consumption
               dramatically due to the affinity laws (also called fan/pump laws).
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Pump and Fan Affinity Laws
               </p>
-              <div className="grid sm:grid-cols-3 gap-4 text-center">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-mono text-elec-yellow">Q ∝ N</p>
-                  <p className="text-sm text-white mt-1">Flow</p>
-                  <p className="text-xs text-white">proportional to speed</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-mono text-elec-yellow">H ∝ N²</p>
-                  <p className="text-sm text-white mt-1">Head/Pressure</p>
-                  <p className="text-xs text-white">proportional to speed²</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-mono text-elec-yellow">P ∝ N³</p>
-                  <p className="text-sm text-white mt-1">Power</p>
-                  <p className="text-xs text-white">proportional to speed³</p>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                
+                  <p><strong>Q ∝ N</strong></p>
+                  <p className="text-sm text-white mt-1">Flow</p>
+                  <p>proportional to speed</p>
+
+                
+                  <p><strong>H ∝ N²</strong></p>
+                  <p className="text-sm text-white mt-1">Head/Pressure</p>
+                  <p>proportional to speed²</p>
+
+                
+                  <p><strong>P ∝ N³</strong></p>
+                  <p className="text-sm text-white mt-1">Power</p>
+                  <p>proportional to speed³</p>
+
+              
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Power vs Speed - The Cube Law Effect
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Speed</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Flow</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Head</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Power</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Energy Saved</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">0%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">80%</td>
-                      <td className="border border-white/10 px-3 py-2">80%</td>
-                      <td className="border border-white/10 px-3 py-2">64%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">51.2%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">48.8%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60%</td>
-                      <td className="border border-white/10 px-3 py-2">60%</td>
-                      <td className="border border-white/10 px-3 py-2">36%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">21.6%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">78.4%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                      <td className="border border-white/10 px-3 py-2">25%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">12.5%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">87.5%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">40%</td>
-                      <td className="border border-white/10 px-3 py-2">40%</td>
-                      <td className="border border-white/10 px-3 py-2">16%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">6.4%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">93.6%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>100%</strong> — 100% — 100% — 100% — 0%</li>
+              <li><strong>80%</strong> — 80% — 64% — 51.2% — 48.8%</li>
+              <li><strong>60%</strong> — 60% — 36% — 21.6% — 78.4%</li>
+              <li><strong>50%</strong> — 50% — 25% — 12.5% — 87.5%</li>
+              <li><strong>40%</strong> — 40% — 16% — 6.4% — 93.6%</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
+              <p className="text-sm font-medium text-white">
                 VSD vs Traditional Flow Control:
               </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
-                  <p className="font-medium text-red-300 mb-1">Throttling/Dampers</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li className="pl-1">Motor runs at full speed</li>
-                    <li className="pl-1">Energy wasted as heat in valve/damper</li>
-                    <li className="pl-1">Valve wear, noise, maintenance</li>
-                    <li className="pl-1">Poor control accuracy</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-green-500/10 border border-green-500/30">
-                  <p className="font-medium text-green-300 mb-1">VSD Speed Control</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li className="pl-1">Motor speed matches demand</li>
-                    <li className="pl-1">Energy savings follow cube law</li>
-                    <li className="pl-1">Reduced mechanical wear</li>
-                    <li className="pl-1">Precise BMS control</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                
+                  <p className="font-medium text-red-300 mb-1">Throttling/Dampers</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Motor runs at full speed</li>
+                    <li>Energy wasted as heat in valve/damper</li>
+                    <li>Valve wear, noise, maintenance</li>
+                    <li>Poor control accuracy</li>
+                  </ul>
+
+                
+                  <p className="font-medium text-green-300 mb-1">VSD Speed Control</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Motor speed matches demand</li>
+                    <li>Energy savings follow cube law</li>
+                    <li>Reduced mechanical wear</li>
+                    <li>Precise BMS control</li>
+                  </ul>
+
+              
+
               <p className="text-sm font-medium text-green-300 mb-2">Typical VSD Payback Periods</p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>HVAC fans (AHUs):</strong> 1-2 years (often operate at part load)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Chilled water pumps:</strong> 1-3 years (variable cooling demand)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Condenser water pumps:</strong> 2-3 years (seasonal variation)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Cooling tower fans:</strong> 1-2 years (temperature dependent)
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Section 7: Building Services Applications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
-            Building Services Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ConceptBlock title="Building Services Applications">
+            <p className="text-sm font-medium text-elec-yellow/80">
                 Pump Control Applications
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Control Strategy
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Savings
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LTHW heating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ΔP control (constant pressure)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CHW cooling</td>
-                      <td className="border border-white/10 px-3 py-2">ΔT control or ΔP control</td>
-                      <td className="border border-white/10 px-3 py-2">40-60%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Condenser water</td>
-                      <td className="border border-white/10 px-3 py-2">Temperature control</td>
-                      <td className="border border-white/10 px-3 py-2">20-40%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Booster sets</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pressure control, duty/assist
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>LTHW heating</strong> — ΔP control (constant pressure) — 30-50%</li>
+              <li><strong>CHW cooling</strong> — ΔT control or ΔP control — 40-60%</li>
+              <li><strong>Condenser water</strong> — Temperature control — 20-40%</li>
+              <li><strong>Booster sets</strong> — Pressure control, duty/assist — 30-50%</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Fan Control Applications
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Control Strategy
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Savings
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AHU supply fans</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Duct static pressure or CO₂
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">40-60%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AHU extract fans</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Track supply or pressure control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">40-60%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooling tower fans</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Condenser water temperature
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Car park ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CO level control, jet fans
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">50-70%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>AHU supply fans</strong> — Duct static pressure or CO₂ — 40-60%</li>
+              <li><strong>AHU extract fans</strong> — Track supply or pressure control — 40-60%</li>
+              <li><strong>Cooling tower fans</strong> — Condenser water temperature — 30-50%</li>
+              <li><strong>Car park ventilation</strong> — CO level control, jet fans — 50-70%</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Escalators and Moving Walkways
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Speed control:</strong> Slow/standby when unoccupied, full speed when in
                   use
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Detection:</strong> PIR sensors or pressure mats trigger acceleration
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Regeneration:</strong> Descending escalators feed energy back to supply
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Savings:</strong> 30-50% compared to constant-speed operation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Standards:</strong> EN 115 covers safety and speed requirements
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Conveyor Systems</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-elec-yellow/80">Conveyor Systems</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Soft starting:</strong> Prevents belt slip and material spillage
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Speed matching:</strong> Multiple conveyors synchronised
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Load sensing:</strong> Speed varies with product flow
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Regeneration:</strong> Downhill or braking energy recovered
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Applications:</strong> Baggage handling, distribution centres,
                   manufacturing
                 </li>
               </ul>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">BMS Integration</p>
-              <p className="text-sm text-white mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">BMS Integration</p>
+              <p>
                 Modern VSDs integrate with Building Management Systems for optimised control:
               </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Analogue:</strong> 0-10V or 4-20mA speed reference from BMS
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Modbus RTU/TCP:</strong> Digital communication, full parameter access
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>BACnet:</strong> Native building automation protocol
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Feedback:</strong> Speed, current, power, fault status to BMS
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Harmonic Considerations */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
-            Harmonic Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Harmonic Considerations">
             <p>
               VFDs with standard diode rectifiers draw non-sinusoidal current from the supply,
               generating harmonics that can affect other equipment. Understanding and mitigating
               harmonics is essential for VFD installations.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Typical Harmonic Content
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Harmonic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical %</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effects</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5th</td>
-                      <td className="border border-white/10 px-3 py-2">250Hz</td>
-                      <td className="border border-white/10 px-3 py-2">30-40%</td>
-                      <td className="border border-white/10 px-3 py-2">Motor heating, vibration</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7th</td>
-                      <td className="border border-white/10 px-3 py-2">350Hz</td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                      <td className="border border-white/10 px-3 py-2">Motor heating, vibration</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">11th, 13th</td>
-                      <td className="border border-white/10 px-3 py-2">550Hz, 650Hz</td>
-                      <td className="border border-white/10 px-3 py-2">5-10%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable heating, interference
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>5th</strong> — 250Hz — 30-40% — Motor heating, vibration</li>
+              <li><strong>7th</strong> — 350Hz — 15-25% — Motor heating, vibration</li>
+              <li><strong>11th, 13th</strong> — 550Hz, 650Hz — 5-10% — Cable heating, interference</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Harmonic Mitigation Methods:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">Harmonic Mitigation Methods:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Line reactors (3-5%):</strong> Simple, reduce THD from 80% to 35-40%
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>DC link choke:</strong> Smooths DC bus, reduces harmonics
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Passive filters:</strong> Tuned LC circuits for specific harmonics
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Active filters:</strong> Electronic cancellation, best THD reduction
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>12/18-pulse rectifiers:</strong> Phase shifting cancels lower harmonics
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Active front end:</strong> Regenerative, near-sinusoidal current, unity pf
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>UK Standard:</strong> Engineering Recommendation G5/4 sets limits for harmonic
               distortion. For larger VFD installations (&gt;100kVA), harmonic assessment and
               mitigation may be required.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">
                 Example 1: Star-Delta Starting Current
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A 15kW motor has a DOL starting current of 180A. What is
                 the starting current with star-delta starting?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Star-delta reduces starting current to 1/3 of DOL</p>
-                <p className="mt-2">
+                <p>
                   I<sub>start(Y-Δ)</sub> = I<sub>start(DOL)</sub> × 1/3
                 </p>
                 <p>
                   I<sub>start(Y-Δ)</sub> = 180A × 1/3 = <strong>60A</strong>
                 </p>
-                <p className="mt-2 text-white">Note: Starting torque is also reduced to 1/3</p>
-              </div>
-            </div>
+                <p>Note: Starting torque is also reduced to 1/3</p>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 2: VFD Speed and Power Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A 4-pole AHU fan motor runs at 1440 rpm at 50Hz. The BMS
                 requests 70% airflow. Calculate the new frequency, speed, and power as a percentage
                 of full load.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Flow is proportional to speed, so 70% flow = 70% speed</p>
-                <p className="mt-2">
+                <p>
                   New speed = 1440 × 0.7 = <strong>1008 rpm</strong>
                 </p>
-                <p className="mt-2">Frequency proportional to speed:</p>
+                <p>Frequency proportional to speed:</p>
                 <p>
                   New frequency = 50Hz × 0.7 = <strong>35Hz</strong>
                 </p>
-                <p className="mt-2">Power proportional to speed cubed:</p>
+                <p>Power proportional to speed cubed:</p>
                 <p>
                   Power = (0.7)³ = <strong>0.343 = 34.3%</strong>
                 </p>
                 <p className="mt-2 text-green-400">
                   Energy saving = 100% - 34.3% = <strong>65.7%</strong>
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 3: Annual Energy Savings
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A 22kW pump runs 4000 hours/year. Currently throttled to
                 60% flow. Calculate annual savings if converted to VSD control at 60% speed.
                 Electricity costs £0.15/kWh.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Current consumption (throttled, full speed):</p>
                 <p>Energy = 22kW × 4000h = 88,000 kWh/year</p>
                 <p>
                   Cost = 88,000 × £0.15 = <strong>£13,200/year</strong>
                 </p>
-                <p className="mt-2">With VSD at 60% speed:</p>
+                <p>With VSD at 60% speed:</p>
                 <p>Power = 22kW × (0.6)³ = 22 × 0.216 = 4.75kW</p>
                 <p>Energy = 4.75kW × 4000h = 19,000 kWh/year</p>
                 <p>
@@ -1371,216 +919,184 @@ const HNCModule3Section5_7 = () => {
                 <p className="text-green-400">
                   If VSD costs ~£3,000, payback = <strong>3-4 months</strong>
                 </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">
                 Starting Method Selection Guide
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recommended Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small pump &lt;7.5kW</td>
-                      <td className="border border-white/10 px-3 py-2">DOL</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple, adequate supply capacity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large pump, constant speed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Soft starter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Smooth start, prevents water hammer
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC pump, variable flow</td>
-                      <td className="border border-white/10 px-3 py-2">VFD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy savings, BMS control
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AHU fan</td>
-                      <td className="border border-white/10 px-3 py-2">VFD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        VAV control, major savings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Escalator</td>
-                      <td className="border border-white/10 px-3 py-2">VFD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standby mode, regeneration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chiller compressor</td>
-                      <td className="border border-white/10 px-3 py-2">VFD (integral)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Capacity control, efficiency
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire pump</td>
-                      <td className="border border-white/10 px-3 py-2">DOL or Star-delta</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simplicity, reliability critical
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Small pump &lt;7.5kW</strong> — DOL — Simple, adequate supply capacity</li>
+              <li><strong>Large pump, constant speed</strong> — Soft starter — Smooth start, prevents water hammer</li>
+              <li><strong>HVAC pump, variable flow</strong> — VFD — Energy savings, BMS control</li>
+              <li><strong>AHU fan</strong> — VFD — VAV control, major savings</li>
+              <li><strong>Escalator</strong> — VFD — Standby mode, regeneration</li>
+              <li><strong>Chiller compressor</strong> — VFD (integral) — Capacity control, efficiency</li>
+              <li><strong>Fire pump</strong> — DOL or Star-delta — Simplicity, reliability critical</li>
+            </ul>
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 VFD Installation Considerations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Cable length:</strong> Long motor cables need output filters (dV/dt or
                   sine wave)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Motor insulation:</strong> Use inverter-duty motors for best reliability
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Bearing currents:</strong> Install shaft grounding rings on larger motors
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>EMC:</strong> Screened motor cable, proper earthing, input filters
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Cooling:</strong> Ensure adequate ventilation, derate for high ambient
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Harmonics:</strong> Assess impact, fit line reactors as minimum
                 </li>
               </ul>
-            </div>
+          </ConceptBlock>
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Undersizing VFD:</strong> Allow for starting duty and derating factors
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>No input protection:</strong> Always fit line reactor or RFI filter
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring minimum speed:</strong> Standard motors overheat below 20Hz
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Wrong control mode:</strong> Use V/f for fans/pumps, vector for lifts
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Poor earthing:</strong> Causes EMC issues and bearing damage
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+              </>
+            }
+            doInstead="Apply the formulas with care, verify with measured values where possible, and always cross-check against BS 7671 and equipment manufacturer data."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Starting Methods Comparison</p>
-                <ul className="space-y-0.5">
+          <ConceptBlock title="Quick Reference">
+            <p className="text-sm font-medium text-elec-yellow/80">Starting Methods Comparison</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>DOL: 100% voltage, 6-8× FLC, 100% torque</li>
                   <li>Star-delta: 33% current, 33% torque</li>
                   <li>Auto-transformer: (tap%)² current and torque</li>
                   <li>Soft starter: Adjustable ramp, current limit</li>
                   <li>VFD: Full control, soft start, variable speed</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Affinity Laws (Pumps/Fans)</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Affinity Laws (Pumps/Fans)</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Flow Q ∝ Speed N</li>
                   <li>Head H ∝ N²</li>
                   <li>Power P ∝ N³</li>
                   <li>80% speed = 51% power</li>
                   <li>50% speed = 12.5% power</li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <Scenario
+            title="Constant-speed AHU fan retrofit to VSD &mdash; cube-law saving calculation"
+            situation={
+              <>
+                A 30 kW supply fan in an office AHU runs constantly at full speed via a
+                DOL starter, controlled by inlet vanes. The BMS data shows actual airflow
+                demand averages 65 % of design over occupied hours, with morning peak at
+                90 % and overnight at 40 %. You evaluate retrofitting a VSD with BMS
+                speed control via 0&ndash;10 V or BACnet.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply cube affinity: P/P&#x2080; = (n/n&#x2080;)&sup3;. At 65 % speed the
+                power = 0.65&sup3; = 0.275 (~27.5 % of design power). For a 30 kW fan
+                that&rsquo;s 8.25 kW absorbed instead of ~30 kW &mdash; 21.75 kW saving
+                during typical operation. Annualised over 4500 occupied hours: ~98,000
+                kWh/year, ~&pound;19,600 at 20 p/kWh + ~13.6 t CO&#x2082;. Specify a
+                30 kW VSD (IES2, 5 % line reactor, EMC filter for residential / commercial
+                area), open IO-Bus to the BMS, payback typically &lt; 18 months. Document
+                in the Part L log book.
+              </>
+            }
+            whyItMatters={
+              <>
+                VSD-on-fan is the highest-leverage energy-efficiency intervention on
+                most existing commercial buildings. The HNC engineer&rsquo;s ability to
+                run the cube-law arithmetic and choose the right VSD package (with
+                harmonic mitigation appropriate to the upstream supply) is the
+                difference between a successful retrofit and one that causes power-quality
+                problems on the busbar.
+              </>
+            }
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'DOL: 6&ndash;8&times; FLC inrush, 100 % torque &mdash; small motors only.',
+              'Star-delta: 1/3 inrush, 1/3 torque &mdash; legacy method, replaced by soft starter or VSD.',
+              'Autotransformer starter: variable tap (typically 50/65/80 %) &mdash; mid-size motors where soft starter not available.',
+              'Soft starter: gradual ramp via SCR phase angle &mdash; reduces inrush, no speed control, lowest-cost VSD alternative.',
+              'VSD (variable-frequency drive): full speed control + soft start + energy saving via cube law on fan/pump duty.',
+              'Affinity laws for centrifugal loads: Q &prop; n, P &prop; n&sup3;, H &prop; n&sup2; &mdash; the basis of every VSD energy-saving calculation.',
+              'Ecodesign Reg 2019/1781 &mdash; VSDs IES2 minimum since 2021, declared per IEC 61800-9.',
+              'VSDs need harmonic mitigation (line reactor / DC link choke / active filter) against G5/5 limits + EMC filter to BS EN 61800-3.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section5-6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: DC Machines
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section5-8">
-              Next: Maintenance and Fault Diagnosis
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section5-6")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                DC machines (types, control, applications)
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section5-8")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Maintenance, testing and fault diagnosis
+              </div>
+            </button>
+          </div>
+
+        </PageFrame>
+      </div>
     </div>
   );
 };

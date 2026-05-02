@@ -1,8 +1,26 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 2 · Subsection 4 — Power Factor: Causes and Effects on Systems
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   Why a 100 kW motor draws more than 100 kVA from the supply, what it costs the tenant
+ *   on the utility bill, and what it does to cable, transformer and switchgear sizing.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Power Factor - Causes and Effects on Systems - HNC Module 3 Section 2.4';
@@ -204,998 +222,542 @@ const faqs = [
 ];
 
 const HNCModule3Section2_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.2.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Power Factor - Causes and Effects on Systems
-          </h1>
-          <p className="text-white">
-            Understanding how reactive loads affect power delivery, efficiency, and costs in
-            building services installations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 2 · Subsection 4"
+            title="Power Factor - Causes and Effects on Systems"
+            description="Understanding how reactive loads affect power delivery, efficiency, and costs in building services installations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>True power (P):</strong> Watts - actual work done
-              </li>
-              <li className="pl-1">
-                <strong>Reactive power (Q):</strong> VAr - oscillates, does no work
-              </li>
-              <li className="pl-1">
-                <strong>Apparent power (S):</strong> VA - total power supplied
-              </li>
-              <li className="pl-1">
-                <strong>Power factor:</strong> pf = P/S = cos φ (0 to 1)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Building Services Impact</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Motors:</strong> Largest cause of poor pf in buildings
-              </li>
-              <li className="pl-1">
-                <strong>Cables:</strong> Larger sizes needed for same kW
-              </li>
-              <li className="pl-1">
-                <strong>Transformers:</strong> Must be rated for kVA, not kW
-              </li>
-              <li className="pl-1">
-                <strong>DNO charges:</strong> Penalties below 0.90 pf
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can distinguish real power P (W), reactive power Q (VAr) and apparent power S (VA) and assemble them into the power triangle: S\u00b2 = P\u00b2 + Q\u00b2.',
+              'You can compute power factor PF = P / S = cos\u03c6 and explain why an inductive motor load gives a lagging PF.',
+              'You can identify the three big offenders for poor PF on a building: induction motors at part load, magnetic ballasts (legacy lighting), uncorrected LED drivers without active PFC.',
+              'You can quantify the cost of poor PF \u2014 oversized cable, oversized transformer, increased I\u00b2R losses, utility kVA penalty (typically applied above 100 kVA maximum demand).',
+              'You can spot the difference between displacement PF (fundamental phase shift) and true PF (which includes harmonic distortion) on modern non-linear loads.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS EN 61000-3-2 — Limits for harmonic current emissions (equipment input current \u2264 16 A per phase)"
+            clause="Class C equipment (lighting equipment) with active input power > 25 W shall comply with the harmonic current limits expressed as a percentage of the fundamental input current, including a third-harmonic limit of 30 % \u00d7 PF (circle) and individual limits on each higher order."
+            meaning={
+              <>
+                Modern LED drivers and switching power supplies must build active PFC into
+                the input stage to comply with BS EN 61000-3-2. The standard is the reason an
+                LED-retrofit office no longer needs the same scale of bulk PFC banks that
+                fluorescent installations did \u2014 but it also means \u201ctrue\u201d PF on the supply
+                now includes harmonic content, not just the fundamental phase shift.
+              </>
+            }
+            cite="Source: BS EN 61000-3-2 (latest edition); IEEE 519 voltage / current distortion limits."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Define true, reactive and apparent power with correct units',
               'Calculate power factor from the power triangle relationship',
               'Distinguish between leading and lagging power factor',
               'Identify causes of poor power factor in building services',
               'Quantify effects on current, cable losses and voltage drop',
               'Understand UK DNO reactive power charging mechanisms',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: True, Reactive and Apparent Power */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            True, Reactive and Apparent Power
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="Power factor is how effectively a circuit converts current into useful work; reactive loads waste capacity."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>True power (P):</strong> Watts - actual work done
+              </li>
+              <li>
+                <strong>Reactive power (Q):</strong> VAr - oscillates, does no work
+              </li>
+              <li>
+                <strong>Apparent power (S):</strong> VA - total power supplied
+              </li>
+              <li>
+                <strong>Power factor:</strong> pf = P/S = cos φ (0 to 1)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Impact</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motors:</strong> Largest cause of poor pf in buildings
+              </li>
+              <li>
+                <strong>Cables:</strong> Larger sizes needed for same kW
+              </li>
+              <li>
+                <strong>Transformers:</strong> Must be rated for kVA, not kW
+              </li>
+              <li>
+                <strong>DNO charges:</strong> Penalties below 0.90 pf
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="True, Reactive and Apparent Power">
             <p>
               In AC circuits with reactive components, the power relationships become more complex
               than simple P = VI. Three distinct power quantities must be understood to properly
               analyse and design electrical systems.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">The Three Power Types</p>
-              <div className="space-y-4">
-                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
-                  <p className="font-medium text-green-400 mb-1">True Power (P) - Watts</p>
-                  <p className="text-sm text-white">
-                    Also called active or real power. This is the power that actually does useful
-                    work - turning motors, producing heat, or generating light. Measured in Watts
-                    (W) or kilowatts (kW). This is what you pay for on your electricity bill (kWh
-                    consumption).
-                  </p>
-                  <p className="text-sm font-mono mt-2 text-green-400/80">P = V × I × cos φ</p>
-                </div>
-
-                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
-                  <p className="font-medium text-blue-400 mb-1">
-                    Reactive Power (Q) - Volt-Amperes Reactive
-                  </p>
-                  <p className="text-sm text-white">
-                    Power that oscillates between the source and the load, doing no useful work.
-                    Required to establish magnetic fields in motors and transformers. Measured in
-                    VAr or kVAr. Though it does no work, it still requires current to flow,
-                    increasing conductor loading.
-                  </p>
-                  <p className="text-sm font-mono mt-2 text-blue-400/80">Q = V × I × sin φ</p>
-                </div>
-
-                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
-                  <p className="font-medium text-purple-400 mb-1">
-                    Apparent Power (S) - Volt-Amperes
-                  </p>
-                  <p className="text-sm text-white">
-                    The total power that must be supplied by the source - the vector sum of true and
-                    reactive power. Measured in VA or kVA. Transformers, generators and cables must
-                    be rated for apparent power, not just true power. This is why poor power factor
-                    requires larger equipment.
-                  </p>
-                  <p className="text-sm font-mono mt-2 text-purple-400/80">
-                    S = V × I (total current)
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Power Relationships</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Quantity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Unit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Single-Phase Formula
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Three-Phase Formula
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">True power</td>
-                      <td className="border border-white/10 px-3 py-2">P</td>
-                      <td className="border border-white/10 px-3 py-2">W, kW</td>
-                      <td className="border border-white/10 px-3 py-2">V × I × cos φ</td>
-                      <td className="border border-white/10 px-3 py-2">√3 × VL × IL × cos φ</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reactive power</td>
-                      <td className="border border-white/10 px-3 py-2">Q</td>
-                      <td className="border border-white/10 px-3 py-2">VAr, kVAr</td>
-                      <td className="border border-white/10 px-3 py-2">V × I × sin φ</td>
-                      <td className="border border-white/10 px-3 py-2">√3 × VL × IL × sin φ</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Apparent power</td>
-                      <td className="border border-white/10 px-3 py-2">S</td>
-                      <td className="border border-white/10 px-3 py-2">VA, kVA</td>
-                      <td className="border border-white/10 px-3 py-2">V × I</td>
-                      <td className="border border-white/10 px-3 py-2">√3 × VL × IL</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">The Three Power Types</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>True Power (P) - Watts:</strong> Also called active or real power. This is the power that actually does useful work - turning motors, producing heat, or generating light. Measured in Watts (W) or kilowatts (kW). This is what you pay for on your electricity bill (kWh consumption). P = V × I × cos φ
+              </li>
+              <li>
+                <strong>Reactive Power (Q) - Volt-Amperes Reactive:</strong> Power that oscillates between the source and the load, doing no useful work. Required to establish magnetic fields in motors and transformers. Measured in VAr or kVAr. Though it does no work, it still requires current to flow, increasing conductor loading. Q = V × I × sin φ
+              </li>
+              <li>
+                <strong>Apparent Power (S) - Volt-Amperes:</strong> The total power that must be supplied by the source - the vector sum of true and reactive power. Measured in VA or kVA. Transformers, generators and cables must be rated for apparent power, not just true power. This is why poor power factor requires larger equipment. S = V × I (total current)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Power Relationships</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>True power (P):</strong> Unit W, kW. Single-phase: V × I × cos φ. Three-phase: √3 × VL × IL × cos φ
+              </li>
+              <li>
+                <strong>Reactive power (Q):</strong> Unit VAr, kVAr. Single-phase: V × I × sin φ. Three-phase: √3 × VL × IL × sin φ
+              </li>
+              <li>
+                <strong>Apparent power (S):</strong> Unit VA, kVA. Single-phase: V × I. Three-phase: √3 × VL × IL
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key relationship:</strong> S² = P² + Q² — apparent power is the hypotenuse of
               the power triangle.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Power Factor and the Power Triangle */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Power Factor and the Power Triangle
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Power Factor and the Power Triangle">
             <p>
               Power factor is the ratio of true power to apparent power, indicating how effectively
               current is being converted to useful work. It ranges from 0 (purely reactive) to 1
               (purely resistive, also called unity).
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Power Factor Definition
-              </p>
-              <div className="text-center">
-                <p className="font-mono text-xl mb-2">pf = P / S = cos φ</p>
-                <p className="text-sm text-white">
-                  Where φ is the phase angle between voltage and current
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Power Triangle</p>
-              <div className="p-4 rounded-lg bg-black/30">
-                <div className="text-center mb-4">
-                  <pre className="text-sm font-mono text-white inline-block text-left">
-                    {`                    S (kVA)
-                   /|
-                  / |
-                 /  |
-                /   | Q (kVAr)
-               /    |
-              /φ    |
-             /______|
-            P (kW)
-`}
-                  </pre>
-                </div>
-                <div className="grid sm:grid-cols-3 gap-3 text-sm">
-                  <div className="text-center">
-                    <p className="text-green-400 font-medium">Horizontal: P (kW)</p>
-                    <p className="text-white text-xs">True power - work done</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-blue-400 font-medium">Vertical: Q (kVAr)</p>
-                    <p className="text-white text-xs">Reactive power - oscillating</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-purple-400 font-medium">Hypotenuse: S (kVA)</p>
-                    <p className="text-white text-xs">Apparent power - total supplied</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Power Triangle Relationships
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">S² = P² + Q²</p>
-                  <p className="text-white text-xs">Pythagorean</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">pf = P / S</p>
-                  <p className="text-white text-xs">Power factor</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">cos φ = P / S</p>
-                  <p className="text-white text-xs">From triangle</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">tan φ = Q / P</p>
-                  <p className="text-white text-xs">Q from P and φ</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Leading vs Lagging Power Factor</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
-                  <p className="font-medium text-orange-400 mb-2">Lagging Power Factor</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Current lags voltage (inductive)</li>
-                    <li className="pl-1">Caused by motors, transformers, reactors</li>
-                    <li className="pl-1">Most common in building services</li>
-                    <li className="pl-1">Q is positive (consuming VAr)</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-cyan-500/50">
-                  <p className="font-medium text-cyan-400 mb-2">Leading Power Factor</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Current leads voltage (capacitive)</li>
-                    <li className="pl-1">Caused by capacitors, over-excited synchronous motors</li>
-                    <li className="pl-1">Used for power factor correction</li>
-                    <li className="pl-1">Q is negative (generating VAr)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Power Factor Definition</p>
+            <p>
+              <strong>pf = P / S = cos φ</strong> — Where φ is the phase angle between voltage and current
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">The Power Triangle</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Horizontal: P (kW)</strong> — True power, work done
+              </li>
+              <li>
+                <strong>Vertical: Q (kVAr)</strong> — Reactive power, oscillating
+              </li>
+              <li>
+                <strong>Hypotenuse: S (kVA)</strong> — Apparent power, total supplied
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Power Triangle Relationships</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>S² = P² + Q²</strong> — Pythagorean
+              </li>
+              <li>
+                <strong>pf = P / S</strong> — Power factor
+              </li>
+              <li>
+                <strong>cos φ = P / S</strong> — From triangle
+              </li>
+              <li>
+                <strong>tan φ = Q / P</strong> — Q from P and φ
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-white">Leading vs Lagging Power Factor</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lagging Power Factor:</strong> Current lags voltage (inductive). Caused by
+                motors, transformers, reactors. Most common in building services. Q is positive
+                (consuming VAr).
+              </li>
+              <li>
+                <strong>Leading Power Factor:</strong> Current leads voltage (capacitive). Caused
+                by capacitors, over-excited synchronous motors. Used for power factor correction.
+                Q is negative (generating VAr).
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Convention:</strong> Always state whether power factor is leading or lagging -
               "0.85 lagging" for motors, "0.95 leading" would indicate over-correction.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Causes of Poor Power Factor */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Causes of Poor Power Factor in Building Services
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Causes of Poor Power Factor in Building Services">
             <p>
               Poor power factor in building services is predominantly caused by inductive loads -
               equipment that requires magnetic fields to operate. Understanding the specific causes
               helps target correction measures.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Power Factors of Building Services Equipment
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical pf</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="bg-red-500/5">
-                      <td className="border border-white/10 px-3 py-2">
-                        Induction motors (unloaded)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.30 - 0.40</td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Worst case - avoid running unloaded
-                      </td>
-                    </tr>
-                    <tr className="bg-orange-500/5">
-                      <td className="border border-white/10 px-3 py-2">
-                        Induction motors (50% load)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">
-                        0.70 - 0.80
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Common operating condition
-                      </td>
-                    </tr>
-                    <tr className="bg-yellow-500/5">
-                      <td className="border border-white/10 px-3 py-2">
-                        Induction motors (full load)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        0.85 - 0.90
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Best motor pf but still requires correction
-                      </td>
-                    </tr>
-                    <tr className="bg-orange-500/5">
-                      <td className="border border-white/10 px-3 py-2">
-                        Transformers (light load)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">
-                        0.50 - 0.70
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Magnetising current dominates
-                      </td>
-                    </tr>
-                    <tr className="bg-yellow-500/5">
-                      <td className="border border-white/10 px-3 py-2">Transformers (full load)</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        0.85 - 0.95
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                      <td className="border border-white/10 px-3 py-2">Load current improves pf</td>
-                    </tr>
-                    <tr className="bg-red-500/5">
-                      <td className="border border-white/10 px-3 py-2">
-                        Fluorescent (magnetic ballast)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.50 - 0.60</td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Legacy equipment - replace with LED
-                      </td>
-                    </tr>
-                    <tr className="bg-green-500/5">
-                      <td className="border border-white/10 px-3 py-2">
-                        Fluorescent (HF electronic)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">0.95+</td>
-                      <td className="border border-white/10 px-3 py-2">Near unity</td>
-                      <td className="border border-white/10 px-3 py-2">Built-in pf correction</td>
-                    </tr>
-                    <tr className="bg-green-500/5">
-                      <td className="border border-white/10 px-3 py-2">
-                        LED luminaires (quality drivers)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        0.90 - 0.98
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Near unity</td>
-                      <td className="border border-white/10 px-3 py-2">Varies by manufacturer</td>
-                    </tr>
-                    <tr className="bg-green-500/5">
-                      <td className="border border-white/10 px-3 py-2">Resistance heaters</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">1.00</td>
-                      <td className="border border-white/10 px-3 py-2">Unity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Purely resistive - no reactive component
-                      </td>
-                    </tr>
-                    <tr className="bg-green-500/5">
-                      <td className="border border-white/10 px-3 py-2">Modern VSDs</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">0.95+</td>
-                      <td className="border border-white/10 px-3 py-2">Near unity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Active front end with pf correction
-                      </td>
-                    </tr>
-                    <tr className="bg-yellow-500/5">
-                      <td className="border border-white/10 px-3 py-2">Welding equipment</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        0.50 - 0.70
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lagging</td>
-                      <td className="border border-white/10 px-3 py-2">Transformer-based</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Primary Causes in Buildings
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">HVAC Systems</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">AHU fan motors (often 50-70% loaded)</li>
-                    <li className="pl-1">Chiller compressor motors</li>
-                    <li className="pl-1">Pump motors for CHW/condenser water</li>
-                    <li className="pl-1">Cooling tower fan motors</li>
-                    <li className="pl-1">FCU fan motors throughout building</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Other Building Loads</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Lift motors (highly variable loading)</li>
-                    <li className="pl-1">Escalator drives</li>
-                    <li className="pl-1">Distribution transformers</li>
-                    <li className="pl-1">Legacy discharge lighting</li>
-                    <li className="pl-1">UPS systems (varies by type)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Typical Power Factors of Building Services Equipment
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Induction motors (unloaded):</strong> 0.30 - 0.40 lagging — Worst case, avoid running unloaded
+              </li>
+              <li>
+                <strong>Induction motors (50% load):</strong> 0.70 - 0.80 lagging — Common operating condition
+              </li>
+              <li>
+                <strong>Induction motors (full load):</strong> 0.85 - 0.90 lagging — Best motor pf but still requires correction
+              </li>
+              <li>
+                <strong>Transformers (light load):</strong> 0.50 - 0.70 lagging — Magnetising current dominates
+              </li>
+              <li>
+                <strong>Transformers (full load):</strong> 0.85 - 0.95 lagging — Load current improves pf
+              </li>
+              <li>
+                <strong>Fluorescent (magnetic ballast):</strong> 0.50 - 0.60 lagging — Legacy equipment, replace with LED
+              </li>
+              <li>
+                <strong>Fluorescent (HF electronic):</strong> 0.95+ near unity — Built-in pf correction
+              </li>
+              <li>
+                <strong>LED luminaires (quality drivers):</strong> 0.90 - 0.98 near unity — Varies by manufacturer
+              </li>
+              <li>
+                <strong>Resistance heaters:</strong> 1.00 unity — Purely resistive, no reactive component
+              </li>
+              <li>
+                <strong>Modern VSDs:</strong> 0.95+ near unity — Active front end with pf correction
+              </li>
+              <li>
+                <strong>Welding equipment:</strong> 0.50 - 0.70 lagging — Transformer-based
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Primary Causes in Buildings</p>
+            <p className="text-sm font-medium text-white">HVAC Systems</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>AHU fan motors (often 50-70% loaded)</li>
+              <li>Chiller compressor motors</li>
+              <li>Pump motors for CHW/condenser water</li>
+              <li>Cooling tower fan motors</li>
+              <li>FCU fan motors throughout building</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Other Building Loads</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lift motors (highly variable loading)</li>
+              <li>Escalator drives</li>
+              <li>Distribution transformers</li>
+              <li>Legacy discharge lighting</li>
+              <li>UPS systems (varies by type)</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Important:</strong> Motor loading significantly affects power factor - a motor
               running at 25% load may have pf of 0.55, while the same motor at 100% load achieves
               0.88. Right-sizing motors is essential.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Effects of Poor Power Factor */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Effects on Electrical Systems and DNO Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Effects on Electrical Systems and DNO Requirements">
             <p>
               Poor power factor has significant technical and commercial consequences for building
               electrical systems. The effects compound throughout the installation from individual
               circuits to the DNO connection.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Technical Effects</p>
-              <div className="space-y-4">
-                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
-                  <p className="font-medium text-red-400 mb-2">Increased Current</p>
-                  <p className="text-sm text-white mb-2">
-                    For the same real power (kW), poor pf requires higher current. Current increases
-                    by factor 1/pf.
-                  </p>
-                  <div className="bg-black/30 p-3 rounded text-sm font-mono">
-                    <p>At 0.7 pf: Current = 1/0.7 = 1.43× higher than unity pf</p>
-                    <p>At 0.8 pf: Current = 1/0.8 = 1.25× higher than unity pf</p>
-                    <p>At 0.9 pf: Current = 1/0.9 = 1.11× higher than unity pf</p>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
-                  <p className="font-medium text-orange-400 mb-2">Increased Cable Losses (I²R)</p>
-                  <p className="text-sm text-white mb-2">
-                    Power loss in conductors is proportional to current squared. Poor pf
-                    dramatically increases losses.
-                  </p>
-                  <div className="bg-black/30 p-3 rounded text-sm font-mono">
-                    <p>At 0.7 pf: Losses = (1/0.7)² = 2.04× higher</p>
-                    <p>At 0.8 pf: Losses = (1/0.8)² = 1.56× higher</p>
-                    <p>At 0.9 pf: Losses = (1/0.9)² = 1.23× higher</p>
-                  </div>
-                  <p className="text-sm text-white mt-2">
-                    This wasted energy appears as heat in cables, transformers and switchgear.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-yellow-500/50">
-                  <p className="font-medium text-yellow-400 mb-2">Increased Voltage Drop</p>
-                  <p className="text-sm text-white mb-2">
-                    Higher current causes proportionally greater voltage drop along cables (Vd = I ×
-                    R × L × 2). May require larger cables to meet the 5% voltage drop limit for
-                    power circuits.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
-                  <p className="font-medium text-purple-400 mb-2">Oversized Equipment Required</p>
-                  <p className="text-sm text-white">
-                    Transformers, generators, cables and switchgear must be rated for apparent power
-                    (kVA). A 100kW load at 0.7 pf requires 143kVA capacity - 43% larger than at
-                    unity pf.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DNO Requirements and Charges
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        UK Typical Requirement
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Minimum power factor</td>
-                      <td className="border border-white/10 px-3 py-2">0.90 lagging or better</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Below this, reactive charges apply
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reactive power charge</td>
-                      <td className="border border-white/10 px-3 py-2">p/kVArh (varies by DNO)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Charged on excess kVArh above 0.90 pf equivalent
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maximum demand charge</td>
-                      <td className="border border-white/10 px-3 py-2">Based on kVA not kW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Poor pf increases MD charges
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Connection agreement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        May specify pf requirement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Breach may result in penalty or disconnection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Measurement</td>
-                      <td className="border border-white/10 px-3 py-2">Half-hourly metering</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        kWh and kVArh recorded for each HH period
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Commercial Impact Example</p>
-              <p className="text-sm text-white">
-                A 500kW commercial building at 0.75 pf draws 667kVA apparent power. This requires:
-              </p>
-              <ul className="text-sm text-white mt-2 space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  33% larger transformer capacity (667kVA vs 500kVA at unity)
-                </li>
-                <li className="pl-1">78% higher I²R losses in all distribution cables</li>
-                <li className="pl-1">Reactive power charges on 441kVArh per hour of operation</li>
-                <li className="pl-1">Higher maximum demand charges based on kVA reading</li>
-              </ul>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Technical Effects</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Increased Current:</strong> For the same real power (kW), poor pf requires higher current. Current increases by factor 1/pf. At 0.7 pf: 1.43× higher than unity. At 0.8 pf: 1.25× higher. At 0.9 pf: 1.11× higher.
+              </li>
+              <li>
+                <strong>Increased Cable Losses (I²R):</strong> Power loss in conductors is proportional to current squared. At 0.7 pf: losses 2.04× higher. At 0.8 pf: 1.56× higher. At 0.9 pf: 1.23× higher. This wasted energy appears as heat in cables, transformers and switchgear.
+              </li>
+              <li>
+                <strong>Increased Voltage Drop:</strong> Higher current causes proportionally greater voltage drop along cables (Vd = I × R × L × 2). May require larger cables to meet the 5% voltage drop limit for power circuits.
+              </li>
+              <li>
+                <strong>Oversized Equipment Required:</strong> Transformers, generators, cables and switchgear must be rated for apparent power (kVA). A 100kW load at 0.7 pf requires 143kVA capacity - 43% larger than at unity pf.
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">DNO Requirements and Charges</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Minimum power factor:</strong> 0.90 lagging or better — Below this, reactive charges apply
+              </li>
+              <li>
+                <strong>Reactive power charge:</strong> p/kVArh (varies by DNO) — Charged on excess kVArh above 0.90 pf equivalent
+              </li>
+              <li>
+                <strong>Maximum demand charge:</strong> Based on kVA not kW — Poor pf increases MD charges
+              </li>
+              <li>
+                <strong>Connection agreement:</strong> May specify pf requirement — Breach may result in penalty or disconnection
+              </li>
+              <li>
+                <strong>Measurement:</strong> Half-hourly metering — kWh and kVArh recorded for each HH period
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Commercial Impact Example</p>
+            <p>
+              A 500kW commercial building at 0.75 pf draws 667kVA apparent power. This requires:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>33% larger transformer capacity (667kVA vs 500kVA at unity)</li>
+              <li>78% higher I²R losses in all distribution cables</li>
+              <li>Reactive power charges on 441kVArh per hour of operation</li>
+              <li>Higher maximum demand charges based on kVA reading</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Target:</strong> Most installations should aim for 0.95 lagging power factor,
               providing margin above the 0.90 penalty threshold while avoiding over-correction to
               leading pf.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">Example 1: Power Triangle Calculation</p>
+            <p>
+              <strong>Question:</strong> A three-phase motor draws 45kW at 0.82 power factor
+              lagging. Calculate the reactive power (Q) and apparent power (S).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Given: P = 45kW, pf = cos φ = 0.82</li>
+              <li>Step 1: Find apparent power</li>
+              <li>S = P / pf = 45 / 0.82 = <strong>54.9kVA</strong></li>
+              <li>Step 2: Find phase angle</li>
+              <li>φ = cos⁻¹(0.82) = 34.9°</li>
+              <li>Step 3: Find reactive power</li>
+              <li>Q = S × sin φ = 54.9 × sin(34.9°) = 54.9 × 0.572</li>
+              <li>Q = <strong>31.4kVAr</strong></li>
+              <li>Check: S² = P² + Q² → 54.9² = 45² + 31.4² → 3014 ≈ 2025 + 986 ✓</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 2: Current Comparison at Different Power Factors</p>
+            <p>
+              <strong>Question:</strong> A 30kW three-phase load operates at 400V. Compare the
+              line current at (a) unity pf, (b) 0.85 pf, and (c) 0.70 pf.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Using: I = P / (√3 × V × pf)</li>
+              <li>(a) At unity pf (1.0): I = 30000 / (1.732 × 400 × 1.0) = <strong>43.3A</strong></li>
+              <li>(b) At 0.85 pf: I = 30000 / (1.732 × 400 × 0.85) = <strong>50.9A</strong> (18% increase)</li>
+              <li>(c) At 0.70 pf: I = 30000 / (1.732 × 400 × 0.70) = <strong>61.9A</strong> (43% increase)</li>
+              <li>At 0.70 pf, current is 43% higher, losses are 104% higher (2.04×)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 3: Transformer Sizing</p>
+            <p>
+              <strong>Question:</strong> A building has 200kW of load at 0.75 pf and 100kW of
+              resistive heating. What transformer kVA rating is required?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Heating load (unity pf)</li>
+              <li>S₁ = P₁ / pf = 100 / 1.0 = 100kVA</li>
+              <li>Q₁ = 0kVAr (resistive)</li>
+              <li>Step 2: Motor/inductive load</li>
+              <li>S₂ = P₂ / pf = 200 / 0.75 = 266.7kVA</li>
+              <li>Q₂ = √(S₂² - P₂²) = √(266.7² - 200²) = 176.8kVAr</li>
+              <li>Step 3: Total power</li>
+              <li>P_total = 100 + 200 = 300kW</li>
+              <li>Q_total = 0 + 176.8 = 176.8kVAr</li>
+              <li>Step 4: Total apparent power</li>
+              <li>S_total = √(300² + 176.8²) = √(90000 + 31258)</li>
+              <li>S_total = √121258 = <strong>348.2kVA</strong></li>
+              <li>Combined pf = 300/348.2 = 0.86 lagging</li>
+              <li>→ Select 400kVA transformer (next standard size)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 4: DNO Reactive Power Charges</p>
+            <p>
+              <strong>Question:</strong> A factory operates at 150kW average load, 0.78 pf, for
+              2000 hours per year. If the DNO charges 0.45p/kVArh for reactive power above 0.90 pf
+              equivalent, calculate the annual reactive charge.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Actual reactive power at 0.78 pf</li>
+              <li>S = 150/0.78 = 192.3kVA</li>
+              <li>Q_actual = √(192.3² - 150²) = 120.4kVAr</li>
+              <li>Step 2: Allowable reactive power at 0.90 pf</li>
+              <li>S_allowed = 150/0.90 = 166.7kVA</li>
+              <li>Q_allowed = √(166.7² - 150²) = 72.6kVAr</li>
+              <li>Step 3: Excess reactive power</li>
+              <li>Q_excess = 120.4 - 72.6 = 47.8kVAr</li>
+              <li>Step 4: Annual excess kVArh</li>
+              <li>Annual kVArh = 47.8 × 2000 = 95,600 kVArh</li>
+              <li>Step 5: Annual charge</li>
+              <li>Charge = 95,600 × 0.45p = <strong>43,020p = £430.20</strong></li>
+              <li>This does not include additional losses and MD charges - total savings from pf correction would be significantly higher</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Power Triangle Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A three-phase motor draws 45kW at 0.82 power factor
-                lagging. Calculate the reactive power (Q) and apparent power (S).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given: P = 45kW, pf = cos φ = 0.82</p>
-                <p className="mt-2">Step 1: Find apparent power</p>
-                <p>
-                  S = P / pf = 45 / 0.82 = <strong>54.9kVA</strong>
-                </p>
-                <p className="mt-2">Step 2: Find phase angle</p>
-                <p>φ = cos⁻¹(0.82) = 34.9°</p>
-                <p className="mt-2">Step 3: Find reactive power</p>
-                <p>Q = S × sin φ = 54.9 × sin(34.9°) = 54.9 × 0.572</p>
-                <p>
-                  Q = <strong>31.4kVAr</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Check: S² = P² + Q² → 54.9² = 45² + 31.4² → 3014 ≈ 2025 + 986 ✓
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Current Comparison at Different Power Factors
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 30kW three-phase load operates at 400V. Compare the
-                line current at (a) unity pf, (b) 0.85 pf, and (c) 0.70 pf.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using: I = P / (√3 × V × pf)</p>
-                <p className="mt-2">(a) At unity pf (1.0):</p>
-                <p>
-                  I = 30000 / (1.732 × 400 × 1.0) = <strong>43.3A</strong>
-                </p>
-                <p className="mt-2">(b) At 0.85 pf:</p>
-                <p>
-                  I = 30000 / (1.732 × 400 × 0.85) = <strong>50.9A</strong> (18% increase)
-                </p>
-                <p className="mt-2">(c) At 0.70 pf:</p>
-                <p>
-                  I = 30000 / (1.732 × 400 × 0.70) = <strong>61.9A</strong> (43% increase)
-                </p>
-                <p className="mt-2 text-red-400">
-                  At 0.70 pf, current is 43% higher, losses are 104% higher (2.04×)
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>pf = P/S = cos φ</strong> — Power factor definition</li>
+              <li><strong>S² = P² + Q²</strong> — Power triangle (Pythagoras)</li>
+              <li><strong>P = V × I × cos φ</strong> — True power (single-phase)</li>
+              <li><strong>Q = V × I × sin φ</strong> — Reactive power (single-phase)</li>
+              <li><strong>P = √3 × VL × IL × cos φ</strong> — True power (three-phase)</li>
+              <li><strong>I₂/I₁ = pf₁/pf₂</strong> — Current ratio at different power factors</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Values to Remember</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>DNO penalty threshold: typically <strong>0.90 lagging</strong></li>
+              <li>Target power factor: <strong>0.95 lagging</strong></li>
+              <li>Induction motor (full load): <strong>0.85-0.90</strong></li>
+              <li>Induction motor (no load): <strong>0.30-0.40</strong></li>
+              <li>Modern LED drivers: <strong>0.90-0.98</strong></li>
+              <li>Resistance heaters: <strong>1.00 (unity)</strong></li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Impact Reference</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1.00 (unity):</strong> Current 0%, Loss 0%, kVA for 100kW = 100kVA</li>
+              <li><strong>0.95:</strong> Current +5%, Loss +11%, kVA for 100kW = 105kVA</li>
+              <li><strong>0.90:</strong> Current +11%, Loss +23%, kVA for 100kW = 111kVA</li>
+              <li><strong>0.85:</strong> Current +18%, Loss +38%, kVA for 100kW = 118kVA</li>
+              <li><strong>0.80:</strong> Current +25%, Loss +56%, kVA for 100kW = 125kVA</li>
+              <li><strong>0.70:</strong> Current +43%, Loss +104%, kVA for 100kW = 143kVA</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Transformer Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A building has 200kW of load at 0.75 pf and 100kW of
-                resistive heating. What transformer kVA rating is required?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Heating load (unity pf)</p>
-                <p>S₁ = P₁ / pf = 100 / 1.0 = 100kVA</p>
-                <p>Q₁ = 0kVAr (resistive)</p>
-                <p className="mt-2">Step 2: Motor/inductive load</p>
-                <p>S₂ = P₂ / pf = 200 / 0.75 = 266.7kVA</p>
-                <p>Q₂ = √(S₂² - P₂²) = √(266.7² - 200²) = 176.8kVAr</p>
-                <p className="mt-2">Step 3: Total power</p>
-                <p>P_total = 100 + 200 = 300kW</p>
-                <p>Q_total = 0 + 176.8 = 176.8kVAr</p>
-                <p className="mt-2">Step 4: Total apparent power</p>
-                <p>S_total = √(300² + 176.8²) = √(90000 + 31258)</p>
-                <p>
-                  S_total = √121258 = <strong>348.2kVA</strong>
-                </p>
-                <p className="mt-2">Combined pf = 300/348.2 = 0.86 lagging</p>
-                <p className="mt-2 text-white">
-                  → Select 400kVA transformer (next standard size)
-                </p>
-              </div>
-            </div>
+          <CommonMistake
+            title="Common power factor mistakes"
+            whatHappens={
+              <>
+                Confusing P (kW) and S (kVA) when sizing transformers and cables. Forgetting to
+                state lagging or leading. Adding kVA values directly instead of using vector
+                addition (P and Q separately). Ignoring how lightly loaded motors have much worse
+                pf. Over-correcting with too much capacitance, leading to resonance and voltage
+                issues.
+              </>
+            }
+            doInstead={
+              <>
+                Always size transformers and cables on kVA, not kW. State direction (lagging or
+                leading) every time. Sum P and Q separately, then compute resultant S. Check motor
+                loading - right-size motors. Aim for 0.95 lagging, not unity, to avoid leading pf.
+              </>
+            }
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: DNO Reactive Power Charges
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A factory operates at 150kW average load, 0.78 pf, for
-                2000 hours per year. If the DNO charges 0.45p/kVArh for reactive power above 0.90 pf
-                equivalent, calculate the annual reactive charge.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Actual reactive power at 0.78 pf</p>
-                <p>S = 150/0.78 = 192.3kVA</p>
-                <p>Q_actual = √(192.3² - 150²) = 120.4kVAr</p>
-                <p className="mt-2">Step 2: Allowable reactive power at 0.90 pf</p>
-                <p>S_allowed = 150/0.90 = 166.7kVA</p>
-                <p>Q_allowed = √(166.7² - 150²) = 72.6kVAr</p>
-                <p className="mt-2">Step 3: Excess reactive power</p>
-                <p>Q_excess = 120.4 - 72.6 = 47.8kVAr</p>
-                <p className="mt-2">Step 4: Annual excess kVArh</p>
-                <p>Annual kVArh = 47.8 × 2000 = 95,600 kVArh</p>
-                <p className="mt-2">Step 5: Annual charge</p>
-                <p>
-                  Charge = 95,600 × 0.45p = <strong>43,020p = £430.20</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  This does not include additional losses and MD charges - total savings from pf
-                  correction would be significantly higher
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Investigating an unexpected utility PF penalty on an office building"
+            situation={
+              <>
+                The facilities manager has flagged a \u00a3850-per-month \u201creactive power\u201d
+                charge on the latest electricity bill. The building is an LED-lit office with
+                two 30 kW chiller compressors and a large AHU bank. Average maximum demand
+                is 220 kVA, average true power 175 kW \u2014 PF = 175 / 220 = 0.795 lagging.
+              </>
+            }
+            whatToDo={
+              <>
+                Walk the switchroom: identify whether the existing PFC bank (if any) is
+                online, that capacitors are still healthy (no swollen cans, fuses intact)
+                and that contactors are switching as expected. Map total reactive demand:
+                Q = \u221a(S\u00b2 \u2212 P\u00b2) = \u221a(220\u00b2 \u2212 175\u00b2) \u2248 133 kVAr.
+                Size new or supplementary PFC: Q_C = P \u00d7 (tan\u03c6\u2081 \u2212 tan\u03c6\u2082) =
+                175 \u00d7 (0.762 \u2212 0.329) \u2248 76 kVAr to lift PF from 0.795 to 0.95.
+                Specify a stepped capacitor bank (typically 5 \u00d7 15 kVAr or
+                detuned/harmonic-filtered if non-linear load is significant) to BS EN 61921.
+                Pay-back is usually under 18 months purely on the avoided penalty.
+              </>
+            }
+            whyItMatters={
+              <>
+                Power factor is a direct line on the utility bill \u2014 fix it and the saving
+                is real, repeatable and easy to quantify in the energy strategy. As the HNC
+                engineer, you are the one who sizes the bank, picks the standard and signs
+                off the install \u2014 the maths in this section is what gets that done.
+              </>
+            }
+          />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <SectionRule />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>pf = P/S = cos φ</strong> — Power factor definition
-                </li>
-                <li className="pl-1">
-                  <strong>S² = P² + Q²</strong> — Power triangle (Pythagoras)
-                </li>
-                <li className="pl-1">
-                  <strong>P = V × I × cos φ</strong> — True power (single-phase)
-                </li>
-                <li className="pl-1">
-                  <strong>Q = V × I × sin φ</strong> — Reactive power (single-phase)
-                </li>
-                <li className="pl-1">
-                  <strong>P = √3 × VL × IL × cos φ</strong> — True power (three-phase)
-                </li>
-                <li className="pl-1">
-                  <strong>I₂/I₁ = pf₁/pf₂</strong> — Current ratio at different power factors
-                </li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  DNO penalty threshold: typically <strong>0.90 lagging</strong>
-                </li>
-                <li className="pl-1">
-                  Target power factor: <strong>0.95 lagging</strong>
-                </li>
-                <li className="pl-1">
-                  Induction motor (full load): <strong>0.85-0.90</strong>
-                </li>
-                <li className="pl-1">
-                  Induction motor (no load): <strong>0.30-0.40</strong>
-                </li>
-                <li className="pl-1">
-                  Modern LED drivers: <strong>0.90-0.98</strong>
-                </li>
-                <li className="pl-1">
-                  Resistance heaters: <strong>1.00 (unity)</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Impact Reference</h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Power Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Current Increase
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Loss Increase (I²R)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">kVA for 100kW</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.00 (unity)</td>
-                      <td className="border border-white/10 px-3 py-2">0%</td>
-                      <td className="border border-white/10 px-3 py-2">0%</td>
-                      <td className="border border-white/10 px-3 py-2">100kVA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.95</td>
-                      <td className="border border-white/10 px-3 py-2">+5%</td>
-                      <td className="border border-white/10 px-3 py-2">+11%</td>
-                      <td className="border border-white/10 px-3 py-2">105kVA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.90</td>
-                      <td className="border border-white/10 px-3 py-2">+11%</td>
-                      <td className="border border-white/10 px-3 py-2">+23%</td>
-                      <td className="border border-white/10 px-3 py-2">111kVA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.85</td>
-                      <td className="border border-white/10 px-3 py-2">+18%</td>
-                      <td className="border border-white/10 px-3 py-2">+38%</td>
-                      <td className="border border-white/10 px-3 py-2">118kVA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.80</td>
-                      <td className="border border-white/10 px-3 py-2">+25%</td>
-                      <td className="border border-white/10 px-3 py-2">+56%</td>
-                      <td className="border border-white/10 px-3 py-2">125kVA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.70</td>
-                      <td className="border border-white/10 px-3 py-2">+43%</td>
-                      <td className="border border-white/10 px-3 py-2">+104%</td>
-                      <td className="border border-white/10 px-3 py-2">143kVA</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <KeyTakeaways
+            points={[
+              'Real power P (W) = work done. Reactive power Q (VAr) = energy stored and returned each cycle. Apparent power S (VA) = the supply has to provide both.',
+              'Power triangle: S\u00b2 = P\u00b2 + Q\u00b2. Phase angle \u03c6 sits between S (hypotenuse) and P (adjacent).',
+              'Power factor: PF = cos\u03c6 = P / S. PF = 1 means perfectly resistive. PF < 1 means reactive content the supply has to carry.',
+              'Lagging PF = inductive (motors, transformers, magnetic ballasts). Leading PF = capacitive (over-corrected installations, long lightly loaded cables).',
+              'Cost of poor PF: oversized cable, oversized transformer, higher I\u00b2R losses, and a direct utility kVA / kVAr penalty (typically above 100 kVA MD).',
+              'PFC sizing: Q_C = P \u00d7 (tan\u03c6\u2081 \u2212 tan\u03c6\u2082). Common target PF 0.95 \u2014 do not over-correct into leading PF.',
+              'BS EN 61000-3-2 makes modern LED drivers and switching supplies do their own active PFC \u2014 the bulk PFC bank story has moved from lighting to motors and chillers.',
+              'True PF includes harmonic distortion. If significant non-linear load is present (VFDs, LED drivers), use a detuned or harmonic-filtered capacitor bank (BS EN 61921) instead of plain capacitors.',
+            ]}
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Confusing P and S</strong> — Transformers and cables are rated for kVA,
-                  not kW
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting direction</strong> — Always state lagging or leading power
-                  factor
-                </li>
-                <li className="pl-1">
-                  <strong>Adding kVA directly</strong> — Must use vector addition (P and Q
-                  separately)
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring motor loading</strong> — Lightly loaded motors have much worse pf
-                </li>
-                <li className="pl-1">
-                  <strong>Over-correcting</strong> — Leading pf can cause resonance and voltage
-                  issues
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Power Types</p>
-                <ul className="space-y-0.5">
-                  <li>True power (P) - Watts - useful work</li>
-                  <li>Reactive power (Q) - VAr - oscillating</li>
-                  <li>Apparent power (S) - VA - total supplied</li>
-                  <li>Power factor = P/S = cos φ (0-1)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Services</p>
-                <ul className="space-y-0.5">
-                  <li>DNO threshold: 0.90 lagging</li>
-                  <li>Target pf: 0.95 lagging</li>
-                  <li>Motors: 0.85-0.90 (loaded)</li>
-                  <li>Losses: increase as (1/pf)²</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section2-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Section 2.3
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section2-5">
-              Next: Section 2.5
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Phase Angle and Phasor Diagrams
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Section 2.5
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

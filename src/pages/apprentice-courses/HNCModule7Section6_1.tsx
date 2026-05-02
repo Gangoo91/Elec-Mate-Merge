@@ -163,7 +163,7 @@ const quizQuestions = [
   {
     id: 9,
     question:
-      'According to Regulation 132.12, what must be considered when grouping circuits in a distribution board?',
+      'According to BS 7671:2018+A4:2026 Regulation 314.1, what must be considered when dividing an installation into circuits at a distribution board?',
     options: [
       'Only the cable colours used',
       'The need to avoid danger and minimise inconvenience in the event of a fault',
@@ -172,7 +172,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Regulation 132.12 requires that circuits be arranged to avoid danger and minimise inconvenience in the event of a fault. This means essential circuits may need separate RCDs, and critical loads should be distributed appropriately.',
+      'Regulation 314.1 states: "Every installation shall be divided into circuits, as necessary, to: (a) avoid danger and minimize inconvenience in the event of a fault; (b) facilitate safe inspection, testing and maintenance..." This means essential circuits may need separate RCDs, and critical loads should be distributed appropriately. (Note: Reg 132.12 covers Accessibility of electrical equipment — a related but distinct requirement.)',
   },
   {
     id: 10,

@@ -1,8 +1,27 @@
-import { ArrowLeft, Droplets, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 2 · Subsection 2 — Flow Characteristics
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Reynolds number, laminar vs turbulent flow, velocity profiles. The regime classification
+ *   that determines whether the system loses energy proportional to velocity (laminar) or to
+ *   velocity squared (turbulent) — and which correlations apply for friction loss.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  SectionRule,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Flow Characteristics - HNC Module 2 Section 2.2';
@@ -222,700 +241,469 @@ const faqs = [
 ];
 
 const HNCModule2Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Droplets className="h-4 w-4" />
-            <span>Module 2.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Flow Characteristics
-          </h1>
-          <p className="text-white">
-            Understanding laminar and turbulent flow regimes, Reynolds number, and velocity profiles
-            in building services systems
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 2 · Subsection 2"
+            title="Flow Characteristics"
+            description="Understanding laminar and turbulent flow regimes, Reynolds number, and velocity profiles in building services systems."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Laminar:</strong> Smooth parallel layers, Re &lt; 2300
-              </li>
-              <li className="pl-1">
-                <strong>Turbulent:</strong> Chaotic mixing, Re &gt; 4000
-              </li>
-              <li className="pl-1">
-                <strong>Reynolds:</strong> Re = ρvD/μ (inertia/viscous ratio)
-              </li>
-              <li className="pl-1">
-                <strong>Continuity:</strong> Q = A₁v₁ = A₂v₂ (mass conservation)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC pipes:</strong> Typically turbulent (Re &gt; 10,000)
-              </li>
-              <li className="pl-1">
-                <strong>Design velocity:</strong> 1-3 m/s for water systems
-              </li>
-              <li className="pl-1">
-                <strong>Heat transfer:</strong> Turbulent flow improves performance
-              </li>
-              <li className="pl-1">
-                <strong>Friction:</strong> Higher in turbulent but predictable
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will calculate Reynolds number (Re = ρvD/µ) for any pipe or duct flow and place it on the laminar (&lt;2,300), transitional (2,300-4,000) or turbulent (&gt;4,000) shelf.',
+              'You distinguish laminar (parabolic velocity profile) from turbulent (flatter, time-averaged profile) and explain why heat transfer is much higher in turbulent flow.',
+              'You apply the right friction-factor correlation for the regime — Hagen-Poiseuille (laminar), Colebrook-White or Moody chart (turbulent).',
+              'You design building services flows to land in turbulent regime — predictable losses, better mixing, better heat transfer.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Guide C — Reference Data (flow regimes and friction)"
+            clause="Reynolds number is calculated from Re = ρvD/µ for circular ducts, with hydraulic diameter substituted for non-circular sections. Laminar flow is taken as Re &lt; 2,300; fully developed turbulent flow occurs above Re ≈ 4,000. Friction factor is read from the Moody chart or calculated from Colebrook-White as a function of Re and relative roughness."
+            meaning={
+              <>
+                CIBSE Guide C provides the UK reference data and friction-factor charts used
+                in building services design. As an HNC engineer your pipe-sizing and
+                pressure-loss calculations live or die on getting the regime classification
+                right.
+              </>
+            }
+            cite="Source: CIBSE Guide C — Reference Data; ASHRAE Fundamentals (parallel international reference)"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Distinguish between laminar and turbulent flow characteristics',
               'Calculate Reynolds number for pipe flow applications',
               'Understand the significance of the critical Reynolds number',
               'Describe velocity profiles for different flow regimes',
               'Apply the continuity equation to pipe systems',
               'Recognise flow patterns in building services applications',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Laminar vs Turbulent Flow */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Laminar vs Turbulent Flow
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Laminar vs Turbulent Flow"
+            plainEnglish="Laminar = orderly, parallel layers, slow. Turbulent = chaotic mixing, the normal state in HVAC pipes. Use Reynolds number to tell which one you've got."
+          >
             <p>
               Fluid flow can be classified into two distinct regimes based on how the fluid
               particles move. Understanding these regimes is essential for predicting pressure
               losses and heat transfer in building services.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Laminar Flow</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Smooth, orderly fluid motion</li>
-                  <li className="pl-1">Parallel layers slide past each other</li>
-                  <li className="pl-1">No mixing between layers</li>
-                  <li className="pl-1">Parabolic velocity profile</li>
-                  <li className="pl-1">Lower friction losses</li>
-                  <li className="pl-1">Poor heat transfer</li>
-                  <li className="pl-1">Re &lt; 2300 in pipes</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Turbulent Flow</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Chaotic, irregular fluid motion</li>
-                  <li className="pl-1">Random fluctuations and eddies</li>
-                  <li className="pl-1">Strong mixing between layers</li>
-                  <li className="pl-1">Flatter velocity profile</li>
-                  <li className="pl-1">Higher friction losses</li>
-                  <li className="pl-1">Excellent heat transfer</li>
-                  <li className="pl-1">Re &gt; 4000 in pipes</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Flow Regime Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Laminar</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Turbulent</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reynolds number</td>
-                      <td className="border border-white/10 px-3 py-2">Re &lt; 2300</td>
-                      <td className="border border-white/10 px-3 py-2">Re &gt; 4000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Friction factor</td>
-                      <td className="border border-white/10 px-3 py-2">f = 64/Re</td>
-                      <td className="border border-white/10 px-3 py-2">Moody diagram</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        v<sub>max</sub>/v<sub>avg</sub>
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.0</td>
-                      <td className="border border-white/10 px-3 py-2">~1.2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Entry length</td>
-                      <td className="border border-white/10 px-3 py-2">~0.06 Re × D</td>
-                      <td className="border border-white/10 px-3 py-2">10-60 D</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Laminar flow:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Smooth, orderly fluid motion</li>
+              <li>Parallel layers slide past each other</li>
+              <li>No mixing between layers</li>
+              <li>Parabolic velocity profile</li>
+              <li>Lower friction losses</li>
+              <li>Poor heat transfer</li>
+              <li>Re &lt; 2300 in pipes</li>
+            </ul>
+            <p>
+              <strong>Turbulent flow:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Chaotic, irregular fluid motion</li>
+              <li>Random fluctuations and eddies</li>
+              <li>Strong mixing between layers</li>
+              <li>Flatter velocity profile</li>
+              <li>Higher friction losses</li>
+              <li>Excellent heat transfer</li>
+              <li>Re &gt; 4000 in pipes</li>
+            </ul>
+            <p>
+              <strong>Flow regime comparison:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reynolds number: laminar Re &lt; 2300, turbulent Re &gt; 4000</li>
+              <li>Friction factor: laminar f = 64/Re, turbulent uses Moody diagram</li>
+              <li>vmax/vavg: laminar 2.0, turbulent ~1.2</li>
+              <li>Entry length: laminar ~0.06 Re × D, turbulent 10-60 D</li>
+            </ul>
+            <p>
               <strong>Practical note:</strong> The transition zone (Re 2300-4000) is unstable and
               unpredictable - avoid designing systems to operate in this range.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Reynolds Number */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Reynolds Number
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Reynolds Number"
+            plainEnglish="Re = ρvD/μ. It's a dimensionless number telling you whether your flow is calm or chaotic. Big Re = inertia wins = turbulent. Small Re = viscosity wins = laminar."
+          >
             <p>
               The Reynolds number (Re) is a dimensionless quantity that predicts flow regime by
               comparing inertial forces (which cause turbulence) to viscous forces (which dampen
               turbulence).
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Reynolds Number Formula
-              </p>
-              <p className="font-mono text-center text-lg mb-2">Re = ρvD/μ = vD/ν</p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>Where: ρ = density (kg/m³), v = velocity (m/s), D = diameter (m)</p>
-                <p>μ = dynamic viscosity (Pa·s), ν = kinematic viscosity (m²/s)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Physical interpretation:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Inertial forces (ρv²):</strong> Tend to cause mixing and turbulence
-                </li>
-                <li className="pl-1">
-                  <strong>Viscous forces (μv/D):</strong> Tend to dampen disturbances and maintain
-                  order
-                </li>
-                <li className="pl-1">
-                  <strong>High Re:</strong> Inertia dominates → turbulent flow
-                </li>
-                <li className="pl-1">
-                  <strong>Low Re:</strong> Viscosity dominates → laminar flow
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Critical Reynolds Numbers
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Geometry</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Critical Re</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circular pipe</td>
-                      <td className="border border-white/10 px-3 py-2">~2300</td>
-                      <td className="border border-white/10 px-3 py-2">Most common case</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flat plate</td>
-                      <td className="border border-white/10 px-3 py-2">~500,000</td>
-                      <td className="border border-white/10 px-3 py-2">Based on length</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open channel</td>
-                      <td className="border border-white/10 px-3 py-2">~500</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Based on hydraulic radius
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Reynolds number formula:</strong> Re = ρvD/μ = vD/ν. ρ = density (kg/m³), v =
+              velocity (m/s), D = diameter (m), μ = dynamic viscosity (Pa·s), ν = kinematic
+              viscosity (m²/s).
+            </p>
+            <p>
+              <strong>Physical interpretation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Inertial forces (ρv²):</strong> Tend to cause mixing and turbulence
+              </li>
+              <li>
+                <strong>Viscous forces (μv/D):</strong> Tend to dampen disturbances and maintain order
+              </li>
+              <li>
+                <strong>High Re:</strong> Inertia dominates → turbulent flow
+              </li>
+              <li>
+                <strong>Low Re:</strong> Viscosity dominates → laminar flow
+              </li>
+            </ul>
+            <p>
+              <strong>Critical Reynolds numbers:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Circular pipe: ~2300 — most common case</li>
+              <li>Flat plate: ~500,000 — based on length</li>
+              <li>Open channel: ~500 — based on hydraulic radius</li>
+            </ul>
+            <p>
               <strong>Remember:</strong> Re is dimensionless - ensure all units are consistent (SI
               units: m, s, kg, Pa).
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Velocity Profiles */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Velocity Profiles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Velocity Profiles"
+            plainEnglish="Laminar = parabola (max at the centre, zero at the wall). Turbulent = nearly flat-topped with thin boundary layers."
+          >
             <p>
               The velocity profile describes how fluid velocity varies across a pipe cross-section.
               This varies significantly between laminar and turbulent flow regimes.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Laminar Profile (Parabolic)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Zero velocity at pipe wall (no-slip)</li>
-                  <li className="pl-1">Maximum velocity at centreline</li>
-                  <li className="pl-1">
-                    v<sub>max</sub> = 2 × v<sub>avg</sub>
-                  </li>
-                  <li className="pl-1">Smooth parabolic shape</li>
-                  <li className="pl-1">
-                    Velocity: v(r) = v<sub>max</sub>[1 - (r/R)²]
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Turbulent Profile (Flattened)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Zero velocity at wall (no-slip)</li>
-                  <li className="pl-1">Nearly uniform across core</li>
-                  <li className="pl-1">
-                    v<sub>max</sub> ≈ 1.2 × v<sub>avg</sub>
-                  </li>
-                  <li className="pl-1">Thin boundary layer near wall</li>
-                  <li className="pl-1">Better for flow measurement</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The No-Slip Condition</p>
-              <p className="text-sm mb-2">
-                At any solid boundary, the fluid velocity equals the boundary velocity. For
-                stationary pipes, this means v = 0 at the wall. This fundamental principle explains
-                why velocity profiles develop and why friction exists.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Entry length and developing flow:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Flow enters pipes with approximately uniform velocity</li>
-                <li className="pl-1">Boundary layers grow from walls until fully developed</li>
-                <li className="pl-1">
-                  <strong>Laminar entry:</strong> L<sub>e</sub> ≈ 0.06 × Re × D (can be very long)
-                </li>
-                <li className="pl-1">
-                  <strong>Turbulent entry:</strong> L<sub>e</sub> ≈ 10-60 × D (much shorter)
-                </li>
-                <li className="pl-1">Fittings disrupt the profile, requiring re-development</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Laminar profile (parabolic):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Zero velocity at pipe wall (no-slip)</li>
+              <li>Maximum velocity at centreline</li>
+              <li>vmax = 2 × vavg</li>
+              <li>Smooth parabolic shape</li>
+              <li>Velocity: v(r) = vmax[1 - (r/R)²]</li>
+            </ul>
+            <p>
+              <strong>Turbulent profile (flattened):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Zero velocity at wall (no-slip)</li>
+              <li>Nearly uniform across core</li>
+              <li>vmax ≈ 1.2 × vavg</li>
+              <li>Thin boundary layer near wall</li>
+              <li>Better for flow measurement</li>
+            </ul>
+            <p>
+              <strong>The no-slip condition:</strong> At any solid boundary, the fluid velocity
+              equals the boundary velocity. For stationary pipes, this means v = 0 at the wall. This
+              fundamental principle explains why velocity profiles develop and why friction exists.
+            </p>
+            <p>
+              <strong>Entry length and developing flow:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Flow enters pipes with approximately uniform velocity</li>
+              <li>Boundary layers grow from walls until fully developed</li>
+              <li>
+                <strong>Laminar entry:</strong> Le ≈ 0.06 × Re × D (can be very long)
+              </li>
+              <li>
+                <strong>Turbulent entry:</strong> Le ≈ 10-60 × D (much shorter)
+              </li>
+              <li>Fittings disrupt the profile, requiring re-development</li>
+            </ul>
+            <p>
               <strong>Flow measurement:</strong> Turbulent flow's flatter profile makes single-point
               velocity measurements more accurate for determining average flow rate.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Continuity and Flow Patterns */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Continuity Equation and Flow Patterns
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Continuity Equation and Flow Patterns"
+            plainEnglish="What goes in must come out. Halve the pipe diameter, quadruple the velocity. Branches and tees split flow but mass is always conserved."
+          >
             <p>
               The continuity equation expresses conservation of mass - what flows in must flow out.
               For incompressible fluids like water, this becomes a powerful tool for analysing pipe
               systems.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Continuity Equation</p>
-              <p className="font-mono text-center text-lg mb-2">Q = A₁v₁ = A₂v₂ = constant</p>
-              <p className="text-xs text-white text-center">
-                For circular pipes: A = πD²/4, so v₁D₁² = v₂D₂²
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key implications:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Reducer:</strong> Smaller area → higher velocity
-                </li>
-                <li className="pl-1">
-                  <strong>Expander:</strong> Larger area → lower velocity
-                </li>
-                <li className="pl-1">
-                  <strong>Branches:</strong> Total flow in = total flow out
-                </li>
-                <li className="pl-1">
-                  <strong>Headers:</strong> Flow distributes based on branch resistances
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical HVAC Water Velocities
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Velocity Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Considerations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pump suction</td>
-                      <td className="border border-white/10 px-3 py-2">0.5 - 1.5 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low to prevent cavitation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pump discharge</td>
-                      <td className="border border-white/10 px-3 py-2">1.5 - 3.0 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Balance friction vs pipe cost
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mains distribution</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 - 2.0 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">Noise and erosion limits</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Branch connections</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 - 1.5 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">Lower for small pipes</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Flow patterns in fittings:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Elbows:</strong> Flow separation on inner radius, reattachment downstream
-                </li>
-                <li className="pl-1">
-                  <strong>Tees:</strong> Complex mixing and flow splitting/combining
-                </li>
-                <li className="pl-1">
-                  <strong>Valves:</strong> High turbulence and pressure drop when partially closed
-                </li>
-                <li className="pl-1">
-                  <strong>Sudden expansion:</strong> Recirculation zones, high losses
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Continuity equation:</strong> Q = A₁v₁ = A₂v₂ = constant. For circular pipes:
+              A = πD²/4, so v₁D₁² = v₂D₂².
+            </p>
+            <p>
+              <strong>Key implications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Reducer:</strong> Smaller area → higher velocity
+              </li>
+              <li>
+                <strong>Expander:</strong> Larger area → lower velocity
+              </li>
+              <li>
+                <strong>Branches:</strong> Total flow in = total flow out
+              </li>
+              <li>
+                <strong>Headers:</strong> Flow distributes based on branch resistances
+              </li>
+            </ul>
+            <p>
+              <strong>Typical HVAC water velocities:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pump suction: 0.5-1.5 m/s — low to prevent cavitation</li>
+              <li>Pump discharge: 1.5-3.0 m/s — balance friction vs pipe cost</li>
+              <li>Mains distribution: 1.0-2.0 m/s — noise and erosion limits</li>
+              <li>Branch connections: 1.0-1.5 m/s — lower for small pipes</li>
+            </ul>
+            <p>
+              <strong>Flow patterns in fittings:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Elbows:</strong> Flow separation on inner radius, reattachment downstream
+              </li>
+              <li>
+                <strong>Tees:</strong> Complex mixing and flow splitting/combining
+              </li>
+              <li>
+                <strong>Valves:</strong> High turbulence and pressure drop when partially closed
+              </li>
+              <li>
+                <strong>Sudden expansion:</strong> Recirculation zones, high losses
+              </li>
+            </ul>
+            <p>
               <strong>Design tip:</strong> Allow 10-20 pipe diameters of straight pipe upstream of
               flow meters for accurate measurement.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three classic flow calcs: Reynolds number for HVAC pipework, velocity through a reducer, and how temperature changes Reynolds number."
+          >
+            <p>
+              <strong>Example 1 - Reynolds number calculation:</strong> Water at 20°C flows at 1.5
+              m/s through a 65mm diameter pipe. Determine the flow regime. (ρ = 998 kg/m³, μ = 0.001
+              Pa·s).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Re = ρvD/μ = (998 × 1.5 × 0.065) / 0.001 = <strong>97,305</strong></li>
+              <li>Re &gt;&gt; 4000, therefore flow is fully turbulent — typical for HVAC systems</li>
+            </ul>
+            <p>
+              <strong>Example 2 - velocity from continuity:</strong> A 100mm pipe carrying 8 l/s
+              reduces to 50mm diameter. What is the velocity in each section?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Q = 8 l/s = 0.008 m³/s</li>
+              <li>100mm pipe: A₁ = π × 0.1² / 4 = 0.00785 m²; v₁ = 0.008 / 0.00785 = <strong>1.02 m/s</strong></li>
+              <li>50mm pipe: A₂ = π × 0.05² / 4 = 0.00196 m²; v₂ = 0.008 / 0.00196 = <strong>4.08 m/s</strong></li>
+              <li>Halving diameter quadruples velocity (v ∝ 1/D²)</li>
+            </ul>
+            <p>
+              <strong>Example 3 - effect of temperature on Reynolds number:</strong> Compare Re for
+              the same flow rate (2 m/s, 50mm pipe) at 20°C and 80°C.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>At 20°C: ρ = 998 kg/m³, μ = 0.001 Pa·s. Re₂₀ = (998 × 2 × 0.05) / 0.001 = <strong>99,800</strong></li>
+              <li>At 80°C: ρ = 972 kg/m³, μ = 0.00035 Pa·s. Re₈₀ = (972 × 2 × 0.05) / 0.00035 = <strong>277,714</strong></li>
+              <li>Hot water Re is ~2.8× higher due to lower viscosity. Both well into turbulent regime</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Reynolds Number Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Water at 20°C flows at 1.5 m/s through a 65mm diameter
-                pipe. Determine the flow regime. (ρ = 998 kg/m³, μ = 0.001 Pa·s)
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Re = ρvD/μ</p>
-                <p>Re = (998 × 1.5 × 0.065) / 0.001</p>
-                <p>
-                  Re = 97.3 / 0.001 = <strong>97,305</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Re &gt;&gt; 4000, therefore flow is fully turbulent
-                </p>
-                <p className="mt-2 text-green-400">✓ Typical for HVAC systems</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Velocity from Continuity
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 100mm pipe carrying 8 l/s reduces to 50mm diameter.
-                What is the velocity in each section?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Q = 8 l/s = 0.008 m³/s</p>
-                <p className="mt-2">100mm pipe:</p>
-                <p>A₁ = π × 0.1² / 4 = 0.00785 m²</p>
-                <p>
-                  v₁ = Q/A₁ = 0.008 / 0.00785 = <strong>1.02 m/s</strong>
-                </p>
-                <p className="mt-2">50mm pipe:</p>
-                <p>A₂ = π × 0.05² / 4 = 0.00196 m²</p>
-                <p>
-                  v₂ = Q/A₂ = 0.008 / 0.00196 = <strong>4.08 m/s</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Halving diameter quadruples velocity (v ∝ 1/D²)
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The five formulas, the critical Re thresholds, and the design velocities you'll quote on a job."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Re = ρvD/μ = vD/ν</strong> — Reynolds number
+              </li>
+              <li>
+                <strong>Q = Av</strong> — Volume flow rate
+              </li>
+              <li>
+                <strong>A₁v₁ = A₂v₂</strong> — Continuity equation
+              </li>
+              <li>
+                <strong>A = πD²/4</strong> — Circular pipe area
+              </li>
+              <li>
+                <strong>f = 64/Re</strong> — Laminar friction factor
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Critical Re (pipe): <strong>~2300</strong>
+              </li>
+              <li>
+                Fully turbulent Re: <strong>&gt;4000</strong>
+              </li>
+              <li>
+                Laminar vmax/vavg: <strong>2.0</strong>
+              </li>
+              <li>
+                Turbulent vmax/vavg: <strong>~1.2</strong>
+              </li>
+              <li>
+                Water at 20°C: μ = <strong>0.001 Pa·s</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Effect of Temperature on Reynolds Number
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Compare Re for the same flow rate (2 m/s, 50mm pipe) at
-                20°C and 80°C.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>At 20°C: ρ = 998 kg/m³, μ = 0.001 Pa·s</p>
-                <p>
-                  Re₂₀ = (998 × 2 × 0.05) / 0.001 = <strong>99,800</strong>
-                </p>
-                <p className="mt-2">At 80°C: ρ = 972 kg/m³, μ = 0.00035 Pa·s</p>
-                <p>
-                  Re₈₀ = (972 × 2 × 0.05) / 0.00035 = <strong>277,714</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Hot water Re is ~2.8× higher due to lower viscosity
-                </p>
-                <p className="mt-2 text-white">→ Both are well into turbulent regime</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Re = ρvD/μ = vD/ν</strong> — Reynolds number
-                </li>
-                <li className="pl-1">
-                  <strong>Q = Av</strong> — Volume flow rate
-                </li>
-                <li className="pl-1">
-                  <strong>A₁v₁ = A₂v₂</strong> — Continuity equation
-                </li>
-                <li className="pl-1">
-                  <strong>A = πD²/4</strong> — Circular pipe area
-                </li>
-                <li className="pl-1">
-                  <strong>f = 64/Re</strong> — Laminar friction factor
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Critical Re (pipe): <strong>~2300</strong>
-                </li>
-                <li className="pl-1">
-                  Fully turbulent Re: <strong>&gt;4000</strong>
-                </li>
-                <li className="pl-1">
-                  Laminar v<sub>max</sub>/v<sub>avg</sub>: <strong>2.0</strong>
-                </li>
-                <li className="pl-1">
-                  Turbulent v<sub>max</sub>/v<sub>avg</sub>: <strong>~1.2</strong>
-                </li>
-                <li className="pl-1">
-                  Water at 20°C: μ = <strong>0.001 Pa·s</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Unit errors:</strong> D in metres, μ in Pa·s for Re calculation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Confusing viscosities:</strong> Use dynamic (μ) or kinematic (ν) correctly
                 </li>
-                <li className="pl-1">
-                  <strong>Ignoring temperature:</strong> Viscosity varies significantly with
-                  temperature
+                <li>
+                  <strong>Ignoring temperature:</strong> Viscosity varies significantly with temperature
                 </li>
-                <li className="pl-1">
-                  <strong>Transition zone:</strong> Avoid designing systems to operate at Re
-                  2300-4000
+                <li>
+                  <strong>Transition zone:</strong> Avoid designing systems to operate at Re 2300-4000
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Convert units to SI before plugging in, pick the right viscosity for the formula, look up viscosity at the actual fluid temperature, and design clearly into laminar or turbulent — never the unstable middle."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Diagnosing under-performance on a low-flow underfloor heating loop"
+            situation={
+              <>
+                A long underfloor heating loop is under-performing. Manifold flow is set
+                correctly, but the surface temperature at the far end is 8 °C below design.
+                The loop is 120 m of 16 mm PE-X at 0.18 m/s.
+              </>
+            }
+            whatToDo={
+              <>
+                Calculate Re = ρvD/µ at LTHW design temperature (970 × 0.18 × 0.014 / 0.00036)
+                ≈ 680. The flow is laminar. Heat transfer in laminar flow is much weaker than
+                turbulent (Nu ≈ 3.66 vs ≈ 100+ at higher Re), and the temperature drop along
+                the loop is amplified. Solutions: shorten loops to standard 80-100 m,
+                increase pipe size to allow lower velocity but maintain head, or accept the
+                regime and adjust manifold flow to lift the velocity into transitional range
+                (above Re 2,300).
+              </>
+            }
+            whyItMatters={
+              <>
+                Underfloor loops sized without checking Re are the most common case of
+                laminar-flow underperformance in building services. Diagnosis is a five-line
+                Reynolds calculation.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Flow Regimes</p>
-                <ul className="space-y-0.5">
-                  <li>Laminar: Re &lt; 2300, parabolic profile</li>
-                  <li>Transition: Re 2300-4000, unstable</li>
-                  <li>Turbulent: Re &gt; 4000, flat profile</li>
-                  <li>HVAC typical: Re &gt; 10,000</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Design Velocities (Water)</p>
-                <ul className="space-y-0.5">
-                  <li>Pump suction: 0.5-1.5 m/s</li>
-                  <li>Pump discharge: 1.5-3.0 m/s</li>
-                  <li>Distribution: 1.0-2.0 m/s</li>
-                  <li>Branches: 1.0-1.5 m/s</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Reynolds number Re = ρvD/µ — dimensionless, dictates flow regime.',
+              'Laminar Re &lt; 2,300, transitional 2,300-4,000, turbulent &gt; 4,000 (for circular pipe).',
+              'Laminar: parabolic velocity profile, friction factor f = 64/Re — losses linear in velocity.',
+              'Turbulent: time-averaged flat velocity profile, friction factor from Colebrook-White or Moody chart — losses quadratic in velocity.',
+              'Heat transfer is much higher in turbulent flow — Nusselt number jumps from ~3.66 (laminar) to 100+ (turbulent).',
+              'Design building services flows in turbulent regime — predictability and mixing both improve.',
+              'Hydraulic diameter D_h = 4A/P for non-circular ducts — substitutes for D in Re calculation.',
+              'Underfloor heating loops, low-flow domestic supplies and small chilled-water branches can drop into laminar — always check Re.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Fluid Properties
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2-3">
-              Next: Bernoulli's Equation
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Fluid properties
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Bernoulli's equation
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

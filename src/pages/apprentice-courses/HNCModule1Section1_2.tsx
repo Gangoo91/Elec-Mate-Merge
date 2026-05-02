@@ -1,8 +1,29 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 1 · Subsection 2 — Electricity at Work Regulations 1989
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   The electrical-specific regulations made under HSWA. Mostly absolute duties — there
+ *   is no SFARP defence on Reg 4. Engineer-in-training perspective: how EAWR sits behind
+ *   every isolation, every live-working risk assessment and every BS 7671 design choice.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Electricity at Work Regulations 1989 - HNC Module 1 Section 1.2';
@@ -244,849 +265,664 @@ const faqs = [
 ];
 
 const HNCModule1Section1_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 1
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.1.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Electricity at Work Regulations 1989
-          </h1>
-          <p className="text-white">
-            Criminal law provisions for electrical safety in the workplace - duties, defences and
-            building services applications
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.1.2"
+            title="Electricity at Work Regulations 1989"
+            description="Criminal law provisions for electrical safety in the workplace - duties, defences and building services applications"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>EAWR 1989:</strong> Criminal law imposing duties on employers and employees
-              </li>
-              <li className="pl-1">
-                <strong>33 Regulations:</strong> Covering systems, equipment, maintenance and
-                working practices
-              </li>
-              <li className="pl-1">
-                <strong>Regulation 14:</strong> Strict controls on live working
-              </li>
-              <li className="pl-1">
-                <strong>Regulation 16:</strong> Competence requirements for all electrical work
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Applies to:</strong> All electrical work in buildings
-              </li>
-              <li className="pl-1">
-                <strong>Duty holders:</strong> Designers, installers, maintainers, owners
-              </li>
-              <li className="pl-1">
-                <strong>Records:</strong> Essential for demonstrating compliance
-              </li>
-              <li className="pl-1">
-                <strong>Penalties:</strong> Unlimited fines, imprisonment for breaches
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will use EAWR 1989 as the legal backbone for every isolation, every live test and every BS 7671 design decision on a building services project.',
+              'You can distinguish absolute duties (Reg 4 — work on or near live conductors) from SFARP duties, and you know which require an EAWR Reg 29 due-diligence defence.',
+              'You can justify "live work" against the three-part Reg 14 test in writing — unreasonable to make dead, reasonable to work live, and suitable precautions taken.',
+              'You evidence Regulation 16 competence on every operative on your projects — from apprentice through to authorised person.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the scope and application of EAWR 1989',
-              'Identify the key regulations (3-16) and their requirements',
-              'Understand duties on systems, equipment and conductors',
-              'Apply Regulation 14 provisions for live working',
-              'Define competence requirements under Regulation 16',
-              'Demonstrate the defence of due diligence',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <RegsCallout
+            source="EAWR 1989 — Regulation 4(1)"
+            clause="All systems shall at all times be of such construction as to prevent, so far as is reasonably practicable, danger."
+            meaning={
+              <>
+                Reg 4 is the foundation duty. Reg 4(1) and 4(2) are SFARP, but Reg 4(3) is
+                <em> absolute</em> — equipment in use must not give rise to danger. As an HNC
+                designer/supervisor you cannot rely on a cost-benefit argument for Reg 4(3); the
+                duty must be met. This is why &ldquo;safe by design&rdquo; choices in BS 7671 (RCDs,
+                AFDDs, SPDs, robust earthing) carry through into your specification every time.
+              </>
+            }
+            cite="Source: Electricity at Work Regulations 1989, Reg 4 — legislation.gov.uk"
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <LearningOutcomes
+            outcomes={[
+              "Explain the scope and application of EAWR 1989",
+              "Identify the key regulations (3-16) and their requirements",
+              "Understand duties on systems, equipment and conductors",
+              "Apply Regulation 14 provisions for live working",
+              "Define competence requirements under Regulation 16",
+              "Demonstrate the defence of due diligence",
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Section 1: Key Regulations Overview */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Key Regulations Overview (Regulations 3-16)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Key Regulations Overview (Regulations 3-16)</ContentEyebrow>
+
+          <ConceptBlock title="Key Regulations Overview (Regulations 3-16)">
             <p>
-              The Electricity at Work Regulations 1989 are made under the Health and Safety at Work
-              etc. Act 1974. They impose duties on employers, employees and self-employed persons to
-              ensure electrical safety in all workplaces. Unlike BS 7671, EAWR is criminal law -
-              breaches can result in prosecution.
+            The Electricity at Work Regulations 1989 are made under the Health and Safety at Work
+            etc. Act 1974. They impose duties on employers, employees and self-employed persons to
+            ensure electrical safety in all workplaces. Unlike BS 7671, EAWR is criminal law -
+            breaches can result in prosecution.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Criminal Law Status</p>
-              <p className="text-sm text-white">
-                EAWR 1989 is enforced by the Health and Safety Executive (HSE). Breaches can result
-                in unlimited fines for organisations, and individuals can face personal prosecution
-                with penalties including imprisonment. This distinguishes EAWR from BS 7671, which
-                is a technical standard without direct legal force.
-              </p>
-            </div>
+            <CommonMistake
+            title="Criminal Law Status"
+            whatHappens={<><p className="text-sm text-white">
+            EAWR 1989 is enforced by the Health and Safety Executive (HSE). Breaches can result
+            in unlimited fines for organisations, and individuals can face personal prosecution
+            with penalties including imprisonment. This distinguishes EAWR from BS 7671, which
+            is a technical standard without direct legal force.
+            </p></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Structure of the Regulations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Regulations</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Coverage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Requirements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1-3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Interpretation and duties
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Defines terms; establishes who has duties
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4-5</td>
-                      <td className="border border-white/10 px-3 py-2">Systems and equipment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Construction and maintenance; equipment strength
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6-9</td>
-                      <td className="border border-white/10 px-3 py-2">Protective provisions</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Environment; insulation; earthing; integrity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10-12</td>
-                      <td className="border border-white/10 px-3 py-2">Protective devices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Connections; excess current; isolation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">13-16</td>
-                      <td className="border border-white/10 px-3 py-2">Working practices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dead working; live working; space/access; competence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">29</td>
-                      <td className="border border-white/10 px-3 py-2">Defence</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Due diligence defence for criminal proceedings
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Structure of the Regulations
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1-3</strong> — Coverage: Interpretation and duties. Key Requirements: Defines terms; establishes who has duties</li>
+            <li><strong>4-5</strong> — Coverage: Systems and equipment. Key Requirements: Construction and maintenance; equipment strength</li>
+            <li><strong>6-9</strong> — Coverage: Protective provisions. Key Requirements: Environment; insulation; earthing; integrity</li>
+            <li><strong>10-12</strong> — Coverage: Protective devices. Key Requirements: Connections; excess current; isolation</li>
+            <li><strong>13-16</strong> — Coverage: Working practices. Key Requirements: Dead working; live working; space/access; competence</li>
+            <li><strong>29</strong> — Coverage: Defence. Key Requirements: Due diligence defence for criminal proceedings</li>
+            </ul>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> The phrase 'so far as is reasonably practicable' (SFAIRP)
-              qualifies most duties. This requires a risk-based approach where precautions must be
-              taken unless grossly disproportionate to the risk.
+            <strong>Remember:</strong> The phrase 'so far as is reasonably practicable' (SFAIRP)
+            qualifies most duties. This requires a risk-based approach where precautions must be
+            taken unless grossly disproportionate to the risk.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Duties on Systems, Equipment and Conductors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Duties on Systems, Equipment and Conductors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Duties on Systems, Equipment and Conductors</ContentEyebrow>
+
+          <ConceptBlock title="Duties on Systems, Equipment and Conductors">
             <p>
-              Regulations 4-12 establish fundamental requirements for electrical systems and
-              equipment. These regulations apply throughout the lifecycle of building services
-              installations - from design and installation through to maintenance and eventual
-              decommissioning.
+            Regulations 4-12 establish fundamental requirements for electrical systems and
+            equipment. These regulations apply throughout the lifecycle of building services
+            installations - from design and installation through to maintenance and eventual
+            decommissioning.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Regulation 4: Systems - Construction and Maintenance
-              </p>
-              <div className="bg-white/5 p-4 rounded-lg">
-                <p className="text-sm text-white mb-3">
-                  <strong>4(1):</strong> All systems shall at all times be of such construction as
-                  to prevent, so far as is reasonably practicable, danger.
-                </p>
-                <p className="text-sm text-white mb-3">
-                  <strong>4(2):</strong> All systems shall be maintained so as to prevent, so far as
-                  is reasonably practicable, such danger.
-                </p>
-                <p className="text-sm text-white">
-                  This regulation covers the entire electrical system including all electrical
-                  equipment. 'Maintained' includes regular inspection, testing, repair and
-                  replacement as necessary.
-                </p>
-              </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Regulation 4: Systems - Construction and Maintenance
+            </p>
+            <div className="bg-white/5 p-4 rounded-lg">
+            <p className="text-sm text-white mb-3">
+            <strong>4(1):</strong> All systems shall at all times be of such construction as
+            to prevent, so far as is reasonably practicable, danger.
+            </p>
+            <p className="text-sm text-white mb-3">
+            <strong>4(2):</strong> All systems shall be maintained so as to prevent, so far as
+            is reasonably practicable, such danger.
+            </p>
+            <p className="text-sm text-white">
+            This regulation covers the entire electrical system including all electrical
+            equipment. 'Maintained' includes regular inspection, testing, repair and
+            replacement as necessary.
+            </p>
             </div>
+            
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulations 5-9: Equipment Protection
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Reg 5:</strong> Equipment strength and capability
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 6:</strong> Suitability for adverse environments
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 7:</strong> Insulation and protection of conductors
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 8:</strong> Earthing and other precautions
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 9:</strong> Integrity of referenced conductors
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulations 10-12: Protective Devices
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Reg 10:</strong> Proper connections
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 11:</strong> Protection against excess current
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 12:</strong> Means of cutting off supply and isolation
-                  </li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Regulations 5-9: Equipment Protection
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Reg 5:</strong> Equipment strength and capability
+            </li>
+            <li>
+            <strong>Reg 6:</strong> Suitability for adverse environments
+            </li>
+            <li>
+            <strong>Reg 7:</strong> Insulation and protection of conductors
+            </li>
+            <li>
+            <strong>Reg 8:</strong> Earthing and other precautions
+            </li>
+            <li>
+            <strong>Reg 9:</strong> Integrity of referenced conductors
+            </li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Regulations 10-12: Protective Devices
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Reg 10:</strong> Proper connections
+            </li>
+            <li>
+            <strong>Reg 11:</strong> Protection against excess current
+            </li>
+            <li>
+            <strong>Reg 12:</strong> Means of cutting off supply and isolation
+            </li>
+            </ul>
+            </div>
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Applications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Regulation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Services Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reg 5 (Strength)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switchgear rated for prospective fault current
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reg 6 (Environment)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IP-rated equipment in plant rooms; ATEX zones
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reg 7 (Insulation)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable insulation; busbars in trunking
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reg 11 (Excess current)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        MCBs, fuses, RCBOs properly coordinated
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reg 12 (Isolation)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Local isolators at AHUs; emergency stops
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Building Services Applications
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Reg 5 (Strength)</strong> — Building Services Example: Switchgear rated for prospective fault current</li>
+            <li><strong>Reg 6 (Environment)</strong> — Building Services Example: IP-rated equipment in plant rooms; ATEX zones</li>
+            <li><strong>Reg 7 (Insulation)</strong> — Building Services Example: Cable insulation; busbars in trunking</li>
+            <li><strong>Reg 11 (Excess current)</strong> — Building Services Example: MCBs, fuses, RCBOs properly coordinated</li>
+            <li><strong>Reg 12 (Isolation)</strong> — Building Services Example: Local isolators at AHUs; emergency stops</li>
+            </ul>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> These regulations require the outcome (prevention of
-              danger) rather than prescribing specific methods. Compliance with BS 7671 generally
-              satisfies these regulations for new installations.
+            <strong>Key principle:</strong> These regulations require the outcome (prevention of
+            danger) rather than prescribing specific methods. Compliance with BS 7671 generally
+            satisfies these regulations for new installations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Work on Live Equipment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Work on Live Equipment (Regulation 14)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Work on Live Equipment (Regulation 14)</ContentEyebrow>
+
+          <ConceptBlock title="Work on Live Equipment (Regulation 14)">
             <p>
-              Regulation 14 is one of the most important provisions in EAWR. It establishes a strong
-              presumption against live working and requires strict conditions to be met before any
-              live work can be undertaken.
+            Regulation 14 is one of the most important provisions in EAWR. It establishes a strong
+            presumption against live working and requires strict conditions to be met before any
+            live work can be undertaken.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Regulation 14 - The Legal Test
-              </p>
-              <p className="text-sm text-white italic mb-3">
-                "No person shall be engaged in any work activity on or so near any live conductor
-                (other than one suitably covered with insulating material so as to prevent danger)
-                that danger may arise unless—"
-              </p>
-              <ul className="text-sm text-white space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="font-bold text-red-400">(a)</span>
-                  <span>it is unreasonable in all the circumstances for it to be dead; and</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="font-bold text-red-400">(b)</span>
-                  <span>
-                    it is reasonable in all the circumstances for him to be at work on or near it
-                    while it is live; and
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="font-bold text-red-400">(c)</span>
-                  <span>
-                    suitable precautions (including where necessary the provision of suitable
-                    protective equipment) are taken to prevent injury.
-                  </span>
-                </li>
-              </ul>
-            </div>
+            <CommonMistake
+            title="Regulation 14 - The Legal Test"
+            whatHappens={<><p className="text-sm text-white italic mb-3">
+            "No person shall be engaged in any work activity on or so near any live conductor
+            (other than one suitably covered with insulating material so as to prevent danger)
+            that danger may arise unless—"
+            </p>
+            <ul className="text-sm text-white space-y-2">
+            <li className="flex items-start gap-2">
+            <span className="font-bold text-red-400">(a)</span>
+            <span>it is unreasonable in all the circumstances for it to be dead; and</span>
+            </li>
+            <li className="flex items-start gap-2">
+            <span className="font-bold text-red-400">(b)</span>
+            <span>
+            it is reasonable in all the circumstances for him to be at work on or near it
+            while it is live; and
+            </span>
+            </li>
+            <li className="flex items-start gap-2">
+            <span className="font-bold text-red-400">(c)</span>
+            <span>
+            suitable precautions (including where necessary the provision of suitable
+            protective equipment) are taken to prevent injury.
+            </span>
+            </li>
+            </ul></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Live Working May Be Justified
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fault finding:</strong> Diagnostic measurements requiring live circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> Initial energisation and testing of systems
-                </li>
-                <li className="pl-1">
-                  <strong>Critical services:</strong> Where isolation would cause greater risk
-                  (e.g., life support)
-                </li>
-                <li className="pl-1">
-                  <strong>Functional testing:</strong> Verifying correct operation of protective
-                  devices
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            When Live Working May Be Justified
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Fault finding:</strong> Diagnostic measurements requiring live circuits
+            </li>
+            <li>
+            <strong>Commissioning:</strong> Initial energisation and testing of systems
+            </li>
+            <li>
+            <strong>Critical services:</strong> Where isolation would cause greater risk
+            (e.g., life support)
+            </li>
+            <li>
+            <strong>Functional testing:</strong> Verifying correct operation of protective
+            devices
+            </li>
+            </ul>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Required Precautions for Live Working
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-white/5 p-3 rounded-lg">
-                  <p className="font-medium text-white text-sm mb-2">Technical Controls</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Insulated tools (1000V rated)</li>
-                    <li>Insulating matting</li>
-                    <li>Barriers and screens</li>
-                    <li>Test instruments with shrouded probes</li>
-                    <li>Restricted access</li>
-                  </ul>
-                </div>
-                <div className="bg-white/5 p-3 rounded-lg">
-                  <p className="font-medium text-white text-sm mb-2">Administrative Controls</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Written risk assessment</li>
-                    <li>Safe system of work / method statement</li>
-                    <li>Competent person undertaking work</li>
-                    <li>Accompaniment (second person)</li>
-                    <li>Competent supervision</li>
-                  </ul>
-                </div>
-              </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Required Precautions for Live Working
+            </p>
+            
+            <div className="bg-white/5 p-3 rounded-lg">
+            <p className="font-medium text-white text-sm mb-2">Technical Controls</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Insulated tools (1000V rated)</li>
+            <li>Insulating matting</li>
+            <li>Barriers and screens</li>
+            <li>Test instruments with shrouded probes</li>
+            <li>Restricted access</li>
+            </ul>
             </div>
+            <div className="bg-white/5 p-3 rounded-lg">
+            <p className="font-medium text-white text-sm mb-2">Administrative Controls</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Written risk assessment</li>
+            <li>Safe system of work / method statement</li>
+            <li>Competent person undertaking work</li>
+            <li>Accompaniment (second person)</li>
+            <li>Competent supervision</li>
+            </ul>
+            </div>
+            
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-2">
-                Regulation 13: Precautions for Dead Working
-              </p>
-              <p className="text-sm text-white mb-2">
-                Before Regulation 14 applies, Regulation 13 requires adequate precautions to prevent
-                conductors becoming live during work:
-              </p>
-              <ol className="text-sm text-white space-y-1 list-decimal list-outside ml-5">
-                <li className="pl-1">Identify the circuit to be worked on</li>
-                <li className="pl-1">Isolate from all points of supply</li>
-                <li className="pl-1">Prove the isolation is effective</li>
-                <li className="pl-1">Lock off and apply warning notices</li>
-                <li className="pl-1">Prove the circuit is dead at the point of work</li>
-              </ol>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">
+            Regulation 13: Precautions for Dead Working
+            </p>
+            <p className="text-sm text-white mb-2">
+            Before Regulation 14 applies, Regulation 13 requires adequate precautions to prevent
+            conductors becoming live during work:
+            </p>
+            <ol className="text-sm text-white space-y-1 list-decimal list-outside ml-5">
+            <li>Identify the circuit to be worked on</li>
+            <li>Isolate from all points of supply</li>
+            <li>Prove the isolation is effective</li>
+            <li>Lock off and apply warning notices</li>
+            <li>Prove the circuit is dead at the point of work</li>
+            </ol>
+            
 
             <p className="text-sm text-white italic">
-              <strong>HSE Guidance:</strong> The HSE memorandum of guidance on EAWR (HSR25) states
-              that live working should be the exception, not the rule. Convenience or cost savings
-              alone do not justify live working.
+            <strong>HSE Guidance:</strong> The HSE memorandum of guidance on EAWR (HSR25) states
+            that live working should be the exception, not the rule. Convenience or cost savings
+            alone do not justify live working.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Competence and Due Diligence */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Competence Requirements and Defence of Due Diligence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Competence Requirements and Defence of Due Diligence</ContentEyebrow>
+
+          <ConceptBlock title="Competence Requirements and Defence of Due Diligence">
             <p>
-              Regulation 16 is fundamental to electrical safety - it requires that only competent
-              persons undertake electrical work. Regulation 29 provides a defence for duty holders
-              who can demonstrate they took all reasonable precautions.
+            Regulation 16 is fundamental to electrical safety - it requires that only competent
+            persons undertake electrical work. Regulation 29 provides a defence for duty holders
+            who can demonstrate they took all reasonable precautions.
             </p>
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                Regulation 16 - Competence
-              </p>
-              <p className="text-sm text-white italic">
-                "No person shall be engaged in any work activity where technical knowledge or
-                experience is necessary to prevent danger or, where appropriate, injury, unless he
-                possesses such knowledge or experience, or is under such degree of supervision as
-                may be appropriate having regard to the nature of the work."
-              </p>
+            <p className="text-sm font-medium text-elec-yellow mb-2">
+            Regulation 16 - Competence
+            </p>
+            <p className="text-sm text-white italic">
+            "No person shall be engaged in any work activity where technical knowledge or
+            experience is necessary to prevent danger or, where appropriate, injury, unless he
+            possesses such knowledge or experience, or is under such degree of supervision as
+            may be appropriate having regard to the nature of the work."
+            </p>
             </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Components of Competence
-              </p>
-              <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Technical Knowledge</p>
-                  <p className="text-white text-xs">
-                    Understanding of electrical principles, regulations and standards
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Experience</p>
-                  <p className="text-white text-xs">
-                    Practical skills developed through hands-on work
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Ability to Prevent Danger</p>
-                  <p className="text-white text-xs">Judgement to recognise and avoid hazards</p>
-                </div>
-              </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Components of Competence
+            </p>
+            <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
+            
+            <p className="font-bold text-elec-yellow mb-1">Technical Knowledge</p>
+            <p className="text-white text-xs">
+            Understanding of electrical principles, regulations and standards
+            </p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Experience</p>
+            <p className="text-white text-xs">
+            Practical skills developed through hands-on work
+            </p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Ability to Prevent Danger</p>
+            <p className="text-white text-xs">Judgement to recognise and avoid hazards</p>
+            
             </div>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Competence in Building Services Context
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Work Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Competence Indicators
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Supervision Level
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple replacement (lamp, fuse)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Basic electrical awareness
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">General supervision</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circuit installation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        NVQ Level 3 / AM2 or equivalent
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Periodic checking</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution board work</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Qualified electrician with relevant experience
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Self-supervising</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HV switchgear</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HV authorisation; specific equipment training
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Authorised person system</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Competence in Building Services Context
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Simple replacement (lamp, fuse)</strong> — Competence Indicators: Basic electrical awareness. Supervision Level: General supervision</li>
+            <li><strong>Circuit installation</strong> — Competence Indicators: NVQ Level 3 / AM2 or equivalent. Supervision Level: Periodic checking</li>
+            <li><strong>Distribution board work</strong> — Competence Indicators: Qualified electrician with relevant experience. Supervision Level: Self-supervising</li>
+            <li><strong>HV switchgear</strong> — Competence Indicators: HV authorisation; specific equipment training. Supervision Level: Authorised person system</li>
+            </ul>
+            
+            
 
             <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Regulation 29 - Defence of Due Diligence
-              </p>
-              <p className="text-sm text-white mb-3">
-                In criminal proceedings, it is a defence to prove that all reasonable steps were
-                taken and all due diligence was exercised to avoid committing the offence.
-              </p>
-              <p className="text-sm font-medium text-white mb-2">Evidence required:</p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">Documented risk assessments and method statements</li>
-                <li className="pl-1">Records of inspection and testing (EICR certificates)</li>
-                <li className="pl-1">Training records and competence assessments</li>
-                <li className="pl-1">Maintenance schedules and records</li>
-                <li className="pl-1">Evidence of acting on inspection findings</li>
-                <li className="pl-1">Safe systems of work and permit procedures</li>
-              </ul>
+            <p className="text-sm font-medium text-green-400 mb-2">
+            Regulation 29 - Defence of Due Diligence
+            </p>
+            <p className="text-sm text-white mb-3">
+            In criminal proceedings, it is a defence to prove that all reasonable steps were
+            taken and all due diligence was exercised to avoid committing the offence.
+            </p>
+            <p className="text-sm font-medium text-white mb-2">Evidence required:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Documented risk assessments and method statements</li>
+            <li>Records of inspection and testing (EICR certificates)</li>
+            <li>Training records and competence assessments</li>
+            <li>Maintenance schedules and records</li>
+            <li>Evidence of acting on inspection findings</li>
+            <li>Safe systems of work and permit procedures</li>
+            </ul>
             </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Demonstrating Due Diligence
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Proactive management:</strong> Systematic approach to electrical safety,
-                  not reactive
-                </li>
-                <li className="pl-1">
-                  <strong>Competent advice:</strong> Using qualified persons for design,
-                  installation and inspection
-                </li>
-                <li className="pl-1">
-                  <strong>Regular inspection:</strong> EICR at appropriate intervals (typically 5
-                  years commercial)
-                </li>
-                <li className="pl-1">
-                  <strong>Prompt remediation:</strong> Acting on defects identified during
-                  inspections
-                </li>
-                <li className="pl-1">
-                  <strong>Record keeping:</strong> Comprehensive documentation of all safety
-                  measures
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Demonstrating Due Diligence
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Proactive management:</strong> Systematic approach to electrical safety,
+            not reactive
+            </li>
+            <li>
+            <strong>Competent advice:</strong> Using qualified persons for design,
+            installation and inspection
+            </li>
+            <li>
+            <strong>Regular inspection:</strong> EICR at appropriate intervals (typically 5
+            years commercial)
+            </li>
+            <li>
+            <strong>Prompt remediation:</strong> Acting on defects identified during
+            inspections
+            </li>
+            <li>
+            <strong>Record keeping:</strong> Comprehensive documentation of all safety
+            measures
+            </li>
+            </ul>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Critical point:</strong> The defence of due diligence is not available for all
-              regulations. Regulations 4(4), 7-9, 11, and 13 are absolute duties where the defence
-              does not apply - these regulations do not include 'so far as is reasonably
-              practicable'.
+            <strong>Critical point:</strong> The defence of due diligence is not available for all
+            regulations. Regulations 4(4), 7-9, 11, and 13 are absolute duties where the defence
+            does not apply - these regulations do not include 'so far as is reasonably
+            practicable'.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Building Services Applications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Building Services Applications</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Application 1: Commercial Office Building
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Managing electrical safety in a multi-tenancy office
-                building
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="mb-2">
-                  <strong>EAWR duties include:</strong>
-                </p>
-                <ul className="space-y-1 list-disc list-outside ml-5">
-                  <li>Reg 4: Maintain common electrical systems (risers, distribution boards)</li>
-                  <li>Reg 12: Ensure tenants can isolate their supplies safely</li>
-                  <li>Reg 15: Adequate access and lighting in electrical intake rooms</li>
-                  <li>Reg 16: Use competent contractors for all electrical work</li>
-                  <li>EICR every 5 years; PAT testing; emergency lighting testing</li>
-                </ul>
-              </div>
+          <ConceptBlock title="Building Services Applications">
+            <p><strong>Application 1: Commercial Office Building</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Scenario:</strong> Managing electrical safety in a multi-tenancy office
+            building
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p className="mb-2">
+            <strong>EAWR duties include:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Reg 4: Maintain common electrical systems (risers, distribution boards)</li>
+            <li>Reg 12: Ensure tenants can isolate their supplies safely</li>
+            <li>Reg 15: Adequate access and lighting in electrical intake rooms</li>
+            <li>Reg 16: Use competent contractors for all electrical work</li>
+            <li>EICR every 5 years; PAT testing; emergency lighting testing</li>
+            </ul>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Application 2: Industrial Facility
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> HVAC system maintenance in a manufacturing plant
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="mb-2">
-                  <strong>Key considerations:</strong>
-                </p>
-                <ul className="space-y-1 list-disc list-outside ml-5">
-                  <li>
-                    Reg 6: Equipment rated for industrial environment (dust, vibration, temperature)
-                  </li>
-                  <li>Reg 11: Motor protection coordinated with upstream devices</li>
-                  <li>Reg 12: Local isolation at each AHU, FCU, and motor</li>
-                  <li>Reg 13: Lock-out/tag-out procedures for maintenance</li>
-                  <li>Reg 14: Live fault-finding only with full precautions</li>
-                </ul>
-              </div>
+            
+            <p><strong>Application 2: Industrial Facility</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Scenario:</strong> HVAC system maintenance in a manufacturing plant
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p className="mb-2">
+            <strong>Key considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Reg 6: Equipment rated for industrial environment (dust, vibration, temperature)
+            </li>
+            <li>Reg 11: Motor protection coordinated with upstream devices</li>
+            <li>Reg 12: Local isolation at each AHU, FCU, and motor</li>
+            <li>Reg 13: Lock-out/tag-out procedures for maintenance</li>
+            <li>Reg 14: Live fault-finding only with full precautions</li>
+            </ul>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Application 3: Healthcare Facility
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Electrical safety in hospital building services
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="mb-2">
-                  <strong>Enhanced requirements:</strong>
-                </p>
-                <ul className="space-y-1 list-disc list-outside ml-5">
-                  <li>HTM 06-01 supplements EAWR for healthcare premises</li>
-                  <li>Critical supplies: Cannot simply isolate - life support systems</li>
-                  <li>
-                    Reg 14 considerations: May justify live working where isolation unacceptable
-                  </li>
-                  <li>Enhanced competence: Medical location awareness required</li>
-                  <li>More frequent inspection: Annual EICR for Group 2 medical locations</li>
-                </ul>
-              </div>
+            
+            <p><strong>Application 3: Healthcare Facility</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Scenario:</strong> Electrical safety in hospital building services
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p className="mb-2">
+            <strong>Enhanced requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>HTM 06-01 supplements EAWR for healthcare premises</li>
+            <li>Critical supplies: Cannot simply isolate - life support systems</li>
+            <li>
+            Reg 14 considerations: May justify live working where isolation unacceptable
+            </li>
+            <li>Enhanced competence: Medical location awareness required</li>
+            <li>More frequent inspection: Annual EICR for Group 2 medical locations</li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
+          <ConceptBlock title="Practical Guidance">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Regulations Summary
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Reg 3:</strong> Duties on employers and employees
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 4:</strong> Systems construction and maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 12:</strong> Means of cutting off and isolation
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 13:</strong> Precautions for working dead
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 14:</strong> Live working restrictions
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 16:</strong> Competence requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 29:</strong> Defence of due diligence
-                </li>
-              </ul>
+            <p><strong>Key Regulations Summary</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Reg 3:</strong> Duties on employers and employees
+            </li>
+            <li>
+            <strong>Reg 4:</strong> Systems construction and maintenance
+            </li>
+            <li>
+            <strong>Reg 12:</strong> Means of cutting off and isolation
+            </li>
+            <li>
+            <strong>Reg 13:</strong> Precautions for working dead
+            </li>
+            <li>
+            <strong>Reg 14:</strong> Live working restrictions
+            </li>
+            <li>
+            <strong>Reg 16:</strong> Competence requirements
+            </li>
+            <li>
+            <strong>Reg 29:</strong> Defence of due diligence
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Compliance Checklist</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Current EICR in place (within 5 years for commercial)</li>
-                <li className="pl-1">All C1/C2 defects remediated</li>
-                <li className="pl-1">Competent persons appointed for electrical work</li>
-                <li className="pl-1">Safe isolation procedures documented</li>
-                <li className="pl-1">Training records maintained</li>
-                <li className="pl-1">Risk assessments for electrical work activities</li>
-              </ul>
+            <p><strong>Compliance Checklist</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Current EICR in place (within 5 years for commercial)</li>
+            <li>All C1/C2 defects remediated</li>
+            <li>Competent persons appointed for electrical work</li>
+            <li>Safe isolation procedures documented</li>
+            <li>Training records maintained</li>
+            <li>Risk assessments for electrical work activities</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Non-Compliances</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Inadequate maintenance:</strong> No EICR or inspection regime
-                </li>
-                <li className="pl-1">
-                  <strong>Unauthorised work:</strong> Unqualified persons doing electrical work
-                </li>
-                <li className="pl-1">
-                  <strong>Unsafe live working:</strong> Without proper risk assessment/precautions
-                </li>
-                <li className="pl-1">
-                  <strong>Missing isolation:</strong> No local means of isolation at equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Poor records:</strong> Unable to demonstrate due diligence
-                </li>
-              </ul>
+            <p><strong>Common Non-Compliances</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Inadequate maintenance:</strong> No EICR or inspection regime
+            </li>
+            <li>
+            <strong>Unauthorised work:</strong> Unqualified persons doing electrical work
+            </li>
+            <li>
+            <strong>Unsafe live working:</strong> Without proper risk assessment/precautions
+            </li>
+            <li>
+            <strong>Missing isolation:</strong> No local means of isolation at equipment
+            </li>
+            <li>
+            <strong>Poor records:</strong> Unable to demonstrate due diligence
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <RegsCallout
+            source="EAWR 1989 — Regulation 14"
+            clause="No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless—(a) it is unreasonable in all the circumstances for it to be dead; and (b) it is reasonable in all the circumstances for him to be at work on or near it while it is live; and (c) suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury."
+            meaning={
+              <>
+                Three tests, all must be satisfied. As an HNC supervisor you record this in writing
+                before any live work proceeds — typically as a live-working risk assessment plus a
+                permit. &ldquo;Easier this way&rdquo; or &ldquo;the programme&rsquo;s tight&rdquo;
+                fails the (a) test on its own.
+              </>
+            }
+            cite="Source: Electricity at Work Regulations 1989, Reg 14 — legislation.gov.uk"
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Regulations</p>
-                <ul className="space-y-0.5">
-                  <li>Reg 4 - Systems construction & maintenance</li>
-                  <li>Reg 12 - Means of isolation</li>
-                  <li>Reg 13 - Dead working precautions</li>
-                  <li>Reg 14 - Live working restrictions</li>
-                  <li>Reg 16 - Competence requirements</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Services Duties</p>
-                <ul className="space-y-0.5">
-                  <li>EICR at appropriate intervals</li>
-                  <li>Competent contractors only</li>
-                  <li>Safe isolation procedures</li>
-                  <li>Record keeping for due diligence</li>
-                  <li>Prompt defect remediation</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Live testing under load on an existing distribution board"
+            situation={
+              <>
+                You are commissioning a new sub-circuit on a 24/7 data centre distribution board.
+                Full isolation would require a planned shutdown the client refuses to fund.
+                Live testing is being requested for IR and load checks.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply Reg 14 in writing: prove (a) that making dead is unreasonable (production
+                loss case), (b) that live working is reasonable (small scope, tested operatives,
+                Class II tools), and (c) that precautions are suitable (CAT IV instruments, GS38
+                leads, mats, two-person rule, defined exclusion zone, permit-to-work). Issue the
+                permit only if all three are documented and signed by the responsible engineer.
+              </>
+            }
+            whyItMatters={
+              <>
+                EAWR 1989 carries unlimited fines and personal prosecution. The HSE will request
+                the Reg 14 documentation as the first piece of evidence after any incident — if
+                you cannot produce it, the breach is presumed.
+              </>
+            }
+          />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'EAWR 1989 is criminal law — breaches are prosecuted by HSE, not chased through the civil courts.',
+              'Reg 4(3) is an absolute duty. SFARP does not apply. Equipment in use must not give rise to danger.',
+              'Reg 14 sets the three-part test for live work — all three limbs must be evidenced before work starts.',
+              'Reg 16 requires technical competence proportionate to the work — you must record skilled, instructed and ordinary person designations.',
+              'Reg 29 provides a due-diligence defence — but only for SFARP duties, not absolute ones.',
+              'Following BS 7671 is the recognised way to demonstrate compliance with EAWR for installation work.',
+              'Self-employed contractors carry the same EAWR duties as employers — there is no escape via labour-only routes.',
+              'EAWR documentation (isolation certificates, live-working permits, competence records) is the audit trail HSE will request first after any electrical incident.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section1-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Health and Safety at Work Act
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section1-3">
-              Next: BS 7671 Requirements
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 1
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section1-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                BS 7671 Requirements
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

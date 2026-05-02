@@ -634,7 +634,7 @@ const AM2Module4Section6 = () => {
               {
                 question: 'Should I memorise A4:2026 figures or look them up on the day?',
                 answer:
-                  "Memorise the common ones: B6 ≈ 7.28 Ω, B16 ≈ 2.74 Ω, B32 = 1.37 Ω, B40 ≈ 1.09 Ω. RCD trip ≤ 300 ms (general-purpose) / ≤ 200 ms (Type S) / ≤ 40 ms (additional protection per Reg 415.1.1). IR ≥ 1 MΩ at 500 V DC. The 0.8 rule. Looking these up burns minutes you don't have. Some centres allow Table 41.3 on the bench for reference — confirm with your centre, but don't rely on it.",
+                  "Memorise the common ones: B6 = 7.28 Ω, B16 = 2.73 Ω, B32 = 1.37 Ω, B40 = 1.09 Ω. RCD trip ≤ 300 ms (general-purpose) / ≤ 200 ms (Type S) / ≤ 40 ms (additional protection per Reg 415.1.1). IR ≥ 1 MΩ at 500 V DC. The 0.8 rule. Looking these up burns minutes you don't have. Some centres allow Table 41.3 on the bench for reference — confirm with your centre, but don't rely on it.",
               },
               {
                 question: "If I'm running ahead, should I slow down?",

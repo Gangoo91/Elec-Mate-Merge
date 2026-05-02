@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 2 · Subsection 4 — Short-Circuit Withstand
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Adiabatic equation S = √(I²t)/k, BS 7671 Regulation 434.5.2 verification, k values
+ *   from Table 43.1, let-through energy (I²t) and protective device coordination for
+ *   cable fault protection.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Short-Circuit Withstand - HNC Module 4 Section 2.4';
@@ -197,709 +216,445 @@ const faqs = [
 ];
 
 const HNCModule4Section2_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.2.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Short-Circuit Withstand
-          </h1>
-          <p className="text-white">
-            Ensuring cables can safely withstand fault currents until protective devices operate
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 2 · Subsection 4"
+            title="Short-Circuit Withstand"
+            description="Ensuring cables can safely withstand fault currents until protective devices operate."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Adiabatic equation:</strong> S = √(I²t) / k
-              </li>
-              <li className="pl-1">
-                <strong>k²S² ≥ I²t:</strong> Cable must withstand device let-through
-              </li>
-              <li className="pl-1">
-                <strong>k values:</strong> Cu/PVC = 115, Cu/XLPE = 143
-              </li>
-              <li className="pl-1">
-                <strong>I²t:</strong> Thermal energy from fault current × time
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>High fault levels:</strong> Near main switchboards
-              </li>
-              <li className="pl-1">
-                <strong>Motor circuits:</strong> High inrush currents
-              </li>
-              <li className="pl-1">
-                <strong>Sub-mains:</strong> Short cables, high PSCC
-              </li>
-              <li className="pl-1">
-                <strong>MCCBs/fuses:</strong> Different I²t characteristics
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Adiabatic equation: S = √(I²t) / k — or k²S² ≥ I²t. Cables must survive the fault without exceeding their limiting temperature.',
+              'k values come from BS 7671 (Cu/PVC = 115, Cu/XLPE = 143, Al/PVC = 76, Al/XLPE = 94) — depends on conductor material and insulation.',
+              'I²t (let-through energy) comes from the protective device manufacturer&rsquo;s data sheet — current-limiting fuses dramatically reduce I²t vs MCBs.',
+              'Verification: k²S² (cable withstand) ≥ I²t (device let-through) at the maximum prospective fault current at the cable origin.',
+              'BS 7671 Reg 434.5.2 requires the protective device to have an operating characteristic that protects the load-side wiring against fault current.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 434.5.2 (Operating characteristic for fault-current protection)"
+            clause="Where Regulation 434.2.2 permits installation of the protective device on the supply side of a change, that device shall possess an operating characteristic such that it protects the wiring situated on the load side against fault current, in accordance with Regulation 434.5.2. See Regulation 434.5.2 for the detailed requirements on operating characteristics and protection levels."
+            meaning={
+              <>
+                Reg 434.5.2 is the regulatory anchor for the adiabatic check. The protective
+                device must clear the prospective fault current quickly enough that the cable
+                does not exceed its limiting temperature. The standard formula t ≤ k²S² / I²
+                lives inside Reg 434.5.2 itself — verifying it is mandatory for any non-trivial
+                circuit, especially long cable runs and reduced-CSA CPCs where fault current is
+                modest but disconnection time stretches.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 434.5.2; manufacturer time-current and I²t data; BS 7671 Table 43.1 (k values)."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Apply the adiabatic equation to verify cable fault protection',
               'Use k values from BS 7671 for different conductor and insulation types',
               'Calculate cable thermal withstand (k²S²)',
               'Understand I²t let-through energy from protective devices',
               'Verify protective device coordination with cable size',
               'Determine minimum cable sizes for given fault levels',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: The Adiabatic Equation */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Adiabatic Equation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The Adiabatic Equation">
             <p>
               During a fault, massive current flows through the cable for a short time before the
               protective device operates. This current causes rapid heating. The adiabatic equation
               ensures the cable won't be damaged before the fault is cleared.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Adiabatic Equation</p>
-              <div className="bg-black/30 p-4 rounded text-center">
-                <p className="font-mono text-xl mb-2">S = √(I²t) / k</p>
-                <p className="text-sm text-white">Or rearranged: k²S² ≥ I²t</p>
-              </div>
-              <div className="mt-3 text-sm text-white grid sm:grid-cols-2 gap-2">
-                <div>
-                  <p>
-                    <strong>S</strong> = conductor cross-sectional area (mm²)
-                  </p>
-                  <p>
-                    <strong>I</strong> = fault current (A)
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    <strong>t</strong> = disconnection time (s)
-                  </p>
-                  <p>
-                    <strong>k</strong> = cable thermal constant
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why 'Adiabatic'?</p>
-              <p className="text-sm text-white">
-                The term 'adiabatic' means no heat transfer. During a very short fault (typically
-                &lt;5 seconds), the heating is so rapid that heat doesn't have time to dissipate
-                from the conductor - it's all absorbed by the conductor itself. This is the
-                worst-case thermal scenario.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Regulation 434.5.2
-              </p>
-              <p className="text-sm text-white italic">
-                "The characteristics of protective devices protecting a conductor against fault
-                current shall be such that the energy let through (I²t) does not exceed that which
-                the conductor can withstand (k²S²)."
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>The adiabatic equation:</strong> S = √(I²t) / k — or rearranged: k²S² ≥ I²t.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>S</strong> = conductor cross-sectional area (mm²)
+              </li>
+              <li>
+                <strong>I</strong> = fault current (A)
+              </li>
+              <li>
+                <strong>t</strong> = disconnection time (s)
+              </li>
+              <li>
+                <strong>k</strong> = cable thermal constant
+              </li>
+            </ul>
+            <p>
+              <strong>Why 'adiabatic'?</strong> The term 'adiabatic' means no heat transfer. During
+              a very short fault (typically &lt;5 seconds), the heating is so rapid that heat
+              doesn't have time to dissipate from the conductor — it's all absorbed by the
+              conductor itself. This is the worst-case thermal scenario.
+            </p>
+            <p>
+              <strong>BS 7671 Regulation 434.5.2:</strong> "The characteristics of protective
+              devices protecting a conductor against fault current shall be such that the energy
+              let through (I²t) does not exceed that which the conductor can withstand (k²S²)."
+            </p>
+            <p>
               <strong>Simple rule:</strong> Cable withstand (k²S²) must be greater than device
               let-through (I²t).
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: k Values and Thermal Constants */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>k Values and Thermal
-            Constants
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="k Values and Thermal Constants">
             <p>
               The k value depends on the conductor material and insulation type. It represents the
-              cable's thermal capacity - higher k values indicate better ability to absorb fault
+              cable's thermal capacity — higher k values indicate better ability to absorb fault
               energy without damage.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                k Values from BS 7671 Table 43.1
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Conductor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Insulation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">k Value</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Max Temp (°C)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Copper</td>
-                      <td className="border border-white/10 px-3 py-2">PVC 70°C</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">115</td>
-                      <td className="border border-white/10 px-3 py-2">160</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Copper</td>
-                      <td className="border border-white/10 px-3 py-2">XLPE 90°C</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-green-400">
-                        143
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">250</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Copper</td>
-                      <td className="border border-white/10 px-3 py-2">Rubber 60°C</td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                      <td className="border border-white/10 px-3 py-2">200</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Copper</td>
-                      <td className="border border-white/10 px-3 py-2">Mineral (bare)</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">135</td>
-                      <td className="border border-white/10 px-3 py-2">250</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Aluminium</td>
-                      <td className="border border-white/10 px-3 py-2">PVC 70°C</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">76</td>
-                      <td className="border border-white/10 px-3 py-2">160</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Aluminium</td>
-                      <td className="border border-white/10 px-3 py-2">XLPE 90°C</td>
-                      <td className="border border-white/10 px-3 py-2">94</td>
-                      <td className="border border-white/10 px-3 py-2">250</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Calculating k²S²</p>
-              <p className="text-sm text-white mb-2">
-                The cable's fault energy withstand is k²S². Here are examples for common sizes
-                (Cu/PVC, k=115):
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <ul className="text-white space-y-1">
-                    <li>
-                      1.5mm²: 115² × 1.5² = <strong>29,756 A²s</strong>
-                    </li>
-                    <li>
-                      2.5mm²: 115² × 2.5² = <strong>82,656 A²s</strong>
-                    </li>
-                    <li>
-                      4mm²: 115² × 4² = <strong>211,600 A²s</strong>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <ul className="text-white space-y-1">
-                    <li>
-                      6mm²: 115² × 6² = <strong>476,100 A²s</strong>
-                    </li>
-                    <li>
-                      10mm²: 115² × 10² = <strong>1,322,500 A²s</strong>
-                    </li>
-                    <li>
-                      16mm²: 115² × 16² = <strong>3,385,600 A²s</strong>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>k values from BS 7671 Table 43.1 (conductor / insulation / k / max temp °C):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Copper / PVC 70°C / k = 115 / 160°C</li>
+              <li>Copper / XLPE 90°C / k = 143 / 250°C</li>
+              <li>Copper / Rubber 60°C / k = 100 / 200°C</li>
+              <li>Copper / Mineral (bare) / k = 135 / 250°C</li>
+              <li>Aluminium / PVC 70°C / k = 76 / 160°C</li>
+              <li>Aluminium / XLPE 90°C / k = 94 / 250°C</li>
+            </ul>
+            <p>
+              <strong>Calculating k²S² (Cu/PVC, k = 115):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                1.5mm²: 115² × 1.5² = <strong>29,756 A²s</strong>
+              </li>
+              <li>
+                2.5mm²: 115² × 2.5² = <strong>82,656 A²s</strong>
+              </li>
+              <li>
+                4mm²: 115² × 4² = <strong>211,600 A²s</strong>
+              </li>
+              <li>
+                6mm²: 115² × 6² = <strong>476,100 A²s</strong>
+              </li>
+              <li>
+                10mm²: 115² × 10² = <strong>1,322,500 A²s</strong>
+              </li>
+              <li>
+                16mm²: 115² × 16² = <strong>3,385,600 A²s</strong>
+              </li>
+            </ul>
+            <p>
               <strong>XLPE advantage:</strong> With k = 143 vs PVC k = 115, XLPE cables have ~55%
               higher fault withstand capacity for the same conductor size.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Let-Through Energy (I²t) */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Let-Through Energy (I²t)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Let-Through Energy (I²t)">
             <p>
               The let-through energy I²t is the thermal stress the protective device allows the
-              cable to experience during fault clearance. It depends on the fault current level and
-              how quickly the device operates.
+              cable to experience during fault clearance. It depends on the fault current level
+              and how quickly the device operates.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">I²t Calculation</p>
-              <div className="bg-black/30 p-3 rounded text-center font-mono text-lg">
-                <p>I²t = I² × t</p>
-              </div>
-              <p className="text-xs text-white mt-2 text-center">
-                Where I = RMS fault current (A) and t = disconnection time (s)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical I²t Values by Device Type
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical I²t (A²s)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Min Cable (Cu/PVC)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCB Type B</td>
-                      <td className="border border-white/10 px-3 py-2">16A</td>
-                      <td className="border border-white/10 px-3 py-2">15,000</td>
-                      <td className="border border-white/10 px-3 py-2">1.5mm²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCB Type B</td>
-                      <td className="border border-white/10 px-3 py-2">32A</td>
-                      <td className="border border-white/10 px-3 py-2">35,000</td>
-                      <td className="border border-white/10 px-3 py-2">2.5mm²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCB Type C</td>
-                      <td className="border border-white/10 px-3 py-2">32A</td>
-                      <td className="border border-white/10 px-3 py-2">50,000</td>
-                      <td className="border border-white/10 px-3 py-2">2.5mm²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BS 88 Fuse</td>
-                      <td className="border border-white/10 px-3 py-2">32A</td>
-                      <td className="border border-white/10 px-3 py-2">8,000</td>
-                      <td className="border border-white/10 px-3 py-2">1.5mm²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCCB</td>
-                      <td className="border border-white/10 px-3 py-2">63A</td>
-                      <td className="border border-white/10 px-3 py-2">150,000</td>
-                      <td className="border border-white/10 px-3 py-2">4mm²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCCB</td>
-                      <td className="border border-white/10 px-3 py-2">100A</td>
-                      <td className="border border-white/10 px-3 py-2">300,000</td>
-                      <td className="border border-white/10 px-3 py-2">6mm²</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Current-Limiting Devices
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Trip before peak current reached</li>
-                  <li className="pl-1">Significantly reduce I²t let-through</li>
-                  <li className="pl-1">BS 88 HRC fuses are excellent limiters</li>
-                  <li className="pl-1">Some MCCBs have current-limiting features</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Factors Affecting I²t
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Higher PSCC = faster operation = lower I²t</li>
-                  <li className="pl-1">Lower PSCC = slower operation = higher I²t</li>
-                  <li className="pl-1">Device type (fuse vs MCB vs MCCB)</li>
-                  <li className="pl-1">Device manufacturer and model</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>I²t calculation:</strong> I²t = I² × t, where I = RMS fault current (A) and
+              t = disconnection time (s).
+            </p>
+            <p>
+              <strong>Typical I²t values by device type (device / rating / I²t A²s / min cable Cu/PVC):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>MCB Type B / 16A / 15,000 / 1.5mm²</li>
+              <li>MCB Type B / 32A / 35,000 / 2.5mm²</li>
+              <li>MCB Type C / 32A / 50,000 / 2.5mm²</li>
+              <li>BS 88 Fuse / 32A / 8,000 / 1.5mm²</li>
+              <li>MCCB / 63A / 150,000 / 4mm²</li>
+              <li>MCCB / 100A / 300,000 / 6mm²</li>
+            </ul>
+            <p>
+              <strong>Current-limiting devices:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Trip before peak current reached</li>
+              <li>Significantly reduce I²t let-through</li>
+              <li>BS 88 HRC fuses are excellent limiters</li>
+              <li>Some MCCBs have current-limiting features</li>
+            </ul>
+            <p>
+              <strong>Factors affecting I²t:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Higher PSCC = faster operation = lower I²t</li>
+              <li>Lower PSCC = slower operation = higher I²t</li>
+              <li>Device type (fuse vs MCB vs MCCB)</li>
+              <li>Device manufacturer and model</li>
+            </ul>
+            <p>
               <strong>Note:</strong> I²t values vary with prospective fault current. Always check
               manufacturer data for the actual installation PSCC.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Protective Device Coordination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Protective Device Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Protective Device Coordination">
             <p>
               For complete protection, the cable's thermal withstand must exceed the protective
               device's let-through energy at all possible fault levels. This is verified using the
               k²S² ≥ I²t check.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Verification Process</p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  Determine the prospective short-circuit current (PSCC) at the circuit origin
-                </li>
-                <li className="pl-1">
-                  Find the protective device I²t at this PSCC from manufacturer data
-                </li>
-                <li className="pl-1">Calculate cable k²S² using conductor size and k value</li>
-                <li className="pl-1">Verify that k²S² ≥ I²t</li>
-                <li className="pl-1">
-                  If not satisfied, increase cable size or use more current-limiting device
-                </li>
-              </ol>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Example Verification</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Circuit: 32A MCB Type B protecting 4mm² Cu/PVC cable</p>
-                <p>PSCC at origin: 6kA</p>
-                <p className="mt-2">MCB I²t at 6kA (from data): 35,000 A²s</p>
-                <p className="mt-2">
-                  Cable k²S² = 115² × 4² = <strong>211,600 A²s</strong>
-                </p>
-                <p className="mt-2">Check: 211,600 ≥ 35,000</p>
-                <p className="text-green-400">✓ Cable adequately protected</p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-              <p className="text-sm font-medium text-orange-400 mb-2">High Fault Level Warning</p>
-              <p className="text-sm text-white">
-                Near main switchboards, PSCC can exceed 20kA. At these levels:
-              </p>
-              <ul className="text-sm text-white mt-2 space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">I²t values increase significantly</li>
-                <li className="pl-1">Small cables may not be adequately protected</li>
-                <li className="pl-1">Use current-limiting fuses (BS 88) where possible</li>
-                <li className="pl-1">Verify coordination carefully for sub-main cables</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maximum Disconnection Time Check
-              </p>
-              <p className="text-sm text-white mb-2">
-                Alternatively, calculate the maximum time the cable can withstand a given fault
-                current:
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center font-mono">
-                <p>
-                  t<sub>max</sub> = k²S² / I²
-                </p>
-              </div>
-              <p className="text-xs text-white mt-2">
-                The protective device must operate within this time at the given fault current.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design tip:</strong> Using XLPE cables (k=143) instead of PVC (k=115) provides
-              approximately 55% more fault withstand margin.
+            <p>
+              <strong>Verification process:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Determine the prospective short-circuit current (PSCC) at the circuit origin</li>
+              <li>Find the protective device I²t at this PSCC from manufacturer data</li>
+              <li>Calculate cable k²S² using conductor size and k value</li>
+              <li>Verify that k²S² ≥ I²t</li>
+              <li>If not satisfied, increase cable size or use more current-limiting device</li>
+            </ul>
+            <p>
+              <strong>Example verification:</strong> 32A MCB Type B protecting 4mm² Cu/PVC cable;
+              PSCC at origin: 6kA; MCB I²t at 6kA (from data): 35,000 A²s; cable k²S² = 115² × 4²
+              = <strong>211,600 A²s</strong>; check: 211,600 ≥ 35,000 — cable adequately
+              protected.
+            </p>
+            <p>
+              <strong>High fault level warning:</strong> Near main switchboards, PSCC can exceed
+              20kA. At these levels:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>I²t values increase significantly</li>
+              <li>Small cables may not be adequately protected</li>
+              <li>Use current-limiting fuses (BS 88) where possible</li>
+              <li>Verify coordination carefully for sub-main cables</li>
+            </ul>
+            <p>
+              <strong>Maximum disconnection time check:</strong> Alternatively, calculate the
+              maximum time the cable can withstand a given fault current — t<sub>max</sub> = k²S²
+              / I². The protective device must operate within this time at the given fault
+              current.
+            </p>
+            <p>
+              <strong>Design tip:</strong> Using XLPE cables (k=143) instead of PVC (k=115)
+              provides approximately 55% more fault withstand margin.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — minimum cable size for MCB:</strong> An MCB has I²t = 45,000
+              A²s. What is the minimum Cu/PVC cable size?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Using S = √(I²t) / k</li>
+              <li>S = √(45,000) / 115</li>
+              <li>
+                S = 212.1 / 115 = <strong>1.84mm²</strong>
+              </li>
+              <li>
+                Next standard size up: <strong>2.5mm²</strong>
+              </li>
+              <li>Verify: k²S² = 115² × 2.5² = 82,656 A²s</li>
+              <li>82,656 ≥ 45,000 — adequately protected</li>
+            </ul>
+            <p>
+              <strong>Example 2 — maximum fault time:</strong> A 6mm² Cu/XLPE cable experiences a
+              5kA fault. What is the maximum permissible disconnection time?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>k for Cu/XLPE = 143</li>
+              <li>
+                k²S² = 143² × 6² = 20,449 × 36 = <strong>736,164 A²s</strong>
+              </li>
+              <li>t = k²S² / I²</li>
+              <li>t = 736,164 / 5000² = 736,164 / 25,000,000</li>
+              <li>
+                t = <strong>0.029s (29ms)</strong>
+              </li>
+              <li>Protective device must clear within 29ms at 5kA</li>
+            </ul>
+            <p>
+              <strong>Example 3 — sub-main verification:</strong> 100A MCCB protects 25mm² Cu/PVC
+              sub-main. PSCC = 15kA. I²t from data = 800,000 A²s. Is cable protected?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cable k²S² = 115² × 25² = 13,225 × 625</li>
+              <li>
+                k²S² = <strong>8,265,625 A²s</strong>
+              </li>
+              <li>Check: 8,265,625 ≥ 800,000 — adequately protected (10× margin)</li>
+              <li>Large margin allows for higher PSCC or different MCCB</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Minimum Cable Size for MCB
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An MCB has I²t = 45,000 A²s. What is the minimum Cu/PVC
-                cable size?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using S = √(I²t) / k</p>
-                <p>S = √(45,000) / 115</p>
-                <p>
-                  S = 212.1 / 115 = <strong>1.84mm²</strong>
-                </p>
-                <p className="mt-2">
-                  Next standard size up: <strong>2.5mm²</strong>
-                </p>
-                <p className="mt-2 text-white">Verify: k²S² = 115² × 2.5² = 82,656 A²s</p>
-                <p className="text-green-400">82,656 ≥ 45,000 ✓</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Maximum Fault Time
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 6mm² Cu/XLPE cable experiences a 5kA fault. What is the
-                maximum permissible disconnection time?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>k for Cu/XLPE = 143</p>
-                <p>
-                  k²S² = 143² × 6² = 20,449 × 36 = <strong>736,164 A²s</strong>
-                </p>
-                <p className="mt-2">t = k²S² / I²</p>
-                <p>t = 736,164 / 5000²</p>
-                <p>t = 736,164 / 25,000,000</p>
-                <p>
-                  t = <strong>0.029s (29ms)</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Protective device must clear within 29ms at 5kA
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>S = √(I²t) / k</strong> — minimum cable size
+              </li>
+              <li>
+                <strong>k²S² ≥ I²t</strong> — protection verification
+              </li>
+              <li>
+                <strong>t = k²S² / I²</strong> — maximum disconnection time
+              </li>
+              <li>
+                <strong>I²t = I² × t</strong> — let-through energy
+              </li>
+            </ul>
+            <p>
+              <strong>Key k values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Copper/PVC: k = <strong>115</strong>
+              </li>
+              <li>
+                Copper/XLPE: k = <strong>143</strong>
+              </li>
+              <li>
+                Aluminium/PVC: k = <strong>76</strong>
+              </li>
+              <li>
+                Steel conduit (as CPC): k = <strong>47</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Sub-Main Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> 100A MCCB protects 25mm² Cu/PVC sub-main. PSCC = 15kA.
-                I²t from data = 800,000 A²s. Is cable protected?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Cable k²S² = 115² × 25² = 13,225 × 625</p>
-                <p>
-                  k²S² = <strong>8,265,625 A²s</strong>
-                </p>
-                <p className="mt-2">Check: 8,265,625 ≥ 800,000</p>
-                <p className="text-green-400">✓ Cable adequately protected (10× margin)</p>
-                <p className="mt-2 text-white">
-                  Note: Large margin allows for higher PSCC or different MCCB
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>S = √(I²t) / k</strong> — Minimum cable size
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Wrong k value</strong> — must match actual conductor and insulation
                 </li>
-                <li className="pl-1">
-                  <strong>k²S² ≥ I²t</strong> — Protection verification
+                <li>
+                  <strong>Ignoring PSCC variation</strong> — I²t changes with fault level
                 </li>
-                <li className="pl-1">
-                  <strong>t = k²S² / I²</strong> — Maximum disconnection time
+                <li>
+                  <strong>Forgetting the CPC</strong> — protective conductor also needs verification
                 </li>
-                <li className="pl-1">
-                  <strong>I²t = I² × t</strong> — Let-through energy
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key k Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Copper/PVC: k = <strong>115</strong>
-                </li>
-                <li className="pl-1">
-                  Copper/XLPE: k = <strong>143</strong>
-                </li>
-                <li className="pl-1">
-                  Aluminium/PVC: k = <strong>76</strong>
-                </li>
-                <li className="pl-1">
-                  Steel conduit (as CPC): k = <strong>47</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wrong k value:</strong> Must match actual conductor and insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring PSCC variation:</strong> I²t changes with fault level
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting the CPC:</strong> Protective conductor also needs verification
-                </li>
-                <li className="pl-1">
-                  <strong>Using peak current:</strong> Use RMS fault current in calculations
+                <li>
+                  <strong>Using peak current</strong> — use RMS fault current in calculations
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always select the k value that matches the actual conductor metal and insulation type, look up I²t at the actual PSCC from manufacturer data rather than assuming a single value, run the adiabatic check on the CPC as well as the line conductor, and use RMS fault current (not peak) in every calculation."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Long sub-main with reduced CPC — adiabatic check on a small-CSA CPC"
+            situation={
+              <>
+                A 70&nbsp;m sub-main runs from the main switchpanel to a remote DB. Live
+                conductors are 50&nbsp;mm² Cu/XLPE. The CPC has been reduced to 25&nbsp;mm² Cu
+                (Table 54.7 permits half-size CPC for 50&nbsp;mm² lives). Prospective earth-fault
+                current at the DB calculated as 1.8&nbsp;kA. The 100&nbsp;A MCB upstream has a
+                Type C characteristic with a 0.4&nbsp;s disconnection time at this fault level.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply Reg 434.5.2 adiabatic check on the 25&nbsp;mm² CPC: t = k²S² / I² = (143²
+                × 25²) / 1800² = (20,449 × 625) / 3,240,000 ≈ 3.94&nbsp;s. The MCB clears in
+                0.4&nbsp;s, so the CPC withstand (3.94&nbsp;s) easily exceeds the disconnection
+                time. Pass. If the fault current dropped (longer cable, higher Z_s), recompute
+                — the adiabatic check passes or fails on the prospective fault current that the
+                cable actually sees at its origin. Document on the cable schedule.
+              </>
+            }
+            whyItMatters={
+              <>
+                Reduced CPCs (Table 54.7) are common but they are the cable element most likely
+                to fail an adiabatic check on long runs with modest fault currents. Reg 434.5.2
+                makes the check mandatory. A failed check means upsizing the CPC or accepting
+                a faster device — never just hoping it clears in time.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">The Adiabatic Equation</p>
-                <ul className="space-y-0.5">
-                  <li>S = √(I²t) / k for minimum size</li>
-                  <li>k²S² ≥ I²t for protection check</li>
-                  <li>t = k²S² / I² for max time</li>
-                  <li>Higher k = better withstand</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Quick k²S² (Cu/PVC k=115)</p>
-                <ul className="space-y-0.5">
-                  <li>1.5mm²: ~30,000 A²s</li>
-                  <li>2.5mm²: ~83,000 A²s</li>
-                  <li>4mm²: ~212,000 A²s</li>
-                  <li>6mm²: ~476,000 A²s</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Adiabatic equation: t ≤ k²S² / I² — the maximum time the cable can carry the fault before exceeding its limiting temperature.',
+              'k values (BS 7671 Table 43.1): Cu/PVC = 115, Cu/XLPE = 143, Al/PVC = 76, Al/XLPE = 94.',
+              'Reg 434.5.2 is the regulatory anchor — protective device operating characteristic shall protect the load-side wiring against fault current.',
+              'I²t (let-through energy) from the device data sheet — current-limiting fuses (HRC, gG) reduce I²t by an order of magnitude vs MCBs.',
+              'Reduced-CSA CPCs (Table 54.7) are the most common adiabatic-check failures on long sub-mains — always verify, never assume.',
+              'Verification = k²S² (cable withstand) ≥ I²t (device let-through) at the maximum prospective fault current at the cable origin.',
+              'For three-phase: check both line-to-line and line-to-earth fault scenarios — the worst case drives the adiabatic.',
+              'Document the adiabatic calculation on the cable schedule, including k, S, I_f and t — Part 6 verification audits this.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: Thermal Constraints
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2-5">
-              Next: Cable Types and Selection
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Thermal constraints
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Cable types and selection
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

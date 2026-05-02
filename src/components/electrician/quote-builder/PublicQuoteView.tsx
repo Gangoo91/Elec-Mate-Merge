@@ -15,11 +15,16 @@ import {
   MapPin,
   Clock,
   Briefcase,
+  GitBranch,
+  Plus,
+  Minus,
+  Pencil,
 } from 'lucide-react';
 import { Quote, QuoteItem } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import SignaturePad from '@/components/forms/SignaturePad';
+import { diffQuoteItems, formatDeltaCurrency, QuoteDiff } from '@/utils/quote-diff';
 
 const PublicQuoteView = () => {
   const { token } = useParams<{ token: string }>();
@@ -31,6 +36,7 @@ const PublicQuoteView = () => {
   const [clientEmail, setClientEmail] = useState('');
   const [signatureData, setSignatureData] = useState<string>('');
   const signaturePadRef = useRef<any>(null);
+  const [variationDiff, setVariationDiff] = useState<QuoteDiff | null>(null);
 
   useEffect(() => {
     if (token) {
@@ -110,11 +116,31 @@ const PublicQuoteView = () => {
         docusign_envelope_id: quoteData.docusign_envelope_id,
         docusign_status: quoteData.docusign_status,
         public_token: quoteData.public_token,
+        version_number: (quoteData as any).version_number,
+        parent_quote_id: (quoteData as any).parent_quote_id,
+        supersedes_id: (quoteData as any).supersedes_id,
+        variation_reason: (quoteData as any).variation_reason,
+        variation_type: (quoteData as any).variation_type,
       };
 
       setQuote(convertedQuote);
       setClientName(convertedQuote.client?.name || '');
       setClientEmail(convertedQuote.client?.email || '');
+
+      // ELE-956 — for v2+ quotes, fetch the version that this one supersedes
+      // and compute the diff so the client sees what changed before they sign.
+      if ((convertedQuote.version_number ?? 1) > 1 && convertedQuote.supersedes_id) {
+        const { data: prevQuote } = await supabase
+          .from('quotes')
+          .select('items')
+          .eq('id', convertedQuote.supersedes_id)
+          .maybeSingle();
+        if (prevQuote?.items) {
+          setVariationDiff(
+            diffQuoteItems(prevQuote.items as QuoteItem[], convertedQuote.items)
+          );
+        }
+      }
 
       // Note: View tracking removed - anonymous users don't have write access to quote_views
     } catch {
@@ -420,6 +446,85 @@ const PublicQuoteView = () => {
           </div>
         )}
 
+        {/* ELE-956 — What's changed (variation diff vs previous version) */}
+        {variationDiff && variationDiff.hasChanges && (
+          <div className="bg-elec-yellow/[0.06] backdrop-blur-sm rounded-2xl border border-elec-yellow/30 overflow-hidden">
+            <div className="px-4 py-3 border-b border-elec-yellow/20 flex items-center gap-2">
+              <GitBranch className="h-4 w-4 text-elec-yellow" />
+              <h2 className="text-base font-semibold text-white">
+                What's changed since v{(quote?.version_number ?? 2) - 1}
+              </h2>
+              <span
+                className={`ml-auto text-sm font-bold tabular-nums ${
+                  variationDiff.totalDelta > 0
+                    ? 'text-amber-300'
+                    : variationDiff.totalDelta < 0
+                      ? 'text-emerald-300'
+                      : 'text-white/60'
+                }`}
+              >
+                {formatDeltaCurrency(variationDiff.totalDelta)}
+              </span>
+            </div>
+            {quote?.variation_reason && (
+              <div className="px-4 py-3 border-b border-elec-yellow/10 bg-white/[0.02]">
+                <p className="text-[11px] uppercase tracking-wider text-white/50 mb-1">
+                  Why this variation
+                </p>
+                <p className="text-sm text-white/90">{quote.variation_reason}</p>
+              </div>
+            )}
+            <div className="p-4 space-y-3">
+              {variationDiff.added.map((item) => (
+                <div key={`added-${item.id}`} className="flex items-start gap-2">
+                  <Plus className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white">{item.description}</p>
+                    <p className="text-[11px] text-white/50">
+                      {item.quantity} {item.unit} · added
+                    </p>
+                  </div>
+                  <span className="text-sm font-semibold text-emerald-300 tabular-nums">
+                    {formatDeltaCurrency(item.totalPrice || 0)}
+                  </span>
+                </div>
+              ))}
+              {variationDiff.removed.map((item) => (
+                <div key={`removed-${item.id}`} className="flex items-start gap-2">
+                  <Minus className="h-4 w-4 text-rose-400 shrink-0 mt-0.5" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white line-through decoration-white/30">
+                      {item.description}
+                    </p>
+                    <p className="text-[11px] text-white/50">removed</p>
+                  </div>
+                  <span className="text-sm font-semibold text-rose-300 tabular-nums">
+                    {formatDeltaCurrency(-(item.totalPrice || 0))}
+                  </span>
+                </div>
+              ))}
+              {variationDiff.changed.map((change) => (
+                <div key={`changed-${change.itemId}`} className="flex items-start gap-2">
+                  <Pencil className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white">{change.description}</p>
+                    <p className="text-[11px] text-white/60">
+                      {change.changedFields.join(', ')} updated
+                    </p>
+                  </div>
+                  <span
+                    className={`text-sm font-semibold tabular-nums ${
+                      change.totalDelta > 0 ? 'text-amber-300' : 'text-emerald-300'
+                    }`}
+                  >
+                    {formatDeltaCurrency(change.totalDelta)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Quote Breakdown Card */}
         <div className="bg-elec-card/80 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
           <div className="px-4 py-3 border-b border-white/10">
@@ -445,6 +550,25 @@ const PublicQuoteView = () => {
                         <p className="text-elec-light/60 text-xs">
                           {item.quantity} {item.unit} × {formatCurrency(item.unitPrice)}
                         </p>
+                        {/* ELE-888 — per-item adjustment chip */}
+                        {typeof item.itemAdjustmentPercent === 'number' &&
+                          item.itemAdjustmentPercent !== 0 && (
+                            <span
+                              className={`inline-flex items-center gap-1 mt-1 text-[10px] font-semibold px-1.5 py-0.5 rounded tabular-nums ${
+                                item.itemAdjustmentPercent > 0
+                                  ? 'bg-amber-500/15 text-amber-300'
+                                  : 'bg-emerald-500/15 text-emerald-300'
+                              }`}
+                            >
+                              {item.itemAdjustmentPercent > 0 ? '+' : ''}
+                              {item.itemAdjustmentPercent}%
+                              {item.itemAdjustmentLabel && (
+                                <span className="text-white/60 font-normal">
+                                  · {item.itemAdjustmentLabel}
+                                </span>
+                              )}
+                            </span>
+                          )}
                       </div>
                       <p className="text-white font-semibold text-sm flex-shrink-0">
                         {formatCurrency(item.totalPrice)}
@@ -463,6 +587,28 @@ const PublicQuoteView = () => {
                 <span>Subtotal</span>
                 <span>{formatCurrency(quote.subtotal)}</span>
               </div>
+              {/* ELE-891 — per-category adjustment lines */}
+              {quote.settings?.categoryAdjustments &&
+                (
+                  [
+                    ['labour', quote.settings.categoryAdjustments.labour],
+                    ['materials', quote.settings.categoryAdjustments.materials],
+                    ['equipment', quote.settings.categoryAdjustments.equipment],
+                  ] as const
+                )
+                  .filter(([, v]) => typeof v === 'number' && v !== 0)
+                  .map(([cat, pct]) => (
+                    <div
+                      key={cat}
+                      className="flex justify-between text-[11px] text-elec-light/50 -mt-1"
+                    >
+                      <span className="capitalize">
+                        {cat} {pct! > 0 ? 'markup' : 'discount'} ({pct! > 0 ? '+' : ''}
+                        {pct}%)
+                      </span>
+                      <span>included</span>
+                    </div>
+                  ))}
               {quote.overhead > 0 && (
                 <div className="flex justify-between text-elec-light/70">
                   <span>Overhead ({quote.settings?.overheadPercentage || 0}%)</span>

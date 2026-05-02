@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 1 · Subsection 3 — Series Circuits
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   Single-path circuits — the model behind cable resistance adding to load resistance,
+ *   string-wired emergency lighting and any voltage-sensing or signal-conditioning network.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Series Circuits - HNC Module 3 Section 1.3';
@@ -195,69 +214,83 @@ const faqs = [
 ];
 
 const HNCModule3Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Series Circuits
-          </h1>
-          <p className="text-white">
-            Understanding how current, voltage, and resistance behave when components share a single
-            path
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 1 · Subsection 3"
+            title="Series Circuits"
+            description="Understanding how current, voltage, and resistance behave when components share a single path"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
+          <TLDR
+            points={[
+              'You can recognise a series circuit (one path, one current) and apply R_T = R\u2081 + R\u2082 + R\u2083 \u2014 the model used every time cable resistance adds in series with the load.',
+              'You can use the voltage-divider rule V\u2099 = V_T \u00d7 (R\u2099 / R_T) for sensor circuits, control wiring and signal-conditioning networks.',
+              'You can sum series voltage sources \u2014 the basis of every battery pack in emergency lighting, fire-alarm and BMS standby systems.',
+              'You can spot the single-point-of-failure character of series circuits and design around it where reliability matters.',
+              'You can use series analysis to estimate the voltage actually delivered to a load once cable losses are included.',
+            ]}
+          />
+
+          <RegsCallout
+            source="BS 5266-1 — Emergency lighting (Code of practice for the emergency lighting of premises)"
+            clause="Self-contained and central-battery emergency luminaires shall maintain rated luminous output for the declared duration (typically 1 h or 3 h) at the end of life of the battery, with the supply voltage at the lower limit of the declared range."
+            meaning={
+              <>
+                Series cell stacks in NiCd or LiFePO\u2084 emergency luminaire packs are sized
+                so that the end-of-life cell voltage \u00d7 number of cells still drives the
+                LED string at rated lumen output. Series circuit analysis is the design
+                arithmetic that proves the duration claim.
+              </>
+            }
+            cite="Source: BS 5266-1 (latest edition); BS EN 1838 illuminance levels."
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Identify the key characteristics of series circuits',
+              'Calculate total resistance in series combinations',
+              'Apply the voltage divider rule to practical circuits',
+              'Analyse current flow in series configurations',
+              'Design voltage divider circuits for sensor applications',
+              'Understand series circuit applications in building services',
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="One path for current. Same current through every component, voltage divides, resistances add."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Current:</strong> Same through all components (I<sub>T</sub> = I<sub>1</sub>{' '}
-                = I<sub>2</sub> = I<sub>3</sub>)
+                <strong>Current:</strong> Same through all components (I<sub>T</sub> = I<sub>1</sub> = I<sub>2</sub> = I<sub>3</sub>)
               </li>
               <li>
-                <strong>Voltage:</strong> Divides across components (V<sub>T</sub> = V<sub>1</sub> +
-                V<sub>2</sub> + V<sub>3</sub>)
+                <strong>Voltage:</strong> Divides across components (V<sub>T</sub> = V<sub>1</sub> + V<sub>2</sub> + V<sub>3</sub>)
               </li>
               <li>
-                <strong>Resistance:</strong> Adds up (R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub>{' '}
-                + R<sub>3</sub>)
+                <strong>Resistance:</strong> Adds up (R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub>)
               </li>
               <li>Single path for current flow</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1">
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
                 <strong>Emergency lighting:</strong> Battery cells in series
               </li>
@@ -271,616 +304,361 @@ const HNCModule3Section1_3 = () => {
                 <strong>Cables:</strong> Line + neutral resistance in series
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify the key characteristics of series circuits',
-              'Calculate total resistance in series combinations',
-              'Apply the voltage divider rule to practical circuits',
-              'Analyse current flow in series configurations',
-              'Design voltage divider circuits for sensor applications',
-              'Understand series circuit applications in building services',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 01: Series Circuit Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Series Circuit Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Series Circuit Fundamentals">
             <p>
               A series circuit has only one path for current to flow. Every electron that leaves the
               supply must pass through each component in turn before returning. This single-path
               characteristic determines all the behaviour of series circuits.
             </p>
+            <p className="text-sm font-medium text-elec-yellow/80">The Three Rules of Series Circuits</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Current:</strong> I<sub>T</sub> = I<sub>1</sub> = I<sub>2</sub> = I<sub>3</sub> — Same through all components
+              </li>
+              <li>
+                <strong>Voltage:</strong> V<sub>T</sub> = V<sub>1</sub> + V<sub>2</sub> + V<sub>3</sub> — Divides across components
+              </li>
+              <li>
+                <strong>Resistance:</strong> R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub> — Adds up (sum of all)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-white">Why Current is Constant:</p>
+            <p>
+              Think of water flowing through a pipe with several restrictions. The same amount of
+              water must pass through each restriction - it cannot accumulate or disappear.
+              Similarly, charge is conserved in electrical circuits. Every coulomb entering a
+              component must exit it.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>If 2A enters a resistor, 2A must exit it</li>
+              <li>Charge cannot be stored in a resistor</li>
+              <li>This is Kirchhoff's Current Law in action</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Why Voltage Divides:</p>
+            <p>
+              Energy is transferred as current flows through each resistance. The voltage drop
+              across each resistor represents the energy converted per coulomb of charge. Larger
+              resistors convert more energy, so they have larger voltage drops.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Kirchhoff's Voltage Law: V<sub>supply</sub> = V<sub>1</sub> + V<sub>2</sub> + V<sub>3</sub>
+              </li>
+              <li>Voltage is proportional to resistance (V = IR, I is constant)</li>
+              <li>Larger resistors drop more voltage</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-4">
-                The Three Rules of Series Circuits
-              </p>
-              <div className="grid md:grid-cols-3 gap-3 text-sm">
-                <div className="p-3 rounded bg-black/30 border border-blue-500/30">
-                  <p className="text-lg font-bold text-blue-400 mb-1">Current</p>
-                  <p className="font-mono text-sm">
-                    I<sub>T</sub> = I<sub>1</sub> = I<sub>2</sub> = I<sub>3</sub>
-                  </p>
-                  <p className="text-white text-xs mt-2">Same through all components</p>
-                </div>
-                <div className="p-3 rounded bg-black/30 border border-elec-yellow/30">
-                  <p className="text-lg font-bold text-elec-yellow mb-1">Voltage</p>
-                  <p className="font-mono text-sm">
-                    V<sub>T</sub> = V<sub>1</sub> + V<sub>2</sub> + V<sub>3</sub>
-                  </p>
-                  <p className="text-white text-xs mt-2">Divides across components</p>
-                </div>
-                <div className="p-3 rounded bg-black/30 border border-green-500/30">
-                  <p className="text-lg font-bold text-green-400 mb-1">Resistance</p>
-                  <p className="font-mono text-sm">
-                    R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub>
-                  </p>
-                  <p className="text-white text-xs mt-2">Adds up (sum of all)</p>
-                </div>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-3">Why Current is Constant:</p>
-              <p className="text-sm text-white mb-3">
-                Think of water flowing through a pipe with several restrictions. The same amount of
-                water must pass through each restriction - it cannot accumulate or disappear.
-                Similarly, charge is conserved in electrical circuits. Every coulomb entering a
-                component must exit it.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">If 2A enters a resistor, 2A must exit it</li>
-                <li className="pl-1">Charge cannot be stored in a resistor</li>
-                <li className="pl-1">This is Kirchhoff's Current Law in action</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-3">Why Voltage Divides:</p>
-              <p className="text-sm text-white mb-3">
-                Energy is transferred as current flows through each resistance. The voltage drop
-                across each resistor represents the energy converted per coulomb of charge. Larger
-                resistors convert more energy, so they have larger voltage drops.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Kirchhoff's Voltage Law: V<sub>supply</sub> = V<sub>1</sub> + V<sub>2</sub> + V
-                  <sub>3</sub>
-                </li>
-                <li className="pl-1">
-                  Voltage is proportional to resistance (V = IR, I is constant)
-                </li>
-                <li className="pl-1">Larger resistors drop more voltage</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 02: Calculating Total Resistance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Calculating Total Resistance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Calculating Total Resistance">
             <p>
               Total resistance in a series circuit is simply the sum of all individual resistances.
               This is because the current must overcome each resistance in sequence - there is no
               alternative path.
             </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Series Resistance Formula</p>
+            <p>
+              <strong>R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub> + ... + R<sub>n</sub></strong> — Simply add all resistance values together
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example 1: Emergency Lighting Control Circuit</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> Control circuit with 3 resistors in series:
+              </li>
+              <li>R<sub>1</sub> = 1.2kΩ, R<sub>2</sub> = 3.3kΩ, R<sub>3</sub> = 2.7kΩ</li>
+              <li>R<sub>T</sub> = 1.2kΩ + 3.3kΩ + 2.7kΩ = <strong>7.2kΩ</strong></li>
+            </ul>
+            <p className="text-sm font-medium text-white">Worked Example 2: Cable Resistance</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> 25m cable run, 2.5mm² copper (7.41mΩ/m)
+              </li>
+              <li>Single-phase circuit (line + neutral in series)</li>
+              <li>Line conductor: 25m × 7.41mΩ/m = 0.185Ω</li>
+              <li>Neutral conductor: 25m × 7.41mΩ/m = 0.185Ω</li>
+              <li>R<sub>cable</sub> = 0.185 + 0.185 = <strong>0.37Ω</strong></li>
+              <li>(Or simply: 25m × 2 × 7.41mΩ/m = 0.37Ω)</li>
+            </ul>
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Key Point:</strong> Series resistance is always greater than the largest
+              individual resistance. Adding any resistance to a series circuit increases the total -
+              there is no way to reduce it by adding components in series.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Series Resistance Formula
-              </p>
-              <div className="bg-black/30 p-4 rounded text-center">
-                <p className="text-2xl font-bold font-mono text-elec-yellow">
-                  R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub> + ... + R
-                  <sub>n</sub>
-                </p>
-                <p className="text-xs text-white mt-2">
-                  Simply add all resistance values together
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Worked Example 1: Emergency Lighting Control Circuit
-              </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> Control circuit with 3 resistors in series:
-                </p>
-                <p>
-                  R<sub>1</sub> = 1.2kΩ, R<sub>2</sub> = 3.3kΩ, R<sub>3</sub> = 2.7kΩ
-                </p>
-                <p className="mt-3">
-                  <strong>Calculate total resistance:</strong>
-                </p>
-                <p>
-                  R<sub>T</sub> = 1.2kΩ + 3.3kΩ + 2.7kΩ
-                </p>
-                <p className="text-elec-yellow">
-                  R<sub>T</sub> = <strong>7.2kΩ</strong>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Worked Example 2: Cable Resistance
-              </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> 25m cable run, 2.5mm² copper (7.41mΩ/m)
-                </p>
-                <p>Single-phase circuit (line + neutral in series)</p>
-                <p className="mt-3">
-                  <strong>Calculate total cable resistance:</strong>
-                </p>
-                <p>Line conductor: 25m × 7.41mΩ/m = 0.185Ω</p>
-                <p>Neutral conductor: 25m × 7.41mΩ/m = 0.185Ω</p>
-                <p className="text-elec-yellow mt-2">
-                  R<sub>cable</sub> = 0.185 + 0.185 = <strong>0.37Ω</strong>
-                </p>
-                <p className="text-white mt-2">(Or simply: 25m × 2 × 7.41mΩ/m = 0.37Ω)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
-              <p className="text-sm font-medium text-blue-400 mb-2">Key Point</p>
-              <p className="text-sm text-white">
-                Series resistance is always{' '}
-                <strong>greater than the largest individual resistance</strong>. Adding any
-                resistance to a series circuit increases the total - there is no way to reduce it by
-                adding components in series.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 03: Voltage Divider Rule */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Voltage Divider Rule
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Voltage Divider Rule">
             <p>
               The voltage divider rule allows direct calculation of the voltage across any resistor
               in a series circuit without first calculating the current. This is particularly useful
               for sensor circuits and reference voltage generation.
             </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Voltage Divider Formula</p>
+            <p>
+              <strong>V<sub>x</sub> = V<sub>T</sub> × (R<sub>x</sub> / R<sub>T</sub>)</strong> —
+              Voltage across any resistor = Total voltage × (that resistance / total resistance)
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example 3: PIR Sensor Reference Voltage</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> 12V DC supply, need 4V reference for comparator
+              </li>
+              <li>Using R<sub>1</sub> = 2kΩ (top) and R<sub>2</sub> = 1kΩ (bottom)</li>
+              <li>R<sub>T</sub> = 2kΩ + 1kΩ = 3kΩ</li>
+              <li>V<sub>out</sub> = 12V × (1kΩ / 3kΩ) = 12V × 0.333 = <strong>4V</strong> ✓</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Worked Example 4: Two-Resistor Divider Design</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Task:</strong> Design a divider to give 5V from 24V DC (BMS sensor input)
+              </li>
+              <li>
+                V<sub>out</sub>/V<sub>in</sub> = R<sub>2</sub>/(R<sub>1</sub>+R<sub>2</sub>) = 5/24 = 0.208
+              </li>
+              <li>Choose R<sub>2</sub> = 10kΩ</li>
+              <li>0.208 = 10k/(R<sub>1</sub>+10k) → R<sub>1</sub> + 10k = 10k/0.208 = 48.1kΩ</li>
+              <li>R<sub>1</sub> = <strong>38.1kΩ</strong> (use 39kΩ standard value)</li>
+              <li>Check: V<sub>out</sub> = 24 × (10/49) = 4.9V ✓</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Voltage Divider Advantages</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simple, passive, no power supply needed</li>
+              <li>Creates reference voltages for sensors</li>
+              <li>Scales high voltages for measurement</li>
+              <li>Level shifting between systems</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Voltage Divider Limitations</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Output changes if load is connected</li>
+              <li>Wastes power (current flows constantly)</li>
+              <li>Not suitable for power delivery</li>
+              <li>Load must be high impedance</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Voltage Divider Formula
-              </p>
-              <div className="bg-black/30 p-4 rounded text-center">
-                <p className="text-xl font-bold font-mono text-elec-yellow">
-                  V<sub>x</sub> = V<sub>T</sub> × (R<sub>x</sub> / R<sub>T</sub>)
-                </p>
-                <p className="text-xs text-white mt-2">
-                  Voltage across any resistor = Total voltage × (that resistance / total resistance)
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Worked Example 3: PIR Sensor Reference Voltage
-              </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> 12V DC supply, need 4V reference for comparator
-                </p>
-                <p>
-                  Using R<sub>1</sub> = 2kΩ (top) and R<sub>2</sub> = 1kΩ (bottom)
-                </p>
-                <p className="mt-3">
-                  <strong>
-                    Calculate output voltage (across R<sub>2</sub>):
-                  </strong>
-                </p>
-                <p>
-                  R<sub>T</sub> = 2kΩ + 1kΩ = 3kΩ
-                </p>
-                <p>
-                  V<sub>out</sub> = 12V × (1kΩ / 3kΩ)
-                </p>
-                <p>
-                  V<sub>out</sub> = 12V × 0.333
-                </p>
-                <p className="text-elec-yellow">
-                  V<sub>out</sub> = <strong>4V</strong> ✓
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Worked Example 4: Two-Resistor Divider Design
-              </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Task:</strong> Design a divider to give 5V from 24V DC (BMS sensor input)
-                </p>
-                <p className="mt-3">
-                  <strong>Method:</strong>
-                </p>
-                <p>
-                  V<sub>out</sub>/V<sub>in</sub> = R<sub>2</sub>/(R<sub>1</sub>+R<sub>2</sub>) =
-                  5/24 = 0.208
-                </p>
-                <p className="mt-2">
-                  Choose R<sub>2</sub> = 10kΩ
-                </p>
-                <p>
-                  0.208 = 10k/(R<sub>1</sub>+10k)
-                </p>
-                <p>
-                  R<sub>1</sub> + 10k = 10k/0.208 = 48.1kΩ
-                </p>
-                <p className="text-elec-yellow">
-                  R<sub>1</sub> = <strong>38.1kΩ</strong> (use 39kΩ standard value)
-                </p>
-                <p className="text-white mt-2">
-                  Check: V<sub>out</sub> = 24 × (10/49) = 4.9V ✓
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Application 1: Emergency Lighting Battery Packs">
+            <p>
+              Emergency lighting units typically use NiCd or NiMH cells connected in series to
+              achieve the required voltage. Each cell provides approximately 1.2V.
+            </p>
+            <p>
+              <strong>V<sub>pack</sub> = n × V<sub>cell</sub></strong> — Pack voltage = number of
+              cells × cell voltage
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> Emergency luminaire requires 24V battery backup
+              </li>
+              <li>Using NiCd cells: 1.2V per cell (charged)</li>
+              <li>n = V<sub>required</sub> / V<sub>cell</sub> = 24V / 1.2V = <strong>20 cells</strong></li>
+              <li>End of discharge (1.0V/cell): V<sub>min</sub> = 20 × 1.0V = 20V</li>
+              <li>Luminaire must operate from 20V to 24V range</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
-                <p className="text-sm font-medium text-green-400 mb-2">
-                  Voltage Divider Advantages
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Simple, passive, no power supply needed</li>
-                  <li className="pl-1">Creates reference voltages for sensors</li>
-                  <li className="pl-1">Scales high voltages for measurement</li>
-                  <li className="pl-1">Level shifting between systems</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
-                <p className="text-sm font-medium text-amber-400 mb-2">
-                  Voltage Divider Limitations
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Output changes if load is connected</li>
-                  <li className="pl-1">Wastes power (current flows constantly)</li>
-                  <li className="pl-1">Not suitable for power delivery</li>
-                  <li className="pl-1">Load must be high impedance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Application 2: PIR Sensor Threshold Circuits">
+            <p>
+              PIR sensors use voltage dividers to set reference thresholds for motion detection
+              comparators. The divider creates a stable reference voltage.
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> PIR circuit powered by 5V, needs 2.5V reference
+              </li>
+              <li>Using equal resistors: R<sub>1</sub> = R<sub>2</sub> = 10kΩ</li>
+              <li>V<sub>ref</sub> = 5V × (10k / 20k) = 5V × 0.5 = <strong>2.5V</strong> ✓</li>
+              <li>Current draw: I = 5V / 20kΩ = 0.25mA (negligible for battery operation)</li>
+            </ul>
+            <p>
+              <strong>Design Note:</strong> High resistance values (10kΩ+) minimise current drain in
+              battery-powered sensors.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Application 3: Protective Devices in Series">
+            <p>
+              Fuses, MCBs, and RCBOs are always connected in series with the circuit they protect.
+              This ensures the protective device carries the full load current.
+            </p>
+            <p>
+              <strong>Series connection ensures:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Protective device sees full circuit current</li>
+              <li>When device operates, circuit is completely disconnected</li>
+              <li>No current can bypass the protection</li>
+              <li>Fault current must flow through the device</li>
+            </ul>
+            <p className="text-sm text-orange-300">
+              <strong>Critical:</strong> A protective device in parallel would be ineffective -
+              current would bypass it through the lower-resistance parallel path.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04: Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Building Services Applications
-          </h2>
-          <div className="text-white space-y-6 leading-relaxed">
-            {/* Emergency Lighting Batteries */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-red-400 mb-3">
-                Application 1: Emergency Lighting Battery Packs
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Emergency lighting units typically use NiCd or NiMH cells connected in series to
-                achieve the required voltage. Each cell provides approximately 1.2V.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono text-lg">
-                  <strong>
-                    V<sub>pack</sub> = n × V<sub>cell</sub>
-                  </strong>
-                </p>
-                <p className="text-xs text-white mt-1">
-                  Pack voltage = number of cells × cell voltage
-                </p>
-              </div>
-              <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> Emergency luminaire requires 24V battery backup
-                </p>
-                <p>Using NiCd cells: 1.2V per cell (charged)</p>
-                <p className="mt-2">
-                  <strong>Calculate cells required:</strong>
-                </p>
-                <p>
-                  n = V<sub>required</sub> / V<sub>cell</sub> = 24V / 1.2V ={' '}
-                  <strong>20 cells</strong>
-                </p>
-                <p className="mt-2">
-                  <strong>End of discharge (1.0V/cell):</strong>
-                </p>
-                <p>
-                  V<sub>min</sub> = 20 × 1.0V = 20V
-                </p>
-                <p className="text-white mt-1">Luminaire must operate from 20V to 24V range</p>
-              </div>
-            </div>
+          <ConceptBlock title="Application 4: Control Panel Indicator LEDs">
+            <p>
+              Multiple LEDs can be connected in series from a higher voltage supply. The supply
+              voltage must exceed the sum of all LED forward voltages.
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> 3 green LEDs (V<sub>f</sub>=2.2V each) from 24V DC
+              </li>
+              <li>Required current: 15mA per LED</li>
+              <li>V<sub>LEDs</sub> = 3 × 2.2V = 6.6V</li>
+              <li>V<sub>R</sub> = 24V - 6.6V = 17.4V</li>
+              <li>R = 17.4V / 0.015A = <strong>1160Ω</strong></li>
+              <li>Use 1.2kΩ standard value (I = 14.5mA)</li>
+              <li>Power dissipation: P<sub>R</sub> = 0.0145² × 1200 = 0.25W (use 0.5W resistor)</li>
+            </ul>
+          </ConceptBlock>
 
-            {/* Control Circuit Sensing */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-blue-400 mb-3">
-                Application 2: PIR Sensor Threshold Circuits
-              </h3>
-              <p className="text-sm text-white mb-3">
-                PIR sensors use voltage dividers to set reference thresholds for motion detection
-                comparators. The divider creates a stable reference voltage.
-              </p>
-              <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> PIR circuit powered by 5V, needs 2.5V reference
-                </p>
-                <p>
-                  Using equal resistors: R<sub>1</sub> = R<sub>2</sub> = 10kΩ
-                </p>
-                <p className="mt-2">
-                  <strong>Verify reference voltage:</strong>
-                </p>
-                <p>
-                  V<sub>ref</sub> = 5V × (10k / 20k) = 5V × 0.5 = <strong>2.5V</strong> ✓
-                </p>
-                <p className="mt-2">
-                  <strong>Current draw:</strong>
-                </p>
-                <p>I = 5V / 20kΩ = 0.25mA (negligible for battery operation)</p>
-              </div>
-              <p className="text-xs text-white mt-3">
-                <strong>Design Note:</strong> High resistance values (10kΩ+) minimise current drain
-                in battery-powered sensors.
-              </p>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            {/* Fuses and Protection */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-amber-400 mb-3">
-                Application 3: Protective Devices in Series
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Fuses, MCBs, and RCBOs are always connected in series with the circuit they protect.
-                This ensures the protective device carries the full load current.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Series connection ensures:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 mt-2 space-y-1">
-                  <li className="pl-1">Protective device sees full circuit current</li>
-                  <li className="pl-1">When device operates, circuit is completely disconnected</li>
-                  <li className="pl-1">No current can bypass the protection</li>
-                  <li className="pl-1">Fault current must flow through the device</li>
-                </ul>
-              </div>
-              <p className="text-xs text-amber-400/80 mt-3">
-                <strong>Critical:</strong> A protective device in parallel would be ineffective -
-                current would bypass it through the lower-resistance parallel path.
-              </p>
-            </div>
+          <SectionRule />
 
-            {/* Control Panel LEDs */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-green-400 mb-3">
-                Application 4: Control Panel Indicator LEDs
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Multiple LEDs can be connected in series from a higher voltage supply. The supply
-                voltage must exceed the sum of all LED forward voltages.
-              </p>
-              <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> 3 green LEDs (V<sub>f</sub>=2.2V each) from 24V DC
-                </p>
-                <p>Required current: 15mA per LED</p>
-                <p className="mt-2">
-                  <strong>Calculate series resistor:</strong>
-                </p>
-                <p>
-                  V<sub>LEDs</sub> = 3 × 2.2V = 6.6V
-                </p>
-                <p>
-                  V<sub>R</sub> = 24V - 6.6V = 17.4V
-                </p>
-                <p>
-                  R = 17.4V / 0.015A = <strong>1160Ω</strong>
-                </p>
-                <p className="mt-1">Use 1.2kΩ standard value (I = 14.5mA)</p>
-                <p className="mt-2">
-                  <strong>Power dissipation:</strong>
-                </p>
-                <p>
-                  P<sub>R</sub> = 0.0145² × 1200 = 0.25W (use 0.5W resistor)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Series Circuit Calculations</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Total resistance:</strong> Simply add all values (R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub> + ...)
+              </li>
+              <li>
+                <strong>Current:</strong> Calculate once, applies everywhere (I = V<sub>T</sub>/R<sub>T</sub>)
+              </li>
+              <li>
+                <strong>Voltage drops:</strong> Use V = IR for each component, or voltage divider rule
+              </li>
+              <li>
+                <strong>Cable resistance:</strong> Remember to double for single-phase (line + neutral)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Voltage Divider Design Tips</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Choose resistor values 10× higher than load impedance minimum</li>
+              <li>Use 1% tolerance resistors for precision applications</li>
+              <li>Consider temperature coefficient for outdoor installations</li>
+              <li>Add decoupling capacitor for noise-sensitive circuits</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <CommonMistake
+            title="Common series circuit mistakes"
+            whatHappens={
+              <>
+                Forgetting cable return path (always ×2 for single-phase). Loading voltage dividers
+                with low-impedance loads (output changes). Mixing units (kΩ, Ω, mΩ) when summing.
+                Assuming voltage is constant (it divides — current is constant in series, not
+                voltage).
+              </>
+            }
+            doInstead={
+              <>
+                Always double cable runs for Vd. Use high-impedance loads (or buffer the divider
+                with an op-amp). Convert all resistances to a single unit before adding. Remember:
+                series = same current, parallel = same voltage.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <Scenario
+            title="Sizing the battery string for a 3 h maintained emergency luminaire"
+            situation={
+              <>
+                You are specifying a self-contained 3 h maintained emergency luminaire for a
+                hotel escape route. The LED engine needs 24 V DC at 0.4 A under emergency
+                operation. You are using LiFePO\u2084 cells (3.2 V nominal, 2.8 V end-of-life)
+                in series.
+              </>
+            }
+            whatToDo={
+              <>
+                Pick the cell count from the end-of-life voltage so the lamp still runs at
+                spec when the battery is at the bottom of its discharge curve: ceiling(24 V /
+                2.8 V) = 9 cells in series (giving 25.2 V end-of-life, 28.8 V nominal). Then
+                size the series current-limiting resistor (or constant-current driver) to drop
+                the surplus voltage to the LED engine\u2019s forward voltage at 0.4 A. Finally,
+                pick a cell capacity (Ah) of at least I_load \u00d7 duration \u00d7 derating
+                factor \u2014 typically 0.4 A \u00d7 3 h \u00d7 1.25 \u2248 1.5 Ah minimum.
+              </>
+            }
+            whyItMatters={
+              <>
+                The whole BS 5266-1 duration claim rests on series-circuit arithmetic. Get the
+                cell count wrong and the lamp dims out before the 3 h is up \u2014 a
+                certifiable non-compliance and a life-safety failure on the day it is needed.
+              </>
+            }
+          />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Series Circuit Calculations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Total resistance:</strong> Simply add all values (R<sub>T</sub> = R
-                  <sub>1</sub> + R<sub>2</sub> + ...)
-                </li>
-                <li className="pl-1">
-                  <strong>Current:</strong> Calculate once, applies everywhere (I = V<sub>T</sub>/R
-                  <sub>T</sub>)
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage drops:</strong> Use V = IR for each component, or voltage divider
-                  rule
-                </li>
-                <li className="pl-1">
-                  <strong>Cable resistance:</strong> Remember to double for single-phase (line +
-                  neutral)
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-blue-400/80 mb-2">
-                Voltage Divider Design Tips
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Choose resistor values 10× higher than load impedance minimum
-                </li>
-                <li className="pl-1">Use 1% tolerance resistors for precision applications</li>
-                <li className="pl-1">Consider temperature coefficient for outdoor installations</li>
-                <li className="pl-1">Add decoupling capacitor for noise-sensitive circuits</li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Forgetting cable return path:</strong> Always multiply by 2 for
-                  single-phase
-                </li>
-                <li className="pl-1">
-                  <strong>Loading voltage dividers:</strong> Connected loads change the output
-                  voltage
-                </li>
-                <li className="pl-1">
-                  <strong>Mixing units:</strong> Convert all to same units (kΩ, Ω, mΩ) before adding
-                </li>
-                <li className="pl-1">
-                  <strong>Assuming parallel behaviour:</strong> Series current is constant, not
-                  voltage
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Series circuits have a single current path \u2014 the same current flows through every component (I_T = I\u2081 = I\u2082 = I\u2083).',
+              'Total resistance is the sum of individual resistances: R_T = R\u2081 + R\u2082 + R\u2083 + ... \u2014 always greater than the largest single R.',
+              'Voltages add: V_T = V\u2081 + V\u2082 + V\u2083 \u2014 useful for both sources (battery cells in series) and resistive drops.',
+              'Voltage-divider rule: V\u2099 = V_T \u00d7 (R\u2099 / R_T) \u2014 the larger R drops the larger voltage.',
+              'Cable resistance always sits in series with the load \u2014 this is why voltage drop matters and why long cable runs need bigger conductors.',
+              'Series circuits are single-point-of-failure by design: one open-circuit and the whole chain dies. Use parallel where redundancy matters.',
+              'Series battery cells multiply voltage but not capacity (Ah) \u2014 the underpinning model for every emergency-lighting pack and BMS UPS string.',
+              'Series voltage division is the working model for sensor pull-up networks, control-circuit dividers and signal-conditioning interfaces.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Series Circuit Rules</p>
-                <ul className="space-y-0.5">
-                  <li>
-                    Current: I<sub>T</sub> = I<sub>1</sub> = I<sub>2</sub> = I<sub>3</sub>
-                  </li>
-                  <li>
-                    Voltage: V<sub>T</sub> = V<sub>1</sub> + V<sub>2</sub> + V<sub>3</sub>
-                  </li>
-                  <li>
-                    Resistance: R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Voltage Divider</p>
-                <ul className="space-y-0.5">
-                  <li>
-                    V<sub>x</sub> = V<sub>T</sub> × (R<sub>x</sub> / R<sub>T</sub>)
-                  </li>
-                  <li>Output across bottom resistor</li>
-                  <li>Load must be high impedance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-4">
-              Next: Parallel Circuits
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Ohm's Law
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Parallel Circuits
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,27 @@
-import { ArrowLeft, GitBranch, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 1 · Subsection 4 — Parallel Circuits
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   Multi-path circuits — the model behind ring finals, parallel luminaire strings,
+ *   distribution-board outgoing ways and any redundant-supply or PFC capacitor bank.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Parallel Circuits - HNC Module 3 Section 1.4';
@@ -189,816 +208,526 @@ const faqs = [
 ];
 
 const HNCModule3Section1_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <GitBranch className="h-4 w-4" />
-            <span>Module 3.1.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Parallel Circuits
-          </h1>
-          <p className="text-white">
-            Understanding voltage distribution, current division, and equivalent resistance in
-            parallel networks
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 1 · Subsection 4"
+            title="Parallel Circuits"
+            description="Understanding voltage distribution, current division, and equivalent resistance in parallel networks"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Voltage:</strong> Same across all parallel branches
-              </li>
-              <li className="pl-1">
-                <strong>Current:</strong> Divides between branches (IT = I1 + I2 + I3...)
-              </li>
-              <li className="pl-1">
-                <strong>Resistance:</strong> 1/RT = 1/R1 + 1/R2 + 1/R3...
-              </li>
-              <li className="pl-1">
-                <strong>Total R:</strong> Always less than smallest individual R
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Applications
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Lighting circuits:</strong> Each luminaire at full voltage
-              </li>
-              <li className="pl-1">
-                <strong>Socket outlets:</strong> Independent operation
-              </li>
-              <li className="pl-1">
-                <strong>Ring finals:</strong> Parallel cable paths for capacity
-              </li>
-              <li className="pl-1">
-                <strong>Distribution boards:</strong> Parallel final circuits
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can recognise a parallel circuit (multiple paths, common voltage) and apply 1/R_T = 1/R\u2081 + 1/R\u2082 + 1/R\u2083 to find the equivalent resistance.',
+              'You can use the current-divider rule to predict how load current splits between branches \u2014 the basis for sizing tap-off circuits at a distribution board.',
+              'You can spot why a ring final has lower effective resistance than a single radial of the same conductor size, and why that matters for fault current.',
+              'You can predict total currents on a parallel bank of luminaires or socket outlets and pick the right MCB rating.',
+              'You can use parallel analysis on PFC capacitor banks, parallel UPS feeds and any redundant-supply arrangement.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671 — Section 433 (Protection against overload current)"
+            clause="The nominal current or current setting of the protective device (I_n) shall be greater than or equal to the design current of the circuit (I_b), and less than or equal to the lowest current-carrying capacity (I_z) of any conductor in the circuit."
+            meaning={
+              <>
+                On a parallel-fed distribution board the design current at any point is the
+                sum of the branch currents at that node \u2014 derived directly from the
+                parallel-circuit current-divider analysis. Get the parallel arithmetic right
+                and the I\u1d47 \u2264 I\u2099 \u2264 I_z chain holds for every device in the board.
+              </>
+            }
+            cite="Source: BS 7671 (latest edition incl. A4:2026) Regulation 433.1.1."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Identify parallel circuit configurations and their characteristics',
               'Calculate total resistance using reciprocal and product/sum methods',
               'Apply the current divider rule to determine branch currents',
               'Analyse lighting circuits as parallel networks',
               'Understand ring final circuit parallel paths',
               'Design balanced loads for distribution boards',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Parallel Circuit Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Parallel Circuit Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="Multiple paths for current. Same voltage across each branch, currents add, total resistance always less than the smallest branch."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Voltage:</strong> Same across all parallel branches
+              </li>
+              <li>
+                <strong>Current:</strong> Divides between branches (IT = I1 + I2 + I3...)
+              </li>
+              <li>
+                <strong>Resistance:</strong> 1/RT = 1/R1 + 1/R2 + 1/R3...
+              </li>
+              <li>
+                <strong>Total R:</strong> Always less than smallest individual R
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Applications</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lighting circuits:</strong> Each luminaire at full voltage
+              </li>
+              <li>
+                <strong>Socket outlets:</strong> Independent operation
+              </li>
+              <li>
+                <strong>Ring finals:</strong> Parallel cable paths for capacity
+              </li>
+              <li>
+                <strong>Distribution boards:</strong> Parallel final circuits
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Parallel Circuit Fundamentals">
             <p>
               In a parallel circuit, components are connected across the same two points, creating
               multiple paths for current flow. This is the most common configuration in building
               electrical installations.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-4">
-                Key Parallel Circuit Rules
-              </p>
-              <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-black/30 border border-blue-500/30">
-                  <p className="text-lg font-bold text-blue-400 mb-1">VT = V1 = V2 = V3</p>
-                  <p className="text-white text-xs">Voltage is the SAME</p>
-                </div>
-                <div className="p-3 rounded bg-black/30 border border-green-500/30">
-                  <p className="text-lg font-bold text-green-400 mb-1">IT = I1 + I2 + I3</p>
-                  <p className="text-white text-xs">Currents ADD up</p>
-                </div>
-                <div className="p-3 rounded bg-black/30 border border-elec-yellow/30">
-                  <p className="text-lg font-bold text-elec-yellow mb-1">RT &lt; Rsmallest</p>
-                  <p className="text-white text-xs">Total R is LESS</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Why voltage is the same across all branches:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  All branches connect to the same two nodes (connection points)
-                </li>
-                <li className="pl-1">Voltage is a potential difference between two points</li>
-                <li className="pl-1">Each branch experiences the full supply voltage</li>
-                <li className="pl-1">
-                  This is why 230V luminaires work correctly on lighting circuits
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Why current divides between branches:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Current has multiple paths from source to load</li>
-                <li className="pl-1">More current flows through lower resistance paths</li>
-                <li className="pl-1">Total current equals the sum of all branch currents</li>
-                <li className="pl-1">
-                  Using Kirchhoff's Current Law: current in = current out at any node
-                </li>
-              </ul>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Key Parallel Circuit Rules</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>VT = V1 = V2 = V3</strong> — Voltage is the SAME
+              </li>
+              <li>
+                <strong>IT = I1 + I2 + I3</strong> — Currents ADD up
+              </li>
+              <li>
+                <strong>RT &lt; R<sub>smallest</sub></strong> — Total R is LESS than the smallest
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-white">Why voltage is the same across all branches:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All branches connect to the same two nodes (connection points)</li>
+              <li>Voltage is a potential difference between two points</li>
+              <li>Each branch experiences the full supply voltage</li>
+              <li>This is why 230V luminaires work correctly on lighting circuits</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Why current divides between branches:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Current has multiple paths from source to load</li>
+              <li>More current flows through lower resistance paths</li>
+              <li>Total current equals the sum of all branch currents</li>
+              <li>Using Kirchhoff's Current Law: current in = current out at any node</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Remember:</strong> Parallel circuits provide redundancy - if one branch fails
               open, the others continue operating normally.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Calculating Total Resistance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Calculating Total Resistance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Calculating Total Resistance">
             <p>
               Calculating equivalent resistance is essential for determining circuit current and
               power consumption. There are two main methods depending on the number of resistors.
             </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Method 1: Reciprocal Formula (Any Number)</p>
+            <p>
+              <strong>1/RT = 1/R1 + 1/R2 + 1/R3 + ...</strong> Calculate the sum of reciprocals,
+              then take the reciprocal of the result.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Example:</strong> 20 ohms, 30 ohms, and 60 ohms in parallel
+              </li>
+              <li>1/RT = 1/20 + 1/30 + 1/60 = 0.05 + 0.0333 + 0.0167 = 0.1</li>
+              <li>RT = 1/0.1 = <strong>10 ohms</strong></li>
+              <li>Note: 10 ohms &lt; 20 ohms (the smallest resistor)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Method 2: Product Over Sum (Two Resistors Only)</p>
+            <p>
+              <strong>RT = (R1 x R2) / (R1 + R2)</strong> — Quick method for two resistors:
+              multiply then divide by sum.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Example:</strong> 40 ohms and 60 ohms in parallel
+              </li>
+              <li>RT = (40 x 60) / (40 + 60) = 2400 / 100 = <strong>24 ohms</strong></li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Method 3: Identical Resistors Shortcut</p>
+            <p>
+              <strong>RT = R / n</strong> (where n = number of identical resistors)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Example:</strong> Four 100 ohm resistors in parallel
+              </li>
+              <li>RT = 100 / 4 = <strong>25 ohms</strong></li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Parallel Resistance Quick Reference</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Two 100 ohm:</strong> 50 ohms (R/n = 100/2)
+              </li>
+              <li>
+                <strong>Three 100 ohm:</strong> 33.3 ohms (R/n = 100/3)
+              </li>
+              <li>
+                <strong>100 ohm + 100 ohm:</strong> 50 ohms (Product/sum)
+              </li>
+              <li>
+                <strong>100 ohm + 200 ohm:</strong> 66.7 ohms ((100x200)/(100+200))
+              </li>
+              <li>
+                <strong>60 ohm + 40 ohm:</strong> 24 ohms ((60x40)/(60+40))
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Method 1: Reciprocal Formula (Any Number)
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono text-lg">
-                  <strong>1/RT = 1/R1 + 1/R2 + 1/R3 + ...</strong>
-                </p>
-              </div>
-              <p className="text-sm text-white mb-3">
-                Calculate the sum of reciprocals, then take the reciprocal of the result.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Example:</strong> 20 ohms, 30 ohms, and 60 ohms in parallel
-                </p>
-                <p className="mt-2">1/RT = 1/20 + 1/30 + 1/60</p>
-                <p>1/RT = 0.05 + 0.0333 + 0.0167 = 0.1</p>
-                <p>
-                  RT = 1/0.1 = <strong>10 ohms</strong>
-                </p>
-                <p className="text-white mt-2">
-                  Note: 10 ohms &lt; 20 ohms (the smallest resistor)
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Method 2: Product Over Sum (Two Resistors Only)
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono text-lg">
-                  <strong>RT = (R1 x R2) / (R1 + R2)</strong>
-                </p>
-              </div>
-              <p className="text-sm text-white mb-3">
-                Quick method for two resistors - multiply then divide by sum.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Example:</strong> 40 ohms and 60 ohms in parallel
-                </p>
-                <p className="mt-2">RT = (40 x 60) / (40 + 60)</p>
-                <p>
-                  RT = 2400 / 100 = <strong>24 ohms</strong>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Method 3: Identical Resistors Shortcut
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono text-lg">
-                  <strong>RT = R / n</strong>
-                </p>
-                <p className="text-xs text-white mt-1">
-                  (Where n = number of identical resistors)
-                </p>
-              </div>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Example:</strong> Four 100 ohm resistors in parallel
-                </p>
-                <p className="mt-2">
-                  RT = 100 / 4 = <strong>25 ohms</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Parallel Resistance Quick Reference
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Configuration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Total Resistance
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Two 100 ohm</td>
-                      <td className="border border-white/10 px-3 py-2">50 ohms</td>
-                      <td className="border border-white/10 px-3 py-2">R/n = 100/2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three 100 ohm</td>
-                      <td className="border border-white/10 px-3 py-2">33.3 ohms</td>
-                      <td className="border border-white/10 px-3 py-2">R/n = 100/3</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100 ohm + 100 ohm</td>
-                      <td className="border border-white/10 px-3 py-2">50 ohms</td>
-                      <td className="border border-white/10 px-3 py-2">Product/sum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100 ohm + 200 ohm</td>
-                      <td className="border border-white/10 px-3 py-2">66.7 ohms</td>
-                      <td className="border border-white/10 px-3 py-2">(100x200)/(100+200)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60 ohm + 40 ohm</td>
-                      <td className="border border-white/10 px-3 py-2">24 ohms</td>
-                      <td className="border border-white/10 px-3 py-2">(60x40)/(60+40)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Current Divider Rule */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Current Divider Rule
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Current Divider Rule">
             <p>
               The current divider rule calculates how total current splits between parallel
               branches. Understanding this is crucial for load balancing and cable sizing in
               distribution systems.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Current Divider Formula (Two Branches)
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono text-lg">
-                  <strong>I1 = IT x (R2 / (R1 + R2))</strong>
-                </p>
-                <p className="text-xs text-white mt-2">
-                  Note: Current through R1 uses R2 in the numerator (opposite to voltage divider)
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4 mt-4">
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-2">For R1 branch:</p>
-                  <p className="font-mono text-sm">I1 = IT x R2 / (R1 + R2)</p>
-                </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-2">For R2 branch:</p>
-                  <p className="font-mono text-sm">I2 = IT x R1 / (R1 + R2)</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Alternative Method: Using Ohm's Law
-              </p>
-              <p className="text-sm text-white mb-3">
-                Since voltage is the same across all branches, you can calculate each branch current
-                directly:
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono text-lg">I1 = V / R1 and I2 = V / R2</p>
-              </div>
-              <p className="text-xs text-white">
-                This is often easier when you know the supply voltage.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Worked Example: Current Division
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> IT = 15A divides between 20 ohms and 30 ohms
-                </p>
-                <p className="mt-2">
-                  <strong>Method 1 - Current divider rule:</strong>
-                </p>
-                <p>
-                  I1 (through 20 ohm) = 15 x (30/(20+30)) = 15 x 0.6 = <strong>9A</strong>
-                </p>
-                <p>
-                  I2 (through 30 ohm) = 15 x (20/(20+30)) = 15 x 0.4 = <strong>6A</strong>
-                </p>
-                <p className="text-green-400 mt-2">Check: 9A + 6A = 15A (currents add up)</p>
-
-                <p className="mt-4">
-                  <strong>Method 2 - Using Ohm's Law:</strong>
-                </p>
-                <p>RT = (20x30)/(20+30) = 12 ohms</p>
-                <p>V = IT x RT = 15 x 12 = 180V</p>
-                <p>
-                  I1 = V/R1 = 180/20 = <strong>9A</strong>
-                </p>
-                <p>
-                  I2 = V/R2 = 180/30 = <strong>6A</strong>
-                </p>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Current Divider Formula (Two Branches)</p>
+            <p>
+              <strong>I1 = IT x (R2 / (R1 + R2))</strong> — Note: Current through R1 uses R2 in
+              the numerator (opposite to voltage divider).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>For R1 branch:</strong> I1 = IT x R2 / (R1 + R2)
+              </li>
+              <li>
+                <strong>For R2 branch:</strong> I2 = IT x R1 / (R1 + R2)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Alternative Method: Using Ohm's Law</p>
+            <p>
+              Since voltage is the same across all branches, you can calculate each branch current
+              directly: <strong>I1 = V / R1 and I2 = V / R2</strong>. This is often easier when
+              you know the supply voltage.
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Worked Example: Current Division</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> IT = 15A divides between 20 ohms and 30 ohms
+              </li>
+              <li>
+                <strong>Method 1 - Current divider rule:</strong>
+              </li>
+              <li>I1 (through 20 ohm) = 15 x (30/(20+30)) = 15 x 0.6 = <strong>9A</strong></li>
+              <li>I2 (through 30 ohm) = 15 x (20/(20+30)) = 15 x 0.4 = <strong>6A</strong></li>
+              <li>Check: 9A + 6A = 15A (currents add up)</li>
+              <li>
+                <strong>Method 2 - Using Ohm's Law:</strong>
+              </li>
+              <li>RT = (20x30)/(20+30) = 12 ohms; V = IT x RT = 15 x 12 = 180V</li>
+              <li>I1 = V/R1 = 180/20 = <strong>9A</strong>; I2 = V/R2 = 180/30 = <strong>6A</strong></li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key insight:</strong> Lower resistance carries higher current. The 20 ohm
               resistor (lower R) carries 9A while the 30 ohm resistor carries only 6A.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Building Services Applications
-          </h2>
-          <div className="text-white space-y-6 leading-relaxed">
-            {/* Lighting Circuits */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-blue-400 mb-3">
-                Application 1: Lighting Circuits
-              </h3>
-              <p className="text-sm text-white mb-3">
-                All luminaires on a lighting circuit are connected in parallel, ensuring each
-                receives full 230V supply and operates independently.
-              </p>
+          <SectionRule />
 
-              <p className="text-sm font-medium text-white mb-2">
-                Worked Example: Office Lighting Analysis
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> 12 LED luminaires, each 45W at 230V
-                </p>
-                <p className="mt-2">
-                  Luminaire resistance: R = V squared/P = 230 squared/45 = 1176 ohms
-                </p>
-                <p className="mt-2">Current per luminaire: I = P/V = 45/230 = 0.196A</p>
-                <p className="mt-2">
-                  Total circuit current: IT = 12 x 0.196A = <strong>2.35A</strong>
-                </p>
-                <p className="mt-2">
-                  Total power: PT = 12 x 45W = <strong>540W</strong>
-                </p>
-                <p className="mt-2">
-                  Combined resistance: RT = 1176/12 = <strong>98 ohms</strong>
-                </p>
-                <p className="text-green-400 mt-2">
-                  Well within 6A MCB rating for lighting circuit
-                </p>
-              </div>
+          <ConceptBlock title="Application 1: Lighting Circuits">
+            <p>
+              All luminaires on a lighting circuit are connected in parallel, ensuring each
+              receives full 230V supply and operates independently.
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example: Office Lighting Analysis</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> 12 LED luminaires, each 45W at 230V
+              </li>
+              <li>Luminaire resistance: R = V²/P = 230²/45 = 1176 ohms</li>
+              <li>Current per luminaire: I = P/V = 45/230 = 0.196A</li>
+              <li>Total circuit current: IT = 12 x 0.196A = <strong>2.35A</strong></li>
+              <li>Total power: PT = 12 x 45W = <strong>540W</strong></li>
+              <li>Combined resistance: RT = 1176/12 = <strong>98 ohms</strong></li>
+              <li>Well within 6A MCB rating for lighting circuit</li>
+            </ul>
+            <p>
+              <strong>Practical note:</strong> Even if one luminaire fails, others continue working
+              - a key benefit of parallel connection.
+            </p>
+          </ConceptBlock>
 
-              <div className="mt-3 text-xs text-white">
-                <strong>Practical note:</strong> Even if one luminaire fails, others continue
-                working - a key benefit of parallel connection.
-              </div>
-            </div>
+          <ConceptBlock title="Application 2: Ring Final Circuit">
+            <p>
+              A ring final provides two parallel cable paths to each socket, effectively doubling
+              the cable capacity and reducing voltage drop.
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example: Ring Circuit Calculation</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> 2.5mm squared ring, 50m total length, 32A load at far point
+              </li>
+              <li>Cable resistance: 7.41 milliohms/m</li>
+              <li>
+                <strong>With ring (two parallel paths):</strong>
+              </li>
+              <li>Path 1: 25m from one direction = 25 x 7.41 = 185 milliohms</li>
+              <li>Path 2: 25m from other direction = 25 x 7.41 = 185 milliohms</li>
+              <li>Parallel R: (185 x 185)/(185 + 185) = <strong>92.5 milliohms</strong></li>
+              <li>Each path carries 16A (current divides equally)</li>
+              <li>Voltage drop: V = 16A x 0.0925 ohms x 2 = <strong>2.96V</strong></li>
+              <li>Only 1.3% drop (within 5% limit)</li>
+              <li>
+                <strong>If broken to radial:</strong> V = 32A x (50m x 0.00741) x 2 = 23.7V (10.3% - fails!)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            {/* Ring Final Circuit */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-green-400 mb-3">
-                Application 2: Ring Final Circuit
-              </h3>
-              <p className="text-sm text-white mb-3">
-                A ring final provides two parallel cable paths to each socket, effectively doubling
-                the cable capacity and reducing voltage drop.
-              </p>
+          <ConceptBlock title="Application 3: Distribution Board Load Balancing">
+            <p>
+              All final circuits connect in parallel at the distribution board. In three-phase
+              systems, loads must be balanced across phases.
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example: Three-Phase Load Balancing</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Loads to distribute:</strong>
+              </li>
+              <li>Lighting: 2kW, 1.8kW, 2.2kW (three circuits)</li>
+              <li>Sockets: 3kW, 3.5kW, 3.2kW (three circuits)</li>
+              <li>HVAC: 5kW (single circuit)</li>
+              <li>
+                <strong>Balanced allocation:</strong>
+              </li>
+              <li>L1: 2kW + 3kW = 5kW</li>
+              <li>L2: 1.8kW + 3.2kW + 5kW* = 5kW (*or HVAC on L2)</li>
+              <li>L3: 2.2kW + 3.5kW = 5.7kW</li>
+              <li>
+                <strong>Phase currents at 230V:</strong> IL1 = 21.7A, IL2 = 21.7A, IL3 = 24.8A
+              </li>
+              <li>Reasonably balanced (max 14% imbalance)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Load Distribution Summary</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>L1:</strong> Lighting 1, Sockets 1 — 5.0kW — 21.7A
+              </li>
+              <li>
+                <strong>L2:</strong> Lighting 2, Sockets 3 — 5.0kW — 21.7A
+              </li>
+              <li>
+                <strong>L3:</strong> Lighting 3, Sockets 2 — 5.7kW — 24.8A
+              </li>
+              <li>
+                <strong>Total:</strong> All circuits in parallel — 15.7kW — ~23A avg
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <p className="text-sm font-medium text-white mb-2">
-                Worked Example: Ring Circuit Calculation
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> 2.5mm squared ring, 50m total length, 32A load at far
-                  point
-                </p>
-                <p className="mt-2">Cable resistance: 7.41 milliohms/m</p>
-                <p className="mt-2">
-                  <strong>With ring (two parallel paths):</strong>
-                </p>
-                <p>Path 1: 25m from one direction = 25 x 7.41 = 185 milliohms</p>
-                <p>Path 2: 25m from other direction = 25 x 7.41 = 185 milliohms</p>
-                <p>
-                  Parallel R: (185 x 185)/(185 + 185) = <strong>92.5 milliohms</strong>
-                </p>
-                <p className="mt-2">Each path carries 16A (current divides equally)</p>
-                <p className="mt-2">
-                  Voltage drop: V = 16A x 0.0925 ohms x 2 = <strong>2.96V</strong>
-                </p>
-                <p className="text-green-400 mt-2">Only 1.3% drop (within 5% limit)</p>
-                <p className="mt-3 text-white">
-                  <strong>If broken to radial:</strong>
-                </p>
-                <p className="text-white">
-                  V = 32A x (50m x 0.00741) x 2 = 23.7V (10.3% - fails!)
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            {/* Distribution Board */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-purple-400 mb-3">
-                Application 3: Distribution Board Load Balancing
-              </h3>
-              <p className="text-sm text-white mb-3">
-                All final circuits connect in parallel at the distribution board. In three-phase
-                systems, loads must be balanced across phases.
-              </p>
+          <SectionRule />
 
-              <p className="text-sm font-medium text-white mb-2">
-                Worked Example: Three-Phase Load Balancing
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Loads to distribute:</strong>
-                </p>
-                <p>Lighting: 2kW, 1.8kW, 2.2kW (three circuits)</p>
-                <p>Sockets: 3kW, 3.5kW, 3.2kW (three circuits)</p>
-                <p>HVAC: 5kW (single circuit)</p>
-                <p className="mt-2">
-                  <strong>Balanced allocation:</strong>
-                </p>
-                <p>L1: 2kW + 3kW = 5kW</p>
-                <p>L2: 1.8kW + 3.2kW + 5kW* = 5kW (*or HVAC on L2)</p>
-                <p>L3: 2.2kW + 3.5kW = 5.7kW</p>
-                <p className="mt-2">
-                  <strong>Phase currents at 230V:</strong>
-                </p>
-                <p>IL1 = 5000/230 = 21.7A</p>
-                <p>IL2 = 5000/230 = 21.7A (with HVAC as 3-phase)</p>
-                <p>IL3 = 5700/230 = 24.8A</p>
-                <p className="text-green-400 mt-2">Reasonably balanced (max 14% imbalance)</p>
-              </div>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">Example 1: Parallel Heater Installation</p>
+            <p>
+              <strong>Question:</strong> Three 2kW panel heaters are to be installed on a single
+              circuit at 230V. Calculate the total current and recommend the MCB rating.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Individual heater current: I = P/V = 2000/230 = 8.7A each</li>
+              <li>Heaters in parallel, currents add: IT = 8.7 + 8.7 + 8.7 = <strong>26.1A</strong></li>
+              <li>Individual heater resistance: R = V/I = 230/8.7 = 26.4 ohms</li>
+              <li>Total resistance: RT = 26.4/3 = <strong>8.8 ohms</strong></li>
+              <li>Check: I = V/RT = 230/8.8 = 26.1A (confirmed)</li>
+              <li>Recommend: 32A MCB with 4mm squared cable</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 2: Parallel Supply Cables</p>
+            <p>
+              <strong>Question:</strong> Two 35mm squared cables (R = 0.524 milliohms/m) run 80m
+              in parallel to supply a sub-board. Calculate the combined resistance and voltage drop
+              at 100A.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single cable resistance (go + return): R = 80m x 2 x 0.524 milliohms = 83.8 milliohms = 0.0838 ohms</li>
+              <li>Parallel cables: RT = 0.0838/2 = <strong>0.0419 ohms</strong></li>
+              <li>Current per cable: 100A / 2 = 50A each</li>
+              <li>Voltage drop: V = IT x RT = 100 x 0.0419 = <strong>4.19V</strong></li>
+              <li>Percentage: (4.19/230) x 100 = <strong>1.82%</strong> ✓ within 5% limit</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 3: Mixed Load Analysis</p>
+            <p>
+              <strong>Question:</strong> A 230V circuit supplies: 6 LED downlights (10W each), 2
+              decorative pendants (40W each), and 1 feature wall light (60W). Calculate total
+              current and verify 6A MCB is adequate.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>LED downlights: 6 x 10W = 60W, I = 60/230 = 0.26A</li>
+              <li>Pendants: 2 x 40W = 80W, I = 80/230 = 0.35A</li>
+              <li>Wall light: 1 x 60W = 60W, I = 60/230 = 0.26A</li>
+              <li>All loads in parallel, currents add: IT = 0.26 + 0.35 + 0.26 = <strong>0.87A</strong></li>
+              <li>Total power: PT = 60 + 80 + 60 = <strong>200W</strong></li>
+              <li>0.87A is well within 6A MCB capacity. Could add many more luminaires within rating</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="mt-3">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Load Distribution Summary
-                </p>
-                <div className="overflow-x-auto">
-                  <table className="text-sm text-white w-full border-collapse">
-                    <thead>
-                      <tr className="bg-white/5">
-                        <th className="border border-white/10 px-3 py-2 text-left">Phase</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">Circuits</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">Total Load</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">Current</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">L1</td>
-                        <td className="border border-white/10 px-3 py-2">Lighting 1, Sockets 1</td>
-                        <td className="border border-white/10 px-3 py-2">5.0kW</td>
-                        <td className="border border-white/10 px-3 py-2">21.7A</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">L2</td>
-                        <td className="border border-white/10 px-3 py-2">Lighting 2, Sockets 3</td>
-                        <td className="border border-white/10 px-3 py-2">5.0kW</td>
-                        <td className="border border-white/10 px-3 py-2">21.7A</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">L3</td>
-                        <td className="border border-white/10 px-3 py-2">Lighting 3, Sockets 2</td>
-                        <td className="border border-white/10 px-3 py-2">5.7kW</td>
-                        <td className="border border-white/10 px-3 py-2">24.8A</td>
-                      </tr>
-                      <tr className="bg-white/5">
-                        <td className="border border-white/10 px-3 py-2 font-medium">Total</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          All circuits in parallel
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">15.7kW</td>
-                        <td className="border border-white/10 px-3 py-2">~23A avg</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Parallel Circuit Formulas</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1/RT = 1/R1 + 1/R2 + 1/R3...</strong> - General formula
+              </li>
+              <li>
+                <strong>RT = (R1 x R2)/(R1 + R2)</strong> - Two resistors (product/sum)
+              </li>
+              <li>
+                <strong>RT = R/n</strong> - n identical resistors
+              </li>
+              <li>
+                <strong>IT = I1 + I2 + I3...</strong> - Total current
+              </li>
+              <li>
+                <strong>I1 = IT x R2/(R1 + R2)</strong> - Current divider
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Principles to Remember</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Voltage is the <strong>same</strong> across all parallel branches</li>
+              <li>Current <strong>divides</strong> - more through lower resistance</li>
+              <li>Total resistance is <strong>always less</strong> than the smallest branch</li>
+              <li>Adding parallel paths <strong>decreases</strong> total resistance</li>
+              <li>If one branch opens, others <strong>continue working</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <CommonMistake
+            title="Common parallel circuit mistakes"
+            whatHappens={
+              <>
+                Adding resistances directly (that's series). Forgetting to take the reciprocal at
+                the end of the 1/RT calculation. Current-divider confusion: I1 uses R2 in the
+                numerator, not R1. Expecting RT to be greater than the smallest resistor (it's
+                always less in parallel).
+              </>
+            }
+            doInstead={
+              <>
+                Use the reciprocal sum, then invert. For two resistors use product/sum. For
+                identical use R/n. Cross-check by computing branch currents from V/R and adding —
+                they must equal IT.
+              </>
+            }
+          />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <SectionRule />
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Parallel Heater Installation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Three 2kW panel heaters are to be installed on a single
-                circuit at 230V. Calculate the total current and recommend the MCB rating.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Individual heater current: I = P/V = 2000/230 = 8.7A each</p>
-                <p className="mt-2">Heaters in parallel, currents add:</p>
-                <p>
-                  IT = 8.7 + 8.7 + 8.7 = <strong>26.1A</strong>
-                </p>
-                <p className="mt-2">Individual heater resistance: R = V/I = 230/8.7 = 26.4 ohms</p>
-                <p>
-                  Total resistance: RT = 26.4/3 = <strong>8.8 ohms</strong>
-                </p>
-                <p className="mt-2">Check: I = V/RT = 230/8.8 = 26.1A (confirmed)</p>
-                <p className="mt-2 text-green-400">Recommend: 32A MCB with 4mm squared cable</p>
-              </div>
-            </div>
+          <Scenario
+            title="Sizing a 4-way distribution board feeding a tenant lighting installation"
+            situation={
+              <>
+                A small office tenant has four parallel lighting circuits feeding from one
+                MCB-protected sub-board: 5 A, 4 A, 6 A and 3 A under design conditions. You
+                need to choose the upstream device for the sub-board incoming feed.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply the parallel-current rule: I_T = I\u2081 + I\u2082 + I\u2083 + I\u2084 = 5 + 4 +
+                6 + 3 = 18 A. Pick the next standard device above 18 A \u2014 a 20 A Type B
+                MCB \u2014 and check the upstream cable I_z is at least 20 A under installation
+                method, ambient and grouping factors. Confirm voltage drop on the longest
+                branch using mV/A/m \u00d7 length \u00d7 I_b. Allow diversity per BS 7671
+                Appendix 1 if all four circuits are not switched on simultaneously.
+              </>
+            }
+            whyItMatters={
+              <>
+                A distribution board is just parallel branches with a common bus. Without the
+                parallel-circuit model you cannot defend the upstream device choice, and an
+                under-sized incomer will nuisance-trip on a Monday morning when every desk
+                lamp comes on.
+              </>
+            }
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Parallel Supply Cables
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Two 35mm squared cables (R = 0.524 milliohms/m) run 80m
-                in parallel to supply a sub-board. Calculate the combined resistance and voltage
-                drop at 100A.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Single cable resistance (go + return):</p>
-                <p>R = 80m x 2 x 0.524 milliohms = 83.8 milliohms = 0.0838 ohms</p>
-                <p className="mt-2">Parallel cables:</p>
-                <p>
-                  RT = 0.0838/2 = <strong>0.0419 ohms</strong>
-                </p>
-                <p className="mt-2">Current per cable: 100A / 2 = 50A each</p>
-                <p className="mt-2">
-                  Voltage drop: V = IT x RT = 100 x 0.0419 = <strong>4.19V</strong>
-                </p>
-                <p className="mt-2">
-                  Percentage: (4.19/230) x 100 = <strong>1.82%</strong>
-                </p>
-                <p className="text-green-400 mt-2">Well within 5% limit</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Mixed Load Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 230V circuit supplies: 6 LED downlights (10W each), 2
-                decorative pendants (40W each), and 1 feature wall light (60W). Calculate total
-                current and verify 6A MCB is adequate.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>LED downlights: 6 x 10W = 60W, I = 60/230 = 0.26A</p>
-                <p>Pendants: 2 x 40W = 80W, I = 80/230 = 0.35A</p>
-                <p>Wall light: 1 x 60W = 60W, I = 60/230 = 0.26A</p>
-                <p className="mt-2">All loads in parallel, currents add:</p>
-                <p>
-                  IT = 0.26 + 0.35 + 0.26 = <strong>0.87A</strong>
-                </p>
-                <p className="mt-2">
-                  Total power: PT = 60 + 80 + 60 = <strong>200W</strong>
-                </p>
-                <p className="text-green-400 mt-2">0.87A is well within 6A MCB capacity</p>
-                <p className="text-white mt-1">Could add many more luminaires within rating</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <KeyTakeaways
+            points={[
+              'Parallel circuits share a common voltage across every branch (V_T = V\u2081 = V\u2082 = V\u2083) \u2014 the model behind any distribution board, ring final or socket bank.',
+              'Total resistance: 1/R_T = 1/R\u2081 + 1/R\u2082 + 1/R\u2083 + ... \u2014 always less than the smallest single R.',
+              'Two-resistor shortcut: R_T = (R\u2081 \u00d7 R\u2082) / (R\u2081 + R\u2082) \u2014 quick to use on parallel sub-mains and dual-source feeds.',
+              'Currents add: I_T = I\u2081 + I\u2082 + I\u2083 \u2014 the basis for upstream device sizing on a distribution board.',
+              'Current-divider rule: I\u2099 = I_T \u00d7 (R_T / R\u2099) \u2014 lower-resistance branch carries more current.',
+              'Parallel reduces effective conductor resistance \u2014 why a ring final has roughly half the loop impedance of a single radial of the same conductor.',
+              'Parallel paths give redundancy \u2014 lose one branch and the rest keep working, the design model for dual-feed UPS and dual-source switchgear.',
+              'Diversity (BS 7671 Appendix 1) lets you size the upstream device below the simple sum of branch currents when not all loads run together.',
+            ]}
+          />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Parallel Circuit Formulas
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1/RT = 1/R1 + 1/R2 + 1/R3...</strong> - General formula
-                </li>
-                <li className="pl-1">
-                  <strong>RT = (R1 x R2)/(R1 + R2)</strong> - Two resistors (product/sum)
-                </li>
-                <li className="pl-1">
-                  <strong>RT = R/n</strong> - n identical resistors
-                </li>
-                <li className="pl-1">
-                  <strong>IT = I1 + I2 + I3...</strong> - Total current
-                </li>
-                <li className="pl-1">
-                  <strong>I1 = IT x R2/(R1 + R2)</strong> - Current divider
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Principles to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Voltage is the <strong>same</strong> across all parallel branches
-                </li>
-                <li className="pl-1">
-                  Current <strong>divides</strong> - more through lower resistance
-                </li>
-                <li className="pl-1">
-                  Total resistance is <strong>always less</strong> than the smallest branch
-                </li>
-                <li className="pl-1">
-                  Adding parallel paths <strong>decreases</strong> total resistance
-                </li>
-                <li className="pl-1">
-                  If one branch opens, others <strong>continue working</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Adding resistances directly</strong> - That's for series circuits!
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting to take reciprocal</strong> - 1/RT needs inverting at the end
-                </li>
-                <li className="pl-1">
-                  <strong>Current divider confusion</strong> - I1 uses R2 in numerator, not R1
-                </li>
-                <li className="pl-1">
-                  <strong>Expecting RT &gt; Rsmallest</strong> - Parallel R is always less
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Parallel Circuit Rules</p>
-                <ul className="space-y-0.5">
-                  <li>Voltage: Same across all branches</li>
-                  <li>Current: IT = I1 + I2 + I3...</li>
-                  <li>Resistance: 1/RT = 1/R1 + 1/R2...</li>
-                  <li>Total R always &lt; smallest R</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Applications</p>
-                <ul className="space-y-0.5">
-                  <li>Lighting: Each luminaire at 230V</li>
-                  <li>Sockets: Independent operation</li>
-                  <li>Ring finals: Parallel cable paths</li>
-                  <li>Distribution: Balance across phases</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Series Circuits
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-5">
-              Next: Series-Parallel Circuits
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Series Circuits
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Kirchhoff's Laws
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

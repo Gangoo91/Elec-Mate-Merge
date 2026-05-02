@@ -1,8 +1,22 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 1 · Subsection 4 — Resource Planning
+ * HNC Electrical Engineering for Building Services (Project Management)
+ *   Labour allocation, materials procurement, plant requirements and resource
+ *   optimisation for building services projects.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Resource Planning - HNC Module 5 Section 1.4';
@@ -242,800 +256,453 @@ const faqs = [
 ];
 
 const HNCModule5Section1_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.1.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Resource Planning
-          </h1>
-          <p className="text-white">
-            Labour allocation, materials procurement, plant requirements and resource optimisation
-            for building services projects
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 1 · Subsection 4"
+            title="Resource Planning"
+            description="Labour allocation, materials procurement, plant requirements and resource optimisation for building services projects."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Resource planning:</strong> Matching resources to programme requirements
-              </li>
-              <li className="pl-1">
-                <strong>Key resources:</strong> Labour, materials, plant/equipment
-              </li>
-              <li className="pl-1">
-                <strong>Resource histogram:</strong> Visual demand profile over time
-              </li>
-              <li className="pl-1">
-                <strong>Levelling:</strong> Smoothing peaks within available float
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Typical productivity:</strong> 25-40m/day containment
-              </li>
-              <li className="pl-1">
-                <strong>Switchgear lead time:</strong> 12-16 weeks
-              </li>
-              <li className="pl-1">
-                <strong>MEWP impact:</strong> 30-40% productivity reduction
-              </li>
-              <li className="pl-1">
-                <strong>Labour build-up:</strong> Peak at first-fix stage
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Calculate labour requirements using productivity rates',
               'Develop resource histograms for building services projects',
               'Apply resource levelling techniques within programme float',
               'Plan material procurement with appropriate lead times',
               'Schedule plant and equipment to match programme peaks',
               'Adjust productivity rates for site-specific conditions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Labour Planning Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Labour Planning Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Labour Planning Fundamentals">
             <p>
               Labour is typically the largest controllable cost on building services projects,
               representing 40-60% of installation value. Effective labour planning ensures the right
               number of workers with appropriate skills are available when needed, avoiding costly
               over-manning or programme-threatening under-resourcing.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Labour planning process:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Activity identification:</strong> Break work into measurable activities
-                </li>
-                <li className="pl-1">
-                  <strong>Quantity take-off:</strong> Measure work content for each activity
-                </li>
-                <li className="pl-1">
-                  <strong>Productivity application:</strong> Apply appropriate output rates
-                </li>
-                <li className="pl-1">
-                  <strong>Duration calculation:</strong> Hours = Quantity / Productivity rate
-                </li>
-                <li className="pl-1">
-                  <strong>Resource aggregation:</strong> Sum requirements by time period
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Electrical Installation Productivity Rates
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Unit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Good Conditions
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Difficult Conditions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable tray installation</td>
-                      <td className="border border-white/10 px-3 py-2">m/day</td>
-                      <td className="border border-white/10 px-3 py-2">35-45</td>
-                      <td className="border border-white/10 px-3 py-2">15-25</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Conduit installation</td>
-                      <td className="border border-white/10 px-3 py-2">m/day</td>
-                      <td className="border border-white/10 px-3 py-2">25-35</td>
-                      <td className="border border-white/10 px-3 py-2">12-18</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SWA cable pulling</td>
-                      <td className="border border-white/10 px-3 py-2">m/day (pair)</td>
-                      <td className="border border-white/10 px-3 py-2">80-120</td>
-                      <td className="border border-white/10 px-3 py-2">40-60</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting point complete</td>
-                      <td className="border border-white/10 px-3 py-2">points/day</td>
-                      <td className="border border-white/10 px-3 py-2">8-12</td>
-                      <td className="border border-white/10 px-3 py-2">4-6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Socket outlet complete</td>
-                      <td className="border border-white/10 px-3 py-2">points/day</td>
-                      <td className="border border-white/10 px-3 py-2">10-15</td>
-                      <td className="border border-white/10 px-3 py-2">5-8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution board install
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">hours each</td>
-                      <td className="border border-white/10 px-3 py-2">4-6</td>
-                      <td className="border border-white/10 px-3 py-2">6-10</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Productivity rates vary significantly with conditions.
-              Always adjust base rates for project-specific factors.
+            <p>
+              <strong>Labour planning process:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Activity identification:</strong> Break work into measurable activities
+              </li>
+              <li>
+                <strong>Quantity take-off:</strong> Measure work content for each activity
+              </li>
+              <li>
+                <strong>Productivity application:</strong> Apply appropriate output rates
+              </li>
+              <li>
+                <strong>Duration calculation:</strong> Hours = Quantity / Productivity rate
+              </li>
+              <li>
+                <strong>Resource aggregation:</strong> Sum requirements by time period
+              </li>
+            </ul>
+            <p>
+              <strong>Typical Electrical Installation Productivity Rates:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable tray installation:</strong> m/day — Good 35-45, Difficult 15-25
+              </li>
+              <li>
+                <strong>Conduit installation:</strong> m/day — Good 25-35, Difficult 12-18
+              </li>
+              <li>
+                <strong>SWA cable pulling:</strong> m/day (pair) — Good 80-120, Difficult 40-60
+              </li>
+              <li>
+                <strong>Lighting point complete:</strong> points/day — Good 8-12, Difficult 4-6
+              </li>
+              <li>
+                <strong>Socket outlet complete:</strong> points/day — Good 10-15, Difficult 5-8
+              </li>
+              <li>
+                <strong>Distribution board install:</strong> hours each — Good 4-6, Difficult 6-10
+              </li>
+            </ul>
+            <p>
+              <strong>Key principle:</strong> Productivity rates vary significantly with
+              conditions. Always adjust base rates for project-specific factors.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Resource Histograms and Levelling */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Resource Histograms and Levelling
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Resource Histograms and Levelling">
             <p>
               A resource histogram displays resource requirements over time, revealing demand peaks
               and troughs. Resource levelling adjusts activity timing to smooth these variations,
               optimising workforce utilisation and reducing costly fluctuations.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Resource Histogram Elements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">X-axis: Time periods (weeks/days)</li>
-                  <li className="pl-1">Y-axis: Resource quantity (persons)</li>
-                  <li className="pl-1">Bars: Demand per period</li>
-                  <li className="pl-1">Availability line: Maximum resources</li>
-                  <li className="pl-1">Cumulative curve: Total person-days</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Levelling Techniques</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Delay non-critical activities</li>
-                  <li className="pl-1">Split activities where practical</li>
-                  <li className="pl-1">Extend durations with fewer resources</li>
-                  <li className="pl-1">Accelerate to fill troughs</li>
-                  <li className="pl-1">Re-sequence within constraints</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Resource Levelling Example
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Week</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Before Levelling
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        After Levelling
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Available</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">12</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">14</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                By delaying non-critical activities and extending durations, peaks of 12-14 are
-                reduced to maximum 8, matching available resources.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Resource Conflict Resolution</p>
-              <p className="text-sm text-white">
-                When demand exceeds availability and levelling within float is insufficient, options
-                include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 mt-2">
-                <li className="pl-1">Authorised overtime (cost premium: 1.5-2.0x)</li>
-                <li className="pl-1">Weekend working (requires client consent)</li>
-                <li className="pl-1">Additional subcontract labour (mobilisation lead time)</li>
-                <li className="pl-1">
-                  Programme extension (last resort - cost/contractual implications)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Resource Histogram Elements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>X-axis: Time periods (weeks/days)</li>
+              <li>Y-axis: Resource quantity (persons)</li>
+              <li>Bars: Demand per period</li>
+              <li>Availability line: Maximum resources</li>
+              <li>Cumulative curve: Total person-days</li>
+            </ul>
+            <p>
+              <strong>Levelling Techniques:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Delay non-critical activities</li>
+              <li>Split activities where practical</li>
+              <li>Extend durations with fewer resources</li>
+              <li>Accelerate to fill troughs</li>
+              <li>Re-sequence within constraints</li>
+            </ul>
+            <p>
+              <strong>Resource Levelling Example (Week — Before — After — Available):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Week 1:</strong> Before 4, After 6, Available 8
+              </li>
+              <li>
+                <strong>Week 2:</strong> Before 12, After 8, Available 8
+              </li>
+              <li>
+                <strong>Week 3:</strong> Before 14, After 8, Available 8
+              </li>
+              <li>
+                <strong>Week 4:</strong> Before 6, After 8, Available 8
+              </li>
+              <li>
+                <strong>Week 5:</strong> Before 4, After 6, Available 8
+              </li>
+            </ul>
+            <p>
+              By delaying non-critical activities and extending durations, peaks of 12-14 are
+              reduced to maximum 8, matching available resources.
+            </p>
+            <p>
+              <strong>Resource Conflict Resolution —</strong> When demand exceeds availability and
+              levelling within float is insufficient, options include:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Authorised overtime (cost premium: 1.5-2.0x)</li>
+              <li>Weekend working (requires client consent)</li>
+              <li>Additional subcontract labour (mobilisation lead time)</li>
+              <li>Programme extension (last resort - cost/contractual implications)</li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Level resources early in planning. It becomes
               increasingly difficult to resolve conflicts as the project progresses and float is
               consumed.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Materials Procurement Planning */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Materials Procurement Planning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Materials Procurement Planning">
             <p>
               Effective material procurement ensures items arrive when needed without excessive
               early delivery consuming storage space and working capital. Lead time management is
               critical for long lead items that can delay the entire project if not ordered
               promptly.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Building Services Lead Times
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Item Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Lead Time
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Order Trigger</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard cables, accessories
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1-2 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">As required (call-off)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Containment systems</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">2 weeks before first-fix</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution boards</td>
-                      <td className="border border-white/10 px-3 py-2">4-8 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">Design approval + 1 week</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bespoke LV switchgear</td>
-                      <td className="border border-white/10 px-3 py-2">12-16 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">Contract award</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standby generators</td>
-                      <td className="border border-white/10 px-3 py-2">16-26 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">Contract award</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformers (HV/LV)</td>
-                      <td className="border border-white/10 px-3 py-2">20-30 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">Pre-contract if possible</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Procurement Strategies
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Bulk order:</strong> Volume discount, requires storage
-                  </li>
-                  <li className="pl-1">
-                    <strong>Call-off:</strong> Agreed price, deliver as needed
-                  </li>
-                  <li className="pl-1">
-                    <strong>JIT:</strong> Minimal storage, supplier reliability critical
-                  </li>
-                  <li className="pl-1">
-                    <strong>Consignment:</strong> Pay on use, wholesaler holds stock
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Material Schedule Contents
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Item description and specification</li>
-                  <li className="pl-1">Quantity with waste allowance</li>
-                  <li className="pl-1">Required delivery date</li>
-                  <li className="pl-1">Approved supplier/manufacturer</li>
-                  <li className="pl-1">Order status tracking</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Typical Building Services Lead Times:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Standard cables, accessories:</strong> 1-2 weeks — As required (call-off)
+              </li>
+              <li>
+                <strong>Containment systems:</strong> 2-4 weeks — 2 weeks before first-fix
+              </li>
+              <li>
+                <strong>Distribution boards:</strong> 4-8 weeks — Design approval + 1 week
+              </li>
+              <li>
+                <strong>Bespoke LV switchgear:</strong> 12-16 weeks — Contract award
+              </li>
+              <li>
+                <strong>Standby generators:</strong> 16-26 weeks — Contract award
+              </li>
+              <li>
+                <strong>Transformers (HV/LV):</strong> 20-30 weeks — Pre-contract if possible
+              </li>
+            </ul>
+            <p>
+              <strong>Procurement Strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Bulk order:</strong> Volume discount, requires storage
+              </li>
+              <li>
+                <strong>Call-off:</strong> Agreed price, deliver as needed
+              </li>
+              <li>
+                <strong>JIT:</strong> Minimal storage, supplier reliability critical
+              </li>
+              <li>
+                <strong>Consignment:</strong> Pay on use, wholesaler holds stock
+              </li>
+            </ul>
+            <p>
+              <strong>Material Schedule Contents:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Item description and specification</li>
+              <li>Quantity with waste allowance</li>
+              <li>Required delivery date</li>
+              <li>Approved supplier/manufacturer</li>
+              <li>Order status tracking</li>
+            </ul>
+            <p>
               <strong>Critical action:</strong> Identify and order long lead items immediately after
               contract award. A 16-week switchgear delay cannot be recovered.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Plant Requirements and Productivity Factors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Plant Requirements and Productivity Factors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Plant Requirements and Productivity Factors">
             <p>
               Plant and equipment requirements must be planned to match programme needs while
               avoiding excessive hire costs from over-ordering. Productivity factors adjust base
               rates for site-specific conditions that affect output.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Building Services Plant
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Plant Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Hire Rate
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scissor lift (electric)</td>
-                      <td className="border border-white/10 px-3 py-2">Internal high-level work</td>
-                      <td className="border border-white/10 px-3 py-2">£150-250/week</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Boom lift (diesel)</td>
-                      <td className="border border-white/10 px-3 py-2">External/reach-over work</td>
-                      <td className="border border-white/10 px-3 py-2">£400-600/week</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable pulling winch</td>
-                      <td className="border border-white/10 px-3 py-2">Large cable installation</td>
-                      <td className="border border-white/10 px-3 py-2">£200-350/week</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hydraulic crimping tools</td>
-                      <td className="border border-white/10 px-3 py-2">Cable termination</td>
-                      <td className="border border-white/10 px-3 py-2">£80-120/week</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Multifunction tester</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Testing and commissioning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">£75-100/week</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Productivity Adjustment Factors
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Condition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Effect on Base Rate
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Working at floor level</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">Base rate applies</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stepladder access (under 3m)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.85</td>
-                      <td className="border border-white/10 px-3 py-2">15% reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MEWP access required</td>
-                      <td className="border border-white/10 px-3 py-2">0.60-0.70</td>
-                      <td className="border border-white/10 px-3 py-2">30-40% reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scaffold tower</td>
-                      <td className="border border-white/10 px-3 py-2">0.65-0.75</td>
-                      <td className="border border-white/10 px-3 py-2">25-35% reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Occupied building</td>
-                      <td className="border border-white/10 px-3 py-2">0.70-0.85</td>
-                      <td className="border border-white/10 px-3 py-2">15-30% reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital/clean room</td>
-                      <td className="border border-white/10 px-3 py-2">0.50-0.70</td>
-                      <td className="border border-white/10 px-3 py-2">30-50% reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Confined spaces</td>
-                      <td className="border border-white/10 px-3 py-2">0.50-0.65</td>
-                      <td className="border border-white/10 px-3 py-2">35-50% reduction</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Adjusted Productivity Calculation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                Adjusted Rate = Base Rate × Access Factor × Occupancy Factor
-              </p>
-              <p className="text-xs text-white text-center">
-                Example: 40m/day × 0.65 (MEWP) × 0.80 (occupied) = 20.8m/day
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Common Building Services Plant:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Scissor lift (electric):</strong> Internal high-level work — £150-250/week
+              </li>
+              <li>
+                <strong>Boom lift (diesel):</strong> External/reach-over work — £400-600/week
+              </li>
+              <li>
+                <strong>Cable pulling winch:</strong> Large cable installation — £200-350/week
+              </li>
+              <li>
+                <strong>Hydraulic crimping tools:</strong> Cable termination — £80-120/week
+              </li>
+              <li>
+                <strong>Multifunction tester:</strong> Testing and commissioning — £75-100/week
+              </li>
+            </ul>
+            <p>
+              <strong>Productivity Adjustment Factors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Working at floor level:</strong> 1.0 — Base rate applies
+              </li>
+              <li>
+                <strong>Stepladder access (under 3m):</strong> 0.85 — 15% reduction
+              </li>
+              <li>
+                <strong>MEWP access required:</strong> 0.60-0.70 — 30-40% reduction
+              </li>
+              <li>
+                <strong>Scaffold tower:</strong> 0.65-0.75 — 25-35% reduction
+              </li>
+              <li>
+                <strong>Occupied building:</strong> 0.70-0.85 — 15-30% reduction
+              </li>
+              <li>
+                <strong>Hospital/clean room:</strong> 0.50-0.70 — 30-50% reduction
+              </li>
+              <li>
+                <strong>Confined spaces:</strong> 0.50-0.65 — 35-50% reduction
+              </li>
+            </ul>
+            <p>
+              <strong>Adjusted Productivity Calculation:</strong> Adjusted Rate = Base Rate × Access
+              Factor × Occupancy Factor. Example: 40m/day × 0.65 (MEWP) × 0.80 (occupied) =
+              20.8m/day.
+            </p>
+            <p>
               <strong>Planning tip:</strong> Match plant hire periods to actual need. A scissor lift
               needed for 3 weeks of first-fix should not be on hire for the entire project duration.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Labour Duration Calculation:</strong> Calculate the labour
+              duration for installing 450m of cable tray at 4m height using scissor lifts. Base
+              productivity is 40m/day.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Base productivity: 40m/day</li>
+              <li>MEWP factor: 0.65</li>
+              <li>
+                Adjusted productivity = 40 × 0.65 = <strong>26m/day</strong>
+              </li>
+              <li>Duration = Quantity / Adjusted rate</li>
+              <li>
+                Duration = 450m / 26m/day = <strong>17.3 days</strong>
+              </li>
+              <li>
+                <strong>Result:</strong> Allow 18 days (round up for planning).
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — Resource Levelling:</strong> Week 3 shows demand for 14
+              electricians but only 10 are available. Activity B has 2 weeks float. How can this be
+              resolved?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Resource conflict = 14 - 10 = 4 electricians over capacity</li>
+              <li>Activity B requires 5 electricians</li>
+              <li>Activity B has 2 weeks total float</li>
+              <li>Solution: Delay Activity B by 1 week</li>
+              <li>Week 3 demand reduces from 14 to 9 (within capacity)</li>
+              <li>Week 4 demand increases by 5 to accommodate B</li>
+              <li>Float consumed: 1 week (1 week remaining)</li>
+              <li>
+                <strong>Result:</strong> Conflict resolved within float, no programme extension.
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — Material Delivery Schedule:</strong> Main LV switchgear is
+              required on site by Week 20. Lead time is 14 weeks. When must the order be placed and
+              what precedes it?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Required on site: Week 20</li>
+              <li>Manufacturing lead time: 14 weeks</li>
+              <li>
+                Latest order date = Week 20 - 14 = <strong>Week 6</strong>
+              </li>
+              <li>Prerequisites before ordering: design approval (allow 2-3 weeks)</li>
+              <li>Technical submittal review (allow 2 weeks)</li>
+              <li>Design completion required by: Week 1-2</li>
+              <li>
+                <strong>Result:</strong> Design must be finalised at contract start for Week 20
+                delivery.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Labour Duration Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the labour duration for installing 450m of
-                cable tray at 4m height using scissor lifts. Base productivity is 40m/day.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Base productivity: 40m/day</p>
-                <p>MEWP factor: 0.65</p>
-                <p className="mt-2">
-                  Adjusted productivity = 40 × 0.65 = <strong>26m/day</strong>
-                </p>
-                <p className="mt-2">Duration = Quantity / Adjusted rate</p>
-                <p>
-                  Duration = 450m / 26m/day = <strong>17.3 days</strong>
-                </p>
-                <p className="mt-2 text-green-400">→ Allow 18 days (round up for planning)</p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Resource Levelling
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Week 3 shows demand for 14 electricians but only 10 are
-                available. Activity B has 2 weeks float. How can this be resolved?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Resource conflict = 14 - 10 = 4 electricians over capacity</p>
-                <p className="mt-2">Activity B requires 5 electricians</p>
-                <p>Activity B has 2 weeks total float</p>
-                <p className="mt-2">Solution: Delay Activity B by 1 week</p>
-                <p>- Week 3 demand reduces from 14 to 9 (within capacity)</p>
-                <p>- Week 4 demand increases by 5 to accommodate B</p>
-                <p>- Float consumed: 1 week (1 week remaining)</p>
-                <p className="mt-2 text-green-400">
-                  → Conflict resolved within float, no programme extension
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Material Delivery Schedule
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Main LV switchgear is required on site by Week 20. Lead
-                time is 14 weeks. When must the order be placed and what precedes it?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Required on site: Week 20</p>
-                <p>Manufacturing lead time: 14 weeks</p>
-                <p className="mt-2">
-                  Latest order date = Week 20 - 14 = <strong>Week 6</strong>
-                </p>
-                <p className="mt-2">Prerequisites before ordering:</p>
-                <p>- Design approval (allow 2-3 weeks)</p>
-                <p>- Technical submittal review (allow 2 weeks)</p>
-                <p className="mt-2">Design completion required by: Week 1-2</p>
-                <p className="mt-2 text-green-400">
-                  → Design must be finalised at contract start for Week 20 delivery
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Resource planning checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify all activities from WBS with durations</li>
+              <li>Assign resource requirements to each activity</li>
+              <li>Aggregate resources by time period (histogram)</li>
+              <li>Identify peaks exceeding availability</li>
+              <li>Level within float where possible</li>
+              <li>Plan overtime/additional resources for remaining conflicts</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Cable tray: <strong>35-45m/day</strong> (floor level)
+              </li>
+              <li>
+                MEWP productivity impact: <strong>30-40% reduction</strong>
+              </li>
+              <li>
+                Switchgear lead time: <strong>12-16 weeks</strong>
+              </li>
+              <li>
+                Generator lead time: <strong>16-26 weeks</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Resource Planning Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Identify all activities from WBS with durations</li>
-                <li className="pl-1">Assign resource requirements to each activity</li>
-                <li className="pl-1">Aggregate resources by time period (histogram)</li>
-                <li className="pl-1">Identify peaks exceeding availability</li>
-                <li className="pl-1">Level within float where possible</li>
-                <li className="pl-1">Plan overtime/additional resources for remaining conflicts</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Cable tray: <strong>35-45m/day</strong> (floor level)
-                </li>
-                <li className="pl-1">
-                  MEWP productivity impact: <strong>30-40% reduction</strong>
-                </li>
-                <li className="pl-1">
-                  Switchgear lead time: <strong>12-16 weeks</strong>
-                </li>
-                <li className="pl-1">
-                  Generator lead time: <strong>16-26 weeks</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Using unadjusted productivity rates</strong> — Always factor in access and
                   conditions
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring long lead items</strong> — Order immediately after contract award
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Over-manning without benefit</strong> — More workers do not always mean
                   faster completion
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Late levelling</strong> — Level early when float is available
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always adjust base productivity rates for access and occupancy, identify and order long lead items immediately after contract award, size crews to match work content rather than over-manning, and level resources early when float is still available."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Labour Planning</p>
-                <ul className="space-y-0.5">
-                  <li>Duration = Quantity / Productivity rate</li>
-                  <li>Adjust for access and occupancy factors</li>
-                  <li>Build histograms by time period</li>
-                  <li>Level within float first</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Procurement Planning</p>
-                <ul className="space-y-0.5">
-                  <li>Identify long lead items at tender</li>
-                  <li>Order switchgear at contract award</li>
-                  <li>Use call-off for standard materials</li>
-                  <li>JIT for congested sites</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section1-5">
-              Next: Risk Management
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Critical path analysis
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Risk Management
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

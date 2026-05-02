@@ -244,7 +244,7 @@ export default function Sub1() {
             points={[
               "Zs = Ze + (R1 + R2) is the total earth fault loop impedance the protective device sees during a line-to-earth fault. Ze is the supply external loop; R1 is the line conductor from origin to fault; R2 is the cpc from fault back to the MET.",
               "Design uses the DNO declared Ze (from Form 1) or the BS 7671 assumed maximum where no Form 1 exists — TN-C-S 0.35 Ω, TN-S 0.80 Ω. (R1 + R2) at 70 degrees C operating temperature uses OSG Table I1 cold values with the 1.20 temperature correction (or 1.28 for 90-deg thermosetting).",
-              "BS 7671 Reg 411.4.5 (A4:2026) requires Zs × Ia ≤ U0 × Cmin where Cmin = 0.95. The Table 41.3 max Zs values are the pre-computed limits — for example B32 MCB on TN max Zs = 1.37 Ω in A4:2026 (was 1.37 Ω pre-A4 — recalculated to incorporate Cmin).",
+              "BS 7671 Reg 411.4.5 (A4:2026) requires Zs × Ia ≤ U0 × Cmin where Cmin = 0.95. The Table 41.3 max Zs values are the pre-computed limits — for example B32 MCB on TN max Zs = 1.37 Ω in A4:2026 (was 1.44 Ω pre-A4 — recalculated to incorporate Cmin).",
             ]}
           />
 
@@ -465,10 +465,10 @@ export default function Sub1() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Table 41.3 (Maximum Zs for fuses and circuit-breakers, Cmin 0.95)"
-            clause="Maximum earth fault loop impedance Zs for circuit-breakers to BS EN 60898 and the overcurrent characteristics of RCBOs to BS EN 61009. Type B (3 In to 5 In) at U0 = 230 V, Cmin = 0.95: B6 = 7.28 Ω; B10 = 4.37 Ω; B16 = 2.73 Ω; B20 = 2.18 Ω; B25 = 1.75 Ω; B32 = 1.37 Ω; B40 = 1.09 Ω; B50 = 0.87 Ω; B63 = 0.69 Ω."
+            clause="Maximum earth fault loop impedance Zs for circuit-breakers to BS EN 60898 and the overcurrent characteristics of RCBOs to BS EN 61009. Type B (3 In to 5 In) at U0 = 230 V, Cmin = 0.95: B6 = 7.28 Ω; B10 = 4.37 Ω; B16 = 2.73 Ω; B20 = 2.19 Ω; B25 = 1.75 Ω; B32 = 1.37 Ω; B40 = 1.09 Ω; B50 = 0.87 Ω; B63 = 0.69 Ω."
             meaning={
               <>
-                Table 41.3 is the lookup table — the pre-solved Zs limits for the common BS EN 60898 MCBs at the A4:2026 Cmin of 0.95. Note the B32 max is now 1.37 Ω. The pre-A4 value (which you may still see on older Zs lookup apps and old design packs) was 1.37 Ω — that figure does NOT incorporate Cmin and is no longer valid for an A4:2026 design. Always confirm you are using the current edition. The Type C and Type D values are also tighter: C32 max Zs = 0.69 Ω (was 0.72); D32 max Zs = 0.34 Ω (was 0.36). Larger cables or lower-rated devices may be needed under A4:2026 where a borderline design just passed under A2.
+                Table 41.3 is the lookup table — the pre-solved Zs limits for the common BS EN 60898 MCBs at the A4:2026 Cmin of 0.95. Note the B32 max is now 1.37 Ω. The pre-A4 value (which you may still see on older Zs lookup apps and old design packs) was 1.44 Ω — that figure does NOT incorporate Cmin and is no longer valid for an A4:2026 design. Always confirm you are using the current edition. The Type C and Type D values are also tighter: C32 max Zs = 0.68 Ω (was 0.72); D32 max Zs = 0.34 Ω (was 0.36). Larger cables or lower-rated devices may be needed under A4:2026 where a borderline design just passed under A2.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Chapter 41, Table 41.3 (and Tables 41.2 / 41.4 for fuses and Type C / D MCBs respectively). See also Appendix 14 for the Cmin derivation."
@@ -505,7 +505,7 @@ export default function Sub1() {
                 the design pack.
               </li>
               <li>
-                <strong>Type C and D values tighter</strong> — C32 max = 0.69 Ω; D32 max =
+                <strong>Type C and D values tighter</strong> — C32 max = 0.68 Ω; D32 max =
                 0.34 Ω. Higher-curve devices have less Zs headroom because their magnetic
                 trip threshold is higher.
               </li>
@@ -651,7 +651,7 @@ export default function Sub1() {
               "Reg 411.4.5 sets the Zs equation: Zs × Ia ≤ U0 × Cmin where Cmin = 0.95 in A4:2026. Table 41.3 is the pre-solved lookup for common BS EN 60898 MCBs.",
               "Design uses the DNO declared Ze (Form 1) or the BS 7671 assumed maximum (0.35 Ω TN-C-S; 0.80 Ω TN-S). Measured Ze is for verification, not design.",
               "(R1 + R2) at 70 degrees C operating temperature uses OSG Table I1 cold values × 1.20 (or × 1.28 for 90-deg thermosetting). Cold (R1 + R2) understates Zs by 20 percent — never use cold value on the design pack.",
-              "A4:2026 changed Table 41.3 to incorporate Cmin 0.95 — for example B32 max Zs is now 1.37 Ω (was 1.37 Ω pre-A4). Confirm your Zs lookup app is on the A4:2026 edition.",
+              "A4:2026 changed Table 41.3 to incorporate Cmin 0.95 — for example B32 max Zs is now 1.37 Ω (was 1.44 Ω pre-A4). Confirm your Zs lookup app is on the A4:2026 edition.",
               "Document Ze source, cable type and CSA, route length, OSG mΩ/m citation, temperature factor and resulting Zs on every circuit in the design pack — without the trace the design is unverifiable.",
             ]}
           />

@@ -1,8 +1,27 @@
-import { ArrowLeft, Droplets, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 2 · Subsection 3 — Bernoulli&rsquo;s Equation
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Energy conservation along a streamline — pressure head + velocity head + elevation head
+ *   = constant. The equation behind every venturi, every flow meter, every pipe-sizing
+ *   pressure-loss budget.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  SectionRule,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = "Bernoulli's Equation - HNC Module 2 Section 2.3";
@@ -228,713 +247,357 @@ const faqs = [
 ];
 
 const HNCModule2Section2_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Droplets className="h-4 w-4" />
-            <span>Module 2.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Bernoulli's Equation
-          </h1>
-          <p className="text-white">
-            Energy conservation in fluid systems and practical measurement applications
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 2 · Subsection 3"
+            title="Bernoulli's Equation"
+            description="Energy conservation for flowing fluids — pressure, velocity, and elevation in balance."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Bernoulli:</strong> P + ½ρv² + ρgh = constant
+          <TLDR
+            points={[
+              'You will apply Bernoulli (P/ρg + v²/2g + z = constant) along a streamline to predict pressure changes between two points in a building services system.',
+              'You can extend the simple form to the engineering form — adding pump head (h_p) and friction loss (h_f) for real-world systems.',
+              'You distinguish static, dynamic and total pressure and recognise where each shows up in instrumentation (Pitot tube, venturi, orifice plate).',
+              'You apply continuity (Q = vA) alongside Bernoulli — the two equations together solve nearly every steady-flow problem on the rig.',
+            ]}
+          />
+
+          <RegsCallout
+            source="CIBSE Guide C — Reference Data; ISO 5167 (flow measurement)"
+            clause="Differential pressure flow meters (orifice plate, venturi, nozzle) operate on the Bernoulli principle: the pressure differential between an upstream tap and a throat tap is related to the volumetric flow rate by an equation derived from energy conservation, with discharge coefficient and expansibility factor accounting for real-fluid effects."
+            meaning={
+              <>
+                Bernoulli is the legal-quality basis for every differential-pressure flow
+                measurement in building services. Heat-meter installations on LTHW and CHW
+                circuits, regulated under the Heat Network (Metering and Billing)
+                Regulations 2014, rely directly on this physics.
+              </>
+            }
+            cite="Source: CIBSE Guide C — Reference Data; ISO 5167-1 to -4 — Measurement of fluid flow by means of pressure differential devices"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "State Bernoulli's equation in pressure and head forms",
+              'Identify the assumptions required for ideal Bernoulli',
+              'Apply Bernoulli to constrictions, jets and elevation changes',
+              'Use pitot tubes and venturi meters for flow measurement',
+              'Extend Bernoulli to include pump head and friction losses',
+              'Solve building-services flow problems using energy conservation',
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="The Bernoulli Equation"
+            plainEnglish="Energy in a moving fluid splits three ways: pressure, motion, and height. Add them up along a streamline and the total stays constant — assuming no friction."
+          >
+            <p>
+              Bernoulli's equation is conservation of energy applied to a flowing fluid. Between any
+              two points along a streamline, the sum of pressure, kinetic and potential energy per
+              unit volume is constant.
+            </p>
+            <p>
+              <strong>Pressure form:</strong> P + ½ρv² + ρgh = constant.
+            </p>
+            <p>
+              <strong>Head form (divide by ρg, all terms in metres):</strong> P/ρg + v²/2g + z =
+              constant. Pressure head + velocity head + elevation head.
+            </p>
+            <p>
+              <strong>Required assumptions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Steady flow (conditions don't change over time at any point)</li>
+              <li>Incompressible fluid (density constant — fine for water and low-speed air)</li>
+              <li>Inviscid (no friction) — the big assumption</li>
+              <li>Along a single streamline</li>
+            </ul>
+            <p>
+              <strong>Three pressure types:</strong> Static (what a gauge reads perpendicular to
+              flow), Dynamic (½ρv², the kinetic energy per unit volume), Total or stagnation
+              (static + dynamic, what a pitot tube reads when flow is brought to rest).
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Pressure-velocity trade-off"
+            plainEnglish="Squeeze the pipe smaller, fluid speeds up, static pressure drops. That's the venturi effect — and the reason aircraft wings lift."
+          >
+            <p>
+              The most useful consequence of Bernoulli is the inverse relationship between velocity
+              and static pressure: speed up, pressure falls; slow down, pressure recovers.
+            </p>
+            <p>
+              <strong>Why it matters in building services:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Partially closed valves create local constrictions and large pressure drops</li>
+              <li>Reducers accelerate flow (lower static pressure downstream of throat)</li>
+              <li>Sudden expansions decelerate flow (some pressure recovery, plus loss to turbulence)</li>
+              <li>Pump suctions: high local velocity can drop pressure below vapour pressure → cavitation</li>
+            </ul>
+            <p>
+              <strong>Dynamic pressure scales with v²:</strong> Doubling velocity quadruples dynamic
+              pressure. That's why high-velocity systems lose pressure rapidly.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Flow measurement — venturi, orifice, pitot"
+            plainEnglish="Restrict the flow, measure the pressure difference, work backwards to velocity. That's how venturis, orifice plates and pitot tubes all work."
+          >
+            <p>
+              <strong>Venturi meter:</strong> Gradual converging and diverging sections. Pressure
+              drop at the throat relates to velocity via Bernoulli. Permanent loss only ~10% — the
+              meter recovers most of the pressure downstream.
+            </p>
+            <p>
+              <strong>Orifice plate:</strong> A simple flat plate with a hole. Cheap and easy, but
+              the abrupt restriction loses 60-70% permanently. Common for steam and gas
+              measurement.
+            </p>
+            <p>
+              <strong>Pitot tube / pitot-static tube:</strong> Faces upstream so flow stagnates at
+              the tip → measures total (stagnation) pressure. Combined with a static-pressure tap
+              (or a coaxial static port on a pitot-static tube), the difference gives dynamic
+              pressure: v = √(2 × ΔP / ρ). Standard for measuring duct air velocity.
+            </p>
+            <p>
+              <strong>Flow rate from venturi:</strong> Q = Cd × A₂ × √(2(P₁ - P₂) / ρ(1 - (A₂/A₁)²)).
+              Cd is the discharge coefficient (~0.95-0.98 for venturis).
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Extended Bernoulli — real systems with pumps and friction"
+            plainEnglish="Real pipework loses energy to friction, and pumps add it back. The extended Bernoulli equation just bolts those terms onto each side."
+          >
+            <p>
+              The ideal Bernoulli equation assumes no friction. Real pipework systems lose energy
+              continuously to friction, and pumps add energy. The extended form handles both.
+            </p>
+            <p>
+              <strong>Extended Bernoulli (head form):</strong> P₁/ρg + v₁²/2g + z₁ + Hpump = P₂/ρg
+              + v₂²/2g + z₂ + hloss.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hpump:</strong> Pump head — energy added to the fluid (positive)
               </li>
-              <li className="pl-1">
-                <strong>Trade-off:</strong> Velocity up = pressure down
+              <li>
+                <strong>hloss:</strong> Friction head loss — energy dissipated (positive on the right)
               </li>
-              <li className="pl-1">
-                <strong>Applications:</strong> Venturi, pitot tube, orifice plate
+              <li>Friction losses calculated by Darcy-Weisbach (next subsection)</li>
+              <li>Fitting losses calculated by K-factors or equivalent length</li>
+            </ul>
+            <p>
+              <strong>Why this matters:</strong> Pump selection means matching Hpump to the
+              required system head — which equals friction loss + elevation change + any
+              destination pressure requirement.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three classic Bernoulli sums: a venturi, a pitot, and a water jet rising from a nozzle."
+          >
+            <p>
+              <strong>Example 1 - venturi velocity:</strong> Pressure drop across a venturi throat
+              is 20 kPa. Approach velocity negligible. Throat velocity?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>ΔP = ½ρv² → v = √(2ΔP/ρ)</li>
+              <li>v = √(2 × 20,000 / 1000) = √40 = <strong>6.32 m/s</strong></li>
+            </ul>
+            <p>
+              <strong>Example 2 - pitot tube air velocity:</strong> Pitot-static tube reads dynamic
+              pressure 90 Pa in air (ρ = 1.2 kg/m³). Air velocity?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>v = √(2 × 90 / 1.2) = √150 = <strong>12.2 m/s</strong></li>
+              <li>Typical for a supply air duct</li>
+            </ul>
+            <p>
+              <strong>Example 3 - jet rising from a nozzle:</strong> A water jet rises 5m
+              vertically from a nozzle. Exit velocity? (g = 10 m/s²)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Energy conservation: ½v² = gh → v = √(2gh)</li>
+              <li>v = √(2 × 10 × 5) = √100 = <strong>10 m/s</strong></li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="Two forms, three pressures, and the small handful of formulas you'll keep coming back to."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>P + ½ρv² + ρgh = constant</strong> — Pressure form
               </li>
-              <li className="pl-1">
-                <strong>Head form:</strong> P/ρg + v²/2g + z = constant
+              <li>
+                <strong>P/ρg + v²/2g + z = constant</strong> — Head form (metres)
+              </li>
+              <li>
+                <strong>v = √(2ΔP/ρ)</strong> — Velocity from dynamic pressure
+              </li>
+              <li>
+                <strong>Pdynamic = ½ρv²</strong> — Velocity pressure
+              </li>
+              <li>
+                <strong>v²/2g</strong> — Velocity head (m)
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
+            <p>
+              <strong>Key values to remember:</strong>
             </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Flow measurement:</strong> Differential pressure devices
-              </li>
-              <li className="pl-1">
-                <strong>Valve losses:</strong> High velocity through restrictions
-              </li>
-              <li className="pl-1">
-                <strong>Pump systems:</strong> Extended equation with losses
-              </li>
-              <li className="pl-1">
-                <strong>Air systems:</strong> Duct velocity measurements
-              </li>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Water: ρ = 1000 kg/m³</li>
+              <li>Air at 20°C: ρ = 1.2 kg/m³</li>
+              <li>g = 9.81 m/s² (10 for quick calcs)</li>
+              <li>10 m head ≈ 1 bar ≈ 100 kPa</li>
+              <li>Velocity head at 2 m/s ≈ 0.2 m</li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "State and apply Bernoulli's equation for ideal fluid flow",
-              'Understand the relationship between pressure, velocity, and elevation',
-              'Calculate velocity from pressure measurements',
-              'Explain how venturi meters and pitot tubes work',
-              'Apply the extended Bernoulli equation with head losses',
-              'Convert between pressure and head forms of the equation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Energy Conservation */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Energy Conservation in Fluids
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Bernoulli's equation is an expression of energy conservation for flowing fluids. It
-              states that the total mechanical energy per unit volume remains constant along a
-              streamline in ideal flow.
-            </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Bernoulli's Equation (Energy Form)
-              </p>
-              <p className="font-mono text-center text-lg mb-2">P + ½ρv² + ρgh = constant</p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>P = static pressure (Pa), ρ = density (kg/m³), v = velocity (m/s)</p>
-                <p>g = gravitational acceleration (9.81 m/s²), h = elevation (m)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">The three energy terms:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>P (Pressure energy):</strong> Work done by pressure forces (flow work)
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Forgetting friction</strong> — Ideal Bernoulli ignores real-world losses
                 </li>
-                <li className="pl-1">
-                  <strong>½ρv² (Kinetic energy):</strong> Energy due to fluid motion
+                <li>
+                  <strong>Mixing units</strong> — Stick to SI: m, s, Pa, kg
                 </li>
-                <li className="pl-1">
-                  <strong>ρgh (Potential energy):</strong> Energy due to elevation
+                <li>
+                  <strong>Confusing static and total pressure</strong> — A pitot reads total, a flush gauge reads static
+                </li>
+                <li>
+                  <strong>Applying across pumps</strong> — Use extended form when energy is added or removed
                 </li>
               </ul>
-            </div>
+            }
+            doInstead="Use ideal Bernoulli only for short sections without major losses. Add a friction term for full pipework analysis. Note whether your gauge reads static or total. And use the extended form whenever a pump or significant friction is involved."
+          />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Head Form (divided by ρg)
-              </p>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-mono text-center text-lg mb-2">P/ρg + v²/2g + z = constant</p>
-                <p className="text-xs text-white text-center">
-                  All terms in metres - useful for pump calculations
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Assumptions for ideal Bernoulli:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Steady flow (no time variation)</li>
-                <li className="pl-1">Incompressible fluid (constant density)</li>
-                <li className="pl-1">Inviscid (no friction losses)</li>
-                <li className="pl-1">Along a single streamline</li>
-              </ul>
-            </div>
+          <Scenario
+            title="Sizing the cold-water break tank fill rate"
+            situation={
+              <>
+                A high-rise building has a 10 m³ cold-water break tank fed via a 50 mm DN
+                feed off the incoming main. The pressure at the main is 4 bar. The fill
+                requirement is 1 L/s (3.6 m³/h). Distance from main to tank inlet is 12 m
+                with negligible elevation rise.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply Bernoulli with friction. Available head = 40 m at the main. Static
+                head loss = 0 (level). Friction loss along 12 m of 50 mm pipe at 1 L/s
+                ≈ 0.5 m. Velocity head at tank inlet (v = Q/A ≈ 0.5 m/s) ≈ 0.013 m. Required
+                pressure at tank inlet ≈ 0.5 m. Available - required = 39 m surplus, well
+                above what the float-operated valve needs. Sized correctly. If the surplus
+                were &lt; 5 m you would consider a booster set or larger feed pipe.
+              </>
+            }
+            whyItMatters={
+              <>
+                Bernoulli + continuity applied as a five-line calculation gives a defendable
+                answer to &ldquo;will it fill fast enough?&rdquo; — and protects the building
+                from low-pressure incidents on the cold-water service.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key insight:</strong> Energy can convert between forms, but the total is
-              constant. Increasing velocity must come at the expense of pressure or elevation.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <FAQ items={faqs} />
 
-        {/* Section 2: Pressure-Velocity Relationship */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Pressure-Velocity Relationship
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              The most important consequence of Bernoulli's equation for building services is the
-              inverse relationship between velocity and pressure in horizontal flow.
-            </p>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                For Horizontal Flow (z₁ = z₂)
-              </p>
-              <p className="font-mono text-center text-lg mb-2">P₁ + ½ρv₁² = P₂ + ½ρv₂²</p>
-              <p className="text-xs text-white text-center">
-                If velocity increases, static pressure must decrease
-              </p>
-            </div>
+          <KeyTakeaways
+            points={[
+              'Bernoulli (ideal): P/ρg + v²/2g + z = constant along a streamline.',
+              'Engineering Bernoulli: P₁/ρg + v₁²/2g + z₁ + h_p = P₂/ρg + v₂²/2g + z₂ + h_f.',
+              'Three energy heads: pressure (P/ρg), velocity (v²/2g), elevation (z) — all in metres of fluid.',
+              'Continuity (incompressible): Q = vA, so v₁A₁ = v₂A₂ — flow speeds up where pipe narrows.',
+              'Static pressure (wall tap), dynamic pressure (½ρv²), total/stagnation pressure (Pitot tube).',
+              'Differential-pressure flow meters (orifice, venturi, nozzle) read Δp and back-calculate Q via Bernoulli + ISO 5167.',
+              'Heat meters on LTHW/CHW use the same principle for flow measurement (regulated under Heat Network MBR 2014).',
+              'Pump head h_p adds energy; friction h_f and minor losses subtract it — full energy balance gives system head curve.',
+            ]}
+          />
 
-            <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-bold text-white mb-1">Static Pressure</p>
-                <p className="text-white text-xs">P - measured perpendicular to flow</p>
-                <p className="text-white text-xs">What gauges typically read</p>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-bold text-white mb-1">Dynamic Pressure</p>
-                <p className="text-white text-xs">½ρv² - kinetic energy term</p>
-                <p className="text-white text-xs">Increases with velocity²</p>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-bold text-white mb-1">Total Pressure</p>
-                <p className="text-white text-xs">P + ½ρv² = stagnation</p>
-                <p className="text-white text-xs">Measured by pitot tube</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Practical Implications</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Scenario</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Velocity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Pressure</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pipe constriction</td>
-                      <td className="border border-white/10 px-3 py-2">Increases</td>
-                      <td className="border border-white/10 px-3 py-2">Decreases</td>
-                      <td className="border border-white/10 px-3 py-2">Venturi meter</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pipe expansion</td>
-                      <td className="border border-white/10 px-3 py-2">Decreases</td>
-                      <td className="border border-white/10 px-3 py-2">Increases (recovery)</td>
-                      <td className="border border-white/10 px-3 py-2">Diffuser sections</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stagnation point</td>
-                      <td className="border border-white/10 px-3 py-2">Zero</td>
-                      <td className="border border-white/10 px-3 py-2">Maximum</td>
-                      <td className="border border-white/10 px-3 py-2">Pitot tube tip</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Partially closed valve</td>
-                      <td className="border border-white/10 px-3 py-2">Increases locally</td>
-                      <td className="border border-white/10 px-3 py-2">Large drop</td>
-                      <td className="border border-white/10 px-3 py-2">Flow control</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Dynamic pressure scales with v². Doubling velocity
-              quadruples dynamic pressure, creating significant effects at high flow rates.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Practical Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Practical Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Several important flow measurement and control devices in building services rely
-              directly on Bernoulli's equation to relate pressure measurements to flow rates.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Venturi Meter</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Gradual convergent-divergent section</li>
-                  <li className="pl-1">Measures ΔP between inlet and throat</li>
-                  <li className="pl-1">Low permanent pressure loss (~10%)</li>
-                  <li className="pl-1">Accurate flow measurement</li>
-                  <li className="pl-1">Used for large pipe installations</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Orifice Plate</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Sharp-edged restriction in pipe</li>
-                  <li className="pl-1">Measures ΔP across the plate</li>
-                  <li className="pl-1">Higher permanent loss (~60-70%)</li>
-                  <li className="pl-1">Simple and inexpensive</li>
-                  <li className="pl-1">Common for temporary measurement</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pitot-Static Tube</p>
-              <p className="text-sm mb-2">
-                Combines a forward-facing hole (total pressure) with side holes (static pressure).
-                The velocity is calculated from the pressure difference.
-              </p>
-              <p className="font-mono text-center mb-2">v = √(2ΔP/ρ)</p>
-              <p className="text-xs text-white">
-                Where ΔP = P_total - P_static = dynamic pressure = ½ρv²
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Flow Rate from Differential Pressure
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cd Typical</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ideal (theoretical)</td>
-                      <td className="border border-white/10 px-3 py-2">Q = A₂√(2ΔP/ρ(1-β⁴))</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Venturi</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Q = Cd × A₂√(2ΔP/ρ(1-β⁴))
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.98</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Orifice plate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Q = Cd × A₂√(2ΔP/ρ(1-β⁴))
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.60-0.65</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                β = d/D (diameter ratio), Cd = discharge coefficient
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical note:</strong> Flow is proportional to √ΔP. To double the flow, you
-              need four times the differential pressure.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Extended Bernoulli Equation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Extended Bernoulli with Losses and Pumps
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Real systems have friction losses in pipes and fittings, and may include pumps that
-              add energy. The extended Bernoulli equation accounts for these real-world effects.
-            </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Extended Bernoulli Equation (Head Form)
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                P₁/ρg + v₁²/2g + z₁ + H<sub>p</sub> = P₂/ρg + v₂²/2g + z₂ + h<sub>f</sub>
-              </p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>
-                  H<sub>p</sub> = pump head added (m), h<sub>f</sub> = total friction head loss (m)
-                </p>
-                <p>All terms in metres of fluid</p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Sources (+)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>
-                      Pump head (H<sub>p</sub>):
-                    </strong>{' '}
-                    Energy added by pumps
-                  </li>
-                  <li className="pl-1">
-                    <strong>Elevation (z₁):</strong> Gravity assists downward flow
-                  </li>
-                  <li className="pl-1">
-                    <strong>Pressure (P₁):</strong> Upstream pressure available
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Sinks (-)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>
-                      Friction losses (h<sub>f</sub>):
-                    </strong>{' '}
-                    Energy lost in pipes/fittings
-                  </li>
-                  <li className="pl-1">
-                    <strong>Elevation (z₂):</strong> Work against gravity for upward flow
-                  </li>
-                  <li className="pl-1">
-                    <strong>Pressure (P₂):</strong> Required delivery pressure
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Rearranged for pump head required:
-              </p>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-mono text-center mb-2">
-                  H<sub>p</sub> = (P₂-P₁)/ρg + (v₂²-v₁²)/2g + (z₂-z₁) + h<sub>f</sub>
-                </p>
-                <p className="text-xs text-white text-center">
-                  Pump head = Pressure rise + Velocity change + Elevation change + Friction losses
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Head Loss Components
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Loss Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Range</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Straight pipe</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Friction (Darcy-Weisbach)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">100-400 Pa/m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">90° elbow</td>
-                      <td className="border border-white/10 px-3 py-2">Minor loss (K factor)</td>
-                      <td className="border border-white/10 px-3 py-2">K = 0.3-1.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Globe valve (open)</td>
-                      <td className="border border-white/10 px-3 py-2">Minor loss (K factor)</td>
-                      <td className="border border-white/10 px-3 py-2">K = 6-10</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heat exchanger</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specified by manufacturer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-80 kPa</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>System design:</strong> The pump must provide enough head to overcome all
-              losses and deliver the required flow at the design pressure.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Velocity from Pitot Tube
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A pitot-static tube in a duct measures 120 Pa
-                differential pressure. What is the air velocity? (ρ<sub>air</sub> = 1.2 kg/m³)
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using v = √(2ΔP/ρ)</p>
-                <p>v = √(2 × 120 / 1.2)</p>
-                <p>
-                  v = √200 = <strong>14.1 m/s</strong>
-                </p>
-                <p className="mt-2 text-white">→ Typical velocity for main supply ductwork</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Venturi Flow Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A venturi meter (Cd = 0.98) has 100mm inlet and 50mm
-                throat. ΔP = 25 kPa. Calculate water flow rate.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>β = 50/100 = 0.5, so β⁴ = 0.0625</p>
-                <p>A₂ = π × 0.05²/4 = 0.00196 m²</p>
-                <p className="mt-2">Theoretical v₂ = √(2×25000/(1000×(1-0.0625)))</p>
-                <p>v₂ = √(50000/937.5) = √53.3 = 7.3 m/s</p>
-                <p className="mt-2">Q = Cd × A₂ × v₂ = 0.98 × 0.00196 × 7.3</p>
-                <p>
-                  Q = <strong>0.014 m³/s = 14 l/s</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Pump Head Requirement
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate pump head to deliver water to a tank 25m higher
-                with 15m friction losses and 2 bar delivery pressure.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  H<sub>p</sub> = Elevation + Friction + Pressure head
-                </p>
-                <p>Pressure head = P/ρg = 200,000/(1000×9.81) = 20.4 m</p>
-                <p className="mt-2">
-                  H<sub>p</sub> = 25 + 15 + 20.4 = <strong>60.4 m</strong>
-                </p>
-                <p className="mt-2 text-white">→ Select pump with ≥60 m head at design flow</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>P + ½ρv² + ρgh = constant</strong> — Bernoulli (energy form)
-                </li>
-                <li className="pl-1">
-                  <strong>P/ρg + v²/2g + z = constant</strong> — Bernoulli (head form)
-                </li>
-                <li className="pl-1">
-                  <strong>v = √(2ΔP/ρ)</strong> — Velocity from pitot tube
-                </li>
-                <li className="pl-1">
-                  <strong>Q ∝ √ΔP</strong> — Flow vs differential pressure
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    h<sub>loss</sub> = K × v²/2g
-                  </strong>{' '}
-                  — Minor loss equation
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Velocity head: <strong>v²/2g</strong> (metres)
-                </li>
-                <li className="pl-1">
-                  1 m/s velocity head: <strong>0.05 m</strong>
-                </li>
-                <li className="pl-1">
-                  3 m/s velocity head: <strong>0.46 m</strong>
-                </li>
-                <li className="pl-1">
-                  Venturi Cd: <strong>~0.98</strong>
-                </li>
-                <li className="pl-1">
-                  Orifice Cd: <strong>~0.62</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Forgetting friction:</strong> Ideal Bernoulli ignores losses - use
-                  extended form
-                </li>
-                <li className="pl-1">
-                  <strong>Elevation sign:</strong> Positive z is upward - be consistent
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure units:</strong> Ensure Pa for SI calculations
-                </li>
-                <li className="pl-1">
-                  <strong>Discharge coefficient:</strong> Real devices need Cd correction
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Bernoulli Components</p>
-                <ul className="space-y-0.5">
-                  <li>Static pressure: P (Pa)</li>
-                  <li>Dynamic pressure: ½ρv² (Pa)</li>
-                  <li>Elevation: ρgh (Pa)</li>
-                  <li>Head form: divide by ρg (metres)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Flow Measurement</p>
-                <ul className="space-y-0.5">
-                  <li>Pitot tube: v = √(2ΔP/ρ)</li>
-                  <li>Venturi: Cd ≈ 0.98, low loss</li>
-                  <li>Orifice: Cd ≈ 0.62, high loss</li>
-                  <li>Flow ∝ √ΔP</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Flow Characteristics
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2-4">
-              Next: Pipe Sizing and Pressure Drop
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Flow characteristics
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Pipe sizing and pressure drop
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -47,7 +47,8 @@ function escapeHtmlEmail(s: string): string {
 export type V11Variant = 'winback' | 'early_access';
 
 const CHEATSHEET_URL = 'https://www.elec-mate.com/lead-magnets/bs7671-a4-2026-cheatsheet.html';
-const PAYMENT_LINK = 'https://buy.stripe.com/aFaeV69MSanq7Yd3t4bjW07';
+// V11 £7.99/mo Stripe payment link.
+const PAYMENT_LINK = 'https://buy.stripe.com/7sYcMY1gm67a6U96FgbjW00';
 const APP_STORE_URL = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
 const APP_STORE_BADGE =
   'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=750x249';
@@ -125,6 +126,21 @@ export function generateV11HTML(
 
 <tr><td align="center" style="padding:0 40px">
 <p style="margin:0;font-size:17px;color:#f4f4f5;line-height:1.5">${sub}</p>
+</td></tr>
+
+<tr><td style="height:32px;line-height:32px;font-size:0">&nbsp;</td></tr>
+
+<!-- TOP HERO — price first, value-led -->
+<tr><td align="center" style="padding:0 32px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:linear-gradient(135deg,rgba(251,191,36,0.18),rgba(245,158,11,0.08));border:1px solid rgba(251,191,36,0.4);border-radius:18px">
+<tr><td align="center" style="padding:26px 22px">
+<p style="margin:0 0 8px;font-size:10px;color:#fbbf24;text-transform:uppercase;letter-spacing:2.5px;font-weight:800">A thank&#8209;you for trying us</p>
+<p style="margin:0;font-size:18px;color:#f4f4f5;line-height:1.4">Come back to <strong style="color:#ffffff">Elec&#8209;Mate</strong> for</p>
+<p style="margin:6px 0 0;font-size:54px;font-weight:700;color:#ffffff;line-height:1;letter-spacing:-2.2px">&pound;7.99<span style="font-size:20px;font-weight:500;letter-spacing:0;color:#f4f4f5">/mo</span></p>
+<p style="margin:8px 0 18px;font-size:13px;color:#fbbf24;font-weight:600"><span style="text-decoration:line-through;color:#a1a1aa;font-weight:400">&pound;14.99/mo</span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;&pound;7/mo off, while you stay subscribed</p>
+<a href="${PAYMENT_LINK}" style="display:inline-block;padding:16px 40px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:13px;font-size:16px;font-weight:700;color:#000;text-decoration:none;letter-spacing:-0.2px;box-shadow:0 4px 18px rgba(251,191,36,0.22)">Take Elec&#8209;Mate for &pound;7.99/mo</a>
+<p style="margin:14px 0 0;font-size:12px;color:#a1a1aa">Cancel anytime &middot; full app, no feature gate</p>
+</td></tr></table>
 </td></tr>
 
 <tr><td style="height:36px;line-height:36px;font-size:0">&nbsp;</td></tr>
@@ -271,15 +287,15 @@ export function generateV11HTML(
 
 <!-- Offer — a thank-you, not a discount push -->
 <tr><td align="center" style="padding:0 32px">
-<p style="margin:0 0 10px;font-size:11px;color:#fbbf24;text-transform:uppercase;letter-spacing:2px;font-weight:800">A thank-you for trying us</p>
-<p style="margin:0;font-size:60px;font-weight:700;color:#ffffff;line-height:1;letter-spacing:-2.4px">&pound;9.99<span style="font-size:22px;font-weight:500;letter-spacing:0;color:#f4f4f5">/mo</span></p>
-<p style="margin:14px auto 0;font-size:15px;color:#f4f4f5;line-height:1.65;max-width:440px">That&#x27;s <strong style="color:#fbbf24">&pound;5/mo off</strong> our normal &pound;14.99 &mdash; our way of saying thanks for giving Elec-Mate a shot. We&#x27;re shipping updates <strong style="color:#ffffff">every single day</strong>, faster than anyone else in the trade. Come and see what&#x27;s changed.</p>
+<p style="margin:0 0 10px;font-size:11px;color:#fbbf24;text-transform:uppercase;letter-spacing:2px;font-weight:800">Still here? Take the offer.</p>
+<p style="margin:0;font-size:60px;font-weight:700;color:#ffffff;line-height:1;letter-spacing:-2.4px">&pound;7.99<span style="font-size:22px;font-weight:500;letter-spacing:0;color:#f4f4f5">/mo</span></p>
+<p style="margin:14px auto 0;font-size:15px;color:#f4f4f5;line-height:1.65;max-width:440px">That&#x27;s <strong style="color:#fbbf24">&pound;7/mo off</strong> our normal &pound;14.99 &mdash; our way of saying thanks for giving Elec-Mate a shot. We&#x27;re shipping updates <strong style="color:#ffffff">every single day</strong>, faster than anyone else in the trade. Come and see what&#x27;s changed.</p>
 </td></tr>
 
 <tr><td style="height:30px;line-height:30px;font-size:0">&nbsp;</td></tr>
 
 <tr><td align="center" style="padding:0 32px">
-<a href="${PAYMENT_LINK}" style="display:inline-block;padding:18px 48px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:14px;font-size:17px;font-weight:700;color:#000;text-decoration:none;letter-spacing:-0.2px;box-shadow:0 4px 20px rgba(251,191,36,0.25)">Take the offer &mdash; &pound;9.99/mo</a>
+<a href="${PAYMENT_LINK}" style="display:inline-block;padding:18px 48px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:14px;font-size:17px;font-weight:700;color:#000;text-decoration:none;letter-spacing:-0.2px;box-shadow:0 4px 20px rgba(251,191,36,0.25)">Take the offer &mdash; &pound;7.99/mo</a>
 </td></tr>
 
 <tr><td style="height:22px;line-height:22px;font-size:0">&nbsp;</td></tr>

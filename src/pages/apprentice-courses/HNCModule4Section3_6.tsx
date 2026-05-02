@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 3 · Subsection 6 — Arc Fault Detection
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Arc Fault Detection Devices (AFDDs) to BS EN 62606, series vs parallel arc faults,
+ *   BS 7671 Regulation 421.1.7 recommendations for sleeping accommodation / combustible
+ *   construction / valuable contents, combined AFDD + MCB / RCBO devices and limitations.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Arc Fault Detection - HNC Module 4 Section 3.6';
@@ -216,852 +235,558 @@ const faqs = [
 ];
 
 const HNCModule4Section3_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.3.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Arc Fault Detection
-          </h1>
-          <p className="text-white">
-            AFDDs for fire prevention - technology, applications, and BS 7671 recommendations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 3 · Subsection 6"
+            title="Arc Fault Detection"
+            description="AFDDs for fire prevention — technology, applications, and BS 7671 recommendations."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Detect arcing faults that cause fires
-              </li>
-              <li className="pl-1">
-                <strong>Standard:</strong> BS EN 62606 up to 240V/63A
-              </li>
-              <li className="pl-1">
-                <strong>Detection:</strong> High-frequency arc signature analysis
-              </li>
-              <li className="pl-1">
-                <strong>Types:</strong> Series arcs and parallel arcs
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HMOs/Hotels:</strong> Sleeping accommodation
-              </li>
-              <li className="pl-1">
-                <strong>Timber frame:</strong> Combustible construction
-              </li>
-              <li className="pl-1">
-                <strong>Heritage:</strong> Irreplaceable contents
-              </li>
-              <li className="pl-1">
-                <strong>Data centres:</strong> High-value equipment
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'AFDDs (Arc Fault Detection Devices) detect the high-frequency signature of arcing faults — series (broken conductor) or parallel (insulation breakdown) — that MCBs and RCDs miss.',
+              'Arcing faults are a leading electrical fire cause: BEAMA estimates 50–60% of UK electrical fires originate from undetected arcing.',
+              'BS 7671 Reg 421.1.7 (introduced in A4:2026) RECOMMENDS the installation of AFDDs in AC final circuits — recommendation, not mandatory.',
+              'Combined AFDD + MCB + RCD modules are the practical specification — single 18&nbsp;mm wide unit replaces an RCBO at slightly higher cost.',
+              'Best-fit applications: HMOs, care homes, schools, listed buildings, wooden-clad construction, hospitality bedrooms — anywhere a fire would be catastrophic.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 421.1.7 (Arc fault detection devices)"
+            clause="Regulation 421.1.7 of BS 7671:2018+A4:2026 has been introduced recommending the installation of arc fault detection devices (AFDDs). The regulation text explicitly recommends installation of AFDDs as a measure within Part 4 — Protection for Safety, Chapter 42. The text uses 'recommending the installation' — advisory rather than mandatory phrasing; it does not use 'shall' or other mandatory wording."
+            meaning={
+              <>
+                Reg 421.1.7 was introduced in BS 7671:2018+A4:2026 and explicitly RECOMMENDS
+                AFDD installation in AC final circuits to mitigate fire risk from arc faults.
+                The wording is advisory (&lsquo;recommending&rsquo;) — NOT mandatory. Designers
+                must still consider AFDDs as part of the risk-based design process and document
+                the decision either way. For high-fire-risk premises (HMOs, care homes, schools,
+                wooden buildings, listed properties) installing AFDDs is the defendable
+                engineering position; omitting them needs a written justification in the design
+                file.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7; BS EN 62606 (AFDD product standard); BEAMA AFDD guidance."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose and operating principle of AFDDs',
               'Differentiate between series and parallel arc faults',
               'Apply BS 7671 recommendations for AFDD installation',
               'Identify appropriate applications for AFDDs in building services',
               'Understand AFDD limitations and potential nuisance tripping',
               'Specify combined AFDD devices for circuit protection',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Arc Fault Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Arc Fault Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Arc Fault Fundamentals">
             <p>
-              Arc faults occur when electrical current flows through an unintended path via ionised
-              air. The arc generates extreme heat (3000-6000°C) that can ignite nearby materials,
-              causing electrical fires.
+              Arc faults occur when electrical current flows through an unintended path via
+              ionised air. The arc generates extreme heat (3000-6000°C) that can ignite nearby
+              materials, causing electrical fires.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of Arc Faults</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Detection Challenge
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Series Arc</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Arc within a single conductor (damaged cable, loose terminal)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current limited by load - MCBs won't detect
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Parallel Arc (L-N)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Arc between line and neutral (damaged insulation)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        May trip MCB eventually but delay allows ignition
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Parallel Arc (L-E)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Arc between line and earth (insulation failure)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RCD should detect but arc may be intermittent
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Causes of Arc Faults
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Installation Faults</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Loose terminal connections</li>
-                    <li className="pl-1">Damaged cable during installation</li>
-                    <li className="pl-1">Incorrectly tightened connections</li>
-                    <li className="pl-1">Cable pinched by fixings</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Aging/Damage</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Insulation degradation over time</li>
-                    <li className="pl-1">Rodent damage to cables</li>
-                    <li className="pl-1">Physical damage (DIY, nails)</li>
-                    <li className="pl-1">Thermal degradation from overloading</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Why Conventional Protection Fails
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>MCBs:</strong> Series arc current is limited by load (e.g., 5A for a lamp)
-                  - well below trip threshold
-                </li>
-                <li className="pl-1">
-                  <strong>RCDs:</strong> Only detect earth leakage - series and L-N arcs don't
-                  involve earth
-                </li>
-                <li className="pl-1">
-                  <strong>Time delay:</strong> Even detectable faults may take seconds to trip -
-                  enough time for ignition
-                </li>
-                <li className="pl-1">
-                  <strong>Arc impedance:</strong> Arc itself adds impedance, further reducing fault
-                  current
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Types of arc faults (type / description / detection challenge):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Series arc</strong> — arc within a single conductor (damaged cable, loose
+                terminal) — current limited by load, MCBs won't detect
+              </li>
+              <li>
+                <strong>Parallel arc (L-N)</strong> — arc between line and neutral (damaged
+                insulation) — may trip MCB eventually but delay allows ignition
+              </li>
+              <li>
+                <strong>Parallel arc (L-E)</strong> — arc between line and earth (insulation
+                failure) — RCD should detect but arc may be intermittent
+              </li>
+            </ul>
+            <p>
+              <strong>Common causes — installation faults:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Loose terminal connections</li>
+              <li>Damaged cable during installation</li>
+              <li>Incorrectly tightened connections</li>
+              <li>Cable pinched by fixings</li>
+            </ul>
+            <p>
+              <strong>Common causes — aging / damage:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Insulation degradation over time</li>
+              <li>Rodent damage to cables</li>
+              <li>Physical damage (DIY, nails)</li>
+              <li>Thermal degradation from overloading</li>
+            </ul>
+            <p>
+              <strong>Why conventional protection fails:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>MCBs:</strong> series arc current is limited by load (e.g., 5A for a lamp)
+                — well below trip threshold
+              </li>
+              <li>
+                <strong>RCDs:</strong> only detect earth leakage — series and L-N arcs don't
+                involve earth
+              </li>
+              <li>
+                <strong>Time delay:</strong> even detectable faults may take seconds to trip —
+                enough time for ignition
+              </li>
+              <li>
+                <strong>Arc impedance:</strong> arc itself adds impedance, further reducing fault
+                current
+              </li>
+            </ul>
+            <p>
               <strong>Fire statistics:</strong> Approximately 50% of electrical fires in dwellings
               are attributed to arcing faults in fixed wiring.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: AFDD Technology */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            AFDD Technology and Operation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="AFDD Technology and Operation">
             <p>
               AFDDs use sophisticated electronic monitoring and algorithms to analyse the current
               waveform for characteristic arc signatures whilst distinguishing dangerous arcs from
               normal switching or motor operation.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Detection Principle</p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Current monitoring:</strong> High-bandwidth current sensor captures
-                  waveform including HF components
-                </li>
-                <li className="pl-1">
-                  <strong>Signal processing:</strong> Microprocessor analyses frequency spectrum
-                  (typically 10kHz - several MHz)
-                </li>
-                <li className="pl-1">
-                  <strong>Pattern recognition:</strong> Algorithms identify characteristic arc
-                  signatures (irregular, broadband noise)
-                </li>
-                <li className="pl-1">
-                  <strong>Discrimination:</strong> Filters distinguish dangerous arcs from normal
-                  switching, motor brushes, etc.
-                </li>
-                <li className="pl-1">
-                  <strong>Trip decision:</strong> If arc pattern persists, AFDD disconnects the
-                  circuit
-                </li>
-              </ol>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS EN 62606 Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rated voltage</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 240V AC</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rated current</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 63A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Arc detection</td>
-                      <td className="border border-white/10 px-3 py-2">Series and parallel arcs</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Response time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typically &lt;1 second for test arcs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Test function</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integral test button required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Indicator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual indication of trip cause
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">AFDD Device Types</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>AFDD only:</strong> Arc detection, requires separate OCPD
-                  </li>
-                  <li className="pl-1">
-                    <strong>AFDD + MCB:</strong> Combined arc and overcurrent
-                  </li>
-                  <li className="pl-1">
-                    <strong>AFDD + RCBO:</strong> Arc, overcurrent, and earth fault
-                  </li>
-                  <li className="pl-1">
-                    <strong>Modular AFDD:</strong> Mounts alongside existing MCB
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Module Width</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">AFDD only: 1-2 modules</li>
-                  <li className="pl-1">AFDD + MCB: 2 modules</li>
-                  <li className="pl-1">AFDD + RCBO: 2-3 modules</li>
-                  <li className="pl-1">Consider board capacity in design</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Detection principle:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Current monitoring:</strong> high-bandwidth current sensor captures
+                waveform including HF components
+              </li>
+              <li>
+                <strong>Signal processing:</strong> microprocessor analyses frequency spectrum
+                (typically 10kHz - several MHz)
+              </li>
+              <li>
+                <strong>Pattern recognition:</strong> algorithms identify characteristic arc
+                signatures (irregular, broadband noise)
+              </li>
+              <li>
+                <strong>Discrimination:</strong> filters distinguish dangerous arcs from normal
+                switching, motor brushes, etc.
+              </li>
+              <li>
+                <strong>Trip decision:</strong> if arc pattern persists, AFDD disconnects the
+                circuit
+              </li>
+            </ul>
+            <p>
+              <strong>BS EN 62606 requirements (parameter / requirement):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Rated voltage — up to 240V AC</li>
+              <li>Rated current — up to 63A</li>
+              <li>Arc detection — series and parallel arcs</li>
+              <li>Response time — typically &lt;1 second for test arcs</li>
+              <li>Test function — integral test button required</li>
+              <li>Indicator — visual indication of trip cause</li>
+            </ul>
+            <p>
+              <strong>AFDD device types:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>AFDD only:</strong> arc detection, requires separate OCPD
+              </li>
+              <li>
+                <strong>AFDD + MCB:</strong> combined arc and overcurrent
+              </li>
+              <li>
+                <strong>AFDD + RCBO:</strong> arc, overcurrent, and earth fault
+              </li>
+              <li>
+                <strong>Modular AFDD:</strong> mounts alongside existing MCB
+              </li>
+            </ul>
+            <p>
+              <strong>Typical module width:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>AFDD only: 1-2 modules</li>
+              <li>AFDD + MCB: 2 modules</li>
+              <li>AFDD + RCBO: 2-3 modules</li>
+              <li>Consider board capacity in design</li>
+            </ul>
+            <p>
               <strong>Selection tip:</strong> Combined AFDD/RCBO devices provide comprehensive
               protection (arc, overcurrent, earth fault) in minimal space.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: BS 7671 Recommendations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            BS 7671 Recommendations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="BS 7671 Recommendations">
             <p>
-              BS 7671 Regulation 421.1.7 recommends consideration of AFDDs for specific applications
-              where fire risk is elevated. This is advisory, not mandatory, but represents best
-              practice.
+              BS 7671 Regulation 421.1.7 recommends consideration of AFDDs for specific
+              applications where fire risk is elevated. This is advisory, not mandatory, but
+              represents best practice.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Regulation 421.1.7 Recommendations
-              </p>
-              <p className="text-sm text-white italic mb-3">
-                "Arc Fault Detection Devices (AFDDs) conforming to BS EN 62606 are recommended in AC
-                final circuits..."
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sleeping accommodation:</strong> HMOs, hotels, care homes, student
-                  accommodation
-                </li>
-                <li className="pl-1">
-                  <strong>Combustible construction:</strong> Timber-frame buildings, thatched roofs
-                </li>
-                <li className="pl-1">
-                  <strong>Fire propagation risk:</strong> High-rise residential, locations with
-                  difficult evacuation
-                </li>
-                <li className="pl-1">
-                  <strong>Valuable contents:</strong> Museums, archives, heritage buildings, data
-                  centres
-                </li>
-                <li className="pl-1">
-                  <strong>Premises with risk:</strong> Where fire could cause serious harm or damage
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Recommended Applications in Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Risk Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        AFDD Recommendation
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HMO</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sleeping, shared facilities
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Strongly recommended</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hotel/B&B</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sleeping, unfamiliar occupants
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Strongly recommended</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Care home</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sleeping, vulnerable occupants
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Strongly recommended</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Timber-frame house</td>
-                      <td className="border border-white/10 px-3 py-2">Combustible construction</td>
-                      <td className="border border-white/10 px-3 py-2">Recommended</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Listed building</td>
-                      <td className="border border-white/10 px-3 py-2">Irreplaceable structure</td>
-                      <td className="border border-white/10 px-3 py-2">Recommended</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standard office</td>
-                      <td className="border border-white/10 px-3 py-2">No elevated risk factors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Consider on risk assessment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cost-Benefit Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Additional cost:</strong> AFDDs cost more than standard MCBs/RCBOs
-                </li>
-                <li className="pl-1">
-                  <strong>Board space:</strong> Combined devices minimise space impact
-                </li>
-                <li className="pl-1">
-                  <strong>Insurance:</strong> Some insurers offer premium reductions
-                </li>
-                <li className="pl-1">
-                  <strong>Liability:</strong> Demonstrates duty of care in design
-                </li>
-                <li className="pl-1">
-                  <strong>Life safety:</strong> Fire prevention in sleeping accommodation
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Designer note:</strong> Document risk assessment and AFDD consideration in the
-              electrical design. If AFDDs are not used, record the reasoning.
+            <p>
+              <strong>Regulation 421.1.7 recommendations:</strong> "Arc Fault Detection Devices
+              (AFDDs) conforming to BS EN 62606 are recommended in AC final circuits..."
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sleeping accommodation:</strong> HMOs, hotels, care homes, student
+                accommodation
+              </li>
+              <li>
+                <strong>Combustible construction:</strong> timber-frame buildings, thatched roofs
+              </li>
+              <li>
+                <strong>Fire propagation risk:</strong> high-rise residential, locations with
+                difficult evacuation
+              </li>
+              <li>
+                <strong>Valuable contents:</strong> museums, archives, heritage buildings, data
+                centres
+              </li>
+              <li>
+                <strong>Premises with risk:</strong> where fire could cause serious harm or damage
+              </li>
+            </ul>
+            <p>
+              <strong>Recommended applications in building services (building type / risk factor / AFDD recommendation):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>HMO — sleeping, shared facilities — strongly recommended</li>
+              <li>Hotel/B&amp;B — sleeping, unfamiliar occupants — strongly recommended</li>
+              <li>Care home — sleeping, vulnerable occupants — strongly recommended</li>
+              <li>Timber-frame house — combustible construction — recommended</li>
+              <li>Listed building — irreplaceable structure — recommended</li>
+              <li>Standard office — no elevated risk factors — consider on risk assessment</li>
+            </ul>
+            <p>
+              <strong>Cost-benefit considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Additional cost:</strong> AFDDs cost more than standard MCBs/RCBOs
+              </li>
+              <li>
+                <strong>Board space:</strong> combined devices minimise space impact
+              </li>
+              <li>
+                <strong>Insurance:</strong> some insurers offer premium reductions
+              </li>
+              <li>
+                <strong>Liability:</strong> demonstrates duty of care in design
+              </li>
+              <li>
+                <strong>Life safety:</strong> fire prevention in sleeping accommodation
+              </li>
+            </ul>
+            <p>
+              <strong>Designer note:</strong> Document risk assessment and AFDD consideration in
+              the electrical design. If AFDDs are not used, record the reasoning.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 4: Installation and Limitations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Installation, Testing, and Limitations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Installation, Testing, and Limitations">
             <p>
               Successful AFDD implementation requires appropriate installation, commissioning, and
               awareness of limitations to avoid nuisance tripping whilst maintaining protection.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Installation Requirements
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Install at the origin of each protected circuit</li>
-                  <li className="pl-1">Ensure test button is accessible for periodic testing</li>
-                  <li className="pl-1">Label circuits protected by AFDDs</li>
-                  <li className="pl-1">Consider space requirements in distribution board</li>
-                  <li className="pl-1">Follow manufacturer's installation instructions</li>
-                  <li className="pl-1">Verify compatibility with connected loads</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Testing and Verification
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Commissioning</td>
-                      <td className="border border-white/10 px-3 py-2">Initial</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Test button operation, visual check
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">User testing</td>
-                      <td className="border border-white/10 px-3 py-2">6 monthly (recommended)</td>
-                      <td className="border border-white/10 px-3 py-2">Test button operation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Periodic inspection</td>
-                      <td className="border border-white/10 px-3 py-2">Per EICR schedule</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Test button, visual inspection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Arc injection test</td>
-                      <td className="border border-white/10 px-3 py-2">Optional/specialist</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specialised test equipment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Known Limitations and Challenges
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">
-                    Potential Nuisance Trip Sources
-                  </p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Universal motors (vacuum, tools)</li>
-                    <li className="pl-1">Some LED dimmer switches</li>
-                    <li className="pl-1">Older electronic equipment</li>
-                    <li className="pl-1">Brush-type motors</li>
-                    <li className="pl-1">Some power supplies</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Mitigation Strategies</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Select quality AFDD devices</li>
-                    <li className="pl-1">Check manufacturer compatibility</li>
-                    <li className="pl-1">Separate sensitive loads</li>
-                    <li className="pl-1">Use latest generation AFDDs</li>
-                    <li className="pl-1">Investigate trips - may be genuine</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Not Protected by AFDDs</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">DC circuits (AFDDs are AC only to BS EN 62606)</li>
-                <li className="pl-1">Circuits above 63A</li>
-                <li className="pl-1">
-                  Three-phase circuits (without neutral - check specific device)
-                </li>
-                <li className="pl-1">SELV/PELV circuits below AFDD threshold</li>
-                <li className="pl-1">External wiring upstream of the AFDD</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Troubleshooting:</strong> If an AFDD trips repeatedly, investigate the circuit
-              for genuine wiring faults before assuming nuisance tripping. The AFDD may be detecting
-              a real problem.
+            <p>
+              <strong>Installation requirements:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Install at the origin of each protected circuit</li>
+              <li>Ensure test button is accessible for periodic testing</li>
+              <li>Label circuits protected by AFDDs</li>
+              <li>Consider space requirements in distribution board</li>
+              <li>Follow manufacturer's installation instructions</li>
+              <li>Verify compatibility with connected loads</li>
+            </ul>
+            <p>
+              <strong>Testing and verification (test / frequency / method):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Commissioning — initial — test button operation, visual check</li>
+              <li>User testing — 6 monthly (recommended) — test button operation</li>
+              <li>Periodic inspection — per EICR schedule — test button, visual inspection</li>
+              <li>Arc injection test — optional/specialist — specialised test equipment</li>
+            </ul>
+            <p>
+              <strong>Potential nuisance trip sources:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Universal motors (vacuum, tools)</li>
+              <li>Some LED dimmer switches</li>
+              <li>Older electronic equipment</li>
+              <li>Brush-type motors</li>
+              <li>Some power supplies</li>
+            </ul>
+            <p>
+              <strong>Mitigation strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Select quality AFDD devices</li>
+              <li>Check manufacturer compatibility</li>
+              <li>Separate sensitive loads</li>
+              <li>Use latest generation AFDDs</li>
+              <li>Investigate trips — may be genuine</li>
+            </ul>
+            <p>
+              <strong>Not protected by AFDDs:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>DC circuits (AFDDs are AC only to BS EN 62606)</li>
+              <li>Circuits above 63A</li>
+              <li>Three-phase circuits (without neutral — check specific device)</li>
+              <li>SELV/PELV circuits below AFDD threshold</li>
+              <li>External wiring upstream of the AFDD</li>
+            </ul>
+            <p>
+              <strong>Troubleshooting:</strong> If an AFDD trips repeatedly, investigate the
+              circuit for genuine wiring faults before assuming nuisance tripping. The AFDD may be
+              detecting a real problem.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — HMO consumer unit specification:</strong> Specify protection for
+              a 6-bedroom HMO with sleeping accommodation on all floors. Supply is TN-C-S.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Sleeping accommodation: <strong>high risk</strong>
+              </li>
+              <li>
+                Multiple occupants: <strong>high risk</strong>
+              </li>
+              <li>BS 7671 Reg 421.1.7 applies</li>
+              <li>All final circuits: AFDD protection</li>
+              <li>Socket outlets: AFDD/RCBO (30mA)</li>
+              <li>Lighting: AFDD/MCB or AFDD/RCBO</li>
+              <li>Kitchen/bathroom: AFDD/RCBO (30mA) mandatory</li>
+              <li>Comprehensive arc and shock protection</li>
+            </ul>
+            <p>
+              <strong>Example 2 — cost-benefit analysis:</strong> Compare protection options for a
+              10-way consumer unit: standard RCBOs vs AFDD/RCBOs.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Standard RCBO: £25 × 10 = £250</li>
+              <li>AFDD/RCBO: £80 × 10 = £800</li>
+              <li>
+                Additional cost: <strong>£550</strong>
+              </li>
+              <li>Series arc protection (MCB/RCBO cannot provide)</li>
+              <li>Parallel arc detection before fire conditions</li>
+              <li>Compliance with Reg 421.1.7 recommendation</li>
+              <li>Potential insurance premium reduction</li>
+              <li>Demonstrates design due diligence</li>
+              <li>For sleeping accommodation: cost justified</li>
+              <li>For standard office: discuss with client</li>
+            </ul>
+            <p>
+              <strong>Example 3 — nuisance tripping investigation:</strong> An AFDD trips when a
+              vacuum cleaner is used. How should this be investigated?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Verify the fault:</strong> does AFDD trip every time? Does same vacuum
+                trip other AFDDs? Do other vacuums trip this AFDD?
+              </li>
+              <li>
+                <strong>2. If vacuum trips all AFDDs:</strong> vacuum may have internal fault;
+                check vacuum flex for damage; test with different vacuum
+              </li>
+              <li>
+                <strong>3. If only this AFDD/circuit:</strong> check for loose connections;
+                inspect socket for damage; test insulation resistance
+              </li>
+              <li>
+                <strong>4. If confirmed nuisance:</strong> modern AFDDs rarely false-trip;
+                consider manufacturer guidance
+              </li>
+              <li>Do not bypass AFDD without investigation</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: HMO Consumer Unit Specification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Specify protection for a 6-bedroom HMO with sleeping
-                accommodation on all floors. Supply is TN-C-S.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Risk assessment:</p>
-                <p>
-                  - Sleeping accommodation: <strong>High risk</strong>
-                </p>
-                <p>
-                  - Multiple occupants: <strong>High risk</strong>
-                </p>
-                <p>- BS 7671 Reg 421.1.7 applies</p>
-                <p className="mt-2">Recommendation:</p>
-                <p>- All final circuits: AFDD protection</p>
-                <p>- Socket outlets: AFDD/RCBO (30mA)</p>
-                <p>- Lighting: AFDD/MCB or AFDD/RCBO</p>
-                <p>- Kitchen/bathroom: AFDD/RCBO (30mA) mandatory</p>
-                <p className="mt-2 text-green-400">✓ Comprehensive arc and shock protection</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Cost-Benefit Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Compare protection options for a 10-way consumer unit:
-                standard RCBOs vs AFDD/RCBOs.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Cost comparison (approximate):</p>
-                <p>- Standard RCBO: £25 × 10 = £250</p>
-                <p>- AFDD/RCBO: £80 × 10 = £800</p>
-                <p>
-                  - Additional cost: <strong>£550</strong>
-                </p>
-                <p className="mt-2">Benefits:</p>
-                <p>- Series arc protection (MCB/RCBO cannot provide)</p>
-                <p>- Parallel arc detection before fire conditions</p>
-                <p>- Compliance with Reg 421.1.7 recommendation</p>
-                <p>- Potential insurance premium reduction</p>
-                <p>- Demonstrates design due diligence</p>
-                <p className="mt-2 text-white">→ For sleeping accommodation: cost justified</p>
-                <p className="text-white">→ For standard office: discuss with client</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>AFDD specification checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Confirm BS EN 62606 compliance</li>
+              <li>Select appropriate current rating (≤63A)</li>
+              <li>Choose combined device (AFDD/MCB or AFDD/RCBO) where suitable</li>
+              <li>Verify board capacity for module width</li>
+              <li>Check compatibility with connected loads</li>
+              <li>Consider RCD discrimination if multiple devices</li>
+            </ul>
+            <p>
+              <strong>Key points to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                BS EN 62606: up to <strong>240V AC, 63A</strong>
+              </li>
+              <li>
+                Detects: <strong>series and parallel arcs</strong>
+              </li>
+              <li>
+                BS 7671: <strong>recommended</strong>, not mandatory
+              </li>
+              <li>
+                Priority: <strong>sleeping accommodation</strong>
+              </li>
+              <li>
+                Testing: <strong>test button operation</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Nuisance Tripping Investigation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An AFDD trips when a vacuum cleaner is used. How should
-                this be investigated?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Investigation steps:</p>
-                <p className="mt-2">
-                  1. <strong>Verify the fault:</strong>
-                </p>
-                <p> - Does AFDD trip every time?</p>
-                <p> - Does same vacuum trip other AFDDs?</p>
-                <p> - Do other vacuums trip this AFDD?</p>
-                <p className="mt-2">
-                  2. <strong>If vacuum trips all AFDDs:</strong>
-                </p>
-                <p> - Vacuum may have internal fault</p>
-                <p> - Check vacuum flex for damage</p>
-                <p> - Test with different vacuum</p>
-                <p className="mt-2">
-                  3. <strong>If only this AFDD/circuit:</strong>
-                </p>
-                <p> - Check for loose connections</p>
-                <p> - Inspect socket for damage</p>
-                <p> - Test insulation resistance</p>
-                <p className="mt-2">
-                  4. <strong>If confirmed nuisance:</strong>
-                </p>
-                <p> - Modern AFDDs rarely false-trip</p>
-                <p> - Consider manufacturer guidance</p>
-                <p className="text-yellow-400">⚠ Do not bypass AFDD without investigation</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                AFDD Specification Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Confirm BS EN 62606 compliance</li>
-                <li className="pl-1">Select appropriate current rating (≤63A)</li>
-                <li className="pl-1">
-                  Choose combined device (AFDD/MCB or AFDD/RCBO) where suitable
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Omitting AFDDs in high-risk locations</strong> — document the decision
                 </li>
-                <li className="pl-1">Verify board capacity for module width</li>
-                <li className="pl-1">Check compatibility with connected loads</li>
-                <li className="pl-1">Consider RCD discrimination if multiple devices</li>
+                <li>
+                  <strong>Ignoring trips as nuisance</strong> — investigate genuinely
+                </li>
+                <li>
+                  <strong>Inadequate board space</strong> — plan for combined devices
+                </li>
+                <li>
+                  <strong>No user guidance</strong> — inform occupants about test button
+                </li>
               </ul>
-            </div>
+            }
+            doInstead="Specify AFDDs (or record the rationale for omission) on every Reg 421.1.7 high-risk circuit, treat repeated AFDD trips as a real fault to investigate, plan distribution board capacity for combined AFDD/RCBO modules, and brief occupants on the 6-monthly test-button check."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Points to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  BS EN 62606: up to <strong>240V AC, 63A</strong>
-                </li>
-                <li className="pl-1">
-                  Detects: <strong>series and parallel arcs</strong>
-                </li>
-                <li className="pl-1">
-                  BS 7671: <strong>recommended</strong>, not mandatory
-                </li>
-                <li className="pl-1">
-                  Priority: <strong>sleeping accommodation</strong>
-                </li>
-                <li className="pl-1">
-                  Testing: <strong>test button operation</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Omitting AFDDs in high-risk locations</strong> — Document the decision
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring trips as nuisance</strong> — Investigate genuinely
-                </li>
-                <li className="pl-1">
-                  <strong>Inadequate board space</strong> — Plan for combined devices
-                </li>
-                <li className="pl-1">
-                  <strong>No user guidance</strong> — Inform occupants about test button
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="HMO refurbishment — specifying AFDDs against a fire-risk-led design"
+            situation={
+              <>
+                A 12-bed HMO is being rewired. The local authority HMO licence requires &lsquo;all
+                reasonable measures&rsquo; against fire. The fire risk assessor has flagged
+                bedroom socket-outlets and luminaires as the highest electrical-fire risk areas
+                — typical HMO failure modes are damaged plug-tops, daisy-chained extension leads
+                and old appliance cords arcing inside furniture.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply Reg 421.1.7 (A4:2026): AFDDs are RECOMMENDED, not mandatory — but the
+                fire-risk-assessment context makes them the defendable specification. Specify
+                combined AFDD+RCBO units (BS EN 62606) on every bedroom socket and luminaire
+                circuit. Standard MCB+RCBO on common-areas where risk is lower. Document the
+                recommendation against Reg 421.1.7 in the design file — the &lsquo;all
+                reasonable measures&rsquo; standard in HMO licensing is met by following the
+                recommendation. Cost premium ≈ £40–£60 per circuit vs an RCBO — small money for
+                the risk reduction.
+              </>
+            }
+            whyItMatters={
+              <>
+                Reg 421.1.7 wording is advisory (&lsquo;recommending&rsquo;), not mandatory
+                (&lsquo;shall&rsquo;) — but in any setting where the fire risk is documented as
+                high (HMO, care home, school, listed building), omitting AFDDs is a design
+                position you would have to defend in court if a fire occurred. Following the
+                recommendation is the defendable engineering choice.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">AFDD Fundamentals</p>
-                <ul className="space-y-0.5">
-                  <li>Standard: BS EN 62606</li>
-                  <li>Voltage: up to 240V AC</li>
-                  <li>Current: up to 63A</li>
-                  <li>Detects: series + parallel arcs</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Recommended Locations</p>
-                <ul className="space-y-0.5">
-                  <li>Sleeping accommodation (HMO, hotel)</li>
-                  <li>Combustible construction (timber)</li>
-                  <li>Valuable/irreplaceable contents</li>
-                  <li>High fire propagation risk</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              'AFDDs detect the high-frequency RF / current-waveform signature of arcing faults — series (broken conductor / loose terminal) or parallel (insulation breakdown).',
+              'MCBs and RCDs do NOT detect arcing — currents are below MCB trip threshold and arcing produces no residual current.',
+              'Reg 421.1.7 (introduced A4:2026) RECOMMENDS — does not mandate — AFDD installation in AC final circuits to mitigate fire risk.',
+              'Best-fit applications: HMOs, care homes, schools, hotels, listed buildings, wooden-clad construction, escape-route bedrooms.',
+              'Combined AFDD+MCB+RCD modules (single 18&nbsp;mm slot) are the practical specification — replaces an RCBO at modest premium.',
+              'AFDD product standard: BS EN 62606. Always specify a Listed device, never an unbranded import.',
+              'Design file documentation: where AFDDs are NOT specified, record the engineering reasoning — &lsquo;low fire risk&rsquo;, &lsquo;cost-benefit&rsquo;, etc.',
+              'Test methodology: AFDDs include built-in self-test functions; verify operation at commissioning and annually thereafter.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section3-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Earth Fault Protection
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section4">
-              Next: Section 4
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Earth fault protection
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Lighting design
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

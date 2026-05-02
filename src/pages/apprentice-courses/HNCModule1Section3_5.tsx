@@ -1,8 +1,29 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 3 · Subsection 5 — Emergency Procedures
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   Fire, electrical injury, confined-space rescue, flood, evacuation. Engineer-in-training
+ *   perspective: how an HNC supervisor designs site emergency procedures that mesh with the
+ *   building&rsquo;s own life-safety systems and the local emergency services.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Emergency Procedures - HNC Module 1 Section 3.5';
@@ -251,814 +272,532 @@ const faqs = [
 ];
 
 const HNCModule1Section3_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 3
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.3.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Emergency Procedures
-          </h1>
-          <p className="text-white">
-            Planning for and responding to emergencies in building services environments
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.3.5"
+            title="Emergency Procedures"
+            description="Planning for and responding to emergencies in building services environments"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Planning:</strong> Identify emergencies, assign roles, practice response
-              </li>
-              <li className="pl-1">
-                <strong>Fire:</strong> Raise alarm, evacuate, assemble, do not re-enter
-              </li>
-              <li className="pl-1">
-                <strong>First aid:</strong> Appropriate provision based on risk assessment
-              </li>
-              <li className="pl-1">
-                <strong>Electrical:</strong> Isolate, rescue safely, apply first aid
-              </li>
+          <TLDR
+            points={[
+              'You will plan for the foreseeable emergencies on a building services project — fire, electrical injury, confined-space rescue, flood, structural collapse, gas release.',
+              'You can write an emergency procedure that names the trigger, the call sequence, the muster point, the roles and the rescue method.',
+              'You apply MHSWR Reg 8, the Regulatory Reform (Fire Safety) Order 2005 and the Confined Spaces Regulations 1997 — and know which takes precedence.',
+              'You drill the procedure — exercise it, debrief, revise. Untested procedures are presumed inadequate.',
+            ]}
+          />
+
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 8(1)(a)"
+            clause="Every employer shall establish and where necessary give effect to appropriate procedures to be followed in the event of serious and imminent danger to persons at work in his undertaking."
+            meaning={
+              <>
+                Reg 8 makes emergency procedures a statutory duty. As an HNC engineer your
+                site-specific procedures must integrate with the building owner&rsquo;s fire
+                strategy and the principal contractor&rsquo;s evacuation plan — they cannot
+                stand alone.
+              </>
+            }
+            cite="Source: Management of Health and Safety at Work Regulations 1999, Reg 8(1)(a) — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Develop emergency plans covering foreseeable incidents",
+              "Implement effective fire safety and evacuation procedures",
+              "Determine appropriate first aid provision for workplaces",
+              "Apply first aid principles for electrical incidents",
+              "Respond to building services specific emergencies",
+              "Maintain emergency equipment and conduct drills",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Emergency Planning</ContentEyebrow>
+
+          <ConceptBlock title="Emergency Planning">
+            <p>
+            Effective emergency planning ensures everyone knows what to do when things go wrong.
+            The key is to identify potential emergencies, plan responses, train personnel, and
+            practice regularly so that response becomes automatic.
+            </p>
+
+            
+            <p className="text-sm font-medium text-white mb-2">Emergency plan elements:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Foreseeable emergencies:</strong> Fire, flood, gas leak, chemical spill,
+            structural failure, medical emergency
+            </li>
+            <li>
+            <strong>Roles and responsibilities:</strong> Who does what - coordinators,
+            wardens, first aiders
+            </li>
+            <li>
+            <strong>Warning systems:</strong> How alarm is raised - sounders, voice alarm, PA
+            </li>
+            <li>
+            <strong>Evacuation routes:</strong> Primary and alternative routes, assembly
+            points
+            </li>
+            <li>
+            <strong>Emergency contacts:</strong> Emergency services, key personnel, utilities
+            </li>
+            <li>
+            <strong>Recovery:</strong> Re-entry criteria, incident investigation, continuity
+            </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Building Services Emergencies
             </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Electrical shock:</strong> Isolation and safe rescue procedures
-              </li>
-              <li className="pl-1">
-                <strong>Refrigerant leaks:</strong> Evacuation and ventilation
-              </li>
-              <li className="pl-1">
-                <strong>Gas incidents:</strong> No ignition sources, evacuate, ventilate
-              </li>
-              <li className="pl-1">
-                <strong>Water leaks:</strong> Isolation, electrical safety, flood response
-              </li>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Electrical shock</strong> — Immediate Actions: Isolate supply, safe rescue, call 999, first aid. Key Hazards: Secondary contact, cardiac arrest</li>
+            <li><strong>Gas leak</strong> — Immediate Actions: No ignition sources, evacuate, ventilate, call National Grid. Key Hazards: Explosion, asphyxiation</li>
+            <li><strong>Refrigerant leak</strong> — Immediate Actions: Evacuate plant room, ventilate, do not re-enter. Key Hazards: Oxygen displacement, toxicity</li>
+            <li><strong>Major water leak</strong> — Immediate Actions: Isolate water, assess electrical risk, evacuate if needed. Key Hazards: Electrical hazard, slip, structural</li>
+            <li><strong>Lift entrapment</strong> — Immediate Actions: Reassure occupants, call lift engineer, do not attempt rescue. Key Hazards: Falls, crushing, panic</li>
             </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Develop emergency plans covering foreseeable incidents',
-              'Implement effective fire safety and evacuation procedures',
-              'Determine appropriate first aid provision for workplaces',
-              'Apply first aid principles for electrical incidents',
-              'Respond to building services specific emergencies',
-              'Maintain emergency equipment and conduct drills',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Emergency Planning */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Emergency Planning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Effective emergency planning ensures everyone knows what to do when things go wrong.
-              The key is to identify potential emergencies, plan responses, train personnel, and
-              practice regularly so that response becomes automatic.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Emergency plan elements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Foreseeable emergencies:</strong> Fire, flood, gas leak, chemical spill,
-                  structural failure, medical emergency
-                </li>
-                <li className="pl-1">
-                  <strong>Roles and responsibilities:</strong> Who does what - coordinators,
-                  wardens, first aiders
-                </li>
-                <li className="pl-1">
-                  <strong>Warning systems:</strong> How alarm is raised - sounders, voice alarm, PA
-                </li>
-                <li className="pl-1">
-                  <strong>Evacuation routes:</strong> Primary and alternative routes, assembly
-                  points
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency contacts:</strong> Emergency services, key personnel, utilities
-                </li>
-                <li className="pl-1">
-                  <strong>Recovery:</strong> Re-entry criteria, incident investigation, continuity
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Emergencies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Emergency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Immediate Actions
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Hazards</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical shock</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Isolate supply, safe rescue, call 999, first aid
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Secondary contact, cardiac arrest
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gas leak</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No ignition sources, evacuate, ventilate, call National Grid
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Explosion, asphyxiation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Refrigerant leak</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Evacuate plant room, ventilate, do not re-enter
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Oxygen displacement, toxicity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Major water leak</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Isolate water, assess electrical risk, evacuate if needed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical hazard, slip, structural
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lift entrapment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reassure occupants, call lift engineer, do not attempt rescue
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Falls, crushing, panic</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Practice makes perfect:</strong> Emergency procedures must be practised
-              regularly through drills. An untested plan is unlikely to work when actually needed.
+            <strong>Practice makes perfect:</strong> Emergency procedures must be practised
+            regularly through drills. An untested plan is unlikely to work when actually needed.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Fire Safety */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fire Safety and Evacuation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Fire Safety and Evacuation</ContentEyebrow>
+
+          <ConceptBlock title="Fire Safety and Evacuation">
             <p>
-              Fire remains one of the most significant workplace hazards. The Regulatory Reform
-              (Fire Safety) Order 2005 requires employers to assess fire risks and implement
-              appropriate measures including detection, warning, means of escape, and firefighting
-              equipment.
+            Fire remains one of the most significant workplace hazards. The Regulatory Reform
+            (Fire Safety) Order 2005 requires employers to assess fire risks and implement
+            appropriate measures including detection, warning, means of escape, and firefighting
+            equipment.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Response - RACE Protocol
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-red-400 mb-1">R - Rescue</p>
-                  <p className="text-sm">Remove people from immediate danger (only if safe)</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-amber-400 mb-1">A - Alarm</p>
-                  <p className="text-sm">Raise the alarm - break glass, shout "Fire!"</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-yellow-400 mb-1">C - Contain</p>
-                  <p className="text-sm">Close doors to limit fire spread</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-green-400 mb-1">E - Evacuate/Extinguish</p>
-                  <p className="text-sm">Leave via nearest exit / tackle if small and safe</p>
-                </div>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Fire Response - RACE Protocol
+            </p>
+            
+            
+            <p className="font-bold text-red-400 mb-1">R - Rescue</p>
+            <p className="text-sm">Remove people from immediate danger (only if safe)</p>
+            
+            
+            <p className="font-bold text-amber-400 mb-1">A - Alarm</p>
+            <p className="text-sm">Raise the alarm - break glass, shout "Fire!"</p>
+            
+            
+            <p className="font-bold text-yellow-400 mb-1">C - Contain</p>
+            <p className="text-sm">Close doors to limit fire spread</p>
+            
+            
+            <p className="font-bold text-green-400 mb-1">E - Evacuate/Extinguish</p>
+            <p className="text-sm">Leave via nearest exit / tackle if small and safe</p>
+            
+            
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Extinguisher Types
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Colour Band</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Suitable For</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">NOT For</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        Red (all red)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Paper, wood, textiles (Class A)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical, liquids, metals
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Foam (AFFF)</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-200">Cream</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Liquids, solids (Class A, B)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Electrical, cooking fat</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dry Powder</td>
-                      <td className="border border-white/10 px-3 py-2 text-blue-400">Blue</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multi-purpose (A, B, C, electrical)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enclosed spaces (visibility)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CO2</td>
-                      <td className="border border-white/10 px-3 py-2 text-gray-400">Black</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical, liquids (Class B)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Outdoor (wind dispersal)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wet Chemical</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Yellow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cooking oils and fats (Class F)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Electrical</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Fire Extinguisher Types
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Water</strong> — Colour Band: Red (all red). Suitable For: Paper, wood, textiles (Class A). NOT For: Electrical, liquids, metals</li>
+            <li><strong>Foam (AFFF)</strong> — Colour Band: Cream. Suitable For: Liquids, solids (Class A, B). NOT For: Electrical, cooking fat</li>
+            <li><strong>Dry Powder</strong> — Colour Band: Blue. Suitable For: Multi-purpose (A, B, C, electrical). NOT For: Enclosed spaces (visibility)</li>
+            <li><strong>CO2</strong> — Colour Band: Black. Suitable For: Electrical, liquids (Class B). NOT For: Outdoor (wind dispersal)</li>
+            <li><strong>Wet Chemical</strong> — Colour Band: Yellow. Suitable For: Cooking oils and fats (Class F). NOT For: Electrical</li>
+            </ul>
+            
+            
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Evacuation Essentials
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Leave immediately when alarm sounds</li>
-                  <li className="pl-1">Use nearest available exit</li>
-                  <li className="pl-1">Do not use lifts</li>
-                  <li className="pl-1">Close doors behind you</li>
-                  <li className="pl-1">Go to assembly point</li>
-                  <li className="pl-1">Do not re-enter until authorised</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fire Warden Duties</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Guide people to exits</li>
-                  <li className="pl-1">Check designated areas are clear</li>
-                  <li className="pl-1">Assist those needing help</li>
-                  <li className="pl-1">Report to assembly point coordinator</li>
-                  <li className="pl-1">Provide information to fire brigade</li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Evacuation Essentials
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Leave immediately when alarm sounds</li>
+            <li>Use nearest available exit</li>
+            <li>Do not use lifts</li>
+            <li>Close doors behind you</li>
+            <li>Go to assembly point</li>
+            <li>Do not re-enter until authorised</li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fire Warden Duties</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Guide people to exits</li>
+            <li>Check designated areas are clear</li>
+            <li>Assist those needing help</li>
+            <li>Report to assembly point coordinator</li>
+            <li>Provide information to fire brigade</li>
+            </ul>
+            </div>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>For electrical work:</strong> CO2 extinguishers (black band) are preferred in
-              switchrooms as they leave no residue. Ensure power is isolated before using water or
-              foam.
+            <strong>For electrical work:</strong> CO2 extinguishers (black band) are preferred in
+            switchrooms as they leave no residue. Ensure power is isolated before using water or
+            foam.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: First Aid */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            First Aid Provision
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>First Aid Provision</ContentEyebrow>
+
+          <ConceptBlock title="First Aid Provision">
             <p>
-              The Health and Safety (First Aid) Regulations 1981 require employers to provide
-              adequate first aid equipment, facilities and personnel. What's "adequate" depends on
-              the nature of work, hazards present, number of employees, and access to emergency
-              services.
+            The Health and Safety (First Aid) Regulations 1981 require employers to provide
+            adequate first aid equipment, facilities and personnel. What's "adequate" depends on
+            the nature of work, hazards present, number of employees, and access to emergency
+            services.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                First Aid Provision Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Workplace Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Employees</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum Provision
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Low risk (office)</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;25</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        First aid kit + appointed person
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Low risk (office)</td>
-                      <td className="border border-white/10 px-3 py-2">25-50</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        First aid kit + EFAW or appointed person
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Low risk (office)</td>
-                      <td className="border border-white/10 px-3 py-2">50+</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        First aid kit + FAW (1 per 100)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher risk (construction)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&lt;5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        First aid kit + appointed person
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher risk (construction)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5-50</td>
-                      <td className="border border-white/10 px-3 py-2">First aid kit + EFAW/FAW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher risk (construction)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">50+</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        First aid kit + FAW (1 per 50)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                EFAW = Emergency First Aid at Work (1 day). FAW = First Aid at Work (3 days).
-              </p>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            First Aid Provision Requirements
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Low risk (office)</strong> — Employees: &lt;25. Minimum Provision: First aid kit + appointed person</li>
+            <li><strong>Low risk (office)</strong> — Employees: 25-50. Minimum Provision: First aid kit + EFAW or appointed person</li>
+            <li><strong>Low risk (office)</strong> — Employees: 50+. Minimum Provision: First aid kit + FAW (1 per 100)</li>
+            <li><strong>Higher risk (construction)</strong> — Employees: &lt;5. Minimum Provision: First aid kit + appointed person</li>
+            <li><strong>Higher risk (construction)</strong> — Employees: 5-50. Minimum Provision: First aid kit + EFAW/FAW</li>
+            <li><strong>Higher risk (construction)</strong> — Employees: 50+. Minimum Provision: First aid kit + FAW (1 per 50)</li>
+            </ul>
+            
+            <p className="text-xs text-white mt-2">
+            EFAW = Emergency First Aid at Work (1 day). FAW = First Aid at Work (3 days).
+            </p>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                First aid kit contents (minimum):
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Guidance leaflet on first aid</li>
-                <li className="pl-1">Individually wrapped sterile plasters (assorted sizes)</li>
-                <li className="pl-1">Sterile eye pads</li>
-                <li className="pl-1">Triangular bandages</li>
-                <li className="pl-1">Safety pins</li>
-                <li className="pl-1">Sterile wound dressings (medium and large)</li>
-                <li className="pl-1">Disposable gloves</li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">
+            First aid kit contents (minimum):
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Guidance leaflet on first aid</li>
+            <li>Individually wrapped sterile plasters (assorted sizes)</li>
+            <li>Sterile eye pads</li>
+            <li>Triangular bandages</li>
+            <li>Safety pins</li>
+            <li>Sterile wound dressings (medium and large)</li>
+            <li>Disposable gloves</li>
+            </ul>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Consider:</strong> For electrical work, consider additional burn dressings.
-              AED (defibrillator) access is recommended - cardiac arrest is a risk with electrical
-              shock.
+            <strong>Consider:</strong> For electrical work, consider additional burn dressings.
+            AED (defibrillator) access is recommended - cardiac arrest is a risk with electrical
+            shock.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Electrical Emergency Response */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Electrical Emergency Response
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Electrical Emergency Response</ContentEyebrow>
+
+          <ConceptBlock title="Electrical Emergency Response">
             <p>
-              Electrical emergencies require specific knowledge to respond safely. The rescuer must
-              protect themselves from becoming a second casualty while providing rapid assistance to
-              the victim.
+            Electrical emergencies require specific knowledge to respond safely. The rescuer must
+            protect themselves from becoming a second casualty while providing rapid assistance to
+            the victim.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electric Shock Response Sequence
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Action</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Points</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Ensure safety
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Do not touch casualty if still in contact with live source
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Isolate supply
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switch off at source if quick and safe, or disconnect plug
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        If cannot isolate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Use non-conductive material to separate casualty from source
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Call 999</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        State electrical incident - location, condition, whether isolated
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Assess casualty
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check response, breathing, circulation (DR ABC)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        CPR if needed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        30 compressions : 2 breaths. Use AED if available
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Treat burns</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cool with water 20+ mins. Cover loosely. Do not burst blisters
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Electric Shock Response Sequence
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1</strong> — Action: Ensure safety. Key Points: Do not touch casualty if still in contact with live source</li>
+            <li><strong>2</strong> — Action: Isolate supply. Key Points: Switch off at source if quick and safe, or disconnect plug</li>
+            <li><strong>3</strong> — Action: If cannot isolate. Key Points: Use non-conductive material to separate casualty from source</li>
+            <li><strong>4</strong> — Action: Call 999. Key Points: State electrical incident - location, condition, whether isolated</li>
+            <li><strong>5</strong> — Action: Assess casualty. Key Points: Check response, breathing, circulation (DR ABC)</li>
+            <li><strong>6</strong> — Action: CPR if needed. Key Points: 30 compressions : 2 breaths. Use AED if available</li>
+            <li><strong>7</strong> — Action: Treat burns. Key Points: Cool with water 20+ mins. Cover loosely. Do not burst blisters</li>
+            </ul>
+            
+            
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">High Voltage Warning</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  High voltage (above 1000V AC) can arc significant distances
-                </li>
-                <li className="pl-1">
-                  Do not approach within the safe distance until confirmed isolated
-                </li>
-                <li className="pl-1">
-                  Call emergency services and the network operator immediately
-                </li>
-                <li className="pl-1">Keep others away from the area</li>
-                <li className="pl-1">Never attempt rescue from overhead lines or substations</li>
-              </ul>
-            </div>
+            <CommonMistake
+            title="High Voltage Warning"
+            whatHappens={<><ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            High voltage (above 1000V AC) can arc significant distances
+            </li>
+            <li>
+            Do not approach within the safe distance until confirmed isolated
+            </li>
+            <li>
+            Call emergency services and the network operator immediately
+            </li>
+            <li>Keep others away from the area</li>
+            <li>Never attempt rescue from overhead lines or substations</li>
+            </ul></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Signs of Electrical Injury
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Entry and exit burns</li>
-                  <li className="pl-1">Unconsciousness</li>
-                  <li className="pl-1">Muscle spasm / rigidity</li>
-                  <li className="pl-1">Cardiac arrhythmia or arrest</li>
-                  <li className="pl-1">Breathing difficulties</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  AED (Defibrillator) Use
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Turn on and follow voice prompts</li>
-                  <li className="pl-1">Attach pads as shown</li>
-                  <li className="pl-1">Ensure no one touching casualty</li>
-                  <li className="pl-1">Let AED analyse and shock if advised</li>
-                  <li className="pl-1">Continue CPR when prompted</li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Signs of Electrical Injury
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Entry and exit burns</li>
+            <li>Unconsciousness</li>
+            <li>Muscle spasm / rigidity</li>
+            <li>Cardiac arrhythmia or arrest</li>
+            <li>Breathing difficulties</li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            AED (Defibrillator) Use
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Turn on and follow voice prompts</li>
+            <li>Attach pads as shown</li>
+            <li>Ensure no one touching casualty</li>
+            <li>Let AED analyse and shock if advised</li>
+            <li>Continue CPR when prompted</li>
+            </ul>
+            </div>
+            
 
             <p className="text-sm text-white italic">
-              <strong>Remember:</strong> All casualties of electric shock should be assessed at
-              hospital, even if they appear unharmed. Internal injuries and cardiac effects may not
-              be immediately apparent.
+            <strong>Remember:</strong> All casualties of electric shock should be assessed at
+            hospital, even if they appear unharmed. Internal injuries and cardiac effects may not
+            be immediately apparent.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Application</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Responding to Electrical Contact
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A colleague is found unconscious, still holding a faulty
-                230V portable tool.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Response Sequence:</strong>
-                </p>
-                <p className="ml-4 text-red-400">1. STOP - Do not touch them directly</p>
-                <p className="ml-4">2. Shout for help - alert others to call 999</p>
-                <p className="ml-4">3. Isolate supply - unplug at wall socket or switch off DB</p>
-                <p className="ml-4">
-                  4. If cannot isolate - use non-conductive item (dry wood, plastic) to push tool
-                  away
-                </p>
-                <p className="ml-4">5. Once safe - check response: "Are you OK?" + tap shoulders</p>
-                <p className="ml-4">6. If no response - open airway, check breathing</p>
-                <p className="ml-4">7. If not breathing - start CPR, send for AED</p>
-                <p className="ml-4">8. Continue until paramedics arrive or casualty recovers</p>
-                <p className="mt-2 text-green-400">
-                  Key: Your safety first - you can't help if you become a casualty too
-                </p>
-              </div>
+          <ConceptBlock title="Practical Application">
+            <p><strong>Example 1: Responding to Electrical Contact</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Scenario:</strong> A colleague is found unconscious, still holding a faulty
+            230V portable tool.
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p>
+            <strong>Response Sequence:</strong>
+            </p>
+            <p className="ml-4 text-red-400">1. STOP - Do not touch them directly</p>
+            <p className="ml-4">2. Shout for help - alert others to call 999</p>
+            <p className="ml-4">3. Isolate supply - unplug at wall socket or switch off DB</p>
+            <p className="ml-4">
+            4. If cannot isolate - use non-conductive item (dry wood, plastic) to push tool
+            away
+            </p>
+            <p className="ml-4">5. Once safe - check response: "Are you OK?" + tap shoulders</p>
+            <p className="ml-4">6. If no response - open airway, check breathing</p>
+            <p className="ml-4">7. If not breathing - start CPR, send for AED</p>
+            <p className="ml-4">8. Continue until paramedics arrive or casualty recovers</p>
+            <p className="mt-2 text-green-400">
+            Key: Your safety first - you can't help if you become a casualty too
+            </p>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Fire During Electrical Work
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Fire breaks out in switchroom while working on
-                distribution board.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Response:</strong>
-                </p>
-                <p className="ml-4">1. Stop work immediately if safe to do so</p>
-                <p className="ml-4">
-                  2. If small fire and CO2 extinguisher available - consider tackling
-                </p>
-                <p className="ml-4">3. If fire spreading or uncertain - leave immediately</p>
-                <p className="ml-4">4. Close door behind you to contain fire</p>
-                <p className="ml-4">5. Raise alarm - operate nearest call point</p>
-                <p className="ml-4">6. Evacuate via nearest safe route</p>
-                <p className="ml-4">7. Report to assembly point</p>
-                <p className="ml-4">
-                  8. Inform fire warden: "Fire in first floor switchroom, electrical fire"
-                </p>
-                <p className="mt-2">
-                  <strong>Do NOT:</strong> Use water or foam extinguisher on electrical fire
-                </p>
-              </div>
+            
+            <p><strong>Example 2: Fire During Electrical Work</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Scenario:</strong> Fire breaks out in switchroom while working on
+            distribution board.
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p>
+            <strong>Response:</strong>
+            </p>
+            <p className="ml-4">1. Stop work immediately if safe to do so</p>
+            <p className="ml-4">
+            2. If small fire and CO2 extinguisher available - consider tackling
+            </p>
+            <p className="ml-4">3. If fire spreading or uncertain - leave immediately</p>
+            <p className="ml-4">4. Close door behind you to contain fire</p>
+            <p className="ml-4">5. Raise alarm - operate nearest call point</p>
+            <p className="ml-4">6. Evacuate via nearest safe route</p>
+            <p className="ml-4">7. Report to assembly point</p>
+            <p className="ml-4">
+            8. Inform fire warden: "Fire in first floor switchroom, electrical fire"
+            </p>
+            <p className="mt-2">
+            <strong>Do NOT:</strong> Use water or foam extinguisher on electrical fire
+            </p>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Key Points Summary</h2>
-
-          <div className="space-y-6">
+          <ConceptBlock title="Key Points Summary">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Emergency Preparedness
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Plan for foreseeable emergencies before they happen</li>
-                <li className="pl-1">Assign and train personnel for emergency roles</li>
-                <li className="pl-1">Practice through regular drills - at least 6-monthly</li>
-                <li className="pl-1">
-                  Maintain equipment - extinguishers, alarms, emergency lighting
-                </li>
-                <li className="pl-1">Review and update plans after drills and incidents</li>
-              </ul>
+            <p><strong>Emergency Preparedness</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Plan for foreseeable emergencies before they happen</li>
+            <li>Assign and train personnel for emergency roles</li>
+            <li>Practice through regular drills - at least 6-monthly</li>
+            <li>
+            Maintain equipment - extinguishers, alarms, emergency lighting
+            </li>
+            <li>Review and update plans after drills and incidents</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Safety Essentials
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">RACE: Rescue, Alarm, Contain, Evacuate/Extinguish</li>
-                <li className="pl-1">CO2 (black band) for electrical fires</li>
-                <li className="pl-1">Never tackle fire if unsafe or escape route threatened</li>
-                <li className="pl-1">Do not re-enter until authorised</li>
-                <li className="pl-1">Account for all personnel at assembly point</li>
-              </ul>
+            <p><strong>Fire Safety Essentials</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>RACE: Rescue, Alarm, Contain, Evacuate/Extinguish</li>
+            <li>CO2 (black band) for electrical fires</li>
+            <li>Never tackle fire if unsafe or escape route threatened</li>
+            <li>Do not re-enter until authorised</li>
+            <li>Account for all personnel at assembly point</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Electrical Emergency Critical Points
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Never touch:</strong> Someone in contact with live electricity
-                </li>
-                <li className="pl-1">
-                  <strong>Isolate first:</strong> Then rescue
-                </li>
-                <li className="pl-1">
-                  <strong>All casualties:</strong> Should be assessed at hospital
-                </li>
-                <li className="pl-1">
-                  <strong>AED:</strong> Use if available for cardiac arrest
-                </li>
-                <li className="pl-1">
-                  <strong>High voltage:</strong> Keep clear, call emergency services
-                </li>
-              </ul>
+            <p><strong>Electrical Emergency Critical Points</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Never touch:</strong> Someone in contact with live electricity
+            </li>
+            <li>
+            <strong>Isolate first:</strong> Then rescue
+            </li>
+            <li>
+            <strong>All casualties:</strong> Should be assessed at hospital
+            </li>
+            <li>
+            <strong>AED:</strong> Use if available for cardiac arrest
+            </li>
+            <li>
+            <strong>High voltage:</strong> Keep clear, call emergency services
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Electrical injury in a basement plant room"
+            situation={
+              <>
+                An operative receives an electric shock while working on a sub-distribution
+                board in a basement plant room. They are conscious but disorientated, and the
+                board is still energised.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply the rehearsed sequence. Do not touch the casualty until the supply is
+                isolated upstream. Send a second person to call 999 and meet the ambulance.
+                Once isolated, follow first-aid (DRSABCD), administer oxygen if trained, do
+                not move the casualty unless still in danger. Apply RIDDOR &mdash; an electric
+                shock causing more than 24-hour absence is a reportable injury under Schedule 1.
+                Preserve the scene. Engage the AED if cardiac arrest follows. Brief HSE the
+                same day.
+              </>
+            }
+            whyItMatters={
+              <>
+                Electrical shock victims can suffer delayed cardiac arrest hours after the
+                event. Procedures must include hospital escort, follow-up monitoring and
+                incident investigation, not just the immediate rescue.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Fire Extinguishers</p>
-                <ul className="space-y-0.5">
-                  <li>Water (Red) - Paper, wood, textiles</li>
-                  <li>Foam (Cream) - Liquids, solids</li>
-                  <li>CO2 (Black) - Electrical, liquids</li>
-                  <li>Powder (Blue) - Multi-purpose</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Emergency Numbers</p>
-                <ul className="space-y-0.5">
-                  <li>Emergency Services: 999 / 112</li>
-                  <li>National Gas Emergency: 0800 111 999</li>
-                  <li>Electricity Emergency: 105</li>
-                  <li>NHS Non-emergency: 111</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'MHSWR Reg 8 makes emergency procedures a statutory duty for foreseeable serious and imminent danger.',
+              'Site procedures integrate with the building&rsquo;s fire strategy and the principal contractor&rsquo;s evacuation plan — never stand alone.',
+              'Foreseeable emergencies on building services work: fire, electrical shock, confined-space casualty, flood, structural collapse, gas release.',
+              'Each procedure names: trigger, call sequence, muster point, roles, rescue method, communication channel.',
+              'Confined Spaces Regulations 1997 require a rescue plan before entry — not after a casualty.',
+              'Drill and exercise — untested procedures are presumed inadequate.',
+              'Casualty handling for electrical shock includes follow-up cardiac monitoring (delayed arrhythmias).',
+              'RIDDOR reporting follows the procedure — not the other way around.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section3-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Audits and Inspections
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section3-6">
-              Next: Contractor Management
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 3
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section3-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Contractor Management
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

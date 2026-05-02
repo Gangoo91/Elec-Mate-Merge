@@ -213,6 +213,47 @@ export const InvoiceSettingsStep = ({
         )}
       </div>
 
+      {/* ELE-891 — Per-category adjustment */}
+      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+      <div>
+        <div className="py-3 border-b border-white/[0.12]">
+          <p className="text-[14px] font-medium text-white">Per-category adjustment</p>
+          <p className="text-[12px] text-white/70 mt-0.5">
+            Signed %. Negative = discount, positive = markup. Applied before global discount.
+          </p>
+        </div>
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {(['labour', 'materials', 'equipment'] as const).map((cat) => (
+            <div key={cat}>
+              <label className={`${labelClass} capitalize`}>{cat}</label>
+              <div className="relative">
+                <input
+                  type="number"
+                  step="0.1"
+                  placeholder="0"
+                  style={darkStyle}
+                  className={`${inputClass} pr-8`}
+                  value={settings?.categoryAdjustments?.[cat] ?? ''}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    const next = v === '' ? undefined : parseFloat(v);
+                    onUpdateSettings({
+                      categoryAdjustments: {
+                        ...(settings?.categoryAdjustments || {}),
+                        [cat]: next,
+                      },
+                    });
+                  }}
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm pointer-events-none">
+                  %
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Payment Terms */}
       <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
       <div className="space-y-3">

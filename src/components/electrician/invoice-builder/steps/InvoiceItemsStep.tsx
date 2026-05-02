@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Button } from '@/components/ui/button';
-import { Trash2, ChevronDown, ChevronUp, Check, Pencil, Copy } from 'lucide-react';
+import { Trash2, ChevronDown, ChevronUp, Check, Pencil, Copy, Percent } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplates';
 import { cn } from '@/lib/utils';
@@ -22,6 +22,28 @@ import {
   equipmentCategories,
   commonEquipment,
 } from '@/data/electrician/presetData';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+// ELE-889 — common UK trade units. Anything outside this list is treated as
+// "custom" and rendered through a free-text input.
+const UNIT_PRESETS = [
+  'hour',
+  'day',
+  'half-day',
+  'each',
+  'item',
+  'm',
+  'm²',
+  'kit',
+  'callout',
+  'visit',
+] as const;
 
 // InlineDecimalInput: local string state prevents parseFloat stripping trailing dots (ELE-14)
 function InlineDecimalInput({
@@ -176,6 +198,8 @@ export const InvoiceItemsStep = ({
   const [materialSearch, setMaterialSearch] = useState('');
   const [priceAdjustment, setPriceAdjustment] = useState(0);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
+  // ELE-888 — per-item adjustment editor toggle
+  const [adjustingItemId, setAdjustingItemId] = useState<string | null>(null);
   const [editingDescription, setEditingDescription] = useState('');
 
   const calculateAdjustedPrice = (basePrice: number) => {
@@ -333,8 +357,16 @@ export const InvoiceItemsStep = ({
       return;
     }
 
+    // ELE-887 — apply material markup to manually-entered items
+    const shouldApplyMarkup =
+      (newItem.category === 'materials' || newItem.category === 'equipment') &&
+      priceAdjustment > 0;
+    const finalUnitPrice = shouldApplyMarkup
+      ? calculateAdjustedPrice(newItem.unitPrice)
+      : newItem.unitPrice;
     const itemToAdd = {
       ...newItem,
+      unitPrice: finalUnitPrice,
       quantity:
         newItem.category === 'labour' && newItem.hours > 0 ? newItem.hours : newItem.quantity,
     };
@@ -518,6 +550,31 @@ export const InvoiceItemsStep = ({
                         )}
                       </button>
                       <button
+                        type="button"
+                        onClick={() =>
+                          setAdjustingItemId(adjustingItemId === item.id ? null : item.id)
+                        }
+                        className={cn(
+                          'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95',
+                          adjustingItemId === item.id ||
+                            (typeof item.itemAdjustmentPercent === 'number' &&
+                              item.itemAdjustmentPercent !== 0)
+                            ? 'bg-elec-yellow/20'
+                            : 'bg-white/[0.08]'
+                        )}
+                        aria-label="Per-item adjustment"
+                      >
+                        <Percent
+                          className={cn(
+                            'h-3.5 w-3.5',
+                            typeof item.itemAdjustmentPercent === 'number' &&
+                              item.itemAdjustmentPercent !== 0
+                              ? 'text-elec-yellow'
+                              : 'text-white'
+                          )}
+                        />
+                      </button>
+                      <button
                         onClick={() => onRemoveItem(item.id)}
                         className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
                       >
@@ -525,6 +582,64 @@ export const InvoiceItemsStep = ({
                       </button>
                     </div>
                   </div>
+                  {/* ELE-888 — adjustment chip */}
+                  {typeof item.itemAdjustmentPercent === 'number' &&
+                    item.itemAdjustmentPercent !== 0 &&
+                    adjustingItemId !== item.id && (
+                      <div className="mt-1.5 flex items-center gap-1.5 text-[11px]">
+                        <span
+                          className={cn(
+                            'px-1.5 py-0.5 rounded font-semibold tabular-nums',
+                            item.itemAdjustmentPercent > 0
+                              ? 'bg-amber-500/15 text-amber-300'
+                              : 'bg-emerald-500/15 text-emerald-300'
+                          )}
+                        >
+                          {item.itemAdjustmentPercent > 0 ? '+' : ''}
+                          {item.itemAdjustmentPercent}%
+                        </span>
+                        {item.itemAdjustmentLabel && (
+                          <span className="text-white/60">{item.itemAdjustmentLabel}</span>
+                        )}
+                      </div>
+                    )}
+                  {adjustingItemId === item.id && (
+                    <div className="mt-2 mb-1 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center gap-2">
+                      <input
+                        type="number"
+                        step="0.1"
+                        autoFocus
+                        placeholder="± %"
+                        value={item.itemAdjustmentPercent ?? ''}
+                        onChange={(e) => {
+                          const v = e.target.value;
+                          onUpdateItem(item.id, {
+                            itemAdjustmentPercent: v === '' ? undefined : parseFloat(v),
+                          });
+                        }}
+                        className="w-20 h-8 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Reason"
+                        value={item.itemAdjustmentLabel ?? ''}
+                        onChange={(e) =>
+                          onUpdateItem(item.id, {
+                            itemAdjustmentLabel: e.target.value || undefined,
+                          })
+                        }
+                        className="flex-1 h-8 px-2 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/40"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setAdjustingItemId(null)}
+                        className="w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center"
+                        aria-label="Done"
+                      >
+                        <Check className="h-3.5 w-3.5 text-elec-yellow" />
+                      </button>
+                    </div>
+                  )}
                   <div className="flex items-center gap-2">
                     <InlineDecimalInput
                       value={item.quantity}
@@ -857,6 +972,61 @@ export const InvoiceItemsStep = ({
                   placeholder="0.00"
                 />
               </div>
+            </div>
+            {/* ELE-889 — Unit type selector. Common UK trade units + custom. */}
+            <div className="pt-1">
+              <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
+                Unit
+              </label>
+              <Select
+                value={
+                  UNIT_PRESETS.includes(newItem.unit as (typeof UNIT_PRESETS)[number])
+                    ? newItem.unit
+                    : 'custom'
+                }
+                onValueChange={(val) => {
+                  if (val === 'custom') {
+                    setNewItem((prev) => ({
+                      ...prev,
+                      unit:
+                        UNIT_PRESETS.includes(prev.unit as (typeof UNIT_PRESETS)[number]) || !prev.unit
+                          ? ''
+                          : prev.unit,
+                    }));
+                  } else {
+                    setNewItem((prev) => ({ ...prev, unit: val }));
+                  }
+                }}
+              >
+                <SelectTrigger className="h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:ring-2 focus:ring-elec-yellow/20">
+                  <SelectValue placeholder="Choose unit" />
+                </SelectTrigger>
+                <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-white">
+                  <SelectItem value="hour">per hour</SelectItem>
+                  <SelectItem value="day">per day</SelectItem>
+                  <SelectItem value="half-day">per half-day</SelectItem>
+                  <SelectItem value="each">each</SelectItem>
+                  <SelectItem value="item">per item</SelectItem>
+                  <SelectItem value="m">per metre</SelectItem>
+                  <SelectItem value="m²">per m²</SelectItem>
+                  <SelectItem value="kit">per kit</SelectItem>
+                  <SelectItem value="callout">per callout</SelectItem>
+                  <SelectItem value="visit">per visit</SelectItem>
+                  <SelectItem value="custom">Custom…</SelectItem>
+                </SelectContent>
+              </Select>
+              {!UNIT_PRESETS.includes(newItem.unit as (typeof UNIT_PRESETS)[number]) && (
+                <input
+                  type="text"
+                  value={newItem.unit}
+                  onChange={(e) =>
+                    setNewItem((prev) => ({ ...prev, unit: e.target.value }))
+                  }
+                  placeholder="e.g. per circuit, per spur"
+                  style={darkInputStyle}
+                  className="w-full h-11 px-3 mt-2 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow placeholder:text-white/40"
+                />
+              )}
             </div>
             {newItem.quantity > 0 && newItem.unitPrice > 0 && (
               <div className="p-4 bg-white/[0.06] border-t border-white/[0.12]">

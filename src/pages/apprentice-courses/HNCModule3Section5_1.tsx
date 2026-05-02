@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 5 · Subsection 1 — Principles of Electromagnetic Induction
+ * HNC Electrical Engineering for Building Services (Pearson U4019)
+ *   Faraday, Lenz, motional EMF, transformer EMF, eddy currents — the physics
+ *   foundation that underpins every transformer, motor, generator and inductive load
+ *   in a BSE installation.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Principles of Electromagnetic Induction - HNC Module 3 Section 5.1';
@@ -205,917 +224,584 @@ const faqs = [
 ];
 
 const HNCModule3Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Principles of Electromagnetic Induction
-          </h1>
-          <p className="text-white">
-            The fundamental principles behind generators, transformers and motors in building
-            services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 5 · Subsection 1"
+            title="Principles of electromagnetic induction"
+            description="The fundamental principles behind generators, transformers and motors in building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Faraday's law:</strong> e = -N(d&#934;/dt) - EMF from changing flux
-              </li>
-              <li className="pl-1">
-                <strong>Lenz's law:</strong> Induced current opposes the change
-              </li>
-              <li className="pl-1">
-                <strong>Motional EMF:</strong> e = Blv for moving conductors
-              </li>
-              <li className="pl-1">
-                <strong>Inductance:</strong> Opposition to current change (Henrys)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Generators:</strong> Standby power, wind turbines
-              </li>
-              <li className="pl-1">
-                <strong>Transformers:</strong> Voltage conversion, isolation
-              </li>
-              <li className="pl-1">
-                <strong>Motors:</strong> HVAC, pumps, lifts, conveyors
-              </li>
-              <li className="pl-1">
-                <strong>Eddy currents:</strong> Losses, braking, heating
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You apply Faraday&rsquo;s law (e = &minus;N d&Phi;/dt) to derive every transformer EMF and every motor back-EMF on a BSE installation.',
+              'You use Lenz&rsquo;s law (the induced current opposes the change that caused it) to predict reactor and inductor behaviour at switching events.',
+              'You calculate motional EMF (e = Blv) for generator output and rotating-machine slip-ring analysis.',
+              'You design out eddy-current losses with laminated cores, grain-oriented silicon steel and amorphous metal — the basis of every modern distribution transformer specification.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS EN 60076-1 — Power transformers (general requirements)"
+            clause="A power transformer is a static piece of apparatus with two or more windings which, by electromagnetic induction, transforms a system of alternating voltage and current into another system of voltage and current usually of different values and at the same frequency for the purpose of transmitting electrical power."
+            meaning={
+              <>
+                BS EN 60076 is the umbrella standard for the distribution and isolating
+                transformers you specify on every BSE project. Faraday&rsquo;s law is
+                the physics; BS EN 60076 turns the physics into the loss limits, vector
+                groups, insulation classes and overload tolerances you select against.
+                Knowing the law lets you read a transformer datasheet critically rather
+                than accept the vendor&rsquo;s defaults.
+              </>
+            }
+            cite="Source: BS EN 60076-1 (power transformers); BS EN 60404 (magnetic materials); CIBSE Guide F (Energy efficiency in buildings)"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               "State and apply Faraday's law of electromagnetic induction",
               "Apply Lenz's law to determine direction of induced EMF",
-              'Calculate motional EMF using e = Blv',
-              'Calculate transformer EMF using e = -N(d\u03A6/dt)',
-              'Explain self and mutual inductance in practical terms',
-              'Describe eddy current effects and mitigation methods',
-              'Relate induction principles to building services equipment',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+              "Calculate motional EMF using e = Blv",
+              "Calculate transformer EMF using e = -N(dΦ/dt)",
+              "Explain self and mutual inductance in practical terms",
+              "Describe eddy current effects and mitigation methods",
+              "Relate induction principles to building services equipment",
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Faraday's Law */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Faraday's Law of Electromagnetic Induction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="In 30 seconds">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Faraday's law:</strong> e = -N(d&#934;/dt) - EMF from changing flux</li>
+              <li><strong>Lenz's law:</strong> Induced current opposes the change</li>
+              <li><strong>Motional EMF:</strong> e = Blv for moving conductors</li>
+              <li><strong>Inductance:</strong> Opposition to current change (Henrys)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Generators:</strong> Standby power, wind turbines</li>
+              <li><strong>Transformers:</strong> Voltage conversion, isolation</li>
+              <li><strong>Motors:</strong> HVAC, pumps, lifts, conveyors</li>
+              <li><strong>Eddy currents:</strong> Losses, braking, heating</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Faraday's Law of Electromagnetic Induction">
             <p>
               Michael Faraday's 1831 discovery that a changing magnetic field induces an
               electromotive force (EMF) in a conductor revolutionised electrical engineering. This
               principle underlies all generators, transformers and induction motors.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Faraday's Law Statement
               </p>
-              <p className="font-mono text-center text-lg mb-2">e = -N &#215; (d&#934;/dt)</p>
-              <div className="text-sm text-white text-center space-y-1">
+              <p><strong>e = -N &#215; (d&#934;/dt)</strong></p>
+
                 <p>e = induced EMF (Volts)</p>
                 <p>N = number of turns in the coil</p>
                 <p>d&#934;/dt = rate of change of magnetic flux (Wb/s)</p>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">EMF is induced only when flux through the coil is changing</li>
-                <li className="pl-1">Greater rate of change produces greater EMF</li>
-                <li className="pl-1">More turns means more EMF for the same flux change</li>
-                <li className="pl-1">
+            
+
+              <p className="text-sm font-medium text-white">Key principles:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>EMF is induced only when flux through the coil is changing</li>
+                <li>Greater rate of change produces greater EMF</li>
+                <li>More turns means more EMF for the same flux change</li>
+                <li>
                   The negative sign represents Lenz's law (opposition to change)
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Methods of Inducing EMF
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        How Flux Changes
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Moving conductor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Conductor cuts field lines
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Generators</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Moving magnet</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Field moves relative to coil
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Dynamos, sensors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Varying current</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electromagnet field changes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Transformers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rotating coil</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coil angle to field varies
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">AC generators</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Moving conductor</strong> — Conductor cuts field lines — Generators</li>
+              <li><strong>Moving magnet</strong> — Field moves relative to coil — Dynamos, sensors</li>
+              <li><strong>Varying current</strong> — Electromagnet field changes — Transformers</li>
+              <li><strong>Rotating coil</strong> — Coil angle to field varies — AC generators</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Remember:</strong> No change in flux = no induced EMF. Static conditions
               produce no induction regardless of field strength.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Lenz's Law */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Lenz's Law and Direction of Induced EMF
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Lenz's Law and Direction of Induced EMF">
             <p>
               Lenz's law provides the direction of the induced EMF and current. It states that the
               induced current will flow in a direction that opposes the change in flux that caused
               it.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Lenz's Law Statement</p>
-              <p className="text-center italic mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">Lenz's Law Statement</p>
+              <p><em>
                 "The direction of the induced EMF is such that it opposes the change producing it."
-              </p>
-              <p className="text-sm text-white text-center">
+              </em></p>
+              <p>
                 This is a consequence of energy conservation - energy cannot be created from
                 nothing.
               </p>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Practical implications:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">Practical implications:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   If flux increases, induced current creates an opposing field
                 </li>
-                <li className="pl-1">If flux decreases, induced current tries to maintain it</li>
-                <li className="pl-1">Moving a magnet toward a coil induces repelling current</li>
-                <li className="pl-1">Moving a magnet away induces attracting current</li>
+                <li>If flux decreases, induced current tries to maintain it</li>
+                <li>Moving a magnet toward a coil induces repelling current</li>
+                <li>Moving a magnet away induces attracting current</li>
               </ul>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Fleming's Right-Hand Rule (Generators)
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Thumb:</strong> Motion of conductor
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>First finger:</strong> Field direction (N to S)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Second finger:</strong> Induced current direction
                   </li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Consideration</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Opposition requires work to overcome</li>
-                  <li className="pl-1">Mechanical energy converts to electrical</li>
-                  <li className="pl-1">Conservation of energy is maintained</li>
-                </ul>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Energy Consideration</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Opposition requires work to overcome</li>
+                  <li>Mechanical energy converts to electrical</li>
+                  <li>Conservation of energy is maintained</li>
+                </ul>
+
+            
+
+            <p>
               <strong>Key insight:</strong> Without Lenz's law, a generator would accelerate itself
               - violating conservation of energy.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Flux Linkage */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Flux Linkage and Rate of Change
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Flux Linkage and Rate of Change">
             <p>
               Flux linkage combines the concepts of magnetic flux and coil turns to give the total
               flux linked with a coil. It is the key quantity in determining induced EMF.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Flux Linkage Definition
               </p>
-              <p className="font-mono text-center text-lg mb-2">&#923; = N &#215; &#934;</p>
-              <div className="text-sm text-white text-center space-y-1">
+              <p><strong>&#923; = N &#215; &#934;</strong></p>
+
                 <p>&#923; (Lambda, flux linkage) = Weber-turns (Wb-turns)</p>
                 <p>N = number of turns</p>
                 <p>&#934; = magnetic flux through one turn (Wb)</p>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Magnetic flux basics:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+            
+
+              <p className="text-sm font-medium text-white">Magnetic flux basics:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>&#934; = B &#215; A &#215; cos(&#952;)</strong> - flux through an area
                 </li>
-                <li className="pl-1">B = magnetic flux density (Tesla)</li>
-                <li className="pl-1">A = area perpendicular to field (m&#178;)</li>
-                <li className="pl-1">&#952; = angle between field and normal to area</li>
-                <li className="pl-1">
+                <li>B = magnetic flux density (Tesla)</li>
+                <li>A = area perpendicular to field (m&#178;)</li>
+                <li>&#952; = angle between field and normal to area</li>
+                <li>
                   Maximum flux when field is perpendicular to area (&#952; = 0)
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Faraday's Law Using Flux Linkage
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-mono text-center mb-1">e = -d&#923;/dt</p>
+
+                
+                  <p><strong>e = -d&#923;/dt</strong></p>
                   <p className="text-white text-xs text-center">
                     EMF equals rate of change of flux linkage
                   </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-mono text-center mb-1">
+
+                
+                  <p><strong>
                     e = -(&#923;&#8322; - &#923;&#8321;) / t
-                  </p>
+                  </strong></p>
                   <p className="text-white text-xs text-center">
                     For average EMF over time interval t
                   </p>
-                </div>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+              
+
+            <p>
               <strong>Practical note:</strong> Doubling either the turns or the rate of flux change
               doubles the induced EMF.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 4: Motional EMF */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Motional EMF: e = Blv
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Motional EMF: e = Blv">
             <p>
               When a conductor moves through a magnetic field, cutting field lines, an EMF is
               induced along its length. This is the basis of all rotating generators.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Motional EMF Equation</p>
-              <p className="font-mono text-center text-lg mb-2">e = B &#215; l &#215; v</p>
-              <div className="text-sm text-white text-center space-y-1">
+              <p className="text-sm font-medium text-elec-yellow/80">Motional EMF Equation</p>
+              <p><strong>e = B &#215; l &#215; v</strong></p>
+
                 <p>e = induced EMF (Volts)</p>
                 <p>B = magnetic flux density (Tesla)</p>
                 <p>l = length of conductor in field (metres)</p>
                 <p>v = velocity of conductor (m/s)</p>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Conditions for maximum EMF:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Conductor moves perpendicular to field lines</li>
-                <li className="pl-1">Conductor length is perpendicular to both field and motion</li>
-                <li className="pl-1">If motion is at angle &#952;: e = Blv &#215; sin(&#952;)</li>
-                <li className="pl-1">Parallel motion produces zero EMF</li>
+            
+
+              <p className="text-sm font-medium text-white">Conditions for maximum EMF:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>Conductor moves perpendicular to field lines</li>
+                <li>Conductor length is perpendicular to both field and motion</li>
+                <li>If motion is at angle &#952;: e = Blv &#215; sin(&#952;)</li>
+                <li>Parallel motion produces zero EMF</li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Generator Applications</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Generator Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Motion</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Services Use
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Diesel generator</td>
-                      <td className="border border-white/10 px-3 py-2">Rotating coil in field</td>
-                      <td className="border border-white/10 px-3 py-2">Standby power systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wind turbine</td>
-                      <td className="border border-white/10 px-3 py-2">Rotating magnetic field</td>
-                      <td className="border border-white/10 px-3 py-2">Renewable generation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Vehicle alternator</td>
-                      <td className="border border-white/10 px-3 py-2">Belt-driven rotor</td>
-                      <td className="border border-white/10 px-3 py-2">Mobile equipment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Micro-hydro</td>
-                      <td className="border border-white/10 px-3 py-2">Water-driven turbine</td>
-                      <td className="border border-white/10 px-3 py-2">Remote installations</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <p className="text-sm font-medium text-elec-yellow/80">Generator Applications</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Diesel generator</strong> — Rotating coil in field — Standby power systems</li>
+              <li><strong>Wind turbine</strong> — Rotating magnetic field — Renewable generation</li>
+              <li><strong>Vehicle alternator</strong> — Belt-driven rotor — Mobile equipment</li>
+              <li><strong>Micro-hydro</strong> — Water-driven turbine — Remote installations</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>AC generation:</strong> As a coil rotates, v sin(&#952;) varies sinusoidally,
               producing AC output naturally.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 5: Transformer EMF */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Transformer EMF: e = -N(d&#934;/dt)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Transformer EMF: e = -N(d&#934;/dt)">
             <p>
               Transformers use electromagnetic induction without any moving parts. An alternating
               current in the primary winding creates a changing magnetic flux that induces an EMF in
               the secondary winding.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Transformer EMF Equations
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-center">
-                <div>
-                  <p className="font-mono text-lg mb-1">e&#8321; = -N&#8321; &#215; (d&#934;/dt)</p>
-                  <p className="text-xs text-white">Primary EMF</p>
-                </div>
-                <div>
-                  <p className="font-mono text-lg mb-1">e&#8322; = -N&#8322; &#215; (d&#934;/dt)</p>
-                  <p className="text-xs text-white">Secondary EMF</p>
-                </div>
-              </div>
-              <p className="text-sm text-white text-center mt-3">
+
+                
+                  <p><strong>e&#8321; = -N&#8321; &#215; (d&#934;/dt)</strong></p>
+                  <p>Primary EMF</p>
+
+                
+                  <p><strong>e&#8322; = -N&#8322; &#215; (d&#934;/dt)</strong></p>
+                  <p>Secondary EMF</p>
+
+              
+              <p>
                 Same flux links both windings, so: e&#8322;/e&#8321; = N&#8322;/N&#8321;
               </p>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
+              <p className="text-sm font-medium text-white">
                 Transformer voltage relationship:
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>V&#8322;/V&#8321; = N&#8322;/N&#8321;</strong> - voltage ratio equals
                   turns ratio
                 </li>
-                <li className="pl-1">
+                <li>
                   Step-up: N&#8322; &gt; N&#8321; gives V&#8322; &gt; V&#8321;
                 </li>
-                <li className="pl-1">
+                <li>
                   Step-down: N&#8322; &lt; N&#8321; gives V&#8322; &lt; V&#8321;
                 </li>
-                <li className="pl-1">
+                <li>
                   Ideal transformer: V&#8321;I&#8321; = V&#8322;I&#8322; (power conserved)
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Transformers in Building Services
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Ratio</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution transformer</td>
-                      <td className="border border-white/10 px-3 py-2">11kV:400V</td>
-                      <td className="border border-white/10 px-3 py-2">HV to LV supply</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bell transformer</td>
-                      <td className="border border-white/10 px-3 py-2">230V:8V</td>
-                      <td className="border border-white/10 px-3 py-2">Door bells, chimes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Isolating transformer</td>
-                      <td className="border border-white/10 px-3 py-2">1:1</td>
-                      <td className="border border-white/10 px-3 py-2">Safety isolation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED driver</td>
-                      <td className="border border-white/10 px-3 py-2">230V:12V/24V</td>
-                      <td className="border border-white/10 px-3 py-2">Low voltage lighting</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Site transformer (CTE)</td>
-                      <td className="border border-white/10 px-3 py-2">230V:110V</td>
-                      <td className="border border-white/10 px-3 py-2">55-0-55V for safety</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Distribution transformer</strong> — 11kV:400V — HV to LV supply</li>
+              <li><strong>Bell transformer</strong> — 230V:8V — Door bells, chimes</li>
+              <li><strong>Isolating transformer</strong> — 1:1 — Safety isolation</li>
+              <li><strong>LED driver</strong> — 230V:12V/24V — Low voltage lighting</li>
+              <li><strong>Site transformer (CTE)</strong> — 230V:110V — 55-0-55V for safety</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Important:</strong> Transformers only work with AC. DC produces constant flux
               and therefore no induced EMF.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 6: Self and Mutual Inductance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Self and Mutual Inductance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Self and Mutual Inductance">
             <p>
               Inductance quantifies the ability of a circuit to oppose changes in current.
               Self-inductance relates to a single coil; mutual inductance relates to coupling
               between two coils.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Self-Inductance (L)</p>
-                <p className="font-mono text-center text-lg mb-2">e = -L &#215; (di/dt)</p>
-                <div className="text-xs text-white space-y-1">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Self-Inductance (L)</p>
+                <p><strong>e = -L &#215; (di/dt)</strong></p>
+
                   <p>L = self-inductance (Henrys)</p>
                   <p>di/dt = rate of change of current</p>
                   <p>e = back-EMF opposing change</p>
-                </div>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+
+              
+
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Mutual Inductance (M)
                 </p>
-                <p className="font-mono text-center text-lg mb-2">
+                <p><strong>
                   e&#8322; = -M &#215; (di&#8321;/dt)
-                </p>
-                <div className="text-xs text-white space-y-1">
+                </strong></p>
+
                   <p>M = mutual inductance (Henrys)</p>
                   <p>di&#8321;/dt = rate of change in coil 1</p>
                   <p>e&#8322; = EMF induced in coil 2</p>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Inductance properties:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              
+
+              <p className="text-sm font-medium text-white">Inductance properties:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Unit: Henry (H) - 1H induces 1V when current changes at 1A/s
                 </li>
-                <li className="pl-1">
+                <li>
                   Increases with: more turns, larger area, magnetic core material
                 </li>
-                <li className="pl-1">L proportional to N&#178; (doubling turns quadruples L)</li>
-                <li className="pl-1">Stored energy: E = 0.5 &#215; L &#215; I&#178;</li>
+                <li>L proportional to N&#178; (doubling turns quadruples L)</li>
+                <li>Stored energy: E = 0.5 &#215; L &#215; I&#178;</li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Practical Effects of Inductance
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Effect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cause</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Practical Impact
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motor back-EMF</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Self-inductance of windings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Limits running current</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inductive reactance</td>
-                      <td className="border border-white/10 px-3 py-2">Opposition to AC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        X&#8343; = 2&#960;fL (Ohms)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Switch arcing</td>
-                      <td className="border border-white/10 px-3 py-2">Stored energy release</td>
-                      <td className="border border-white/10 px-3 py-2">Contact wear, EMC issues</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lagging power factor</td>
-                      <td className="border border-white/10 px-3 py-2">Current lags voltage</td>
-                      <td className="border border-white/10 px-3 py-2">Reactive power demand</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Motor back-EMF</strong> — Self-inductance of windings — Limits running current</li>
+              <li><strong>Inductive reactance</strong> — Opposition to AC — X&#8343; = 2&#960;fL (Ohms)</li>
+              <li><strong>Switch arcing</strong> — Stored energy release — Contact wear, EMC issues</li>
+              <li><strong>Lagging power factor</strong> — Current lags voltage — Reactive power demand</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Design note:</strong> High mutual inductance with minimal leakage flux is the
               goal for efficient transformers.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 7: Eddy Currents */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
-            Eddy Currents and Their Effects
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Eddy Currents and Their Effects">
             <p>
               Eddy currents are circulating currents induced in conducting materials by changing
               magnetic fields. They can cause unwanted losses or be harnessed for useful
               applications.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Eddy Current Formation</p>
-              <p className="text-sm text-white">
+              <p className="text-sm font-medium text-elec-yellow/80">Eddy Current Formation</p>
+              <p>
                 When a changing magnetic field passes through a conductor, EMF is induced throughout
                 the material. This drives circulating currents (eddies) that follow closed loops
                 within the conductor, generating heat through I&#178;R losses.
               </p>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-red-400/80 mb-2">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Unwanted Effects (Losses)
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Transformer core heating</li>
-                  <li className="pl-1">Motor and generator core losses</li>
-                  <li className="pl-1">Efficiency reduction</li>
-                  <li className="pl-1">Overheating of metal enclosures</li>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Transformer core heating</li>
+                  <li>Motor and generator core losses</li>
+                  <li>Efficiency reduction</li>
+                  <li>Overheating of metal enclosures</li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-green-400/80 mb-2">Useful Applications</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Induction heating (cooking, furnaces)</li>
-                  <li className="pl-1">Electromagnetic braking (trains, rides)</li>
-                  <li className="pl-1">Metal detectors</li>
-                  <li className="pl-1">Damping in instruments</li>
-                </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Useful Applications</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Induction heating (cooking, furnaces)</li>
+                  <li>Electromagnetic braking (trains, rides)</li>
+                  <li>Metal detectors</li>
+                  <li>Damping in instruments</li>
+                </ul>
+
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Reducing Eddy Current Losses
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">How It Works</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Laminated cores</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thin sheets restrict eddy paths
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Transformers, motors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Silicon steel</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher resistivity reduces currents
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Power transformers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ferrite cores</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-conductive magnetic material
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-frequency transformers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Non-magnetic enclosures</td>
-                      <td className="border border-white/10 px-3 py-2">No field interaction</td>
-                      <td className="border border-white/10 px-3 py-2">Switchgear, cable routes</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Laminated cores</strong> — Thin sheets restrict eddy paths — Transformers, motors</li>
+              <li><strong>Silicon steel</strong> — Higher resistivity reduces currents — Power transformers</li>
+              <li><strong>Ferrite cores</strong> — Non-conductive magnetic material — High-frequency transformers</li>
+              <li><strong>Non-magnetic enclosures</strong> — No field interaction — Switchgear, cable routes</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Eddy current loss factors:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Losses proportional to frequency squared (f&#178;)</li>
-                <li className="pl-1">Losses proportional to flux density squared (B&#178;)</li>
-                <li className="pl-1">Losses proportional to lamination thickness squared</li>
-                <li className="pl-1">Typical lamination thickness: 0.35mm to 0.5mm for 50Hz</li>
+              <p className="text-sm font-medium text-white">Eddy current loss factors:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>Losses proportional to frequency squared (f&#178;)</li>
+                <li>Losses proportional to flux density squared (B&#178;)</li>
+                <li>Losses proportional to lamination thickness squared</li>
+                <li>Typical lamination thickness: 0.35mm to 0.5mm for 50Hz</li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Practical example:</strong> A solid core transformer would waste 20-30% of
               energy as heat; lamination reduces this to 1-2%.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 8: Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
-            Building Services: Generators, Motors, Transformers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Building Services: Generators, Motors, Transformers">
             <p>
               Electromagnetic induction principles are applied extensively in building services
               installations. Understanding these principles aids specification, installation and
               fault diagnosis.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Generators in Building Services
               </p>
-              <div className="p-4 rounded-lg bg-white/5 space-y-3">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Standby generators:</strong> Essential for hospitals, data centres,
                     high-rise buildings
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Operating principle:</strong> Diesel engine rotates field or armature,
                     inducing AC in windings
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Output:</strong> Typically 400V three-phase, 50Hz (synchronised to mains
                     frequency)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Sizing:</strong> Must account for motor starting currents (up to 6&#215;
                     running current)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>AVR (Automatic Voltage Regulator):</strong> Maintains output voltage by
                     adjusting field current
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Motors in Building Services
               </p>
-              <div className="p-4 rounded-lg bg-white/5 space-y-3">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Induction motors:</strong> Most common type - rotating magnetic field
                     induces rotor current
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Applications:</strong> HVAC fans, pumps, compressors, lifts, escalators
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Back-EMF:</strong> Generated by rotor motion, reduces net voltage and
                     hence current
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Starting current:</strong> 6-8&#215; full load current (no back-EMF when
                     stationary)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>VSD control:</strong> Variable Speed Drives control motor speed by
                     varying frequency
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Transformers in Building Services
               </p>
-              <div className="p-4 rounded-lg bg-white/5 space-y-3">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Distribution:</strong> 11kV/400V for large buildings, on-site substation
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Isolation:</strong> Medical locations (IT systems), bathrooms, swimming
                     pools
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>SELV:</strong> 230V/12V or 24V for bathroom lighting, garden lighting
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Control:</strong> 230V/24V for BMS, fire alarm, access control
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>CTE:</strong> 230V/110V (55-0-55V) for construction site tools
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Key Installation Considerations
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Induction Effect
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Installation Requirement
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Large motors</td>
-                      <td className="border border-white/10 px-3 py-2">High starting current</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suitably rated MCB/fuses, consider soft-start
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformers</td>
-                      <td className="border border-white/10 px-3 py-2">Magnetising inrush</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Time-delayed protection, inrush-rated MCB
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Generators</td>
-                      <td className="border border-white/10 px-3 py-2">Voltage regulation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AVR settings, load shedding sequence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single-core cables</td>
-                      <td className="border border-white/10 px-3 py-2">Induced EMF in metalwork</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-ferrous glands, trefoil formation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Large motors</strong> — High starting current — Suitably rated MCB/fuses, consider soft-start</li>
+              <li><strong>Transformers</strong> — Magnetising inrush — Time-delayed protection, inrush-rated MCB</li>
+              <li><strong>Generators</strong> — Voltage regulation — AVR settings, load shedding sequence</li>
+              <li><strong>Single-core cables</strong> — Induced EMF in metalwork — Non-ferrous glands, trefoil formation</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>BS 7671 note:</strong> Regulation 521.5 requires all conductors of a circuit
               to be contained in the same cable or enclosure to prevent eddy current heating.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">
                 Example 1: Generator EMF Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A generator armature has 200 conductors, each 0.3m long,
                 rotating at the edge of a 0.15m radius drum at 1500 rpm in a 0.9T field. Calculate
                 the average EMF per conductor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Step 1: Calculate velocity</p>
                 <p>
                   v = 2 &#215; &#960; &#215; r &#215; (rpm/60) = 2 &#215; 3.14 &#215; 0.15 &#215;
@@ -1124,229 +810,249 @@ const HNCModule3Section5_1 = () => {
                 <p>
                   v = 2 &#215; 3.14 &#215; 0.15 &#215; 25 = <strong>23.6 m/s</strong>
                 </p>
-                <p className="mt-2">Step 2: Calculate EMF per conductor</p>
+                <p>Step 2: Calculate EMF per conductor</p>
                 <p>
                   e = Blv = 0.9 &#215; 0.3 &#215; 23.6 = <strong>6.4V</strong>
                 </p>
-                <p className="mt-2 text-white">
+                <p>
                   Total EMF depends on series/parallel conductor arrangement
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 2: Transformer Turns Ratio
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A bell transformer has 1150 turns on the primary and 40
                 turns on the secondary. If connected to 230V mains, what is the secondary voltage?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Using transformer equation: V&#8322;/V&#8321; = N&#8322;/N&#8321;</p>
-                <p className="mt-2">V&#8322; = V&#8321; &#215; (N&#8322;/N&#8321;)</p>
+                <p>V&#8322; = V&#8321; &#215; (N&#8322;/N&#8321;)</p>
                 <p>V&#8322; = 230 &#215; (40/1150)</p>
                 <p>
                   V&#8322; = 230 &#215; 0.0348 = <strong>8V</strong>
                 </p>
-                <p className="mt-2 text-white">Suitable for door bells and chimes</p>
-              </div>
-            </div>
+                <p>Suitable for door bells and chimes</p>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 3: Rate of Change of Flux
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A 400-turn coil is in a magnetic field. The flux through
                 the coil changes from 0.08Wb to 0.02Wb in 50ms. Calculate the induced EMF.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Change in flux: d&#934; = 0.02 - 0.08 = -0.06Wb</p>
                 <p>Time: dt = 50ms = 0.05s</p>
-                <p className="mt-2">e = -N &#215; (d&#934;/dt)</p>
+                <p>e = -N &#215; (d&#934;/dt)</p>
                 <p>e = -400 &#215; (-0.06/0.05)</p>
                 <p>
                   e = -400 &#215; (-1.2) = <strong>480V</strong>
                 </p>
-                <p className="mt-2 text-white">
+                <p>
                   The positive result indicates EMF opposes the decreasing flux
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 4: Self-Inductance Back-EMF
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A relay coil has inductance of 0.5H. When the circuit is
                 opened, the current falls from 0.2A to zero in 5ms. What back-EMF is generated?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Using: e = -L &#215; (di/dt)</p>
-                <p className="mt-2">di = 0 - 0.2 = -0.2A</p>
+                <p>di = 0 - 0.2 = -0.2A</p>
                 <p>dt = 5ms = 0.005s</p>
-                <p className="mt-2">e = -0.5 &#215; (-0.2/0.005)</p>
+                <p>e = -0.5 &#215; (-0.2/0.005)</p>
                 <p>
                   e = -0.5 &#215; (-40) = <strong>20V</strong>
                 </p>
-                <p className="mt-2 text-white">
+                <p>
                   This is why relay contacts arc - the back-EMF can be much higher than supply
                 </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>e = -N(d&#934;/dt)</strong> - Faraday's law (transformer EMF)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>e = Blv</strong> - Motional EMF
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>e = -L(di/dt)</strong> - Self-inductance back-EMF
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>V&#8322;/V&#8321; = N&#8322;/N&#8321;</strong> - Transformer voltage ratio
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>X&#8343; = 2&#960;fL</strong> - Inductive reactance
                 </li>
               </ul>
-            </div>
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Motor starting current: <strong>6-8&#215; full load current</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   Transformer inrush: <strong>Up to 12&#215; full load current</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   UK frequency: <strong>50Hz</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   Lamination thickness (50Hz): <strong>0.35-0.5mm</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   CTE output: <strong>55-0-55V</strong> (110V between lines)
                 </li>
               </ul>
-            </div>
+          </ConceptBlock>
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>DC on transformer:</strong> Produces no output, only heating
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring inrush:</strong> MCBs may nuisance trip on transformer
                   energisation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Separating single-core cables:</strong> Causes eddy current heating in
                   steel enclosures
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Undersizing for motors:</strong> Must account for starting current, not
                   just running
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+              </>
+            }
+            doInstead="Apply the formulas with care, verify with measured values where possible, and always cross-check against BS 7671 and equipment manufacturer data."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Induction Laws</p>
-                <ul className="space-y-0.5">
+          <ConceptBlock title="Quick Reference">
+            <p className="text-sm font-medium text-elec-yellow/80">Induction Laws</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Faraday: e = -N(d&#934;/dt)</li>
                   <li>Lenz: Opposes the change causing it</li>
                   <li>Motional: e = Blv (perpendicular)</li>
                   <li>Self-inductance: e = -L(di/dt)</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Services</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Building Services</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Generators: Mechanical to electrical</li>
                   <li>Motors: Electrical to mechanical</li>
                   <li>Transformers: Voltage conversion</li>
                   <li>Laminations: Reduce eddy losses</li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <Scenario
+            title="Investigating transformer humming and excessive no-load loss"
+            situation={
+              <>
+                A site operator reports increased monthly kWh consumption from a 800 kVA
+                cast-resin distribution transformer feeding a quiet office building. The
+                transformer is audibly louder than at commissioning two years ago. No-load
+                loss measurement shows 1.8 kW continuous (commissioning value 1.1 kW).
+              </>
+            }
+            whatToDo={
+              <>
+                Investigate via three avenues: (a) Check supply voltage. If the DNO is
+                running consistently at 245&ndash;253 V (within the 230 V +10 % BS EN 50160
+                tolerance), core flux density rises beyond design point and the iron
+                saturates — drives both no-load loss and acoustic noise. Specify a tap
+                changer adjustment to bring secondary nominal closer to 230 V. (b) Check
+                downstream harmonic content — significant 5th/7th distortion increases
+                eddy-current loss. (c) Visually / thermally inspect for delaminated core
+                stacking or loose tie-bolts.
+              </>
+            }
+            whyItMatters={
+              <>
+                A 0.7 kW continuous no-load increase is 6132 kWh/year &mdash; ~&pound;1230
+                at 20 p/kWh, plus the carbon penalty under any building&rsquo;s ESOS or
+                BREEAM-In-Use audit. Transformer no-load loss runs 24/7 regardless of
+                downstream load, so detecting and correcting drift is high-leverage on
+                BSE energy management.
+              </>
+            }
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Faraday&rsquo;s law: e = &minus;N d&Phi;/dt — induced EMF is proportional to rate of change of flux linkage.',
+              'Lenz&rsquo;s law: induced current direction opposes the change in flux that caused it &mdash; the source of inductor &ldquo;back-EMF&rdquo; on switching.',
+              'Motional EMF: e = Blv — the basis of generator and slip-ring machine analysis.',
+              'Transformer EMF: E = 4.44 &times; B &times; A &times; f &times; N — the design equation behind every transformer kVA rating.',
+              'Eddy currents: circulating currents in solid metal cores cause I&sup2;R losses — controlled by laminating cores in 0.3&ndash;0.5 mm sheets.',
+              'Hysteresis loss: energy lost re-aligning magnetic domains every cycle — controlled by grain-oriented silicon steel.',
+              'BS EN 60076 is the umbrella standard for distribution transformers; tier 2 Ecodesign limits cap no-load and load losses.',
+              'Modern alternatives: amorphous metal cores (~70 % lower no-load loss than silicon steel) for ultra-low-loss transformers in Part L-driven specifications.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section4-8">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Section 4.8
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section5-2">
-              Next: Section 5.2
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 4
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section5-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Transformer theory, losses and efficiency
+              </div>
+            </button>
+          </div>
+
+        </PageFrame>
+      </div>
     </div>
   );
 };

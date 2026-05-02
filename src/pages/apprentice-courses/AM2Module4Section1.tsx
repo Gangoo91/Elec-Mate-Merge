@@ -954,8 +954,8 @@ const AM2Module4Section1 = () => {
             }
             doInstead={
               <>
-                Use the A4:2026 figures. B-curve at 230 V: B6 ≈ 7.28 Ω · B16 ≈ 2.74 Ω ·{' '}
-                <strong>B32 = 1.37 Ω</strong> · B40 ≈ 1.09 Ω. C-curve roughly halves these. Then
+                Use the A4:2026 figures. B-curve at 230 V: B6 = 7.28 Ω · B16 = 2.73 Ω ·{' '}
+                <strong>B32 = 1.37 Ω</strong> · B40 = 1.09 Ω. C-curve roughly halves these. Then
                 apply the 0.8 rule for ambient measurement → measured Zs on a B32 must be ≤ 1.10 Ω.
                 Drill these numbers before AM2 day so you can write them without looking them up.
               </>

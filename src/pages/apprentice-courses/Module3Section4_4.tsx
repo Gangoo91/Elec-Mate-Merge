@@ -1116,7 +1116,7 @@ const Module3Section4_4 = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Symptoms</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li>Zs reading above maximum permitted (1.44Ω for B32 MCB)</li>
+                      <li>Zs reading above maximum permitted (1.37Ω for B32 MCB)</li>
                       <li>RCD may still operate correctly</li>
                       <li>ADS disconnection times exceeded</li>
                       <li>Potential shock risk in fault conditions</li>
@@ -1212,9 +1212,9 @@ const Module3Section4_4 = () => {
           <InlineCheck
             id="fault-impedance"
             question="What is the maximum earth fault loop impedance for a 32A Type B MCB circuit?"
-            options={['0.87Ω', '1.44Ω', '2.19Ω', '3.68Ω']}
+            options={['0.87Ω', '1.37Ω', '2.19Ω', '3.68Ω']}
             correctIndex={1}
-            explanation="The maximum Zs for a 32A Type B MCB is 1.44Ω to ensure disconnection within 0.4 seconds under fault conditions."
+            explanation="The maximum Zs for a 32A Type B MCB is 1.37Ω (BS 7671:2018+A4:2026 Table 41.3) to ensure disconnection within 0.4 seconds under fault conditions."
           />
         </section>
 

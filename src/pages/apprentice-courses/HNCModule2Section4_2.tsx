@@ -1,8 +1,26 @@
-import { ArrowLeft, Lightbulb, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 4 · Subsection 2 — Illumination Calculations
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Lumen method, point-by-point calculations, room index, utilisation and maintenance
+ *   factors — turning a lux target into a defendable luminaire schedule.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Illumination Calculations - HNC Module 2 Section 4.2';
@@ -218,770 +236,545 @@ const faqs = [
 ];
 
 const HNCModule2Section4_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Lightbulb className="h-4 w-4" />
-            <span>Module 2.4.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Illumination Calculations
-          </h1>
-          <p className="text-white">
-            The lumen method, point-by-point calculations, and CIBSE recommendations for building
-            services lighting design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 4 · Subsection 2"
+            title="Illumination Calculations"
+            description="The lumen method, point-by-point calculations, and CIBSE recommendations for building services lighting design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Lumen method:</strong> N = (E × A) / (Φ × UF × MF)
-              </li>
-              <li className="pl-1">
-                <strong>Point-by-point:</strong> E = I cos θ / d²
-              </li>
-              <li className="pl-1">
-                <strong>Room index:</strong> RI = LW / Hm(L+W)
-              </li>
-              <li className="pl-1">
-                <strong>Maintained illuminance:</strong> Design minimum
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Office:</strong> 300-500 lux (CIBSE LG7)
-              </li>
-              <li className="pl-1">
-                <strong>Warehouse:</strong> 150-200 lux
-              </li>
-              <li className="pl-1">
-                <strong>Retail:</strong> 300-500 lux
-              </li>
-              <li className="pl-1">
-                <strong>Typical MF:</strong> 0.7-0.8
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You apply the lumen method N = (E × A) / (Φ × UF × MF) to size luminaire quantity for a target maintained illuminance.',
+              'You compute the room index k = (L × W) / [Hm × (L + W)] and read UF off the manufacturer&rsquo;s photometric data.',
+              'You apply MF = LLMF × LSF × LMF × RSMF to allow for lamp lumen depreciation, survival, luminaire dirt and room surface maintenance.',
+              'You verify the design with a point-by-point check (E = I × cos³θ / h²) on critical task positions before sign-off.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS EN 12464-1 — Light and lighting. Lighting of work places. Indoor work places"
+            clause="Maintained illuminance Em, uniformity U₀, UGR limits and CRI minima for each indoor task and area type — the European standard the UK lighting industry designs to."
+            meaning={
+              <>
+                BS EN 12464-1 is the harmonised European standard, embedded into CIBSE
+                Lighting Guide recommendations. Quote it on the lighting calculation summary
+                so the building control officer, BREEAM assessor and contractor are working
+                from the same numbers as you.
+              </>
+            }
+            cite="Source: BS EN 12464-1; CIBSE/SLL LG7 Lighting for Offices; CIBSE/SLL Code for Lighting."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Apply the lumen method to calculate number of luminaires required',
               'Calculate room index and determine utilisation factors',
               'Use point-by-point method for specific illuminance calculations',
               'Understand maintained illuminance and maintenance factors',
               'Reference CIBSE lighting guides for design recommendations',
               'Apply inverse square and cosine laws to lighting calculations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: The Lumen Method */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Lumen Method
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="The Lumen Method"
+            plainEnglish="The standard way to size a regular grid of luminaires for an even spread of light. One formula, four inputs, and you get the count."
+          >
             <p>
               The lumen method is the primary technique for calculating the number of luminaires
               required to achieve a target average illuminance across a working plane. It accounts
               for room characteristics, surface finishes, and maintenance conditions through
               systematic factors.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Lumen Method Formula
-              </p>
-              <p className="font-mono text-center text-lg mb-2">N = (E × A) / (Φ × UF × MF)</p>
-              <div className="text-xs text-white grid grid-cols-2 gap-2 mt-3">
-                <div>N = number of luminaires</div>
-                <div>E = maintained illuminance (lux)</div>
-                <div>A = area of working plane (m²)</div>
-                <div>Φ = luminaire light output (lm)</div>
-                <div>UF = utilisation factor</div>
-                <div>MF = maintenance factor</div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Lumen method procedure:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Determine required maintained illuminance (E) from CIBSE guides
-                </li>
-                <li className="pl-1">Measure or calculate room area (A = L × W)</li>
-                <li className="pl-1">Calculate room index: RI = (L × W) / [Hm × (L + W)]</li>
-                <li className="pl-1">Select luminaire and note lumen output (Φ)</li>
-                <li className="pl-1">Read UF from luminaire data using RI and reflectances</li>
-                <li className="pl-1">Determine appropriate MF (typically 0.7-0.8)</li>
-                <li className="pl-1">Calculate N and round up to next whole number</li>
-                <li className="pl-1">Arrange luminaires in regular array</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Variables Explained
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Variable</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Range</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">Hm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mounting height above working plane
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.0-3.5m (offices)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">RI</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Room index (room proportions)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.75-5.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">UF</td>
-                      <td className="border border-white/10 px-3 py-2">Utilisation factor</td>
-                      <td className="border border-white/10 px-3 py-2">0.3-0.7</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">MF</td>
-                      <td className="border border-white/10 px-3 py-2">Maintenance factor</td>
-                      <td className="border border-white/10 px-3 py-2">0.6-0.9</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> The lumen method gives average illuminance - actual values
+            <p>
+              <strong>The Lumen Method Formula:</strong> N = (E × A) / (Φ × UF × MF)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>N = number of luminaires</li>
+              <li>E = maintained illuminance (lux)</li>
+              <li>A = area of working plane (m²)</li>
+              <li>Φ = luminaire light output (lm)</li>
+              <li>UF = utilisation factor</li>
+              <li>MF = maintenance factor</li>
+            </ul>
+            <p>
+              <strong>Lumen method procedure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Determine required maintained illuminance (E) from CIBSE guides</li>
+              <li>Measure or calculate room area (A = L × W)</li>
+              <li>Calculate room index: RI = (L × W) / [Hm × (L + W)]</li>
+              <li>Select luminaire and note lumen output (Φ)</li>
+              <li>Read UF from luminaire data using RI and reflectances</li>
+              <li>Determine appropriate MF (typically 0.7-0.8)</li>
+              <li>Calculate N and round up to next whole number</li>
+              <li>Arrange luminaires in regular array</li>
+            </ul>
+            <p>
+              <strong>Key Variables Explained:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hm:</strong> Mounting height above working plane. Typical 2.0-3.5m for
+                offices.
+              </li>
+              <li>
+                <strong>RI:</strong> Room index (room proportions). Typical 0.75-5.0.
+              </li>
+              <li>
+                <strong>UF:</strong> Utilisation factor. Typical 0.3-0.7.
+              </li>
+              <li>
+                <strong>MF:</strong> Maintenance factor. Typical 0.6-0.9.
+              </li>
+            </ul>
+            <p>
+              <strong>Remember:</strong> The lumen method gives average illuminance — actual values
               will vary across the space. Software verification is recommended for final designs.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Room Index and Utilisation Factor */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Room Index and Utilisation Factor
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Room Index and Utilisation Factor"
+            plainEnglish="RI describes the shape of the room. UF says how much luminaire light actually lands on the working plane. Bigger, more proportionate rooms with light surfaces win."
+          >
             <p>
               The room index describes the proportions of a room relative to the luminaire mounting
               height. Combined with surface reflectances, it determines how efficiently light from
-              luminaires reaches the working plane - the utilisation factor (UF).
+              luminaires reaches the working plane — the utilisation factor (UF).
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Room Index Formula</p>
-              <p className="font-mono text-center text-lg mb-2">RI = (L × W) / [Hm × (L + W)]</p>
-              <div className="text-xs text-white text-center mt-2">
-                L = length, W = width, Hm = mounting height above working plane (typically 0.85m
-                above floor)
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Room Index Interpretation
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>RI &lt; 1:</strong> Small/tall room, low UF
-                  </li>
-                  <li className="pl-1">
-                    <strong>RI 1-2:</strong> Typical rooms
-                  </li>
-                  <li className="pl-1">
-                    <strong>RI 2-3:</strong> Large/low rooms
-                  </li>
-                  <li className="pl-1">
-                    <strong>RI &gt; 3:</strong> Very large/low rooms, high UF
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Standard Surface Reflectances
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Ceiling:</strong> 0.7 (70%) - white
-                  </li>
-                  <li className="pl-1">
-                    <strong>Walls:</strong> 0.5 (50%) - light colours
-                  </li>
-                  <li className="pl-1">
-                    <strong>Floor:</strong> 0.2 (20%) - typical floor
-                  </li>
-                  <li className="pl-1">Often written as C70 W50 F20</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical UF Values (Direct Luminaire, C70 W50 F20)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Room Index</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">0.75</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">1.0</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">1.5</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">2.0</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">3.0</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">5.0</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical UF</td>
-                      <td className="border border-white/10 px-3 py-2">0.35</td>
-                      <td className="border border-white/10 px-3 py-2">0.42</td>
-                      <td className="border border-white/10 px-3 py-2">0.50</td>
-                      <td className="border border-white/10 px-3 py-2">0.55</td>
-                      <td className="border border-white/10 px-3 py-2">0.62</td>
-                      <td className="border border-white/10 px-3 py-2">0.68</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Note: Actual UF values vary by luminaire type - always use manufacturer's
-                photometric data
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Room Index Formula:</strong> RI = (L × W) / [Hm × (L + W)]. L = length, W =
+              width, Hm = mounting height above working plane (typically 0.85m above floor).
+            </p>
+            <p>
+              <strong>Room Index Interpretation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>RI &lt; 1:</strong> Small/tall room, low UF
+              </li>
+              <li>
+                <strong>RI 1-2:</strong> Typical rooms
+              </li>
+              <li>
+                <strong>RI 2-3:</strong> Large/low rooms
+              </li>
+              <li>
+                <strong>RI &gt; 3:</strong> Very large/low rooms, high UF
+              </li>
+            </ul>
+            <p>
+              <strong>Standard Surface Reflectances:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ceiling:</strong> 0.7 (70%) — white
+              </li>
+              <li>
+                <strong>Walls:</strong> 0.5 (50%) — light colours
+              </li>
+              <li>
+                <strong>Floor:</strong> 0.2 (20%) — typical floor
+              </li>
+              <li>Often written as C70 W50 F20</li>
+            </ul>
+            <p>
+              <strong>Typical UF Values (Direct Luminaire, C70 W50 F20):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>RI 0.75 → UF ≈ 0.35</li>
+              <li>RI 1.0 → UF ≈ 0.42</li>
+              <li>RI 1.5 → UF ≈ 0.50</li>
+              <li>RI 2.0 → UF ≈ 0.55</li>
+              <li>RI 3.0 → UF ≈ 0.62</li>
+              <li>RI 5.0 → UF ≈ 0.68</li>
+            </ul>
+            <p>
+              Note: Actual UF values vary by luminaire type — always use manufacturer's photometric
+              data.
+            </p>
+            <p>
               <strong>Design tip:</strong> Dark surfaces significantly reduce UF. For dark ceilings
               or walls, expect 10-30% lower UF than standard tables suggest.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Maintained Illuminance and Maintenance Factor */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Maintained Illuminance and Maintenance Factors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Maintained Illuminance and Maintenance Factors"
+            plainEnglish="Lamps dim, dust builds up, walls get grubby. MF builds in headroom so the room still hits the design lux at the end of the cleaning cycle."
+          >
             <p>
-              Lighting systems depreciate over time - lamps lose output, luminaires and room
+              Lighting systems depreciate over time — lamps lose output, luminaires and room
               surfaces accumulate dirt. The maintenance factor (MF) accounts for this, ensuring the
               design achieves required illuminance throughout the maintenance cycle.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maintenance Factor Components
-              </p>
-              <p className="font-mono text-center text-lg mb-2">MF = LLMF × LSF × LMF × RSMF</p>
-              <div className="text-xs text-white grid sm:grid-cols-2 gap-2 mt-3">
-                <div>
-                  <strong>LLMF:</strong> Lamp Lumen Maintenance Factor
-                </div>
-                <div>
-                  <strong>LSF:</strong> Lamp Survival Factor
-                </div>
-                <div>
-                  <strong>LMF:</strong> Luminaire Maintenance Factor
-                </div>
-                <div>
-                  <strong>RSMF:</strong> Room Surface Maintenance Factor
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE Maintained Illuminance Recommendations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Em (lux)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        CIBSE Reference
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corridors, circulation</td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                      <td className="border border-white/10 px-3 py-2">LG7</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse (general)</td>
-                      <td className="border border-white/10 px-3 py-2">150-200</td>
-                      <td className="border border-white/10 px-3 py-2">LG1</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office</td>
-                      <td className="border border-white/10 px-3 py-2">300-500</td>
-                      <td className="border border-white/10 px-3 py-2">LG7</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail sales areas</td>
-                      <td className="border border-white/10 px-3 py-2">300-500</td>
-                      <td className="border border-white/10 px-3 py-2">LG6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fine assembly/inspection</td>
-                      <td className="border border-white/10 px-3 py-2">750-1000</td>
-                      <td className="border border-white/10 px-3 py-2">LG1</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Operating theatre</td>
-                      <td className="border border-white/10 px-3 py-2">1000+</td>
-                      <td className="border border-white/10 px-3 py-2">LG2</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Maintenance Factors by Environment
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Environment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical MF</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Clean (office, retail)</td>
-                      <td className="border border-white/10 px-3 py-2">0.80</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Regular cleaning, LED lamps
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Normal (schools, workshops)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.70</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate soiling</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dirty (industrial)</td>
-                      <td className="border border-white/10 px-3 py-2">0.60</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High soiling, IP65+ luminaires
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Very dirty (foundry)</td>
-                      <td className="border border-white/10 px-3 py-2">0.50</td>
-                      <td className="border border-white/10 px-3 py-2">Heavy contamination</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Maintenance Factor Components:</strong> MF = LLMF × LSF × LMF × RSMF
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LLMF:</strong> Lamp Lumen Maintenance Factor
+              </li>
+              <li>
+                <strong>LSF:</strong> Lamp Survival Factor
+              </li>
+              <li>
+                <strong>LMF:</strong> Luminaire Maintenance Factor
+              </li>
+              <li>
+                <strong>RSMF:</strong> Room Surface Maintenance Factor
+              </li>
+            </ul>
+            <p>
+              <strong>CIBSE Maintained Illuminance Recommendations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Corridors, circulation:</strong> 100 lux (LG7)
+              </li>
+              <li>
+                <strong>Warehouse (general):</strong> 150-200 lux (LG1)
+              </li>
+              <li>
+                <strong>General office:</strong> 300-500 lux (LG7)
+              </li>
+              <li>
+                <strong>Retail sales areas:</strong> 300-500 lux (LG6)
+              </li>
+              <li>
+                <strong>Fine assembly/inspection:</strong> 750-1000 lux (LG1)
+              </li>
+              <li>
+                <strong>Operating theatre:</strong> 1000+ lux (LG2)
+              </li>
+            </ul>
+            <p>
+              <strong>Typical Maintenance Factors by Environment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Clean (office, retail):</strong> MF 0.80. Regular cleaning, LED lamps.
+              </li>
+              <li>
+                <strong>Normal (schools, workshops):</strong> MF 0.70. Moderate soiling.
+              </li>
+              <li>
+                <strong>Dirty (industrial):</strong> MF 0.60. High soiling, IP65+ luminaires.
+              </li>
+              <li>
+                <strong>Very dirty (foundry):</strong> MF 0.50. Heavy contamination.
+              </li>
+            </ul>
+            <p>
               <strong>Key relationship:</strong> Initial illuminance = Maintained illuminance / MF.
               Always design to maintained, not initial values.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Point-by-Point Method */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Point-by-Point Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Point-by-Point Calculations"
+            plainEnglish="Inverse square + cosine. The two laws that tell you what you'll actually get on a target surface from a single luminaire — and software does this thousands of times per design."
+          >
             <p>
               The point-by-point method calculates illuminance at specific locations using luminous
               intensity data and geometric relationships. It combines the inverse square law
               (distance effect) with the cosine law (angle of incidence effect).
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Point-by-Point Formula</p>
-              <p className="font-mono text-center text-lg mb-2">E = (I × cos θ) / d²</p>
-              <div className="text-xs text-white text-center mt-2">
-                E = illuminance (lux), I = intensity towards point (cd), θ = angle to normal, d =
-                distance (m)
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Inverse Square Law</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">E = I / d² (for perpendicular incidence)</li>
-                  <li className="pl-1">Doubling distance quarters illuminance</li>
-                  <li className="pl-1">Applies to point sources</li>
-                  <li className="pl-1">Extended sources: use closer to source</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cosine Law</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">E ∝ cos θ (angle to surface normal)</li>
-                  <li className="pl-1">Maximum illuminance at perpendicular</li>
-                  <li className="pl-1">E = 0 at grazing incidence (90°)</li>
-                  <li className="pl-1">Accounts for surface orientation</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Alternative Forms</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">E = I cos³θ / H²</p>
-                  <p className="text-white text-xs">Using mounting height H</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">E = I H / d³</p>
-                  <p className="text-white text-xs">For horizontal surface below source</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                When to use point-by-point calculations:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Spotlights and accent lighting design</li>
-                <li className="pl-1">Calculating illuminance at specific task locations</li>
-                <li className="pl-1">Checking uniformity at critical points</li>
-                <li className="pl-1">Irregular luminaire layouts</li>
-                <li className="pl-1">Outdoor and floodlighting applications</li>
-                <li className="pl-1">Software typically uses this method internally</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Point-by-Point Formula:</strong> E = (I × cos θ) / d². E = illuminance (lux),
+              I = intensity towards point (cd), θ = angle to normal, d = distance (m).
+            </p>
+            <p>
+              <strong>Inverse Square Law:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>E = I / d² (for perpendicular incidence)</li>
+              <li>Doubling distance quarters illuminance</li>
+              <li>Applies to point sources</li>
+              <li>Extended sources: use closer to source</li>
+            </ul>
+            <p>
+              <strong>Cosine Law:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>E ∝ cos θ (angle to surface normal)</li>
+              <li>Maximum illuminance at perpendicular</li>
+              <li>E = 0 at grazing incidence (90°)</li>
+              <li>Accounts for surface orientation</li>
+            </ul>
+            <p>
+              <strong>Alternative Forms:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>E = I cos³θ / H²</strong> — using mounting height H
+              </li>
+              <li>
+                <strong>E = I H / d³</strong> — for horizontal surface below source
+              </li>
+            </ul>
+            <p>
+              <strong>When to use point-by-point calculations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Spotlights and accent lighting design</li>
+              <li>Calculating illuminance at specific task locations</li>
+              <li>Checking uniformity at critical points</li>
+              <li>Irregular luminaire layouts</li>
+              <li>Outdoor and floodlighting applications</li>
+              <li>Software typically uses this method internally</li>
+            </ul>
+            <p>
               <strong>Multiple sources:</strong> Total illuminance at a point = sum of contributions
               from all luminaires. Add individual E values calculated for each luminaire.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="A standard office grid, a downlight on a display, and an MF calculation — three real specifying jobs."
+          >
+            <p>
+              <strong>Example 1: Lumen Method - Office Lighting.</strong> Calculate luminaires
+              needed for a 15m × 10m office requiring 400 lux maintained. Luminaires output 4000lm
+              each. Ceiling height 3m, working plane 0.85m. Reflectances C70 W50 F20.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Calculate room index. Hm = 3.0 - 0.85 = 2.15m</li>
+              <li>RI = (15 × 10) / [2.15 × (15 + 10)] = 150 / 53.75 = <strong>2.79</strong></li>
+              <li>
+                Step 2: Find UF (from tables at RI = 2.79) ≈ <strong>0.58</strong>
+              </li>
+              <li>Step 3: Apply formula (MF = 0.8). N = (E × A) / (Φ × UF × MF)</li>
+              <li>N = (400 × 150) / (4000 × 0.58 × 0.8)</li>
+              <li>
+                N = 60000 / 1856 = <strong>32.3 → 33 luminaires</strong>
+              </li>
+              <li>Arrange in 11 × 3 grid or similar regular array.</li>
+            </ul>
+            <p>
+              <strong>Example 2: Point-by-Point Calculation.</strong> A downlight with 1200cd
+              intensity in the relevant direction is mounted 2.5m above a display. The display is
+              1.5m horizontally from directly below the downlight. Calculate the illuminance on the
+              display.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Calculate geometry. H = 2.5m, horizontal distance = 1.5m</li>
+              <li>
+                d = √(2.5² + 1.5²) = √(6.25 + 2.25) = √8.5 = <strong>2.92m</strong>
+              </li>
+              <li>
+                Step 2: Calculate angle. cos θ = H / d = 2.5 / 2.92 = <strong>0.856</strong>
+              </li>
+              <li>Step 3: Apply formula. E = (I × cos θ) / d² = (1200 × 0.856) / 2.92²</li>
+              <li>
+                E = 1027.2 / 8.53 = <strong>120 lux</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3: Maintenance Factor Calculation.</strong> Calculate the maintenance
+              factor for an LED installation in a clean office. LLMF = 0.9, LSF = 1.0, LMF = 0.9,
+              RSMF = 0.95.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>MF = LLMF × LSF × LMF × RSMF = 0.9 × 1.0 × 0.9 × 0.95</li>
+              <li>
+                MF = <strong>0.77 (use 0.8)</strong>
+              </li>
+              <li>This means the installation will deliver 77% of initial lumens at end of
+              maintenance cycle.</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Lumen Method - Office Lighting
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate luminaires needed for a 15m × 10m office
-                requiring 400 lux maintained. Luminaires output 4000lm each. Ceiling height 3m,
-                working plane 0.85m. Reflectances C70 W50 F20.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Calculate room index</p>
-                <p>Hm = 3.0 - 0.85 = 2.15m</p>
-                <p>RI = (15 × 10) / [2.15 × (15 + 10)]</p>
-                <p>
-                  RI = 150 / 53.75 = <strong>2.79</strong>
-                </p>
-                <p className="mt-2">
-                  Step 2: Find UF (from tables at RI = 2.79) ≈ <strong>0.58</strong>
-                </p>
-                <p className="mt-2">Step 3: Apply formula (MF = 0.8)</p>
-                <p>N = (E × A) / (Φ × UF × MF)</p>
-                <p>N = (400 × 150) / (4000 × 0.58 × 0.8)</p>
-                <p>
-                  N = 60000 / 1856 = <strong>32.3 → 33 luminaires</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Arrange in 11 × 3 grid or similar regular array
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Point-by-Point Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A downlight with 1200cd intensity in the relevant
-                direction is mounted 2.5m above a display. The display is 1.5m horizontally from
-                directly below the downlight. Calculate the illuminance on the display.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Calculate geometry</p>
-                <p>H = 2.5m, horizontal distance = 1.5m</p>
-                <p>
-                  d = √(2.5² + 1.5²) = √(6.25 + 2.25) = √8.5 = <strong>2.92m</strong>
-                </p>
-                <p className="mt-2">Step 2: Calculate angle</p>
-                <p>
-                  cos θ = H / d = 2.5 / 2.92 = <strong>0.856</strong>
-                </p>
-                <p className="mt-2">Step 3: Apply formula</p>
-                <p>E = (I × cos θ) / d²</p>
-                <p>E = (1200 × 0.856) / 2.92²</p>
-                <p>
-                  E = 1027.2 / 8.53 = <strong>120 lux</strong>
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="Five formulas, half a dozen CIBSE guides — that covers most jobs."
+          >
+            <p>
+              <strong>Key Formulas to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lumen method:</strong> N = (E × A) / (Φ × UF × MF)
+              </li>
+              <li>
+                <strong>Room index:</strong> RI = (L × W) / [Hm × (L + W)]
+              </li>
+              <li>
+                <strong>Point-by-point:</strong> E = I cos θ / d²
+              </li>
+              <li>
+                <strong>Inverse square:</strong> E = I / d²
+              </li>
+              <li>
+                <strong>Maintenance factor:</strong> MF = LLMF × LSF × LMF × RSMF
+              </li>
+            </ul>
+            <p>
+              <strong>CIBSE Lighting Guide References:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LG1:</strong> Industrial Environment
+              </li>
+              <li>
+                <strong>LG2:</strong> Hospitals and Healthcare
+              </li>
+              <li>
+                <strong>LG5:</strong> Lecture/Conference Rooms
+              </li>
+              <li>
+                <strong>LG6:</strong> Outdoor Environment
+              </li>
+              <li>
+                <strong>LG7:</strong> Offices
+              </li>
+              <li>
+                <strong>SLL Handbook:</strong> Comprehensive reference
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Maintenance Factor Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the maintenance factor for an LED installation
-                in a clean office. LLMF = 0.9, LSF = 1.0, LMF = 0.9, RSMF = 0.95.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>MF = LLMF × LSF × LMF × RSMF</p>
-                <p>MF = 0.9 × 1.0 × 0.9 × 0.95</p>
-                <p>
-                  MF = <strong>0.77 (use 0.8)</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This means the installation will deliver 77% of initial lumens at end of
-                  maintenance cycle
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Formulas to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lumen method:</strong> N = (E × A) / (Φ × UF × MF)
-                </li>
-                <li className="pl-1">
-                  <strong>Room index:</strong> RI = (L × W) / [Hm × (L + W)]
-                </li>
-                <li className="pl-1">
-                  <strong>Point-by-point:</strong> E = I cos θ / d²
-                </li>
-                <li className="pl-1">
-                  <strong>Inverse square:</strong> E = I / d²
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance factor:</strong> MF = LLMF × LSF × LMF × RSMF
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE Lighting Guide References
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>LG1:</strong> Industrial Environment
-                </li>
-                <li className="pl-1">
-                  <strong>LG2:</strong> Hospitals and Healthcare
-                </li>
-                <li className="pl-1">
-                  <strong>LG5:</strong> Lecture/Conference Rooms
-                </li>
-                <li className="pl-1">
-                  <strong>LG6:</strong> Outdoor Environment
-                </li>
-                <li className="pl-1">
-                  <strong>LG7:</strong> Offices
-                </li>
-                <li className="pl-1">
-                  <strong>SLL Handbook:</strong> Comprehensive reference
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Wrong Hm:</strong> Use mounting height above working plane, not floor or
                   ceiling
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Forgetting MF:</strong> Initial illuminance is much higher than maintained
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Wrong UF tables:</strong> Must match luminaire type and reflectances
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Mixing units:</strong> Keep everything in SI units (lux, lumens, metres)
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always measure Hm from the working plane (typically 0.85m above floor), apply MF every time, pick UF tables matched to your specific luminaire and surface reflectances, and keep all units in lux/lumens/metres throughout."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Lumen-method calculation for a 12 m × 8 m classroom"
+            situation={
+              <>
+                You are designing the lighting for a new 12 m × 8 m primary-school
+                classroom, mounting height 2.7 m, target Em = 300 lux maintained,
+                UGR ≤ 19. The architect has selected a 4000 K, CRI 90 LED panel
+                rated 4,000 lm at 32 W. Reflectances: ceiling 70%, walls 50%,
+                floor 20%.
+              </>
+            }
+            whatToDo={
+              <>
+                Compute room index k = (12 × 8) / [2.7 × (12 + 8)] = 1.78. Look up UF
+                from the photometric file at k = 1.78 and the given reflectances (typically
+                0.62). Set MF = 0.80 (clean office/classroom, 3-year cleaning cycle, LED
+                LLMF 0.92 × LMF 0.92 × RSMF ≈ 0.80). Calculate
+                N = (300 × 96) / (4000 × 0.62 × 0.80) ≈ 14.5 — round up to 16
+                luminaires arranged 4 × 4 for uniformity. Verify U₀ ≥ 0.6 with a
+                point-by-point grid in DIALux.
+              </>
+            }
+            whyItMatters={
+              <>
+                Schools are inspected against BS EN 12464-1 and Building Bulletin 90
+                (lighting for schools). An undersized scheme triggers a re-design after
+                handover and a Department for Education non-conformity report. The
+                lumen-method calculation is the auditable spine of the lighting design.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Lumen Method</p>
-                <ul className="space-y-0.5">
-                  <li>N = (E × A) / (Φ × UF × MF)</li>
-                  <li>RI = LW / Hm(L+W)</li>
-                  <li>Typical UF: 0.4-0.6</li>
-                  <li>Typical MF: 0.7-0.8</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">CIBSE Lux Levels</p>
-                <ul className="space-y-0.5">
-                  <li>Corridors: 100 lux</li>
-                  <li>General office: 300-500 lux</li>
-                  <li>Retail: 300-500 lux</li>
-                  <li>Detailed work: 500-750 lux</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Lumen method N = (E × A) / (Φ × UF × MF) — the workhorse first-pass design tool.',
+              'Room index k = (L × W) / [Hm × (L + W)] — drives Utilisation Factor lookup.',
+              'Mounting height Hm = ceiling-to-working-plane distance (typically 0.7 m above floor for desks).',
+              'Maintenance Factor MF = LLMF × LSF × LMF × RSMF — never use 1.0 except in commissioning verification.',
+              'Point-by-point E = I × cos³θ / h² — verifies lumen-method results at task locations.',
+              'Inverse-square law: doubling distance = quartering illuminance.',
+              'Cosine law: E_horizontal = E_normal × cos θ — critical for desks lit by angled sources.',
+              'BS EN 12464-1 is the design-target standard; CIBSE LG7/LG5/LG2 supplies UK-specific commentary.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section4-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Light and Vision
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section4-3">
-              Next: Lamp Types and Efficacy
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Light and Vision
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section4-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Lamp Types and Efficacy
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

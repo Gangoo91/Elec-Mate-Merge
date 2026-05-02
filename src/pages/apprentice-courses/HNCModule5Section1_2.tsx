@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 1 · Subsection 2 — Programme Development
+ * HNC Electrical Engineering for Building Services (Project Management)
+ *   Gantt charts, milestones, programme logic and scheduling techniques for MEP installations.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Programme Development - HNC Module 5 Section 1.2';
@@ -254,745 +267,454 @@ const faqs = [
 ];
 
 const HNCModule5Section1_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.1.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Programme Development
-          </h1>
-          <p className="text-white">
-            Gantt charts, milestones, programme logic and scheduling techniques for MEP
-            installations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 1 · Subsection 2"
+            title="Programme Development"
+            description="Gantt charts, milestones, programme logic and scheduling techniques for MEP installations."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Gantt chart:</strong> Visual bar chart showing tasks over time
-              </li>
-              <li className="pl-1">
-                <strong>Milestones:</strong> Zero-duration key achievement points
-              </li>
-              <li className="pl-1">
-                <strong>Dependencies:</strong> Logical links between activities (FS, SS, FF, SF)
-              </li>
-              <li className="pl-1">
-                <strong>Critical path:</strong> Longest sequence determining project duration
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">MEP Scheduling Context</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Software:</strong> Primavera P6, Microsoft Project
-              </li>
-              <li className="pl-1">
-                <strong>Trade coordination:</strong> Mechanical, electrical, plumbing sequence
-              </li>
-              <li className="pl-1">
-                <strong>Look-ahead:</strong> 2-4 week detailed programmes
-              </li>
-              <li className="pl-1">
-                <strong>Progress tracking:</strong> Weekly updates against baseline
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Create and interpret Gantt charts for MEP installations',
               'Identify and define project milestones appropriate to building services',
               'Apply programme logic including dependencies, leads, and lags',
               'Understand critical path methodology and float calculation',
               'Use scheduling software effectively (Primavera P6, MS Project)',
               'Coordinate MEP trades within the construction programme',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Gantt Charts and Bar Charts */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Gantt Charts and Bar Charts
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Gantt Charts and Bar Charts">
             <p>
               The Gantt chart, developed by Henry Gantt in the 1910s, remains the fundamental tool
               for construction programme visualisation. It displays activities as horizontal bars
               positioned against a calendar timescale, making it easy to understand project timing
               at a glance.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key Gantt Chart Elements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Activity bar:</strong> Horizontal bar showing duration from start to
-                  finish date
-                </li>
-                <li className="pl-1">
-                  <strong>Timescale:</strong> Calendar showing weeks, months, or days across the top
-                </li>
-                <li className="pl-1">
-                  <strong>Dependency arrows:</strong> Lines connecting related activities
-                </li>
-                <li className="pl-1">
-                  <strong>Milestone diamonds:</strong> Zero-duration achievement points
-                </li>
-                <li className="pl-1">
-                  <strong>Progress bar:</strong> Shaded portion showing percentage complete
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MEP Installation Programme Example
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Predecessor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Sequence
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Containment installation</td>
-                      <td className="border border-white/10 px-3 py-2">4 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">Structure complete</td>
-                      <td className="border border-white/10 px-3 py-2">1st fix phase</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable pulling</td>
-                      <td className="border border-white/10 px-3 py-2">3 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">Containment (SS+1w)</td>
-                      <td className="border border-white/10 px-3 py-2">1st fix phase</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution board installation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1 week</td>
-                      <td className="border border-white/10 px-3 py-2">Cables terminated</td>
-                      <td className="border border-white/10 px-3 py-2">1st fix complete</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Accessories installation</td>
-                      <td className="border border-white/10 px-3 py-2">2 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">2nd fix start</td>
-                      <td className="border border-white/10 px-3 py-2">2nd fix phase</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Testing and commissioning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All installation complete
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Commissioning</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key Gantt chart elements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Activity bar:</strong> Horizontal bar showing duration from start to finish
+                date
+              </li>
+              <li>
+                <strong>Timescale:</strong> Calendar showing weeks, months, or days across the top
+              </li>
+              <li>
+                <strong>Dependency arrows:</strong> Lines connecting related activities
+              </li>
+              <li>
+                <strong>Milestone diamonds:</strong> Zero-duration achievement points
+              </li>
+              <li>
+                <strong>Progress bar:</strong> Shaded portion showing percentage complete
+              </li>
+            </ul>
+            <p>
+              <strong>MEP installation programme example:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Containment installation:</strong> 4 weeks — predecessor: structure
+                complete — 1st fix phase
+              </li>
+              <li>
+                <strong>Cable pulling:</strong> 3 weeks — predecessor: containment (SS+1w) — 1st
+                fix phase
+              </li>
+              <li>
+                <strong>Distribution board installation:</strong> 1 week — predecessor: cables
+                terminated — 1st fix complete
+              </li>
+              <li>
+                <strong>Accessories installation:</strong> 2 weeks — predecessor: 2nd fix start —
+                2nd fix phase
+              </li>
+              <li>
+                <strong>Testing and commissioning:</strong> 2 weeks — predecessor: all installation
+                complete — commissioning
+              </li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Break down programmes by floor or zone for large
               buildings, enabling progress tracking per area and clearer resource allocation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Milestones and Key Dates */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Milestones and Key Dates
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Milestones and Key Dates">
             <p>
               Milestones are zero-duration events representing significant achievements in the
               project. They provide clear targets for teams and enable management to track progress
               against key deliverables without examining every activity in detail.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Typical MEP Milestones
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Main switchboard delivered to site</li>
-                  <li className="pl-1">First fix electrical complete per floor</li>
-                  <li className="pl-1">Temporary power available</li>
-                  <li className="pl-1">Permanent power energisation</li>
-                  <li className="pl-1">Fire alarm system operational</li>
-                  <li className="pl-1">Commissioning complete</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Contractual Key Dates
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Access to site date</li>
-                  <li className="pl-1">Sectional completion dates</li>
-                  <li className="pl-1">Practical completion date</li>
-                  <li className="pl-1">Client occupation dates</li>
-                  <li className="pl-1">Defects liability end date</li>
-                  <li className="pl-1">Final account agreement</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Milestone vs Activity</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
-                <div>
-                  <p className="font-medium mb-1">Milestone</p>
-                  <ul className="space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Zero duration</li>
-                    <li className="pl-1">Achievement point</li>
-                    <li className="pl-1">Diamond symbol</li>
-                    <li className="pl-1">Example: "First fix complete"</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium mb-1">Activity</p>
-                  <ul className="space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Has duration</li>
-                    <li className="pl-1">Work package</li>
-                    <li className="pl-1">Horizontal bar</li>
-                    <li className="pl-1">Example: "Install containment L2"</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Typical MEP milestones:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Main switchboard delivered to site</li>
+              <li>First fix electrical complete per floor</li>
+              <li>Temporary power available</li>
+              <li>Permanent power energisation</li>
+              <li>Fire alarm system operational</li>
+              <li>Commissioning complete</li>
+            </ul>
+            <p>
+              <strong>Contractual key dates:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Access to site date</li>
+              <li>Sectional completion dates</li>
+              <li>Practical completion date</li>
+              <li>Client occupation dates</li>
+              <li>Defects liability end date</li>
+              <li>Final account agreement</li>
+            </ul>
+            <p>
+              <strong>Milestone vs activity:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Milestone:</strong> Zero duration, achievement point, diamond symbol —
+                example "First fix complete"
+              </li>
+              <li>
+                <strong>Activity:</strong> Has duration, work package, horizontal bar — example
+                "Install containment L2"
+              </li>
+            </ul>
+            <p>
               <strong>Programming tip:</strong> Link milestones to payment applications. Achieving
               milestones often triggers stage payments, making accurate milestone dating financially
               critical.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Programme Logic and Dependencies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Programme Logic and Dependencies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Programme Logic and Dependencies">
             <p>
               Programme logic defines the relationships between activities, determining what must
               happen before, after, or concurrently with other activities. Correct logic is
               essential for accurate critical path analysis and realistic scheduling.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dependency Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Abbreviation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">MEP Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Finish-to-Start</td>
-                      <td className="border border-white/10 px-3 py-2">FS</td>
-                      <td className="border border-white/10 px-3 py-2">B starts when A finishes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable pulling after containment complete
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Start-to-Start</td>
-                      <td className="border border-white/10 px-3 py-2">SS</td>
-                      <td className="border border-white/10 px-3 py-2">B starts when A starts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable pulling following containment (with lag)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Finish-to-Finish</td>
-                      <td className="border border-white/10 px-3 py-2">FF</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        B finishes when A finishes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Testing complete when installation complete
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Start-to-Finish</td>
-                      <td className="border border-white/10 px-3 py-2">SF</td>
-                      <td className="border border-white/10 px-3 py-2">B finishes when A starts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Temporary power ends when permanent starts (rare)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Leads and Lags</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lag:</strong> Waiting time added after the dependency. Example: FS + 2
-                  days lag for concrete curing before drilling
-                </li>
-                <li className="pl-1">
-                  <strong>Lead:</strong> Overlap time (negative lag). Example: FS - 3 days allows
-                  successor to start before predecessor finishes
-                </li>
-                <li className="pl-1">
-                  <strong>Application:</strong> Use lags for inspection hold points, material
-                  delivery, or curing times
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Critical Path Methodology</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Critical path:</strong> The longest sequence of dependent activities
-                </li>
-                <li className="pl-1">
-                  <strong>Float:</strong> Time an activity can slip without delaying completion
-                </li>
-                <li className="pl-1">
-                  <strong>Critical activities:</strong> Those with zero float - any delay delays the
-                  project
-                </li>
-                <li className="pl-1">
-                  <strong>Near-critical:</strong> Activities with less than 5 days float requiring
-                  monitoring
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Dependency types:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Finish-to-Start (FS):</strong> B starts when A finishes — cable pulling
+                after containment complete
+              </li>
+              <li>
+                <strong>Start-to-Start (SS):</strong> B starts when A starts — cable pulling
+                following containment (with lag)
+              </li>
+              <li>
+                <strong>Finish-to-Finish (FF):</strong> B finishes when A finishes — testing
+                complete when installation complete
+              </li>
+              <li>
+                <strong>Start-to-Finish (SF):</strong> B finishes when A starts — temporary power
+                ends when permanent starts (rare)
+              </li>
+            </ul>
+            <p>
+              <strong>Leads and lags:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lag:</strong> Waiting time added after the dependency. Example: FS + 2 days
+                lag for concrete curing before drilling
+              </li>
+              <li>
+                <strong>Lead:</strong> Overlap time (negative lag). Example: FS - 3 days allows
+                successor to start before predecessor finishes
+              </li>
+              <li>
+                <strong>Application:</strong> Use lags for inspection hold points, material
+                delivery, or curing times
+              </li>
+            </ul>
+            <p>
+              <strong>Critical path methodology:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Critical path:</strong> The longest sequence of dependent activities
+              </li>
+              <li>
+                <strong>Float:</strong> Time an activity can slip without delaying completion
+              </li>
+              <li>
+                <strong>Critical activities:</strong> Those with zero float - any delay delays the
+                project
+              </li>
+              <li>
+                <strong>Near-critical:</strong> Activities with less than 5 days float requiring
+                monitoring
+              </li>
+            </ul>
+            <p>
               <strong>Logic rule:</strong> Every activity (except project start) should have at
               least one predecessor. Dangling activities without logic links create unrealistic
               schedules.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Scheduling Software and MEP Coordination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Scheduling Software and MEP Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Scheduling Software and MEP Coordination">
             <p>
               Professional scheduling software enables complex programme management beyond simple
               Gantt charts. Understanding these tools is essential for MEP project managers working
               on commercial and infrastructure projects.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Primavera P6</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Enterprise-level scheduling</li>
-                  <li className="pl-1">Multi-project management</li>
-                  <li className="pl-1">Robust resource handling</li>
-                  <li className="pl-1">Earned value analysis</li>
-                  <li className="pl-1">Industry standard for large projects</li>
-                  <li className="pl-1">Oracle-owned database system</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Microsoft Project</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Desktop and cloud versions</li>
-                  <li className="pl-1">Familiar Microsoft interface</li>
-                  <li className="pl-1">Good for small-medium projects</li>
-                  <li className="pl-1">Integration with Office 365</li>
-                  <li className="pl-1">More accessible learning curve</li>
-                  <li className="pl-1">Lower licence cost than P6</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Software Features for MEP
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        MEP Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        WBS (Work Breakdown Structure)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hierarchical organisation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Organise by floor, zone, or system
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resource levelling</td>
-                      <td className="border border-white/10 px-3 py-2">Avoid overallocation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Balance electrician numbers across activities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Baseline comparison</td>
-                      <td className="border border-white/10 px-3 py-2">Track variance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Identify delays against original programme
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Activity codes</td>
-                      <td className="border border-white/10 px-3 py-2">Filtering and reporting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Filter by trade (elec/mech/plumb)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Look-ahead reports</td>
-                      <td className="border border-white/10 px-3 py-2">Short-term planning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        2-week look-ahead for coordination meetings
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MEP Trade Coordination Sequence
-              </p>
-              <p className="text-sm text-white mb-3">
-                Typical priority order in congested areas (risers, ceiling voids):
-              </p>
-              <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Mechanical:</strong> Largest ducts/pipes first (least flexible)
-                </li>
-                <li className="pl-1">
-                  <strong>Plumbing:</strong> Drainage with fixed gradients
-                </li>
-                <li className="pl-1">
-                  <strong>Electrical:</strong> Containment routes around M&P services
-                </li>
-                <li className="pl-1">
-                  <strong>Fire protection:</strong> Sprinkler pipework
-                </li>
-                <li className="pl-1">
-                  <strong>Controls:</strong> BMS sensors and cabling
-                </li>
-              </ol>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Primavera P6:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Enterprise-level scheduling</li>
+              <li>Multi-project management</li>
+              <li>Robust resource handling</li>
+              <li>Earned value analysis</li>
+              <li>Industry standard for large projects</li>
+              <li>Oracle-owned database system</li>
+            </ul>
+            <p>
+              <strong>Microsoft Project:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Desktop and cloud versions</li>
+              <li>Familiar Microsoft interface</li>
+              <li>Good for small-medium projects</li>
+              <li>Integration with Office 365</li>
+              <li>More accessible learning curve</li>
+              <li>Lower licence cost than P6</li>
+            </ul>
+            <p>
+              <strong>Key software features for MEP:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>WBS (Work Breakdown Structure):</strong> Hierarchical organisation —
+                organise by floor, zone, or system
+              </li>
+              <li>
+                <strong>Resource levelling:</strong> Avoid overallocation — balance electrician
+                numbers across activities
+              </li>
+              <li>
+                <strong>Baseline comparison:</strong> Track variance — identify delays against
+                original programme
+              </li>
+              <li>
+                <strong>Activity codes:</strong> Filtering and reporting — filter by trade
+                (elec/mech/plumb)
+              </li>
+              <li>
+                <strong>Look-ahead reports:</strong> Short-term planning — 2-week look-ahead for
+                coordination meetings
+              </li>
+            </ul>
+            <p>
+              <strong>MEP trade coordination sequence — typical priority order in congested areas
+              (risers, ceiling voids):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Mechanical:</strong> Largest ducts/pipes first (least flexible)
+              </li>
+              <li>
+                <strong>Plumbing:</strong> Drainage with fixed gradients
+              </li>
+              <li>
+                <strong>Electrical:</strong> Containment routes around M&amp;P services
+              </li>
+              <li>
+                <strong>Fire protection:</strong> Sprinkler pipework
+              </li>
+              <li>
+                <strong>Controls:</strong> BMS sensors and cabling
+              </li>
+            </ul>
+            <p>
               <strong>Coordination tip:</strong> Use BIM coordination meetings to resolve clashes
               before they affect the programme. Virtual clashes are far cheaper to resolve than site
               conflicts.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Calculating Float:</strong> Activity A takes 5 days. Activity B
+              depends on A (FS) and takes 3 days. Project must finish on Day 15. A can start Day 1.
+              What is the float?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Early Start A = Day 1</li>
+              <li>Early Finish A = Day 1 + 5 = Day 6</li>
+              <li>Early Start B = Day 6</li>
+              <li>Early Finish B = Day 6 + 3 = Day 9</li>
+              <li>Project requires finish Day 15, earliest finish Day 9</li>
+              <li>
+                <strong>Total Float = 15 - 9 = 6 days</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — Dependency Selection:</strong> Containment installation takes 10
+              days. Cable pulling takes 8 days but can start 3 days after containment starts. What
+              dependency and lag?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cable pulling starts when containment starts (not finishes)</li>
+              <li>This is a Start-to-Start (SS) relationship</li>
+              <li>3 days must elapse before cables can follow</li>
+              <li>
+                <strong>Answer: SS + 3 days lag</strong>
+              </li>
+              <li>
+                This allows cable pulling to begin in areas where containment is complete, while
+                containment continues in other areas.
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — Critical Path Identification:</strong> Three parallel paths: (A)
+              Containment 10d + Cables 8d = 18d, (B) Switchboard delivery 12d + Install 3d = 15d,
+              (C) Generator install 20d. Which is critical?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Path A: 10 + 8 = 18 days</li>
+              <li>Path B: 12 + 3 = 15 days</li>
+              <li>Path C: 20 days</li>
+              <li>
+                <strong>Critical Path = Path C (Generator) at 20 days</strong>
+              </li>
+              <li>Path A has 2 days float (20-18)</li>
+              <li>Path B has 5 days float (20-15)</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Calculating Float
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Activity A takes 5 days. Activity B depends on A (FS) and
-                takes 3 days. Project must finish on Day 15. A can start Day 1. What is the float?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Early Start A = Day 1</p>
-                <p>Early Finish A = Day 1 + 5 = Day 6</p>
-                <p>Early Start B = Day 6</p>
-                <p>Early Finish B = Day 6 + 3 = Day 9</p>
-                <p className="mt-2">Project requires finish Day 15, earliest finish Day 9</p>
-                <p>
-                  <strong>Total Float = 15 - 9 = 6 days</strong>
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Dependency Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Containment installation takes 10 days. Cable pulling
-                takes 8 days but can start 3 days after containment starts. What dependency and lag?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Cable pulling starts when containment starts (not finishes)</p>
-                <p>This is a Start-to-Start (SS) relationship</p>
-                <p>3 days must elapse before cables can follow</p>
-                <p className="mt-2">
-                  <strong>Answer: SS + 3 days lag</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This allows cable pulling to begin in areas where containment is complete, while
-                  containment continues in other areas.
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Critical Path Identification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Three parallel paths: (A) Containment 10d + Cables 8d =
-                18d, (B) Switchboard delivery 12d + Install 3d = 15d, (C) Generator install 20d.
-                Which is critical?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Path A: 10 + 8 = 18 days</p>
-                <p>Path B: 12 + 3 = 15 days</p>
-                <p>Path C: 20 days</p>
-                <p className="mt-2">
-                  <strong>Critical Path = Path C (Generator) at 20 days</strong>
-                </p>
-                <p className="mt-2 text-green-400">Path A has 2 days float (20-18)</p>
-                <p className="text-green-400">Path B has 5 days float (20-15)</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Programme development checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Define the Work Breakdown Structure by location/system</li>
+              <li>Identify all activities with realistic durations</li>
+              <li>Establish logical dependencies (avoid excessive constraints)</li>
+              <li>Set key milestones aligned with contract requirements</li>
+              <li>Assign resources and check for overallocation</li>
+              <li>Calculate critical path and review logic</li>
+              <li>Set baseline before work commences</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Finish-to-Start (FS): <strong>Most common dependency</strong>
+              </li>
+              <li>
+                Float = 0: <strong>Critical activity</strong>
+              </li>
+              <li>
+                Near-critical: <strong>Less than 5 days float</strong>
+              </li>
+              <li>
+                Look-ahead period: <strong>2-4 weeks typical</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Programme Development Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Define the Work Breakdown Structure by location/system</li>
-                <li className="pl-1">Identify all activities with realistic durations</li>
-                <li className="pl-1">
-                  Establish logical dependencies (avoid excessive constraints)
-                </li>
-                <li className="pl-1">Set key milestones aligned with contract requirements</li>
-                <li className="pl-1">Assign resources and check for overallocation</li>
-                <li className="pl-1">Calculate critical path and review logic</li>
-                <li className="pl-1">Set baseline before work commences</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Finish-to-Start (FS): <strong>Most common dependency</strong>
-                </li>
-                <li className="pl-1">
-                  Float = 0: <strong>Critical activity</strong>
-                </li>
-                <li className="pl-1">
-                  Near-critical: <strong>Less than 5 days float</strong>
-                </li>
-                <li className="pl-1">
-                  Look-ahead period: <strong>2-4 weeks typical</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Programming Mistakes
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common programming mistakes"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Missing logic links</strong> - Activities without predecessors create
                   unrealistic schedules
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Excessive constraints</strong> - Fixed dates should be used sparingly
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring resource limits</strong> - Scheduling more workers than available
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>No baseline</strong> - Cannot measure progress without a baseline
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Link every activity (except project start) to at least one predecessor, use date constraints sparingly, level resources within available float, and set the baseline before work commences so progress can be tracked against it."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Dependency Types</p>
-                <ul className="space-y-0.5">
-                  <li>FS - Finish-to-Start (most common)</li>
-                  <li>SS - Start-to-Start (enables overlap)</li>
-                  <li>FF - Finish-to-Finish (concurrent finish)</li>
-                  <li>SF - Start-to-Finish (rare)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Critical Path</p>
-                <ul className="space-y-0.5">
-                  <li>Longest path through the network</li>
-                  <li>Determines minimum project duration</li>
-                  <li>Critical activities have zero float</li>
-                  <li>Delay here delays the project</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section1-3">
-              Next: Resource Planning
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Work Breakdown Structure
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Critical path method
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

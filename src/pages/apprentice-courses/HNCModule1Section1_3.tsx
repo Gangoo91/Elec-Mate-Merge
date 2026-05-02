@@ -1,8 +1,30 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 1 · Subsection 3 — CDM Regulations 2015
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   The framework that imposes designer, principal designer and principal contractor
+ *   duties from concept through handover. Engineer-in-training perspective: how an HNC
+ *   electrical/building-services designer signals risks, populates the H&S file and
+ *   coordinates with the principal designer.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'CDM Regulations 2015 - HNC Module 1 Section 1.3';
@@ -259,808 +281,618 @@ const faqs = [
 ];
 
 const HNCModule1Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 1
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            CDM Regulations 2015
-          </h1>
-          <p className="text-white">
-            The Construction (Design and Management) Regulations - the framework for managing health
-            and safety throughout construction projects
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.1.3"
+            title="CDM Regulations 2015"
+            description="The Construction (Design and Management) Regulations - the framework for managing health and safety throughout construction projects"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CDM 2015:</strong> Applies to ALL construction work in GB
-              </li>
-              <li className="pl-1">
-                <strong>Duty holders:</strong> Client, Designer, Principal Designer, Principal
-                Contractor, Contractor
-              </li>
-              <li className="pl-1">
-                <strong>F10:</strong> Notify HSE for projects exceeding thresholds
-              </li>
-              <li className="pl-1">
-                <strong>CPP:</strong> Construction Phase Plan required before work starts
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>M&E designers:</strong> Must consider installation and maintenance risks
-              </li>
-              <li className="pl-1">
-                <strong>Contractors:</strong> Often Principal Contractor on refurbishment projects
-              </li>
-              <li className="pl-1">
-                <strong>Coordination:</strong> Critical for multi-service installations
-              </li>
-              <li className="pl-1">
-                <strong>H&S File:</strong> Must include as-built service information
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will identify each duty-holder under CDM 2015 (client, principal designer, designer, principal contractor, contractor, worker) on every building services project you support.',
+              'You can list the notification trigger (more than 30 working days and >20 workers simultaneously, or more than 500 person days) and complete an F10 mentally before the kick-off meeting.',
+              'You apply Regulation 9 (designer&rsquo;s duty to eliminate, reduce or control foreseeable risks) when you produce a circuit-design package, switchroom layout or services-coordination drawing.',
+              'You contribute residual-risk information to the pre-construction information pack and to the H&S file at handover.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify the five duty holder roles and their responsibilities',
-              'Understand Client duties and when F10 notification is required',
+          <RegsCallout
+            source="CDM 2015 — Regulation 9(2)"
+            clause="A designer must, when preparing or modifying a design, take into account the general principles of prevention and any pre-construction information to eliminate, so far as is reasonably practicable, foreseeable risks to the health or safety of any person—(a) carrying out or liable to be affected by construction work; (b) maintaining or cleaning a structure; or (c) using a structure designed as a workplace."
+            meaning={
+              <>
+                As a building services designer your duty is not just to make it work — it is to
+                make it buildable, maintainable and replaceable safely. Cable routes, switchroom
+                ventilation, headroom for testing, access for periodic inspection: each is a
+                Regulation 9 decision that you must record on the design risk register.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015, Reg 9(2) — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Identify the five duty holder roles and their responsibilities",
+              "Understand Client duties and when F10 notification is required",
               "Explain the Principal Designer's role in the pre-construction phase",
-              'Describe Principal Contractor duties and the Construction Phase Plan',
-              'Apply CDM requirements to building services coordination',
-              'Contribute appropriate information to the Health and Safety File',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+              "Describe Principal Contractor duties and the Construction Phase Plan",
+              "Apply CDM requirements to building services coordination",
+              "Contribute appropriate information to the Health and Safety File",
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Duty Holders */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Duty Holders and Their Responsibilities
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Duty Holders and Their Responsibilities</ContentEyebrow>
+
+          <ConceptBlock title="Duty Holders and Their Responsibilities">
             <p>
-              CDM 2015 replaced the previous 2007 regulations and introduced significant changes
-              including the new Principal Designer role. The regulations place duties on five
-              categories of duty holder, with responsibilities proportionate to their ability to
-              influence project health and safety.
+            CDM 2015 replaced the previous 2007 regulations and introduced significant changes
+            including the new Principal Designer role. The regulations place duties on five
+            categories of duty holder, with responsibilities proportionate to their ability to
+            influence project health and safety.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Five Duty Holders</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Duty Holder</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Who</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Duties</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Client</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Anyone for whom construction work is carried out
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Make suitable arrangements, appoint duty holders, provide pre-construction
-                        information
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Principal Designer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Designer appointed by Client (projects with more than one contractor)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plan, manage and coordinate pre-construction phase H&S, prepare H&S File
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Designer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Anyone who prepares or modifies designs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Eliminate or reduce foreseeable risks, provide information about residual
-                        risks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Principal Contractor
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contractor appointed by Client (projects with more than one contractor)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plan, manage and coordinate construction phase, prepare CPP, ensure welfare
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Contractor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Anyone who carries out or manages construction work
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plan and manage own work safely, cooperate with Principal Contractor
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Five Duty Holders</p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Client</strong> — Who: Anyone for whom construction work is carried out. Key Duties: Make suitable arrangements, appoint duty holders, provide pre-construction information</li>
+            <li><strong>Principal Designer</strong> — Who: Designer appointed by Client (projects with more than one contractor). Key Duties: Plan, manage and coordinate pre-construction phase H&S, prepare H&S File</li>
+            <li><strong>Designer</strong> — Who: Anyone who prepares or modifies designs. Key Duties: Eliminate or reduce foreseeable risks, provide information about residual risks</li>
+            <li><strong>Principal Contractor</strong> — Who: Contractor appointed by Client (projects with more than one contractor). Key Duties: Plan, manage and coordinate construction phase, prepare CPP, ensure welfare</li>
+            <li><strong>Contractor</strong> — Who: Anyone who carries out or manages construction work. Key Duties: Plan and manage own work safely, cooperate with Principal Contractor</li>
+            </ul>
+            
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key principles of CDM 2015:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Duties are proportionate to the ability to influence project H&S
-                </li>
-                <li className="pl-1">
-                  The Client is the most influential - they appoint the team and set the programme
-                </li>
-                <li className="pl-1">Designers can eliminate risks before they reach site</li>
-                <li className="pl-1">Everyone has a duty to cooperate and communicate</li>
-                <li className="pl-1">
-                  Competence requirements removed - focus on skills, knowledge, experience
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">Key principles of CDM 2015:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Duties are proportionate to the ability to influence project H&S
+            </li>
+            <li>
+            The Client is the most influential - they appoint the team and set the programme
+            </li>
+            <li>Designers can eliminate risks before they reach site</li>
+            <li>Everyone has a duty to cooperate and communicate</li>
+            <li>
+            Competence requirements removed - focus on skills, knowledge, experience
+            </li>
+            </ul>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> On single-contractor projects, the contractor automatically
-              takes on Principal Designer and Principal Contractor duties - no separate appointments
-              needed.
+            <strong>Remember:</strong> On single-contractor projects, the contractor automatically
+            takes on Principal Designer and Principal Contractor duties - no separate appointments
+            needed.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Client Duties and F10 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Client Duties and F10 Notification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Client Duties and F10 Notification</ContentEyebrow>
+
+          <ConceptBlock title="Client Duties and F10 Notification">
             <p>
-              The Client has overarching duties to ensure projects are set up for success. Even
-              commercial clients who lack construction expertise cannot delegate their statutory
-              duties - they must make suitable arrangements or appoint competent duty holders to
-              assist them.
+            The Client has overarching duties to ensure projects are set up for success. Even
+            commercial clients who lack construction expertise cannot delegate their statutory
+            duties - they must make suitable arrangements or appoint competent duty holders to
+            assist them.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Core Client Duties (Regulation 4):
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Make suitable arrangements for managing the project</li>
-                <li className="pl-1">Allocate sufficient time and resources</li>
-                <li className="pl-1">
-                  Appoint Principal Designer and Principal Contractor in writing (multi-contractor
-                  projects)
-                </li>
-                <li className="pl-1">
-                  Provide pre-construction information to designers and contractors
-                </li>
-                <li className="pl-1">
-                  Ensure a Construction Phase Plan is in place before construction starts
-                </li>
-                <li className="pl-1">Ensure welfare facilities are provided from day one</li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">
+            Core Client Duties (Regulation 4):
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Make suitable arrangements for managing the project</li>
+            <li>Allocate sufficient time and resources</li>
+            <li>
+            Appoint Principal Designer and Principal Contractor in writing (multi-contractor
+            projects)
+            </li>
+            <li>
+            Provide pre-construction information to designers and contractors
+            </li>
+            <li>
+            Ensure a Construction Phase Plan is in place before construction starts
+            </li>
+            <li>Ensure welfare facilities are provided from day one</li>
+            </ul>
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                F10 Notification Thresholds
-              </p>
-              <p className="text-sm text-white mb-3">The Client must notify HSE when a project:</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Duration + Workers</p>
-                  <p className="text-sm text-white">
-                    More than 30 working days AND more than 20 workers at any one time
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">OR Person-Days</p>
-                  <p className="text-sm text-white">
-                    More than 500 person-days of construction work
-                  </p>
-                </div>
-              </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            F10 Notification Thresholds
+            </p>
+            <p className="text-sm text-white mb-3">The Client must notify HSE when a project:</p>
+            
+            <div className="p-3 rounded bg-black/30">
+            <p className="font-bold text-elec-yellow mb-1">Duration + Workers</p>
+            <p className="text-sm text-white">
+            More than 30 working days AND more than 20 workers at any one time
+            </p>
             </div>
+            <div className="p-3 rounded bg-black/30">
+            <p className="font-bold text-elec-yellow mb-1">OR Person-Days</p>
+            <p className="text-sm text-white">
+            More than 500 person-days of construction work
+            </p>
+            </div>
+            
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                F10 Notification Contents
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Date of submission and address of construction site</li>
-                <li className="pl-1">Client name, address and contact details</li>
-                <li className="pl-1">Principal Designer and Principal Contractor details</li>
-                <li className="pl-1">
-                  Date construction phase is planned to start and estimated duration
-                </li>
-                <li className="pl-1">
-                  Maximum number of workers and contractors on site at any one time
-                </li>
-                <li className="pl-1">Name and address of anyone who has already been appointed</li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            F10 Notification Contents
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Date of submission and address of construction site</li>
+            <li>Client name, address and contact details</li>
+            <li>Principal Designer and Principal Contractor details</li>
+            <li>
+            Date construction phase is planned to start and estimated duration
+            </li>
+            <li>
+            Maximum number of workers and contractors on site at any one time
+            </li>
+            <li>Name and address of anyone who has already been appointed</li>
+            </ul>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Timing:</strong> F10 must be submitted as soon as practicable before the
-              construction phase begins. It can be submitted electronically via the HSE website.
+            <strong>Timing:</strong> F10 must be submitted as soon as practicable before the
+            construction phase begins. It can be submitted electronically via the HSE website.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Principal Designer Role */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Principal Designer Role
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Principal Designer Role</ContentEyebrow>
+
+          <ConceptBlock title="Principal Designer Role">
             <p>
-              The Principal Designer replaced the CDM Coordinator role from the 2007 regulations.
-              Unlike the coordinator role, the Principal Designer must be a designer themselves -
-              they cannot simply coordinate without having design capability and understanding.
+            The Principal Designer replaced the CDM Coordinator role from the 2007 regulations.
+            Unlike the coordinator role, the Principal Designer must be a designer themselves -
+            they cannot simply coordinate without having design capability and understanding.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Principal Designer Duties (Regulation 11):
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Plan, manage and monitor the pre-construction phase</li>
-                <li className="pl-1">Identify and eliminate or control foreseeable risks</li>
-                <li className="pl-1">
-                  Ensure designers comply with their duties under Regulation 9
-                </li>
-                <li className="pl-1">Ensure all designers cooperate and coordinate their work</li>
-                <li className="pl-1">Assist the Client with pre-construction information</li>
-                <li className="pl-1">Prepare and update the Health and Safety File</li>
-                <li className="pl-1">Liaise with the Principal Contractor during construction</li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">
+            Principal Designer Duties (Regulation 11):
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Plan, manage and monitor the pre-construction phase</li>
+            <li>Identify and eliminate or control foreseeable risks</li>
+            <li>
+            Ensure designers comply with their duties under Regulation 9
+            </li>
+            <li>Ensure all designers cooperate and coordinate their work</li>
+            <li>Assist the Client with pre-construction information</li>
+            <li>Prepare and update the Health and Safety File</li>
+            <li>Liaise with the Principal Contractor during construction</li>
+            </ul>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Designer Duties for Building Services (Regulation 9)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Design Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Risk Consideration
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Mitigation Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable containment routes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Work at height for installation/maintenance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Route at lower level where practicable
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution board location
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Access for testing, maintenance, isolation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adequate working space, good lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heavy equipment (transformers)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manual handling, lifting operations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Access for mechanical handling, lifting points
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Service penetrations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Structural integrity, fire stopping
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coordinate with structural engineer early
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Roof-mounted equipment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Edge protection, access routes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Design permanent access and fall protection
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Designer Duties for Building Services (Regulation 9)
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Cable containment routes</strong> — Risk Consideration: Work at height for installation/maintenance. Mitigation Example: Route at lower level where practicable</li>
+            <li><strong>Distribution board location</strong> — Risk Consideration: Access for testing, maintenance, isolation. Mitigation Example: Adequate working space, good lighting</li>
+            <li><strong>Heavy equipment (transformers)</strong> — Risk Consideration: Manual handling, lifting operations. Mitigation Example: Access for mechanical handling, lifting points</li>
+            <li><strong>Service penetrations</strong> — Risk Consideration: Structural integrity, fire stopping. Mitigation Example: Coordinate with structural engineer early</li>
+            <li><strong>Roof-mounted equipment</strong> — Risk Consideration: Edge protection, access routes. Mitigation Example: Design permanent access and fall protection</li>
+            </ul>
+            
+            
 
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 my-6">
-              <p className="text-sm text-amber-300">
-                <strong>Design Risk Hierarchy:</strong> Designers must apply the hierarchy: (1)
-                Eliminate hazards where possible, (2) Reduce risks that cannot be eliminated, (3)
-                Provide information about significant residual risks. Simply noting a risk in a risk
-                register does not discharge the duty.
-              </p>
+            <p className="text-sm text-amber-300">
+            <strong>Design Risk Hierarchy:</strong> Designers must apply the hierarchy: (1)
+            Eliminate hazards where possible, (2) Reduce risks that cannot be eliminated, (3)
+            Provide information about significant residual risks. Simply noting a risk in a risk
+            register does not discharge the duty.
+            </p>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Note:</strong> On projects where the Principal Designer's appointment ends
-              before construction completion, they must pass the H&S File to the Principal
-              Contractor who then maintains and completes it.
+            <strong>Note:</strong> On projects where the Principal Designer's appointment ends
+            before construction completion, they must pass the H&S File to the Principal
+            Contractor who then maintains and completes it.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Principal Contractor and CPP */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Principal Contractor and Construction Phase Plan
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Principal Contractor and Construction Phase Plan</ContentEyebrow>
+
+          <ConceptBlock title="Principal Contractor and Construction Phase Plan">
             <p>
-              The Principal Contractor manages health and safety during the construction phase. They
-              must be a contractor - an organisation or individual who carries out or manages
-              construction work. The CPP is the key document that sets out how the construction
-              phase will be managed safely.
+            The Principal Contractor manages health and safety during the construction phase. They
+            must be a contractor - an organisation or individual who carries out or manages
+            construction work. The CPP is the key document that sets out how the construction
+            phase will be managed safely.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Principal Contractor Duties (Regulations 12-14):
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Plan, manage and monitor the construction phase</li>
-                <li className="pl-1">Draw up the Construction Phase Plan before work starts</li>
-                <li className="pl-1">Organise cooperation between contractors</li>
-                <li className="pl-1">Ensure suitable site inductions are provided</li>
-                <li className="pl-1">Take reasonable steps to prevent unauthorised access</li>
-                <li className="pl-1">Ensure welfare facilities are in place from day one</li>
-                <li className="pl-1">Consult and engage with workers on H&S matters</li>
-                <li className="pl-1">Liaise with Principal Designer on design matters</li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">
+            Principal Contractor Duties (Regulations 12-14):
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Plan, manage and monitor the construction phase</li>
+            <li>Draw up the Construction Phase Plan before work starts</li>
+            <li>Organise cooperation between contractors</li>
+            <li>Ensure suitable site inductions are provided</li>
+            <li>Take reasonable steps to prevent unauthorised access</li>
+            <li>Ensure welfare facilities are in place from day one</li>
+            <li>Consult and engage with workers on H&S matters</li>
+            <li>Liaise with Principal Designer on design matters</li>
+            </ul>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Construction Phase Plan Contents
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-xs text-white mb-2">Required Elements:</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Description of the project</li>
-                    <li className="pl-1">Management arrangements</li>
-                    <li className="pl-1">Arrangements for controlling significant risks</li>
-                    <li className="pl-1">Health and safety aims for the project</li>
-                    <li className="pl-1">Site rules</li>
-                    <li className="pl-1">Emergency procedures</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-xs text-white mb-2">Building Services Specifics:</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Isolation procedures for live systems</li>
-                    <li className="pl-1">Permit to work systems</li>
-                    <li className="pl-1">Coordination between M&E trades</li>
-                    <li className="pl-1">Commissioning sequences</li>
-                    <li className="pl-1">Interface with occupied areas</li>
-                    <li className="pl-1">Hot work procedures</li>
-                  </ul>
-                </div>
-              </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Construction Phase Plan Contents
+            </p>
+            
+            <div>
+            <p className="text-xs text-white mb-2">Required Elements:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Description of the project</li>
+            <li>Management arrangements</li>
+            <li>Arrangements for controlling significant risks</li>
+            <li>Health and safety aims for the project</li>
+            <li>Site rules</li>
+            <li>Emergency procedures</li>
+            </ul>
             </div>
+            <div>
+            <p className="text-xs text-white mb-2">Building Services Specifics:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Isolation procedures for live systems</li>
+            <li>Permit to work systems</li>
+            <li>Coordination between M&E trades</li>
+            <li>Commissioning sequences</li>
+            <li>Interface with occupied areas</li>
+            <li>Hot work procedures</li>
+            </ul>
+            </div>
+            
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Coordination Requirements
-              </p>
-              <p className="text-sm text-white mb-3">
-                M&E installation requires careful coordination due to:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Shared routes:</strong> Cable trays, pipework, ductwork competing for
-                  ceiling void space
-                </li>
-                <li className="pl-1">
-                  <strong>Sequencing:</strong> Containment before cables, pipework before insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Testing interfaces:</strong> Electrical tests before BMS integration
-                </li>
-                <li className="pl-1">
-                  <strong>Fire stopping:</strong> All penetrations must be coordinated and properly
-                  sealed
-                </li>
-                <li className="pl-1">
-                  <strong>Live systems:</strong> Working near or on energised equipment requires
-                  permits
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Building Services Coordination Requirements
+            </p>
+            <p className="text-sm text-white mb-3">
+            M&E installation requires careful coordination due to:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Shared routes:</strong> Cable trays, pipework, ductwork competing for
+            ceiling void space
+            </li>
+            <li>
+            <strong>Sequencing:</strong> Containment before cables, pipework before insulation
+            </li>
+            <li>
+            <strong>Testing interfaces:</strong> Electrical tests before BMS integration
+            </li>
+            <li>
+            <strong>Fire stopping:</strong> All penetrations must be coordinated and properly
+            sealed
+            </li>
+            <li>
+            <strong>Live systems:</strong> Working near or on energised equipment requires
+            permits
+            </li>
+            </ul>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Health and Safety File - Building Services Content
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  As-built drawings showing cable routes, containment, equipment locations
-                </li>
-                <li className="pl-1">Schematic diagrams and circuit charts</li>
-                <li className="pl-1">Isolation and switching arrangements</li>
-                <li className="pl-1">Equipment O&M manuals and specifications</li>
-                <li className="pl-1">
-                  Hazardous materials (asbestos surveys, refrigerant types, PCBs)
-                </li>
-                <li className="pl-1">Structural information (lifting points, floor loadings)</li>
-                <li className="pl-1">Access requirements for maintenance</li>
-                <li className="pl-1">Residual risks not eliminated by design</li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Health and Safety File - Building Services Content
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            As-built drawings showing cable routes, containment, equipment locations
+            </li>
+            <li>Schematic diagrams and circuit charts</li>
+            <li>Isolation and switching arrangements</li>
+            <li>Equipment O&M manuals and specifications</li>
+            <li>
+            Hazardous materials (asbestos surveys, refrigerant types, PCBs)
+            </li>
+            <li>Structural information (lifting points, floor loadings)</li>
+            <li>Access requirements for maintenance</li>
+            <li>Residual risks not eliminated by design</li>
+            </ul>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Client responsibility:</strong> The Client must keep the H&S File available
-              for inspection and ensure it is revised if further construction work takes place. The
-              file stays with the building.
+            <strong>Client responsibility:</strong> The Client must keep the H&S File available
+            for inspection and ensure it is revised if further construction work takes place. The
+            file stays with the building.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Notification Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A new office fit-out will take 12 weeks. The workforce
-                will ramp up from 5 workers in weeks 1-2, to 15 workers in weeks 3-8, then 8 workers
-                in weeks 9-12. Is F10 notification required?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Check threshold 1: More than 30 days with more than 20 workers?</p>
-                <p>
-                  Maximum workers = 15 (does not exceed 20) -{' '}
-                  <span className="text-red-400">NO</span>
-                </p>
-                <p className="mt-2">Check threshold 2: More than 500 person-days?</p>
-                <p>Weeks 1-2: 2 × 5 × 5 = 50 person-days</p>
-                <p>Weeks 3-8: 6 × 5 × 15 = 450 person-days</p>
-                <p>Weeks 9-12: 4 × 5 × 8 = 160 person-days</p>
-                <p className="mt-2">
-                  Total = 50 + 450 + 160 = <strong>660 person-days</strong>
-                </p>
-                <p className="mt-2 text-green-400">✓ Exceeds 500 - F10 NOTIFICATION REQUIRED</p>
-              </div>
+          <ConceptBlock title="Worked Examples">
+            <p><strong>Example 1: Notification Calculation</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Question:</strong> A new office fit-out will take 12 weeks. The workforce
+            will ramp up from 5 workers in weeks 1-2, to 15 workers in weeks 3-8, then 8 workers
+            in weeks 9-12. Is F10 notification required?
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+            <p>Check threshold 1: More than 30 days with more than 20 workers?</p>
+            <p>
+            Maximum workers = 15 (does not exceed 20) -{' '}
+            <span className="text-red-400">NO</span>
+            </p>
+            <p className="mt-2">Check threshold 2: More than 500 person-days?</p>
+            <p>Weeks 1-2: 2 × 5 × 5 = 50 person-days</p>
+            <p>Weeks 3-8: 6 × 5 × 15 = 450 person-days</p>
+            <p>Weeks 9-12: 4 × 5 × 8 = 160 person-days</p>
+            <p className="mt-2">
+            Total = 50 + 450 + 160 = <strong>660 person-days</strong>
+            </p>
+            <p className="mt-2 text-green-400">✓ Exceeds 500 - F10 NOTIFICATION REQUIRED</p>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Designer Risk Considerations
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> An M&E consultant is designing the electrical
-                installation for a warehouse with 10m high ceilings. What CDM considerations apply
-                to luminaire specification?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="font-medium mb-2">Design Risks to Consider:</p>
-                <ul className="list-disc ml-5 space-y-1">
-                  <li>Installation: Work at height, MEWP access, lifting heavy luminaires</li>
-                  <li>Maintenance: Lamp replacement, cleaning, emergency light testing</li>
-                  <li>Future alterations: Relamping, upgrade to LED, layout changes</li>
-                </ul>
-                <p className="font-medium mt-3 mb-2">Designer's Response:</p>
-                <ul className="list-disc ml-5 space-y-1">
-                  <li>
-                    <strong>Eliminate:</strong> Specify long-life LED luminaires (25,000+ hours)
-                  </li>
-                  <li>
-                    <strong>Reduce:</strong> Use high-level access with lowering winches for
-                    maintenance
-                  </li>
-                  <li>
-                    <strong>Inform:</strong> Note in H&S File that MEWP access is required, specify
-                    clear zones
-                  </li>
-                </ul>
-              </div>
+            
+            <p><strong>Example 2: Designer Risk Considerations</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Scenario:</strong> An M&E consultant is designing the electrical
+            installation for a warehouse with 10m high ceilings. What CDM considerations apply
+            to luminaire specification?
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p className="font-medium mb-2">Design Risks to Consider:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Installation: Work at height, MEWP access, lifting heavy luminaires</li>
+            <li>Maintenance: Lamp replacement, cleaning, emergency light testing</li>
+            <li>Future alterations: Relamping, upgrade to LED, layout changes</li>
+            </ul>
+            <p className="font-medium mt-3 mb-2">Designer's Response:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Eliminate:</strong> Specify long-life LED luminaires (25,000+ hours)
+            </li>
+            <li>
+            <strong>Reduce:</strong> Use high-level access with lowering winches for
+            maintenance
+            </li>
+            <li>
+            <strong>Inform:</strong> Note in H&S File that MEWP access is required, specify
+            clear zones
+            </li>
+            </ul>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Duty Holder Identification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A property management company commissions a rewire of a
-                commercial unit. They appoint an electrical contractor who designs and installs the
-                new system. Identify the duty holders.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Client:</strong> Property management company
-                </p>
-                <p className="text-white text-xs ml-4">
-                  - Has duties even though they appoint only one contractor
-                </p>
-                <p className="mt-2">
-                  <strong>Designer:</strong> Electrical contractor (they design the installation)
-                </p>
-                <p className="text-white text-xs ml-4">
-                  - Must consider risks in design decisions
-                </p>
-                <p className="mt-2">
-                  <strong>Principal Designer:</strong> Electrical contractor (single contractor
-                  project)
-                </p>
-                <p className="text-white text-xs ml-4">
-                  - Duties apply automatically, no separate appointment needed
-                </p>
-                <p className="mt-2">
-                  <strong>Principal Contractor:</strong> Electrical contractor (single contractor)
-                </p>
-                <p className="text-white text-xs ml-4">
-                  - Must prepare CPP if project is notifiable
-                </p>
-                <p className="mt-2">
-                  <strong>Contractor:</strong> Electrical contractor
-                </p>
-                <p className="text-white text-xs ml-4">- General contractor duties also apply</p>
-              </div>
+            
+            <p><strong>Example 3: Duty Holder Identification</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Scenario:</strong> A property management company commissions a rewire of a
+            commercial unit. They appoint an electrical contractor who designs and installs the
+            new system. Identify the duty holders.
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p>
+            <strong>Client:</strong> Property management company
+            </p>
+            <p className="text-white text-xs ml-4">
+            - Has duties even though they appoint only one contractor
+            </p>
+            <p className="mt-2">
+            <strong>Designer:</strong> Electrical contractor (they design the installation)
+            </p>
+            <p className="text-white text-xs ml-4">
+            - Must consider risks in design decisions
+            </p>
+            <p className="mt-2">
+            <strong>Principal Designer:</strong> Electrical contractor (single contractor
+            project)
+            </p>
+            <p className="text-white text-xs ml-4">
+            - Duties apply automatically, no separate appointment needed
+            </p>
+            <p className="mt-2">
+            <strong>Principal Contractor:</strong> Electrical contractor (single contractor)
+            </p>
+            <p className="text-white text-xs ml-4">
+            - Must prepare CPP if project is notifiable
+            </p>
+            <p className="mt-2">
+            <strong>Contractor:</strong> Electrical contractor
+            </p>
+            <p className="text-white text-xs ml-4">- General contractor duties also apply</p>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
+          <ConceptBlock title="Practical Guidance">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Regulations to Know
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Regulation 4:</strong> Client duties
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 6:</strong> Notification (F10)
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 7:</strong> Domestic clients
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 9:</strong> Designer duties
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 11:</strong> Principal Designer duties
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 12-13:</strong> Principal Contractor duties
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 14:</strong> Worker consultation
-                </li>
-                <li className="pl-1">
-                  <strong>Schedule 2:</strong> Welfare facilities minimum standards
-                </li>
-              </ul>
+            <p><strong>Key Regulations to Know</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Regulation 4:</strong> Client duties
+            </li>
+            <li>
+            <strong>Regulation 6:</strong> Notification (F10)
+            </li>
+            <li>
+            <strong>Regulation 7:</strong> Domestic clients
+            </li>
+            <li>
+            <strong>Regulation 9:</strong> Designer duties
+            </li>
+            <li>
+            <strong>Regulation 11:</strong> Principal Designer duties
+            </li>
+            <li>
+            <strong>Regulation 12-13:</strong> Principal Contractor duties
+            </li>
+            <li>
+            <strong>Regulation 14:</strong> Worker consultation
+            </li>
+            <li>
+            <strong>Schedule 2:</strong> Welfare facilities minimum standards
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Notification Thresholds Summary
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">More than 30 working days AND more than 20 workers, OR</li>
-                <li className="pl-1">More than 500 person-days of construction work</li>
-                <li className="pl-1">Notify as soon as practicable before construction starts</li>
-                <li className="pl-1">Can be submitted online via HSE website</li>
-                <li className="pl-1">
-                  Display F10 in site office (or where impracticable, keep available)
-                </li>
-              </ul>
+            <p><strong>Notification Thresholds Summary</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>More than 30 working days AND more than 20 workers, OR</li>
+            <li>More than 500 person-days of construction work</li>
+            <li>Notify as soon as practicable before construction starts</li>
+            <li>Can be submitted online via HSE website</li>
+            <li>
+            Display F10 in site office (or where impracticable, keep available)
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Compliance Failures
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>No written appointment:</strong> PD and PC must be appointed in writing
-                </li>
-                <li className="pl-1">
-                  <strong>Late CPP:</strong> Must exist BEFORE construction starts
-                </li>
-                <li className="pl-1">
-                  <strong>Generic CPP:</strong> Must be project-specific, not a template
-                </li>
-                <li className="pl-1">
-                  <strong>Missing H&S File:</strong> Must be handed to Client at completion
-                </li>
-                <li className="pl-1">
-                  <strong>Designer duties ignored:</strong> Designing risks into projects
-                </li>
-                <li className="pl-1">
-                  <strong>No pre-construction information:</strong> Client must provide to designers
-                </li>
-              </ul>
+            <p><strong>Common Compliance Failures</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>No written appointment:</strong> PD and PC must be appointed in writing
+            </li>
+            <li>
+            <strong>Late CPP:</strong> Must exist BEFORE construction starts
+            </li>
+            <li>
+            <strong>Generic CPP:</strong> Must be project-specific, not a template
+            </li>
+            <li>
+            <strong>Missing H&S File:</strong> Must be handed to Client at completion
+            </li>
+            <li>
+            <strong>Designer duties ignored:</strong> Designing risks into projects
+            </li>
+            <li>
+            <strong>No pre-construction information:</strong> Client must provide to designers
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="A residential refurbishment quietly tips into notifiable territory"
+            situation={
+              <>
+                You are designing the electrical refit of a 14-flat residential block. The
+                contractor estimates the project will run 35 working days with 18 trades on site
+                most days. The client believes CDM doesn&rsquo;t apply because it is a domestic
+                project.
+              </>
+            }
+            whatToDo={
+              <>
+                Flag two CDM points in writing. First, even on a domestic client project the
+                CDM duties are transferred to the contractor (Reg 7) — duties do not disappear,
+                they migrate. Second, the project exceeds the 30-working-day notification
+                threshold, so the client (or by extension the contractor) must submit an F10 to
+                HSE before construction starts and appoint a principal designer and principal
+                contractor in writing.
+              </>
+            }
+            whyItMatters={
+              <>
+                Failure to notify is a strict-liability offence. As an HNC engineer signalling
+                the requirement early protects the client from a Prohibition Notice and protects
+                you from being drawn into an HSE investigation under Reg 13.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Duty Holders</p>
-                <ul className="space-y-0.5">
-                  <li>Client - Overall project arrangements</li>
-                  <li>Principal Designer - Pre-construction H&S</li>
-                  <li>Designer - Eliminate/reduce design risks</li>
-                  <li>Principal Contractor - Construction phase</li>
-                  <li>Contractor - Own work and cooperation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Documents</p>
-                <ul className="space-y-0.5">
-                  <li>F10 - HSE notification (if thresholds met)</li>
-                  <li>Pre-construction information - From Client</li>
-                  <li>Construction Phase Plan - Before work starts</li>
-                  <li>Health and Safety File - At completion</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'CDM 2015 applies to every construction project including domestic — duties may transfer to the contractor, but they never disappear.',
+              'Notify HSE via F10 when the project will exceed 30 working days with >20 workers simultaneously, or more than 500 person days.',
+              'Six duty-holders: client, principal designer, designer, principal contractor, contractor, worker — each has named duties under Regs 4-15.',
+              'Regulation 9 makes designers eliminate, reduce or control foreseeable risk — this is your day-to-day duty as a building services HNC designer.',
+              'Pre-construction information, construction phase plan and H&S file are the three CDM documents that follow the project from concept to occupation.',
+              'Principal designer is appointed in writing for any project with more than one contractor — and coordinates the design risk management.',
+              'Worker engagement and consultation under Reg 14 is mandatory — toolbox talks alone do not satisfy this.',
+              'Residual risks that cannot be designed out must be communicated to the principal contractor in the pre-construction information.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section1-4">
-              Next: Section 1.4
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 1
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section1-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Section 1.4
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

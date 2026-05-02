@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 3 · Subsection 3 — Fault Current Calculations
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Prospective fault current Ipf = V/Z, transformer fault levels via percentage
+ *   impedance (FLC / (%Z/100)), cable resistance / R1+R2, earth fault loop impedance
+ *   Zs = Ze + (R1+R2), DNO declared Ze values for TN-C-S / TN-S / TT.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Fault Current Calculations - HNC Module 4 Section 3.3';
@@ -200,788 +219,487 @@ const faqs = [
 ];
 
 const HNCModule4Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Fault Current Calculations
-          </h1>
-          <p className="text-white">
-            Calculating prospective fault current, impedances, and verifying protection adequacy
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 3 · Subsection 3"
+            title="Fault Current Calculations"
+            description="Calculating prospective fault current, impedances, and verifying protection adequacy."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Ipf = V/Z:</strong> Fault current from system impedance
-              </li>
-              <li className="pl-1">
-                <strong>Transformer:</strong> Fault ≈ FLC / %impedance
-              </li>
-              <li className="pl-1">
-                <strong>Zs = Ze + (R1+R2):</strong> Earth fault loop
-              </li>
-              <li className="pl-1">
-                <strong>If = Uo/Zs:</strong> Earth fault current
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Origin:</strong> Highest Ipf - breaking capacity
-              </li>
-              <li className="pl-1">
-                <strong>Circuit end:</strong> Lowest If - disconnection time
-              </li>
-              <li className="pl-1">
-                <strong>Sub-distribution:</strong> Reduced Ipf by cable Z
-              </li>
-              <li className="pl-1">
-                <strong>Verification:</strong> Test vs calculated values
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Prospective fault current (PFC) sets the breaking capacity needed for every protective device — Ipf at the origin from the DNO is the worst case.',
+              'Calculate PFC from transformer rating: Ipf ≈ kVA × 1000 / (√3 × V × Z%) for three-phase. Add network impedance from the DNO.',
+              'PFC reduces along the cable run as cable impedance adds — fault current at the DB is lower than at the supply origin, sometimes much lower.',
+              'Earth fault loop impedance Z_s = Z_e + (R₁ + R₂) — verify against Table 41.3 Z_s_max for the protective device used (current A4:2026 values, e.g. B32 = 1.37&nbsp;Ω).',
+              'BS 7671 Reg 643.7.3.201 makes determination of prospective fault current at origin and other relevant points a mandatory verification activity.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 643.7.3.201 (Prospective fault current verification)"
+            clause="Regulation 643.7.3.201 (Prospective fault current) sets out the requirement that prospective short-circuit current and prospective earth fault current shall be measured, calculated or determined at the origin and other relevant points. This scope facet clarifies the application of the clause within Part 6 inspection and testing."
+            meaning={
+              <>
+                Reg 643.7.3.201 makes the PFC determination a mandatory verification step, not
+                an optional design comfort. It must be done at the origin AND at other relevant
+                points (DBs, sub-panels, points with reduced fault levels). The figures from
+                this verification confirm the breaking capacity of every protective device, the
+                adiabatic check on every cable, and the disconnection time at every endpoint.
+                Either measure (loop tester at origin and at relevant points) or calculate from
+                DNO data plus cable impedance — and document.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 643.7.3.201; DNO connection statement; BS 7671 Appendix 14 (loop impedance)."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate prospective fault current from transformer data',
               'Determine fault current reduction along cable runs',
               'Apply the earth fault loop impedance formula',
               'Use BS 7671 tables for cable impedance values',
               'Apply correction factors for temperature and voltage',
               'Verify protective device adequacy using calculated values',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Prospective Fault Current */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Prospective Fault Current (Ipf)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Prospective Fault Current (Ipf)">
             <p>
-              Prospective fault current is the maximum current that would flow if a short-circuit of
-              negligible impedance occurred at a given point. It determines the required breaking
-              capacity of protective devices.
+              Prospective fault current is the maximum current that would flow if a short-circuit
+              of negligible impedance occurred at a given point. It determines the required
+              breaking capacity of protective devices.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fundamental Formula</p>
-              <p className="font-mono text-center text-lg mb-2">
-                Ipf = V / Z<sub>total</sub>
-              </p>
-              <p className="text-xs text-white text-center">
-                Where V is system voltage and Z is total impedance to fault point
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Components of Total Impedance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Values</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Supply network</td>
-                      <td className="border border-white/10 px-3 py-2">Zs(supply)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Very low (infinite busbar assumption)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformer</td>
-                      <td className="border border-white/10 px-3 py-2">ZT</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        4-6% of transformer rating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cables</td>
-                      <td className="border border-white/10 px-3 py-2">Zc</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Depends on length, size, type
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Switchgear</td>
-                      <td className="border border-white/10 px-3 py-2">Zsw</td>
-                      <td className="border border-white/10 px-3 py-2">Usually negligible</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Three-Phase Fault</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Highest fault current magnitude</li>
-                  <li className="pl-1">Symmetrical fault - balanced currents</li>
-                  <li className="pl-1">Ipf = VL / (√3 × Zph)</li>
-                  <li className="pl-1">Determines device breaking capacity</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Single-Phase Fault</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Phase-to-earth or phase-to-neutral</li>
-                  <li className="pl-1">Lower current than three-phase</li>
-                  <li className="pl-1">If = Uo / Zs</li>
-                  <li className="pl-1">Determines disconnection time</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Fundamental formula:</strong> Ipf = V / Z<sub>total</sub> — where V is system
+              voltage and Z is total impedance to fault point.
+            </p>
+            <p>
+              <strong>Components of total impedance (component / symbol / typical values):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Supply network — Zs(supply) — very low (infinite busbar assumption)</li>
+              <li>Transformer — ZT — 4-6% of transformer rating</li>
+              <li>Cables — Zc — depends on length, size, type</li>
+              <li>Switchgear — Zsw — usually negligible</li>
+            </ul>
+            <p>
+              <strong>Three-phase fault:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Highest fault current magnitude</li>
+              <li>Symmetrical fault — balanced currents</li>
+              <li>Ipf = VL / (√3 × Zph)</li>
+              <li>Determines device breaking capacity</li>
+            </ul>
+            <p>
+              <strong>Single-phase fault:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Phase-to-earth or phase-to-neutral</li>
+              <li>Lower current than three-phase</li>
+              <li>If = Uo / Zs</li>
+              <li>Determines disconnection time</li>
+            </ul>
+            <p>
               <strong>Design rule:</strong> Protective device breaking capacity must exceed Ipf at
               the point of installation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Transformer Impedance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Transformer Impedance and Fault Level
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Transformer Impedance and Fault Level">
             <p>
-              The transformer is typically the dominant impedance limiting fault current. Percentage
-              impedance (%Z) provides a convenient method for fault level estimation.
+              The transformer is typically the dominant impedance limiting fault current.
+              Percentage impedance (%Z) provides a convenient method for fault level estimation.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Transformer Fault Current Formula
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                I<sub>fault</sub> = I<sub>FL</sub> / (%Z / 100)
-              </p>
-              <p className="text-xs text-white text-center mt-2">
-                Where I<sub>FL</sub> = kVA / (√3 × V<sub>L</sub>) for three-phase transformers
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Transformer Fault Levels (400V Secondary)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">%Z</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">FLC</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Fault Current</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100kVA</td>
-                      <td className="border border-white/10 px-3 py-2">4%</td>
-                      <td className="border border-white/10 px-3 py-2">144A</td>
-                      <td className="border border-white/10 px-3 py-2">3.6kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">250kVA</td>
-                      <td className="border border-white/10 px-3 py-2">4%</td>
-                      <td className="border border-white/10 px-3 py-2">361A</td>
-                      <td className="border border-white/10 px-3 py-2">9kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">500kVA</td>
-                      <td className="border border-white/10 px-3 py-2">5%</td>
-                      <td className="border border-white/10 px-3 py-2">722A</td>
-                      <td className="border border-white/10 px-3 py-2">14.4kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1000kVA</td>
-                      <td className="border border-white/10 px-3 py-2">6%</td>
-                      <td className="border border-white/10 px-3 py-2">1443A</td>
-                      <td className="border border-white/10 px-3 py-2">24kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2000kVA</td>
-                      <td className="border border-white/10 px-3 py-2">6%</td>
-                      <td className="border border-white/10 px-3 py-2">2887A</td>
-                      <td className="border border-white/10 px-3 py-2">48kA</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Converting %Z to Ohms:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Z<sub>T</sub> (Ω) = (%Z / 100) × (V²<sub>L</sub> / S)
-                </p>
-                <p className="mt-2 text-white">
-                  Where S is transformer rating in VA and V<sub>L</sub> is line voltage
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Transformer fault current formula:</strong> I<sub>fault</sub> = I
+              <sub>FL</sub> / (%Z / 100) — where I<sub>FL</sub> = kVA / (√3 × V<sub>L</sub>) for
+              three-phase transformers.
+            </p>
+            <p>
+              <strong>Typical transformer fault levels at 400V secondary (rating / %Z / FLC / fault current):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>100kVA — 4% — 144A — 3.6kA</li>
+              <li>250kVA — 4% — 361A — 9kA</li>
+              <li>500kVA — 5% — 722A — 14.4kA</li>
+              <li>1000kVA — 6% — 1443A — 24kA</li>
+              <li>2000kVA — 6% — 2887A — 48kA</li>
+            </ul>
+            <p>
+              <strong>Converting %Z to ohms:</strong> Z<sub>T</sub> (Ω) = (%Z / 100) × (V²
+              <sub>L</sub> / S) — where S is transformer rating in VA and V<sub>L</sub> is line
+              voltage.
+            </p>
+            <p>
               <strong>Note:</strong> These are approximate values. Actual fault levels depend on
               supply network impedance and transformer exact characteristics.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Cable Impedance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Cable Impedance and Fault Level Reduction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Cable Impedance and Fault Level Reduction">
             <p>
               Cable impedance comprises resistance (R) and reactance (X). As fault current flows
               through cables, voltage drop reduces available voltage and impedance limits current.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable Resistance Values (Copper at 20°C)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Size (mm²)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">R (mΩ/m)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">R1+R2 for T&E*</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.5</td>
-                      <td className="border border-white/10 px-3 py-2">12.1</td>
-                      <td className="border border-white/10 px-3 py-2">24.2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2.5</td>
-                      <td className="border border-white/10 px-3 py-2">7.41</td>
-                      <td className="border border-white/10 px-3 py-2">14.82</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4.0</td>
-                      <td className="border border-white/10 px-3 py-2">4.61</td>
-                      <td className="border border-white/10 px-3 py-2">9.22</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6.0</td>
-                      <td className="border border-white/10 px-3 py-2">3.08</td>
-                      <td className="border border-white/10 px-3 py-2">6.16</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10.0</td>
-                      <td className="border border-white/10 px-3 py-2">1.83</td>
-                      <td className="border border-white/10 px-3 py-2">3.66</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">16.0</td>
-                      <td className="border border-white/10 px-3 py-2">1.15</td>
-                      <td className="border border-white/10 px-3 py-2">2.30</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                *R1+R2 values assume CPC is same size as line conductor
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calculating Cable Impedance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Resistance:</strong> R = r × L (mΩ/m × metres)
-                </li>
-                <li className="pl-1">
-                  <strong>Reactance:</strong> X ≈ 0.08 mΩ/m for small cables (often ignored)
-                </li>
-                <li className="pl-1">
-                  <strong>Impedance:</strong> Z = √(R² + X²) ≈ R for small cables
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature:</strong> Multiply by 1.2 for operating temperature
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fault Current Along a Cable
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>At origin: Ipf = 15kA (from transformer)</p>
-                <p className="mt-2">After 50m of 25mm² cable:</p>
-                <p>Cable Z = 50m × 0.727mΩ/m × 2 = 72.7mΩ = 0.073Ω</p>
-                <p className="mt-2">New fault level (approx):</p>
-                <p>
-                  Ipf(reduced) ≈ 230 / (230/15000 + 0.073) = <strong>~12kA</strong>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Cable resistance values — copper at 20°C (size mm² / R mΩ/m / R1+R2 for T&amp;E):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1.5 — 12.1 — 24.2</li>
+              <li>2.5 — 7.41 — 14.82</li>
+              <li>4.0 — 4.61 — 9.22</li>
+              <li>6.0 — 3.08 — 6.16</li>
+              <li>10.0 — 1.83 — 3.66</li>
+              <li>16.0 — 1.15 — 2.30</li>
+            </ul>
+            <p>R1+R2 values assume CPC is same size as line conductor.</p>
+            <p>
+              <strong>Calculating cable impedance:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Resistance:</strong> R = r × L (mΩ/m × metres)
+              </li>
+              <li>
+                <strong>Reactance:</strong> X ≈ 0.08 mΩ/m for small cables (often ignored)
+              </li>
+              <li>
+                <strong>Impedance:</strong> Z = √(R² + X²) ≈ R for small cables
+              </li>
+              <li>
+                <strong>Temperature:</strong> multiply by 1.2 for operating temperature
+              </li>
+            </ul>
+            <p>
+              <strong>Fault current along a cable:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>At origin: Ipf = 15kA (from transformer)</li>
+              <li>After 50m of 25mm² cable: cable Z = 50m × 0.727mΩ/m × 2 = 72.7mΩ = 0.073Ω</li>
+              <li>
+                New fault level (approx): Ipf(reduced) ≈ 230 / (230/15000 + 0.073) ={' '}
+                <strong>~12kA</strong>
+              </li>
+            </ul>
+            <p>
               <strong>Key point:</strong> Fault current reduces rapidly along cable runs. This is
               beneficial for downstream device selection but must be verified for disconnection
               times.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Loop Impedance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Earth Fault Loop Impedance (Zs)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Earth Fault Loop Impedance (Zs)">
             <p>
               Earth fault loop impedance determines the fault current that flows during an earth
               fault. This current must be sufficient to operate the protective device within the
               required time.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Loop Impedance Formula</p>
-              <p className="font-mono text-center text-lg mb-2">Zs = Ze + (R1 + R2)</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 mt-3">
-                <li className="pl-1">
-                  <strong>Ze:</strong> External earth fault loop impedance
-                </li>
-                <li className="pl-1">
-                  <strong>R1:</strong> Resistance of phase conductor
-                </li>
-                <li className="pl-1">
-                  <strong>R2:</strong> Resistance of protective conductor (CPC)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DNO Declared Ze Values</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Maximum Ze</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TN-C-S (PME)</td>
-                      <td className="border border-white/10 px-3 py-2">0.35Ω</td>
-                      <td className="border border-white/10 px-3 py-2">Most common UK supply</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TN-S</td>
-                      <td className="border border-white/10 px-3 py-2">0.80Ω</td>
-                      <td className="border border-white/10 px-3 py-2">Separate earth conductor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TT</td>
-                      <td className="border border-white/10 px-3 py-2">21Ω (typical RA)</td>
-                      <td className="border border-white/10 px-3 py-2">Depends on electrode</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Verification Process</p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Calculate Zs:</strong> Zs = Ze + (R1+R2) from design data
-                  </li>
-                  <li className="pl-1">
-                    <strong>Apply factor:</strong> Zs(operating) = Zs × 1.2 (temperature)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Check against limit:</strong> Compare with BS 7671 Table 41.2-41.4
-                  </li>
-                  <li className="pl-1">
-                    <strong>Verify disconnection:</strong> Ensure Zs ≤ maximum for device
-                  </li>
-                  <li className="pl-1">
-                    <strong>Test on site:</strong> Measured Zs must be ≤ calculated value
-                  </li>
-                </ol>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maximum Zs for 0.4s Disconnection (230V, TN)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rating (A)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Max Zs (Ω)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type B MCB</td>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">7.67</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type B MCB</td>
-                      <td className="border border-white/10 px-3 py-2">16</td>
-                      <td className="border border-white/10 px-3 py-2">2.87</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type B MCB</td>
-                      <td className="border border-white/10 px-3 py-2">32</td>
-                      <td className="border border-white/10 px-3 py-2">1.44</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type C MCB</td>
-                      <td className="border border-white/10 px-3 py-2">16</td>
-                      <td className="border border-white/10 px-3 py-2">1.44</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type C MCB</td>
-                      <td className="border border-white/10 px-3 py-2">32</td>
-                      <td className="border border-white/10 px-3 py-2">0.72</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Loop impedance formula:</strong> Zs = Ze + (R1 + R2).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ze:</strong> external earth fault loop impedance
+              </li>
+              <li>
+                <strong>R1:</strong> resistance of phase conductor
+              </li>
+              <li>
+                <strong>R2:</strong> resistance of protective conductor (CPC)
+              </li>
+            </ul>
+            <p>
+              <strong>DNO declared Ze values (system type / maximum Ze / notes):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>TN-C-S (PME) — 0.35Ω — most common UK supply</li>
+              <li>TN-S — 0.80Ω — separate earth conductor</li>
+              <li>TT — 21Ω (typical RA) — depends on electrode</li>
+            </ul>
+            <p>
+              <strong>Verification process:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Calculate Zs:</strong> Zs = Ze + (R1+R2) from design data
+              </li>
+              <li>
+                <strong>2. Apply factor:</strong> Zs(operating) = Zs × 1.2 (temperature)
+              </li>
+              <li>
+                <strong>3. Check against limit:</strong> compare with BS 7671 Table 41.2-41.4
+              </li>
+              <li>
+                <strong>4. Verify disconnection:</strong> ensure Zs ≤ maximum for device
+              </li>
+              <li>
+                <strong>5. Test on site:</strong> measured Zs must be ≤ calculated value
+              </li>
+            </ul>
+            {/* Zs values from canonical source: src/lib/calculators/bs7671-data/protectiveDevices.ts (BS 7671:2018+A4:2026 Table 41.3) */}
+            <p>
+              <strong>Maximum Zs for 0.4s disconnection — 230V, TN (BS 7671:2018+A4:2026 — device / rating A / max Zs Ω):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Type B MCB — 6 — 7.28</li>
+              <li>Type B MCB — 16 — 2.73</li>
+              <li>Type B MCB — 32 — 1.37</li>
+              <li>Type C MCB — 16 — 1.37</li>
+              <li>Type C MCB — 32 — 0.68</li>
+            </ul>
+            <p>
               <strong>Important:</strong> If calculated Zs exceeds the maximum value, use RCD
               protection (≤30mA for additional protection) or increase conductor sizes.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — transformer fault level:</strong> Calculate the prospective fault
+              current at the secondary terminals of a 800kVA, 11kV/400V transformer with 5.5%
+              impedance.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1 — calculate full load current: I<sub>FL</sub> = S / (√3 × V<sub>L</sub>)</li>
+              <li>
+                I<sub>FL</sub> = 800,000 / (1.732 × 400) = <strong>1155A</strong>
+              </li>
+              <li>
+                Step 2 — calculate fault current: I<sub>fault</sub> = I<sub>FL</sub> / (%Z / 100)
+              </li>
+              <li>
+                I<sub>fault</sub> = 1155 / 0.055 = <strong>21kA</strong>
+              </li>
+              <li>Switchgear must have minimum 25kA rating</li>
+            </ul>
+            <p>
+              <strong>Example 2 — Zs calculation and verification:</strong> A 20A Type B MCB
+              protects 25m of 2.5mm² T&amp;E cable. Ze = 0.35Ω. Verify protection is adequate.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1 — calculate circuit impedance</li>
+              <li>
+                R1+R2 = 25m × 14.82 mΩ/m = 370.5 mΩ = <strong>0.371Ω</strong>
+              </li>
+              <li>Step 2 — calculate total Zs</li>
+              <li>
+                Zs = Ze + (R1+R2) = 0.35 + 0.371 = <strong>0.721Ω</strong>
+              </li>
+              <li>Step 3 — apply temperature factor</li>
+              <li>
+                Zs(operating) = 0.721 × 1.2 = <strong>0.865Ω</strong>
+              </li>
+              <li>Step 4 — check against maximum: from BS 7671:2018+A4:2026 Table 41.3 max Zs for 20A Type B = 2.19Ω</li>
+              <li>0.865Ω &lt; 2.19Ω — protection adequate</li>
+            </ul>
+            <p>
+              <strong>Example 3 — sub-distribution fault level:</strong> A sub-board is fed by 30m
+              of 35mm² SWA from a main board where Ipf = 18kA. Calculate Ipf at the sub-board.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1 — source impedance at main board</li>
+              <li>
+                Z<sub>source</sub> = V / Ipf = 230 / 18000 = <strong>0.0128Ω</strong>
+              </li>
+              <li>Step 2 — cable impedance (35mm² copper ≈ 0.524 mΩ/m)</li>
+              <li>
+                Z<sub>cable</sub> = 30m × 0.524 × 2 = 31.44 mΩ = <strong>0.0314Ω</strong>
+              </li>
+              <li>Step 3 — total impedance</li>
+              <li>
+                Z<sub>total</sub> = 0.0128 + 0.0314 = <strong>0.0442Ω</strong>
+              </li>
+              <li>Step 4 — fault current at sub-board</li>
+              <li>
+                Ipf = 230 / 0.0442 = <strong>5.2kA</strong>
+              </li>
+              <li>6kA MCBs adequate at sub-board</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Transformer Fault Level
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the prospective fault current at the secondary
-                terminals of a 800kVA, 11kV/400V transformer with 5.5% impedance.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Calculate full load current</p>
-                <p>
-                  I<sub>FL</sub> = S / (√3 × V<sub>L</sub>)
-                </p>
-                <p>
-                  I<sub>FL</sub> = 800,000 / (1.732 × 400) = <strong>1155A</strong>
-                </p>
-                <p className="mt-2">Step 2: Calculate fault current</p>
-                <p>
-                  I<sub>fault</sub> = I<sub>FL</sub> / (%Z / 100)
-                </p>
-                <p>
-                  I<sub>fault</sub> = 1155 / 0.055 = <strong>21kA</strong>
-                </p>
-                <p className="mt-2 text-green-400">→ Switchgear must have minimum 25kA rating</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Zs Calculation and Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 20A Type B MCB protects 25m of 2.5mm² T&E cable. Ze =
-                0.35Ω. Verify protection is adequate.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Calculate circuit impedance</p>
-                <p>
-                  R1+R2 = 25m × 14.82 mΩ/m = 370.5 mΩ = <strong>0.371Ω</strong>
-                </p>
-                <p className="mt-2">Step 2: Calculate total Zs</p>
-                <p>
-                  Zs = Ze + (R1+R2) = 0.35 + 0.371 = <strong>0.721Ω</strong>
-                </p>
-                <p className="mt-2">Step 3: Apply temperature factor</p>
-                <p>
-                  Zs(operating) = 0.721 × 1.2 = <strong>0.865Ω</strong>
-                </p>
-                <p className="mt-2">Step 4: Check against maximum</p>
-                <p>From Table 41.3: Max Zs for 20A Type B = 2.30Ω</p>
-                <p className="mt-2">
-                  0.865Ω &lt; 2.30Ω <span className="text-green-400">✓ Protection adequate</span>
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ipf = V/Z</strong> — prospective fault current
+              </li>
+              <li>
+                <strong>I<sub>fault</sub> = FLC / (%Z/100)</strong> — transformer fault
+              </li>
+              <li>
+                <strong>Zs = Ze + (R1+R2)</strong> — loop impedance
+              </li>
+              <li>
+                <strong>If = Uo/Zs</strong> — earth fault current
+              </li>
+              <li>
+                <strong>Zs × 1.2</strong> — temperature correction
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                TN-C-S Ze maximum: <strong>0.35Ω</strong>
+              </li>
+              <li>
+                TN-S Ze maximum: <strong>0.80Ω</strong>
+              </li>
+              <li>
+                Temperature factor: <strong>×1.2</strong>
+              </li>
+              <li>
+                Cmin voltage factor: <strong>0.95</strong>
+              </li>
+              <li>
+                2.5mm² R1+R2: <strong>14.82 mΩ/m</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Sub-Distribution Fault Level
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A sub-board is fed by 30m of 35mm² SWA from a main board
-                where Ipf = 18kA. Calculate Ipf at the sub-board.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Source impedance at main board</p>
-                <p>
-                  Z<sub>source</sub> = V / Ipf = 230 / 18000 = <strong>0.0128Ω</strong>
-                </p>
-                <p className="mt-2">Step 2: Cable impedance (35mm² copper ≈ 0.524 mΩ/m)</p>
-                <p>
-                  Z<sub>cable</sub> = 30m × 0.524 × 2 = 31.44 mΩ = <strong>0.0314Ω</strong>
-                </p>
-                <p className="mt-2">Step 3: Total impedance</p>
-                <p>
-                  Z<sub>total</sub> = 0.0128 + 0.0314 = <strong>0.0442Ω</strong>
-                </p>
-                <p className="mt-2">Step 4: Fault current at sub-board</p>
-                <p>
-                  Ipf = 230 / 0.0442 = <strong>5.2kA</strong>
-                </p>
-                <p className="mt-2 text-white">→ 6kA MCBs adequate at sub-board</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ipf = V/Z</strong> — Prospective fault current
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    I<sub>fault</sub> = FLC / (%Z/100)
-                  </strong>{' '}
-                  — Transformer fault
-                </li>
-                <li className="pl-1">
-                  <strong>Zs = Ze + (R1+R2)</strong> — Loop impedance
-                </li>
-                <li className="pl-1">
-                  <strong>If = Uo/Zs</strong> — Earth fault current
-                </li>
-                <li className="pl-1">
-                  <strong>Zs × 1.2</strong> — Temperature correction
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  TN-C-S Ze maximum: <strong>0.35Ω</strong>
-                </li>
-                <li className="pl-1">
-                  TN-S Ze maximum: <strong>0.80Ω</strong>
-                </li>
-                <li className="pl-1">
-                  Temperature factor: <strong>×1.2</strong>
-                </li>
-                <li className="pl-1">
-                  Cmin voltage factor: <strong>0.95</strong>
-                </li>
-                <li className="pl-1">
-                  2.5mm² R1+R2: <strong>14.82 mΩ/m</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Forgetting factor of 2</strong> — R1+R2 includes both conductors
                 </li>
-                <li className="pl-1">
-                  <strong>Wrong units</strong> — Convert mΩ/m to Ω for calculations
+                <li>
+                  <strong>Wrong units</strong> — convert mΩ/m to Ω for calculations
                 </li>
-                <li className="pl-1">
-                  <strong>Ignoring temperature</strong> — Use 1.2 factor for verification
+                <li>
+                  <strong>Ignoring temperature</strong> — use 1.2 factor for verification
                 </li>
-                <li className="pl-1">
-                  <strong>Using measured Ze for design</strong> — Use DNO declared values
+                <li>
+                  <strong>Using measured Ze for design</strong> — use DNO declared values
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always include both phase and CPC lengths in R1+R2 (factor of 2 for the round-trip), convert mΩ/m to ohms before adding to Ze, multiply final Zs by 1.2 for temperature, and design against the DNO declared maximum Ze rather than a one-off measurement."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Z_s verification on a 32 A circuit — checking Table 41.3 with A4:2026 values"
+            situation={
+              <>
+                A 32&nbsp;A B-curve MCB protects a final-circuit ring. Loop impedance measured
+                at the furthest socket Z_s = 1.20&nbsp;Ω. The installer thinks this is fine
+                because earlier guidance gave Z_s_max ≈ 1.44&nbsp;Ω for B32 (A2 / older edition
+                figures). You need to confirm against current A4:2026 values.
+              </>
+            }
+            whatToDo={
+              <>
+                Open BS 7671:2018+A4:2026 Table 41.3 — current Z_s_max for B32 is 1.37&nbsp;Ω
+                (NOT 1.44&nbsp;Ω, which was the older edition). Measured 1.20&nbsp;Ω is below
+                1.37&nbsp;Ω so the disconnection time is satisfied. Apply the rule-of-thumb
+                0.8 × multiplier for design margin: design Z_s_max = 1.37 × 0.8 = 1.10&nbsp;Ω.
+                Measured 1.20 exceeds the 0.8 design margin — investigate. Likely causes:
+                higher-than-assumed Z_e, longer cable run, smaller CPC, or warm cables on the
+                day of test. Document the measured Z_s, the Table 41.3 limit (A4:2026), and
+                whether design margin is met against Reg 643.7.
+              </>
+            }
+            whyItMatters={
+              <>
+                Using the wrong Z_s_max value (older 1.44 instead of A4:2026 1.37) is a
+                regulatory regression. Reg 643.7.3.201 requires the verification to use current
+                edition values. Quote the wrong figure on an EIC and the certificate is
+                technically non-compliant. A4:2026 also moved B32 from 1.44 to 1.37&nbsp;Ω —
+                tighter, but defensible.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Fault Current Sources</p>
-                <ul className="space-y-0.5">
-                  <li>Transformer: FLC / (%Z/100)</li>
-                  <li>Cable reduces Ipf with distance</li>
-                  <li>Origin: highest Ipf (breaking)</li>
-                  <li>End: lowest If (disconnection)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Loop Impedance (Zs)</p>
-                <ul className="space-y-0.5">
-                  <li>Zs = Ze + (R1+R2)</li>
-                  <li>TN-C-S: Ze ≤ 0.35Ω</li>
-                  <li>Verify: Zs × 1.2 ≤ max</li>
-                  <li>If = 230/Zs for fault current</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Prospective fault current Ipf at origin: Ipf ≈ kVA × 1000 / (√3 × V × Z%) — drives breaking-capacity selection for the entire downstream installation.',
+              'PFC reduces along the cable run as cable impedance adds — fault current at the DB is lower than at the supply origin.',
+              'Earth fault loop impedance: Z_s = Z_e + (R₁ + R₂). R values come from BS 7671 Table B1 (Cu) corrected for temperature.',
+              'Verify Z_s ≤ Z_s_max (Table 41.3, current A4:2026 values: B32 = 1.37&nbsp;Ω, C32 = 0.69&nbsp;Ω, B16 = 2.74&nbsp;Ω). Apply 0.8 design margin for warm cables.',
+              'Reg 643.7.3.201 makes PFC determination at origin AND relevant points a mandatory verification step.',
+              'Always use the current A4:2026 Z_s_max values — older editions gave different (more lenient) figures.',
+              'For 1×IΔn RCD test (NOT 5×IΔn — that was older guidance) — current rule under A4:2026 is single-shot 1×IΔn.',
+              'Document PFC, Z_e, R₁ + R₂ and Z_s for every circuit on the schedule of test results — Part 6 audits all of it.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Protective Device Selection
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section3-4">
-              Next: Discrimination and Coordination
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Protective device selection
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Discrimination and coordination
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

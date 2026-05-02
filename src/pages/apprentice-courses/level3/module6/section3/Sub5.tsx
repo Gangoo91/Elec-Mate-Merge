@@ -74,7 +74,7 @@ const checks = [
       "On the worked example, the heat pump is on a 40 A Type C RCBO with 30 mA Type A RCD, 35 m run of 6 mm² T&E (2.5 mm² CPC) on TN-C-S Ze 0.35 ohms. Design Zs at the heat pump compressor terminals is approximately:",
     options: [
       "0.35 ohms.",
-      "Zs = Ze + (R1 + R2 at 70 deg C) — R1 = 3.08 milliohm/m x 1.20 x 35 = 0.13 ohms; R2 = 7.41 milliohm/m x 1.20 x 35 = 0.31 ohms; Zs = 0.35 + 0.13 + 0.31 = 0.79 ohms. Table 41.3 max Zs for Type C 40 A is approximately 0.43 ohms — design Zs exceeds maximum, ADS via OPD does not work; rely on the 30 mA RCD for ADS, which is acceptable per Reg 411.4.205 / 411.4.4.",
+      "Zs = Ze + (R1 + R2 at 70 deg C) — R1 = 3.08 milliohm/m x 1.20 x 35 = 0.13 ohms; R2 = 7.41 milliohm/m x 1.20 x 35 = 0.31 ohms; Zs = 0.35 + 0.13 + 0.31 = 0.79 ohms. BS 7671:2018+A4:2026 Table 41.3 max Zs for Type C 40 A = 0.55 ohms — design Zs exceeds maximum, ADS via OPD does not work; rely on the 30 mA RCD for ADS, which is acceptable per Reg 411.4.205 / 411.4.4.",
       "0.43 ohms.",
       "1.37 ohms.",
     ],

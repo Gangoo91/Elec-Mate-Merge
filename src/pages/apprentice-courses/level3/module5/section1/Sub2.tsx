@@ -598,7 +598,7 @@ export default function Sub2() {
 
           <ConceptBlock
             title="Table 41.3 maximum Zs — A4:2026 corrected values"
-            plainEnglish="A4:2026 republished Table 41.3 (max Zs for ADS) with corrected values that align with the BS EN protective device standards. Notable: B32 Type B max Zs is now 1.37 Ω (was 1.37 Ω in 17th Edition Amendment 3 and earlier). The table is the verifier's reference for comparing measured Zs against the limit."
+            plainEnglish="A4:2026 republished Table 41.3 (max Zs for ADS) with corrected values that align with the BS EN protective device standards. Notable: B32 Type B max Zs is now 1.37 Ω (was 1.44 Ω in 17th Edition Amendment 3 and earlier). The table is the verifier's reference for comparing measured Zs against the limit."
             onSite="Use the A4:2026 Table 41.3 — not memory, not older copies. Apply the GN3 0.8 multiplier when comparing measured Zs (at ambient) against the tabulated value (which assumes operating temperature). 1.37 Ω × 0.8 = 1.10 Ω is the realistic ambient-temperature target for B32."
           >
             <p>Common Type B MCB max Zs values from A4:2026 Table 41.3 (230 V, 0.4 s disconnection):</p>
@@ -616,7 +616,7 @@ export default function Sub2() {
                 <strong>B20 — 2.19 Ω</strong> (1.75 Ω at ambient).
               </li>
               <li>
-                <strong>B32 — 1.37 Ω</strong> (1.10 Ω at ambient — A4:2026 corrected from 1.37 Ω).
+                <strong>B32 — 1.37 Ω</strong> (1.10 Ω at ambient — A4:2026 corrected from 1.44 Ω).
               </li>
               <li>
                 <strong>B40 — 1.09 Ω</strong> (0.87 Ω at ambient).

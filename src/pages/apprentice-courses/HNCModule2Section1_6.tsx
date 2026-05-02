@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 1 · Subsection 6 — Heat Loss Calculations
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   The room-by-room heat loss method that drives heating system sizing — fabric loss
+ *   plus ventilation/infiltration loss against design external temperature. The output
+ *   sets boiler/heat-pump capacity, emitter selection and pipe sizing.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  SectionRule,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Heat Loss Calculations - HNC Module 2 Section 1.6';
@@ -199,828 +218,500 @@ const faqs = [
 ];
 
 const HNCModule2Section1_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2.1.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Heat Loss Calculations
-          </h1>
-          <p className="text-white">
-            Calculating building heat loads for heating system design using CIBSE methods
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 1 · Subsection 6"
+            title="Heat Loss Calculations"
+            description="Calculating building heat loads for heating system design using CIBSE methods."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Fabric loss:</strong> Q = U × A × ΔT (through walls, roof, floor, windows)
-              </li>
-              <li className="pl-1">
-                <strong>Ventilation loss:</strong> Q = 0.33 × n × V × ΔT (air changes)
-              </li>
-              <li className="pl-1">
-                <strong>Total load:</strong> Sum of fabric + ventilation losses
-              </li>
-              <li className="pl-1">
-                <strong>Design margin:</strong> Add 10-20% for pre-heat and losses
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CIBSE Guide A:</strong> Design temperatures and data
-              </li>
-              <li className="pl-1">
-                <strong>Part L:</strong> Maximum U-values for compliance
-              </li>
-              <li className="pl-1">
-                <strong>System sizing:</strong> Boiler, radiators, pipework
-              </li>
-              <li className="pl-1">
-                <strong>Room-by-room:</strong> Individual heat emitter sizing
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will perform a room-by-room heat loss calculation using fabric loss (Σ U·A·ΔT) plus ventilation/infiltration loss (0.33·n·V·ΔT) against the design external temperature.',
+              'You apply the CIBSE Domestic Heating Design Guide and BS EN 12831 (the European method) — and you know which is appropriate for the project.',
+              'You select design external temperature for the project location (CIBSE Guide A weather data) and the design internal temperature for each room.',
+              'You add intermittent-heating uplift (typically 5-15%) where the system is not run 24/7 — and reject blanket-overinsuring.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS EN 12831 — Energy performance of buildings: method for calculation of the design heat load"
+            clause="The design heat loss for a heated space is calculated as the sum of the design transmission heat loss (through fabric) and the design ventilation heat loss, evaluated for the design external temperature and the design internal temperature for the space, with appropriate corrections for thermal bridging and intermittent heating."
+            meaning={
+              <>
+                BS EN 12831 is the UK / European reference for design heat-load calculations.
+                CIBSE&rsquo;s Domestic Heating Design Guide and Guide A apply the same physics
+                with UK-specific data. As an HNC engineer your output (kW per room, kW per
+                building) drives every downstream sizing decision.
+              </>
+            }
+            cite="Source: BS EN 12831 — Method for calculation of the design heat load; CIBSE Domestic Heating Design Guide; CIBSE Guide A — Environmental design"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate fabric heat loss using U-values and areas',
               'Calculate ventilation heat loss using air change rates',
               'Determine total building heat load',
               'Apply CIBSE internal and external design temperatures',
               'Size heating systems with appropriate margins',
               'Understand Building Regulations Part L requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Fabric Heat Loss */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Fabric Heat Loss
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Fabric Heat Loss"
+            plainEnglish="The straightforward bit: heat through the walls, roof, floor and windows. Q = U × A × ΔT for every element. Add them up."
+          >
             <p>
               Fabric heat loss occurs through the building envelope - walls, roof, floor, windows
               and doors. It is the primary heat loss mechanism in most buildings and is directly
               related to the insulation quality (U-value) and surface area of each element.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fabric Heat Loss Formula
-              </p>
-              <p className="font-mono text-center text-lg mb-2">Q = U × A × ΔT</p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>Q = Heat loss (Watts)</p>
-                <p>U = U-value (W/m²K)</p>
-                <p>A = Area (m²)</p>
-                <p>ΔT = Temperature difference (K or °C)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key principles of fabric heat loss:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Heat flows from hot to cold - always from inside to outside in winter
-                </li>
-                <li className="pl-1">Lower U-values mean better insulation and less heat loss</li>
-                <li className="pl-1">
-                  Total fabric loss is the sum of losses through each element
-                </li>
-                <li className="pl-1">Window and door areas are subtracted from wall areas</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical U-Values (Building Regulations Part L 2021)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">New Build Max</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Existing (Refurb)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Old Building
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External wall</td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.30 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">1.5-2.0 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Roof (pitched)</td>
-                      <td className="border border-white/10 px-3 py-2">0.11 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.16 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-1.0 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Floor</td>
-                      <td className="border border-white/10 px-3 py-2">0.13 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.25 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-0.8 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Windows</td>
-                      <td className="border border-white/10 px-3 py-2">1.2 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">1.4 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">2.8-5.0 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External doors</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">1.4 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">3.0-4.0 W/m²K</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Formula:</strong> Q = U × A × ΔT. Q = heat loss (W), U = U-value (W/m²K), A =
+              area (m²), ΔT = temperature difference (K or °C).
+            </p>
+            <p>
+              <strong>Key principles of fabric heat loss:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Heat flows from hot to cold - always from inside to outside in winter</li>
+              <li>Lower U-values mean better insulation and less heat loss</li>
+              <li>Total fabric loss is the sum of losses through each element</li>
+              <li>Window and door areas are subtracted from wall areas</li>
+            </ul>
+            <p>
+              <strong>Typical U-values (Building Regulations Part L 2021) — new build / existing
+              refurb / typical old building:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>External wall: 0.18 / 0.30 / 1.5-2.0 W/m²K</li>
+              <li>Roof (pitched): 0.11 / 0.16 / 0.5-1.0 W/m²K</li>
+              <li>Floor: 0.13 / 0.25 / 0.5-0.8 W/m²K</li>
+              <li>Windows: 1.2 / 1.4 / 2.8-5.0 W/m²K</li>
+              <li>External doors: 1.0 / 1.4 / 3.0-4.0 W/m²K</li>
+            </ul>
+            <p>
               <strong>Remember:</strong> Windows typically have U-values 5-10 times higher than
               modern walls, making them the weakest thermal element despite their smaller area.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Ventilation Heat Loss */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Ventilation Heat Loss
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Ventilation Heat Loss"
+            plainEnglish="Cold air comes in, warm air goes out. The 0.33 magic number turns air-change-rate × volume × temperature-difference into watts."
+          >
             <p>
               Ventilation heat loss occurs when warm indoor air is replaced by cold outdoor air.
               This happens through both controlled ventilation (windows, vents, MVHR) and
               uncontrolled infiltration (gaps, cracks, service penetrations).
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ventilation Heat Loss Formula
-              </p>
-              <p className="font-mono text-center text-lg mb-2">Q = 0.33 × n × V × ΔT</p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>Q = Heat loss (Watts)</p>
-                <p>0.33 = Volumetric specific heat of air (Wh/m³K)</p>
-                <p>n = Air changes per hour (ACH)</p>
-                <p>V = Room volume (m³)</p>
-                <p>ΔT = Temperature difference (K or °C)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Understanding the 0.33 factor:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Air density ≈ 1.2 kg/m³ at standard conditions</li>
-                <li className="pl-1">Specific heat capacity of air ≈ 1000 J/kgK</li>
-                <li className="pl-1">Combined: 1.2 × 1000 = 1200 J/m³K = 0.33 Wh/m³K</li>
-                <li className="pl-1">
-                  This factor accounts for the energy needed to heat incoming air
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE Recommended Air Change Rates
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Room Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">ACH (Design)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Living room</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                      <td className="border border-white/10 px-3 py-2">Background ventilation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bedroom</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-1.0</td>
-                      <td className="border border-white/10 px-3 py-2">Lower overnight</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Kitchen</td>
-                      <td className="border border-white/10 px-3 py-2">2.0-3.0</td>
-                      <td className="border border-white/10 px-3 py-2">Extract ventilation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bathroom</td>
-                      <td className="border border-white/10 px-3 py-2">2.0-3.0</td>
-                      <td className="border border-white/10 px-3 py-2">Moisture removal</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office (general)</td>
-                      <td className="border border-white/10 px-3 py-2">1.0-1.5</td>
-                      <td className="border border-white/10 px-3 py-2">8-10 l/s per person</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Classroom</td>
-                      <td className="border border-white/10 px-3 py-2">2.0-3.0</td>
-                      <td className="border border-white/10 px-3 py-2">High occupancy</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Formula:</strong> Q = 0.33 × n × V × ΔT. Q = heat loss (W), 0.33 = volumetric
+              specific heat of air (Wh/m³K), n = air changes per hour (ACH), V = room volume (m³),
+              ΔT = temperature difference (K or °C).
+            </p>
+            <p>
+              <strong>Understanding the 0.33 factor:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Air density ≈ 1.2 kg/m³ at standard conditions</li>
+              <li>Specific heat capacity of air ≈ 1000 J/kgK</li>
+              <li>Combined: 1.2 × 1000 = 1200 J/m³K = 0.33 Wh/m³K</li>
+              <li>This factor accounts for the energy needed to heat incoming air</li>
+            </ul>
+            <p>
+              <strong>CIBSE recommended air change rates:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Living room: 1.0 ACH — background ventilation</li>
+              <li>Bedroom: 0.5-1.0 ACH — lower overnight</li>
+              <li>Kitchen: 2.0-3.0 ACH — extract ventilation</li>
+              <li>Bathroom: 2.0-3.0 ACH — moisture removal</li>
+              <li>Office (general): 1.0-1.5 ACH — 8-10 l/s per person</li>
+              <li>Classroom: 2.0-3.0 ACH — high occupancy</li>
+            </ul>
+            <p>
               <strong>Modern buildings:</strong> With improved airtightness (&lt;5 m³/h/m² at 50Pa),
               mechanical ventilation with heat recovery (MVHR) can recover 80-90% of heat from
               exhaust air.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Design Temperatures and CIBSE Data */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Design Temperatures and CIBSE Data
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Design Temperatures and CIBSE Data"
+            plainEnglish="Inside temp = what the room should sit at. Outside temp = the design cold day. Difference = ΔT, which feeds every heat loss calc."
+          >
             <p>
               Accurate heat loss calculations require appropriate design temperatures. CIBSE Guide A
               provides comprehensive data for internal comfort temperatures and external design
               conditions based on UK weather statistics.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Internal Design Temperatures
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Living room:</strong> 21°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Dining room:</strong> 21°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Bedroom:</strong> 18°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Bathroom:</strong> 22°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Hall/landing:</strong> 18°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Kitchen:</strong> 18°C (cooking gains)
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commercial Spaces</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>General office:</strong> 22°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Open plan office:</strong> 22°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Retail (sales):</strong> 19-21°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Restaurant:</strong> 22°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Warehouse:</strong> 12-16°C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Factory (light work):</strong> 16-19°C
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                External Design Temperatures (CIBSE Guide A)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Winter Design Temp
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">London</td>
-                      <td className="border border-white/10 px-3 py-2">-2°C</td>
-                      <td className="border border-white/10 px-3 py-2">Urban heat island effect</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Birmingham</td>
-                      <td className="border border-white/10 px-3 py-2">-3°C</td>
-                      <td className="border border-white/10 px-3 py-2">Central England</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Manchester</td>
-                      <td className="border border-white/10 px-3 py-2">-3°C</td>
-                      <td className="border border-white/10 px-3 py-2">North West</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Edinburgh</td>
-                      <td className="border border-white/10 px-3 py-2">-4°C</td>
-                      <td className="border border-white/10 px-3 py-2">Scotland - colder</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Aberdeen</td>
-                      <td className="border border-white/10 px-3 py-2">-5°C</td>
-                      <td className="border border-white/10 px-3 py-2">North Scotland</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exposed/rural sites</td>
-                      <td className="border border-white/10 px-3 py-2">-1°C to -2°C lower</td>
-                      <td className="border border-white/10 px-3 py-2">Additional allowance</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calculating Temperature Difference (ΔT)
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                ΔT = t<sub>i</sub> - t<sub>e</sub>
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mt-3">
-                <p>Example: Office in Manchester</p>
-                <p>Internal: 22°C, External: -3°C</p>
-                <p>
-                  ΔT = 22 - (-3) = <strong>25K</strong>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Internal design temperatures - residential:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Living room:</strong> 21°C
+              </li>
+              <li>
+                <strong>Dining room:</strong> 21°C
+              </li>
+              <li>
+                <strong>Bedroom:</strong> 18°C
+              </li>
+              <li>
+                <strong>Bathroom:</strong> 22°C
+              </li>
+              <li>
+                <strong>Hall/landing:</strong> 18°C
+              </li>
+              <li>
+                <strong>Kitchen:</strong> 18°C (cooking gains)
+              </li>
+            </ul>
+            <p>
+              <strong>Internal design temperatures - commercial spaces:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>General office:</strong> 22°C
+              </li>
+              <li>
+                <strong>Open plan office:</strong> 22°C
+              </li>
+              <li>
+                <strong>Retail (sales):</strong> 19-21°C
+              </li>
+              <li>
+                <strong>Restaurant:</strong> 22°C
+              </li>
+              <li>
+                <strong>Warehouse:</strong> 12-16°C
+              </li>
+              <li>
+                <strong>Factory (light work):</strong> 16-19°C
+              </li>
+            </ul>
+            <p>
+              <strong>External design temperatures (CIBSE Guide A):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>London: -2°C — urban heat island effect</li>
+              <li>Birmingham: -3°C — central England</li>
+              <li>Manchester: -3°C — north west</li>
+              <li>Edinburgh: -4°C — Scotland, colder</li>
+              <li>Aberdeen: -5°C — north Scotland</li>
+              <li>Exposed/rural sites: subtract a further 1-2°C</li>
+            </ul>
+            <p>
+              <strong>Calculating temperature difference (ΔT):</strong> ΔT = ti - te. Example -
+              office in Manchester: internal 22°C, external -3°C. ΔT = 22 - (-3) = <strong>25K</strong>.
+            </p>
+            <p>
               <strong>CIBSE basis:</strong> External design temperatures are based on the
               temperature exceeded for 99.6% of the year (i.e., only colder for approximately 35
               hours annually).
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Total Building Heat Load and System Sizing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Total Building Heat Load and System Sizing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Total Building Heat Load and System Sizing"
+            plainEnglish="Add fabric and ventilation. Add a margin (10-20%). Add DHW if it's a combi. That's the boiler / heat-pump output you need to specify."
+          >
             <p>
               The total building heat load is the sum of all fabric and ventilation losses. This
               determines the required capacity of the heating system including boiler, heat pump,
               distribution pipework and heat emitters.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Total Heat Load Formula
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                Q<sub>total</sub> = Q<sub>fabric</sub> + Q<sub>ventilation</sub>
-              </p>
-              <div className="text-xs text-white text-center mt-2">
-                <p>Add margins for pre-heat (10-20%) and distribution losses (5-10%)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">System sizing considerations:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Pre-heat margin:</strong> 10-20% for intermittent heating
-                </li>
-                <li className="pl-1">
-                  <strong>Distribution losses:</strong> 5-10% for pipe heat losses
-                </li>
-                <li className="pl-1">
-                  <strong>Safety factor:</strong> Round up to available equipment sizes
-                </li>
-                <li className="pl-1">
-                  <strong>Future-proofing:</strong> Consider building extensions or usage changes
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Heat Loss Benchmarks
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Heat Loss (W/m² floor)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Passivhaus</td>
-                      <td className="border border-white/10 px-3 py-2">10-15</td>
-                      <td className="border border-white/10 px-3 py-2">Ultra-low energy</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">New build (Part L 2021)</td>
-                      <td className="border border-white/10 px-3 py-2">30-50</td>
-                      <td className="border border-white/10 px-3 py-2">Current standards</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1990s-2000s build</td>
-                      <td className="border border-white/10 px-3 py-2">50-80</td>
-                      <td className="border border-white/10 px-3 py-2">Reasonable insulation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1970s-1980s build</td>
-                      <td className="border border-white/10 px-3 py-2">80-120</td>
-                      <td className="border border-white/10 px-3 py-2">Partial insulation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pre-1970s unimproved</td>
-                      <td className="border border-white/10 px-3 py-2">120-200+</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Solid walls, single glazing
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Boiler Sizing</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Output must exceed total heat load</li>
-                  <li className="pl-1">Add DHW load for combis (3-5kW)</li>
-                  <li className="pl-1">Consider modulation range (10:1)</li>
-                  <li className="pl-1">Oversizing causes short-cycling</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heat Pump Sizing</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">COP reduces at low external temps</li>
-                  <li className="pl-1">Size to peak load or bivalent point</li>
-                  <li className="pl-1">Buffer vessels for low thermal mass</li>
-                  <li className="pl-1">Weather compensation essential</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Total heat load formula:</strong> Qtotal = Qfabric + Qventilation. Add
+              margins for pre-heat (10-20%) and distribution losses (5-10%).
+            </p>
+            <p>
+              <strong>System sizing considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pre-heat margin:</strong> 10-20% for intermittent heating
+              </li>
+              <li>
+                <strong>Distribution losses:</strong> 5-10% for pipe heat losses
+              </li>
+              <li>
+                <strong>Safety factor:</strong> Round up to available equipment sizes
+              </li>
+              <li>
+                <strong>Future-proofing:</strong> Consider building extensions or usage changes
+              </li>
+            </ul>
+            <p>
+              <strong>Typical heat loss benchmarks (W/m² floor area):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Passivhaus: 10-15 — ultra-low energy</li>
+              <li>New build (Part L 2021): 30-50 — current standards</li>
+              <li>1990s-2000s build: 50-80 — reasonable insulation</li>
+              <li>1970s-1980s build: 80-120 — partial insulation</li>
+              <li>Pre-1970s unimproved: 120-200+ — solid walls, single glazing</li>
+            </ul>
+            <p>
+              <strong>Boiler sizing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Output must exceed total heat load</li>
+              <li>Add DHW load for combis (3-5kW)</li>
+              <li>Consider modulation range (10:1)</li>
+              <li>Oversizing causes short-cycling</li>
+            </ul>
+            <p>
+              <strong>Heat pump sizing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>COP reduces at low external temps</li>
+              <li>Size to peak load or bivalent point</li>
+              <li>Buffer vessels for low thermal mass</li>
+              <li>Weather compensation essential</li>
+            </ul>
+            <p>
               <strong>Rule of thumb:</strong> Modern well-insulated homes need approximately 40-60
               W/m² floor area. A 100m² home would need 4-6kW heating capacity.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Four numbers: a room's fabric loss, a room's ventilation loss, the same room with margin for radiator sizing, and a whole house through to boiler kW."
+          >
+            <p>
+              <strong>Example 1 - room fabric heat loss:</strong> Living room with: external wall
+              12m² (U=0.3), window 4m² (U=1.4), floor 20m² (U=0.2), ceiling 20m² (U=0.15). Internal
+              21°C, external -3°C.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>ΔT = 21 - (-3) = 24K</li>
+              <li>Wall loss: 0.3 × 12 × 24 = 86.4W</li>
+              <li>Window loss: 1.4 × 4 × 24 = 134.4W</li>
+              <li>Floor loss: 0.2 × 20 × 24 = 96W</li>
+              <li>Ceiling loss: 0.15 × 20 × 24 = 72W</li>
+              <li>Total fabric loss = <strong>388.8W</strong></li>
+              <li>Window contributes 35% of loss despite being 7% of envelope area</li>
+            </ul>
+            <p>
+              <strong>Example 2 - room ventilation heat loss:</strong> Same living room is 5m × 4m ×
+              2.4m with 1.0 ACH.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Volume = 5 × 4 × 2.4 = 48m³</li>
+              <li>ΔT = 24K</li>
+              <li>Q = 0.33 × 1.0 × 48 × 24 = <strong>380.2W</strong></li>
+              <li>Ventilation loss is almost equal to fabric loss in this example</li>
+            </ul>
+            <p>
+              <strong>Example 3 - total room heat load with margin:</strong> Total heat loss =
+              fabric + ventilation = 388.8 + 380.2 = 769W. With 10% margin = 769 × 1.10 =
+              <strong>845.9W</strong>. Recommended radiator: 900-1000W output (next size up from
+              manufacturer's range).
+            </p>
+            <p>
+              <strong>Example 4 - whole house heat load:</strong> A 120m² house has calculated
+              room-by-room heat losses totalling 7.2kW. Size the boiler with appropriate margins for
+              intermittent heating.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Base heat load: 7.2kW</li>
+              <li>Pre-heat margin (15%): 7.2 × 0.15 = 1.08kW</li>
+              <li>Distribution losses (5%): 7.2 × 0.05 = 0.36kW</li>
+              <li>Total required: 7.2 + 1.08 + 0.36 = <strong>8.64kW</strong></li>
+              <li>Add DHW for combi (3kW): 8.64 + 3 = 11.64kW</li>
+              <li>Recommended: <strong>12-15kW combi boiler</strong> (or 9-10kW system boiler with separate DHW cylinder)</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Room Fabric Heat Loss
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the fabric heat loss for a living room with:
-                External wall 12m² (U=0.3), window 4m² (U=1.4), floor 20m² (U=0.2), ceiling 20m²
-                (U=0.15). Internal temp 21°C, external -3°C.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>ΔT = 21 - (-3) = 24K</p>
-                <p className="mt-2">Wall loss: 0.3 × 12 × 24 = 86.4W</p>
-                <p>Window loss: 1.4 × 4 × 24 = 134.4W</p>
-                <p>Floor loss: 0.2 × 20 × 24 = 96W</p>
-                <p>Ceiling loss: 0.15 × 20 × 24 = 72W</p>
-                <p className="mt-2">
-                  Total fabric loss = 86.4 + 134.4 + 96 + 72 = <strong>388.8W</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Note: Window contributes 35% of loss despite being 7% of envelope area
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Room Ventilation Heat Loss
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> The same living room is 5m × 4m × 2.4m with 1.0 air
-                change per hour. Calculate the ventilation heat loss.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Volume = 5 × 4 × 2.4 = 48m³</p>
-                <p>ΔT = 24K (from previous example)</p>
-                <p className="mt-2">Q = 0.33 × n × V × ΔT</p>
-                <p>Q = 0.33 × 1.0 × 48 × 24</p>
-                <p>
-                  Q = <strong>380.2W</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Ventilation loss is almost equal to fabric loss in this example
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The five formulas, five values, and design conditions you'll keep coming back to."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Q = U × A × ΔT</strong> — Fabric heat loss (W)
+              </li>
+              <li>
+                <strong>Q = 0.33 × n × V × ΔT</strong> — Ventilation heat loss (W)
+              </li>
+              <li>
+                <strong>Qtotal = Qfabric + Qventilation</strong> — Total heat load
+              </li>
+              <li>
+                <strong>ΔT = tinside - toutside</strong> — Temperature difference
+              </li>
+              <li>
+                <strong>Boiler output = Total × margin factor</strong> — System sizing
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Volumetric specific heat of air: <strong>0.33 Wh/m³K</strong>
+              </li>
+              <li>
+                Living room internal temp: <strong>21°C</strong>
+              </li>
+              <li>
+                Office internal temp: <strong>22°C</strong>
+              </li>
+              <li>
+                UK external design temp: <strong>-1°C to -4°C</strong>
+              </li>
+              <li>
+                New build wall U-value: <strong>≤0.18 W/m²K</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Total Room Heat Load with Margin
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Using the results above, calculate the total heat load
-                and recommended radiator size with a 10% margin.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Total heat loss = Fabric + Ventilation</p>
-                <p>Total = 388.8 + 380.2 = 769W</p>
-                <p className="mt-2">With 10% margin:</p>
-                <p>
-                  Required = 769 × 1.10 = <strong>845.9W</strong>
-                </p>
-                <p className="mt-2">
-                  Recommended radiator: <strong>900W-1000W output</strong>
-                </p>
-                <p className="text-white">(Select next size up from manufacturer's range)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Whole House Heat Load
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 120m² house has calculated room-by-room heat losses
-                totalling 7.2kW. Size the boiler with appropriate margins for intermittent heating.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Base heat load: 7.2kW</p>
-                <p className="mt-2">Pre-heat margin (15%): 7.2 × 0.15 = 1.08kW</p>
-                <p>Distribution losses (5%): 7.2 × 0.05 = 0.36kW</p>
-                <p className="mt-2">
-                  Total required: 7.2 + 1.08 + 0.36 = <strong>8.64kW</strong>
-                </p>
-                <p className="mt-2">Add DHW for combi (3kW): 8.64 + 3 = 11.64kW</p>
-                <p className="mt-2 text-green-400">
-                  Recommended: <strong>12-15kW combi boiler</strong>
-                </p>
-                <p className="text-white">Or 9-10kW system boiler with separate DHW cylinder</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Q = U × A × ΔT</strong> — Fabric heat loss (W)
-                </li>
-                <li className="pl-1">
-                  <strong>Q = 0.33 × n × V × ΔT</strong> — Ventilation heat loss (W)
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    Q<sub>total</sub> = Q<sub>fabric</sub> + Q<sub>ventilation</sub>
-                  </strong>{' '}
-                  — Total heat load
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    ΔT = t<sub>inside</sub> - t<sub>outside</sub>
-                  </strong>{' '}
-                  — Temperature difference
-                </li>
-                <li className="pl-1">
-                  <strong>Boiler output = Total × margin factor</strong> — System sizing
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Volumetric specific heat of air: <strong>0.33 Wh/m³K</strong>
-                </li>
-                <li className="pl-1">
-                  Living room internal temp: <strong>21°C</strong>
-                </li>
-                <li className="pl-1">
-                  Office internal temp: <strong>22°C</strong>
-                </li>
-                <li className="pl-1">
-                  UK external design temp: <strong>-1°C to -4°C</strong>
-                </li>
-                <li className="pl-1">
-                  New build wall U-value: <strong>≤0.18 W/m²K</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Forgetting negatives</strong> — ΔT = 21 - (-3) = 24, not 18
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Double counting areas</strong> — Subtract window area from wall area
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring internal partitions</strong> — Heat flows to unheated spaces too
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Undersizing systems</strong> — Always add appropriate margins
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Using wrong U-values</strong> — Verify actual construction, not assumed
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Watch the sign on external temps, deduct openings from wall areas, treat unheated adjoining spaces as a partial heat loss, always carry a pre-heat + distribution margin, and confirm U-values from actual build-up not generic figures."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Sizing an air-source heat pump for a Victorian terrace"
+            situation={
+              <>
+                The customer wants an ASHP retrofit for a 3-bed Victorian terrace. The
+                existing gas boiler is 24 kW. They have read online that ASHP needs to be
+                sized to 80% of boiler capacity.
+              </>
+            }
+            whatToDo={
+              <>
+                Reject the rule of thumb. Run a room-by-room heat loss to BS EN 12831 with
+                the actual U-values of the as-built fabric (likely 1.5-2.5 W/m²·K for solid
+                brick walls, 5+ for single glazing). Use design external temperature for the
+                location (-3 °C London, -5 °C Birmingham, -8 °C Glasgow per CIBSE). Sum the
+                room loads. Compare against ASHP performance at the design ambient (de-rated
+                from nameplate). Likely outcome: 8-12 kW heat pump matched to the actual
+                load is realistic. The 24 kW boiler was massively oversized.
+              </>
+            }
+            whyItMatters={
+              <>
+                Oversized ASHPs cycle, lose efficiency and shorten compressor life.
+                Right-sizing from a proper heat-loss calculation is the single biggest factor
+                in retrofit success.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Heat Loss Formulas</p>
-                <ul className="space-y-0.5">
-                  <li>Fabric: Q = U × A × ΔT</li>
-                  <li>Ventilation: Q = 0.33 × n × V × ΔT</li>
-                  <li>
-                    Total: Q<sub>fab</sub> + Q<sub>vent</sub>
-                  </li>
-                  <li>With margin: Total × 1.15 typical</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Design Data</p>
-                <ul className="space-y-0.5">
-                  <li>Internal: 18-22°C (room dependent)</li>
-                  <li>External UK: -1°C to -4°C</li>
-                  <li>Air changes: 0.5-3.0 ACH</li>
-                  <li>Benchmarks: 30-200 W/m² floor</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Design heat loss = fabric loss + ventilation/infiltration loss.',
+              'Fabric loss: Σ(U·A·ΔT) — sum over all elements bounding the heated space.',
+              'Ventilation loss: Q_v = 0.33·n·V·ΔT (W) where n = air change rate (per hour) and V = room volume (m³).',
+              'BS EN 12831 is the European method; CIBSE Domestic Heating Design Guide and Guide A apply UK data and conventions.',
+              'Design external temperature: location-specific (CIBSE Guide A) — typically -1 to -8 °C across the UK.',
+              'Design internal temperature: CIBSE Guide A or BS EN 12831 — living rooms 21 °C, bedrooms 18 °C, bathrooms 22 °C.',
+              'Intermittent heating uplift: 5-15% for systems run on schedule rather than 24/7.',
+              'Output drives boiler/heat pump sizing, emitter selection, pipe sizing, fuel cost estimate — get it wrong and the whole system suffers.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section1-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Section 1.5
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2">
-              Next: Section 2
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Thermal bridging
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Fluid mechanics
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

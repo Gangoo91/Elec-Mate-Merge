@@ -1,8 +1,29 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 3 · Subsection 2 — Safety Culture and Leadership
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   The human-factors layer that determines whether the SSOW survives contact with a busy
+ *   site. Engineer-in-training perspective: how a junior HNC supervisor moves the needle on
+ *   culture without the seniority to mandate it.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Safety Culture and Leadership - HNC Module 1 Section 3.2';
@@ -257,750 +278,495 @@ const faqs = [
 ];
 
 const HNCModule1Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 3
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Safety Culture and Leadership
-          </h1>
-          <p className="text-white">
-            Understanding the human factors that shape safety performance in organisations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.3.2"
+            title="Safety Culture and Leadership"
+            description="Understanding the human factors that shape safety performance in organisations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Safety culture:</strong> Shared values and beliefs about safety
-              </li>
-              <li className="pl-1">
-                <strong>Leadership:</strong> Visible commitment driving cultural change
-              </li>
-              <li className="pl-1">
-                <strong>Behavioural safety:</strong> Understanding why people act unsafely
-              </li>
-              <li className="pl-1">
-                <strong>Engagement:</strong> Workers actively participating in safety
-              </li>
+          <TLDR
+            points={[
+              'You will recognise safety culture as &ldquo;what people do when no one is watching&rdquo; — the operational reality the SSOW depends on.',
+              'You can place a workforce on the HSE culture maturity ladder (pathological → reactive → calculative → proactive → generative) and identify the moves that step it up.',
+              'You apply visible felt leadership (VFL) — the senior officer is seen on the floor, listens to operatives, acts on what they hear.',
+              'You separate just culture from blame culture — operatives report near-misses without fear, but reckless violations are still actionable.',
+            ]}
+          />
+
+          <RegsCallout
+            source="HASAWA 1974 — Section 2(6)"
+            clause="It shall be the duty of every employer to consult any such representatives [safety representatives] with a view to the making and maintenance of arrangements which will enable him and his employees to co-operate effectively in promoting and developing measures to ensure the health and safety at work of the employees, and in checking the effectiveness of such measures."
+            meaning={
+              <>
+                Section 2(6) makes worker consultation a statutory duty. Culture is built on
+                the assumption that operatives can speak honestly without retaliation — and the
+                law underwrites that assumption.
+              </>
+            }
+            cite="Source: Health and Safety at Work etc. Act 1974, s.2(6) — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Define safety culture and explain its importance to safety performance",
+              "Describe the characteristics of positive and negative safety cultures",
+              "Explain the role of leadership in shaping and maintaining safety culture",
+              "Understand behavioural safety principles and observation techniques",
+              "Identify methods for engaging workers in safety improvement",
+              "Recognise leading and lagging indicators of safety culture",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Understanding Safety Culture</ContentEyebrow>
+
+          <ConceptBlock title="Understanding Safety Culture">
+            <p>
+            Safety culture describes the shared attitudes, values, beliefs and behaviours relating
+            to health and safety within an organisation. It's often described as "the way we do
+            things around here" when no one is watching.
+            </p>
+
+            
+            <p className="text-sm font-medium text-white mb-2">
+            Key components of safety culture:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Values:</strong> What the organisation truly prioritises (not just what it
+            says)
+            </li>
+            <li>
+            <strong>Beliefs:</strong> Assumptions about risk, control, and responsibility
+            </li>
+            <li>
+            <strong>Behaviours:</strong> How people actually act day-to-day
+            </li>
+            <li>
+            <strong>Norms:</strong> Unwritten rules about acceptable conduct
+            </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Westrum's Culture Typology
             </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Multi-site working:</strong> Maintaining culture across locations
-              </li>
-              <li className="pl-1">
-                <strong>Contractor interface:</strong> Aligning different company cultures
-              </li>
-              <li className="pl-1">
-                <strong>Production pressure:</strong> Balancing deadlines with safety
-              </li>
-              <li className="pl-1">
-                <strong>Competence:</strong> Skilled workforce taking ownership
-              </li>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Pathological</strong> — Characteristics: Power-oriented, low cooperation. Response to Safety Info: Messengers are "shot"</li>
+            <li><strong>Bureaucratic</strong> — Characteristics: Rule-oriented, modest cooperation. Response to Safety Info: Messengers are tolerated</li>
+            <li><strong>Generative</strong> — Characteristics: Performance-oriented, high cooperation. Response to Safety Info: Messengers are trained and rewarded</li>
             </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Define safety culture and explain its importance to safety performance',
-              'Describe the characteristics of positive and negative safety cultures',
-              'Explain the role of leadership in shaping and maintaining safety culture',
-              'Understand behavioural safety principles and observation techniques',
-              'Identify methods for engaging workers in safety improvement',
-              'Recognise leading and lagging indicators of safety culture',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Understanding Safety Culture */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding Safety Culture
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Safety culture describes the shared attitudes, values, beliefs and behaviours relating
-              to health and safety within an organisation. It's often described as "the way we do
-              things around here" when no one is watching.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key components of safety culture:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Values:</strong> What the organisation truly prioritises (not just what it
-                  says)
-                </li>
-                <li className="pl-1">
-                  <strong>Beliefs:</strong> Assumptions about risk, control, and responsibility
-                </li>
-                <li className="pl-1">
-                  <strong>Behaviours:</strong> How people actually act day-to-day
-                </li>
-                <li className="pl-1">
-                  <strong>Norms:</strong> Unwritten rules about acceptable conduct
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Westrum's Culture Typology
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Culture Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Characteristics
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Response to Safety Info
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        Pathological
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Power-oriented, low cooperation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Messengers are "shot"</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-amber-400">
-                        Bureaucratic
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rule-oriented, modest cooperation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Messengers are tolerated</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        Generative
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Performance-oriented, high cooperation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Messengers are trained and rewarded
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>HSE research:</strong> Organisations with positive safety cultures have
-              significantly fewer accidents than those with poor cultures, even when using similar
-              equipment and procedures.
+            <strong>HSE research:</strong> Organisations with positive safety cultures have
+            significantly fewer accidents than those with poor cultures, even when using similar
+            equipment and procedures.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Safety Leadership */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Safety Leadership
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Safety Leadership</ContentEyebrow>
+
+          <ConceptBlock title="Safety Leadership">
             <p>
-              Leadership is the single most influential factor in shaping safety culture. What
-              leaders pay attention to, measure, and reward signals to everyone what really matters.
-              Actions speak louder than policies.
+            Leadership is the single most influential factor in shaping safety culture. What
+            leaders pay attention to, measure, and reward signals to everyone what really matters.
+            Actions speak louder than policies.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Visible Leadership Behaviours
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Behaviour</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Impact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Regular site visits and safety conversations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Demonstrates personal commitment and interest
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Always wearing correct PPE on site
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Models expected behaviour - "walk the talk"
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stopping unsafe work immediately
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shows safety is not negotiable for production
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Allocating resources for safety
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proves commitment beyond words
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Recognising and rewarding safe behaviour
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reinforces what is valued
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Acting on safety suggestions and concerns
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Builds trust and encourages reporting
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Visible Leadership Behaviours
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Regular site visits and safety conversations</strong> — Impact: Demonstrates personal commitment and interest</li>
+            <li><strong>Always wearing correct PPE on site</strong> — Impact: Models expected behaviour - "walk the talk"</li>
+            <li><strong>Stopping unsafe work immediately</strong> — Impact: Shows safety is not negotiable for production</li>
+            <li><strong>Allocating resources for safety</strong> — Impact: Proves commitment beyond words</li>
+            <li><strong>Recognising and rewarding safe behaviour</strong> — Impact: Reinforces what is valued</li>
+            <li><strong>Acting on safety suggestions and concerns</strong> — Impact: Builds trust and encourages reporting</li>
+            </ul>
+            
+            
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Leadership Don'ts</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Walking past hazards without acting</li>
-                  <li className="pl-1">Prioritising production over safety</li>
-                  <li className="pl-1">Blaming individuals without system review</li>
-                  <li className="pl-1">Ignoring safety suggestions</li>
-                  <li className="pl-1">"Do as I say, not as I do" behaviour</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Just Culture Principles
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Honest errors are learning opportunities</li>
-                  <li className="pl-1">At-risk behaviour needs coaching</li>
-                  <li className="pl-1">Reckless behaviour requires accountability</li>
-                  <li className="pl-1">System failures are addressed systemically</li>
-                  <li className="pl-1">Trust is built through consistent fairness</li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Leadership Don'ts</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Walking past hazards without acting</li>
+            <li>Prioritising production over safety</li>
+            <li>Blaming individuals without system review</li>
+            <li>Ignoring safety suggestions</li>
+            <li>"Do as I say, not as I do" behaviour</li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Just Culture Principles
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Honest errors are learning opportunities</li>
+            <li>At-risk behaviour needs coaching</li>
+            <li>Reckless behaviour requires accountability</li>
+            <li>System failures are addressed systemically</li>
+            <li>Trust is built through consistent fairness</li>
+            </ul>
+            </div>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key insight:</strong> Workers observe what leaders do under pressure. If
-              deadlines lead to safety shortcuts, the message is clear regardless of what the policy
-              says.
+            <strong>Key insight:</strong> Workers observe what leaders do under pressure. If
+            deadlines lead to safety shortcuts, the message is clear regardless of what the policy
+            says.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Behavioural Safety */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Behavioural Safety
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Behavioural Safety</ContentEyebrow>
+
+          <ConceptBlock title="Behavioural Safety">
             <p>
-              Behavioural safety recognises that human behaviour is the final link in most accident
-              chains. By observing work practices, understanding why people act as they do, and
-              positively reinforcing safe behaviours, we can reduce at-risk acts.
+            Behavioural safety recognises that human behaviour is the final link in most accident
+            chains. By observing work practices, understanding why people act as they do, and
+            positively reinforcing safe behaviours, we can reduce at-risk acts.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">The ABC Model of Behaviour:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Antecedents:</strong> Factors that trigger behaviour (training,
-                  procedures, equipment)
-                </li>
-                <li className="pl-1">
-                  <strong>Behaviour:</strong> The observable actions of the worker
-                </li>
-                <li className="pl-1">
-                  <strong>Consequences:</strong> What happens after the behaviour (positive or
-                  negative reinforcement)
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">The ABC Model of Behaviour:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Antecedents:</strong> Factors that trigger behaviour (training,
+            procedures, equipment)
+            </li>
+            <li>
+            <strong>Behaviour:</strong> The observable actions of the worker
+            </li>
+            <li>
+            <strong>Consequences:</strong> What happens after the behaviour (positive or
+            negative reinforcement)
+            </li>
+            </ul>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Safety Observation Process
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Observe</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Watch work activity without interrupting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        See how work is actually done
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Record</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Note safe and at-risk behaviours
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Gather data for analysis</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Engage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Have a conversation with the worker
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Understand the 'why'</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Reinforce</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Recognise safe practices observed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Encourage continuation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Analyse</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review trends and patterns
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Identify systemic issues</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6. Act</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Address root causes identified
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Make lasting improvements
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Safety Observation Process
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1. Observe</strong> — Activity: Watch work activity without interrupting. Purpose: See how work is actually done</li>
+            <li><strong>2. Record</strong> — Activity: Note safe and at-risk behaviours. Purpose: Gather data for analysis</li>
+            <li><strong>3. Engage</strong> — Activity: Have a conversation with the worker. Purpose: Understand the 'why'</li>
+            <li><strong>4. Reinforce</strong> — Activity: Recognise safe practices observed. Purpose: Encourage continuation</li>
+            <li><strong>5. Analyse</strong> — Activity: Review trends and patterns. Purpose: Identify systemic issues</li>
+            <li><strong>6. Act</strong> — Activity: Address root causes identified. Purpose: Make lasting improvements</li>
+            </ul>
+            
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common At-Risk Behaviours in Building Services
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Not isolating before working on circuits</li>
-                  <li className="pl-1">Working from ladders instead of proper platforms</li>
-                  <li className="pl-1">PPE not worn or worn incorrectly</li>
-                </ul>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Taking shortcuts on permit procedures</li>
-                  <li className="pl-1">Poor manual handling techniques</li>
-                  <li className="pl-1">Rushing to meet deadlines</li>
-                </ul>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Common At-Risk Behaviours in Building Services
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Not isolating before working on circuits</li>
+            <li>Working from ladders instead of proper platforms</li>
+            <li>PPE not worn or worn incorrectly</li>
+            </ul>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Taking shortcuts on permit procedures</li>
+            <li>Poor manual handling techniques</li>
+            <li>Rushing to meet deadlines</li>
+            </ul>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> Behavioural safety is not about blame. It's about
-              understanding why people take risks (often due to system failures) and making safe
-              behaviour easier.
+            <strong>Important:</strong> Behavioural safety is not about blame. It's about
+            understanding why people take risks (often due to system failures) and making safe
+            behaviour easier.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Worker Engagement and Culture Indicators */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Worker Engagement and Culture Indicators
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Worker Engagement and Culture Indicators</ContentEyebrow>
+
+          <ConceptBlock title="Worker Engagement and Culture Indicators">
             <p>
-              A positive safety culture requires genuine worker engagement - not just compliance,
-              but active participation in identifying hazards, developing solutions, and taking
-              ownership of safety outcomes.
+            A positive safety culture requires genuine worker engagement - not just compliance,
+            but active participation in identifying hazards, developing solutions, and taking
+            ownership of safety outcomes.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Engagement Methods</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Safety committees with worker representation</li>
-                  <li className="pl-1">Involvement in risk assessment development</li>
-                  <li className="pl-1">Safety suggestion schemes with feedback</li>
-                  <li className="pl-1">Peer-to-peer safety observation</li>
-                  <li className="pl-1">Safety improvement teams</li>
-                  <li className="pl-1">Regular safety conversations</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Barriers to Engagement
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Fear of blame or punishment</li>
-                  <li className="pl-1">Suggestions ignored in the past</li>
-                  <li className="pl-1">Time pressure and workload</li>
-                  <li className="pl-1">Poor relationship with supervisor</li>
-                  <li className="pl-1">Language and communication barriers</li>
-                  <li className="pl-1">"That's not my job" attitude</li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Engagement Methods</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Safety committees with worker representation</li>
+            <li>Involvement in risk assessment development</li>
+            <li>Safety suggestion schemes with feedback</li>
+            <li>Peer-to-peer safety observation</li>
+            <li>Safety improvement teams</li>
+            <li>Regular safety conversations</li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Barriers to Engagement
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Fear of blame or punishment</li>
+            <li>Suggestions ignored in the past</li>
+            <li>Time pressure and workload</li>
+            <li>Poor relationship with supervisor</li>
+            <li>Language and communication barriers</li>
+            <li>"That's not my job" attitude</li>
+            </ul>
+            </div>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Positive Safety Culture Indicators
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Leading Indicators
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Lagging Indicators
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        High near-miss reporting rate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Accident frequency rates</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        Safety training completion rates
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Days lost to injury</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        Safety observation frequency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Workers' compensation costs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        Hazard reporting and close-out rates
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enforcement notices received
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        Safety meeting attendance/quality
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Civil claims and costs</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Positive Safety Culture Indicators
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>High near-miss reporting rate</strong> — Lagging Indicators: Accident frequency rates</li>
+            <li><strong>Safety training completion rates</strong> — Lagging Indicators: Days lost to injury</li>
+            <li><strong>Safety observation frequency</strong> — Lagging Indicators: Workers' compensation costs</li>
+            <li><strong>Hazard reporting and close-out rates</strong> — Lagging Indicators: Enforcement notices received</li>
+            <li><strong>Safety meeting attendance/quality</strong> — Lagging Indicators: Civil claims and costs</li>
+            </ul>
+            
+            
 
             <p className="text-sm text-white italic">
-              <strong>Mature culture sign:</strong> Workers stop their own unsafe acts and those of
-              colleagues - not because of rules, but because they genuinely care about everyone
-              going home safely.
+            <strong>Mature culture sign:</strong> Workers stop their own unsafe acts and those of
+            colleagues - not because of rules, but because they genuinely care about everyone
+            going home safely.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Application</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Improving Near-Miss Reporting
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Problem:</strong> An electrical contractor has very few near-miss reports
-                despite many minor incidents.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Analysis:</strong> Workers fear blame; previous reports led to
-                  investigations focused on finding fault.
-                </p>
-                <p className="mt-2">
-                  <strong>Culture Change Actions:</strong>
-                </p>
-                <p className="ml-4">1. MD commits publicly to learning not blaming</p>
-                <p className="ml-4">2. Anonymous reporting option introduced</p>
-                <p className="ml-4">3. Weekly recognition of reporters (not named, but thanked)</p>
-                <p className="ml-4">4. Visible action taken on reported hazards</p>
-                <p className="ml-4">5. Supervisors trained in supportive responses</p>
-                <p className="mt-2 text-green-400">
-                  Result: Reporting increased 400% within 6 months, enabling proactive hazard
-                  control
-                </p>
-              </div>
+          <ConceptBlock title="Practical Application">
+            <p><strong>Example 1: Improving Near-Miss Reporting</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Problem:</strong> An electrical contractor has very few near-miss reports
+            despite many minor incidents.
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p>
+            <strong>Analysis:</strong> Workers fear blame; previous reports led to
+            investigations focused on finding fault.
+            </p>
+            <p className="mt-2">
+            <strong>Culture Change Actions:</strong>
+            </p>
+            <p className="ml-4">1. MD commits publicly to learning not blaming</p>
+            <p className="ml-4">2. Anonymous reporting option introduced</p>
+            <p className="ml-4">3. Weekly recognition of reporters (not named, but thanked)</p>
+            <p className="ml-4">4. Visible action taken on reported hazards</p>
+            <p className="ml-4">5. Supervisors trained in supportive responses</p>
+            <p className="mt-2 text-green-400">
+            Result: Reporting increased 400% within 6 months, enabling proactive hazard
+            control
+            </p>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Leadership Safety Walks
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Objective:</strong> Demonstrate visible leadership commitment across
-                multiple sites.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Programme Structure:</strong>
-                </p>
-                <p className="ml-4">- Directors visit each site quarterly minimum</p>
-                <p className="ml-4">- Structured walk covering all work areas</p>
-                <p className="ml-4">- Informal conversations with workers at the face</p>
-                <p className="ml-4">- PPE worn correctly throughout visit</p>
-                <p className="ml-4">- Actions logged and followed up within 7 days</p>
-                <p className="mt-2">
-                  <strong>Conversation Topics:</strong>
-                </p>
-                <p className="ml-4">- "What's the biggest safety challenge here?"</p>
-                <p className="ml-4">- "What would make your job safer?"</p>
-                <p className="ml-4">- "Have you reported any near misses recently?"</p>
-                <p className="mt-2 text-elec-yellow/70">
-                  Key: Listen more than talk; act on feedback
-                </p>
-              </div>
+            
+            <p><strong>Example 2: Leadership Safety Walks</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Objective:</strong> Demonstrate visible leadership commitment across
+            multiple sites.
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p>
+            <strong>Programme Structure:</strong>
+            </p>
+            <p className="ml-4">- Directors visit each site quarterly minimum</p>
+            <p className="ml-4">- Structured walk covering all work areas</p>
+            <p className="ml-4">- Informal conversations with workers at the face</p>
+            <p className="ml-4">- PPE worn correctly throughout visit</p>
+            <p className="ml-4">- Actions logged and followed up within 7 days</p>
+            <p className="mt-2">
+            <strong>Conversation Topics:</strong>
+            </p>
+            <p className="ml-4">- "What's the biggest safety challenge here?"</p>
+            <p className="ml-4">- "What would make your job safer?"</p>
+            <p className="ml-4">- "Have you reported any near misses recently?"</p>
+            <p className="mt-2 text-elec-yellow/70">
+            Key: Listen more than talk; act on feedback
+            </p>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Key Points Summary</h2>
-
-          <div className="space-y-6">
+          <ConceptBlock title="Key Points Summary">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Culture Change Essentials
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Culture change starts at the top - leadership must model desired behaviours
-                </li>
-                <li className="pl-1">
-                  Actions speak louder than words - what you do under pressure matters most
-                </li>
-                <li className="pl-1">
-                  Build trust through consistent, fair responses to safety issues
-                </li>
-                <li className="pl-1">Engage workers as partners, not just rule-followers</li>
-                <li className="pl-1">Focus on learning from incidents, not blaming individuals</li>
-              </ul>
+            <p><strong>Culture Change Essentials</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Culture change starts at the top - leadership must model desired behaviours
+            </li>
+            <li>
+            Actions speak louder than words - what you do under pressure matters most
+            </li>
+            <li>
+            Build trust through consistent, fair responses to safety issues
+            </li>
+            <li>Engage workers as partners, not just rule-followers</li>
+            <li>Focus on learning from incidents, not blaming individuals</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Behavioural Safety Principles
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Observe to understand, not to catch people out</li>
-                <li className="pl-1">Focus on behaviours that can be observed and changed</li>
-                <li className="pl-1">Positive reinforcement is more effective than punishment</li>
-                <li className="pl-1">Look for system causes of at-risk behaviour</li>
-                <li className="pl-1">Involve workers in developing solutions</li>
-              </ul>
+            <p><strong>Behavioural Safety Principles</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Observe to understand, not to catch people out</li>
+            <li>Focus on behaviours that can be observed and changed</li>
+            <li>Positive reinforcement is more effective than punishment</li>
+            <li>Look for system causes of at-risk behaviour</li>
+            <li>Involve workers in developing solutions</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Warning Signs of Poor Culture
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Low reporting:</strong> Few near misses or hazards reported
-                </li>
-                <li className="pl-1">
-                  <strong>Blame focus:</strong> Investigations look for someone at fault
-                </li>
-                <li className="pl-1">
-                  <strong>Disconnect:</strong> Procedures don't match how work is done
-                </li>
-                <li className="pl-1">
-                  <strong>Silence:</strong> Workers don't raise safety concerns
-                </li>
-                <li className="pl-1">
-                  <strong>Normalised risk:</strong> "We've always done it this way"
-                </li>
-              </ul>
+            <p><strong>Warning Signs of Poor Culture</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Low reporting:</strong> Few near misses or hazards reported
+            </li>
+            <li>
+            <strong>Blame focus:</strong> Investigations look for someone at fault
+            </li>
+            <li>
+            <strong>Disconnect:</strong> Procedures don't match how work is done
+            </li>
+            <li>
+            <strong>Silence:</strong> Workers don't raise safety concerns
+            </li>
+            <li>
+            <strong>Normalised risk:</strong> "We've always done it this way"
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Near-miss reporting falls off after a director&rsquo;s comment"
+            situation={
+              <>
+                Your firm&rsquo;s near-miss reporting drops 80% over two months. You discover
+                a director told the team &ldquo;we&rsquo;ve got too many of these — sort it out
+                on the floor.&rdquo; Reports stopped, but the underlying near-misses did not.
+              </>
+            }
+            whatToDo={
+              <>
+                Take the data to the SHE meeting. Restate just-culture principles — every
+                report welcomed, no retribution for honest mistakes, learning shared. Brief
+                the director privately on the consequence of the comment. Reset the
+                reporting baseline by relaunching with visible felt leadership: the MD on
+                site, in person, thanking operatives who report. Track the metric monthly.
+              </>
+            }
+            whyItMatters={
+              <>
+                Suppressed near-miss data masks rising risk. The HSE will trace any incident
+                back to leading indicators — and an unexplained drop in reporting is itself a
+                red flag.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Culture Models</p>
-                <ul className="space-y-0.5">
-                  <li>Westrum: Pathological → Bureaucratic → Generative</li>
-                  <li>Schein: Artefacts, Values, Assumptions</li>
-                  <li>Just Culture: Error vs Violation vs Recklessness</li>
-                  <li>ABC: Antecedent → Behaviour → Consequence</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Leadership Actions</p>
-                <ul className="space-y-0.5">
-                  <li>Visible site presence and engagement</li>
-                  <li>Model correct behaviour always</li>
-                  <li>Stop unsafe work without hesitation</li>
-                  <li>Act on feedback and suggestions</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Safety culture is &ldquo;the way we do things around here&rdquo; — what people do without supervision.',
+              'HSE maturity ladder: pathological → reactive → calculative → proactive → generative.',
+              'Visible felt leadership (VFL): senior staff seen on the floor, listening, acting on what they hear.',
+              'Just culture distinguishes honest error (learn) from negligent action (coach) from reckless violation (discipline).',
+              'HSWA s.2(6) consultation is the statutory underpinning of culture — workers must be heard.',
+              'Leading indicators (near-miss rate, training completion, audit closeout) predict; lagging indicators (LTIs, prosecutions) confirm.',
+              'Climate surveys and culture audits (HSE&rsquo;s Safety Climate Tool) make perception measurable.',
+              'Cultural change is slow — measured in years, not quarters — and any reversal is fast.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section3-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Safety Policy
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section3-3">
-              Next: Permit to Work Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 3
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section3-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Permit to Work Systems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

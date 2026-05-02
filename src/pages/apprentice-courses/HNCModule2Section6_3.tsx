@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 6 · Subsection 3 — Building Simulation
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Dynamic thermal simulation, model validation, uncertainty bands and
+ *   appropriate use cases — the analytical superpower the HNC engineer wields
+ *   on TM52, Net-Zero and BREEAM Ene-04 submissions.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Building Simulation - HNC Module 2 Section 6.3';
@@ -259,748 +278,497 @@ const faqs = [
 ];
 
 const HNCModule2Section6_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2.6.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Building Simulation
-          </h1>
-          <p className="text-white">
-            Dynamic thermal simulation principles, validation methods, and understanding modelling
-            uncertainty
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 6 · Subsection 3"
+            title="Building Simulation"
+            description="Dynamic thermal simulation principles, validation methods, and understanding modelling uncertainty."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Dynamic simulation:</strong> Models time-varying thermal behaviour
-              </li>
-              <li className="pl-1">
-                <strong>Timestep:</strong> Hourly or sub-hourly for 8,760 hours/year
-              </li>
-              <li className="pl-1">
-                <strong>Validation:</strong> Essential for confidence in results
-              </li>
-              <li className="pl-1">
-                <strong>Uncertainty:</strong> Multiple sources affect accuracy
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              When Simulation is Required
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Part L:</strong> Buildings over 1,000m² (DSM)
-              </li>
-              <li className="pl-1">
-                <strong>BREEAM:</strong> Various credits require simulation
-              </li>
-              <li className="pl-1">
-                <strong>TM52/59:</strong> Overheating assessment
-              </li>
-              <li className="pl-1">
-                <strong>Complex buildings:</strong> Atria, mixed-mode ventilation
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You decide when dynamic simulation is justified (overheating, mass-coupled designs, complex HVAC) versus when steady-state is fine (single-zone heating load).',
+              'You understand the underlying time-step heat balance: zone air node + multiple surface nodes + HVAC schedule, all solved hourly or sub-hourly.',
+              'You build calibrated models (CIBSE TM63 / ASHRAE Guideline 14) so the dynamic output is defendable against measured data.',
+              'You quantify and communicate uncertainty bands — single-point predictions are dangerous in tender review.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE AM11 — Building Performance Modelling and TM63 — Operational Performance"
+            clause="AM11 sets the methodology for building performance simulation, model construction, calibration and reporting; TM63 sets the standard for in-use performance verification through measurement."
+            meaning={
+              <>
+                CIBSE AM11 + TM63 frame the design-to-operation workflow. As HNC engineer
+                you cite AM11 to justify the simulation tool choice, the input assumptions
+                and the calibration approach — and TM63 to commit to post-handover
+                performance verification.
+              </>
+            }
+            cite="Source: CIBSE AM11 Building Performance Modelling; CIBSE TM63 Operational Performance: Building Performance Modelling and Calibration; ASHRAE Guideline 14 Measurement of Energy and Demand Savings."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Understand the principles of dynamic thermal simulation',
               'Recognise when simulation is appropriate versus simpler methods',
               'Interpret simulation outputs critically',
               'Identify sources of uncertainty in modelling results',
               'Apply appropriate validation approaches',
               'Understand limitations of building simulation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Dynamic Simulation Principles */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Dynamic Simulation Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Dynamic Simulation Principles"
+            plainEnglish="Dynamic simulation solves the heat balance hour by hour for a whole year. It captures thermal mass, solar swings, and HVAC interaction - things steady-state can't see."
+          >
             <p>
               Dynamic thermal simulation models the time-varying thermal behaviour of buildings,
               accounting for heat storage in thermal mass, varying solar radiation, and the dynamic
               response of HVAC systems. This is essential for accurate cooling load and comfort
               prediction.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">How Dynamic Simulation Works:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Timestep calculation:</strong> Solves heat balance equations at each
-                  timestep (typically hourly)
-                </li>
-                <li className="pl-1">
-                  <strong>Heat storage:</strong> Tracks energy stored in walls, floors, furniture
-                </li>
-                <li className="pl-1">
-                  <strong>Weather interaction:</strong> Applies hourly weather data (8,760
-                  hours/year)
-                </li>
-                <li className="pl-1">
-                  <strong>Schedule-driven:</strong> Varies occupancy, lighting, equipment by hour
-                </li>
-                <li className="pl-1">
-                  <strong>System response:</strong> Models HVAC plant output and control
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Comparison: Steady-State vs Dynamic
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Steady-State</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Dynamic Simulation
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal mass</td>
-                      <td className="border border-white/10 px-3 py-2">Ignored</td>
-                      <td className="border border-white/10 px-3 py-2">Fully modelled</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Time variation</td>
-                      <td className="border border-white/10 px-3 py-2">Single point in time</td>
-                      <td className="border border-white/10 px-3 py-2">Full year simulation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Solar gains</td>
-                      <td className="border border-white/10 px-3 py-2">Peak or average</td>
-                      <td className="border border-white/10 px-3 py-2">Hourly variation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Suitable for</td>
-                      <td className="border border-white/10 px-3 py-2">Heating loads</td>
-                      <td className="border border-white/10 px-3 py-2">Cooling, energy, comfort</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Computation</td>
-                      <td className="border border-white/10 px-3 py-2">Simple, fast</td>
-                      <td className="border border-white/10 px-3 py-2">Complex, slower</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Heat Balance Equation
-              </p>
-              <p className="font-mono text-center text-sm mb-2">
-                Q<sub>stored</sub> = Q<sub>solar</sub> + Q<sub>internal</sub> + Q<sub>HVAC</sub> - Q
-                <sub>fabric</sub> - Q<sub>ventilation</sub>
-              </p>
-              <p className="text-xs text-white text-center">
-                Solved at each timestep for each thermal zone
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>How dynamic simulation works:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Timestep calculation:</strong> Solves heat balance equations at each timestep (typically hourly)
+              </li>
+              <li>
+                <strong>Heat storage:</strong> Tracks energy stored in walls, floors, furniture
+              </li>
+              <li>
+                <strong>Weather interaction:</strong> Applies hourly weather data (8,760 hours/year)
+              </li>
+              <li>
+                <strong>Schedule-driven:</strong> Varies occupancy, lighting, equipment by hour
+              </li>
+              <li>
+                <strong>System response:</strong> Models HVAC plant output and control
+              </li>
+            </ul>
+            <p>
+              <strong>Comparison: steady-state vs dynamic simulation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Thermal mass:</strong> Steady-state ignored; dynamic fully modelled
+              </li>
+              <li>
+                <strong>Time variation:</strong> Steady-state single point in time; dynamic full year
+              </li>
+              <li>
+                <strong>Solar gains:</strong> Steady-state peak or average; dynamic hourly variation
+              </li>
+              <li>
+                <strong>Suitable for:</strong> Steady-state heating loads; dynamic cooling, energy, comfort
+              </li>
+              <li>
+                <strong>Computation:</strong> Steady-state simple/fast; dynamic complex/slower
+              </li>
+            </ul>
+            <p>
+              <strong>The heat balance equation:</strong> Q_stored = Q_solar + Q_internal + Q_HVAC
+              - Q_fabric - Q_ventilation. Solved at each timestep for each thermal zone.
+            </p>
+            <p>
               <strong>Key insight:</strong> Dynamic simulation captures the time lag between when
               heat enters a building and when it affects indoor temperature - critical for
               understanding peak cooling times.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Software Capabilities */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Software Capabilities and Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Software Capabilities and Requirements"
+            plainEnglish="Software ranges from compliance calculators to full physics. Match the tool to the question - and make sure you've got the inputs to feed it."
+          >
             <p>
               Building simulation software ranges from compliance calculation tools to
               research-grade thermal modelling packages. Understanding capabilities helps select
               appropriate tools for different applications.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Simulation Capabilities
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Capability</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal zones</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple zones with heat transfer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">All building simulations</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC systems</td>
-                      <td className="border border-white/10 px-3 py-2">Detailed plant modelling</td>
-                      <td className="border border-white/10 px-3 py-2">Energy consumption</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Natural ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wind/stack-driven airflow
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Mixed-mode buildings</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Daylighting</td>
-                      <td className="border border-white/10 px-3 py-2">Daylight factor, glare</td>
-                      <td className="border border-white/10 px-3 py-2">Lighting energy, comfort</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CFD coupling</td>
-                      <td className="border border-white/10 px-3 py-2">Detailed air movement</td>
-                      <td className="border border-white/10 px-3 py-2">Atria, displacement vent</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Essential Simulation Inputs:</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-xs font-medium text-white mb-2">Geometry & Construction</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li>Building geometry (3D model)</li>
-                    <li>Construction layers and properties</li>
-                    <li>Window specifications (U, g, VT)</li>
-                    <li>Shading devices</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-white mb-2">Operations & Systems</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li>Occupancy schedules</li>
-                    <li>Equipment and lighting loads</li>
-                    <li>HVAC system configuration</li>
-                    <li>Control setpoints and strategies</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Weather Files for UK Simulation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>TRY:</strong> Test Reference Year - typical conditions for energy
-                  estimates
-                </li>
-                <li className="pl-1">
-                  <strong>DSY:</strong> Design Summer Year - near-extreme for overheating
-                </li>
-                <li className="pl-1">
-                  <strong>Future DSY:</strong> 2020s, 2050s, 2080s projections for climate change
-                </li>
-                <li className="pl-1">
-                  <strong>EPW format:</strong> Standard hourly format (8,760 hours)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Typical simulation capabilities (capability / description / typical use):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Thermal zones - multiple zones with heat transfer - all building simulations</li>
+              <li>HVAC systems - detailed plant modelling - energy consumption</li>
+              <li>Natural ventilation - wind/stack-driven airflow - mixed-mode buildings</li>
+              <li>Daylighting - daylight factor, glare - lighting energy, comfort</li>
+              <li>CFD coupling - detailed air movement - atria, displacement vent</li>
+            </ul>
+            <p>
+              <strong>Essential simulation inputs - geometry &amp; construction:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Building geometry (3D model)</li>
+              <li>Construction layers and properties</li>
+              <li>Window specifications (U, g, VT)</li>
+              <li>Shading devices</li>
+            </ul>
+            <p>
+              <strong>Essential inputs - operations &amp; systems:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Occupancy schedules</li>
+              <li>Equipment and lighting loads</li>
+              <li>HVAC system configuration</li>
+              <li>Control setpoints and strategies</li>
+            </ul>
+            <p>
+              <strong>Weather files for UK simulation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>TRY:</strong> Test Reference Year - typical conditions for energy estimates
+              </li>
+              <li>
+                <strong>DSY:</strong> Design Summer Year - near-extreme for overheating
+              </li>
+              <li>
+                <strong>Future DSY:</strong> 2020s, 2050s, 2080s projections for climate change
+              </li>
+              <li>
+                <strong>EPW format:</strong> Standard hourly format (8,760 hours)
+              </li>
+            </ul>
+            <p>
               <strong>Practical tip:</strong> Always document the weather file used - results are
               only meaningful in the context of the weather data applied.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Validation Methods */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Validation and Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Validation and Verification"
+            plainEnglish="A model that runs is not a model that's right. Validation - against analytics, other tools, or measured data - tells you whether you can trust the answer."
+          >
             <p>
               Validation confirms that a simulation model reasonably represents real building
               behaviour. Without validation, simulation results may mislead design decisions.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of Validation</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">When Used</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Analytical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compare to known mathematical solutions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Software testing</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inter-model</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compare results between different tools
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Design stage</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Empirical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compare to measured building data
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Existing buildings</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Calibration</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adjust inputs to match measurements
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Retrofit analysis</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                ASHRAE Guideline 14 Calibration Criteria:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>NMBE:</strong> Normalised Mean Bias Error ≤ ±5% (monthly)
-                </li>
-                <li className="pl-1">
-                  <strong>CV(RMSE):</strong> Coefficient of Variation of RMSE ≤ 15% (monthly)
-                </li>
-                <li className="pl-1">Hourly data: NMBE ≤ ±10%, CV(RMSE) ≤ 30%</li>
-                <li className="pl-1">Based on comparison with sub-metered data</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Quality Assurance Checks
-              </p>
-              <ol className="text-sm text-white space-y-1 list-decimal list-outside ml-5">
-                <li>Review zone areas and volumes against drawings</li>
-                <li>Verify construction assignments</li>
-                <li>Check schedules reflect realistic operation</li>
-                <li>Confirm HVAC sizing and control logic</li>
-                <li>Review warning messages from simulation</li>
-                <li>Sense-check results against benchmarks</li>
-              </ol>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Types of validation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Analytical:</strong> Compare to known mathematical solutions - software testing
+              </li>
+              <li>
+                <strong>Inter-model:</strong> Compare results between different tools - design stage
+              </li>
+              <li>
+                <strong>Empirical:</strong> Compare to measured building data - existing buildings
+              </li>
+              <li>
+                <strong>Calibration:</strong> Adjust inputs to match measurements - retrofit analysis
+              </li>
+            </ul>
+            <p>
+              <strong>ASHRAE Guideline 14 calibration criteria:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>NMBE:</strong> Normalised Mean Bias Error ≤ ±5% (monthly)
+              </li>
+              <li>
+                <strong>CV(RMSE):</strong> Coefficient of Variation of RMSE ≤ 15% (monthly)
+              </li>
+              <li>Hourly data: NMBE ≤ ±10%, CV(RMSE) ≤ 30%</li>
+              <li>Based on comparison with sub-metered data</li>
+            </ul>
+            <p>
+              <strong>Quality assurance checks:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Review zone areas and volumes against drawings</li>
+              <li>Verify construction assignments</li>
+              <li>Check schedules reflect realistic operation</li>
+              <li>Confirm HVAC sizing and control logic</li>
+              <li>Review warning messages from simulation</li>
+              <li>Sense-check results against benchmarks</li>
+            </ul>
+            <p>
               <strong>Remember:</strong> A model that runs without errors is not necessarily a valid
               model. Critical review of inputs and outputs is essential.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 4: Limitations and Uncertainty */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Understanding Limitations and Uncertainty
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Understanding Limitations and Uncertainty"
+            plainEnglish="Simulation results aren't single-point truth - they're a band shaped by inputs, weather, occupancy and your own modelling choices. Quote ranges, not decimals."
+          >
             <p>
               All simulation results carry uncertainty. Understanding sources of uncertainty helps
               interpret results appropriately and communicate confidence levels to clients.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sources of Uncertainty</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Examples</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Impact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Input data</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Material properties, equipment loads
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">±10-20%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Weather</td>
-                      <td className="border border-white/10 px-3 py-2">Year-to-year variation</td>
-                      <td className="border border-white/10 px-3 py-2">±10-15%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Occupancy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Actual vs assumed schedules
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">±15-30%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC modelling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Part-load performance, controls
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">±10-20%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">User decisions</td>
-                      <td className="border border-white/10 px-3 py-2">Zoning, assumptions</td>
-                      <td className="border border-white/10 px-3 py-2">±5-15%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key Modelling Limitations:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Perfect controls:</strong> Models assume controls work as intended
-                </li>
-                <li className="pl-1">
-                  <strong>Idealised occupants:</strong> Schedules don't capture behavioural
-                  variation
-                </li>
-                <li className="pl-1">
-                  <strong>Well-mixed air:</strong> Single temperature per zone assumed
-                </li>
-                <li className="pl-1">
-                  <strong>Construction quality:</strong> Assumes as-designed performance
-                </li>
-                <li className="pl-1">
-                  <strong>Future uncertainty:</strong> Climate, occupancy, use may change
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-              <p className="text-sm font-medium text-orange-400 mb-2">Managing Uncertainty</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sensitivity analysis:</strong> Vary key inputs to understand impact
-                </li>
-                <li className="pl-1">
-                  <strong>Scenario modelling:</strong> High/medium/low cases
-                </li>
-                <li className="pl-1">
-                  <strong>Range reporting:</strong> Present results as ranges, not single values
-                </li>
-                <li className="pl-1">
-                  <strong>Benchmarking:</strong> Compare results to TM46 and similar buildings
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Sources of uncertainty (source / examples / typical impact):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Input data - material properties, equipment loads - ±10-20%</li>
+              <li>Weather - year-to-year variation - ±10-15%</li>
+              <li>Occupancy - actual vs assumed schedules - ±15-30%</li>
+              <li>HVAC modelling - part-load performance, controls - ±10-20%</li>
+              <li>User decisions - zoning, assumptions - ±5-15%</li>
+            </ul>
+            <p>
+              <strong>Key modelling limitations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Perfect controls:</strong> Models assume controls work as intended
+              </li>
+              <li>
+                <strong>Idealised occupants:</strong> Schedules don't capture behavioural variation
+              </li>
+              <li>
+                <strong>Well-mixed air:</strong> Single temperature per zone assumed
+              </li>
+              <li>
+                <strong>Construction quality:</strong> Assumes as-designed performance
+              </li>
+              <li>
+                <strong>Future uncertainty:</strong> Climate, occupancy, use may change
+              </li>
+            </ul>
+            <p>
+              <strong>Managing uncertainty:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sensitivity analysis:</strong> Vary key inputs to understand impact
+              </li>
+              <li>
+                <strong>Scenario modelling:</strong> High/medium/low cases
+              </li>
+              <li>
+                <strong>Range reporting:</strong> Present results as ranges, not single values
+              </li>
+              <li>
+                <strong>Benchmarking:</strong> Compare results to TM46 and similar buildings
+              </li>
+            </ul>
+            <p>
               <strong>Professional responsibility:</strong> Communicate uncertainty to clients.
               Don't present simulation results with false precision - acknowledge the limitations of
               the analysis.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three walk-throughs covering thermal zoning, sensitivity analysis on cooling load, and weather file selection by analysis purpose."
+          >
+            <p>
+              <strong>Example 1 - Zoning decision:</strong> A 2,000m² open-plan office has south
+              and north facades. How should it be zoned?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>South perimeter receives high solar gains</li>
+              <li>North perimeter has minimal solar</li>
+              <li>Core areas have no external exposure</li>
+              <li>Recommended zoning: south perimeter zone (4-5m depth), north perimeter zone (4-5m depth), core zone (remainder)</li>
+              <li>Minimum 3 zones to capture different thermal conditions</li>
+              <li>For TM52 assessment, may need finer perimeter zoning to identify worst-case locations</li>
+            </ul>
+            <p>
+              <strong>Example 2 - Sensitivity analysis:</strong> How do you present uncertainty in
+              cooling load predictions?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Base case cooling load: 150 kW</li>
+              <li>Small power +20%: 162 kW (+8%)</li>
+              <li>Small power -20%: 138 kW (-8%)</li>
+              <li>Occupancy +25%: 158 kW (+5%)</li>
+              <li>Weather DSY2080: 175 kW (+17%)</li>
+              <li>Infiltration doubled: 155 kW (+3%)</li>
+              <li>Report as range: <strong>Design cooling: 150 kW (range 135-175 kW)</strong></li>
+              <li>Small power and future climate have greatest impact</li>
+            </ul>
+            <p>
+              <strong>Example 3 - Weather file selection:</strong> Which weather files for a new
+              London office assessment?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Annual energy estimate → London TRY (typical conditions)</li>
+              <li>2. Part L compliance → London TRY (as per NCM)</li>
+              <li>3. Overheating assessment (TM52) → London DSY1 (moderate warm year)</li>
+              <li>4. Future-proofing assessment → London DSY1 2050s medium scenario</li>
+              <li>Document weather files in report appendix</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Zoning Decision
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 2,000m² open-plan office has south and north facades.
-                How should it be zoned?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Considerations:</p>
-                <p>- South perimeter receives high solar gains</p>
-                <p>- North perimeter has minimal solar</p>
-                <p>- Core areas have no external exposure</p>
-                <p className="mt-2">Recommended zoning:</p>
-                <p>1. South perimeter zone (4-5m depth)</p>
-                <p>2. North perimeter zone (4-5m depth)</p>
-                <p>3. Core zone (remainder)</p>
-                <p className="mt-2 text-white">
-                  → Minimum 3 zones to capture different thermal conditions
-                </p>
-                <p className="mt-2">For TM52 assessment, may need finer perimeter</p>
-                <p>zoning to identify worst-case locations</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Sensitivity Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> How do you present uncertainty in cooling load
-                predictions?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Base case cooling load: 150 kW</p>
-                <p className="mt-2">Sensitivity runs:</p>
-                <p>- Small power +20%: 162 kW (+8%)</p>
-                <p>- Small power -20%: 138 kW (-8%)</p>
-                <p>- Occupancy +25%: 158 kW (+5%)</p>
-                <p>- Weather DSY2080: 175 kW (+17%)</p>
-                <p>- Infiltration doubled: 155 kW (+3%)</p>
-                <p className="mt-2">Report as range:</p>
-                <p className="text-green-400">Design cooling: 150 kW (range 135-175 kW)</p>
-                <p className="mt-2 text-white">
-                  → Small power and future climate have greatest impact
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The standards, validation criteria and reporting habits that separate a defensible model from a black box."
+          >
+            <p>
+              <strong>Simulation best practice:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Document all modelling assumptions clearly</li>
+              <li>Record weather file and software version used</li>
+              <li>Check energy balance (inputs ≈ outputs annually)</li>
+              <li>Compare results to benchmarks as sanity check</li>
+              <li>Present results as ranges, not single values</li>
+            </ul>
+            <p>
+              <strong>Key software standards:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>CIBSE AM11:</strong> Building energy and environmental modelling
+              </li>
+              <li>
+                <strong>ASHRAE 140:</strong> Standard method of test for building simulation
+              </li>
+              <li>
+                <strong>ASHRAE Guideline 14:</strong> Measurement and verification
+              </li>
+              <li>
+                <strong>Part L NCM:</strong> National Calculation Methodology
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Weather File Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Which weather files for a new London office assessment?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Analysis requirements and weather files:</p>
-                <p className="mt-2">1. Annual energy estimate</p>
-                <p className="text-green-400"> → London TRY (typical conditions)</p>
-                <p className="mt-2">2. Part L compliance</p>
-                <p className="text-green-400"> → London TRY (as per NCM)</p>
-                <p className="mt-2">3. Overheating assessment (TM52)</p>
-                <p className="text-green-400"> → London DSY1 (moderate warm year)</p>
-                <p className="mt-2">4. Future-proofing assessment</p>
-                <p className="text-green-400"> → London DSY1 2050s medium scenario</p>
-                <p className="mt-2 text-white">Document weather files in report appendix</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Simulation Best Practice
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Document all modelling assumptions clearly</li>
-                <li className="pl-1">Record weather file and software version used</li>
-                <li className="pl-1">Check energy balance (inputs ≈ outputs annually)</li>
-                <li className="pl-1">Compare results to benchmarks as sanity check</li>
-                <li className="pl-1">Present results as ranges, not single values</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Software Standards
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>CIBSE AM11:</strong> Building energy and environmental modelling
-                </li>
-                <li className="pl-1">
-                  <strong>ASHRAE 140:</strong> Standard method of test for building simulation
-                </li>
-                <li className="pl-1">
-                  <strong>ASHRAE Guideline 14:</strong> Measurement and verification
-                </li>
-                <li className="pl-1">
-                  <strong>Part L NCM:</strong> National Calculation Methodology
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Wrong weather file:</strong> TRY for energy, DSY for overheating
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Oversimplified zones:</strong> Missing perimeter/core distinction
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Default schedules:</strong> May not match actual operation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring warnings:</strong> Unmet hours indicate undersizing
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Pick the weather file by purpose (TRY for energy, DSY for overheating), zone perimeter and core separately, replace default schedules with project-specific ones, and investigate every unmet-hours warning before signing off the run."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Dynamic simulation supporting a TM52 overheating planning condition"
+            situation={
+              <>
+                A 14-storey office in Manchester is going to planning. The local plan
+                requires a CIBSE TM52 overheating assessment using a 2050s DSY weather
+                file. The architect&rsquo;s envelope (50% glazing, g = 0.45) and the
+                proposed mixed-mode HVAC need to be tested.
+              </>
+            }
+            whatToDo={
+              <>
+                Build a multi-zone dynamic model in IES VE / DesignBuilder / TAS. Set
+                weather to DSY1 Manchester 2050s. Apply CIBSE Guide A occupancy and gain
+                profiles. Model the mixed-mode HVAC: natural ventilation 19–24 °C,
+                mechanical cooling cut-in at 24 °C. Run TM52 Criteria A, B, C across
+                worst-case zones (south-west aspect, top floor). Where any zone fails two
+                of three criteria, iterate: external shading, lower g-value, increased
+                openable area, mechanical cooling extension. Document in the TM52 report.
+              </>
+            }
+            whyItMatters={
+              <>
+                Manchester planning explicitly requires TM52 evidence for new commercial
+                buildings &gt; 1,000 m². A TM52 fail blocks consent. Once consented and
+                built, an overheating-prone office becomes a leasing problem within five
+                years as climate warms. The dynamic simulation is the design-stage insurance.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Weather Files</p>
-                <ul className="space-y-0.5">
-                  <li>TRY - typical year for energy</li>
-                  <li>DSY - summer year for overheating</li>
-                  <li>8,760 hours of hourly data</li>
-                  <li>14 UK locations from CIBSE</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Validation Criteria</p>
-                <ul className="space-y-0.5">
-                  <li>NMBE ≤ ±5% (monthly)</li>
-                  <li>CV(RMSE) ≤ 15% (monthly)</li>
-                  <li>Compare to sub-metered data</li>
-                  <li>Document all assumptions</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Dynamic simulation = hourly (or sub-hourly) heat balance for each thermal zone, all year.',
+              'Use cases: overheating studies, thermal-mass designs, mixed-mode HVAC, BREEAM Ene-04, TM54 forecasts.',
+              'Tools: IES VE, DesignBuilder, TAS, EnergyPlus — pick one supported by AM11 and validated to BESTEST.',
+              'Inputs to control carefully: weather file (DSY/TRY), occupancy/equipment profiles, infiltration, HVAC schedule.',
+              'Calibrate against measured data per CIBSE TM63 / ASHRAE Guideline 14 (CV(RMSE) ≤ 30% monthly).',
+              'Communicate uncertainty bands — single-point output is misleading.',
+              'Dynamic simulation is not a Part L compliance tool — that role belongs to SBEM/SAP.',
+              'CIBSE AM11 + TM63 are the UK reference methodology for modelling and operational verification.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section6-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section6-4">
-              Next: Design Tools and Software
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Energy analysis
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Design tools and software
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

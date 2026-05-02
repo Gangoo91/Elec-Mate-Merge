@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 1 · Subsection 3 — Radiation Heat Transfer
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Stefan-Boltzmann law, emissivity, view factors, radiant exchange. The mechanism
+ *   behind low-e glazing, radiant ceiling panels, mean radiant temperature and the
+ *   solar gain term in any thermal model.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  SectionRule,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Radiation Heat Transfer - HNC Module 2 Section 1.3';
@@ -191,783 +210,484 @@ const faqs = [
 ];
 
 const HNCModule2Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Radiation Heat Transfer
-          </h1>
-          <p className="text-white">
-            Electromagnetic heat transfer: from Stefan-Boltzmann law to radiant heating panels and
-            low-e glazing
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 1 · Subsection 3"
+            title="Radiation Heat Transfer"
+            description="Electromagnetic heat transfer: from Stefan-Boltzmann law to radiant heating panels and low-e glazing."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Radiation:</strong> Heat transfer via electromagnetic waves (no medium
-                required)
-              </li>
-              <li className="pl-1">
-                <strong>Stefan-Boltzmann:</strong> Q = εσAT⁴ (power ∝ temperature to fourth power)
-              </li>
-              <li className="pl-1">
-                <strong>Emissivity (ε):</strong> 0-1, how well a surface radiates (black body = 1)
-              </li>
-              <li className="pl-1">
-                <strong>View factor:</strong> Fraction of radiation leaving one surface reaching
-                another
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Radiant panels:</strong> Direct heating of occupants and surfaces
-              </li>
-              <li className="pl-1">
-                <strong>Low-e glazing:</strong> ε = 0.05 vs standard glass ε = 0.84
-              </li>
-              <li className="pl-1">
-                <strong>Mean radiant temp:</strong> Key factor in thermal comfort
-              </li>
-              <li className="pl-1">
-                <strong>Solar gains:</strong> Absorptivity determines heat gain through fabric
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will apply the Stefan-Boltzmann law (Q = εσA·T⁴) and recognise that radiation goes as the fourth power of absolute temperature — small temperature changes have large effects.',
+              'You can read emissivity (ε) values for building materials and explain why a low-e coating on glazing transforms thermal performance.',
+              'You apply the view-factor concept to radiant heat exchange between surfaces — the basis of radiant panel sizing and asymmetric thermal-comfort analysis.',
+              'You separate solar (short-wave) radiation from thermal (long-wave) re-radiation when analysing summer overheating.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Guide A — Environmental Design (thermal comfort & solar gain chapters)"
+            clause="The radiant component of a building&rsquo;s thermal environment is treated through mean radiant temperature, view factors and surface emissivity. Solar gain is modelled by total solar energy transmittance (g-value) of glazing assemblies and shading devices."
+            meaning={
+              <>
+                CIBSE provides the UK design framework for radiative analysis. As an HNC
+                designer your spec choices on glazing g-value, low-e coatings and radiant panel
+                area follow directly from this framework. Building Regulations Part L sets the
+                regulatory ceiling.
+              </>
+            }
+            cite="Source: CIBSE Guide A — Environmental Design; BS EN 410 — Glass in building (light and solar characteristics); Building Regulations Part L"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Apply the Stefan-Boltzmann law for radiant heat transfer calculations',
               "Understand emissivity, absorptivity and Kirchhoff's Law",
               'Explain black body radiation and real surface behaviour',
               'Calculate view factors for common geometries',
               'Analyse radiative exchange between building surfaces',
               'Apply radiation principles to radiant heating and low-e glazing design',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Stefan-Boltzmann Law */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Stefan-Boltzmann Law and Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Stefan-Boltzmann Law and Fundamentals"
+            plainEnglish="Hot stuff radiates. The hotter it gets, the more it radiates — by the FOURTH power of temperature in Kelvin. That's why a 1000°C furnace shifts heat by radiation alone."
+          >
             <p>
               Thermal radiation is the transfer of heat through electromagnetic waves, predominantly
               in the infrared spectrum. Unlike conduction and convection, radiation requires no
               medium and can transfer heat through a vacuum - this is how the Sun heats the Earth.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Stefan-Boltzmann Law</p>
-              <p className="font-mono text-center text-lg mb-2">Q = εσAT⁴</p>
-              <div className="text-xs text-white space-y-1">
-                <p>
-                  <strong>Q</strong> = Radiant power emitted (W)
-                </p>
-                <p>
-                  <strong>ε</strong> = Emissivity (0 to 1, dimensionless)
-                </p>
-                <p>
-                  <strong>σ</strong> = Stefan-Boltzmann constant = 5.67 × 10⁻⁸ W/m²K⁴
-                </p>
-                <p>
-                  <strong>A</strong> = Surface area (m²)
-                </p>
-                <p>
-                  <strong>T</strong> = Absolute temperature (K)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">All objects above absolute zero emit thermal radiation</li>
-                <li className="pl-1">
-                  Radiation power increases with T⁴ (doubling temperature increases radiation
-                  16-fold)
-                </li>
-                <li className="pl-1">
-                  Net heat transfer occurs from hot surfaces to cold surfaces
-                </li>
-                <li className="pl-1">Temperature must always be in Kelvin (K = °C + 273)</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Net Radiation Between Two Surfaces
-              </p>
-              <p className="font-mono text-center text-base mb-2">
-                Q<sub>net</sub> = εσA(T₁⁴ - T₂⁴)
-              </p>
-              <p className="text-sm text-white text-center">
-                Net heat transfer from surface 1 (hot) to surface 2 (cold)
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Stefan-Boltzmann Law:</strong> Q = εσAT⁴
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Q</strong> = Radiant power emitted (W)
+              </li>
+              <li>
+                <strong>ε</strong> = Emissivity (0 to 1, dimensionless)
+              </li>
+              <li>
+                <strong>σ</strong> = Stefan-Boltzmann constant = 5.67 × 10⁻⁸ W/m²K⁴
+              </li>
+              <li>
+                <strong>A</strong> = Surface area (m²)
+              </li>
+              <li>
+                <strong>T</strong> = Absolute temperature (K)
+              </li>
+            </ul>
+            <p>
+              <strong>Key principles:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All objects above absolute zero emit thermal radiation</li>
+              <li>Radiation power increases with T⁴ (doubling temperature increases radiation 16-fold)</li>
+              <li>Net heat transfer occurs from hot surfaces to cold surfaces</li>
+              <li>Temperature must always be in Kelvin (K = °C + 273)</li>
+            </ul>
+            <p>
+              <strong>Net radiation between two surfaces:</strong> Qnet = εσA(T₁⁴ - T₂⁴) — net heat
+              transfer from surface 1 (hot) to surface 2 (cold).
+            </p>
+            <p>
               <strong>Critical insight:</strong> The T⁴ relationship makes radiation dominant at
               high temperatures. At furnace temperatures (1000°C+), radiation accounts for over 90%
               of heat transfer.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Emissivity and Absorptivity */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Emissivity, Absorptivity and Surface Properties
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Emissivity, Absorptivity and Surface Properties"
+            plainEnglish="Real surfaces don't radiate perfectly. ε says how good they are at emitting, α says how good at absorbing. At the same temperature and wavelength, they're equal — Kirchhoff's Law."
+          >
             <p>
               Real surfaces emit and absorb radiation less efficiently than a perfect black body.
               Emissivity (ε) and absorptivity (α) quantify these properties and are crucial for
               accurate heat transfer calculations.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Emissivity (ε)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Ratio of actual emission to black body emission</li>
-                  <li className="pl-1">Range: 0 (perfect reflector) to 1 (black body)</li>
-                  <li className="pl-1">Depends on surface finish, material, wavelength</li>
-                  <li className="pl-1">Low-e coatings: ε = 0.05-0.10</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Absorptivity (α)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Fraction of incident radiation absorbed</li>
-                  <li className="pl-1">α + ρ + τ = 1 (absorbed + reflected + transmitted)</li>
-                  <li className="pl-1">For opaque surfaces: α + ρ = 1</li>
-                  <li className="pl-1">Dark surfaces: high α; shiny surfaces: low α</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Kirchhoff's Law</p>
-              <p className="font-mono text-center text-lg mb-2">α = ε</p>
-              <p className="text-sm text-white text-center">
-                At thermal equilibrium, absorptivity equals emissivity at the same wavelength and
-                temperature
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Emissivity Values
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Surface</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Emissivity (ε)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Black body (ideal)</td>
-                      <td className="border border-white/10 px-3 py-2">1.00</td>
-                      <td className="border border-white/10 px-3 py-2">Theoretical reference</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Matt black paint</td>
-                      <td className="border border-white/10 px-3 py-2">0.95</td>
-                      <td className="border border-white/10 px-3 py-2">Radiant panel finish</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Brick, concrete, plaster</td>
-                      <td className="border border-white/10 px-3 py-2">0.90-0.95</td>
-                      <td className="border border-white/10 px-3 py-2">Building surfaces</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standard glass</td>
-                      <td className="border border-white/10 px-3 py-2">0.84</td>
-                      <td className="border border-white/10 px-3 py-2">Windows (uncoated)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">White paint</td>
-                      <td className="border border-white/10 px-3 py-2">0.90</td>
-                      <td className="border border-white/10 px-3 py-2">Interior surfaces</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Oxidised steel</td>
-                      <td className="border border-white/10 px-3 py-2">0.80</td>
-                      <td className="border border-white/10 px-3 py-2">Exposed steelwork</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Low-e coated glass</td>
-                      <td className="border border-white/10 px-3 py-2">0.05-0.10</td>
-                      <td className="border border-white/10 px-3 py-2">Energy-efficient glazing</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Polished aluminium</td>
-                      <td className="border border-white/10 px-3 py-2">0.05</td>
-                      <td className="border border-white/10 px-3 py-2">Reflective insulation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Emissivity (ε):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ratio of actual emission to black body emission</li>
+              <li>Range: 0 (perfect reflector) to 1 (black body)</li>
+              <li>Depends on surface finish, material, wavelength</li>
+              <li>Low-e coatings: ε = 0.05-0.10</li>
+            </ul>
+            <p>
+              <strong>Absorptivity (α):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Fraction of incident radiation absorbed</li>
+              <li>α + ρ + τ = 1 (absorbed + reflected + transmitted)</li>
+              <li>For opaque surfaces: α + ρ = 1</li>
+              <li>Dark surfaces: high α; shiny surfaces: low α</li>
+            </ul>
+            <p>
+              <strong>Kirchhoff's Law:</strong> α = ε. At thermal equilibrium, absorptivity equals
+              emissivity at the same wavelength and temperature.
+            </p>
+            <p>
+              <strong>Typical emissivity values:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Black body (ideal): ε = 1.00 — theoretical reference</li>
+              <li>Matt black paint: ε = 0.95 — radiant panel finish</li>
+              <li>Brick, concrete, plaster: ε = 0.90-0.95 — building surfaces</li>
+              <li>Standard glass: ε = 0.84 — windows (uncoated)</li>
+              <li>White paint: ε = 0.90 — interior surfaces</li>
+              <li>Oxidised steel: ε = 0.80 — exposed steelwork</li>
+              <li>Low-e coated glass: ε = 0.05-0.10 — energy-efficient glazing</li>
+              <li>Polished aluminium: ε = 0.05 — reflective insulation</li>
+            </ul>
+            <p>
               <strong>Design note:</strong> Colour affects solar absorptivity (short wavelength) but
               has little effect on thermal emissivity (long wavelength). A white roof and black roof
               have similar ε (~0.90) but very different solar absorptivity.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Black Body Radiation and View Factors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Black Body Radiation and View Factors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Black Body Radiation and View Factors"
+            plainEnglish="A black body is a perfect absorber/emitter — useful as a reference. View factors say how much of one surface's radiation actually hits another surface — geometry matters as much as temperature."
+          >
             <p>
               A black body is a theoretical surface that absorbs all incident radiation and emits
               the maximum possible radiation at any temperature. Real surfaces are compared to this
               ideal through emissivity. View factors determine how radiation is distributed between
               surfaces.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Black body characteristics:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Perfect absorber: α = 1 (absorbs all wavelengths)</li>
-                <li className="pl-1">Perfect emitter: ε = 1 (emits maximum possible radiation)</li>
-                <li className="pl-1">
-                  Emission depends only on temperature, not material properties
-                </li>
-                <li className="pl-1">Black body radiation spectrum follows Planck's Law</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Wien's Displacement Law
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                λ<sub>max</sub> = 2898 / T
-              </p>
-              <p className="text-sm text-white text-center">
-                Peak wavelength (μm) is inversely proportional to temperature (K)
-              </p>
-              <div className="mt-3 text-xs text-white">
-                <p>Sun (5800K): λmax ≈ 0.5 μm (visible light)</p>
-                <p>Room surfaces (300K): λmax ≈ 10 μm (far infrared)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                View Factors (Configuration Factors)
-              </p>
-              <p className="text-sm text-white mb-3">
-                The view factor F₁₂ is the fraction of radiation leaving surface 1 that reaches
-                surface 2.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Summation rule:</strong> ΣF₁ⱼ = 1 (all radiation must go somewhere)
-                </li>
-                <li className="pl-1">
-                  <strong>Reciprocity:</strong> A₁F₁₂ = A₂F₂₁ (geometric relationship)
-                </li>
-                <li className="pl-1">
-                  <strong>Self-viewing:</strong> Flat/convex surfaces have F₁₁ = 0
-                </li>
-                <li className="pl-1">
-                  <strong>Enclosure:</strong> Concave surfaces may have F₁₁ &gt; 0
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common View Factor Values
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Configuration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        View Factor F₁₂
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Parallel infinite plates</td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small surface in large enclosure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Perpendicular rectangles (shared edge)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        0.2-0.4 (geometry dependent)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Parallel equal squares (spacing = side)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">≈ 0.2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ceiling panel to floor (typical room)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.3-0.6</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Black body characteristics:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Perfect absorber: α = 1 (absorbs all wavelengths)</li>
+              <li>Perfect emitter: ε = 1 (emits maximum possible radiation)</li>
+              <li>Emission depends only on temperature, not material properties</li>
+              <li>Black body radiation spectrum follows Planck's Law</li>
+            </ul>
+            <p>
+              <strong>Wien's displacement law:</strong> λmax = 2898 / T. Peak wavelength (μm) is
+              inversely proportional to temperature (K).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sun (5800K): λmax ≈ 0.5 μm (visible light)</li>
+              <li>Room surfaces (300K): λmax ≈ 10 μm (far infrared)</li>
+            </ul>
+            <p>
+              <strong>View factors (configuration factors):</strong> The view factor F₁₂ is the
+              fraction of radiation leaving surface 1 that reaches surface 2.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Summation rule:</strong> ΣF₁ⱼ = 1 (all radiation must go somewhere)
+              </li>
+              <li>
+                <strong>Reciprocity:</strong> A₁F₁₂ = A₂F₂₁ (geometric relationship)
+              </li>
+              <li>
+                <strong>Self-viewing:</strong> Flat/convex surfaces have F₁₁ = 0
+              </li>
+              <li>
+                <strong>Enclosure:</strong> Concave surfaces may have F₁₁ &gt; 0
+              </li>
+            </ul>
+            <p>
+              <strong>Common view factor values:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Parallel infinite plates: F₁₂ = 1.0</li>
+              <li>Small surface in large enclosure: F₁₂ = 1.0</li>
+              <li>Perpendicular rectangles (shared edge): F₁₂ = 0.2-0.4 (geometry dependent)</li>
+              <li>Parallel equal squares (spacing = side): F₁₂ ≈ 0.2</li>
+              <li>Ceiling panel to floor (typical room): F₁₂ = 0.3-0.6</li>
+            </ul>
+            <p>
               <strong>Practical tip:</strong> View factors can be found in charts and tables in
               CIBSE guides or calculated using software. For complex geometries, numerical methods
               are typically used.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 4: Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Building Services Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Building Services Applications"
+            plainEnglish="Three big places radiation matters in buildings: radiant heating panels, low-e glazing, and the mean radiant temperature you feel sat in a cold-walled room."
+          >
             <p>
               Radiation heat transfer principles are applied throughout building services
               engineering, from radiant heating system design to window specification and thermal
               comfort assessment.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Radiant Heating Panels</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  High-temperature panels (150-400°C): Gas-fired, industrial applications
-                </li>
-                <li className="pl-1">
-                  Medium-temperature panels (40-100°C): Hot water or electric ceiling panels
-                </li>
-                <li className="pl-1">
-                  Low-temperature panels (30-40°C): Underfloor heating, radiant ceilings
-                </li>
-                <li className="pl-1">
-                  Direct radiant heating warms occupants without heating air mass
-                </li>
-                <li className="pl-1">Allows 2-3°C lower air temperature for same comfort level</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Low-Emissivity Glazing</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Metallic oxide coating (silver, tin oxide) applied to glass surface
-                </li>
-                <li className="pl-1">Reduces emissivity from 0.84 to 0.05-0.10</li>
-                <li className="pl-1">Cuts radiative heat transfer across cavity by up to 90%</li>
-                <li className="pl-1">
-                  Coating position: Surface 2 or 3 (cavity-facing) for optimal performance
-                </li>
-                <li className="pl-1">"Hard coat" (pyrolytic): durable, ε ≈ 0.15-0.20</li>
-                <li className="pl-1">
-                  "Soft coat" (sputtered): better performance, ε ≈ 0.05, less durable
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mean Radiant Temperature (MRT)
-              </p>
-              <p className="text-sm text-white mb-2">
-                MRT is the uniform temperature of an imaginary black enclosure that would exchange
-                the same radiant heat as the actual non-uniform environment. It is critical for
-                thermal comfort.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Operative temperature ≈ (MRT + T<sub>air</sub>) / 2
-                </p>
-                <p className="text-white text-xs mt-1">(simplified for low air velocities)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Radiative Heat Loss Through Windows
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Glazing Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        U-value (W/m²K)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Radiant Component
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single glazing</td>
-                      <td className="border border-white/10 px-3 py-2">5.4</td>
-                      <td className="border border-white/10 px-3 py-2">Minimal cavity effect</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Double glazing (air)</td>
-                      <td className="border border-white/10 px-3 py-2">2.8</td>
-                      <td className="border border-white/10 px-3 py-2">~60% radiative in cavity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Double glazing (argon)</td>
-                      <td className="border border-white/10 px-3 py-2">2.6</td>
-                      <td className="border border-white/10 px-3 py-2">~60% radiative in cavity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Double + low-e (argon)</td>
-                      <td className="border border-white/10 px-3 py-2">1.2</td>
-                      <td className="border border-white/10 px-3 py-2">~10% radiative in cavity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Triple + low-e (argon)</td>
-                      <td className="border border-white/10 px-3 py-2">0.8</td>
-                      <td className="border border-white/10 px-3 py-2">Minimal radiation losses</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Radiant heating panels:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>High-temperature panels (150-400°C): Gas-fired, industrial applications</li>
+              <li>Medium-temperature panels (40-100°C): Hot water or electric ceiling panels</li>
+              <li>Low-temperature panels (30-40°C): Underfloor heating, radiant ceilings</li>
+              <li>Direct radiant heating warms occupants without heating air mass</li>
+              <li>Allows 2-3°C lower air temperature for same comfort level</li>
+            </ul>
+            <p>
+              <strong>Low-emissivity glazing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Metallic oxide coating (silver, tin oxide) applied to glass surface</li>
+              <li>Reduces emissivity from 0.84 to 0.05-0.10</li>
+              <li>Cuts radiative heat transfer across cavity by up to 90%</li>
+              <li>Coating position: Surface 2 or 3 (cavity-facing) for optimal performance</li>
+              <li>"Hard coat" (pyrolytic): durable, ε ≈ 0.15-0.20</li>
+              <li>"Soft coat" (sputtered): better performance, ε ≈ 0.05, less durable</li>
+            </ul>
+            <p>
+              <strong>Mean Radiant Temperature (MRT):</strong> MRT is the uniform temperature of an
+              imaginary black enclosure that would exchange the same radiant heat as the actual
+              non-uniform environment. It is critical for thermal comfort.
+            </p>
+            <p>Operative temperature ≈ (MRT + Tair) / 2 (simplified for low air velocities).</p>
+            <p>
+              <strong>Radiative heat loss through windows:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single glazing: U = 5.4 W/m²K — minimal cavity effect</li>
+              <li>Double glazing (air): U = 2.8 W/m²K — ~60% radiative in cavity</li>
+              <li>Double glazing (argon): U = 2.6 W/m²K — ~60% radiative in cavity</li>
+              <li>Double + low-e (argon): U = 1.2 W/m²K — ~10% radiative in cavity</li>
+              <li>Triple + low-e (argon): U = 0.8 W/m²K — minimal radiation losses</li>
+            </ul>
+            <p>
               <strong>Surface temperature considerations:</strong> Cold internal surfaces (below
               14°C) cause radiant asymmetry discomfort and risk condensation. Well-insulated
               construction with low-e glazing maintains higher internal surface temperatures.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three practical calcs: a radiant panel, the low-e benefit, and how a roof colour changes solar gain."
+          >
+            <p>
+              <strong>Example 1 - radiant panel output:</strong> A radiant ceiling panel (2m × 1m)
+              operates at 60°C in a room at 20°C. The panel has ε = 0.95. Calculate the net radiant
+              heat output.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Convert to Kelvin: T₁ = 60 + 273 = 333K, T₂ = 20 + 273 = 293K</li>
+              <li>Area: A = 2 × 1 = 2m²</li>
+              <li>Net radiation: Q = εσA(T₁⁴ - T₂⁴)</li>
+              <li>Q = 0.95 × 5.67×10⁻⁸ × 2 × (333⁴ - 293⁴)</li>
+              <li>Q = 0.95 × 5.67×10⁻⁸ × 2 × (1.23×10¹⁰ - 7.37×10⁹)</li>
+              <li>Q = 0.95 × 5.67×10⁻⁸ × 2 × 4.93×10⁹</li>
+              <li>Q = <strong>531W</strong> (panel output: 266 W/m²)</li>
+            </ul>
+            <p>
+              <strong>Example 2 - low-e glazing benefit:</strong> Calculate the effective emissivity
+              for radiative exchange across a 16mm cavity with: (a) standard glass both sides (ε =
+              0.84), (b) one low-e surface (ε = 0.05).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>For two parallel surfaces, effective emissivity: εeff = 1 / (1/ε₁ + 1/ε₂ - 1)</li>
+              <li>(a) Standard glass both sides: εeff = 1 / (1/0.84 + 1/0.84 - 1) = 1 / (1.19 + 1.19 - 1) = 1 / 1.38 = <strong>0.72</strong></li>
+              <li>(b) One low-e surface: εeff = 1 / (1/0.84 + 1/0.05 - 1) = 1 / (1.19 + 20 - 1) = 1 / 20.19 = <strong>0.05</strong></li>
+              <li>Result: 93% reduction in radiative heat transfer</li>
+            </ul>
+            <p>
+              <strong>Example 3 - solar absorptivity:</strong> A flat roof receives 600 W/m² solar
+              radiation. Compare heat absorbed by: (a) dark bitumen (α = 0.90), (b) white reflective
+              coating (α = 0.25).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Heat absorbed = α × incident radiation</li>
+              <li>(a) Dark bitumen: Q = 0.90 × 600 = <strong>540 W/m²</strong></li>
+              <li>(b) White coating: Q = 0.25 × 600 = <strong>150 W/m²</strong></li>
+              <li>Reduction = (540 - 150) / 540 = <strong>72% reduction</strong></li>
+              <li>Result: significant cooling load reduction with reflective roof</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Radiant Panel Output
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A radiant ceiling panel (2m × 1m) operates at 60°C in a
-                room at 20°C. The panel has ε = 0.95. Calculate the net radiant heat output.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Convert to Kelvin:</p>
-                <p>T₁ = 60 + 273 = 333K</p>
-                <p>T₂ = 20 + 273 = 293K</p>
-                <p className="mt-2">Area: A = 2 × 1 = 2m²</p>
-                <p className="mt-2">Net radiation: Q = εσA(T₁⁴ - T₂⁴)</p>
-                <p>Q = 0.95 × 5.67×10⁻⁸ × 2 × (333⁴ - 293⁴)</p>
-                <p>Q = 0.95 × 5.67×10⁻⁸ × 2 × (1.23×10¹⁰ - 7.37×10⁹)</p>
-                <p>Q = 0.95 × 5.67×10⁻⁸ × 2 × 4.93×10⁹</p>
-                <p>
-                  Q = <strong>531W</strong>
-                </p>
-                <p className="mt-2 text-white">Panel output: 266 W/m²</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Low-E Glazing Benefit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the effective emissivity for radiative exchange
-                across a 16mm cavity with: (a) standard glass both sides (ε = 0.84), (b) one low-e
-                surface (ε = 0.05).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>For two parallel surfaces, effective emissivity:</p>
-                <p>
-                  ε<sub>eff</sub> = 1 / (1/ε₁ + 1/ε₂ - 1)
-                </p>
-                <p className="mt-2">(a) Standard glass both sides:</p>
-                <p>
-                  ε<sub>eff</sub> = 1 / (1/0.84 + 1/0.84 - 1)
-                </p>
-                <p>
-                  ε<sub>eff</sub> = 1 / (1.19 + 1.19 - 1) = 1 / 1.38 = <strong>0.72</strong>
-                </p>
-                <p className="mt-2">(b) One low-e surface:</p>
-                <p>
-                  ε<sub>eff</sub> = 1 / (1/0.84 + 1/0.05 - 1)
-                </p>
-                <p>
-                  ε<sub>eff</sub> = 1 / (1.19 + 20 - 1) = 1 / 20.19 = <strong>0.05</strong>
-                </p>
-                <p className="mt-2 text-green-400">✓ 93% reduction in radiative heat transfer</p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The formulas and standard values you'll keep coming back to."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Q = εσAT⁴</strong> — Stefan-Boltzmann (total emission)
+              </li>
+              <li>
+                <strong>Q = εσA(T₁⁴ - T₂⁴)</strong> — Net radiation exchange
+              </li>
+              <li>
+                <strong>λmax = 2898/T</strong> — Wien's displacement law (μm, K)
+              </li>
+              <li>
+                <strong>α = ε</strong> — Kirchhoff's Law (same wavelength/temperature)
+              </li>
+              <li>
+                <strong>ΣFij = 1</strong> — View factor summation rule
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Stefan-Boltzmann constant: <strong>σ = 5.67 × 10⁻⁸ W/m²K⁴</strong>
+              </li>
+              <li>
+                Black body emissivity: <strong>ε = 1.0</strong>
+              </li>
+              <li>
+                Standard glass emissivity: <strong>ε = 0.84</strong>
+              </li>
+              <li>
+                Low-e glass emissivity: <strong>ε = 0.05-0.10</strong>
+              </li>
+              <li>
+                Building surfaces (brick, plaster): <strong>ε ≈ 0.90-0.95</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Solar Absorptivity
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A flat roof receives 600 W/m² solar radiation. Compare
-                heat absorbed by: (a) dark bitumen (α = 0.90), (b) white reflective coating (α =
-                0.25).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Heat absorbed = α × incident radiation</p>
-                <p className="mt-2">(a) Dark bitumen:</p>
-                <p>
-                  Q = 0.90 × 600 = <strong>540 W/m²</strong>
-                </p>
-                <p className="mt-2">(b) White coating:</p>
-                <p>
-                  Q = 0.25 × 600 = <strong>150 W/m²</strong>
-                </p>
-                <p className="mt-2">
-                  Reduction = (540 - 150) / 540 = <strong>72% reduction</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Significant cooling load reduction with reflective roof
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Q = εσAT⁴</strong> — Stefan-Boltzmann (total emission)
-                </li>
-                <li className="pl-1">
-                  <strong>Q = εσA(T₁⁴ - T₂⁴)</strong> — Net radiation exchange
-                </li>
-                <li className="pl-1">
-                  <strong>λmax = 2898/T</strong> — Wien's displacement law (μm, K)
-                </li>
-                <li className="pl-1">
-                  <strong>α = ε</strong> — Kirchhoff's Law (same wavelength/temperature)
-                </li>
-                <li className="pl-1">
-                  <strong>ΣFij = 1</strong> — View factor summation rule
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Stefan-Boltzmann constant: <strong>σ = 5.67 × 10⁻⁸ W/m²K⁴</strong>
-                </li>
-                <li className="pl-1">
-                  Black body emissivity: <strong>ε = 1.0</strong>
-                </li>
-                <li className="pl-1">
-                  Standard glass emissivity: <strong>ε = 0.84</strong>
-                </li>
-                <li className="pl-1">
-                  Low-e glass emissivity: <strong>ε = 0.05-0.10</strong>
-                </li>
-                <li className="pl-1">
-                  Building surfaces (brick, plaster): <strong>ε ≈ 0.90-0.95</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Using °C instead of K</strong> — Temperature must be absolute (K)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Confusing ε with α</strong> — Equal only at same wavelength
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Forgetting T⁴ relationship</strong> — Small T change has large effect
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring view factors</strong> — Geometry affects actual heat transfer
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always convert to Kelvin before plugging into Stefan-Boltzmann, treat ε and α as separate properties at different wavelengths, sanity-check radiation effects via T⁴ scaling, and look up view factors for the actual geometry rather than assuming F = 1."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Specifying glazing for a south-facing atrium"
+            situation={
+              <>
+                A new office atrium has 80 m² of south-facing vertical glazing. The architect
+                wants the &ldquo;clear glass&rdquo; visual look. The mechanical designer warns
+                the cooling load will exceed plant capacity in summer.
+              </>
+            }
+            whatToDo={
+              <>
+                Run the radiative analysis. Specify a low-e + solar-control double-glazed unit
+                with g-value ≤ 0.30 (from BS EN 410), light transmittance ≥ 0.65 (preserves
+                visual clarity), U ≤ 1.4 W/m²·K (Part L compliance). Add external solar
+                shading where the g-value alone is insufficient. Re-run the cooling load — the
+                radiative + transmitted solar should now be within plant capacity. Document
+                the trade-off in the Part L submission and a thermal comfort report.
+              </>
+            }
+            whyItMatters={
+              <>
+                Glazing is the largest single radiative gain on most buildings. A clear
+                untreated assembly delivers a g-value of 0.7+; a properly specified
+                solar-control unit can halve the gain at the same light transmittance.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Fundamental Relationships</p>
-                <ul className="space-y-0.5">
-                  <li>Q = εσAT⁴ (Stefan-Boltzmann)</li>
-                  <li>σ = 5.67 × 10⁻⁸ W/m²K⁴</li>
-                  <li>α = ε (Kirchhoff's Law)</li>
-                  <li>ΣFij = 1 (view factor sum)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Services Values</p>
-                <ul className="space-y-0.5">
-                  <li>Standard glass: ε = 0.84</li>
-                  <li>Low-e glass: ε = 0.05-0.10</li>
-                  <li>Building surfaces: ε ≈ 0.90</li>
-                  <li>Polished metals: ε ≈ 0.05</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Stefan-Boltzmann: Q = εσA·T⁴ — radiation goes as the fourth power of absolute temperature.',
+              'σ (Stefan-Boltzmann constant) = 5.67 × 10⁻⁸ W/m²·K⁴ — universal constant.',
+              'Emissivity ε ranges 0 (perfect reflector) to 1 (black body); typical building surfaces ε ≈ 0.85-0.95, low-e glazing ε ≈ 0.05.',
+              'View factor F₁₂ — fraction of radiation leaving surface 1 that reaches surface 2 — geometric, between 0 and 1.',
+              'Solar (short-wave, ~0.3-2.5 µm) and thermal (long-wave, ~5-50 µm) radiation behave differently — low-e coatings exploit the gap.',
+              'Mean radiant temperature drives radiant comfort — analyse via view factors to surrounding surfaces.',
+              'g-value (total solar energy transmittance) is the BS EN 410 metric for glazing solar gain.',
+              'Net radiative exchange Q = εσA(T₁⁴-T₂⁴) for a surface in a large enclosure — the equation behind every radiant panel calculation.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Convection
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section1-4">
-              Next: Combined Heat Transfer
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Convection
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                U-values and thermal resistance
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

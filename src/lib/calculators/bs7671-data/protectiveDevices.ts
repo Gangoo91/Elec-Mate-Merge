@@ -35,7 +35,7 @@ export const standardDeviceRatings = {
   ],
 };
 
-// BS 7671:2018+A3:2024 Maximum Zs values - Official Tables 41.2, 41.3 (0.4s disconnection)
+// BS 7671:2018+A4:2026 Maximum Zs values - Official Tables 41.2, 41.3 (0.4s disconnection)
 export const maxZsValues = {
   mcb: {
     // Type B MCBs (3-5 × In) - BS 7671 Table 41.3

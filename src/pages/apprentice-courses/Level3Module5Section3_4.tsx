@@ -132,7 +132,7 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'A 6A Type B MCB has a maximum Zs of 7.67 ohms at 0.4s. You measure 8.2 ohms. What is your conclusion?',
+      'A 6A Type B MCB has a maximum Zs of 7.28 ohms at 0.4s (BS 7671:2018+A4:2026 Table 41.3). You measure 8.2 ohms. What is your conclusion?',
     options: [
       'Acceptable - close enough',
       'Unacceptable - Zs exceeds maximum permitted value',
@@ -141,7 +141,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      '8.2 ohms exceeds the maximum of 7.67 ohms for 0.4s disconnection. The circuit does not comply. Solutions include: reducing cable length, increasing cable size, or adding RCD protection (which provides an alternative disconnection mechanism).',
+      '8.2 ohms exceeds the maximum of 7.28 ohms for 0.4s disconnection. The circuit does not comply. Solutions include: reducing cable length, increasing cable size, or adding RCD protection (which provides an alternative disconnection mechanism).',
   },
   {
     id: 7,
@@ -545,18 +545,19 @@ const Level3Module5Section3_4 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Maximum Zs examples (Type B MCB, 0.4s):
               </p>
+              {/* Zs values from canonical source: src/lib/calculators/bs7671-data/protectiveDevices.ts (BS 7671:2018+A4:2026 Table 41.3) */}
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>
-                  <strong>6A Type B:</strong> 7.67 ohms (apply 0.8 = 6.14 ohms target)
+                  <strong>6A Type B:</strong> 7.28 ohms (apply 0.8 = 5.82 ohms target)
                 </li>
                 <li>
-                  <strong>16A Type B:</strong> 2.87 ohms (apply 0.8 = 2.30 ohms target)
+                  <strong>16A Type B:</strong> 2.73 ohms (apply 0.8 = 2.18 ohms target)
                 </li>
                 <li>
-                  <strong>32A Type B:</strong> 1.44 ohms (apply 0.8 = 1.15 ohms target)
+                  <strong>32A Type B:</strong> 1.37 ohms (apply 0.8 = 1.10 ohms target)
                 </li>
                 <li>
-                  <strong>40A Type B:</strong> 1.15 ohms (apply 0.8 = 0.92 ohms target)
+                  <strong>40A Type B:</strong> 1.09 ohms (apply 0.8 = 0.87 ohms target)
                 </li>
               </ul>
             </div>

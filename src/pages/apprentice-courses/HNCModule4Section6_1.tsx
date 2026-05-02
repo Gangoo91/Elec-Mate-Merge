@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 6 · Subsection 1 — NBS Specifications
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   National Building Specification work sections (Y70-Y74), clause structure (100/200/300
+ *   /400/500 series), performance vs prescriptive specifications, NBS Create cloud platform
+ *   and amendment management for coordinated tender and construction documentation.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'NBS Specifications - HNC Module 4 Section 6.1';
@@ -223,576 +242,436 @@ const faqs = [
 ];
 
 const HNCModule4Section6_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.6.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            NBS Specifications
-          </h1>
-          <p className="text-white">
-            Mastering structured specification writing for building services electrical
-            installations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 6 · Subsection 1"
+            title="NBS Specifications"
+            description="Mastering structured specification writing for building services electrical installations."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>NBS:</strong> UK standard specification system for construction
-              </li>
-              <li className="pl-1">
-                <strong>Work sections:</strong> Y70-Y74 cover electrical installations
-              </li>
-              <li className="pl-1">
-                <strong>Clause types:</strong> Preliminaries, products, workmanship
-              </li>
-              <li className="pl-1">
-                <strong>NBS Create:</strong> Cloud platform for specification writing
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Coordination:</strong> Specs must align with drawings and schedules
-              </li>
-              <li className="pl-1">
-                <strong>Performance:</strong> Define outcomes, not just products
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> Reference BS 7671 and relevant codes
-              </li>
-              <li className="pl-1">
-                <strong>Amendments:</strong> Project-specific modifications clearly marked
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Understand NBS structure and work section organisation',
               'Differentiate between performance and prescriptive specifications',
               'Use NBS Create platform for specification development',
               'Write clear, unambiguous specification clauses',
               'Coordinate specifications with drawings and schedules',
               'Apply appropriate amendments to standard clauses',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <TLDR
+            points={[
+              'NBS is the UK industry-standard specification framework — Y70-Y74 cover building services electrical work sections.',
+              'Clause structure: 100s (general), 200s (products), 300s (execution), 400s (system performance), 500s (completion).',
+              'Performance specs say WHAT must be achieved (e.g. "general office Em 500 lx maintained"); prescriptive specs name the product. Most schemes blend both.',
+              '"Shall" = mandatory, "should" = recommended, "may" = permitted. Get this wrong and the contractor will exploit it.',
+              'BS 7671 Reg 510.3 binds the spec to BS 7671 — every named or performance-defined product still has to be selected and erected to comply with the wider Wiring Regulations.',
+            ]}
+          />
 
-        {/* Section 1: Introduction to NBS */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Introduction to NBS Specifications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 510.3"
+            clause="Every item of equipment shall be selected and erected so as to allow compliance with the regulations stated in this chapter and the relevant regulations in other parts of BS 7671 and shall take account of manufacturers' instructions."
+            meaning={
+              <>
+                NBS clauses describe products and performance, but Reg 510.3 is the BS 7671
+                guarantee that each item is also selected and erected to comply with the Wiring
+                Regulations and the manufacturer’s instructions. A specification that says
+                "Switchgear shall comply with BS EN 61439-2" is fine; one that omits the BS 7671
+                selection chain (Chapter 41 disconnection times, Chapter 43 fault levels, Chapter
+                52 environmental ratings) leaves a gap the contractor will fall into.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 510.3."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Introduction to NBS Specifications">
             <p>
               The National Building Specification (NBS) provides a standardised framework for
               writing construction specifications in the UK. For building services engineers, NBS
               ensures that design requirements are communicated clearly and consistently to
               contractors.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Purpose of specifications:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Define quality and performance requirements for materials and equipment
-                </li>
-                <li className="pl-1">Establish workmanship standards and installation methods</li>
-                <li className="pl-1">
-                  Reference applicable standards and regulations (BS 7671, etc.)
-                </li>
-                <li className="pl-1">Provide a basis for tendering and contract administration</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                NBS Electrical Work Sections
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Section</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Title</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Coverage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Y70</td>
-                      <td className="border border-white/10 px-3 py-2">HV supply</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High voltage distribution
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Y71</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LV supply and distribution
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Main switchgear, distribution boards
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Y72</td>
-                      <td className="border border-white/10 px-3 py-2">Power</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small power, socket outlets
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Y73</td>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Luminaires, controls, emergency
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Y74</td>
-                      <td className="border border-white/10 px-3 py-2">Earthing and bonding</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Main earth, protective conductors
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> NBS specifications complement drawings - they define
+            <p>
+              <strong>Purpose of specifications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Define quality and performance requirements for materials and equipment</li>
+              <li>Establish workmanship standards and installation methods</li>
+              <li>Reference applicable standards and regulations (BS 7671, etc.)</li>
+              <li>Provide a basis for tendering and contract administration</li>
+            </ul>
+            <p>
+              <strong>NBS electrical work sections (section / title / coverage):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Y70:</strong> HV supply — high voltage distribution
+              </li>
+              <li>
+                <strong>Y71:</strong> LV supply and distribution — main switchgear, distribution
+                boards
+              </li>
+              <li>
+                <strong>Y72:</strong> Power — small power, socket outlets
+              </li>
+              <li>
+                <strong>Y73:</strong> Lighting — luminaires, controls, emergency
+              </li>
+              <li>
+                <strong>Y74:</strong> Earthing and bonding — main earth, protective conductors
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> NBS specifications complement drawings — they define
               quality and performance while drawings show location and quantity.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Clause Structure */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Clause Structure and Organisation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Clause Structure and Organisation">
             <p>
               NBS specifications are organised into work sections, each containing clauses that
               address specific requirements. Understanding this structure is essential for both
               writing and interpreting specifications.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Clause types within work sections:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Preliminaries/General:</strong> Scope, standards, general requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Products:</strong> Material and equipment specifications
-                </li>
-                <li className="pl-1">
-                  <strong>Execution/Workmanship:</strong> Installation methods and standards
-                </li>
-                <li className="pl-1">
-                  <strong>Testing/Commissioning:</strong> Verification requirements
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Clause Numbering</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">100 series: Preliminaries/General</li>
-                  <li className="pl-1">200 series: Products</li>
-                  <li className="pl-1">300 series: Execution</li>
-                  <li className="pl-1">400 series: Testing</li>
-                  <li className="pl-1">500 series: Completion</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Example Clause Reference
-                </p>
-                <div className="bg-white/5 p-3 rounded text-sm font-mono">
-                  <p>Y71/210 - Distribution boards</p>
-                  <p className="text-white mt-1">Section/Clause number</p>
-                  <p className="mt-2">Y71 = LV supply section</p>
-                  <p>210 = Product clause</p>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Clause types within work sections:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Preliminaries/General:</strong> Scope, standards, general requirements
+              </li>
+              <li>
+                <strong>Products:</strong> Material and equipment specifications
+              </li>
+              <li>
+                <strong>Execution/Workmanship:</strong> Installation methods and standards
+              </li>
+              <li>
+                <strong>Testing/Commissioning:</strong> Verification requirements
+              </li>
+            </ul>
+            <p>
+              <strong>Clause numbering:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>100 series:</strong> Preliminaries/General
+              </li>
+              <li>
+                <strong>200 series:</strong> Products
+              </li>
+              <li>
+                <strong>300 series:</strong> Execution
+              </li>
+              <li>
+                <strong>400 series:</strong> Testing
+              </li>
+              <li>
+                <strong>500 series:</strong> Completion
+              </li>
+            </ul>
+            <p>
+              <strong>Example clause reference:</strong> Y71/210 — Distribution boards (Y71 = LV
+              supply section, 210 = product clause).
+            </p>
+            <p>
               <strong>Best practice:</strong> Use standard NBS clause numbers where possible to aid
               familiarity and reduce errors.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Performance vs Prescriptive */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Performance vs Prescriptive Specifications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Performance vs Prescriptive Specifications">
             <p>
               Specifications can be written in two fundamental styles: performance-based (defining
               outcomes) or prescriptive (defining exact products and methods). Most projects use a
               combination of both approaches.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Performance Specification Example
-              </p>
-              <div className="bg-white/5 p-4 rounded text-sm">
-                <p className="font-medium text-white mb-2">Luminaire - Office General:</p>
-                <ul className="text-white space-y-1 list-disc list-outside ml-5">
-                  <li>Delivered luminous flux: minimum 3500 lumens</li>
-                  <li>Efficacy: minimum 120 lm/W</li>
-                  <li>Colour temperature: 4000K ±200K</li>
-                  <li>CRI: minimum 80</li>
-                  <li>L80B10 lifetime: minimum 50,000 hours</li>
-                  <li>DALI dimmable compatible</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Prescriptive Specification Example
-              </p>
-              <div className="bg-white/5 p-4 rounded text-sm">
-                <p className="font-medium text-white mb-2">Luminaire - Office General:</p>
-                <ul className="text-white space-y-1 list-disc list-outside ml-5">
-                  <li>Manufacturer: Thorn Lighting</li>
-                  <li>Model: Omega Pro LED 600×600</li>
-                  <li>Part number: 96631057</li>
-                  <li>Or equal and approved</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="overflow-x-auto my-6">
-              <table className="text-sm text-white w-full border-collapse">
-                <thead>
-                  <tr className="bg-white/5">
-                    <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                    <th className="border border-white/10 px-3 py-2 text-left">Performance</th>
-                    <th className="border border-white/10 px-3 py-2 text-left">Prescriptive</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="border border-white/10 px-3 py-2">Flexibility</td>
-                    <td className="border border-white/10 px-3 py-2">
-                      High - contractor can propose alternatives
-                    </td>
-                    <td className="border border-white/10 px-3 py-2">
-                      Low - specific product required
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-white/10 px-3 py-2">Design risk</td>
-                    <td className="border border-white/10 px-3 py-2">Shared with contractor</td>
-                    <td className="border border-white/10 px-3 py-2">Retained by designer</td>
-                  </tr>
-                  <tr>
-                    <td className="border border-white/10 px-3 py-2">Use case</td>
-                    <td className="border border-white/10 px-3 py-2">
-                      Design and build, value engineering
-                    </td>
-                    <td className="border border-white/10 px-3 py-2">
-                      Standardisation, matching existing
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Performance specification example — luminaire (office general):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Delivered luminous flux: minimum 3500 lumens</li>
+              <li>Efficacy: minimum 120 lm/W</li>
+              <li>Colour temperature: 4000K ±200K</li>
+              <li>CRI: minimum 80</li>
+              <li>L80B10 lifetime: minimum 50,000 hours</li>
+              <li>DALI dimmable compatible</li>
+            </ul>
+            <p>
+              <strong>Prescriptive specification example — luminaire (office general):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Manufacturer: Thorn Lighting</li>
+              <li>Model: Omega Pro LED 600×600</li>
+              <li>Part number: 96631057</li>
+              <li>Or equal and approved</li>
+            </ul>
+            <p>
+              <strong>Comparison (aspect / performance / prescriptive):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Flexibility:</strong> High (contractor can propose alternatives) vs low
+                (specific product required)
+              </li>
+              <li>
+                <strong>Design risk:</strong> Shared with contractor vs retained by designer
+              </li>
+              <li>
+                <strong>Use case:</strong> Design and build, value engineering vs standardisation,
+                matching existing
+              </li>
+            </ul>
+            <p>
               <strong>Practical tip:</strong> Use performance specifications for general equipment,
               prescriptive for critical items or where standardisation is required.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: NBS Create and Amendments */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            NBS Create and Managing Amendments
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="NBS Create and Managing Amendments">
             <p>
               NBS Create is the current cloud-based platform for developing specifications. It
               provides standard clause content that can be customised for specific projects, with
               clear tracking of amendments.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">NBS Create features:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Cloud-based collaboration and version control</li>
-                <li className="pl-1">Integrated manufacturer product data</li>
-                <li className="pl-1">BIM object linking capabilities</li>
-                <li className="pl-1">Export to multiple formats (PDF, Word, IFC)</li>
-                <li className="pl-1">Automatic cross-referencing and validation</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Managing Amendments</p>
-              <div className="bg-white/5 p-4 rounded text-sm">
-                <p className="font-medium text-white mb-2">Amendment best practice:</p>
-                <ul className="text-white space-y-1 list-disc list-outside ml-5">
-                  <li>
-                    <strong>Identify clearly:</strong> Use italics, colour, or markers for
-                    project-specific text
-                  </li>
-                  <li>
-                    <strong>Track changes:</strong> Maintain amendment register for major revisions
-                  </li>
-                  <li>
-                    <strong>Cross-reference:</strong> Ensure amendments don't conflict with other
-                    clauses
-                  </li>
-                  <li>
-                    <strong>Review cycle:</strong> Coordinate amendments with drawing revisions
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Coordination Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Match equipment references in schedules</li>
-                  <li className="pl-1">Align cable specifications with cable schedules</li>
-                  <li className="pl-1">Coordinate with mechanical specifications</li>
-                  <li className="pl-1">Reference correct drawing numbers</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Coordination Errors
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Spec says IP65, drawing shows IP44</li>
-                  <li className="pl-1">Different cable sizes in spec and schedule</li>
-                  <li className="pl-1">Conflicting luminaire types</li>
-                  <li className="pl-1">Outdated drawing references</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>NBS Create features:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cloud-based collaboration and version control</li>
+              <li>Integrated manufacturer product data</li>
+              <li>BIM object linking capabilities</li>
+              <li>Export to multiple formats (PDF, Word, IFC)</li>
+              <li>Automatic cross-referencing and validation</li>
+            </ul>
+            <p>
+              <strong>Amendment best practice:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identify clearly:</strong> Use italics, colour, or markers for
+                project-specific text
+              </li>
+              <li>
+                <strong>Track changes:</strong> Maintain amendment register for major revisions
+              </li>
+              <li>
+                <strong>Cross-reference:</strong> Ensure amendments don't conflict with other
+                clauses
+              </li>
+              <li>
+                <strong>Review cycle:</strong> Coordinate amendments with drawing revisions
+              </li>
+            </ul>
+            <p>
+              <strong>Coordination requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Match equipment references in schedules</li>
+              <li>Align cable specifications with cable schedules</li>
+              <li>Coordinate with mechanical specifications</li>
+              <li>Reference correct drawing numbers</li>
+            </ul>
+            <p>
+              <strong>Common coordination errors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Spec says IP65, drawing shows IP44</li>
+              <li>Different cable sizes in spec and schedule</li>
+              <li>Conflicting luminaire types</li>
+              <li>Outdated drawing references</li>
+            </ul>
+            <p>
               <strong>Critical:</strong> Always conduct a coordination check between specifications,
               drawings and schedules before issue.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Writing clear clauses:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Use definitive language: 'shall' for requirements, 'should' for recommendations
+              </li>
+              <li>Be specific: avoid vague terms like 'adequate' or 'suitable'</li>
+              <li>Reference standards precisely: include clause numbers where relevant</li>
+              <li>Define technical terms that may be ambiguous</li>
+            </ul>
+            <p>
+              <strong>Standard references:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 7671:</strong> Requirements for Electrical Installations
+              </li>
+              <li>
+                <strong>BS EN 61439:</strong> Low-voltage switchgear assemblies
+              </li>
+              <li>
+                <strong>BS 5266:</strong> Emergency lighting
+              </li>
+              <li>
+                <strong>BS EN 12464-1:</strong> Lighting of work places
+              </li>
+            </ul>
+            <p>
+              <strong>NBS work sections quick reference:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Y70 — HV supply/distribution</li>
+              <li>Y71 — LV supply/distribution</li>
+              <li>Y72 — Power installations</li>
+              <li>Y73 — Lighting installations</li>
+              <li>Y74 — Earthing and bonding</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Writing Clear Clauses
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Use definitive language: 'shall' for requirements, 'should' for recommendations
-                </li>
-                <li className="pl-1">
-                  Be specific: avoid vague terms like 'adequate' or 'suitable'
-                </li>
-                <li className="pl-1">
-                  Reference standards precisely: include clause numbers where relevant
-                </li>
-                <li className="pl-1">Define technical terms that may be ambiguous</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Standard References</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BS 7671:</strong> Requirements for Electrical Installations
-                </li>
-                <li className="pl-1">
-                  <strong>BS EN 61439:</strong> Low-voltage switchgear assemblies
-                </li>
-                <li className="pl-1">
-                  <strong>BS 5266:</strong> Emergency lighting
-                </li>
-                <li className="pl-1">
-                  <strong>BS EN 12464-1:</strong> Lighting of work places
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Contradictory requirements</strong> - conflicting clauses within the same
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Contradictory requirements</strong> — conflicting clauses within the same
                   section
                 </li>
-                <li className="pl-1">
-                  <strong>Over-specification</strong> - unnecessary detail that restricts options
+                <li>
+                  <strong>Over-specification</strong> — unnecessary detail that restricts options
                   and increases cost
                 </li>
-                <li className="pl-1">
-                  <strong>Under-specification</strong> - vague requirements open to interpretation
+                <li>
+                  <strong>Under-specification</strong> — vague requirements open to interpretation
                 </li>
-                <li className="pl-1">
-                  <strong>Outdated standards</strong> - referencing superseded British Standards
+                <li>
+                  <strong>Outdated standards</strong> — referencing superseded British Standards
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Run a clause-by-clause coordination review for contradictions, set requirements at the level the project actually needs (no more, no less), use definitive 'shall' / 'should' language, and check every BS / BS EN reference is current before issue."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Authoring the lighting and small power spec for a school refurb"
+            situation={
+              <>
+                You’re leading the M&amp;E spec for a primary school remodelling. Architect issues
+                Stage 4 drawings. The QS wants the NBS specification by Friday so they can issue
+                tender. Project carries Education Funding Agency standards on lighting, small
+                power and emergency lighting. Six weeks to occupation after construction
+                handover.
+              </>
+            }
+            whatToDo={
+              <>
+                Open NBS Chorus, set the project profile, pull in Y70 (general HV/LV),
+                Y71 (LV switchgear and controlgear assemblies), Y73 (luminaires and lamps), Y74
+                (emergency lighting). For each work section: 100s — general scope, applicable
+                standards (BS 7671:2018+A4:2026, EFA standards, BS 5266); 200s — products
+                (performance: classroom Em 300 lx maintained, UGR ≤ 19, Ra ≥ 80; or
+                prescriptive: named LED panel) ; 300s — execution (cable routing, segregation,
+                terminations to Reg 559.5.1); 400s — system performance (LENI, lighting controls
+                narrative, emergency lighting test regime per BS 5266-1); 500s — completion
+                (commissioning, EIC, O&amp;M structure). Cross-reference Reg 510.3 in the
+                preliminaries so the contractor can’t gold-plate or value-engineer outside the
+                BS 7671 envelope. Add an amendment register with date, author, and reason for
+                every deviation from standard NBS clauses.
+              </>
+            }
+            whyItMatters={
+              <>
+                A loose spec gets exploited at tender (cheapest LED that just hits 300 lx average,
+                no controls strategy, no commissioning record). A precise spec drives a fair
+                comparable tender and a maintainable building. Specification is engineering, not
+                paperwork.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">NBS Work Sections</p>
-                <ul className="space-y-0.5">
-                  <li>Y70 - HV supply/distribution</li>
-                  <li>Y71 - LV supply/distribution</li>
-                  <li>Y72 - Power installations</li>
-                  <li>Y73 - Lighting installations</li>
-                  <li>Y74 - Earthing and bonding</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Specification Types</p>
-                <ul className="space-y-0.5">
-                  <li>Performance - defines outcomes</li>
-                  <li>Prescriptive - defines products</li>
-                  <li>Hybrid - combination approach</li>
-                  <li>Equal and approved - allows alternatives</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              'NBS Y70-Y74 cover building services electrical work sections — pick the right one and stay in it.',
+              'Clause structure: 100s general, 200s products, 300s execution, 400s performance, 500s completion.',
+              'Performance vs prescriptive: blend them — performance for the design intent, prescriptive where a product family is mandated.',
+              '"Shall" = mandatory, "should" = recommended, "may" = permitted. Use intentionally.',
+              'Cross-reference BS 7671 Reg 510.3 in preliminaries — every named product still has to be selected and erected to BS 7671.',
+              'Maintain an amendment register with date, author and reason for every deviation from standard NBS clauses.',
+              'Coordinate spec with drawings and schedules — a 30-minute clash review at issue avoids 30 hours of RFIs.',
+              'Verify every BS / BS EN reference is current before issue — superseded standards confuse contractors and weaken the spec.',
+            ]}
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section6-2">
-              Next: Electrical Drawings
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Specification and documentation
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Electrical drawings
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

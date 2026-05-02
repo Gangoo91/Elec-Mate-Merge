@@ -344,10 +344,10 @@ export default function Sub4() {
             <p>Typical EFLI values on healthy circuits:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Domestic Ze (origin): 0.35–0.65 Ω on TN-C-S, 0.5–1.0 Ω on TN-S, 1–200 Ω on TT.</li>
-              <li>Ring final 32 A B6 RCBO, 50 m of 2.5 mm² T+E: Zs typically 0.6–1.2 Ω.</li>
+              <li>Ring final 32 A B32 RCBO, 50 m of 2.5 mm² T+E: Zs typically 0.6–1.2 Ω.</li>
               <li>Lighting 6 A B6, 30 m of 1.0 mm² T+E: Zs typically 1.0–1.8 Ω.</li>
-              <li>Cooker 32 A B6, 5 m of 6 mm² T+E: Zs typically 0.4–0.8 Ω.</li>
-              <li>Shower 40 A B6, 8 m of 10 mm² T+E: Zs typically 0.4–0.7 Ω.</li>
+              <li>Cooker 32 A B32, 5 m of 6 mm² T+E: Zs typically 0.4–0.8 Ω.</li>
+              <li>Shower 40 A B40, 8 m of 10 mm² T+E: Zs typically 0.4–0.7 Ω.</li>
             </ul>
             <p>Use Hi-Z (no-trip) mode on RCD-protected circuits; standard mode on non-RCD circuits.</p>
           </ConceptBlock>

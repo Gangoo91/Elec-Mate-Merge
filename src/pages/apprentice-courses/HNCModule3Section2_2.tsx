@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 2 · Subsection 2 — Reactance and Impedance in AC Circuits
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   The AC version of resistance — impedance Z combines pure resistance R with reactance X
+ *   to give the working model used for motor circuit analysis, transformer regulation and Zs.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Reactance and Impedance in AC Circuits - HNC Module 3 Section 2.2';
@@ -201,91 +220,53 @@ const faqs = [
 ];
 
 const HNCModule3Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Reactance and Impedance in AC Circuits
-          </h1>
-          <p className="text-white">
-            Understanding opposition to AC current flow in reactive circuits and building services
-            applications
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 2 · Subsection 2"
+            title="Reactance and Impedance in AC Circuits"
+            description="Understanding opposition to AC current flow in reactive circuits and building services applications"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Inductive reactance:</strong> X<sub>L</sub> = 2&pi;fL (increases with
-                frequency)
-              </li>
-              <li className="pl-1">
-                <strong>Capacitive reactance:</strong> X<sub>C</sub> = 1/(2&pi;fC) (decreases with
-                frequency)
-              </li>
-              <li className="pl-1">
-                <strong>Impedance:</strong> Z = R + jX (complex number)
-              </li>
-              <li className="pl-1">
-                <strong>Magnitude:</strong> |Z| = &radic;(R&sup2; + X&sup2;)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Motor circuits:</strong> Inductive loads, starting current
-              </li>
-              <li className="pl-1">
-                <strong>Power factor correction:</strong> Capacitor sizing
-              </li>
-              <li className="pl-1">
-                <strong>Cable impedance:</strong> Voltage drop, fault calculations
-              </li>
-              <li className="pl-1">
-                <strong>Transformers:</strong> Equivalent circuit impedance
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can compute X_L and X_C at 50 Hz and combine them with R to get impedance Z = \u221a(R\u00b2 + (X_L \u2212 X_C)\u00b2) for a series RLC circuit.',
+              'You can find the phase angle \u03c6 = tan\u207b\u00b9((X_L \u2212 X_C)/R) and explain whether the load is resistive, inductive or capacitive.',
+              'You can apply Z to motor circuit analysis \u2014 starting current, running impedance and the difference between blocked-rotor and full-load.',
+              'You can use Z in earth-fault-loop calculations \u2014 Z_s is impedance, not resistance, on AC circuits with measurable inductance.',
+              'You can spot why long cable runs at 50 Hz add reactance as well as resistance and why it matters for fault studies and voltage drop.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671 — Section 411 (Protection by automatic disconnection of supply)"
+            clause="The earth fault loop impedance Z_s at any point of the installation shall satisfy: Z_s \u00d7 I_a \u2264 U\u2080, where U\u2080 is the nominal a.c. voltage to earth and I_a is the current causing the protective device to operate within the time stated in Table 41.1."
+            meaning={
+              <>
+                Z_s is impedance, not pure resistance \u2014 on three-phase circuits and long
+                runs the inductive component matters and the calculated Z is bigger than the
+                R\u2081 + R\u2082 you measured at DC. Always derive disconnection times from the
+                impedance value, not from a continuity-only ohms reading.
+              </>
+            }
+            cite="Source: BS 7671 (latest edition incl. A4:2026) Regulation 411.4.4."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate inductive reactance using X\u2097 = 2\u03c0fL',
               'Calculate capacitive reactance using X\u1d04 = 1/(2\u03c0fC)',
               'Understand how frequency affects reactance values',
@@ -293,835 +274,464 @@ const HNCModule3Section2_2 = () => {
               'Calculate impedance magnitude and phase angle',
               'Apply series and parallel impedance combinations',
               'Analyse motor and transformer equivalent circuits',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Inductive Reactance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Inductive Reactance (X<sub>L</sub>)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="Reactance is frequency-dependent opposition to AC. Combine R and X with Pythagoras to get impedance Z."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Inductive reactance:</strong> X<sub>L</sub> = 2πfL (increases with frequency)
+              </li>
+              <li>
+                <strong>Capacitive reactance:</strong> X<sub>C</sub> = 1/(2πfC) (decreases with frequency)
+              </li>
+              <li>
+                <strong>Impedance:</strong> Z = R + jX (complex number)
+              </li>
+              <li>
+                <strong>Magnitude:</strong> |Z| = √(R² + X²)
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor circuits:</strong> Inductive loads, starting current
+              </li>
+              <li>
+                <strong>Power factor correction:</strong> Capacitor sizing
+              </li>
+              <li>
+                <strong>Cable impedance:</strong> Voltage drop, fault calculations
+              </li>
+              <li>
+                <strong>Transformers:</strong> Equivalent circuit impedance
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Inductive Reactance (X_L)">
             <p>
               Inductive reactance is the opposition to AC current flow caused by an inductor. When
               AC current flows through an inductor, the changing magnetic field induces a back-EMF
               that opposes the change in current. This opposition increases with both frequency and
               inductance.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Inductive Reactance Formula
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                X<sub>L</sub> = 2&pi;fL = &omega;L
-              </p>
-              <p className="text-xs text-white text-center">
-                Where: f = frequency (Hz), L = inductance (H), &omega; = 2&pi;f (rad/s)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key characteristics:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  X<sub>L</sub> is measured in Ohms (&Omega;)
-                </li>
-                <li className="pl-1">
-                  Directly proportional to frequency - doubles if frequency doubles
-                </li>
-                <li className="pl-1">Directly proportional to inductance</li>
-                <li className="pl-1">Current lags voltage by 90&deg; in a pure inductor</li>
-                <li className="pl-1">No power is dissipated (energy stored and returned)</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Inductance Values in Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical L</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        X<sub>L</sub> at 50Hz
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small single-phase motor</td>
-                      <td className="border border-white/10 px-3 py-2">50-100mH</td>
-                      <td className="border border-white/10 px-3 py-2">15.7-31.4&Omega;</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Three-phase motor (per phase)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-50mH</td>
-                      <td className="border border-white/10 px-3 py-2">3.14-15.7&Omega;</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fluorescent ballast</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-2H</td>
-                      <td className="border border-white/10 px-3 py-2">157-628&Omega;</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Choke/reactor</td>
-                      <td className="border border-white/10 px-3 py-2">1-10mH</td>
-                      <td className="border border-white/10 px-3 py-2">0.31-3.14&Omega;</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Inductive Reactance Formula</p>
+            <p>
+              <strong>X<sub>L</sub> = 2πfL = ωL</strong> — Where: f = frequency (Hz), L = inductance
+              (H), ω = 2πf (rad/s).
+            </p>
+            <p className="text-sm font-medium text-white">Key characteristics:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>X<sub>L</sub> is measured in Ohms (Ω)</li>
+              <li>Directly proportional to frequency — doubles if frequency doubles</li>
+              <li>Directly proportional to inductance</li>
+              <li>Current lags voltage by 90° in a pure inductor</li>
+              <li>No power is dissipated (energy stored and returned)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Typical Inductance Values in Building Services</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Small single-phase motor:</strong> 50-100mH — X<sub>L</sub> = 15.7-31.4Ω at 50Hz
+              </li>
+              <li>
+                <strong>Three-phase motor (per phase):</strong> 10-50mH — X<sub>L</sub> = 3.14-15.7Ω at 50Hz
+              </li>
+              <li>
+                <strong>Fluorescent ballast:</strong> 0.5-2H — X<sub>L</sub> = 157-628Ω at 50Hz
+              </li>
+              <li>
+                <strong>Choke/reactor:</strong> 1-10mH — X<sub>L</sub> = 0.31-3.14Ω at 50Hz
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Building services note:</strong> Motor windings are primarily inductive. At
-              50Hz, a typical motor winding inductance of 50mH gives X<sub>L</sub> = 15.7&Omega;,
-              but this varies with motor loading.
+              50Hz, a typical motor winding inductance of 50mH gives X<sub>L</sub> = 15.7Ω, but this
+              varies with motor loading.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Capacitive Reactance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Capacitive Reactance (X<sub>C</sub>)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Capacitive Reactance (X_C)">
             <p>
               Capacitive reactance is the opposition to AC current flow caused by a capacitor.
               Capacitors store energy in an electric field between their plates. The opposition
               decreases as frequency increases because higher frequencies allow less time for charge
               to accumulate.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Capacitive Reactance Formula
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                X<sub>C</sub> = 1/(2&pi;fC) = 1/(&omega;C)
-              </p>
-              <p className="text-xs text-white text-center">
-                Where: f = frequency (Hz), C = capacitance (F), &omega; = 2&pi;f (rad/s)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key characteristics:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  X<sub>C</sub> is measured in Ohms (&Omega;)
-                </li>
-                <li className="pl-1">
-                  Inversely proportional to frequency - halves if frequency doubles
-                </li>
-                <li className="pl-1">Inversely proportional to capacitance</li>
-                <li className="pl-1">Current leads voltage by 90&deg; in a pure capacitor</li>
-                <li className="pl-1">No power is dissipated (energy stored and returned)</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Power Factor Correction Capacitors
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Capacitor Rating
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Capacitance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        X<sub>C</sub> at 50Hz
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5 kVAr (230V)</td>
-                      <td className="border border-white/10 px-3 py-2">95&mu;F</td>
-                      <td className="border border-white/10 px-3 py-2">33.5&Omega;</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10 kVAr (400V)</td>
-                      <td className="border border-white/10 px-3 py-2">50&mu;F</td>
-                      <td className="border border-white/10 px-3 py-2">63.7&Omega;</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25 kVAr (400V)</td>
-                      <td className="border border-white/10 px-3 py-2">125&mu;F</td>
-                      <td className="border border-white/10 px-3 py-2">25.5&Omega;</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50 kVAr (400V)</td>
-                      <td className="border border-white/10 px-3 py-2">250&mu;F</td>
-                      <td className="border border-white/10 px-3 py-2">12.7&Omega;</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Frequency Dependence Comparison
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">
-                    Inductive (X<sub>L</sub>)
-                  </p>
-                  <ul className="text-white space-y-0.5">
-                    <li>
-                      50Hz: X<sub>L</sub> = 31.4&Omega;
-                    </li>
-                    <li>
-                      100Hz: X<sub>L</sub> = 62.8&Omega;
-                    </li>
-                    <li>
-                      150Hz: X<sub>L</sub> = 94.2&Omega;
-                    </li>
-                  </ul>
-                  <p className="text-xs mt-1 text-white">(L = 100mH)</p>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">
-                    Capacitive (X<sub>C</sub>)
-                  </p>
-                  <ul className="text-white space-y-0.5">
-                    <li>
-                      50Hz: X<sub>C</sub> = 31.8&Omega;
-                    </li>
-                    <li>
-                      100Hz: X<sub>C</sub> = 15.9&Omega;
-                    </li>
-                    <li>
-                      150Hz: X<sub>C</sub> = 10.6&Omega;
-                    </li>
-                  </ul>
-                  <p className="text-xs mt-1 text-white">(C = 100&mu;F)</p>
-                </div>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Capacitive Reactance Formula</p>
+            <p>
+              <strong>X<sub>C</sub> = 1/(2πfC) = 1/(ωC)</strong> — Where: f = frequency (Hz), C =
+              capacitance (F), ω = 2πf (rad/s).
+            </p>
+            <p className="text-sm font-medium text-white">Key characteristics:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>X<sub>C</sub> is measured in Ohms (Ω)</li>
+              <li>Inversely proportional to frequency — halves if frequency doubles</li>
+              <li>Inversely proportional to capacitance</li>
+              <li>Current leads voltage by 90° in a pure capacitor</li>
+              <li>No power is dissipated (energy stored and returned)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Power Factor Correction Capacitors</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>5 kVAr (230V):</strong> 95µF — X<sub>C</sub> = 33.5Ω at 50Hz
+              </li>
+              <li>
+                <strong>10 kVAr (400V):</strong> 50µF — X<sub>C</sub> = 63.7Ω at 50Hz
+              </li>
+              <li>
+                <strong>25 kVAr (400V):</strong> 125µF — X<sub>C</sub> = 25.5Ω at 50Hz
+              </li>
+              <li>
+                <strong>50 kVAr (400V):</strong> 250µF — X<sub>C</sub> = 12.7Ω at 50Hz
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Frequency Dependence Comparison (L = 100mH; C = 100µF)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>50Hz: X<sub>L</sub> = 31.4Ω; X<sub>C</sub> = 31.8Ω</li>
+              <li>100Hz: X<sub>L</sub> = 62.8Ω; X<sub>C</sub> = 15.9Ω</li>
+              <li>150Hz: X<sub>L</sub> = 94.2Ω; X<sub>C</sub> = 10.6Ω</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Harmonic consideration:</strong> Capacitive reactance decreases at harmonic
-              frequencies, which can cause capacitors to absorb excessive harmonic currents, leading
-              to overheating.
+              frequencies, which can cause capacitors to absorb excessive harmonic currents,
+              leading to overheating.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Complex Impedance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Complex Impedance (Z = R + jX)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Complex Impedance (Z = R + jX)">
             <p>
               Impedance combines resistance and reactance into a single quantity that describes the
-              total opposition to AC current. Because resistance and reactance are 90&deg; out of
-              phase, they must be combined using complex numbers or the Pythagorean theorem.
+              total opposition to AC current. Because resistance and reactance are 90° out of phase,
+              they must be combined using complex numbers or the Pythagorean theorem.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Complex Impedance Form</p>
-              <p className="font-mono text-center text-lg mb-2">Z = R + jX</p>
-              <p className="text-xs text-white text-center mb-3">
-                Where: R = resistance, X = net reactance (X<sub>L</sub> - X<sub>C</sub>), j =
-                &radic;-1
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-sm text-center">
-                <div className="p-2 rounded bg-black/20">
-                  <p className="text-white">
-                    Inductive: Z = R + jX<sub>L</sub>
-                  </p>
-                  <p className="text-xs text-white">Current lags voltage</p>
-                </div>
-                <div className="p-2 rounded bg-black/20">
-                  <p className="text-white">
-                    Capacitive: Z = R - jX<sub>C</sub>
-                  </p>
-                  <p className="text-xs text-white">Current leads voltage</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Impedance Magnitude and Phase Angle
-              </p>
-              <div className="grid sm:grid-cols-2 gap-3 text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Magnitude</p>
-                  <p className="font-mono">|Z| = &radic;(R&sup2; + X&sup2;)</p>
-                  <p className="text-white text-xs mt-1">Total opposition in Ohms</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Phase Angle</p>
-                  <p className="font-mono">&theta; = arctan(X/R)</p>
-                  <p className="text-white text-xs mt-1">Angle between V and I</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Understanding the j operator:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>j = &radic;-1</strong> represents a 90&deg; phase shift
-                </li>
-                <li className="pl-1">
-                  <strong>+jX</strong> means reactance leads resistance (inductive)
-                </li>
-                <li className="pl-1">
-                  <strong>-jX</strong> means reactance lags resistance (capacitive)
-                </li>
-                <li className="pl-1">
-                  Electrical engineers use j (not i) because i represents current
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Impedance Triangle</p>
-              <div className="p-4 rounded bg-black/30 text-center">
-                <pre className="text-sm text-white font-mono">
-                  {`              |Z|
-           /|
-          / |
-         /  | X (reactance)
-        /   |
-       /____|
-         R (resistance)
-
-|Z| = √(R² + X²)
-θ = arctan(X/R)`}
-                </pre>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Complex Impedance Form</p>
+            <p>
+              <strong>Z = R + jX</strong> — Where R = resistance, X = net reactance (X<sub>L</sub> -
+              X<sub>C</sub>), j = √-1.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Inductive:</strong> Z = R + jX<sub>L</sub> — Current lags voltage
+              </li>
+              <li>
+                <strong>Capacitive:</strong> Z = R - jX<sub>C</sub> — Current leads voltage
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Impedance Magnitude and Phase Angle</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>|Z| = √(R² + X²)</strong> — Total opposition in Ohms
+              </li>
+              <li>
+                <strong>θ = arctan(X/R)</strong> — Angle between V and I
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-white">Understanding the j operator:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>j = √-1</strong> represents a 90° phase shift
+              </li>
+              <li>
+                <strong>+jX</strong> means reactance leads resistance (inductive)
+              </li>
+              <li>
+                <strong>-jX</strong> means reactance lags resistance (capacitive)
+              </li>
+              <li>Electrical engineers use j (not i) because i represents current</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Impedance Triangle</p>
+            <p>
+              Right-angled triangle: R along the base, X up the side, |Z| as the hypotenuse. |Z| =
+              √(R² + X²); θ = arctan(X/R).
+            </p>
             <p className="text-sm text-elec-yellow/70">
-              <strong>Power factor link:</strong> cos(&theta;) = R/|Z| = power factor. A phase angle
-              of 0&deg; means purely resistive (pf = 1), while 90&deg; means purely reactive (pf =
-              0).
+              <strong>Power factor link:</strong> cos(θ) = R/|Z| = power factor. A phase angle of 0°
+              means purely resistive (pf = 1), while 90° means purely reactive (pf = 0).
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Series and Parallel Impedance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Series and Parallel Impedance Combinations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Series and Parallel Impedance Combinations">
             <p>
               Impedances combine using the same rules as resistances, but with complex arithmetic.
-              This is essential for analysing practical circuits with multiple components, including
-              motor equivalent circuits and transformer models.
+              This is essential for analysing practical circuits with multiple components,
+              including motor equivalent circuits and transformer models.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Series Impedance</p>
-              <p className="font-mono text-center text-lg mb-2">
-                Z<sub>T</sub> = Z<sub>1</sub> + Z<sub>2</sub> + Z<sub>3</sub> + ...
-              </p>
-              <p className="text-xs text-white text-center">
-                Add complex impedances directly: (R<sub>1</sub> + jX<sub>1</sub>) + (R<sub>2</sub> +
-                jX<sub>2</sub>) = (R<sub>1</sub> + R<sub>2</sub>) + j(X<sub>1</sub> + X<sub>2</sub>)
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Parallel Impedance</p>
-              <p className="font-mono text-center text-lg mb-2">
-                1/Z<sub>T</sub> = 1/Z<sub>1</sub> + 1/Z<sub>2</sub> + 1/Z<sub>3</sub> + ...
-              </p>
-              <p className="text-xs text-white text-center">
-                For two impedances: Z<sub>T</sub> = (Z<sub>1</sub> &times; Z<sub>2</sub>)/(Z
-                <sub>1</sub> + Z<sub>2</sub>)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Applications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Configuration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Impedance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor circuit (cable + motor)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Series</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Z<sub>cable</sub> + Z<sub>motor</sub>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PFC capacitor with motor</td>
-                      <td className="border border-white/10 px-3 py-2">Parallel</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduces net reactive component
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Parallel loads on busbar</td>
-                      <td className="border border-white/10 px-3 py-2">Parallel</td>
-                      <td className="border border-white/10 px-3 py-2">Combined load impedance</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault loop (source + cable)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Series</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Z<sub>s</sub> = Z<sub>e</sub> + Z<sub>cable</sub>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable Impedance (BS 7671)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Cable Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">R (m&Omega;/m)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">X (m&Omega;/m)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        |Z| (m&Omega;/m)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2.5mm&sup2;</td>
-                      <td className="border border-white/10 px-3 py-2">7.41</td>
-                      <td className="border border-white/10 px-3 py-2">0.1</td>
-                      <td className="border border-white/10 px-3 py-2">7.41</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25mm&sup2;</td>
-                      <td className="border border-white/10 px-3 py-2">0.727</td>
-                      <td className="border border-white/10 px-3 py-2">0.08</td>
-                      <td className="border border-white/10 px-3 py-2">0.73</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">95mm&sup2;</td>
-                      <td className="border border-white/10 px-3 py-2">0.193</td>
-                      <td className="border border-white/10 px-3 py-2">0.075</td>
-                      <td className="border border-white/10 px-3 py-2">0.21</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">300mm&sup2;</td>
-                      <td className="border border-white/10 px-3 py-2">0.0601</td>
-                      <td className="border border-white/10 px-3 py-2">0.07</td>
-                      <td className="border border-white/10 px-3 py-2">0.09</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Note: For larger cables, reactance becomes more significant relative to resistance.
-              </p>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Series Impedance</p>
+            <p>
+              <strong>Z<sub>T</sub> = Z<sub>1</sub> + Z<sub>2</sub> + Z<sub>3</sub> + ...</strong>
+              {' '}— Add complex impedances directly: (R<sub>1</sub> + jX<sub>1</sub>) + (R<sub>2</sub>
+              + jX<sub>2</sub>) = (R<sub>1</sub> + R<sub>2</sub>) + j(X<sub>1</sub> + X<sub>2</sub>).
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Parallel Impedance</p>
+            <p>
+              <strong>1/Z<sub>T</sub> = 1/Z<sub>1</sub> + 1/Z<sub>2</sub> + ...</strong> For two
+              impedances: Z<sub>T</sub> = (Z<sub>1</sub> × Z<sub>2</sub>)/(Z<sub>1</sub> + Z<sub>2</sub>).
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Applications</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor circuit (cable + motor):</strong> Series — Z<sub>cable</sub> + Z<sub>motor</sub>
+              </li>
+              <li>
+                <strong>PFC capacitor with motor:</strong> Parallel — reduces net reactive component
+              </li>
+              <li>
+                <strong>Parallel loads on busbar:</strong> Parallel — combined load impedance
+              </li>
+              <li>
+                <strong>Fault loop (source + cable):</strong> Series — Z<sub>s</sub> = Z<sub>e</sub> + Z<sub>cable</sub>
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Cable Impedance (BS 7671)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>2.5mm²:</strong> R = 7.41 mΩ/m; X = 0.1 mΩ/m; |Z| = 7.41 mΩ/m
+              </li>
+              <li>
+                <strong>25mm²:</strong> R = 0.727 mΩ/m; X = 0.08 mΩ/m; |Z| = 0.73 mΩ/m
+              </li>
+              <li>
+                <strong>95mm²:</strong> R = 0.193 mΩ/m; X = 0.075 mΩ/m; |Z| = 0.21 mΩ/m
+              </li>
+              <li>
+                <strong>300mm²:</strong> R = 0.0601 mΩ/m; X = 0.07 mΩ/m; |Z| = 0.09 mΩ/m
+              </li>
+            </ul>
+            <p>For larger cables, reactance becomes more significant relative to resistance.</p>
             <p className="text-sm text-elec-yellow/70">
-              <strong>Design note:</strong> For small cables (&lt;25mm&sup2;), reactance is
-              negligible and Z &asymp; R. For larger cables, especially long runs, include reactance
-              in voltage drop calculations.
+              <strong>Design note:</strong> For small cables (&lt;25mm²), reactance is negligible
+              and Z ≈ R. For larger cables, especially long runs, include reactance in voltage drop
+              calculations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">Example 1: Motor Circuit Impedance</p>
+            <p>
+              <strong>Question:</strong> A single-phase motor has winding resistance R = 8Ω and
+              inductance L = 50mH. Calculate the impedance at 50Hz and the current drawn from 230V
+              supply.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>X<sub>L</sub> = 2πfL = 2π × 50 × 0.050 = <strong>15.7Ω</strong></li>
+              <li>|Z| = √(R² + X<sub>L</sub>²) = √(64 + 246.5) = √310.5 = <strong>17.6Ω</strong></li>
+              <li>I = V/|Z| = 230/17.6 = <strong>13.1A</strong></li>
+              <li>θ = arctan(15.7/8) = <strong>63°</strong> lagging → pf = cos(63°) = 0.45</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 2: Power Factor Correction</p>
+            <p>
+              <strong>Question:</strong> A motor draws 20A at 0.7 power factor lagging from 230V
+              supply. Calculate the capacitor reactance needed to improve power factor to 0.95.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>|Z| = V/I = 230/20 = 11.5Ω; θ<sub>1</sub> = arccos(0.7) = 45.6°</li>
+              <li>R = 11.5 × 0.7 = 8.05Ω; X<sub>L</sub> = 11.5 × 0.714 = 8.21Ω</li>
+              <li>θ<sub>2</sub> = arccos(0.95) = 18.2° → X<sub>new</sub> = R × tan(θ<sub>2</sub>) = 8.05 × 0.329 = 2.65Ω</li>
+              <li>X<sub>C</sub> = X<sub>L</sub> - X<sub>new</sub> = 8.21 - 2.65 = <strong>5.56Ω</strong></li>
+              <li>C = 1/(2πfX<sub>C</sub>) = 1/(2π × 50 × 5.56) = <strong>573µF</strong></li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 3: Transformer Equivalent Circuit</p>
+            <p>
+              <strong>Question:</strong> A 100kVA transformer has 4% impedance with X/R ratio of
+              10. Calculate the equivalent resistance and reactance referred to the 400V secondary.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Z<sub>base</sub> = V²/S = 400²/100000 = 1.6Ω</li>
+              <li>Z<sub>T</sub> = 4% × Z<sub>base</sub> = 0.04 × 1.6 = <strong>0.064Ω</strong></li>
+              <li>Given X/R = 10, |Z|² = R² + (10R)² = 101R² → R = 0.064/10.05 = <strong>6.4 mΩ</strong></li>
+              <li>X = 10R = <strong>64 mΩ</strong> → Z = 0.0064 + j0.064 Ω</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 4: Fault Loop Impedance</p>
+            <p>
+              <strong>Question:</strong> A circuit has external earth fault loop impedance Z<sub>e</sub>
+              = 0.35Ω and uses 30m of 4mm² cable (R = 4.61mΩ/m, X = 0.1mΩ/m). Calculate total Z<sub>s</sub>.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>R<sub>cable</sub> = 30 × 2 × 4.61 mΩ = 0.277Ω; X<sub>cable</sub> = 30 × 2 × 0.1 mΩ = 0.006Ω</li>
+              <li>Assuming Z<sub>e</sub> resistive: R<sub>total</sub> = 0.35 + 0.277 = 0.627Ω; X<sub>total</sub> = 0.006Ω</li>
+              <li>|Z<sub>s</sub>| = √(0.627² + 0.006²) ≈ <strong>0.627Ω</strong> (X negligible for 4mm²)</li>
+              <li>I<sub>pf</sub> = U₀/Z<sub>s</sub> = 230/0.627 = <strong>367A</strong></li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Motor Circuit Impedance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A single-phase motor has winding resistance R = 8&Omega;
-                and inductance L = 50mH. Calculate the impedance at 50Hz and the current drawn from
-                230V supply.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Calculate inductive reactance</p>
-                <p>
-                  X<sub>L</sub> = 2&pi;fL = 2&pi; &times; 50 &times; 0.050 ={' '}
-                  <strong>15.7&Omega;</strong>
-                </p>
-                <p className="mt-2">Step 2: Calculate impedance magnitude</p>
-                <p>
-                  |Z| = &radic;(R&sup2; + X<sub>L</sub>&sup2;) = &radic;(8&sup2; + 15.7&sup2;)
-                </p>
-                <p>
-                  |Z| = &radic;(64 + 246.5) = &radic;310.5 = <strong>17.6&Omega;</strong>
-                </p>
-                <p className="mt-2">Step 3: Calculate current</p>
-                <p>
-                  I = V/|Z| = 230/17.6 = <strong>13.1A</strong>
-                </p>
-                <p className="mt-2">Step 4: Calculate phase angle</p>
-                <p>
-                  &theta; = arctan(X/R) = arctan(15.7/8) = <strong>63&deg;</strong> lagging
-                </p>
-                <p className="mt-2 text-white">&rarr; Power factor = cos(63&deg;) = 0.45</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Power Factor Correction
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A motor draws 20A at 0.7 power factor lagging from 230V
-                supply. Calculate the capacitor reactance needed to improve power factor to 0.95.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Calculate motor impedance</p>
-                <p>|Z| = V/I = 230/20 = 11.5&Omega;</p>
-                <p>
-                  &theta;<sub>1</sub> = arccos(0.7) = 45.6&deg;
-                </p>
-                <p className="mt-2">
-                  Step 2: Find R and X<sub>L</sub>
-                </p>
-                <p>R = |Z| &times; cos(&theta;) = 11.5 &times; 0.7 = 8.05&Omega;</p>
-                <p>
-                  X<sub>L</sub> = |Z| &times; sin(&theta;) = 11.5 &times; 0.714 = 8.21&Omega;
-                </p>
-                <p className="mt-2">Step 3: Calculate new target reactance</p>
-                <p>
-                  &theta;<sub>2</sub> = arccos(0.95) = 18.2&deg;
-                </p>
-                <p>
-                  X<sub>new</sub> = R &times; tan(&theta;<sub>2</sub>) = 8.05 &times; 0.329 =
-                  2.65&Omega;
-                </p>
-                <p className="mt-2">
-                  Step 4: Calculate required X<sub>C</sub>
-                </p>
-                <p>
-                  X<sub>C</sub> = X<sub>L</sub> - X<sub>new</sub> = 8.21 - 2.65 ={' '}
-                  <strong>5.56&Omega;</strong>
-                </p>
-                <p className="mt-2">Step 5: Calculate capacitance</p>
-                <p>
-                  C = 1/(2&pi;fX<sub>C</sub>) = 1/(2&pi; &times; 50 &times; 5.56) ={' '}
-                  <strong>573&mu;F</strong>
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>X<sub>L</sub> = 2πfL</strong> — Inductive reactance
+              </li>
+              <li>
+                <strong>X<sub>C</sub> = 1/(2πfC)</strong> — Capacitive reactance
+              </li>
+              <li>
+                <strong>Z = R + jX</strong> — Complex impedance
+              </li>
+              <li>
+                <strong>|Z| = √(R² + X²)</strong> — Impedance magnitude
+              </li>
+              <li>
+                <strong>θ = arctan(X/R)</strong> — Phase angle
+              </li>
+              <li>
+                <strong>cos θ = R/|Z|</strong> — Power factor
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Values to Remember</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>2π × 50Hz = <strong>314.16 rad/s</strong></li>
+              <li>At 50Hz: X<sub>L</sub> = 314L (L in henrys)</li>
+              <li>At 50Hz: X<sub>C</sub> = 3183/C (C in µF gives X in Ω)</li>
+              <li>Cables &lt;25mm²: X ≈ 0, use R only</li>
+              <li>Cables &gt;95mm²: include X in calculations</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Applications</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor starting:</strong> Low speed = low back-EMF = low impedance = high current
+              </li>
+              <li>
+                <strong>PFC capacitors:</strong> Size to cancel motor inductive reactance
+              </li>
+              <li>
+                <strong>Transformer sizing:</strong> % impedance determines fault current and Vdrop
+              </li>
+              <li>
+                <strong>Harmonic filters:</strong> Tuned LC circuits at specific frequencies
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Transformer Equivalent Circuit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 100kVA transformer has 4% impedance with X/R ratio of
-                10. Calculate the equivalent resistance and reactance referred to the 400V
-                secondary.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Calculate base impedance</p>
-                <p>
-                  Z<sub>base</sub> = V&sup2;/S = 400&sup2;/100000 = 1.6&Omega;
-                </p>
-                <p className="mt-2">Step 2: Calculate transformer impedance</p>
-                <p>
-                  Z<sub>T</sub> = 4% &times; Z<sub>base</sub> = 0.04 &times; 1.6 ={' '}
-                  <strong>0.064&Omega;</strong>
-                </p>
-                <p className="mt-2">Step 3: Calculate R and X from X/R ratio</p>
-                <p>Given X/R = 10, and |Z| = &radic;(R&sup2; + X&sup2;)</p>
-                <p>|Z|&sup2; = R&sup2; + (10R)&sup2; = 101R&sup2;</p>
-                <p>
-                  R = |Z|/&radic;101 = 0.064/10.05 = <strong>0.0064&Omega; (6.4m&Omega;)</strong>
-                </p>
-                <p>
-                  X = 10R = <strong>0.064&Omega; (64m&Omega;)</strong>
-                </p>
-                <p className="mt-2 text-white">&rarr; Z = 0.0064 + j0.064 &Omega;</p>
-              </div>
-            </div>
+          <CommonMistake
+            title="Common reactance and impedance mistakes"
+            whatHappens={
+              <>
+                Adding R and X arithmetically (must use Pythagoras). Wrong units (mH, µF). Forgetting
+                that reactance depends on frequency. Sign errors: X<sub>L</sub> is +j, X<sub>C</sub> is
+                -j. Ignoring cable reactance on long large cable runs.
+              </>
+            }
+            doInstead={
+              <>
+                Use |Z| = √(R²+X²). Convert to base SI units before substituting. Always specify
+                frequency. Treat inductive as +j, capacitive as -j when summing. Include X for cables
+                ≥95mm² over long runs.
+              </>
+            }
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Fault Loop Impedance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A circuit has external earth fault loop impedance Z
-                <sub>e</sub> = 0.35&Omega; and uses 30m of 4mm&sup2; cable (R = 4.61m&Omega;/m, X =
-                0.1m&Omega;/m). Calculate total Z<sub>s</sub>.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Calculate cable impedance (line + CPC)</p>
-                <p>
-                  R<sub>cable</sub> = 30m &times; 2 &times; 4.61m&Omega;/m = 0.277&Omega;
-                </p>
-                <p>
-                  X<sub>cable</sub> = 30m &times; 2 &times; 0.1m&Omega;/m = 0.006&Omega;
-                </p>
-                <p className="mt-2">
-                  Step 2: Assuming Z<sub>e</sub> is resistive (worst case)
-                </p>
-                <p>
-                  R<sub>total</sub> = 0.35 + 0.277 = 0.627&Omega;
-                </p>
-                <p>
-                  X<sub>total</sub> = 0.006&Omega;
-                </p>
-                <p className="mt-2">Step 3: Calculate total impedance</p>
-                <p>
-                  |Z<sub>s</sub>| = &radic;(0.627&sup2; + 0.006&sup2;) ={' '}
-                  <strong>0.627&Omega;</strong>
-                </p>
-                <p className="mt-2 text-white">&rarr; For 4mm&sup2; cable, X is negligible</p>
-                <p className="mt-2">Step 4: Calculate prospective fault current</p>
-                <p>
-                  I<sub>pf</sub> = U<sub>0</sub>/Z<sub>s</sub> = 230/0.627 = <strong>367A</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Calculating starting current for a 15 kW AHU motor"
+            situation={
+              <>
+                A 15 kW three-phase induction motor on the supply-air AHU has a measured
+                running impedance of (3 + j5) \u03a9 per phase. The blocked-rotor (locked-rotor)
+                impedance is roughly one sixth of running impedance because rotor reactance
+                drops at standstill. You need to estimate Direct-On-Line starting current to
+                size cable, MCCB and feeder transformer.
+              </>
+            }
+            whatToDo={
+              <>
+                Compute running impedance: |Z_run| = \u221a(3\u00b2 + 5\u00b2) = \u221a34 \u2248
+                5.83 \u03a9, giving full-load line current of 230 / 5.83 \u2248 39 A. Estimate
+                blocked-rotor impedance |Z_start| \u2248 5.83 / 6 \u2248 0.97 \u03a9, giving
+                DOL starting current \u2248 230 / 0.97 \u2248 237 A \u2014 about 6 \u00d7 FLC,
+                consistent with NEMA Code F. Pick a Type C or D MCB sized for the running
+                load but rated to ride through the start, and confirm the upstream
+                transformer can deliver 237 A for several seconds without excessive voltage
+                dip (\u2264 5 % is the usual target).
+              </>
+            }
+            whyItMatters={
+              <>
+                Impedance is the only correct model for AC starting current. Treating the
+                motor as a pure resistance under-estimates inrush by a factor of six \u2014 the
+                upstream MCB nuisance-trips on every start, the cable cooks under repeated
+                inrush, and the feeder transformer dips voltage on neighbouring circuits.
+                Soft-start or VFD systems exist precisely because of this DOL starting
+                impedance behaviour.
+              </>
+            }
+          />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <SectionRule />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>
-                    X<sub>L</sub> = 2&pi;fL
-                  </strong>{' '}
-                  &mdash; Inductive reactance
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    X<sub>C</sub> = 1/(2&pi;fC)
-                  </strong>{' '}
-                  &mdash; Capacitive reactance
-                </li>
-                <li className="pl-1">
-                  <strong>Z = R + jX</strong> &mdash; Complex impedance
-                </li>
-                <li className="pl-1">
-                  <strong>|Z| = &radic;(R&sup2; + X&sup2;)</strong> &mdash; Impedance magnitude
-                </li>
-                <li className="pl-1">
-                  <strong>&theta; = arctan(X/R)</strong> &mdash; Phase angle
-                </li>
-                <li className="pl-1">
-                  <strong>cos &theta; = R/|Z|</strong> &mdash; Power factor
-                </li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  2&pi; &times; 50Hz = <strong>314.16 rad/s</strong>
-                </li>
-                <li className="pl-1">
-                  At 50Hz: X<sub>L</sub> = 314L (L in henrys)
-                </li>
-                <li className="pl-1">
-                  At 50Hz: X<sub>C</sub> = 3183/C (C in &mu;F gives X in &Omega;)
-                </li>
-                <li className="pl-1">Cables &lt;25mm&sup2;: X &asymp; 0, use R only</li>
-                <li className="pl-1">Cables &gt;95mm&sup2;: Include X in calculations</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Applications
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motor starting:</strong> Low speed = low back-EMF = low impedance = high
-                  current
-                </li>
-                <li className="pl-1">
-                  <strong>PFC capacitors:</strong> Size to cancel motor inductive reactance
-                </li>
-                <li className="pl-1">
-                  <strong>Transformer sizing:</strong> % impedance determines fault current and
-                  Vdrop
-                </li>
-                <li className="pl-1">
-                  <strong>Harmonic filters:</strong> Tuned LC circuits at specific frequencies
-                </li>
-              </ul>
-            </div>
+          <KeyTakeaways
+            points={[
+              'Impedance Z (\u03a9) is the AC analogue of resistance \u2014 the total opposition to current including both R and X.',
+              'Series RLC: Z = \u221a(R\u00b2 + (X_L \u2212 X_C)\u00b2). Phase angle \u03c6 = tan\u207b\u00b9((X_L \u2212 X_C)/R).',
+              'Inductive reactance X_L = 2\u03c0fL = 314L at 50 Hz \u2014 rises with frequency, the source of inrush and back-EMF.',
+              'Capacitive reactance X_C = 1/(2\u03c0fC) = 1/(314C) at 50 Hz \u2014 falls with frequency, used for PFC and harmonic-filter tuning.',
+              'Pure R: V and I in phase, PF = 1. Pure L: V leads I by 90\u00b0. Pure C: I leads V by 90\u00b0. Real loads sit somewhere in between.',
+              'Motor running impedance is much higher than blocked-rotor impedance \u2014 DOL starting current is typically 5\u20137 \u00d7 full-load current.',
+              'Z_s on AC circuits is impedance, not just resistance \u2014 inductive component matters on long runs and three-phase circuits.',
+              'Cable mV/A/m tables in BS 7671 Appendix 4 already include the inductive reactance contribution at 50 Hz \u2014 use them, do not redo the maths.',
+            ]}
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Adding R and X directly</strong> &mdash; Must use Pythagorean theorem
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong units</strong> &mdash; mH to H, &mu;F to F before calculating
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting frequency</strong> &mdash; Reactance depends on frequency
-                </li>
-                <li className="pl-1">
-                  <strong>Sign errors</strong> &mdash; X<sub>L</sub> is +j, X<sub>C</sub> is -j
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring cable X</strong> &mdash; Important for large cables
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Reactance Formulas</p>
-                <ul className="space-y-0.5">
-                  <li>
-                    Inductive: X<sub>L</sub> = 2&pi;fL = &omega;L
-                  </li>
-                  <li>
-                    Capacitive: X<sub>C</sub> = 1/(2&pi;fC) = 1/&omega;C
-                  </li>
-                  <li>
-                    X<sub>L</sub> increases with f, X<sub>C</sub> decreases
-                  </li>
-                  <li>
-                    At resonance: X<sub>L</sub> = X<sub>C</sub>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Impedance Calculations</p>
-                <ul className="space-y-0.5">
-                  <li>Complex: Z = R + jX</li>
-                  <li>Magnitude: |Z| = &radic;(R&sup2; + X&sup2;)</li>
-                  <li>Phase: &theta; = arctan(X/R)</li>
-                  <li>Power factor: pf = cos&theta; = R/|Z|</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Inductance & Capacitance
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section2-3">
-              Next: Phase Angle & Phasors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Inductance & Capacitance
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Phase Angle & Phasors
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

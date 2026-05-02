@@ -154,6 +154,18 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
     );
   };
 
+  // ELE-885 — manual decline. Allow the electrician to mark a quote declined
+  // from the web app, even if the client never used the public link. Show the
+  // option on any quote that isn't already declined, accepted-and-invoiced,
+  // or rejected. Drafts can also be declined (electrician decides not to send
+  // after a phone conversation).
+  const canManuallyDecline = (quote: Quote) => {
+    if (quote.acceptance_status === 'rejected') return false;
+    if (quote.status === 'rejected') return false;
+    if (hasInvoiceRaised(quote)) return false;
+    return true;
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
       {quotes.map((quote, index) => {
@@ -350,6 +362,22 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                       >
                         <Receipt className="h-4 w-4" />
                         {loadingAction === `invoice-${quote.id}` ? 'Creating...' : 'Raise Invoice'}
+                      </button>
+                    )}
+
+                    {/* ELE-885 — Manual decline. Subtle ghost button always
+                        available for non-final quotes so the electrician can
+                        mark a quote declined without waiting for the client
+                        to use the public link. Hidden once the existing
+                        Accept/Reject pair is shown to avoid duplication. */}
+                    {!canResend(quote) && canManuallyDecline(quote) && (
+                      <button
+                        onClick={() => handleActionClick(quote, 'reject')}
+                        disabled={loadingAction === `action-${quote.id}`}
+                        className="w-full h-9 bg-transparent hover:bg-red-500/10 border border-white/[0.08] hover:border-red-500/30 text-white/60 hover:text-red-400 rounded-lg flex items-center justify-center gap-1.5 text-[12px] font-medium disabled:opacity-50 touch-manipulation transition-colors"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                        Mark as declined
                       </button>
                     )}
                   </div>

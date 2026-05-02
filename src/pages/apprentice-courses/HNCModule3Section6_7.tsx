@@ -1,8 +1,28 @@
-import { ArrowLeft, Zap, CheckCircle, Sun, Battery, Car, Network, Building2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 6 · Subsection 7 — Integration with Renewables and Storage Systems
+ * HNC Electrical Engineering for Building Services (Pearson U4019)
+ *   Solar PV, BESS battery storage, EV charging infrastructure, microgrids and
+ *   smart-grid integration. The forward-looking BSE design topic that brings
+ *   G98/G99/G100, BS 7671 Sections 712 (PV) / 722 (EV) / 826 (microgrid) into
+ *   one integrated specification.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Integration with Renewables and Storage Systems - HNC Module 3 Section 6.7';
@@ -195,215 +215,132 @@ const faqs = [
 ];
 
 const HNCModule3Section6_7 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.6.7</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Integration with Renewables and Storage Systems
-          </h1>
-          <p className="text-white">
-            Solar PV, battery storage, EV charging and smart grid integration for modern building
-            services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 6 · Subsection 7"
+            title="Integration with renewables and storage systems"
+            description="Solar PV, battery storage, EV charging and smart grid integration for modern building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>G98/G99:</strong> Grid connection requirements for embedded generation
-              </li>
-              <li className="pl-1">
-                <strong>Solar PV:</strong> Typically 850-1000 kWh/kWp annual yield in UK
-              </li>
-              <li className="pl-1">
-                <strong>BESS:</strong> 90-95% round-trip efficiency with lithium technology
-              </li>
-              <li className="pl-1">
-                <strong>EV charging:</strong> Mode 3 (7-22kW) standard for dedicated installations
-              </li>
+          <TLDR
+            points={[
+              'You design Solar PV to BS 7671 Section 712 + IEC 62548; submit G98 (single phase &le; 16 A) or G99 (everything larger) connection application; verify export limitation under G100 if needed.',
+              'You size BESS (battery energy storage) for arbitrage / peak-shaving / backup duty; specify to BS EN 62619 (cells) + BS EN 62933 (system) + IEC 62443 (cyber security).',
+              'You design EV charging to BS 7671 Section 722 + Open Charge Point Protocol (OCPP); apply BS 7671 A4:2026 PEN-fault protection on outdoor PME-supplied chargers.',
+              'You document the integrated renewables + storage + EV scheme in the building&rsquo;s log book + lodge the connection agreement with the DNO &mdash; both regulatory and commercial deliverables.',
+            ]}
+          />
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 712 (Solar photovoltaic power supply systems) and Regulation 722 (Electric vehicle charging installations) and Regulation 551 (Low-voltage generating sets)"
+            clause="A solar PV installation shall comply with BS 7671 Section 712 including DC isolation requirements (712.537), labelling (712.514), and string voltage limits. EV charging installations shall comply with Section 722 including the requirement on TN-C-S supplies for additional measures against PEN faults affecting persons in contact with the EV (722.411.4.1)."
+            meaning={
+              <>
+                BS 7671 Sections 712, 722 and 551 are the three primary special-locations
+                regs for renewables / EV / storage integration. The A4:2026 amendment
+                specifically tightened PEN-fault protection on PME-supplied outdoor EV
+                chargers. As BSE designer of any modern building, you orchestrate these
+                sections plus the ENA Engineering Recommendations (G98, G99, G100) plus
+                the relevant product-standard suite (IEC 62548 PV, BS EN 62619 BESS,
+                IEC 61851 EV) into one integrated submission.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026, Regs 551, 712, 722; ENA Engineering Recommendations G98, G99, G100; IEC 62548 (PV), BS EN 62619 (BESS cells), IEC 61851 (EV charging); IET Code of Practice for EV Charging Equipment Installation"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Design and specify solar PV systems for commercial buildings",
+              "Apply G98/G99 requirements for embedded generation connections",
+              "Size and integrate battery energy storage systems (BESS)",
+              "Design EV charging infrastructure compliant with regulations",
+              "Understand smart grid integration and demand response",
+              "Evaluate microgrid configurations and islanding requirements",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="In 30 seconds">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>G98/G99:</strong> Grid connection requirements for embedded generation</li>
+              <li><strong>Solar PV:</strong> Typically 850-1000 kWh/kWp annual yield in UK</li>
+              <li><strong>BESS:</strong> 90-95% round-trip efficiency with lithium technology</li>
+              <li><strong>EV charging:</strong> Mode 3 (7-22kW) standard for dedicated installations</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Self-consumption:</strong> Maximising on-site use of generated power
-              </li>
-              <li className="pl-1">
-                <strong>Peak shaving:</strong> Reducing maximum demand charges
-              </li>
-              <li className="pl-1">
-                <strong>Grid services:</strong> Frequency response and demand flexibility
-              </li>
-              <li className="pl-1">
-                <strong>Resilience:</strong> Backup power and islanding capability
-              </li>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Self-consumption:</strong> Maximising on-site use of generated power</li>
+              <li><strong>Peak shaving:</strong> Reducing maximum demand charges</li>
+              <li><strong>Grid services:</strong> Frequency response and demand flexibility</li>
+              <li><strong>Resilience:</strong> Backup power and islanding capability</li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Design and specify solar PV systems for commercial buildings',
-              'Apply G98/G99 requirements for embedded generation connections',
-              'Size and integrate battery energy storage systems (BESS)',
-              'Design EV charging infrastructure compliant with regulations',
-              'Understand smart grid integration and demand response',
-              'Evaluate microgrid configurations and islanding requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Solar PV Systems */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            <Sun className="h-5 w-5 text-elec-yellow/70" />
-            Solar PV Systems and Grid Connection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Solar PV Systems and Grid Connection">
             <p>
               Solar photovoltaic systems convert sunlight directly into electricity. For building
               services engineers, understanding system design, performance prediction and grid
               integration is essential for both new installations and retrofits.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key PV System Components</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">Key PV System Components</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>PV modules:</strong> Monocrystalline (20-22% efficiency), polycrystalline
                   (15-17%), thin-film (10-12%)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Inverters:</strong> String inverters, microinverters, or power optimisers
                   with central inverter
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Mounting systems:</strong> Roof-mounted (pitched/flat),
                   building-integrated (BIPV), ground-mounted
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>AC distribution:</strong> Connection point, metering, protection and
                   isolation
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 UK PV Performance Parameters
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical UK Value
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Specific yield</td>
-                      <td className="border border-white/10 px-3 py-2">850-1000 kWh/kWp/year</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        South-facing, unshaded, optimal tilt
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Performance ratio</td>
-                      <td className="border border-white/10 px-3 py-2">0.75-0.85</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Actual vs theoretical output
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Optimal orientation</td>
-                      <td className="border border-white/10 px-3 py-2">South ±30°</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        East/West reduces yield by ~15%
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Optimal tilt angle</td>
-                      <td className="border border-white/10 px-3 py-2">30-40°</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower for self-consumption focus
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Area per kWp</td>
-                      <td className="border border-white/10 px-3 py-2">5-7 m²</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Depends on module efficiency
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Degradation</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-0.7% per year</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typically 80% output at 25 years
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Specific yield</strong> — 850-1000 kWh/kWp/year — South-facing, unshaded, optimal tilt</li>
+              <li><strong>Performance ratio</strong> — 0.75-0.85 — Actual vs theoretical output</li>
+              <li><strong>Optimal orientation</strong> — South ±30° — East/West reduces yield by ~15%</li>
+              <li><strong>Optimal tilt angle</strong> — 30-40° — Lower for self-consumption focus</li>
+              <li><strong>Area per kWp</strong> — 5-7 m² — Depends on module efficiency</li>
+              <li><strong>Degradation</strong> — 0.5-0.7% per year — Typically 80% output at 25 years</li>
+            </ul>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 PV System Sizing Example
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   <strong>Requirement:</strong> 50,000 kWh annual consumption, target 30% solar
                 </p>
-                <p className="mt-2">Target generation = 50,000 × 0.30 = 15,000 kWh/year</p>
+                <p>Target generation = 50,000 × 0.30 = 15,000 kWh/year</p>
                 <p>Specific yield (South England) = 950 kWh/kWp/year</p>
                 <p>
                   System size = 15,000 / 950 = <strong>15.8 kWp</strong>
@@ -411,484 +348,281 @@ const HNCModule3Section6_7 = () => {
                 <p>
                   Roof area required = 15.8 × 6 m²/kWp = <strong>~95 m²</strong>
                 </p>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            
+
+            <p>
               <strong>Design consideration:</strong> Oversizing PV relative to inverter capacity
               (DC/AC ratio of 1.1-1.3) can improve economics by capturing more energy during
               shoulder periods while clipping only peak output.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 2: G98/G99 Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            G98/G99 Requirements for Embedded Generation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="G98/G99 Requirements for Embedded Generation">
             <p>
               Engineering Recommendation G98 and G99 are the UK standards governing the connection
               of generation equipment to distribution networks. Compliance is mandatory for all
               grid-connected renewable and storage systems.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 G98 vs G99 Application Thresholds
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Standard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Capacity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Process</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Timeline</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">G98</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ≤16kW per phase (≤50kW 3-phase)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Notification only</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Within 28 days of commissioning
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">G99</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt;16kW per phase (or &gt;50kW 3-phase)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full application and approval
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        45-90 working days typical
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>G98</strong> — ≤16kW per phase (≤50kW 3-phase) — Notification only — Within 28 days of commissioning</li>
+              <li><strong>G99</strong> — &gt;16kW per phase (or &gt;50kW 3-phase) — Full application and approval — 45-90 working days typical</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key Protection Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">Key Protection Requirements</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Loss of Mains (LoM):</strong> Must disconnect within 0.5s of mains loss
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Under/over voltage:</strong> Disconnect if V &lt;184V or V &gt;262V
                   (single-phase)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Under/over frequency:</strong> Disconnect if f &lt;47.5Hz or f &gt;52Hz
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Rate of Change of Frequency (RoCoF):</strong> Trip at &gt;1Hz/s
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Anti-islanding:</strong> Prevent energising isolated network sections
                 </li>
               </ul>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   G98 Notification Contents
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Installation address and MPAN</li>
-                  <li className="pl-1">Generator type and capacity (kW)</li>
-                  <li className="pl-1">Inverter make, model and G98 certificate</li>
-                  <li className="pl-1">Installer details and certification</li>
-                  <li className="pl-1">Commissioning date</li>
-                  <li className="pl-1">Export meter details (if fitted)</li>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Installation address and MPAN</li>
+                  <li>Generator type and capacity (kW)</li>
+                  <li>Inverter make, model and G98 certificate</li>
+                  <li>Installer details and certification</li>
+                  <li>Commissioning date</li>
+                  <li>Export meter details (if fitted)</li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   G99 Application Requirements
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Formal application to DNO</li>
-                  <li className="pl-1">Single line diagram</li>
-                  <li className="pl-1">Protection settings schedule</li>
-                  <li className="pl-1">Witness testing may be required</li>
-                  <li className="pl-1">Connection agreement before energisation</li>
-                  <li className="pl-1">Potential network reinforcement costs</li>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Formal application to DNO</li>
+                  <li>Single line diagram</li>
+                  <li>Protection settings schedule</li>
+                  <li>Witness testing may be required</li>
+                  <li>Connection agreement before energisation</li>
+                  <li>Potential network reinforcement costs</li>
                 </ul>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            
+
+            <p>
               <strong>Important:</strong> All grid-connected inverters must carry valid G98 or G99
               type test certificates from an accredited laboratory. Check the ENA Type Test Register
               for approved equipment.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 3: Battery Energy Storage Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            <Battery className="h-5 w-5 text-elec-yellow/70" />
-            Battery Energy Storage Systems (BESS)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Battery Energy Storage Systems (BESS)">
             <p>
               Battery storage enables time-shifting of energy use, peak demand reduction, and grid
               services participation. Understanding battery technologies, sizing methodology and
               integration options is essential for modern building services design.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Battery Technology Comparison
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Efficiency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cycle Life</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lithium Iron Phosphate (LFP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">92-96%</td>
-                      <td className="border border-white/10 px-3 py-2">6000+</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commercial, grid-scale (safety focus)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lithium NMC</td>
-                      <td className="border border-white/10 px-3 py-2">90-95%</td>
-                      <td className="border border-white/10 px-3 py-2">3000-5000</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic, commercial (energy density)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lead-acid (VRLA)</td>
-                      <td className="border border-white/10 px-3 py-2">80-85%</td>
-                      <td className="border border-white/10 px-3 py-2">500-1500</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        UPS, backup power (cost-sensitive)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flow batteries</td>
-                      <td className="border border-white/10 px-3 py-2">70-80%</td>
-                      <td className="border border-white/10 px-3 py-2">10000+</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large-scale, long duration
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lithium Iron Phosphate (LFP)</strong> — 92-96% — 6000+ — Commercial, grid-scale (safety focus)</li>
+              <li><strong>Lithium NMC</strong> — 90-95% — 3000-5000 — Domestic, commercial (energy density)</li>
+              <li><strong>Lead-acid (VRLA)</strong> — 80-85% — 500-1500 — UPS, backup power (cost-sensitive)</li>
+              <li><strong>Flow batteries</strong> — 70-80% — 10000+ — Large-scale, long duration</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">BESS Sizing Parameters</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">BESS Sizing Parameters</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Energy capacity (kWh):</strong> Total storage available
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Power rating (kW):</strong> Maximum charge/discharge rate
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>C-rate:</strong> Power/Energy ratio (1C = full charge in 1 hour)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Depth of Discharge (DoD):</strong> Usable capacity (typically 80-95% for
                   lithium)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Round-trip efficiency:</strong> Energy out vs energy in
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 BESS Sizing Example: Peak Shaving
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   <strong>Requirement:</strong> Reduce 150kW peak demand to 100kW for 2 hours
                 </p>
-                <p className="mt-2">Peak reduction required = 150 - 100 = 50kW</p>
+                <p>Peak reduction required = 150 - 100 = 50kW</p>
                 <p>Duration = 2 hours</p>
                 <p>Usable energy required = 50kW × 2h = 100kWh</p>
                 <p>
                   At 90% DoD: Battery capacity = 100 / 0.9 = <strong>111kWh</strong>
                 </p>
                 <p>Power rating needed = 50kW minimum</p>
-                <p className="mt-2 text-white">
+                <p>
                   → Select 120kWh, 60kW battery system (0.5C rating)
                 </p>
-              </div>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">AC-Coupled Systems</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Battery has dedicated inverter</li>
-                  <li className="pl-1">Connects to AC distribution board</li>
-                  <li className="pl-1">Can retrofit to existing PV</li>
-                  <li className="pl-1">Independent of PV inverter brand</li>
-                  <li className="pl-1">Slightly lower efficiency (double conversion)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">DC-Coupled Systems</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Battery connects to DC bus</li>
-                  <li className="pl-1">Shares inverter with PV (hybrid)</li>
-                  <li className="pl-1">Higher efficiency (single conversion)</li>
-                  <li className="pl-1">Requires compatible equipment</li>
-                  <li className="pl-1">Better for new installations</li>
-                </ul>
-              </div>
-            </div>
+            
 
-            <p className="text-sm text-elec-yellow/70">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">AC-Coupled Systems</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Battery has dedicated inverter</li>
+                  <li>Connects to AC distribution board</li>
+                  <li>Can retrofit to existing PV</li>
+                  <li>Independent of PV inverter brand</li>
+                  <li>Slightly lower efficiency (double conversion)</li>
+                </ul>
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">DC-Coupled Systems</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Battery connects to DC bus</li>
+                  <li>Shares inverter with PV (hybrid)</li>
+                  <li>Higher efficiency (single conversion)</li>
+                  <li>Requires compatible equipment</li>
+                  <li>Better for new installations</li>
+                </ul>
+
+            
+
+            <p>
               <strong>Safety note:</strong> BESS installations must comply with fire safety
               requirements including IEC 62619 (safety requirements) and consider thermal runaway
               protection, ventilation, and fire suppression systems for commercial installations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Hybrid Systems and Load Matching */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Hybrid Systems and Load Matching
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Hybrid Systems and Load Matching">
             <p>
               Hybrid systems combine multiple generation and storage technologies to optimise energy
               use, maximise self-consumption and provide resilience. Effective load matching
               algorithms balance generation, storage and grid interaction in real-time.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Self-Consumption Strategies</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">Self-Consumption Strategies</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Direct consumption:</strong> Use PV generation immediately when available
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Time-shifting:</strong> Store excess PV for evening/night use
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Load scheduling:</strong> Run high-demand loads during peak generation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Export limitation:</strong> Prevent grid export to maximise on-site use
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Typical Self-Consumption Rates
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Configuration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Self-Consumption
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PV only (domestic)</td>
-                      <td className="border border-white/10 px-3 py-2">25-40%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Depends on occupancy patterns
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PV + battery (domestic)</td>
-                      <td className="border border-white/10 px-3 py-2">60-80%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Battery sized at ~1kWh/kWp
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PV only (commercial)</td>
-                      <td className="border border-white/10 px-3 py-2">40-70%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daytime operation matches generation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        PV + battery (commercial)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">70-90%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Peak shaving and evening use
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>PV only (domestic)</strong> — 25-40% — Depends on occupancy patterns</li>
+              <li><strong>PV + battery (domestic)</strong> — 60-80% — Battery sized at ~1kWh/kWp</li>
+              <li><strong>PV only (commercial)</strong> — 40-70% — Daytime operation matches generation</li>
+              <li><strong>PV + battery (commercial)</strong> — 70-90% — Peak shaving and evening use</li>
+            </ul>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Energy Management System (EMS) Functions
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
-                <div>
+
+                
                   <p className="font-medium mb-1">Generation Management</p>
-                  <ul className="space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                     <li>PV output monitoring and forecasting</li>
                     <li>Inverter power limiting</li>
                     <li>Export management</li>
                     <li>Grid code compliance</li>
                   </ul>
-                </div>
-                <div>
+
+                
                   <p className="font-medium mb-1">Storage Control</p>
-                  <ul className="space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                     <li>Charge/discharge scheduling</li>
                     <li>State of charge management</li>
                     <li>Grid services participation</li>
                     <li>Tariff optimisation</li>
                   </ul>
-                </div>
-              </div>
-            </div>
 
-            <p className="text-sm text-white italic">
+              
+
+            <p><em>
               <strong>Optimisation:</strong> Modern EMS uses machine learning to predict generation
               and consumption, enabling proactive battery management and optimal grid interaction
               timing.
-            </p>
-          </div>
-        </section>
+            </em></p>
+          </ConceptBlock>
 
-        {/* Section 5: EV Charging Infrastructure */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            <Car className="h-5 w-5 text-elec-yellow/70" />
-            EV Charging Infrastructure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="EV Charging Infrastructure">
             <p>
               Electric vehicle charging is a rapidly growing load category in building services.
               Understanding charging modes, infrastructure requirements and smart charging
               capabilities is essential for futureproof installations.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 EV Charging Modes (IEC 61851)
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Mode</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Power</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Connection</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mode 2</td>
-                      <td className="border border-white/10 px-3 py-2">2.3kW (10A max)</td>
-                      <td className="border border-white/10 px-3 py-2">Standard socket + ICCB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Emergency/occasional use only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mode 3 (single-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">3.6-7.4kW</td>
-                      <td className="border border-white/10 px-3 py-2">Dedicated EVSE (Type 2)</td>
-                      <td className="border border-white/10 px-3 py-2">Domestic, workplace</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mode 3 (three-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">11-22kW</td>
-                      <td className="border border-white/10 px-3 py-2">Dedicated EVSE (Type 2)</td>
-                      <td className="border border-white/10 px-3 py-2">Commercial, fleet depots</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mode 4 (DC rapid)</td>
-                      <td className="border border-white/10 px-3 py-2">50-350kW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DC fast charger (CCS/CHAdeMO)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Public rapid charging, fleet hubs
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Mode 2</strong> — 2.3kW (10A max) — Standard socket + ICCB — Emergency/occasional use only</li>
+              <li><strong>Mode 3 (single-phase)</strong> — 3.6-7.4kW — Dedicated EVSE (Type 2) — Domestic, workplace</li>
+              <li><strong>Mode 3 (three-phase)</strong> — 11-22kW — Dedicated EVSE (Type 2) — Commercial, fleet depots</li>
+              <li><strong>Mode 4 (DC rapid)</strong> — 50-350kW — DC fast charger (CCS/CHAdeMO) — Public rapid charging, fleet hubs</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">UK Regulatory Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">UK Regulatory Requirements</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Building Regulations Part S:</strong> New buildings must have EV charging
                   provision
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>EV Smart Charge Regulations 2021:</strong> Domestic chargers must have
                   smart functionality
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>BS 7671 Section 722:</strong> Specific requirements for EV charging
                   installations
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>OZEV Grant (EVHS):</strong> Requirements for grant-eligible domestic
                   installations
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 EV Charger Circuit Design
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   <strong>7.4kW Charger (32A single-phase):</strong>
                 </p>
@@ -896,186 +630,127 @@ const HNCModule3Section6_7 = () => {
                 <p>Cable: 6mm² minimum (Iz = 46A in conduit)</p>
                 <p>Protection: 32A Type A RCD + MCB (or RCBO)</p>
                 <p>Voltage drop (20m): 32 × 40 × 3.08mΩ/m = 3.9V (1.7%)</p>
-                <p className="mt-2">
+                <p>
                   <strong>22kW Charger (32A three-phase):</strong>
                 </p>
                 <p>Cable: 4mm² minimum per phase</p>
                 <p>Protection: 32A Type B RCD (for DC fault detection)</p>
                 <p>Connection: 5-core SWA or individual cores in conduit</p>
-              </div>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Smart Charging Features
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Time-of-use tariff scheduling</li>
-                  <li className="pl-1">Solar/battery integration</li>
-                  <li className="pl-1">Load balancing (multiple EVs)</li>
-                  <li className="pl-1">Demand response capability</li>
-                  <li className="pl-1">User authentication and billing</li>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Time-of-use tariff scheduling</li>
+                  <li>Solar/battery integration</li>
+                  <li>Load balancing (multiple EVs)</li>
+                  <li>Demand response capability</li>
+                  <li>User authentication and billing</li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Load Management Options
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Static:</strong> Fixed current limit per charger
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Dynamic:</strong> Real-time load sharing
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Scheduled:</strong> Time-based priority
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Solar-matched:</strong> Track PV availability
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            
+
+            <p>
               <strong>Diversity:</strong> BS 7671 Appendix 15 provides diversity factors for EV
               charging - typically 0.6-0.8 for multiple domestic chargers, enabling significant
               supply capacity savings.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 6: Smart Grid Integration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            <Network className="h-5 w-5 text-elec-yellow/70" />
-            Smart Grid Integration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Smart Grid Integration">
             <p>
               Smart grid integration enables buildings to participate in grid services, responding
               to price signals and grid operator requests. This creates revenue opportunities while
               supporting grid stability as renewable penetration increases.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
+              <p className="text-sm font-medium text-white">
                 Grid Services and Flexibility Markets
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Frequency response:</strong> Automatic power adjustment to maintain 50Hz
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Demand Side Response (DSR):</strong> Reducing load on request during peak
                   periods
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Capacity Market:</strong> Guaranteed availability payments for reliable
                   capacity
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Balancing Mechanism:</strong> Real-time trading with National Grid ESO
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Local flexibility:</strong> DNO constraint management services
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Demand Response Capability by Asset
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Asset</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Response Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Services</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Battery storage</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;1 second</td>
-                      <td className="border border-white/10 px-3 py-2">Minutes to hours</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Frequency response, DSR, arbitrage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EV charging</td>
-                      <td className="border border-white/10 px-3 py-2">Seconds</td>
-                      <td className="border border-white/10 px-3 py-2">Hours</td>
-                      <td className="border border-white/10 px-3 py-2">DSR, V2G services</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC systems</td>
-                      <td className="border border-white/10 px-3 py-2">Minutes</td>
-                      <td className="border border-white/10 px-3 py-2">15min-2hr</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DSR (thermal mass provides buffer)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">Instant</td>
-                      <td className="border border-white/10 px-3 py-2">Minutes</td>
-                      <td className="border border-white/10 px-3 py-2">Limited DSR (dimming)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Battery storage</strong> — &lt;1 second — Minutes to hours — Frequency response, DSR, arbitrage</li>
+              <li><strong>EV charging</strong> — Seconds — Hours — DSR, V2G services</li>
+              <li><strong>HVAC systems</strong> — Minutes — 15min-2hr — DSR (thermal mass provides buffer)</li>
+              <li><strong>Lighting</strong> — Instant — Minutes — Limited DSR (dimming)</li>
+            </ul>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Communication Protocols
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
-                <div>
+
+                
                   <p className="font-medium mb-1">Grid Operator Interface</p>
-                  <ul className="space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                     <li>DNP3 - Distribution network protocol</li>
                     <li>IEC 61850 - Substation automation</li>
                     <li>OpenADR - Automated demand response</li>
                   </ul>
-                </div>
-                <div>
+
+                
                   <p className="font-medium mb-1">Building/Device Level</p>
-                  <ul className="space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                     <li>Modbus TCP - Equipment control</li>
                     <li>OCPP - EV charger management</li>
                     <li>SunSpec - Solar/storage monitoring</li>
                   </ul>
-                </div>
-              </div>
-            </div>
 
-            <p className="text-sm text-white italic">
+              
+
+            <p><em>
               <strong>Revenue potential:</strong> A 100kW/200kWh commercial BESS participating in
               frequency response can generate £15,000-30,000 annually from grid services, in
               addition to peak shaving savings.
-            </p>
-          </div>
-        </section>
+            </em></p>
+          </ConceptBlock>
 
-        {/* Section 7: Microgrids and Islanding */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
-            <Building2 className="h-5 w-5 text-elec-yellow/70" />
-            Microgrids and Islanding
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Microgrids and Islanding">
             <p>
               Microgrids are localised energy systems capable of operating independently from the
               main grid. They combine generation, storage and loads with intelligent control to
@@ -1083,250 +758,94 @@ const HNCModule3Section6_7 = () => {
               integration.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Microgrid Components</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">Microgrid Components</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Distributed generation:</strong> PV, wind, CHP, fuel cells
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Energy storage:</strong> Batteries, thermal storage, flywheels
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Controllable loads:</strong> HVAC, water heating, EV charging
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Point of Common Coupling (PCC):</strong> Grid connection point
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Microgrid controller:</strong> Central intelligence for optimisation
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Islanding Modes and Requirements
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Mode</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirements</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Grid-connected</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Normal operation, grid provides reference
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard G98/G99 compliance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Intentional island</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Planned disconnection (maintenance)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transfer switching, load shedding
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Unplanned island</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grid failure, automatic transition
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Black-start capability, fast transfer
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resynchronisation</td>
-                      <td className="border border-white/10 px-3 py-2">Reconnection to grid</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Synchronisation check relay
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Grid-connected</strong> — Normal operation, grid provides reference — Standard G98/G99 compliance</li>
+              <li><strong>Intentional island</strong> — Planned disconnection (maintenance) — Transfer switching, load shedding</li>
+              <li><strong>Unplanned island</strong> — Grid failure, automatic transition — Black-start capability, fast transfer</li>
+              <li><strong>Resynchronisation</strong> — Reconnection to grid — Synchronisation check relay</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
+              <p className="text-sm font-medium text-white">
                 BS 7671 Section 551 Requirements
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Switching arrangements must prevent paralleling of incompatible sources
                 </li>
-                <li className="pl-1">
+                <li>
                   Automatic changeover devices must be type-tested for the application
                 </li>
-                <li className="pl-1">
+                <li>
                   Earth fault loop impedance must be verified for each source configuration
                 </li>
-                <li className="pl-1">
+                <li>
                   Standby supply ratings must be adequate for connected loads
                 </li>
-                <li className="pl-1">Labels required at all switch positions and supply points</li>
+                <li>Labels required at all switch positions and supply points</li>
               </ul>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Islanding Protection Scheme
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   <strong>Anti-islanding (standard G98/G99):</strong>
                 </p>
                 <p>Under/over voltage: 184V-262V (0.5s trip)</p>
                 <p>Under/over frequency: 47.5Hz-52Hz (0.5s trip)</p>
                 <p>RoCoF: 1Hz/s (0.5s trip)</p>
-                <p className="mt-2">
+                <p>
                   <strong>Controlled islanding (microgrid):</strong>
                 </p>
                 <p>Transfer switch: &lt;20ms for critical loads</p>
                 <p>Load shedding: Non-essential loads disconnected</p>
                 <p>Grid-forming inverter: Provides voltage/frequency reference</p>
                 <p>Sync check: ±5° phase, ±0.5Hz, ±5% voltage</p>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            
+
+            <p>
               <strong>Important:</strong> Islanding capability requires specific agreement with the
               DNO and additional protection equipment. Standard grid-tied inverters cannot provide
               islanding functionality.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Section 8: Building Services Applications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Building Services Applications</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PV System Design Process
-              </h3>
-              <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Site assessment:</strong> Roof area, orientation, shading analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Load analysis:</strong> Annual consumption, demand profile, tariff
-                  structure
-                </li>
-                <li className="pl-1">
-                  <strong>System sizing:</strong> Match generation to consumption or export limits
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment selection:</strong> Modules, inverters, mounting system
-                </li>
-                <li className="pl-1">
-                  <strong>Electrical design:</strong> String configuration, cable sizing, protection
-                </li>
-                <li className="pl-1">
-                  <strong>Grid connection:</strong> G98/G99 application, metering arrangements
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> Testing, documentation, DNO notification
-                </li>
-              </ol>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BESS Sizing Methodology
-              </h3>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  <strong>Step 1 - Define objectives:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-0.5">
-                  <li>Self-consumption maximisation</li>
-                  <li>Peak demand reduction (kW target)</li>
-                  <li>Backup duration requirements</li>
-                  <li>Grid services participation</li>
-                </ul>
-                <p className="mt-2">
-                  <strong>Step 2 - Analyse load profile:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-0.5">
-                  <li>Half-hourly consumption data (minimum 12 months)</li>
-                  <li>Peak demand timing and duration</li>
-                  <li>PV generation profile (if applicable)</li>
-                </ul>
-                <p className="mt-2">
-                  <strong>Step 3 - Size capacity:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-0.5">
-                  <li>Energy (kWh) = Peak reduction × Duration × Safety factor</li>
-                  <li>Power (kW) = Maximum charge/discharge requirement</li>
-                  <li>Apply DoD factor (typically 0.85-0.95)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EV Charger Installation Checklist
-              </h3>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
-                <div>
-                  <p className="font-medium mb-1">Pre-Installation</p>
-                  <ul className="space-y-0.5 list-disc list-outside ml-5">
-                    <li>Supply capacity assessment</li>
-                    <li>DNO notification (if required)</li>
-                    <li>Building Regulations notification</li>
-                    <li>Planning permission check</li>
-                    <li>Grant eligibility (OZEV)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium mb-1">Installation</p>
-                  <ul className="space-y-0.5 list-disc list-outside ml-5">
-                    <li>Dedicated circuit from consumer unit</li>
-                    <li>Type A RCD (or Type B for 3-phase)</li>
-                    <li>Correct cable sizing for route</li>
-                    <li>Earthing arrangements (PME/TT)</li>
-                    <li>Smart functionality configuration</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">
                 Example 1: Commercial PV + Storage System
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Scenario:</strong> Office building, 100,000 kWh annual consumption, 150kW
                 peak demand, aiming for 40% renewable supply with peak shaving.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   <strong>PV Sizing:</strong>
                 </p>
@@ -1337,7 +856,7 @@ const HNCModule3Section6_7 = () => {
                 <p>
                   Roof area = 45 × 6 = <strong>270 m²</strong>
                 </p>
-                <p className="mt-2">
+                <p>
                   <strong>Battery Sizing (peak shaving to 100kW for 2 hours):</strong>
                 </p>
                 <p>Peak reduction = 150 - 100 = 50kW</p>
@@ -1348,34 +867,33 @@ const HNCModule3Section6_7 = () => {
                 <p>
                   Select: <strong>50kWp PV + 120kWh/60kW BESS</strong>
                 </p>
-                <p className="mt-2 text-white">
+                <p>
                   → G99 application required (50kW exceeds G98 limit)
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 2: Multi-EV Charger Installation
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Scenario:</strong> Car park with 10 × 7.4kW chargers, 100A three-phase
                 supply available.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   <strong>Maximum demand calculation:</strong>
                 </p>
                 <p>Full load = 10 × 7.4kW = 74kW</p>
                 <p>Current at 400V 3-phase = 74,000 / (√3 × 400) = 107A</p>
                 <p className="text-red-400">Exceeds 100A supply</p>
-                <p className="mt-2">
+                <p>
                   <strong>With diversity (BS 7671 App 15, factor 0.7):</strong>
                 </p>
                 <p>Diversified load = 74 × 0.7 = 51.8kW</p>
                 <p>Current = 51,800 / (√3 × 400) = 75A</p>
                 <p className="text-green-400">✓ Within 100A supply</p>
-                <p className="mt-2">
+                <p>
                   <strong>Dynamic load management alternative:</strong>
                 </p>
                 <p>Available capacity = 100A × √3 × 400 = 69.3kW</p>
@@ -1383,17 +901,16 @@ const HNCModule3Section6_7 = () => {
                 <p className="text-white">
                   → Implement dynamic load sharing for full charging when fewer EVs connected
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 3: Self-Consumption Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Scenario:</strong> Domestic 4kWp PV, considering 10kWh battery addition.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   <strong>Without battery:</strong>
                 </p>
@@ -1401,7 +918,7 @@ const HNCModule3Section6_7 = () => {
                 <p>Self-consumption rate = 35%</p>
                 <p>Self-consumed = 3,600 × 0.35 = 1,260 kWh</p>
                 <p>Exported = 3,600 - 1,260 = 2,340 kWh</p>
-                <p className="mt-2">
+                <p>
                   <strong>With 10kWh battery:</strong>
                 </p>
                 <p>Self-consumption rate = 75%</p>
@@ -1409,7 +926,7 @@ const HNCModule3Section6_7 = () => {
                 <p>
                   Additional self-consumption = 2,700 - 1,260 = <strong>1,440 kWh/year</strong>
                 </p>
-                <p className="mt-2">
+                <p>
                   <strong>Financial benefit (import 30p, export 15p):</strong>
                 </p>
                 <p>Without battery: Import cost saving = 1,260 × £0.30 = £378</p>
@@ -1420,84 +937,116 @@ const HNCModule3Section6_7 = () => {
                   Additional annual benefit = (£810 + £135) - (£378 + £351) ={' '}
                   <strong>£216/year</strong>
                 </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Grid Connection</p>
-                <ul className="space-y-0.5">
+          <ConceptBlock title="Quick Reference">
+            <p className="text-sm font-medium text-elec-yellow/80">Grid Connection</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>G98: ≤16kW/phase, notification only</li>
                   <li>G99: &gt;16kW/phase, formal application</li>
                   <li>LoM protection: 47.5-52Hz, RoCoF 1Hz/s</li>
                   <li>Voltage limits: 184V-262V (single-phase)</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">System Performance</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">System Performance</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>UK PV yield: 850-1000 kWh/kWp/year</li>
                   <li>Battery efficiency: 90-95% round-trip</li>
                   <li>EV Mode 3: 7.4kW (1-phase), 22kW (3-phase)</li>
                   <li>Self-consumption: 25-40% (PV only), 60-80% (+ battery)</li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <Scenario
+            title="School with PV + BESS + EV charging &mdash; integrated G99 connection"
+            situation={
+              <>
+                A secondary school is adding 200 kWp rooftop solar PV + 250 kWh / 100 kW
+                battery storage + 12&times;22 kW EV chargers in the staff carpark. The
+                existing DNO supply is 250 kVA TN-C-S (PME). The combined export
+                capability of PV is 200 kW &mdash; well above the G98 single-phase
+                threshold, so the project is in G99 scope. The carpark chargers raise
+                BS 7671 722 PEN-fault questions.
+              </>
+            }
+            whatToDo={
+              <>
+                Three workstreams: (a) Submit G99 application to the DNO with PV +
+                BESS interface protection settings (LoM, RoCoF, U/V, U/F); apply for
+                G100 export limitation if needed to cap at the existing supply
+                capacity; (b) for the EV chargers, specify chargers with integrated
+                PEN-fault detection (the cheaper compliant option than dedicated TT
+                earth electrodes) per BS 7671 722.411.4.1; (c) integrate PV + BESS +
+                EV charging on a common BMS controller with dispatch logic that
+                charges BESS from PV, supplies EV charging from BESS / PV during
+                daytime, and exports any surplus within the G100 limit. Document the
+                whole scheme in one DNO submission and update the building log book.
+              </>
+            }
+            whyItMatters={
+              <>
+                Schools, council buildings and commercial sites are all moving to the
+                same combined PV + BESS + EV pattern. The HNC engineer who can navigate
+                G98/G99/G100 + BS 7671 712 / 722 / 551 simultaneously is the BSE
+                profession&rsquo;s scarce skill in 2026 onwards. Getting the
+                integrated submission right first time saves months of DNO back-and-forth.
+              </>
+            }
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Solar PV: BS 7671 Section 712 (DC isolation, string V, labelling) + IEC 62548 (system design).',
+              'G98: micro-generation &le; 16 A single-phase, fit-and-inform DNO; G99: anything larger, prior connection agreement.',
+              'G100: export limitation scheme &mdash; allows higher generation behind a cap that prevents export above DNO-agreed limit.',
+              'BESS battery storage: BS EN 62619 (cells), BS EN 62933 (system), thermal management + fire detection essential.',
+              'EV charging: BS 7671 Section 722 + IEC 61851; A4:2026 tightened PEN-fault protection for PME-supplied outdoor chargers.',
+              'OCPP (Open Charge Point Protocol): vendor-neutral EV management protocol; OSCP for grid-side smart charging.',
+              'Microgrid: islandable subsystem with own generation + storage + load &mdash; needs synchronisation, black-start, and DNO interface protection.',
+              'Integrated PV + BESS + EV on common BMS dispatch &mdash; the standard pattern for school / commercial decarbonisation projects in 2026 onwards.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section6-6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: BS 7671, CIBSE and Part L
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3">
-              Back to Module 3
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section6-6")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                BS 7671, CIBSE and Part L requirements for energy efficiency
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Back to Module 3
+              </div>
+            </button>
+          </div>
+
+        </PageFrame>
+      </div>
     </div>
   );
 };

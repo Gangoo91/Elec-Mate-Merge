@@ -16,6 +16,14 @@ const settingsSchema = z.object({
   discountType: z.enum(['percentage', 'fixed']).optional(),
   discountValue: z.number().min(0).optional(),
   discountLabel: z.string().optional(),
+  // ELE-891 — per-category adjustments (signed %; -20 = 20% off labour)
+  categoryAdjustments: z
+    .object({
+      labour: z.number().optional(),
+      materials: z.number().optional(),
+      equipment: z.number().optional(),
+    })
+    .optional(),
 });
 
 interface QuoteSettingsStepProps {
@@ -62,24 +70,31 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
 
   return (
     <Form {...form}>
-      <div className="space-y-5">
-        {/* VAT */}
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-[14px] font-medium text-white">VAT Registered</p>
-            <p className="text-[12px] text-white">Add VAT to this quote</p>
+      <div className="space-y-6 text-left">
+        {/* VAT — section divider pattern matches InvoiceSettingsStep */}
+        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+        <div>
+          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+            <div>
+              <p className="text-[14px] font-medium text-white">VAT Registered</p>
+              <p className="text-[12px] text-white mt-0.5">Add VAT to this quote</p>
+            </div>
+            <FormField
+              control={form.control}
+              name="vatRegistered"
+              render={({ field }) => (
+                <FormItem className="p-0 m-0 space-y-0">
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
-          <FormField
-            control={form.control}
-            name="vatRegistered"
-            render={({ field }) => (
-              <FormItem className="p-0 m-0 space-y-0">
-                <FormControl>
-                  <Switch checked={field.value} onCheckedChange={field.onChange} className="data-[state=checked]:bg-elec-yellow" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
         </div>
 
         {isVatRegistered && (
@@ -106,42 +121,56 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
           />
         )}
 
-        {/* Materials breakdown */}
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-[14px] font-medium text-white">Show Materials Breakdown</p>
-            <p className="text-[12px] text-white">Display each material as a line item on PDF</p>
+        {/* Materials breakdown — section divider matches Invoice pattern */}
+        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+        <div>
+          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+            <div>
+              <p className="text-[14px] font-medium text-white">Show Materials Breakdown</p>
+              <p className="text-[12px] text-white mt-0.5">Display each material as a line item on PDF</p>
+            </div>
+            <FormField
+              control={form.control}
+              name="showMaterialsBreakdown"
+              render={({ field }) => (
+                <FormItem className="p-0 m-0 space-y-0">
+                  <FormControl>
+                    <Switch
+                      checked={field.value !== false}
+                      onCheckedChange={field.onChange}
+                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
-          <FormField
-            control={form.control}
-            name="showMaterialsBreakdown"
-            render={({ field }) => (
-              <FormItem className="p-0 m-0 space-y-0">
-                <FormControl>
-                  <Switch checked={field.value !== false} onCheckedChange={field.onChange} className="data-[state=checked]:bg-elec-yellow" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
         </div>
 
-        {/* Deductions */}
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-[14px] font-medium text-white">Apply Deduction/Discount</p>
-            <p className="text-[12px] text-white">CIS, OAP discount, etc.</p>
+        {/* Deductions — section divider matches Invoice pattern */}
+        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+        <div>
+          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+            <div>
+              <p className="text-[14px] font-medium text-white">Apply Deduction / Discount</p>
+              <p className="text-[12px] text-white mt-0.5">CIS, OAP discount, etc.</p>
+            </div>
+            <FormField
+              control={form.control}
+              name="discountEnabled"
+              render={({ field }) => (
+                <FormItem className="p-0 m-0 space-y-0">
+                  <FormControl>
+                    <Switch
+                      checked={field.value || false}
+                      onCheckedChange={field.onChange}
+                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
-          <FormField
-            control={form.control}
-            name="discountEnabled"
-            render={({ field }) => (
-              <FormItem className="p-0 m-0 space-y-0">
-                <FormControl>
-                  <Switch checked={field.value || false} onCheckedChange={field.onChange} className="data-[state=checked]:bg-elec-yellow" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
         </div>
 
         {isDiscountEnabled && (
@@ -213,6 +242,52 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
             </div>
           </div>
         )}
+
+        {/* ELE-891 — per-category adjustments */}
+        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+        <div>
+          <div className="py-3 border-b border-white/[0.12]">
+            <p className="text-[14px] font-medium text-white">Per-category adjustment</p>
+            <p className="text-[12px] text-white/70 mt-0.5">
+              Signed %. Negative = discount, positive = markup. Applied before global discount.
+            </p>
+          </div>
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {(['labour', 'materials', 'equipment'] as const).map((cat) => (
+              <FormField
+                key={cat}
+                control={form.control}
+                name={`categoryAdjustments.${cat}` as const}
+                render={({ field }) => (
+                  <FormItem>
+                    <label className="text-xs font-medium text-white mb-1.5 block capitalize">
+                      {cat}
+                    </label>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type="number"
+                          step="0.1"
+                          placeholder="0"
+                          className={cn(inputClass, 'pr-8')}
+                          value={field.value ?? ''}
+                          onChange={(e) => {
+                            const v = e.target.value;
+                            field.onChange(v === '' ? undefined : parseFloat(v));
+                          }}
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm pointer-events-none">
+                          %
+                        </span>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </Form>
   );

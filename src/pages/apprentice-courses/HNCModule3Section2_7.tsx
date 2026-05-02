@@ -1,8 +1,26 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 2 · Subsection 7 — AC Applications in Lighting, HVAC and Motors
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   The full AC theory toolkit applied to the three big load groups in a real building \u2014
+ *   lighting drivers, HVAC fan / pump motors and the fixed-speed compressors / heaters that sit alongside.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Applications in Lighting, HVAC and Motors - HNC Module 3 Section 2.7';
@@ -220,89 +238,54 @@ const faqs = [
 ];
 
 const HNCModule3Section2_7 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.2.7</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Applications in Lighting, HVAC and Motors
-          </h1>
-          <p className="text-white">
-            Practical application of reactive component principles in building services equipment
-            and systems
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 2 · Subsection 7"
+            title="Applications in Lighting, HVAC and Motors"
+            description="Practical application of reactive component principles in building services equipment and systems"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Motor starting:</strong> 6-8× FLC, poor power factor until running
-              </li>
-              <li className="pl-1">
-                <strong>Electronic ballasts:</strong> High frequency, PFC for &gt;0.95 pf
-              </li>
-              <li className="pl-1">
-                <strong>VSDs:</strong> Energy savings but produce harmonics
-              </li>
-              <li className="pl-1">
-                <strong>Cable sizing:</strong> Must account for reactive loads
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC motors:</strong> Major reactive load in buildings
-              </li>
-              <li className="pl-1">
-                <strong>LED drivers:</strong> Quality PFC essential for commercial
-              </li>
-              <li className="pl-1">
-                <strong>Transformer sizing:</strong> Inrush current considerations
-              </li>
-              <li className="pl-1">
-                <strong>Harmonic mitigation:</strong> Filters and line reactors
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can size cable, MCB and PFC for an LED lighting circuit, distinguishing drivers with active PFC (PF > 0.9, true) from cheaper drivers with passive PF that need bulk correction.',
+              'You can apply AC analysis to single- and three-phase induction motors \u2014 starting current, running impedance, slip, full-load efficiency and PF at part load.',
+              'You can compare DOL, star-delta, soft-start and VFD starting methods on the basis of inrush current, voltage dip and harmonic content.',
+              'You can size a VFD, choose between motor-mounted and panel-mounted PFC, and decide where harmonic mitigation is needed.',
+              'You can map AC theory to BMS metering: real, reactive, apparent power and PF on each phase of every distribution board.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS EN 60034-30-1 — Rotating electrical machines: Efficiency classes (IE1\u2013IE4) for AC induction motors"
+            clause="Single-speed three-phase 50 Hz cage induction motors rated 0.12 kW to 1000 kW shall be classified into efficiency classes from IE1 (Standard) through IE2, IE3 (Premium) to IE4 (Super-Premium), with mandated minimum efficiency depending on rated power and pole number."
+            meaning={
+              <>
+                Building services HVAC motors above 0.75 kW must meet IE3 minimum (or IE2 if
+                fed from a VFD) under the EU MEPS regulation \u2014 still in force in UK
+                building services specs. Pick efficiency class against the load profile,
+                because IE3/IE4 motors run cooler, draw less line current, have better PF
+                and recover their cost premium quickly on annual energy bills.
+              </>
+            }
+            cite="Source: BS EN 60034-30-1 (latest edition); UK Ecodesign for Energy-Related Products Regulations 2010 (as amended)."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate motor starting currents and understand their impact on system design',
               'Analyse induction motor equivalent circuits and slip characteristics',
               'Compare magnetic and electronic ballast performance characteristics',
@@ -311,901 +294,569 @@ const HNCModule3Section2_7 = () => {
               'Understand VSD operation and harmonic mitigation strategies',
               'Account for transformer inrush and magnetising current',
               'Size cables correctly for reactive motor and lighting loads',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Motor Circuits */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Motor Circuits and Starting Current
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="Real building loads (motors, lighting, HVAC) are largely reactive and harmonic-rich; size circuits and PFC for reality, not nameplates."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor starting:</strong> 6-8x FLC, poor power factor until running
+              </li>
+              <li>
+                <strong>Electronic ballasts:</strong> High frequency, PFC for &gt;0.95 pf
+              </li>
+              <li>
+                <strong>VSDs:</strong> Energy savings but produce harmonics
+              </li>
+              <li>
+                <strong>Cable sizing:</strong> Must account for reactive loads
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>HVAC motors:</strong> Major reactive load in buildings
+              </li>
+              <li>
+                <strong>LED drivers:</strong> Quality PFC essential for commercial
+              </li>
+              <li>
+                <strong>Transformer sizing:</strong> Inrush current considerations
+              </li>
+              <li>
+                <strong>Harmonic mitigation:</strong> Filters and line reactors
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Motor Circuits and Starting Current">
             <p>
               Induction motors are the workhorses of building services, driving fans, pumps,
               compressors and lifts. Understanding their electrical characteristics - particularly
               the high starting current and variable power factor - is essential for correct circuit
               design.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Induction Motor Starting Current
-              </p>
-              <p className="text-sm text-white mb-3">
-                When an induction motor starts, it draws very high current because the rotor is
-                stationary (slip = 1) and rotor impedance is at minimum. As the motor accelerates,
-                slip decreases and current falls to the running value.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Starting Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Starting Current
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Starting Torque
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Direct-on-line (DOL)</td>
-                      <td className="border border-white/10 px-3 py-2">6-8 × FLC</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small motors up to ~7.5kW
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Star-delta</td>
-                      <td className="border border-white/10 px-3 py-2">2-3 × FLC</td>
-                      <td className="border border-white/10 px-3 py-2">33%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fans, pumps (low starting torque)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Soft starter</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 × FLC</td>
-                      <td className="border border-white/10 px-3 py-2">Adjustable</td>
-                      <td className="border border-white/10 px-3 py-2">Pumps, conveyors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VSD (variable speed)</td>
-                      <td className="border border-white/10 px-3 py-2">1-1.5 × FLC</td>
-                      <td className="border border-white/10 px-3 py-2">150%+ possible</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable speed applications
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Power Factor Variation with Load
-              </p>
-              <p className="text-sm text-white mb-3">
-                Motor power factor varies significantly with load. The magnetising current
-                (reactive) remains nearly constant, but load current (resistive) changes with
-                mechanical load.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Load</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Power Factor
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Efficiency</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100% (Full load)</td>
-                      <td className="border border-white/10 px-3 py-2">0.85 - 0.90</td>
-                      <td className="border border-white/10 px-3 py-2">90 - 95%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">75%</td>
-                      <td className="border border-white/10 px-3 py-2">0.80 - 0.85</td>
-                      <td className="border border-white/10 px-3 py-2">89 - 94%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                      <td className="border border-white/10 px-3 py-2">0.70 - 0.75</td>
-                      <td className="border border-white/10 px-3 py-2">85 - 90%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25%</td>
-                      <td className="border border-white/10 px-3 py-2">0.45 - 0.55</td>
-                      <td className="border border-white/10 px-3 py-2">75 - 82%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Induction Motor Starting Current
+            </p>
+            <p>
+              When an induction motor starts, it draws very high current because the rotor is
+              stationary (slip = 1) and rotor impedance is at minimum. As the motor accelerates,
+              slip decreases and current falls to the running value.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Direct-on-line (DOL):</strong> Starting current 6-8 × FLC, starting torque 100% — Small motors up to ~7.5kW
+              </li>
+              <li>
+                <strong>Star-delta:</strong> Starting current 2-3 × FLC, starting torque 33% — Fans, pumps (low starting torque)
+              </li>
+              <li>
+                <strong>Soft starter:</strong> Starting current 2-4 × FLC, adjustable torque — Pumps, conveyors
+              </li>
+              <li>
+                <strong>VSD (variable speed):</strong> Starting current 1-1.5 × FLC, 150%+ torque possible — Variable speed applications
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Power Factor Variation with Load
+            </p>
+            <p>
+              Motor power factor varies significantly with load. The magnetising current
+              (reactive) remains nearly constant, but load current (resistive) changes with
+              mechanical load.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>100% (Full load):</strong> Power factor 0.85 - 0.90, efficiency 90 - 95%</li>
+              <li><strong>75%:</strong> Power factor 0.80 - 0.85, efficiency 89 - 94%</li>
+              <li><strong>50%:</strong> Power factor 0.70 - 0.75, efficiency 85 - 90%</li>
+              <li><strong>25%:</strong> Power factor 0.45 - 0.55, efficiency 75 - 82%</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Design tip:</strong> Oversized motors operating at light load have poor power
               factor and efficiency. Select motors to operate near 75-100% of rated load for best
               performance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Induction Motor Equivalent Circuit */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Induction Motor Equivalent Circuit and Slip
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Induction Motor Equivalent Circuit and Slip">
             <p>
               The induction motor equivalent circuit provides a model for analysing motor
               performance. Understanding slip is fundamental to this analysis and explains why motor
               characteristics change with load.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Slip Definition</p>
-              <p className="font-mono text-center text-lg mb-2">
-                s = (N<sub>s</sub> - N<sub>r</sub>) / N<sub>s</sub>
-              </p>
-              <p className="text-xs text-white text-center mb-4">
-                Where Ns = synchronous speed, Nr = rotor speed
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                N<sub>s</sub> = (120 × f) / p
-              </p>
-              <p className="text-xs text-white text-center">
-                Where f = frequency (Hz), p = number of poles
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Synchronous Speeds at 50Hz
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Poles</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Synchronous Speed
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Running Speed
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">3000 rpm</td>
-                      <td className="border border-white/10 px-3 py-2">2850-2950 rpm</td>
-                      <td className="border border-white/10 px-3 py-2">Fans, small pumps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">1500 rpm</td>
-                      <td className="border border-white/10 px-3 py-2">1420-1480 rpm</td>
-                      <td className="border border-white/10 px-3 py-2">Most HVAC applications</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">1000 rpm</td>
-                      <td className="border border-white/10 px-3 py-2">950-980 rpm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large fans, cooling towers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">750 rpm</td>
-                      <td className="border border-white/10 px-3 py-2">710-740 rpm</td>
-                      <td className="border border-white/10 px-3 py-2">Low-speed applications</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Equivalent Circuit Components
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>R₁:</strong> Stator winding resistance - causes I²R losses
-                </li>
-                <li className="pl-1">
-                  <strong>X₁:</strong> Stator leakage reactance - flux not linking rotor
-                </li>
-                <li className="pl-1">
-                  <strong>Xm:</strong> Magnetising reactance - creates rotating field
-                </li>
-                <li className="pl-1">
-                  <strong>Rc:</strong> Core loss resistance - represents iron losses
-                </li>
-                <li className="pl-1">
-                  <strong>R₂/s:</strong> Rotor resistance/slip - represents mechanical power + rotor
-                  losses
-                </li>
-                <li className="pl-1">
-                  <strong>X₂:</strong> Rotor leakage reactance - referred to stator
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Insight: R₂/s Variation
-              </p>
-              <p className="text-sm text-white">
-                At standstill (s = 1), R₂/s = R₂, giving minimum impedance and maximum current. As
-                the motor accelerates and slip decreases (say s = 0.04), R₂/s = 25R₂, representing
-                the mechanical load being driven. This is why current drops as the motor reaches
-                running speed.
-              </p>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Slip Definition</p>
+            <p>
+              s = (N<sub>s</sub> - N<sub>r</sub>) / N<sub>s</sub> — Where Ns = synchronous speed, Nr = rotor speed
+            </p>
+            <p>
+              N<sub>s</sub> = (120 × f) / p — Where f = frequency (Hz), p = number of poles
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Synchronous Speeds at 50Hz
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>2 poles:</strong> Synchronous 3000 rpm, running 2850-2950 rpm — Fans, small pumps
+              </li>
+              <li>
+                <strong>4 poles:</strong> Synchronous 1500 rpm, running 1420-1480 rpm — Most HVAC applications
+              </li>
+              <li>
+                <strong>6 poles:</strong> Synchronous 1000 rpm, running 950-980 rpm — Large fans, cooling towers
+              </li>
+              <li>
+                <strong>8 poles:</strong> Synchronous 750 rpm, running 710-740 rpm — Low-speed applications
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Equivalent Circuit Components
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>R₁:</strong> Stator winding resistance - causes I²R losses
+              </li>
+              <li>
+                <strong>X₁:</strong> Stator leakage reactance - flux not linking rotor
+              </li>
+              <li>
+                <strong>Xm:</strong> Magnetising reactance - creates rotating field
+              </li>
+              <li>
+                <strong>Rc:</strong> Core loss resistance - represents iron losses
+              </li>
+              <li>
+                <strong>R₂/s:</strong> Rotor resistance/slip - represents mechanical power + rotor
+                losses
+              </li>
+              <li>
+                <strong>X₂:</strong> Rotor leakage reactance - referred to stator
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Key Insight: R₂/s Variation
+            </p>
+            <p>
+              At standstill (s = 1), R₂/s = R₂, giving minimum impedance and maximum current. As
+              the motor accelerates and slip decreases (say s = 0.04), R₂/s = 25R₂, representing
+              the mechanical load being driven. This is why current drops as the motor reaches
+              running speed.
+            </p>
             <p className="text-sm text-elec-yellow/70">
               <strong>Remember:</strong> Slip is typically 2-5% at full load for standard motors.
               Higher efficiency motors have lower slip due to reduced rotor resistance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 3: Lighting - Ballasts and LED Drivers */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Lighting Ballasts and LED Driver Circuits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Lighting Ballasts and LED Driver Circuits">
             <p>
               Lighting equipment represents significant reactive loads in commercial buildings.
               Understanding the differences between magnetic ballasts, electronic ballasts, and LED
               drivers is essential for correct circuit design and power quality assessment.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Magnetic vs Electronic Ballasts
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Magnetic Ballast
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electronic Ballast
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Operating frequency</td>
-                      <td className="border border-white/10 px-3 py-2">50 Hz (mains)</td>
-                      <td className="border border-white/10 px-3 py-2">25-40 kHz</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Power factor (uncorrected)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.5 lagging</td>
-                      <td className="border border-white/10 px-3 py-2">0.95+ (with PFC)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flicker</td>
-                      <td className="border border-white/10 px-3 py-2">100 Hz visible flicker</td>
-                      <td className="border border-white/10 px-3 py-2">None (imperceptible)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Efficacy improvement</td>
-                      <td className="border border-white/10 px-3 py-2">Baseline</td>
-                      <td className="border border-white/10 px-3 py-2">10-15% better</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Weight</td>
-                      <td className="border border-white/10 px-3 py-2">Heavy (iron core)</td>
-                      <td className="border border-white/10 px-3 py-2">Light</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dimming capability</td>
-                      <td className="border border-white/10 px-3 py-2">Limited</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent (DALI, 1-10V)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Harmonic distortion</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                      <td className="border border-white/10 px-3 py-2">Low with good PFC</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LED Driver Power Quality
-              </p>
-              <p className="text-sm text-white mb-3">
-                LED drivers convert AC mains to the low-voltage DC required by LEDs. Driver quality
-                significantly affects power factor and harmonic distortion.
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Basic Driver (no PFC)</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Simple rectifier-capacitor input</li>
-                    <li>Power factor: 0.5-0.6</li>
-                    <li>THD: 100%+ possible</li>
-                    <li>Draws current in sharp peaks</li>
-                    <li>Suitable only for small loads</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Quality Driver (with PFC)</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Active power factor correction</li>
-                    <li>Power factor: 0.95+</li>
-                    <li>THD: &lt;10%</li>
-                    <li>Near-sinusoidal input current</li>
-                    <li>Required for commercial installations</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EN 61000-3-2 Harmonic Limits
-              </p>
-              <p className="text-sm text-white mb-2">
-                Lighting equipment over 25W must comply with Class C harmonic limits. Key
-                requirements:
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">3rd harmonic: ≤ 30 × circuit power factor %</li>
-                <li className="pl-1">5th harmonic: ≤ 10%</li>
-                <li className="pl-1">7th harmonic: ≤ 7%</li>
-                <li className="pl-1">9th harmonic: ≤ 5%</li>
-              </ul>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Magnetic vs Electronic Ballasts
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Operating frequency:</strong> Magnetic 50 Hz (mains) — Electronic 25-40 kHz
+              </li>
+              <li>
+                <strong>Power factor (uncorrected):</strong> Magnetic 0.5 lagging — Electronic 0.95+ (with PFC)
+              </li>
+              <li>
+                <strong>Flicker:</strong> Magnetic 100 Hz visible flicker — Electronic none (imperceptible)
+              </li>
+              <li>
+                <strong>Efficacy improvement:</strong> Magnetic baseline — Electronic 10-15% better
+              </li>
+              <li>
+                <strong>Weight:</strong> Magnetic heavy (iron core) — Electronic light
+              </li>
+              <li>
+                <strong>Dimming capability:</strong> Magnetic limited — Electronic excellent (DALI, 1-10V)
+              </li>
+              <li>
+                <strong>Harmonic distortion:</strong> Magnetic low — Electronic low with good PFC
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              LED Driver Power Quality
+            </p>
+            <p>
+              LED drivers convert AC mains to the low-voltage DC required by LEDs. Driver quality
+              significantly affects power factor and harmonic distortion.
+            </p>
+            <p className="text-sm font-medium text-white">Basic Driver (no PFC)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simple rectifier-capacitor input</li>
+              <li>Power factor: 0.5-0.6</li>
+              <li>THD: 100%+ possible</li>
+              <li>Draws current in sharp peaks</li>
+              <li>Suitable only for small loads</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Quality Driver (with PFC)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Active power factor correction</li>
+              <li>Power factor: 0.95+</li>
+              <li>THD: &lt;10%</li>
+              <li>Near-sinusoidal input current</li>
+              <li>Required for commercial installations</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              EN 61000-3-2 Harmonic Limits
+            </p>
+            <p>
+              Lighting equipment over 25W must comply with Class C harmonic limits. Key
+              requirements:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>3rd harmonic: ≤ 30 × circuit power factor %</li>
+              <li>5th harmonic: ≤ 10%</li>
+              <li>7th harmonic: ≤ 7%</li>
+              <li>9th harmonic: ≤ 5%</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Specification tip:</strong> Always specify LED drivers with power factor ≥0.9
               and THD ≤20% for commercial projects. Check EN 61000-3-2 compliance on datasheets.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: HVAC, VSDs and Practical Cable Sizing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            HVAC Equipment, VSDs and Cable Sizing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="HVAC Equipment, VSDs and Cable Sizing">
             <p>
               HVAC systems typically represent the largest electrical loads in commercial buildings,
               with fans, pumps and chillers accounting for 40-60% of total consumption. Variable
               speed drives offer major energy savings but introduce harmonic considerations.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Affinity Laws (Fan and Pump Laws)
-              </p>
-              <p className="text-sm text-white mb-3">
-                These fundamental relationships govern centrifugal fans and pumps, making them ideal
-                for variable speed control.
-              </p>
-              <div className="grid grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Q ∝ N</p>
-                  <p className="text-white text-xs">Flow proportional to speed</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">H ∝ N²</p>
-                  <p className="text-white text-xs">Head proportional to speed²</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">P ∝ N³</p>
-                  <p className="text-white text-xs">Power proportional to speed³</p>
-                </div>
-              </div>
-              <p className="text-sm text-white mt-3">
-                Example: Reducing fan speed by 20% reduces power consumption by 1 - 0.8³ = 49%
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Variable Speed Drive Harmonics
-              </p>
-              <p className="text-sm text-white mb-3">
-                Standard six-pulse VSDs produce characteristic harmonic currents that can cause
-                problems in electrical installations.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Harmonic Order</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Magnitude
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effect</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5th (250 Hz)</td>
-                      <td className="border border-white/10 px-3 py-2">25-40% of fundamental</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Negative sequence, motor heating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7th (350 Hz)</td>
-                      <td className="border border-white/10 px-3 py-2">15-25% of fundamental</td>
-                      <td className="border border-white/10 px-3 py-2">Positive sequence</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">11th (550 Hz)</td>
-                      <td className="border border-white/10 px-3 py-2">7-12% of fundamental</td>
-                      <td className="border border-white/10 px-3 py-2">Additional heating</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">13th (650 Hz)</td>
-                      <td className="border border-white/10 px-3 py-2">5-10% of fundamental</td>
-                      <td className="border border-white/10 px-3 py-2">Voltage distortion</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Harmonic Mitigation Methods
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      <strong>Line reactors (3-5%):</strong> Simple, reduces THD to ~35%
-                    </li>
-                    <li className="pl-1">
-                      <strong>DC link chokes:</strong> Smooth DC, reduce input harmonics
-                    </li>
-                    <li className="pl-1">
-                      <strong>12-pulse rectifiers:</strong> Cancel 5th and 7th harmonics
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      <strong>Active front end:</strong> Near-sinusoidal input, THD &lt;5%
-                    </li>
-                    <li className="pl-1">
-                      <strong>Passive filters:</strong> Tuned to specific harmonics
-                    </li>
-                    <li className="pl-1">
-                      <strong>Active filters:</strong> Real-time harmonic cancellation
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Transformer Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Inrush current:</strong> 10-15 × rated current for first few cycles
-                </li>
-                <li className="pl-1">
-                  <strong>Magnetising current:</strong> Typically 2-5% of rated, highly inductive
-                </li>
-                <li className="pl-1">
-                  <strong>K-factor rating:</strong> Required for non-linear loads (K-13 typical for
-                  VSD loads)
-                </li>
-                <li className="pl-1">
-                  <strong>Derating:</strong> Standard transformers derated 15-20% for harmonic loads
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable Sizing for Motor Circuits
-              </p>
-              <p className="text-sm text-white mb-2">Key considerations:</p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Use motor full load current (FLC) from nameplate or BS 7671 tables
-                </li>
-                <li className="pl-1">
-                  Apply correction factors: Ca (ambient), Cg (grouping), Ci (insulation)
-                </li>
-                <li className="pl-1">Check voltage drop at both running and starting conditions</li>
-                <li className="pl-1">
-                  For VSD-fed motors, consider additional derating for harmonics (~5-10%)
-                </li>
-                <li className="pl-1">
-                  Protective device must allow starting current without nuisance tripping
-                </li>
-              </ul>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">
+              The Affinity Laws (Fan and Pump Laws)
+            </p>
+            <p>
+              These fundamental relationships govern centrifugal fans and pumps, making them ideal
+              for variable speed control.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Q ∝ N:</strong> Flow proportional to speed</li>
+              <li><strong>H ∝ N²:</strong> Head proportional to speed²</li>
+              <li><strong>P ∝ N³:</strong> Power proportional to speed³</li>
+            </ul>
+            <p>
+              Example: Reducing fan speed by 20% reduces power consumption by 1 - 0.8³ = 49%
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Variable Speed Drive Harmonics
+            </p>
+            <p>
+              Standard six-pulse VSDs produce characteristic harmonic currents that can cause
+              problems in electrical installations.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>5th (250 Hz):</strong> 25-40% of fundamental — Negative sequence, motor heating
+              </li>
+              <li>
+                <strong>7th (350 Hz):</strong> 15-25% of fundamental — Positive sequence
+              </li>
+              <li>
+                <strong>11th (550 Hz):</strong> 7-12% of fundamental — Additional heating
+              </li>
+              <li>
+                <strong>13th (650 Hz):</strong> 5-10% of fundamental — Voltage distortion
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Harmonic Mitigation Methods
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Line reactors (3-5%):</strong> Simple, reduces THD to ~35%
+              </li>
+              <li>
+                <strong>DC link chokes:</strong> Smooth DC, reduce input harmonics
+              </li>
+              <li>
+                <strong>12-pulse rectifiers:</strong> Cancel 5th and 7th harmonics
+              </li>
+              <li>
+                <strong>Active front end:</strong> Near-sinusoidal input, THD &lt;5%
+              </li>
+              <li>
+                <strong>Passive filters:</strong> Tuned to specific harmonics
+              </li>
+              <li>
+                <strong>Active filters:</strong> Real-time harmonic cancellation
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Transformer Considerations
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Inrush current:</strong> 10-15 × rated current for first few cycles
+              </li>
+              <li>
+                <strong>Magnetising current:</strong> Typically 2-5% of rated, highly inductive
+              </li>
+              <li>
+                <strong>K-factor rating:</strong> Required for non-linear loads (K-13 typical for
+                VSD loads)
+              </li>
+              <li>
+                <strong>Derating:</strong> Standard transformers derated 15-20% for harmonic loads
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Cable Sizing for Motor Circuits
+            </p>
+            <p>Key considerations:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use motor full load current (FLC) from nameplate or BS 7671 tables</li>
+              <li>Apply correction factors: Ca (ambient), Cg (grouping), Ci (insulation)</li>
+              <li>Check voltage drop at both running and starting conditions</li>
+              <li>For VSD-fed motors, consider additional derating for harmonics (~5-10%)</li>
+              <li>Protective device must allow starting current without nuisance tripping</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Important:</strong> VSD output cables see high-frequency PWM voltages. Use
               cables rated for this duty and keep motor cable lengths within manufacturer limits to
               avoid reflected wave voltage spikes.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Example 1: Motor Starting Current and Protection
+            </p>
+            <p>
+              <strong>Question:</strong> A 15kW, 400V three-phase motor has efficiency 91% and
+              power factor 0.87 at full load. Calculate the full load current and expected DOL
+              starting current.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Input power = Output / Efficiency = 15000 / 0.91 = 16484W</li>
+              <li>Full load current:</li>
+              <li>IL = P / (√3 × VL × cos φ)</li>
+              <li>IL = 16484 / (1.732 × 400 × 0.87)</li>
+              <li>IL = 16484 / 602.7 = <strong>27.4A</strong></li>
+              <li>DOL starting current (assuming 7× FLC):</li>
+              <li>Istart = 7 × 27.4 = <strong>192A</strong></li>
+              <li>→ Protection device must allow 192A for ~5 seconds without tripping</li>
+              <li>→ Consider Type D MCB or MCCB with adjustable magnetic trip</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Example 2: Fan Energy Savings with VSD
+            </p>
+            <p>
+              <strong>Question:</strong> A supply fan with 11kW motor normally runs at full speed.
+              If a VSD reduces speed to 75% for 60% of operating hours, calculate annual energy
+              savings.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Power at 75% speed (affinity law):</li>
+              <li>P = 11kW × 0.75³ = 11 × 0.422 = <strong>4.64kW</strong></li>
+              <li>Assuming 4000 operating hours per year:</li>
+              <li>Hours at full speed: 4000 × 0.4 = 1600h</li>
+              <li>Hours at 75% speed: 4000 × 0.6 = 2400h</li>
+              <li>Without VSD: 11kW × 4000h = 44,000 kWh</li>
+              <li>With VSD: (11 × 1600) + (4.64 × 2400) = 17,600 + 11,136 = 28,736 kWh</li>
+              <li>Annual saving = 44,000 - 28,736 = <strong>15,264 kWh</strong></li>
+              <li>Percentage saving = <strong>34.7%</strong></li>
+              <li>At £0.15/kWh: £2,290 annual saving</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Example 3: LED Driver Power Factor Assessment
+            </p>
+            <p>
+              <strong>Question:</strong> A lighting installation has 100 LED fittings, each with a
+              45W driver. Compare the supply current with drivers having (a) pf = 0.55 and (b) pf
+              = 0.95.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Total power = 100 × 45W = 4500W = 4.5kW</li>
+              <li>(a) With poor power factor (0.55):</li>
+              <li>Apparent power S = P / pf = 4500 / 0.55 = 8182 VA</li>
+              <li>Current I = S / V = 8182 / 230 = <strong>35.6A</strong></li>
+              <li>(b) With good power factor (0.95):</li>
+              <li>Apparent power S = P / pf = 4500 / 0.95 = 4737 VA</li>
+              <li>Current I = S / V = 4737 / 230 = <strong>20.6A</strong></li>
+              <li>Good PFC reduces current by 42%, enabling smaller cables and potentially fewer circuits</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Example 4: Motor Slip and Speed Calculation
+            </p>
+            <p>
+              <strong>Question:</strong> A 4-pole induction motor operates on 50Hz supply with
+              3.5% slip at full load. Calculate the synchronous speed and actual running speed.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Synchronous speed:</li>
+              <li>Ns = (120 × f) / p = (120 × 50) / 4 = <strong>1500 rpm</strong></li>
+              <li>Actual speed:</li>
+              <li>Nr = Ns × (1 - s) = 1500 × (1 - 0.035)</li>
+              <li>Nr = 1500 × 0.965 = <strong>1447.5 rpm</strong></li>
+              <li>Nameplate would typically show 1450 rpm or 1440 rpm</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Motor Starting Current and Protection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 15kW, 400V three-phase motor has efficiency 91% and
-                power factor 0.87 at full load. Calculate the full load current and expected DOL
-                starting current.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Input power = Output / Efficiency = 15000 / 0.91 = 16484W</p>
-                <p className="mt-2">Full load current:</p>
-                <p>IL = P / (√3 × VL × cos φ)</p>
-                <p>IL = 16484 / (1.732 × 400 × 0.87)</p>
-                <p>
-                  IL = 16484 / 602.7 = <strong>27.4A</strong>
-                </p>
-                <p className="mt-2">DOL starting current (assuming 7× FLC):</p>
-                <p>
-                  Istart = 7 × 27.4 = <strong>192A</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Protection device must allow 192A for ~5 seconds without tripping
-                </p>
-                <p className="text-white">
-                  → Consider Type D MCB or MCCB with adjustable magnetic trip
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Fan Energy Savings with VSD
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A supply fan with 11kW motor normally runs at full speed.
-                If a VSD reduces speed to 75% for 60% of operating hours, calculate annual energy
-                savings.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Power at 75% speed (affinity law):</p>
-                <p>
-                  P = 11kW × 0.75³ = 11 × 0.422 = <strong>4.64kW</strong>
-                </p>
-                <p className="mt-2">Assuming 4000 operating hours per year:</p>
-                <p>Hours at full speed: 4000 × 0.4 = 1600h</p>
-                <p>Hours at 75% speed: 4000 × 0.6 = 2400h</p>
-                <p className="mt-2">Without VSD: 11kW × 4000h = 44,000 kWh</p>
-                <p className="mt-2">With VSD:</p>
-                <p>(11 × 1600) + (4.64 × 2400) = 17,600 + 11,136 = 28,736 kWh</p>
-                <p className="mt-2">
-                  Annual saving = 44,000 - 28,736 = <strong>15,264 kWh</strong>
-                </p>
-                <p>
-                  Percentage saving = <strong>34.7%</strong>
-                </p>
-                <p className="mt-2 text-green-400">At £0.15/kWh: £2,290 annual saving</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ns = (120 × f) / p</strong> — Synchronous speed (rpm)</li>
+              <li><strong>s = (Ns - Nr) / Ns</strong> — Slip</li>
+              <li><strong>P = √3 × VL × IL × cos φ × η</strong> — Motor input power</li>
+              <li><strong>P ∝ N³</strong> — Fan/pump affinity law for power</li>
+              <li><strong>h = 6n ± 1</strong> — Characteristic harmonics (6-pulse VSD)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Values to Remember</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>DOL starting current: <strong>6-8 × FLC</strong></li>
+              <li>Star-delta starting current: <strong>2-3 × FLC</strong> (33% torque)</li>
+              <li>Electronic ballast power factor: <strong>≥0.95</strong></li>
+              <li>Typical motor slip at full load: <strong>2-5%</strong></li>
+              <li>Transformer inrush: <strong>10-15 × rated current</strong></li>
+              <li>K-factor for VSD loads: <strong>K-13 typical</strong></li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Motor Circuit Design Checklist
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Obtain motor FLC from nameplate or calculate from kW rating</li>
+              <li>Apply installation correction factors to determine cable size</li>
+              <li>Check voltage drop at running current (max 5% typically)</li>
+              <li>Verify voltage drop during starting is acceptable (15% momentarily)</li>
+              <li>Select protection device allowing starting current without tripping</li>
+              <li>Consider power factor correction if multiple motors</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: LED Driver Power Factor Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A lighting installation has 100 LED fittings, each with a
-                45W driver. Compare the supply current with drivers having (a) pf = 0.55 and (b) pf
-                = 0.95.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Total power = 100 × 45W = 4500W = 4.5kW</p>
-                <p className="mt-2">(a) With poor power factor (0.55):</p>
-                <p>Apparent power S = P / pf = 4500 / 0.55 = 8182 VA</p>
-                <p>
-                  Current I = S / V = 8182 / 230 = <strong>35.6A</strong>
-                </p>
-                <p className="mt-2">(b) With good power factor (0.95):</p>
-                <p>Apparent power S = P / pf = 4500 / 0.95 = 4737 VA</p>
-                <p>
-                  Current I = S / V = 4737 / 230 = <strong>20.6A</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Good PFC reduces current by 42%, enabling smaller cables
-                </p>
-                <p className="text-white">and potentially fewer circuits</p>
-              </div>
-            </div>
+          <CommonMistake
+            title="Common motor and lighting mistakes"
+            whatHappens={
+              <>
+                Using output power as input (forgetting efficiency). Ignoring starting current
+                when selecting protection. Specifying poor LED drivers leading to excessive
+                current and harmonics. Forgetting VSD harmonics affect other equipment and
+                protection. Oversizing motors causing poor power factor and efficiency. Ignoring
+                transformer inrush which can trip upstream protection.
+              </>
+            }
+            doInstead={
+              <>
+                Always divide output kW by efficiency to get input. Size protection for starting
+                inrush (Type D MCB or MCCB). Specify LED drivers with PFC ≥0.9 and THD ≤20%.
+                Conduct harmonic study for VSD-rich installations. Right-size motors to run at
+                75-100% load. Allow ride-through margin for transformer energisation.
+              </>
+            }
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Motor Slip and Speed Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 4-pole induction motor operates on 50Hz supply with
-                3.5% slip at full load. Calculate the synchronous speed and actual running speed.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Synchronous speed:</p>
-                <p>
-                  Ns = (120 × f) / p = (120 × 50) / 4 = <strong>1500 rpm</strong>
-                </p>
-                <p className="mt-2">Actual speed:</p>
-                <p>Nr = Ns × (1 - s) = 1500 × (1 - 0.035)</p>
-                <p>
-                  Nr = 1500 × 0.965 = <strong>1447.5 rpm</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Nameplate would typically show 1450 rpm or 1440 rpm
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Picking starting method for a 22 kW chiller compressor on a tight supply"
+            situation={
+              <>
+                A 22 kW three-phase chiller compressor needs to start on a 1000 kVA supply
+                serving a small mixed-use building with sensitive IT load. DOL inrush would be
+                roughly 6 \u00d7 FLC \u2248 240 A, dipping the supply voltage by 6\u20137 % \u2014
+                outside the 4 % limit the IT supplier insists on for clean operation.
+              </>
+            }
+            whatToDo={
+              <>
+                Compare the three realistic options. (1) Star-delta: cuts starting current to
+                roughly 1/3 (\u224880 A), but needs the motor to be specifically wound for it
+                and gives a torque dip on transition. (2) Soft-starter: smooth thyristor-based
+                ramp, peak typically 3 \u00d7 FLC, no harmonic content during run. (3) VFD:
+                full speed control, peak start typically 1 \u00d7 FLC, also gives part-load
+                energy savings on a chiller, but needs harmonic mitigation per IEEE 519. For
+                this compressor and supply, a VFD is the right pick \u2014 it solves both the
+                starting dip and the part-load efficiency problem, and the harmonic mitigation
+                is a known cost line.
+              </>
+            }
+            whyItMatters={
+              <>
+                Picking the starting method is a direct application of AC theory \u2014
+                starting impedance, voltage drop, harmonic content. The wrong choice causes
+                rolling brownouts on adjacent loads, premature compressor failure, or both.
+              </>
+            }
+          />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <SectionRule />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ns = (120 × f) / p</strong> — Synchronous speed (rpm)
-                </li>
-                <li className="pl-1">
-                  <strong>s = (Ns - Nr) / Ns</strong> — Slip
-                </li>
-                <li className="pl-1">
-                  <strong>P = √3 × VL × IL × cos φ × η</strong> — Motor input power
-                </li>
-                <li className="pl-1">
-                  <strong>P ∝ N³</strong> — Fan/pump affinity law for power
-                </li>
-                <li className="pl-1">
-                  <strong>h = 6n ± 1</strong> — Characteristic harmonics (6-pulse VSD)
-                </li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  DOL starting current: <strong>6-8 × FLC</strong>
-                </li>
-                <li className="pl-1">
-                  Star-delta starting current: <strong>2-3 × FLC</strong> (33% torque)
-                </li>
-                <li className="pl-1">
-                  Electronic ballast power factor: <strong>≥0.95</strong>
-                </li>
-                <li className="pl-1">
-                  Typical motor slip at full load: <strong>2-5%</strong>
-                </li>
-                <li className="pl-1">
-                  Transformer inrush: <strong>10-15 × rated current</strong>
-                </li>
-                <li className="pl-1">
-                  K-factor for VSD loads: <strong>K-13 typical</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Motor Circuit Design Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Obtain motor FLC from nameplate or calculate from kW rating
-                </li>
-                <li className="pl-1">
-                  Apply installation correction factors to determine cable size
-                </li>
-                <li className="pl-1">Check voltage drop at running current (max 5% typically)</li>
-                <li className="pl-1">
-                  Verify voltage drop during starting is acceptable (15% momentarily)
-                </li>
-                <li className="pl-1">
-                  Select protection device allowing starting current without tripping
-                </li>
-                <li className="pl-1">Consider power factor correction if multiple motors</li>
-              </ul>
-            </div>
+          <KeyTakeaways
+            points={[
+              'LED lighting drivers with active PFC: true PF \u2265 0.9, low THD, no bulk PFC needed downstream. Cheap drivers (no active PFC) need attention or bulk correction.',
+              'Three-phase induction motors are inductive loads \u2014 PF lags worse at part load (often 0.6 at 25 % load vs 0.85 at full load).',
+              'DOL starting current is typically 5\u20137 \u00d7 FLC \u2014 sized by blocked-rotor impedance, not running impedance.',
+              'Star-delta starting: \u22481/3 of DOL inrush, requires motor designed for it and a transition torque dip.',
+              'Soft-starter (thyristor): smooth ramp, peak \u22483 \u00d7 FLC during start, no permanent control during run \u2014 best for fixed-speed pumps and compressors.',
+              'VFD: full speed control, peak start \u22481 \u00d7 FLC, large part-load energy savings on variable-torque loads (fans, pumps), needs harmonic mitigation per IEEE 519.',
+              'Motor efficiency class to BS EN 60034-30-1 \u2014 IE3 minimum for most building services motors above 0.75 kW. IE4 / IE5 for high-runtime applications.',
+              'BMS metering should report P (kW), Q (kVAr), S (kVA) and PF per phase \u2014 the AC theory in this section is what makes those readings interpretable on the dashboard.',
+            ]}
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using output power as input:</strong> Always account for efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring starting current:</strong> Affects protection selection
-                </li>
-                <li className="pl-1">
-                  <strong>Specifying poor LED drivers:</strong> Causes excessive current and
-                  harmonics
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting VSD harmonics:</strong> Can affect other equipment and
-                  protection
-                </li>
-                <li className="pl-1">
-                  <strong>Oversizing motors:</strong> Results in poor power factor and efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring transformer inrush:</strong> Can cause upstream protection to
-                  trip
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Motor Characteristics</p>
-                <ul className="space-y-0.5">
-                  <li>DOL starting: 6-8 × FLC</li>
-                  <li>Star-delta: 2-3 × FLC, 33% torque</li>
-                  <li>Slip at full load: 2-5%</li>
-                  <li>pf varies: 0.85 (FL) to 0.45 (25% load)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Lighting Equipment</p>
-                <ul className="space-y-0.5">
-                  <li>Magnetic ballast pf: 0.5 lagging</li>
-                  <li>Electronic ballast pf: ≥0.95</li>
-                  <li>Basic LED driver pf: 0.5-0.6</li>
-                  <li>Quality LED driver pf: ≥0.9</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">VSDs and Harmonics</p>
-                <ul className="space-y-0.5">
-                  <li>6-pulse harmonics: 5th, 7th, 11th, 13th</li>
-                  <li>5th harmonic: 25-40% of fundamental</li>
-                  <li>Line reactor: reduces THD to ~35%</li>
-                  <li>Active front end: THD &lt;5%</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Affinity Laws (Fans/Pumps)</p>
-                <ul className="space-y-0.5">
-                  <li>Flow: Q ∝ N</li>
-                  <li>Head/Pressure: H ∝ N²</li>
-                  <li>Power: P ∝ N³</li>
-                  <li>80% speed = 51% power</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section2-6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Resonance
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section3">
-              Next: Section 3
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2-6')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Resonance in RLC Circuits
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Section 3
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

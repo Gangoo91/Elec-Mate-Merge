@@ -8,6 +8,7 @@ import { useCompanyProfile } from './useCompanyProfile';
 import { generateSequentialQuoteNumber } from '@/utils/quote-number-generator';
 import { supabase } from '@/integrations/supabase/client';
 import { logger, generateRequestId } from '@/utils/logger';
+import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Quote) => {
@@ -62,10 +63,14 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   }, []);
 
   const addItem = useCallback((item: Omit<QuoteItem, 'id' | 'totalPrice'>) => {
+    const base = item.quantity * item.unitPrice;
+    const adj = item.itemAdjustmentPercent;
+    const totalPrice =
+      typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
     const newItem: QuoteItem = {
       ...item,
       id: uuidv4(),
-      totalPrice: item.quantity * item.unitPrice,
+      totalPrice,
     };
 
     setQuote((prev) => ({
@@ -78,16 +83,15 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   const updateItem = useCallback((itemId: string, updates: Partial<QuoteItem>) => {
     setQuote((prev) => ({
       ...prev,
-      items: prev.items?.map((item) =>
-        item.id === itemId
-          ? {
-              ...item,
-              ...updates,
-              totalPrice:
-                (updates.quantity ?? item.quantity) * (updates.unitPrice ?? item.unitPrice),
-            }
-          : item
-      ),
+      items: prev.items?.map((item) => {
+        if (item.id !== itemId) return item;
+        const merged = { ...item, ...updates };
+        const base = (merged.quantity || 0) * (merged.unitPrice || 0);
+        const adj = merged.itemAdjustmentPercent;
+        merged.totalPrice =
+          typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
+        return merged;
+      }),
       updatedAt: new Date(),
     }));
   }, []);
@@ -104,37 +108,19 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     const items = quote.items || [];
     const settings = quote.settings;
 
-    // Always use raw items in state — grouping is only for PDF/display, not for state management
-    // This ensures removeItem/updateItem always work on real item IDs
-    const subtotal = items.reduce((sum, item) => {
-      const price = typeof item.totalPrice === 'number' ? item.totalPrice : (item.quantity || 0) * (item.unitPrice || 0);
-      return sum + price;
-    }, 0);
-
-    // Discount/deduction — only if settings configured
-    const discountAmount = settings?.discountEnabled
-      ? settings.discountType === 'percentage'
-        ? subtotal * ((settings.discountValue || 0) / 100)
-        : Math.min(settings.discountValue || 0, subtotal)
-      : 0;
-    const netAfterDiscount = subtotal - discountAmount;
-
-    // VAT applies AFTER discount (CIS-correct: HMRC says VAT on net amount)
-    const vatRate = settings?.vatRate ?? 20;
-    const vatAmount = settings?.vatRegistered
-      ? netAfterDiscount * (vatRate / 100)
-      : 0;
-    const total = netAfterDiscount + vatAmount;
+    // ELE-888 + ELE-891 — single source of truth for per-item, per-category,
+    // and global discount maths. Quote flow does not apply overhead+profit.
+    const totals = computeQuoteTotals(items, settings, { applyOverheadAndProfit: false });
 
     return {
       ...quote,
       items,
-      subtotal,
+      subtotal: totals.subtotal,
       overhead: 0,
       profit: 0,
-      discountAmount,
-      vatAmount,
-      total,
+      discountAmount: totals.discountAmount,
+      vatAmount: totals.vatAmount,
+      total: totals.total,
     };
   }, [quote]);
 

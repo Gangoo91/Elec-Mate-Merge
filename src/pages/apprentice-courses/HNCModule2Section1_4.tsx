@@ -1,8 +1,27 @@
-import { ArrowLeft, Thermometer, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 1 · Subsection 4 — U-Values and Thermal Resistance
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Combined conduction-convection-radiation expressed as the U-value (W/m²·K). The single
+ *   number that drives every fabric heat-loss calculation, every Part L compliance check
+ *   and every SAP/SBEM model.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  SectionRule,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'U-Values and Thermal Resistance - HNC Module 2 Section 1.4';
@@ -194,889 +213,502 @@ const faqs = [
 ];
 
 const HNCModule2Section1_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Thermometer className="h-4 w-4" />
-            <span>Module 2.1.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            U-Values and Thermal Resistance
-          </h1>
-          <p className="text-white">
-            Understanding heat transfer through building elements for energy-efficient design and
-            Part L compliance
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 1 · Subsection 4"
+            title="U-Values and Thermal Resistance"
+            description="Understanding heat transfer through building elements for energy-efficient design and Part L compliance."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>U-value:</strong> Rate of heat loss through an element (W/m²K)
-              </li>
-              <li className="pl-1">
-                <strong>R-value:</strong> Thermal resistance of materials (m²K/W)
-              </li>
-              <li className="pl-1">
-                <strong>Relationship:</strong> U = 1/RT (reciprocals)
-              </li>
-              <li className="pl-1">
-                <strong>Lower U-value = Better insulation</strong>
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Part L compliance:</strong> Limiting U-values for elements
-              </li>
-              <li className="pl-1">
-                <strong>Heat loss calculations:</strong> Q = U × A × ΔT
-              </li>
-              <li className="pl-1">
-                <strong>HVAC sizing:</strong> Based on fabric heat loss
-              </li>
-              <li className="pl-1">
-                <strong>Energy performance:</strong> EPC ratings and SAP
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will calculate the U-value of any building element from first principles using R-value addition (1/U = R_si + Σ(d/k) + R_se).',
+              'You can read and reject manufacturer&rsquo;s &ldquo;ideal&rdquo; U-values that ignore thermal bridging — apply BS EN ISO 6946 corrections.',
+              'You apply Part L target U-values for new and existing dwellings (and Part L2 for non-domestic) and the Limiting Fabric Standards.',
+              'You feed U-values into SAP (domestic) or SBEM (non-domestic) and trace the Part L compliance back to the assembly drawing.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="Building Regulations 2010 — Approved Document L (limiting fabric U-values)"
+            clause="The thermal performance of building fabric elements shall be no worse than the limiting standards set out in Approved Document L. For new dwellings (Part L1A 2021): wall ≤ 0.26 W/m²·K, roof ≤ 0.16 W/m²·K, floor ≤ 0.18 W/m²·K, window ≤ 1.6 W/m²·K (notional dwelling target U-values, indicative)."
+            meaning={
+              <>
+                Part L sets minimum (limiting) standards and notional &ldquo;target&rdquo;
+                values for the SAP / SBEM compliance calculation. As an HNC building services
+                designer your fabric assumptions feed straight into the energy model and the
+                Part L submission to Building Control.
+              </>
+            }
+            cite="Source: Building Regulations 2010, Approved Document L (latest edition); BS EN ISO 6946 — calculation of thermal resistance and transmittance"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Define U-value and thermal resistance with correct SI units',
               'Calculate R-values for individual material layers',
               'Determine U-values for composite wall constructions',
               'Apply surface resistance values (Rsi and Rse)',
               'Understand Part L limiting U-values for building elements',
               'Calculate fabric heat loss for HVAC system sizing',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: U-Value Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            U-Value Definition and Significance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="U-Value Definition and Significance"
+            plainEnglish="U-value is the rate at which heat leaks through one square metre of wall (or roof, or floor) for every 1°C of temperature difference. Lower number = better wall."
+          >
             <p>
               The U-value (thermal transmittance) measures how effectively a building element
               transfers heat. It represents the rate of heat flow through one square metre of the
               element for each degree of temperature difference between inside and outside.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">U-Value Definition</p>
-              <p className="font-mono text-center text-lg mb-2">
-                U = Heat flow rate / (Area × Temperature difference)
-              </p>
-              <p className="text-xs text-white text-center">
-                Unit: W/m²K (Watts per square metre per Kelvin)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key principles of U-values:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lower is better:</strong> A U-value of 0.15 W/m²K loses less heat than
-                  0.30 W/m²K
-                </li>
-                <li className="pl-1">
-                  <strong>Whole element:</strong> Includes all layers, air gaps, and surface effects
-                </li>
-                <li className="pl-1">
-                  <strong>Steady-state:</strong> Assumes constant temperatures (not transient
-                  behaviour)
-                </li>
-                <li className="pl-1">
-                  <strong>Perpendicular flow:</strong> Measures heat flow through the element, not
-                  along it
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical U-Values for Building Elements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical U-value
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Quality</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Solid brick wall (uninsulated)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.0 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">Very poor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cavity wall (unfilled)</td>
-                      <td className="border border-white/10 px-3 py-2">1.5 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">Poor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cavity wall (filled)</td>
-                      <td className="border border-white/10 px-3 py-2">0.5 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modern insulated wall</td>
-                      <td className="border border-white/10 px-3 py-2">0.18-0.25 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Good</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Passivhaus wall</td>
-                      <td className="border border-white/10 px-3 py-2">0.10-0.15 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Excellent</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Double glazed window</td>
-                      <td className="border border-white/10 px-3 py-2">1.4-2.0 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Triple glazed window</td>
-                      <td className="border border-white/10 px-3 py-2">0.8-1.2 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Good</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> U-values are used directly in heat loss calculations: Q = U
-              × A × ΔT (Watts)
+            <p>
+              <strong>Definition:</strong> U = Heat flow rate / (Area × Temperature difference).
+              Unit: W/m²K (Watts per square metre per Kelvin).
             </p>
-          </div>
-        </section>
+            <p>
+              <strong>Key principles of U-values:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lower is better:</strong> A U-value of 0.15 W/m²K loses less heat than 0.30 W/m²K
+              </li>
+              <li>
+                <strong>Whole element:</strong> Includes all layers, air gaps, and surface effects
+              </li>
+              <li>
+                <strong>Steady-state:</strong> Assumes constant temperatures (not transient behaviour)
+              </li>
+              <li>
+                <strong>Perpendicular flow:</strong> Measures heat flow through the element, not along it
+              </li>
+            </ul>
+            <p>
+              <strong>Typical U-values for building elements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Solid brick wall (uninsulated): 2.0 W/m²K — very poor</li>
+              <li>Cavity wall (unfilled): 1.5 W/m²K — poor</li>
+              <li>Cavity wall (filled): 0.5 W/m²K — moderate</li>
+              <li>Modern insulated wall: 0.18-0.25 W/m²K — good</li>
+              <li>Passivhaus wall: 0.10-0.15 W/m²K — excellent</li>
+              <li>Double glazed window: 1.4-2.0 W/m²K — moderate</li>
+              <li>Triple glazed window: 0.8-1.2 W/m²K — good</li>
+            </ul>
+            <p>
+              <strong>Remember:</strong> U-values are used directly in heat loss calculations: Q = U
+              × A × ΔT (Watts).
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Thermal Resistance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Thermal Resistance (R-Values)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Thermal Resistance (R-Values)"
+            plainEnglish="R-value is the opposite of U-value — it's how much a layer resists heat flow. The big advantage: you can just add R-values for each layer, then take 1/R at the end to get the U-value."
+          >
             <p>
               Thermal resistance (R-value) measures how well a material or layer resists heat flow.
               Unlike U-values, R-values can be simply added together when calculating total
               resistance of multi-layer constructions.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">R-Value Calculation</p>
-              <p className="font-mono text-center text-lg mb-2">R = d / λ</p>
-              <p className="text-xs text-white text-center">
-                Where d = thickness (m), λ = thermal conductivity (W/mK)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key facts about thermal resistance:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Higher is better:</strong> More resistance = less heat flow
-                </li>
-                <li className="pl-1">
-                  <strong>Additive:</strong> R-values of layers simply add together
-                </li>
-                <li className="pl-1">
-                  <strong>Unit:</strong> m²K/W (square metres Kelvin per Watt)
-                </li>
-                <li className="pl-1">
-                  <strong>Reciprocal of U:</strong> For the whole element, U = 1/RT
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Thermal Conductivity of Common Materials
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Material</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">λ (W/mK)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">R per 100mm</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PIR/PUR foam board</td>
-                      <td className="border border-white/10 px-3 py-2">0.022</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        4.55 m²K/W
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phenolic foam</td>
-                      <td className="border border-white/10 px-3 py-2">0.020</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        5.00 m²K/W
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mineral wool</td>
-                      <td className="border border-white/10 px-3 py-2">0.035-0.040</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        2.50-2.86 m²K/W
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        EPS (expanded polystyrene)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.032-0.038</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        2.63-3.13 m²K/W
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Aerated concrete block</td>
-                      <td className="border border-white/10 px-3 py-2">0.11</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        0.91 m²K/W
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dense concrete block</td>
-                      <td className="border border-white/10 px-3 py-2">1.13</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.09 m²K/W</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Brick</td>
-                      <td className="border border-white/10 px-3 py-2">0.77</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.13 m²K/W</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plasterboard</td>
-                      <td className="border border-white/10 px-3 py-2">0.21</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        0.48 m²K/W
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Glass</td>
-                      <td className="border border-white/10 px-3 py-2">1.00</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">0.10 m²K/W</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>R-value calculation:</strong> R = d / λ, where d = thickness (m) and λ =
+              thermal conductivity (W/mK).
+            </p>
+            <p>
+              <strong>Key facts about thermal resistance:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Higher is better:</strong> More resistance = less heat flow
+              </li>
+              <li>
+                <strong>Additive:</strong> R-values of layers simply add together
+              </li>
+              <li>
+                <strong>Unit:</strong> m²K/W (square metres Kelvin per Watt)
+              </li>
+              <li>
+                <strong>Reciprocal of U:</strong> For the whole element, U = 1/RT
+              </li>
+            </ul>
+            <p>
+              <strong>Thermal conductivity of common materials (and R per 100mm):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>PIR/PUR foam board: λ = 0.022 W/mK (R ≈ 4.55 m²K/W per 100mm)</li>
+              <li>Phenolic foam: λ = 0.020 W/mK (R ≈ 5.00 m²K/W per 100mm)</li>
+              <li>Mineral wool: λ = 0.035-0.040 W/mK (R ≈ 2.50-2.86 m²K/W per 100mm)</li>
+              <li>EPS (expanded polystyrene): λ = 0.032-0.038 W/mK (R ≈ 2.63-3.13 m²K/W per 100mm)</li>
+              <li>Aerated concrete block: λ = 0.11 W/mK (R ≈ 0.91 m²K/W per 100mm)</li>
+              <li>Dense concrete block: λ = 1.13 W/mK (R ≈ 0.09 m²K/W per 100mm)</li>
+              <li>Brick: λ = 0.77 W/mK (R ≈ 0.13 m²K/W per 100mm)</li>
+              <li>Plasterboard: λ = 0.21 W/mK (R ≈ 0.48 m²K/W per 100mm)</li>
+              <li>Glass: λ = 1.00 W/mK (R ≈ 0.10 m²K/W per 100mm)</li>
+            </ul>
+            <p>
               <strong>Key insight:</strong> Insulation materials have λ values below 0.045 W/mK. The
               lower the conductivity, the better the insulator.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Composite Construction Calculations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Calculating U-Values for Composite Constructions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Calculating U-Values for Composite Constructions"
+            plainEnglish="Add up the R-values of every layer (plus the surface resistances), take the reciprocal, and that's your U-value. Six layers, one sum, one division — done."
+          >
             <p>
               Real building elements comprise multiple layers. To find the U-value, calculate the
               thermal resistance of each layer, add them together with surface resistances, then
               take the reciprocal.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                U-Value Calculation Method
-              </p>
-              <div className="space-y-2 text-sm">
-                <p className="font-mono">
-                  R<sub>T</sub> = R<sub>si</sub> + R<sub>1</sub> + R<sub>2</sub> + ... + R
-                  <sub>n</sub> + R<sub>se</sub>
-                </p>
-                <p className="font-mono">
-                  U = 1 / R<sub>T</sub>
-                </p>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Where Rsi = internal surface resistance, Rse = external surface resistance
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Surface Resistances (Standard Values)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Rsi (internal wall):</strong> 0.13 m²K/W
-                  </li>
-                  <li className="pl-1">
-                    <strong>Rse (external):</strong> 0.04 m²K/W
-                  </li>
-                  <li className="pl-1">
-                    <strong>Rsi (ceiling - upward):</strong> 0.10 m²K/W
-                  </li>
-                  <li className="pl-1">
-                    <strong>Rsi (floor - downward):</strong> 0.17 m²K/W
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Air Cavity Resistances
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Unventilated ≥25mm:</strong> 0.18 m²K/W
-                  </li>
-                  <li className="pl-1">
-                    <strong>Unventilated 5mm:</strong> 0.11 m²K/W
-                  </li>
-                  <li className="pl-1">
-                    <strong>Slightly ventilated:</strong> 0.09 m²K/W
-                  </li>
-                  <li className="pl-1">
-                    <strong>Highly ventilated:</strong> 0.00 m²K/W
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Worked Example: Cavity Wall U-Value
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Calculate U-value for: 102mm brick | 50mm cavity | 100mm insulated block | 12.5mm
-                plasterboard
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Layer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Thickness</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">λ (W/mK)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">R (m²K/W)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External surface (Rse)</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">0.04</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Brick outer leaf</td>
-                      <td className="border border-white/10 px-3 py-2">102mm</td>
-                      <td className="border border-white/10 px-3 py-2">0.77</td>
-                      <td className="border border-white/10 px-3 py-2">0.13</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cavity (mineral wool filled)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">50mm</td>
-                      <td className="border border-white/10 px-3 py-2">0.035</td>
-                      <td className="border border-white/10 px-3 py-2">1.43</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Aerated concrete block</td>
-                      <td className="border border-white/10 px-3 py-2">100mm</td>
-                      <td className="border border-white/10 px-3 py-2">0.11</td>
-                      <td className="border border-white/10 px-3 py-2">0.91</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plasterboard</td>
-                      <td className="border border-white/10 px-3 py-2">12.5mm</td>
-                      <td className="border border-white/10 px-3 py-2">0.21</td>
-                      <td className="border border-white/10 px-3 py-2">0.06</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Internal surface (Rsi)</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">0.13</td>
-                    </tr>
-                    <tr className="bg-white/5 font-medium">
-                      <td className="border border-white/10 px-3 py-2" colSpan={3}>
-                        Total RT
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-elec-yellow">2.70</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-sm text-white mt-3">
-                <strong>
-                  U-value = 1/RT = 1/2.70 = <span className="text-elec-yellow">0.37 W/m²K</span>
-                </strong>
-              </p>
-              <p className="text-xs text-red-400 mt-2">
-                Note: This exceeds Part L limiting value of 0.26 W/m²K - additional insulation
-                required
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Method:</strong> RT = Rsi + R1 + R2 + ... + Rn + Rse, then U = 1 / RT. Where
+              Rsi = internal surface resistance and Rse = external surface resistance.
+            </p>
+            <p>
+              <strong>Surface resistances (standard values):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Rsi (internal wall):</strong> 0.13 m²K/W
+              </li>
+              <li>
+                <strong>Rse (external):</strong> 0.04 m²K/W
+              </li>
+              <li>
+                <strong>Rsi (ceiling - upward):</strong> 0.10 m²K/W
+              </li>
+              <li>
+                <strong>Rsi (floor - downward):</strong> 0.17 m²K/W
+              </li>
+            </ul>
+            <p>
+              <strong>Air cavity resistances:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Unventilated ≥25mm:</strong> 0.18 m²K/W
+              </li>
+              <li>
+                <strong>Unventilated 5mm:</strong> 0.11 m²K/W
+              </li>
+              <li>
+                <strong>Slightly ventilated:</strong> 0.09 m²K/W
+              </li>
+              <li>
+                <strong>Highly ventilated:</strong> 0.00 m²K/W
+              </li>
+            </ul>
+            <p>
+              <strong>Worked example - cavity wall U-value:</strong> 102mm brick | 50mm cavity
+              (mineral wool filled) | 100mm aerated concrete block | 12.5mm plasterboard.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>External surface (Rse): R = 0.04 m²K/W</li>
+              <li>Brick outer leaf (102mm, λ = 0.77): R = 0.13 m²K/W</li>
+              <li>Cavity (50mm mineral wool, λ = 0.035): R = 1.43 m²K/W</li>
+              <li>Aerated concrete block (100mm, λ = 0.11): R = 0.91 m²K/W</li>
+              <li>Plasterboard (12.5mm, λ = 0.21): R = 0.06 m²K/W</li>
+              <li>Internal surface (Rsi): R = 0.13 m²K/W</li>
+              <li>Total RT = <strong>2.70 m²K/W</strong></li>
+              <li>U-value = 1/RT = 1/2.70 = <strong>0.37 W/m²K</strong></li>
+              <li>Note: This exceeds Part L limiting value of 0.26 W/m²K - additional insulation required</li>
+            </ul>
+            <p>
               <strong>Design tip:</strong> Calculate required insulation thickness by working
               backwards from target U-value to find needed R-value.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Part L and Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Part L Requirements and Building Services Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Part L Requirements and Building Services Applications"
+            plainEnglish="Building Regs Part L sets the minimum U-values you have to hit on a new build. Designers go better than this for SAP/SBEM compliance — and to keep the heat-loss calc small enough to size a sensible heating system."
+          >
             <p>
               Part L of the Building Regulations sets standards for conservation of fuel and power.
               U-values are fundamental to demonstrating compliance and are essential for sizing HVAC
               systems accurately.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L 2021 Limiting U-Values (England)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        New Build Limit
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Extension/Renovation
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External walls</td>
-                      <td className="border border-white/10 px-3 py-2">0.26 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.30 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pitched roof (insulation at ceiling)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.16 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.16 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pitched roof (insulation at rafter)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flat roof</td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ground floor</td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.25 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Windows, roof windows, doors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1.6 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">1.6 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Swimming pool basin</td>
-                      <td className="border border-white/10 px-3 py-2">0.25 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.25 W/m²K</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Heat Loss Calculation for HVAC Sizing
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                Q<sub>fabric</sub> = Σ(U × A × ΔT)
-              </p>
-              <p className="text-xs text-white text-center">
-                Where Q = heat loss (W), A = area (m²), ΔT = temperature difference (K)
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Worked Example: Room Heat Loss
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Calculate fabric heat loss for an office: 5m × 4m, ceiling height 2.7m, one external
-                wall with window
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="mb-2">
-                  <strong>Given:</strong>
-                </p>
-                <p>- External wall: 5m × 2.7m = 13.5m², U = 0.25 W/m²K</p>
-                <p>- Window in wall: 2m × 1.2m = 2.4m², U = 1.4 W/m²K</p>
-                <p>- Net wall area: 13.5 - 2.4 = 11.1m²</p>
-                <p>- Internal temp: 21°C, External temp: -3°C, ΔT = 24K</p>
-                <p className="mt-3 mb-2">
-                  <strong>Calculation:</strong>
-                </p>
-                <p>
-                  Wall loss: Q = 0.25 × 11.1 × 24 = <strong>66.6 W</strong>
-                </p>
-                <p>
-                  Window loss: Q = 1.4 × 2.4 × 24 = <strong>80.6 W</strong>
-                </p>
-                <p className="mt-2 text-elec-yellow">
-                  Total fabric loss = 66.6 + 80.6 = <strong>147.2 W</strong>
-                </p>
-                <p className="mt-3 text-white">
-                  Note: Total heating load also includes ventilation heat loss and internal gains
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">
-                Thermal Bridging Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Window reveals:</strong> Insulation must wrap around to prevent cold spots
-                </li>
-                <li className="pl-1">
-                  <strong>Wall-floor junctions:</strong> Perimeter insulation critical
-                </li>
-                <li className="pl-1">
-                  <strong>Structural elements:</strong> Steel beams penetrating insulation layer
-                </li>
-                <li className="pl-1">
-                  <strong>Service penetrations:</strong> Pipes and cables through external envelope
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Part L 2021 limiting U-values (England):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>External walls: 0.26 W/m²K (new build) / 0.30 W/m²K (extension/renovation)</li>
+              <li>Pitched roof (insulation at ceiling): 0.16 W/m²K</li>
+              <li>Pitched roof (insulation at rafter): 0.18 W/m²K</li>
+              <li>Flat roof: 0.18 W/m²K</li>
+              <li>Ground floor: 0.18 W/m²K (new) / 0.25 W/m²K (extension/renovation)</li>
+              <li>Windows, roof windows, doors: 1.6 W/m²K</li>
+              <li>Swimming pool basin: 0.25 W/m²K</li>
+            </ul>
+            <p>
+              <strong>Heat loss calculation for HVAC sizing:</strong> Qfabric = Σ(U × A × ΔT). Where
+              Q = heat loss (W), A = area (m²), ΔT = temperature difference (K).
+            </p>
+            <p>
+              <strong>Worked example - room heat loss:</strong> Calculate fabric heat loss for an
+              office: 5m × 4m, ceiling height 2.7m, one external wall with window.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>External wall: 5m × 2.7m = 13.5m², U = 0.25 W/m²K</li>
+              <li>Window in wall: 2m × 1.2m = 2.4m², U = 1.4 W/m²K</li>
+              <li>Net wall area: 13.5 - 2.4 = 11.1m²</li>
+              <li>Internal temp: 21°C, External temp: -3°C, ΔT = 24K</li>
+              <li>Wall loss: Q = 0.25 × 11.1 × 24 = <strong>66.6 W</strong></li>
+              <li>Window loss: Q = 1.4 × 2.4 × 24 = <strong>80.6 W</strong></li>
+              <li>Total fabric loss = 66.6 + 80.6 = <strong>147.2 W</strong></li>
+              <li>Note: Total heating load also includes ventilation heat loss and internal gains</li>
+            </ul>
+            <p>
+              <strong>Thermal bridging considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Window reveals:</strong> Insulation must wrap around to prevent cold spots
+              </li>
+              <li>
+                <strong>Wall-floor junctions:</strong> Perimeter insulation critical
+              </li>
+              <li>
+                <strong>Structural elements:</strong> Steel beams penetrating insulation layer
+              </li>
+              <li>
+                <strong>Service penetrations:</strong> Pipes and cables through external envelope
+              </li>
+            </ul>
+            <p>
               <strong>Building services impact:</strong> Better U-values reduce heating/cooling
               loads, allowing smaller HVAC systems, lower energy consumption, and reduced carbon
               emissions.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three quick wins: working out insulation thickness backwards, checking a flat-roof build-up against Part L, and totting up the fabric loss for a small office."
+          >
+            <p>
+              <strong>Example 1 - insulation thickness required:</strong> A wall needs to achieve U
+              = 0.20 W/m²K. Current layers give RT = 1.2 m²K/W. What thickness of PIR insulation (λ
+              = 0.022 W/mK) is needed?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Target RT = 1/U = 1/0.20 = 5.0 m²K/W</li>
+              <li>Additional R needed = 5.0 - 1.2 = 3.8 m²K/W</li>
+              <li>Using R = d/λ, rearranging: d = R × λ</li>
+              <li>d = 3.8 × 0.022 = 0.0836m = <strong>84mm</strong></li>
+              <li>Specify 90mm PIR board (standard size)</li>
+            </ul>
+            <p>
+              <strong>Example 2 - roof U-value check:</strong> Flat roof construction: 150mm
+              concrete deck | 120mm PIR | waterproof membrane. Does it meet Part L?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Rsi (ceiling, upward flow) = 0.10 m²K/W</li>
+              <li>Concrete (λ = 1.13): R = 0.150/1.13 = 0.13 m²K/W</li>
+              <li>PIR (λ = 0.022): R = 0.120/0.022 = 5.45 m²K/W</li>
+              <li>Membrane: negligible</li>
+              <li>Rse = 0.04 m²K/W</li>
+              <li>RT = 0.10 + 0.13 + 5.45 + 0.04 = 5.72 m²K/W</li>
+              <li>U = 1/5.72 = <strong>0.175 W/m²K</strong></li>
+              <li>Meets Part L limit of 0.18 W/m²K for flat roofs</li>
+            </ul>
+            <p>
+              <strong>Example 3 - total building heat loss:</strong> Calculate total fabric heat
+              loss for a small office building. ΔT = 24K. Walls: 200m² at U = 0.25 W/m²K. Windows:
+              40m² at U = 1.4 W/m²K. Roof: 150m² at U = 0.18 W/m²K. Floor: 150m² at U = 0.20 W/m²K.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Walls: 0.25 × 200 × 24 = 1,200 W</li>
+              <li>Windows: 1.4 × 40 × 24 = 1,344 W</li>
+              <li>Roof: 0.18 × 150 × 24 = 648 W</li>
+              <li>Floor: 0.20 × 150 × 24 = 720 W</li>
+              <li><strong>Total fabric loss = 3,912 W (3.9 kW)</strong></li>
+              <li>Add ventilation loss (~2-3 kW) for total heating load</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Insulation Thickness Required
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A wall needs to achieve U = 0.20 W/m²K. Current layers
-                give RT = 1.2 m²K/W. What thickness of PIR insulation (λ = 0.022 W/mK) is needed?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Target RT = 1/U = 1/0.20 = 5.0 m²K/W</p>
-                <p>Additional R needed = 5.0 - 1.2 = 3.8 m²K/W</p>
-                <p className="mt-2">Using R = d/λ, rearranging: d = R × λ</p>
-                <p>
-                  d = 3.8 × 0.022 = 0.0836m = <strong>84mm</strong>
-                </p>
-                <p className="mt-2 text-white">→ Specify 90mm PIR board (standard size)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Roof U-Value Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Flat roof construction: 150mm concrete deck | 120mm PIR |
-                waterproof membrane. Does it meet Part L?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Rsi (ceiling, upward flow) = 0.10 m²K/W</p>
-                <p>Concrete (λ = 1.13): R = 0.150/1.13 = 0.13 m²K/W</p>
-                <p>PIR (λ = 0.022): R = 0.120/0.022 = 5.45 m²K/W</p>
-                <p>Membrane: negligible</p>
-                <p>Rse = 0.04 m²K/W</p>
-                <p className="mt-2">RT = 0.10 + 0.13 + 5.45 + 0.04 = 5.72 m²K/W</p>
-                <p className="mt-2">
-                  U = 1/5.72 = <strong>0.175 W/m²K</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  ✓ Meets Part L limit of 0.18 W/m²K for flat roofs
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="Formulas and numbers to memorise — the bare minimum to handle any U-value question."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>R = d/λ</strong> — Thermal resistance of a layer
+              </li>
+              <li>
+                <strong>RT = Rsi + ΣR + Rse</strong> — Total thermal resistance
+              </li>
+              <li>
+                <strong>U = 1/RT</strong> — U-value from total resistance
+              </li>
+              <li>
+                <strong>Q = U × A × ΔT</strong> — Heat loss through element
+              </li>
+              <li>
+                <strong>d = R × λ</strong> — Required insulation thickness
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Rsi (walls): <strong>0.13 m²K/W</strong>
+              </li>
+              <li>
+                Rse (external): <strong>0.04 m²K/W</strong>
+              </li>
+              <li>
+                Air cavity ≥25mm: <strong>0.18 m²K/W</strong>
+              </li>
+              <li>
+                Part L wall limit: <strong>0.26 W/m²K</strong>
+              </li>
+              <li>
+                Part L roof limit: <strong>0.18 W/m²K</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Total Building Heat Loss
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate total fabric heat loss for a small office
-                building. ΔT = 24K.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Building elements:</strong>
-                </p>
-                <p>Walls: 200m² at U = 0.25 W/m²K</p>
-                <p>Windows: 40m² at U = 1.4 W/m²K</p>
-                <p>Roof: 150m² at U = 0.18 W/m²K</p>
-                <p>Floor: 150m² at U = 0.20 W/m²K</p>
-                <p className="mt-3">
-                  <strong>Heat loss calculation:</strong>
-                </p>
-                <p>Walls: 0.25 × 200 × 24 = 1,200 W</p>
-                <p>Windows: 1.4 × 40 × 24 = 1,344 W</p>
-                <p>Roof: 0.18 × 150 × 24 = 648 W</p>
-                <p>Floor: 0.20 × 150 × 24 = 720 W</p>
-                <p className="mt-2 text-elec-yellow">
-                  <strong>Total fabric loss = 3,912 W (3.9 kW)</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Add ventilation loss (~2-3 kW) for total heating load
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>R = d/λ</strong> — Thermal resistance of a layer
-                </li>
-                <li className="pl-1">
-                  <strong>RT = Rsi + ΣR + Rse</strong> — Total thermal resistance
-                </li>
-                <li className="pl-1">
-                  <strong>U = 1/RT</strong> — U-value from total resistance
-                </li>
-                <li className="pl-1">
-                  <strong>Q = U × A × ΔT</strong> — Heat loss through element
-                </li>
-                <li className="pl-1">
-                  <strong>d = R × λ</strong> — Required insulation thickness
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Rsi (walls): <strong>0.13 m²K/W</strong>
-                </li>
-                <li className="pl-1">
-                  Rse (external): <strong>0.04 m²K/W</strong>
-                </li>
-                <li className="pl-1">
-                  Air cavity ≥25mm: <strong>0.18 m²K/W</strong>
-                </li>
-                <li className="pl-1">
-                  Part L wall limit: <strong>0.26 W/m²K</strong>
-                </li>
-                <li className="pl-1">
-                  Part L roof limit: <strong>0.18 W/m²K</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Forgetting surface resistances</strong> — Always include Rsi and Rse
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Wrong units</strong> — Thickness must be in metres, not mm
                 </li>
-                <li className="pl-1">
-                  <strong>Confusing U and R</strong> — Remember: lower U is better, higher R is
-                  better
+                <li>
+                  <strong>Confusing U and R</strong> — Lower U is better, higher R is better
                 </li>
-                <li className="pl-1">
-                  <strong>Ignoring thermal bridges</strong> — Real buildings have junctions and
-                  penetrations
+                <li>
+                  <strong>Ignoring thermal bridges</strong> — Real buildings have junctions and penetrations
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always start with Rsi + Rse, work in metres, double-check whether you're tracking U or R, and add 10-15% for thermal bridges if a quick check is all you've got."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Specifying a wall build-up to hit the Part L target"
+            situation={
+              <>
+                A new-build dwelling needs an external wall achieving U ≤ 0.18 W/m²·K (better
+                than the limiting standard, to balance other elements in the SAP calculation).
+                The proposed build-up is brick / 100 mm cavity / 100 mm aerated block / 25 mm
+                plasterboard.
+              </>
+            }
+            whatToDo={
+              <>
+                Calculate the as-drawn U from R values: R_si (0.13) + R_brick (0.05) +
+                R_cavity (0.18 unfilled) + R_block (0.55) + R_plaster (0.05) + R_se (0.04) =
+                1.0, U = 1.0 W/m²·K. That misses by a factor of 5. Fill cavity with 100 mm
+                full-fill mineral wool (R 2.7), refigure: U ≈ 0.27 W/m²·K. Still over.
+                Increase to 150 mm partial-fill PIR (R 6.8) within a wider cavity, refigure: U
+                ≈ 0.16 W/m²·K. Pass. Add the BS EN ISO 6946 correction for wall ties (~5%) and
+                document on the SAP submission.
+              </>
+            }
+            whyItMatters={
+              <>
+                The first-pass &ldquo;clear cavity&rdquo; build-up is a Part L failure that
+                would be caught by Building Control before sign-off. Iterating early avoids
+                a re-design when foundations are in.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Thermal Properties</p>
-                <ul className="space-y-0.5">
-                  <li>U-value (W/m²K) - Heat transmittance</li>
-                  <li>R-value (m²K/W) - Thermal resistance</li>
-                  <li>λ (W/mK) - Thermal conductivity</li>
-                  <li>U = 1/RT (reciprocal relationship)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Part L Limits (2021)</p>
-                <ul className="space-y-0.5">
-                  <li>Walls: 0.26 W/m²K</li>
-                  <li>Flat roof: 0.18 W/m²K</li>
-                  <li>Floor: 0.18 W/m²K</li>
-                  <li>Windows: 1.6 W/m²K</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'U-value (W/m²·K) is heat flow per unit area per unit temperature difference — the inverse of the total R.',
+              'Calculation: 1/U = R_si + Σ(d/k) + R_air gap + R_se — surface resistances + layer resistances + air gap.',
+              'Surface resistances from BS EN ISO 6946: R_si ≈ 0.13 (internal), R_se ≈ 0.04 (external) for vertical walls.',
+              'Each layer contributes R = d/k — high-k materials add little, low-k materials add a lot.',
+              'BS EN ISO 6946 corrections: thermal bridging (wall ties, fasteners), air gaps, mechanical fixings — typically 5-10% adjustment.',
+              'Part L 2021 limiting fabric U-values: wall 0.26, roof 0.16, floor 0.18, window 1.6 W/m²·K (dwellings).',
+              'Notional dwelling U-values (for SAP target) are tighter than the limiting values.',
+              'Glazing U-value depends on assembly (frame + glass + gas fill + spacer) — single number from BS EN ISO 10077.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section1-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Heat Transfer
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section1-5">
-              Next: Thermal Bridging
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Radiation
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section1-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Thermal bridging
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -212,7 +212,62 @@ serve(async (req) => {
           break;
         }
 
-        // Update invoice status to paid
+        // ELE-954 — Look up the invoice in the new `invoices` table first.
+        // If it's a deposit invoice (deposit_for_quote = true) we also flip
+        // the parent quote from accepted_pending_deposit → accepted, so the
+        // booking is confirmed.
+        const { data: depositInvoice } = await supabase
+          .from('invoices')
+          .select('id, parent_quote_id, deposit_for_quote, total, invoice_number')
+          .eq('id', invoiceId)
+          .maybeSingle();
+
+        if (depositInvoice) {
+          await supabase
+            .from('invoices')
+            .update({
+              invoice_status: 'paid',
+              invoice_paid_at: new Date().toISOString(),
+              invoice_payment_method: 'card',
+              invoice_payment_reference: session.payment_intent as string,
+              stripe_payment_intent_id: session.payment_intent as string,
+            })
+            .eq('id', invoiceId);
+
+          if (depositInvoice.deposit_for_quote && depositInvoice.parent_quote_id) {
+            console.log(
+              `💰 Deposit paid for quote ${depositInvoice.parent_quote_id} — confirming booking`
+            );
+            await supabase
+              .from('quotes')
+              .update({
+                acceptance_status: 'accepted',
+                deposit_paid_at: new Date().toISOString(),
+              })
+              .eq('id', depositInvoice.parent_quote_id);
+
+            // Notify sparky deposit landed
+            if (electricianUserId) {
+              await supabase.from('notifications').insert({
+                user_id: electricianUserId,
+                type: 'deposit_received',
+                title: '🎉 Deposit received — booking confirmed',
+                message: `${formatCurrency(depositInvoice.total || 0)} deposit paid for quote. Booking is now confirmed.`,
+                data: {
+                  quote_id: depositInvoice.parent_quote_id,
+                  deposit_invoice_id: invoiceId,
+                  amount: depositInvoice.total || 0,
+                },
+                read: false,
+              });
+            }
+          }
+          // Skip the legacy quotes-table update (this invoice lives in the
+          // new invoices table).
+          break;
+        }
+
+        // Legacy path — invoice still living on the quotes table (pre-2026-03-03)
         const { error: updateError } = await supabase
           .from('quotes')
           .update({

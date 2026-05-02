@@ -1,8 +1,27 @@
-import { ArrowLeft, AlertTriangle, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 4 · Subsection 3 — Emergency Lighting Design
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   BS 5266 / BS EN 1838 / BS EN 50172 emergency lighting — escape routes (1 lux centre
+ *   line, 40:1 uniformity), open area anti-panic (0.5 lux > 60m²), high-risk task
+ *   (10% / 15 lux min), 3-hour duration, maintained / non-maintained / sustained types.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Emergency Lighting Design - HNC Module 4 Section 4.3';
@@ -198,717 +217,470 @@ const faqs = [
 ];
 
 const HNCModule4Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <AlertTriangle className="h-4 w-4" />
-            <span>Module 4.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Emergency Lighting Design
-          </h1>
-          <p className="text-white">
-            Designing life safety systems to BS 5266 for safe evacuation during power failure
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 4 · Subsection 3"
+            title="Emergency Lighting Design"
+            description="Designing life safety systems to BS 5266 for safe evacuation during power failure."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Escape routes:</strong> 1 lux minimum on centre line
-              </li>
-              <li className="pl-1">
-                <strong>Open areas:</strong> 0.5 lux anti-panic lighting
-              </li>
-              <li className="pl-1">
-                <strong>High risk:</strong> 10% of normal, min 15 lux
-              </li>
-              <li className="pl-1">
-                <strong>Duration:</strong> 3 hours standard
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BS 5266:</strong> Emergency lighting code of practice
-              </li>
-              <li className="pl-1">
-                <strong>BS EN 1838:</strong> Applied photometry requirements
-              </li>
-              <li className="pl-1">
-                <strong>BS EN 50172:</strong> Emergency escape schemes
-              </li>
-              <li className="pl-1">
-                <strong>RRO:</strong> Regulatory Reform (Fire Safety) Order
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Design escape route emergency lighting to BS 5266',
               'Apply illuminance requirements for different areas',
               'Select appropriate system types (maintained/non-maintained)',
               'Determine correct duration for building types',
               'Position luminaires for required coverage',
               'Specify testing and maintenance requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <TLDR
+            points={[
+              'Escape route minimum 1 lx along the centre line, 0.5 lx across the full route width — at floor level, with the maintenance factor applied. BS 5266 numbers are not optional.',
+              'Open (anti-panic) areas: 0.5 lx minimum over the empty floor (excluding a 0.5 m perimeter band). High-risk task areas: 10 % of the maintained task value, never less than 15 lx.',
+              'Duration: 1 h for premises evacuated immediately; 3 h where occupants might re-enter or where evacuation could be delayed. Most commercial designs go to 3 h by default.',
+              'Self-contained luminaires are simpler to install but harder to manage at scale; central battery (BS EN 50171) is the choice when you’ve got hundreds of points across multiple floors.',
+              'BS 7671 Chapter 56 sits underneath BS 5266 — the supply, circuit segregation, sources and wiring all have to comply. The fire-engineered escape strategy and the electrical design are inseparable.',
+            ]}
+          />
 
-        {/* Section 1: Escape Route Lighting */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Escape Route Lighting Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 560.6.1"
+            clause="The following electrical sources for safety services are recognized: (a) primary batteries; (b) stationary secondary batteries; (c) other generating sets independent of the normal supply; (d) a separate feeder of the supply network that is effectively independent of the normal feeder."
+            meaning={
+              <>
+                Reg 560.6.1 fixes the menu of acceptable safety-source supplies for emergency
+                lighting. As the HNC designer you choose between a self-contained luminaire (its
+                own secondary battery), a central battery system to BS EN 50171, an independent
+                generator, or — rarely — a genuinely independent network feeder. Anything else
+                isn’t a recognised source and won’t pass verification under Chapter 56. Your spec
+                states which option (a)–(d) you’re using and why.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 560.6.1."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Escape Route Lighting Requirements">
             <p>
               Escape route lighting ensures occupants can safely evacuate a building during mains
               failure. Routes must be illuminated to enable recognition of obstacles, direction
               changes and exit points. BS 5266 and BS EN 1838 specify the requirements.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Escape route requirements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Illuminance:</strong> Minimum 1 lux on centre line of route
-                </li>
-                <li className="pl-1">
-                  <strong>Uniformity:</strong> Maximum 40:1 ratio (Emax/Emin)
-                </li>
-                <li className="pl-1">
-                  <strong>Width:</strong> Central band of at least 50% of route width
-                </li>
-                <li className="pl-1">
-                  <strong>Response:</strong> 50% output within 5 seconds, 100% within 60 seconds
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Locations Requiring Escape Route Lighting
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corridors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1 lux on centre line, luminaires at direction changes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stairways</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1 lux on treads, each flight illuminated
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exit doors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Illuminated exit sign, 1 lux at door position
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Changes of direction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Luminaire within 2m of change
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Changes of level</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Luminaire to illuminate each change
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Intersections</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Luminaire at or near each intersection
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Escape route requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Illuminance:</strong> minimum 1 lux on centre line of route
+              </li>
+              <li>
+                <strong>Uniformity:</strong> maximum 40:1 ratio (Emax/Emin)
+              </li>
+              <li>
+                <strong>Width:</strong> central band of at least 50% of route width
+              </li>
+              <li>
+                <strong>Response:</strong> 50% output within 5 seconds, 100% within 60 seconds
+              </li>
+            </ul>
+            <p>
+              <strong>Locations requiring escape route lighting (location / requirement):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Corridors — 1 lux on centre line, luminaires at direction changes</li>
+              <li>Stairways — 1 lux on treads, each flight illuminated</li>
+              <li>Exit doors — illuminated exit sign, 1 lux at door position</li>
+              <li>Changes of direction — luminaire within 2m of change</li>
+              <li>Changes of level — luminaire to illuminate each change</li>
+              <li>Intersections — luminaire at or near each intersection</li>
+            </ul>
+            <p>
               <strong>Critical:</strong> Emergency lighting must also illuminate fire safety signs,
               fire alarm call points, fire fighting equipment locations, and first aid points.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Open Area and High-Risk Lighting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Open Area and High-Risk Task Lighting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Open Area and High-Risk Task Lighting">
             <p>
               Open area (anti-panic) lighting and high-risk task area lighting serve different
-              purposes from escape routes. Anti-panic lighting prevents panic in large spaces, while
-              high-risk lighting enables safe shutdown of dangerous processes.
+              purposes from escape routes. Anti-panic lighting prevents panic in large spaces,
+              while high-risk lighting enables safe shutdown of dangerous processes.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Open Area (Anti-Panic)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Required in areas &gt;60m² floor area</li>
-                  <li className="pl-1">Minimum 0.5 lux at floor level</li>
-                  <li className="pl-1">Core area (excluding 0.5m perimeter band)</li>
-                  <li className="pl-1">Uniformity maximum 40:1</li>
-                  <li className="pl-1">Enable occupants to reach escape routes</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">High-Risk Task Areas</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Required where sudden darkness is dangerous</li>
-                  <li className="pl-1">Minimum 10% of normal task illuminance</li>
-                  <li className="pl-1">Never less than 15 lux on task area</li>
-                  <li className="pl-1">Uniformity maximum 10:1</li>
-                  <li className="pl-1">Response: 0.5 seconds for escape routes</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Emergency Lighting Summary Table
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Illuminance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Uniformity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Response</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Escape route</td>
-                      <td className="border border-white/10 px-3 py-2">1 lux (centre line)</td>
-                      <td className="border border-white/10 px-3 py-2">40:1 max</td>
-                      <td className="border border-white/10 px-3 py-2">5s (50%), 60s (100%)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open area</td>
-                      <td className="border border-white/10 px-3 py-2">0.5 lux (floor)</td>
-                      <td className="border border-white/10 px-3 py-2">40:1 max</td>
-                      <td className="border border-white/10 px-3 py-2">5s (50%), 60s (100%)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High-risk task</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        10% of normal, min 15 lux
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10:1 max</td>
-                      <td className="border border-white/10 px-3 py-2">0.5s (100%)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Examples of high-risk areas:</strong> Operating machinery, laboratories,
+            <p>
+              <strong>Open area (anti-panic):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Required in areas &gt;60m² floor area</li>
+              <li>Minimum 0.5 lux at floor level</li>
+              <li>Core area (excluding 0.5m perimeter band)</li>
+              <li>Uniformity maximum 40:1</li>
+              <li>Enable occupants to reach escape routes</li>
+            </ul>
+            <p>
+              <strong>High-risk task areas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Required where sudden darkness is dangerous</li>
+              <li>Minimum 10% of normal task illuminance</li>
+              <li>Never less than 15 lux on task area</li>
+              <li>Uniformity maximum 10:1</li>
+              <li>Response: 0.5 seconds for escape routes</li>
+            </ul>
+            <p>
+              <strong>Emergency lighting summary (type / illuminance / uniformity / response):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Escape route — 1 lux (centre line) — 40:1 max — 5s (50%), 60s (100%)</li>
+              <li>Open area — 0.5 lux (floor) — 40:1 max — 5s (50%), 60s (100%)</li>
+              <li>
+                High-risk task — 10% of normal, min 15 lux — 10:1 max — 0.5s (100%)
+              </li>
+            </ul>
+            <p>
+              <strong>Examples of high-risk areas:</strong> operating machinery, laboratories,
               electrical switchrooms, kitchens with hot equipment, working at height.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 3: System Types and Duration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Maintained vs Non-Maintained Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Maintained vs Non-Maintained Systems">
             <p>
               The choice between maintained and non-maintained systems depends on how the space is
               used. Where lighting may be deliberately switched off while occupied, maintained
               systems are required.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                System Types Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Operation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Applications</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Non-maintained</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Only operates on mains failure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Offices, shops, factories where lights always on when occupied
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintained</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Operates continuously (mains or battery)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cinemas, theatres, nightclubs, some restaurants
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sustained</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two lamps - one maintained, one not
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Combined normal and emergency function
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Self-Contained Systems
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Battery in each luminaire</li>
-                  <li className="pl-1">Simple installation (no battery room)</li>
-                  <li className="pl-1">Each unit independent</li>
-                  <li className="pl-1">Batteries require replacement (5-10 years)</li>
-                  <li className="pl-1">Self-test options available</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Central Battery Systems
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Single battery location</li>
-                  <li className="pl-1">Easier maintenance monitoring</li>
-                  <li className="pl-1">Fire-rated distribution required</li>
-                  <li className="pl-1">More complex cabling</li>
-                  <li className="pl-1">Suitable for larger buildings</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Duration Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>3 hours:</strong> Standard for most buildings (offices, retail,
-                  industrial)
-                </li>
-                <li className="pl-1">
-                  <strong>1 hour:</strong> Where immediate evacuation possible and no reoccupation
-                  without power
-                </li>
-                <li className="pl-1">
-                  <strong>Extended (to 8 hours):</strong> Sleeping accommodation, hospitals,
-                  premises with delayed evacuation
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>System types comparison (type / operation / applications):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Non-maintained</strong> — only operates on mains failure — offices, shops,
+                factories where lights always on when occupied
+              </li>
+              <li>
+                <strong>Maintained</strong> — operates continuously (mains or battery) — cinemas,
+                theatres, nightclubs, some restaurants
+              </li>
+              <li>
+                <strong>Sustained</strong> — two lamps, one maintained, one not — combined normal
+                and emergency function
+              </li>
+            </ul>
+            <p>
+              <strong>Self-contained systems:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Battery in each luminaire</li>
+              <li>Simple installation (no battery room)</li>
+              <li>Each unit independent</li>
+              <li>Batteries require replacement (5-10 years)</li>
+              <li>Self-test options available</li>
+            </ul>
+            <p>
+              <strong>Central battery systems:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single battery location</li>
+              <li>Easier maintenance monitoring</li>
+              <li>Fire-rated distribution required</li>
+              <li>More complex cabling</li>
+              <li>Suitable for larger buildings</li>
+            </ul>
+            <p>
+              <strong>Duration requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>3 hours:</strong> standard for most buildings (offices, retail,
+                industrial)
+              </li>
+              <li>
+                <strong>1 hour:</strong> where immediate evacuation possible and no reoccupation
+                without power
+              </li>
+              <li>
+                <strong>Extended (to 8 hours):</strong> sleeping accommodation, hospitals,
+                premises with delayed evacuation
+              </li>
+            </ul>
+            <p>
               <strong>Remember:</strong> Duration is determined by the fire risk assessment, not
               chosen arbitrarily. The responsible person must justify any deviation from 3 hours.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Testing and Maintenance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Testing, Maintenance and Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Testing, Maintenance and Documentation">
             <p>
-              Emergency lighting is a life safety system requiring regular testing and maintenance.
-              BS 5266 specifies the test regime and documentation requirements. Self-test systems
-              can automate some requirements but manual verification remains essential.
+              Emergency lighting is a life safety system requiring regular testing and
+              maintenance. BS 5266 specifies the test regime and documentation requirements.
+              Self-test systems can automate some requirements but manual verification remains
+              essential.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Testing Regime (BS 5266)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirements</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Daily check</td>
-                      <td className="border border-white/10 px-3 py-2">Daily (visual)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Indicator lights functioning
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Function test</td>
-                      <td className="border border-white/10 px-3 py-2">Monthly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Brief operation, check all luminaires function
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Full duration test</td>
-                      <td className="border border-white/10 px-3 py-2">Annually</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full rated duration (1 or 3 hours)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Battery replacement</td>
-                      <td className="border border-white/10 px-3 py-2">As required</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        When duration test fails (typically 4-6 years)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Documentation Required
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Completion certificate (initial)</li>
-                  <li className="pl-1">As-built drawings showing luminaire positions</li>
-                  <li className="pl-1">Design basis and calculations</li>
-                  <li className="pl-1">Test log book with all test records</li>
-                  <li className="pl-1">Maintenance records and replacements</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Self-Test Systems</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Automatic function testing</li>
-                  <li className="pl-1">Fault indication (local or central)</li>
-                  <li className="pl-1">Reduced manual testing burden</li>
-                  <li className="pl-1">Still requires annual duration test</li>
-                  <li className="pl-1">DALI-compatible options available</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Recharge Time After Testing
-              </p>
-              <p className="text-sm text-white">
-                After any discharge test, batteries require 24 hours to fully recharge. Testing
-                should be scheduled to ensure the system is fully charged during normal occupied
-                periods. Avoid testing on consecutive days or before weekends/holidays when the
-                building is occupied.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Legal responsibility:</strong> The Regulatory Reform (Fire Safety) Order 2005
-              places responsibility on the 'responsible person' (usually building owner/employer) to
-              maintain emergency lighting in working order.
+            <p>
+              <strong>Testing regime BS 5266 (test / frequency / requirements):</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Daily check — daily (visual) — indicator lights functioning</li>
+              <li>Function test — monthly — brief operation, check all luminaires function</li>
+              <li>Full duration test — annually — full rated duration (1 or 3 hours)</li>
+              <li>
+                Battery replacement — as required — when duration test fails (typically 4-6 years)
+              </li>
+            </ul>
+            <p>
+              <strong>Documentation required:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Completion certificate (initial)</li>
+              <li>As-built drawings showing luminaire positions</li>
+              <li>Design basis and calculations</li>
+              <li>Test log book with all test records</li>
+              <li>Maintenance records and replacements</li>
+            </ul>
+            <p>
+              <strong>Self-test systems:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Automatic function testing</li>
+              <li>Fault indication (local or central)</li>
+              <li>Reduced manual testing burden</li>
+              <li>Still requires annual duration test</li>
+              <li>DALI-compatible options available</li>
+            </ul>
+            <p>
+              <strong>Recharge time after testing:</strong> After any discharge test, batteries
+              require 24 hours to fully recharge. Testing should be scheduled to ensure the system
+              is fully charged during normal occupied periods. Avoid testing on consecutive days
+              or before weekends/holidays when the building is occupied.
+            </p>
+            <p>
+              <strong>Legal responsibility:</strong> The Regulatory Reform (Fire Safety) Order
+              2005 places responsibility on the 'responsible person' (usually building
+              owner/employer) to maintain emergency lighting in working order.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — escape route design:</strong> Design emergency lighting for a 30m
+              corridor, 2m wide, with exit at one end and a change of direction midway.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Requirements (BS 5266): minimum 1 lux on centre line</li>
+              <li>Uniformity maximum 40:1</li>
+              <li>Luminaire at each end (exits)</li>
+              <li>Luminaire within 2m of direction change</li>
+              <li>Exit luminaire at 0m (illuminated exit sign)</li>
+              <li>Corridor luminaire at 15m (direction change point)</li>
+              <li>Exit luminaire at 30m (exit door)</li>
+              <li>Using 8W LED emergency with 15m spacing capability</li>
+              <li>
+                Total: <strong>3 emergency luminaires + signage</strong>
+              </li>
+              <li>Verify with manufacturer spacing data for 1 lux compliance</li>
+            </ul>
+            <p>
+              <strong>Example 2 — open area calculation:</strong> An open plan office is 20m × 15m
+              (300m²). Determine emergency lighting requirements.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Area = 300m² &gt; 60m² threshold — anti-panic lighting required</li>
+              <li>Core area (excluding 0.5m perimeter): (20 − 1) × (15 − 1) = 19 × 14 = 266m²</li>
+              <li>Requirement: 0.5 lux minimum across core</li>
+              <li>Using 3W LED bulkhead with 8m × 8m spacing (0.5 lux):</li>
+              <li>
+                Grid: 3 across × 2 along = <strong>6 luminaires</strong>
+              </li>
+              <li>Plus escape route lighting to exits</li>
+            </ul>
+            <p>
+              <strong>Example 3 — high-risk task area:</strong> A machine workshop operates at 500
+              lux. Calculate emergency lighting requirement for safe shutdown.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>10% of normal = 500 × 0.1 = 50 lux</li>
+              <li>50 lux &gt; 15 lux (minimum) — pass</li>
+              <li>
+                Required: <strong>50 lux on machine task areas</strong>
+              </li>
+              <li>Uniformity maximum 10:1</li>
+              <li>Response time: 0.5 seconds to full output</li>
+              <li>
+                Self-contained may not achieve 0.5s response; consider central battery or
+                UPS-backed system
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Escape Route Design
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> Design emergency lighting for a 30m corridor, 2m wide, with
-                exit at one end and a change of direction midway.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Requirements (BS 5266):</p>
-                <p>- Minimum 1 lux on centre line</p>
-                <p>- Uniformity maximum 40:1</p>
-                <p>- Luminaire at each end (exits)</p>
-                <p>- Luminaire within 2m of direction change</p>
-                <p className="mt-2">
-                  <strong>Solution:</strong>
-                </p>
-                <p>- Exit luminaire at 0m (illuminated exit sign)</p>
-                <p>- Corridor luminaire at 15m (direction change point)</p>
-                <p>- Exit luminaire at 30m (exit door)</p>
-                <p className="mt-2">Using 8W LED emergency with 15m spacing capability:</p>
-                <p>
-                  <strong>Total: 3 emergency luminaires + signage</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Verify with manufacturer spacing data for 1 lux compliance
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Open Area Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An open plan office is 20m × 15m (300m²). Determine
-                emergency lighting requirements.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Area = 300m² &gt; 60m² threshold</p>
-                <p className="text-green-400">✓ Anti-panic lighting required</p>
-                <p className="mt-2">Core area (excluding 0.5m perimeter):</p>
-                <p>Core = (20 - 1) × (15 - 1) = 19 × 14 = 266m²</p>
-                <p className="mt-2">Requirement: 0.5 lux minimum across core</p>
-                <p className="mt-2">Using 3W LED bulkhead with 8m × 8m spacing (0.5 lux):</p>
-                <p>
-                  Grid: 3 across × 2 along = <strong>6 luminaires</strong>
-                </p>
-                <p className="mt-2 text-white">Plus escape route lighting to exits</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Design summary:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Escape routes: 1 lux centre line, uniformity 40:1</li>
+              <li>Open areas (&gt;60m²): 0.5 lux, uniformity 40:1</li>
+              <li>High-risk: 10% of normal, min 15 lux, 10:1 uniformity</li>
+              <li>Standard duration: 3 hours</li>
+              <li>Test: monthly function, annual duration</li>
+            </ul>
+            <p>
+              <strong>Luminaire positioning:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>At or near each exit door</li>
+              <li>Within 2m of direction changes</li>
+              <li>At each stairway flight and landing</li>
+              <li>Near fire alarm call points</li>
+              <li>Near fire extinguisher locations</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: High-Risk Task Area
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> A machine workshop operates at 500 lux. Calculate emergency
-                lighting requirement for safe shutdown.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>High-risk task area requirement:</p>
-                <p>10% of normal = 500 × 0.1 = 50 lux</p>
-                <p className="mt-2">Check against minimum:</p>
-                <p>50 lux &gt; 15 lux (minimum) ✓</p>
-                <p className="mt-2">
-                  <strong>Required: 50 lux on machine task areas</strong>
-                </p>
-                <p>Uniformity maximum 10:1</p>
-                <p>Response time: 0.5 seconds to full output</p>
-                <p className="mt-2 text-white">Self-contained may not achieve 0.5s response.</p>
-                <p className="text-white">Consider central battery or UPS-backed system.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Summary</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Escape routes: 1 lux centre line, uniformity 40:1</li>
-                <li className="pl-1">Open areas (&gt;60m²): 0.5 lux, uniformity 40:1</li>
-                <li className="pl-1">High-risk: 10% of normal, min 15 lux, 10:1 uniformity</li>
-                <li className="pl-1">Standard duration: 3 hours</li>
-                <li className="pl-1">Test: monthly function, annual duration</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Luminaire Positioning
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">At or near each exit door</li>
-                <li className="pl-1">Within 2m of direction changes</li>
-                <li className="pl-1">At each stairway flight and landing</li>
-                <li className="pl-1">Near fire alarm call points</li>
-                <li className="pl-1">Near fire extinguisher locations</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Excessive spacing:</strong> Always check manufacturer data for actual
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Excessive spacing</strong> — always check manufacturer data for actual
                   coverage
                 </li>
-                <li className="pl-1">
-                  <strong>Forgetting open areas:</strong> Spaces &gt;60m² need anti-panic lighting
+                <li>
+                  <strong>Forgetting open areas</strong> — spaces &gt;60m² need anti-panic
+                  lighting
                 </li>
-                <li className="pl-1">
-                  <strong>Missing safety equipment:</strong> Fire extinguishers and call points need
-                  illumination
+                <li>
+                  <strong>Missing safety equipment</strong> — fire extinguishers and call points
+                  need illumination
                 </li>
-                <li className="pl-1">
-                  <strong>Poor test scheduling:</strong> Allow 24h recharge before occupied periods
+                <li>
+                  <strong>Poor test scheduling</strong> — allow 24h recharge before occupied
+                  periods
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Use the manufacturer's emergency-spacing tables (not generic distances), include open areas above 60m² in the design, illuminate every fire alarm call point and extinguisher, and schedule discharge tests so the system has 24 hours to recharge before occupation."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Three-storey office refurb — picking source (a)–(d)"
+            situation={
+              <>
+                You’re designing the emergency lighting for a 3-storey, 2,400 m² office refurb.
+                Around 140 emergency luminaires across escape routes, open areas, plant rooms and
+                a small high-risk archive store. Client wants 3 h duration, monthly function tests
+                and an annual full-discharge test logged centrally. The fire strategy says
+                simultaneous evacuation, single staircase per zone.
+              </>
+            }
+            whatToDo={
+              <>
+                Choose the source under Reg 560.6.1. Option (a) primary batteries — non-starter for
+                a 3 h commercial duty. Option (d) independent feeder — not realistic from a single
+                DNO connection. That leaves (b) stationary secondary batteries (a central battery
+                system to BS EN 50171) or (c) generator. Generator is overkill for emergency
+                lighting alone and triggers gas-flue and ventilation works. Specify a central
+                battery system (b) to BS EN 50171 with addressable luminaires for self-test
+                logging, OR self-contained 3 h luminaires with a wireless test/monitoring head-end.
+                Document escape route 1 lx / 0.5 lx, open area 0.5 lx, high-risk archive 15 lx (10
+                % of task), and call out that the supply circuits are independent of normal
+                lighting per Reg 560.7.1.
+              </>
+            }
+            whyItMatters={
+              <>
+                On a 140-luminaire scheme, manual annual discharge testing is a 3-day disruption
+                you only do once before the FM team rebels. Self-test (DALI / wireless) is the
+                modern answer; central battery wins on long corridors and tower blocks. The
+                560.6.1 source choice cascades into every other M&amp;E decision.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Illuminance Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Escape routes: 1 lux (centre line)</li>
-                  <li>Open areas: 0.5 lux (floor)</li>
-                  <li>High-risk: 10% of normal, min 15 lux</li>
-                  <li>Colour rendering: Ra 40 minimum</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Testing Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Daily: Visual check of indicators</li>
-                  <li>Monthly: Function test (brief)</li>
-                  <li>Annual: Full duration test</li>
-                  <li>Recharge: 24 hours after test</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              'Escape route 1 lx centre line / 0.5 lx full width at floor, with MF applied — the BS 5266 floor.',
+              'Open (anti-panic) area 0.5 lx minimum, high-risk task 10 % of task / 15 lx minimum.',
+              '1 h duration for immediate-evacuate premises; 3 h is the commercial default for offices, retail, hospitality.',
+              'Self-contained vs central battery is a maintenance and scale decision — both are recognised under Reg 560.6.1.',
+              'Reg 560.7.1 demands circuit independence from normal lighting — separate circuits, separate routes or fire-resistant cable.',
+              'Test regime: monthly function test (visual), annual 1 h or 3 h full discharge — log it. BS 5266-1 is explicit.',
+              'Cover every open area &gt; 60 m², every change of direction, stair, exit and external assembly point.',
+              'BS 7671 Chapter 56 is the verification framework; BS 5266 is the design code; BS EN 50171 covers the central battery hardware.',
+            ]}
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section4-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Interior Calculations
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section4-4">
-              Next: Lighting Controls
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Interior lighting calculations
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Lighting controls
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

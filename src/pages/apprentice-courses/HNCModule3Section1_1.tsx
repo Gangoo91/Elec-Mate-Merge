@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 1 · Subsection 1 — Voltage, Current, Resistance and Power
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   The four foundation quantities the HNC engineer uses every day — to size cables,
+ *   pick protective devices, estimate energy use and assess voltage drop on commercial supplies.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Voltage, Current, Resistance and Power - HNC Module 3 Section 1.1';
@@ -174,651 +193,463 @@ const faqs = [
 ];
 
 const HNCModule3Section1_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.1.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Voltage, Current, Resistance and Power
-          </h1>
-          <p className="text-white">
-            The fundamental electrical quantities that underpin all circuit analysis and building
-            services design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 1 · Subsection 1"
+            title="Voltage, Current, Resistance and Power"
+            description="The fundamental electrical quantities that underpin all circuit analysis and building services design"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Voltage (V):</strong> Electrical 'pressure' pushing charge through circuits
-              </li>
-              <li className="pl-1">
-                <strong>Current (I):</strong> Rate of charge flow, measured in Amperes
-              </li>
-              <li className="pl-1">
-                <strong>Resistance (R):</strong> Opposition to current, measured in Ohms
-              </li>
-              <li className="pl-1">
-                <strong>Power (P):</strong> Rate of energy transfer: P = V × I
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>UK supplies:</strong> 230V single-phase, 400V three-phase
-              </li>
-              <li className="pl-1">
-                <strong>Load calculations:</strong> Lighting, heating, HVAC
-              </li>
-              <li className="pl-1">
-                <strong>Cable sizing:</strong> Based on current and voltage drop
-              </li>
-              <li className="pl-1">
-                <strong>Energy billing:</strong> kWh consumption calculations
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can define V, I, R and P in SI units and move between them confidently using Ohm\u2019s law and the three power equations (P = VI, P = I\u00b2R, P = V\u00b2/R).',
+              'You can pick the right UK supply voltage for the application \u2014 230 V single-phase, 400 V three-phase, 24 V DC for BMS, 110 V CTE for site tools, SELV for special locations.',
+              'You can size a circuit from a load: convert kW to amps, allow for power factor, check Ib \u2264 In \u2264 Iz against BS 7671 cable tables.',
+              'You can do a back-of-envelope voltage-drop check using cable mO/m values and the go-and-return rule.',
+              'You can estimate energy use (kWh) and lighting power density (W/m\u00b2) for early-stage building services design.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS EN 50160 — Voltage characteristics of electricity supplied by public distribution systems"
+            clause="UK declared low-voltage supply: 230 V single-phase / 400 V three-phase, 50 Hz, with a tolerance of \u00b110 % under normal operating conditions (207-253 V)."
+            meaning={
+              <>
+                Equipment is rated to operate across the full \u00b110 % band, so HNC sizing
+                calculations should use 230 V nominal and check worst-case voltage drop down to
+                207 V at the furthest outlet. Anything outside that band is a power-quality issue,
+                not a normal design assumption.
+              </>
+            }
+            cite="Source: BS EN 50160 (latest edition); BS 7671 Section 132."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Define voltage, current, resistance and power with correct SI units',
               'Apply the power equations P = VI, P = I²R and P = V²/R',
               'Calculate current, voltage drop and power for single and three-phase',
               'Understand UK supply voltages in building services',
               'Apply power density calculations for lighting design',
               'Calculate energy consumption for load assessment',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Voltage */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Voltage - Electrical Potential Difference
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="Voltage pushes, current flows, resistance opposes, power is the rate of work done."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Voltage (V):</strong> Electrical 'pressure' pushing charge through circuits
+              </li>
+              <li>
+                <strong>Current (I):</strong> Rate of charge flow, measured in Amperes
+              </li>
+              <li>
+                <strong>Resistance (R):</strong> Opposition to current, measured in Ohms
+              </li>
+              <li>
+                <strong>Power (P):</strong> Rate of energy transfer: P = V × I
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>UK supplies:</strong> 230V single-phase, 400V three-phase
+              </li>
+              <li>
+                <strong>Load calculations:</strong> Lighting, heating, HVAC
+              </li>
+              <li>
+                <strong>Cable sizing:</strong> Based on current and voltage drop
+              </li>
+              <li>
+                <strong>Energy billing:</strong> kWh consumption calculations
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Voltage — Electrical Potential Difference">
             <p>
               Voltage is the electrical 'pressure' that drives current through a circuit. It
               represents the energy available per unit charge and is always measured between two
               points.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key facts about voltage:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">1 Volt = 1 Joule per Coulomb (1V = 1 J/C)</li>
-                <li className="pl-1">
-                  Voltage is always measured between two points (potential difference)
-                </li>
-                <li className="pl-1">
-                  Higher voltage can deliver more power with the same current
-                </li>
-                <li className="pl-1">Symbol: V, Unit: Volts (V)</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UK Building Services Voltages
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Voltage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single-phase supply</td>
-                      <td className="border border-white/10 px-3 py-2">230V AC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ±10% tolerance (207V-253V)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-phase (line)</td>
-                      <td className="border border-white/10 px-3 py-2">400V AC</td>
-                      <td className="border border-white/10 px-3 py-2">Between phases</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-phase (phase)</td>
-                      <td className="border border-white/10 px-3 py-2">230V AC</td>
-                      <td className="border border-white/10 px-3 py-2">Phase to neutral</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SELV (bathrooms)</td>
-                      <td className="border border-white/10 px-3 py-2">≤50V AC / ≤120V DC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extra-low voltage protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS controls</td>
-                      <td className="border border-white/10 px-3 py-2">24V DC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sensors, actuators, controls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Construction site tools</td>
-                      <td className="border border-white/10 px-3 py-2">110V AC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CTE (centre-tapped earth)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-white">Key facts about voltage:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1 Volt = 1 Joule per Coulomb (1V = 1 J/C)</li>
+              <li>Voltage is always measured between two points (potential difference)</li>
+              <li>Higher voltage can deliver more power with the same current</li>
+              <li>Symbol: V, Unit: Volts (V)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">UK Building Services Voltages</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single-phase supply:</strong> 230V AC — ±10% tolerance (207V-253V)
+              </li>
+              <li>
+                <strong>Three-phase (line):</strong> 400V AC — Between phases
+              </li>
+              <li>
+                <strong>Three-phase (phase):</strong> 230V AC — Phase to neutral
+              </li>
+              <li>
+                <strong>SELV (bathrooms):</strong> ≤50V AC / ≤120V DC — Extra-low voltage
+                protection
+              </li>
+              <li>
+                <strong>BMS controls:</strong> 24V DC — Sensors, actuators, controls
+              </li>
+              <li>
+                <strong>Construction site tools:</strong> 110V AC — CTE (centre-tapped earth)
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Remember:</strong> 400V ÷ √3 = 230V - this is the relationship between line
               and phase voltages in a three-phase system.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Current */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Current - Flow of Electric Charge
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Current — Flow of Electric Charge">
             <p>
               Current is the rate at which electric charge flows through a conductor. It determines
               cable sizes, protective device ratings, and heat generation in circuits.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key facts about current:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">1 Ampere = 1 Coulomb per second (1A = 1 C/s)</li>
-                <li className="pl-1">Current is the same at all points in a series circuit</li>
-                <li className="pl-1">Current divides between parallel branches</li>
-                <li className="pl-1">Symbol: I, Unit: Amperes (A)</li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Current Calculations</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Single-phase:</strong> I = P / V = P / 230
-                  </li>
-                  <li className="pl-1">
-                    <strong>Three-phase:</strong> I = P / (√3 × VL × pf)
-                  </li>
-                  <li className="pl-1">Cable Iz must exceed design current Ib</li>
-                  <li className="pl-1">Device rating In must be ≥ Ib and ≤ Iz</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Typical Load Currents (230V)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>LED luminaire (45W):</strong> 0.2A
-                  </li>
-                  <li className="pl-1">
-                    <strong>Desktop computer:</strong> 0.9A
-                  </li>
-                  <li className="pl-1">
-                    <strong>3kW heater:</strong> 13A
-                  </li>
-                  <li className="pl-1">
-                    <strong>9.5kW shower:</strong> 41A
-                  </li>
-                </ul>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-white">Key facts about current:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1 Ampere = 1 Coulomb per second (1A = 1 C/s)</li>
+              <li>Current is the same at all points in a series circuit</li>
+              <li>Current divides between parallel branches</li>
+              <li>Symbol: I, Unit: Amperes (A)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Current Calculations</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single-phase:</strong> I = P / V = P / 230
+              </li>
+              <li>
+                <strong>Three-phase:</strong> I = P / (√3 × VL × pf)
+              </li>
+              <li>Cable Iz must exceed design current Ib</li>
+              <li>Device rating In must be ≥ Ib and ≤ Iz</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Typical Load Currents (230V)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LED luminaire (45W):</strong> 0.2A
+              </li>
+              <li>
+                <strong>Desktop computer:</strong> 0.9A
+              </li>
+              <li>
+                <strong>3kW heater:</strong> 13A
+              </li>
+              <li>
+                <strong>9.5kW shower:</strong> 41A
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Design principle:</strong> Ib ≤ In ≤ Iz (design current ≤ protective device ≤
               cable capacity)
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Resistance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Resistance - Opposition to Current Flow
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Resistance — Opposition to Current Flow">
             <p>
               Resistance determines how much current flows for a given voltage. In building
               services, cable resistance causes voltage drop and power losses that must be accounted
               for in design.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key facts about resistance:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">1 Ohm = 1 Volt per Ampere (1Ω = 1 V/A)</li>
-                <li className="pl-1">R = ρL/A (resistivity × length / area)</li>
-                <li className="pl-1">Resistance increases with temperature</li>
-                <li className="pl-1">Symbol: R, Unit: Ohms (Ω)</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable Resistance (Copper at 20°C)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Cable Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Resistance (mΩ/m)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.5mm²</td>
-                      <td className="border border-white/10 px-3 py-2">12.1</td>
-                      <td className="border border-white/10 px-3 py-2">Lighting circuits</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2.5mm²</td>
-                      <td className="border border-white/10 px-3 py-2">7.41</td>
-                      <td className="border border-white/10 px-3 py-2">Ring finals, radials</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4mm²</td>
-                      <td className="border border-white/10 px-3 py-2">4.61</td>
-                      <td className="border border-white/10 px-3 py-2">Cookers, showers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6mm²</td>
-                      <td className="border border-white/10 px-3 py-2">3.08</td>
-                      <td className="border border-white/10 px-3 py-2">Showers, small motors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10mm²</td>
-                      <td className="border border-white/10 px-3 py-2">1.83</td>
-                      <td className="border border-white/10 px-3 py-2">Sub-mains, large loads</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-white">Key facts about resistance:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1 Ohm = 1 Volt per Ampere (1Ω = 1 V/A)</li>
+              <li>R = ρL/A (resistivity × length / area)</li>
+              <li>Resistance increases with temperature</li>
+              <li>Symbol: R, Unit: Ohms (Ω)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Cable Resistance (Copper at 20°C)</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1.5mm²:</strong> 12.1 mΩ/m — Lighting circuits
+              </li>
+              <li>
+                <strong>2.5mm²:</strong> 7.41 mΩ/m — Ring finals, radials
+              </li>
+              <li>
+                <strong>4mm²:</strong> 4.61 mΩ/m — Cookers, showers
+              </li>
+              <li>
+                <strong>6mm²:</strong> 3.08 mΩ/m — Showers, small motors
+              </li>
+              <li>
+                <strong>10mm²:</strong> 1.83 mΩ/m — Sub-mains, large loads
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Temperature effect:</strong> Copper resistance increases ~0.4% per °C rise.
               Use correction factor 1.2 for cables operating at 70°C.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 4: Power */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Power - Rate of Energy Transfer
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Power — Rate of Energy Transfer">
             <p>
               Power calculations are fundamental to building services design - from sizing
               individual circuits to specifying transformers and generators for entire buildings.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Power Equations</p>
-              <div className="grid grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">P = V × I</p>
-                  <p className="text-white text-xs">Basic power</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">P = I² × R</p>
-                  <p className="text-white text-xs">Power from current</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">P = V² / R</p>
-                  <p className="text-white text-xs">Power from voltage</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Three-Phase Power</p>
-              <p className="font-mono text-center text-lg mb-2">
-                P = √3 × V<sub>L</sub> × I<sub>L</sub> × cos φ
-              </p>
-              <p className="text-xs text-white text-center">
-                Where VL = line voltage (400V), cos φ = power factor
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Power Density for Lighting (W/m²)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">W/m² (LED)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Target Lux</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office</td>
-                      <td className="border border-white/10 px-3 py-2">10-12</td>
-                      <td className="border border-white/10 px-3 py-2">300-500</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corridors</td>
-                      <td className="border border-white/10 px-3 py-2">5-8</td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail</td>
-                      <td className="border border-white/10 px-3 py-2">15-20</td>
-                      <td className="border border-white/10 px-3 py-2">300-500</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse</td>
-                      <td className="border border-white/10 px-3 py-2">5-8</td>
-                      <td className="border border-white/10 px-3 py-2">150-200</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">The Power Equations</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>P = V × I</strong> — Basic power
+              </li>
+              <li>
+                <strong>P = I² × R</strong> — Power from current
+              </li>
+              <li>
+                <strong>P = V² / R</strong> — Power from voltage
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Three-Phase Power</p>
+            <p>
+              P = √3 × V<sub>L</sub> × I<sub>L</sub> × cos φ — Where VL = line voltage (400V),
+              cos φ = power factor
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">
+              Power Density for Lighting (W/m²)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>General office:</strong> 10-12 W/m² (LED) — Target 300-500 lux
+              </li>
+              <li>
+                <strong>Corridors:</strong> 5-8 W/m² (LED) — Target 100 lux
+              </li>
+              <li>
+                <strong>Retail:</strong> 15-20 W/m² (LED) — Target 300-500 lux
+              </li>
+              <li>
+                <strong>Warehouse:</strong> 5-8 W/m² (LED) — Target 150-200 lux
+              </li>
+            </ul>
             <p className="text-sm text-white italic">
               <strong>Energy calculation:</strong> E = P × t (kWh = kW × hours) - this is what
               electricity meters measure for billing.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">Example 1: Lighting Circuit Load</p>
+            <p>
+              <strong>Question:</strong> An office floor (500m²) requires lighting at 12 W/m².
+              Calculate the total load and circuit current.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Total power = Area × Power density</li>
+              <li>P = 500m² × 12 W/m² = <strong>6000W = 6kW</strong></li>
+              <li>Current at 230V: I = P / V = 6000 / 230 = <strong>26.1A</strong></li>
+              <li>→ Requires multiple circuits or single 32A circuit</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 2: Cable Voltage Drop</p>
+            <p>
+              <strong>Question:</strong> A 3kW heater is supplied by 25m of 2.5mm² cable.
+              Calculate the voltage drop.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Current: I = P / V = 3000 / 230 = 13A</li>
+              <li>Cable resistance: R = 25m × 2 × 7.41mΩ/m = 0.37Ω (×2 for go and return conductors)</li>
+              <li>Voltage drop: V = I × R = 13 × 0.37 = <strong>4.8V</strong></li>
+              <li>As percentage: (4.8 / 230) × 100 = <strong>2.1%</strong> ✓ Within 5% limit for power circuits</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 3: Three-Phase Motor</p>
+            <p>
+              <strong>Question:</strong> A 15kW AHU motor operates at 0.85 power factor on 400V
+              three-phase. Calculate the line current.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Using: P = √3 × VL × IL × cos φ</li>
+              <li>Rearranging: IL = P / (√3 × VL × cos φ)</li>
+              <li>IL = 15000 / (1.732 × 400 × 0.85)</li>
+              <li>IL = 15000 / 588.9 = <strong>25.5A per phase</strong></li>
+              <li>→ 32A MCB and 4mm² cable suitable</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Lighting Circuit Load
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An office floor (500m²) requires lighting at 12 W/m².
-                Calculate the total load and circuit current.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Total power = Area × Power density</p>
-                <p>
-                  P = 500m² × 12 W/m² = <strong>6000W = 6kW</strong>
-                </p>
-                <p className="mt-2">Current at 230V:</p>
-                <p>
-                  I = P / V = 6000 / 230 = <strong>26.1A</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Requires multiple circuits or single 32A circuit
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Cable Voltage Drop
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 3kW heater is supplied by 25m of 2.5mm² cable.
-                Calculate the voltage drop.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Current: I = P / V = 3000 / 230 = 13A</p>
-                <p>Cable resistance: R = 25m × 2 × 7.41mΩ/m = 0.37Ω</p>
-                <p className="text-white">(×2 for go and return conductors)</p>
-                <p className="mt-2">
-                  Voltage drop: V = I × R = 13 × 0.37 = <strong>4.8V</strong>
-                </p>
-                <p className="mt-2">
-                  As percentage: (4.8 / 230) × 100 = <strong>2.1%</strong>
-                </p>
-                <p className="mt-2 text-green-400">✓ Within 5% limit for power circuits</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Three-Phase Motor
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 15kW AHU motor operates at 0.85 power factor on 400V
-                three-phase. Calculate the line current.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using: P = √3 × VL × IL × cos φ</p>
-                <p className="mt-2">Rearranging: IL = P / (√3 × VL × cos φ)</p>
-                <p className="mt-2">IL = 15000 / (1.732 × 400 × 0.85)</p>
-                <p>
-                  IL = 15000 / 588.9 = <strong>25.5A per phase</strong>
-                </p>
-                <p className="mt-2 text-white">→ 32A MCB and 4mm² cable suitable</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>V = I × R</strong> — Ohm's Law
+              </li>
+              <li>
+                <strong>P = V × I</strong> — Power (single-phase)
+              </li>
+              <li>
+                <strong>P = √3 × VL × IL × cos φ</strong> — Three-phase power
+              </li>
+              <li>
+                <strong>Vd = I × R × 2</strong> — Voltage drop (single-phase)
+              </li>
+              <li>
+                <strong>E = P × t</strong> — Energy consumption
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Values to Remember</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                UK single-phase: <strong>230V</strong> (±10%)
+              </li>
+              <li>
+                UK three-phase line: <strong>400V</strong>
+              </li>
+              <li>
+                √3 = <strong>1.732</strong> (three-phase factor)
+              </li>
+              <li>
+                Voltage drop limit (power): <strong>5%</strong>
+              </li>
+              <li>
+                Voltage drop limit (lighting): <strong>3%</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <CommonMistake
+            title="Common power and cable calculation mistakes"
+            whatHappens={
+              <>
+                Forgetting to ×2 cable length for go and return conductors. Mixing mΩ/m and Ω in the
+                same calculation. Ignoring power factor on motor loads. Treating cable resistance at
+                20°C as if it were the operating value (it's ~20% higher at 70°C).
+              </>
+            }
+            doInstead={
+              <>
+                Always double the run length for single-phase Vd. Convert all resistances to Ω
+                before substituting. Apply pf for inductive loads. Use the 1.2 correction factor for
+                hot cables.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <Scenario
+            title="Sizing a sub-main for a new tenant fit-out"
+            situation={
+              <>
+                You are the building services engineer on a Cat-B office fit-out. The tenant
+                has declared 80 kW of total connected load (lighting, small power, comfort
+                cooling fan-coils) at an assumed 0.9 power factor, fed from a 400 V three-phase
+                sub-main run 35 m from the landlord\u2019s riser distribution board.
+              </>
+            }
+            whatToDo={
+              <>
+                Convert load to line current: I<sub>L</sub> = P / (\u221a3 \u00d7 V<sub>L</sub>{' '}
+                \u00d7 cos \u03c6) = 80 000 / (1.732 \u00d7 400 \u00d7 0.9) \u2248 128 A. Pick
+                the next standard protective device above 128 A (typically 160 A MCCB), then
+                select a cable from BS 7671 Appendix 4 with I<sub>z</sub> \u2265 160 A under the
+                actual installation method, ambient and grouping factors. Finally check
+                voltage drop over 35 m using the cable\u2019s mV/A/m figure \u00d7 length \u00d7
+                I<sub>b</sub> against the 5 % limit for power circuits in BS 7671 Appendix 12.
+              </>
+            }
+            whyItMatters={
+              <>
+                Getting these four basics right \u2014 V, I, R and P \u2014 is the difference
+                between a sub-main that serves the tenant for 25 years and one that nuisance-trips,
+                cooks its insulation or fails the voltage drop check on commissioning. The numbers
+                also sit inside the Part L energy submission, so they are auditable, not throwaway.
+              </>
+            }
+          />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>V = I × R</strong> — Ohm's Law
-                </li>
-                <li className="pl-1">
-                  <strong>P = V × I</strong> — Power (single-phase)
-                </li>
-                <li className="pl-1">
-                  <strong>P = √3 × VL × IL × cos φ</strong> — Three-phase power
-                </li>
-                <li className="pl-1">
-                  <strong>Vd = I × R × 2</strong> — Voltage drop (single-phase)
-                </li>
-                <li className="pl-1">
-                  <strong>E = P × t</strong> — Energy consumption
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  UK single-phase: <strong>230V</strong> (±10%)
-                </li>
-                <li className="pl-1">
-                  UK three-phase line: <strong>400V</strong>
-                </li>
-                <li className="pl-1">
-                  √3 = <strong>1.732</strong> (three-phase factor)
-                </li>
-                <li className="pl-1">
-                  Voltage drop limit (power): <strong>5%</strong>
-                </li>
-                <li className="pl-1">
-                  Voltage drop limit (lighting): <strong>3%</strong>
-                </li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Forgetting ×2</strong> — Cable voltage drop needs both conductors
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong units</strong> — mΩ/m must convert to Ω for calculations
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring power factor</strong> — Motor loads need pf in calculations
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature</strong> — Cable R at operating temp is ~20% higher
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Voltage is potential difference (V), current is rate of charge flow (A), resistance is opposition (\u03a9), power is rate of energy transfer (W) \u2014 all four are bound together by Ohm\u2019s law and the three power equations.',
+              'UK declared supply: 230 V \u00b110 % single-phase, 400 V three-phase line, 50 Hz \u2014 design at nominal but check worst case at 207 V.',
+              'Single-phase: I = P / V. Three-phase: I = P / (\u221a3 \u00d7 V\u2097 \u00d7 cos \u03c6). Always include power factor on inductive loads.',
+              'Cable selection rule: I\u1d47 \u2264 I\u2099 \u2264 I_z (design current \u2264 device rating \u2264 cable capacity at site conditions).',
+              'I\u00b2R losses scale with the square of current \u2014 doubling the load quadruples the heat in the cable. Drives both cable sizing and voltage drop.',
+              'Voltage drop limits (BS 7671 Appendix 12): 3 % lighting, 5 % power \u2014 always use the go-and-return distance for single-phase calcs.',
+              'Energy is power \u00d7 time (kWh) \u2014 the unit billed by the supply utility and reported in the Part L energy submission.',
+              'Power density (W/m\u00b2) is the early-stage tool for sizing landlord supplies before the lighting and HVAC schedules are issued.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Fundamental Quantities</p>
-                <ul className="space-y-0.5">
-                  <li>Voltage (V) - Volts - Potential difference</li>
-                  <li>Current (I) - Amperes - Charge flow rate</li>
-                  <li>Resistance (R) - Ohms - Opposition to flow</li>
-                  <li>Power (P) - Watts - Energy transfer rate</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Services</p>
-                <ul className="space-y-0.5">
-                  <li>Single-phase: 230V, P = VI</li>
-                  <li>Three-phase: 400V, P = √3·VL·IL·pf</li>
-                  <li>Power circuits: max 5% Vd</li>
-                  <li>Lighting: max 3% Vd</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-2">
-              Next: Ohm's Law
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                DC circuit theory
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Ohm's Law
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

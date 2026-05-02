@@ -1,8 +1,29 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 1 · Subsection 1 — Health and Safety at Work Act 1974
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   The umbrella statute under which every other UK workplace H&S regulation sits.
+ *   Engineer-in-training perspective: how the Act frames duty-holder accountability
+ *   on a building services project from concept to handover.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Health and Safety at Work Act 1974 - HNC Module 1 Section 1.1';
@@ -244,831 +265,637 @@ const faqs = [
 ];
 
 const HNCModule1Section1_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 1
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.1.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Health and Safety at Work Act 1974
-          </h1>
-          <p className="text-white">
-            The foundation of UK workplace health and safety law and its application to building
-            services engineering
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.1.1"
+            title="Health and Safety at Work Act 1974"
+            description="The foundation of UK workplace health and safety law and its application to building services engineering"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Section 2:</strong> Employers must ensure employee health, safety and
-                welfare
-              </li>
-              <li className="pl-1">
-                <strong>Section 3:</strong> Duty to protect non-employees (public, visitors,
-                contractors)
-              </li>
-              <li className="pl-1">
-                <strong>Section 7:</strong> Employees must take reasonable care and cooperate
-              </li>
-              <li className="pl-1">
-                <strong>SFARP:</strong> Duties qualified by 'so far as reasonably practicable'
-              </li>
+          <TLDR
+            points={[
+              'You will treat HSWA 1974 as the enabling Act sitting above every regulation you cite on a building services project (EAWR, CDM, COSHH, PUWER).',
+              'You can articulate Section 2, 3, 7 and 8 duties to your design team, your client and your sub-contractors — and hold each duty-holder to account.',
+              'You apply "so far as is reasonably practicable" (SFARP) as a balancing test on every design and method-statement decision, not as a get-out clause.',
+              'You recognise HSE enforcement powers (Improvement Notice, Prohibition Notice, FFI) and design risk out of the project to keep the firm out of court.',
+            ]}
+          />
+
+          <RegsCallout
+            source="HASAWA 1974 — Section 2(1)"
+            clause="It shall be the duty of every employer to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all his employees."
+            meaning={
+              <>
+                As an HNC engineer you sit on both sides of this duty: an employee yourself, but
+                soon a supervising or designing duty-holder. Every safe-system, every risk
+                assessment and every spec decision you sign off has to demonstrate the SFARP test
+                was applied — risk weighed against time, cost and effort to control it.
+              </>
+            }
+            cite="Source: Health and Safety at Work etc. Act 1974, s.2(1) — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain the structure and purpose of HSWA 1974",
+              "Describe employer duties under Section 2",
+              "Understand duties to non-employees under Section 3",
+              "Explain employee responsibilities under Sections 7 and 8",
+              "Describe HSE enforcement powers and penalties",
+              "Apply HSWA requirements to building services work",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Introduction and Structure of HSWA 1974</ContentEyebrow>
+
+          <ConceptBlock title="Introduction and Structure of HSWA 1974">
+            <p>
+            The Health and Safety at Work etc. Act 1974 (HSWA) is the primary piece of legislation
+            covering occupational health and safety in Great Britain. It established the Health
+            and Safety Commission (now merged into HSE) and created a framework for all subsequent
+            health and safety regulations.
+            </p>
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Key Characteristics of HSWA 1974
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Enabling Act:</strong> Provides framework for detailed regulations (e.g.,
+            EAWR, PUWER, CDM)
+            </li>
+            <li>
+            <strong>Goal-setting:</strong> States what must be achieved, not precisely how to
+            achieve it
+            </li>
+            <li>
+            <strong>Risk-based:</strong> Duties qualified by 'so far as reasonably
+            practicable' (SFARP)
+            </li>
+            <li>
+            <strong>Criminal law:</strong> Breaches are criminal offences, not civil matters
+            </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Key Sections of HSWA 1974
             </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Safe systems:</strong> Isolation procedures, permits to work
-              </li>
-              <li className="pl-1">
-                <strong>Training:</strong> Competence for electrical work
-              </li>
-              <li className="pl-1">
-                <strong>Equipment:</strong> Maintained test instruments, PPE
-              </li>
-              <li className="pl-1">
-                <strong>Third parties:</strong> Client staff, other trades, building occupants
-              </li>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Section 2</strong> — Duty Holder: Employers. Summary: Duty to employees</li>
+            <li><strong>Section 3</strong> — Duty Holder: Employers/Self-employed. Summary: Duty to non-employees</li>
+            <li><strong>Section 4</strong> — Duty Holder: Premises controllers. Summary: Duty regarding premises</li>
+            <li><strong>Section 6</strong> — Duty Holder: Manufacturers/suppliers. Summary: Duty regarding articles and substances</li>
+            <li><strong>Section 7</strong> — Duty Holder: Employees. Summary: Duty to take care and cooperate</li>
+            <li><strong>Section 8</strong> — Duty Holder: Everyone. Summary: Duty not to interfere with safety provisions</li>
             </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the structure and purpose of HSWA 1974',
-              'Describe employer duties under Section 2',
-              'Understand duties to non-employees under Section 3',
-              'Explain employee responsibilities under Sections 7 and 8',
-              'Describe HSE enforcement powers and penalties',
-              'Apply HSWA requirements to building services work',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Introduction and Structure */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Introduction and Structure of HSWA 1974
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              The Health and Safety at Work etc. Act 1974 (HSWA) is the primary piece of legislation
-              covering occupational health and safety in Great Britain. It established the Health
-              and Safety Commission (now merged into HSE) and created a framework for all subsequent
-              health and safety regulations.
-            </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Characteristics of HSWA 1974
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Enabling Act:</strong> Provides framework for detailed regulations (e.g.,
-                  EAWR, PUWER, CDM)
-                </li>
-                <li className="pl-1">
-                  <strong>Goal-setting:</strong> States what must be achieved, not precisely how to
-                  achieve it
-                </li>
-                <li className="pl-1">
-                  <strong>Risk-based:</strong> Duties qualified by 'so far as reasonably
-                  practicable' (SFARP)
-                </li>
-                <li className="pl-1">
-                  <strong>Criminal law:</strong> Breaches are criminal offences, not civil matters
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Sections of HSWA 1974
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Section</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duty Holder</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Summary</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Section 2</td>
-                      <td className="border border-white/10 px-3 py-2">Employers</td>
-                      <td className="border border-white/10 px-3 py-2">Duty to employees</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Section 3</td>
-                      <td className="border border-white/10 px-3 py-2">Employers/Self-employed</td>
-                      <td className="border border-white/10 px-3 py-2">Duty to non-employees</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Section 4</td>
-                      <td className="border border-white/10 px-3 py-2">Premises controllers</td>
-                      <td className="border border-white/10 px-3 py-2">Duty regarding premises</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Section 6</td>
-                      <td className="border border-white/10 px-3 py-2">Manufacturers/suppliers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Duty regarding articles and substances
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Section 7</td>
-                      <td className="border border-white/10 px-3 py-2">Employees</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Duty to take care and cooperate
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Section 8</td>
-                      <td className="border border-white/10 px-3 py-2">Everyone</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Duty not to interfere with safety provisions
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> HSWA 1974 applies to all work activities. The Electricity
-              at Work Regulations 1989, made under HSWA, provide specific requirements for
-              electrical safety.
+            <strong>Remember:</strong> HSWA 1974 applies to all work activities. The Electricity
+            at Work Regulations 1989, made under HSWA, provide specific requirements for
+            electrical safety.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Employer Duties */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Employer Duties - Sections 2 and 3
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Employer Duties - Sections 2 and 3</ContentEyebrow>
+
+          <ConceptBlock title="Employer Duties - Sections 2 and 3">
             <p>
-              Sections 2 and 3 contain the primary duties placed on employers. These are the
-              foundation of workplace safety management and apply to all building services
-              contractors and employers.
+            Sections 2 and 3 contain the primary duties placed on employers. These are the
+            foundation of workplace safety management and apply to all building services
+            contractors and employers.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Section 2 - Duties to Employees
-              </h3>
-              <p className="text-sm text-white mb-3">
-                <strong>Section 2(1):</strong> "It shall be the duty of every employer to ensure, so
-                far as is reasonably practicable, the health, safety and welfare at work of all his
-                employees."
-              </p>
-              <p className="text-sm font-medium text-white mb-2">
-                Section 2(2) requires provision of:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>(a) Safe plant and systems of work</strong> - Test equipment, isolation
-                  procedures, safe working methods
-                </li>
-                <li className="pl-1">
-                  <strong>(b) Safe handling, storage and transport</strong> - Materials, cables,
-                  equipment, hazardous substances
-                </li>
-                <li className="pl-1">
-                  <strong>(c) Information, instruction, training and supervision</strong> -
-                  Competence for electrical work
-                </li>
-                <li className="pl-1">
-                  <strong>(d) Safe workplace and access/egress</strong> - Working at height,
-                  confined spaces, site conditions
-                </li>
-                <li className="pl-1">
-                  <strong>(e) Safe working environment and welfare</strong> - Lighting, ventilation,
-                  rest facilities
-                </li>
-              </ul>
-            </div>
+            
+            <p><strong>Section 2 - Duties to Employees</strong></p>
+            <p className="text-sm text-white mb-3">
+            <strong>Section 2(1):</strong> "It shall be the duty of every employer to ensure, so
+            far as is reasonably practicable, the health, safety and welfare at work of all his
+            employees."
+            </p>
+            <p className="text-sm font-medium text-white mb-2">
+            Section 2(2) requires provision of:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>(a) Safe plant and systems of work</strong> - Test equipment, isolation
+            procedures, safe working methods
+            </li>
+            <li>
+            <strong>(b) Safe handling, storage and transport</strong> - Materials, cables,
+            equipment, hazardous substances
+            </li>
+            <li>
+            <strong>(c) Information, instruction, training and supervision</strong> -
+            Competence for electrical work
+            </li>
+            <li>
+            <strong>(d) Safe workplace and access/egress</strong> - Working at height,
+            confined spaces, site conditions
+            </li>
+            <li>
+            <strong>(e) Safe working environment and welfare</strong> - Lighting, ventilation,
+            rest facilities
+            </li>
+            </ul>
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Section 3 - Duties to Non-Employees
-              </h3>
-              <p className="text-sm text-white mb-3">
-                <strong>Section 3(1):</strong> "It shall be the duty of every employer to conduct
-                his undertaking in such a way as to ensure, so far as is reasonably practicable,
-                that persons not in his employment who may be affected thereby are not exposed to
-                risks to their health or safety."
-              </p>
-              <p className="text-sm font-medium text-white mb-2">
-                For building services, this includes:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Client staff</strong> - Building occupants during installation or
-                  maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Other contractors</strong> - Coordination on multi-trade sites
-                </li>
-                <li className="pl-1">
-                  <strong>Visitors</strong> - Anyone entering the work area
-                </li>
-                <li className="pl-1">
-                  <strong>Members of the public</strong> - Especially in occupied premises
-                </li>
-              </ul>
-            </div>
+            
+            <p><strong>Section 3 - Duties to Non-Employees</strong></p>
+            <p className="text-sm text-white mb-3">
+            <strong>Section 3(1):</strong> "It shall be the duty of every employer to conduct
+            his undertaking in such a way as to ensure, so far as is reasonably practicable,
+            that persons not in his employment who may be affected thereby are not exposed to
+            risks to their health or safety."
+            </p>
+            <p className="text-sm font-medium text-white mb-2">
+            For building services, this includes:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Client staff</strong> - Building occupants during installation or
+            maintenance
+            </li>
+            <li>
+            <strong>Other contractors</strong> - Coordination on multi-trade sites
+            </li>
+            <li>
+            <strong>Visitors</strong> - Anyone entering the work area
+            </li>
+            <li>
+            <strong>Members of the public</strong> - Especially in occupied premises
+            </li>
+            </ul>
+            
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Building Services Applications
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Maintained and calibrated test instruments</li>
-                  <li className="pl-1">Safe isolation procedures (lock-off)</li>
-                  <li className="pl-1">Competent supervision of apprentices</li>
-                  <li className="pl-1">Risk assessments for electrical work</li>
-                  <li className="pl-1">Method statements for complex tasks</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Written Policy Requirement
-                </p>
-                <p className="text-sm text-white mb-2">
-                  Section 2(3) requires employers with <strong>5 or more employees</strong> to
-                  prepare and revise a written health and safety policy statement, including:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">General policy statement</li>
-                  <li className="pl-1">Organisation (responsibilities)</li>
-                  <li className="pl-1">Arrangements (procedures)</li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Building Services Applications
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Maintained and calibrated test instruments</li>
+            <li>Safe isolation procedures (lock-off)</li>
+            <li>Competent supervision of apprentices</li>
+            <li>Risk assessments for electrical work</li>
+            <li>Method statements for complex tasks</li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Written Policy Requirement
+            </p>
+            <p className="text-sm text-white mb-2">
+            Section 2(3) requires employers with <strong>5 or more employees</strong> to
+            prepare and revise a written health and safety policy statement, including:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>General policy statement</li>
+            <li>Organisation (responsibilities)</li>
+            <li>Arrangements (procedures)</li>
+            </ul>
+            </div>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Section 3 means building services contractors must
-              consider the safety of everyone who might be affected by their work, not just their
-              own employees.
+            <strong>Key point:</strong> Section 3 means building services contractors must
+            consider the safety of everyone who might be affected by their work, not just their
+            own employees.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 3: Employee Duties */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Employee Duties - Sections 7 and 8
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Employee Duties - Sections 7 and 8</ContentEyebrow>
+
+          <ConceptBlock title="Employee Duties - Sections 7 and 8">
             <p>
-              HSWA 1974 places clear legal duties on employees. These are personal responsibilities
-              that cannot be transferred to the employer. Employees can be prosecuted personally for
-              breaches.
+            HSWA 1974 places clear legal duties on employees. These are personal responsibilities
+            that cannot be transferred to the employer. Employees can be prosecuted personally for
+            breaches.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Section 7 - Employee Duties
-              </h3>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Section 7(a) - Duty of Care</p>
-                  <p className="text-sm text-white">
-                    "To take reasonable care for the health and safety of himself and of other
-                    persons who may be affected by his acts or omissions at work."
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">
-                    Section 7(b) - Duty to Cooperate
-                  </p>
-                  <p className="text-sm text-white">
-                    "To cooperate with his employer so far as is necessary to enable any duty or
-                    requirement imposed on the employer to be performed or complied with."
-                  </p>
-                </div>
-              </div>
+            
+            <p><strong>Section 7 - Employee Duties</strong></p>
+            
+            <div>
+            <p className="text-sm font-medium text-white mb-1">Section 7(a) - Duty of Care</p>
+            <p className="text-sm text-white">
+            "To take reasonable care for the health and safety of himself and of other
+            persons who may be affected by his acts or omissions at work."
+            </p>
             </div>
+            <div>
+            <p className="text-sm font-medium text-white mb-1">
+            Section 7(b) - Duty to Cooperate
+            </p>
+            <p className="text-sm text-white">
+            "To cooperate with his employer so far as is necessary to enable any duty or
+            requirement imposed on the employer to be performed or complied with."
+            </p>
+            </div>
+            
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Section 8 - Duty Not to Interfere
-              </h3>
-              <p className="text-sm text-white">
-                "No person shall intentionally or recklessly interfere with or misuse anything
-                provided in the interests of health, safety or welfare in pursuance of any of the
-                relevant statutory provisions."
-              </p>
-            </div>
+            
+            <p><strong>Section 8 - Duty Not to Interfere</strong></p>
+            <p className="text-sm text-white">
+            "No person shall intentionally or recklessly interfere with or misuse anything
+            provided in the interests of health, safety or welfare in pursuance of any of the
+            relevant statutory provisions."
+            </p>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Examples for Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Duty</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Compliance Example
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Breach Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">S.7(a) Care for self</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Using safe isolation before work
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Working live without justification
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">S.7(a) Care for others</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Posting warning signs, barriers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Leaving live conductors exposed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">S.7(b) Cooperate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Attending safety training
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ignoring safety instructions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">S.8 Not interfere</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Keeping guards/covers in place
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Bypassing RCD protection</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Practical Examples for Building Services
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>S.7(a) Care for self</strong> — Compliance Example: Using safe isolation before work. Breach Example: Working live without justification</li>
+            <li><strong>S.7(a) Care for others</strong> — Compliance Example: Posting warning signs, barriers. Breach Example: Leaving live conductors exposed</li>
+            <li><strong>S.7(b) Cooperate</strong> — Compliance Example: Attending safety training. Breach Example: Ignoring safety instructions</li>
+            <li><strong>S.8 Not interfere</strong> — Compliance Example: Keeping guards/covers in place. Breach Example: Bypassing RCD protection</li>
+            </ul>
+            
+            
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Section 36 - Personal Liability
-              </p>
-              <p className="text-sm text-white">
-                Where an offence by an employer is due to the act or default of another person
-                (including an employee), that other person can be charged and convicted whether or
-                not proceedings are taken against the employer. Individuals can face personal fines
-                or imprisonment.
-              </p>
-            </div>
+            <CommonMistake
+            title="Section 36 - Personal Liability"
+            whatHappens={<><p className="text-sm text-white">
+            Where an offence by an employer is due to the act or default of another person
+            (including an employee), that other person can be charged and convicted whether or
+            not proceedings are taken against the employer. Individuals can face personal fines
+            or imprisonment.
+            </p></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> "I was told to do it" is not a defence. Employees must
-              refuse unreasonable instructions that would compromise safety.
+            <strong>Remember:</strong> "I was told to do it" is not a defence. Employees must
+            refuse unreasonable instructions that would compromise safety.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Enforcement and Penalties */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            HSE Enforcement and Penalties
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>HSE Enforcement and Penalties</ContentEyebrow>
+
+          <ConceptBlock title="HSE Enforcement and Penalties">
             <p>
-              The Health and Safety Executive (HSE) is the enforcing authority for most workplaces,
-              including construction sites and building services work. HSE inspectors have extensive
-              powers under HSWA 1974.
+            The Health and Safety Executive (HSE) is the enforcing authority for most workplaces,
+            including construction sites and building services work. HSE inspectors have extensive
+            powers under HSWA 1974.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                HSE Inspector Powers (Section 20)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Enter premises at any reasonable time (or any time if dangerous)
-                </li>
-                <li className="pl-1">Take a constable if obstruction is anticipated</li>
-                <li className="pl-1">Examine, investigate, and take measurements/photographs</li>
-                <li className="pl-1">Take samples of articles, substances, or the atmosphere</li>
-                <li className="pl-1">Require persons to answer questions and sign declarations</li>
-                <li className="pl-1">Inspect and take copies of documents</li>
-                <li className="pl-1">
-                  Seize and render harmless any article causing imminent danger
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            HSE Inspector Powers (Section 20)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Enter premises at any reasonable time (or any time if dangerous)
+            </li>
+            <li>Take a constable if obstruction is anticipated</li>
+            <li>Examine, investigate, and take measurements/photographs</li>
+            <li>Take samples of articles, substances, or the atmosphere</li>
+            <li>Require persons to answer questions and sign declarations</li>
+            <li>Inspect and take copies of documents</li>
+            <li>
+            Seize and render harmless any article causing imminent danger
+            </li>
+            </ul>
+            
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-                <h3 className="text-sm font-medium text-orange-400 mb-2">
-                  Improvement Notice (Section 21)
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Issued when contravention exists or is likely</li>
-                  <li className="pl-1">
-                    <strong>Minimum 21 days</strong> to comply
-                  </li>
-                  <li className="pl-1">Work can continue while remedying</li>
-                  <li className="pl-1">Appeal suspends the notice</li>
-                  <li className="pl-1">Must state contravention and reason</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h3 className="text-sm font-medium text-red-400 mb-2">
-                  Prohibition Notice (Section 22)
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Risk of <strong>serious personal injury</strong>
-                  </li>
-                  <li className="pl-1">
-                    Can take <strong>immediate effect</strong>
-                  </li>
-                  <li className="pl-1">Activity must stop until remedied</li>
-                  <li className="pl-1">Appeal does NOT suspend the notice</li>
-                  <li className="pl-1">No current contravention needed</li>
-                </ul>
-              </div>
-            </div>
+            
+            <CommonMistake
+            title="Improvement Notice (Section 21)"
+            whatHappens={<><ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Issued when contravention exists or is likely</li>
+            <li>
+            <strong>Minimum 21 days</strong> to comply
+            </li>
+            <li>Work can continue while remedying</li>
+            <li>Appeal suspends the notice</li>
+            <li>Must state contravention and reason</li>
+            </ul></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
+            <CommonMistake
+            title="Prohibition Notice (Section 22)"
+            whatHappens={<><ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Risk of <strong>serious personal injury</strong>
+            </li>
+            <li>
+            Can take <strong>immediate effect</strong>
+            </li>
+            <li>Activity must stop until remedied</li>
+            <li>Appeal does NOT suspend the notice</li>
+            <li>No current contravention needed</li>
+            </ul></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Penalties for Offences</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Offence</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Magistrates' Court
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Crown Court</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Breach of Sections 2-6</td>
-                      <td className="border border-white/10 px-3 py-2">Unlimited fine</td>
-                      <td className="border border-white/10 px-3 py-2">Unlimited fine</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Breach of Section 7 (employees)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Unlimited fine</td>
-                      <td className="border border-white/10 px-3 py-2">Unlimited fine</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Breach of Improvement Notice
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Unlimited fine</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlimited fine and/or 2 years prison
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Breach of Prohibition Notice
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlimited fine and/or 6 months prison
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlimited fine and/or 2 years prison
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Penalties for Offences</p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Breach of Sections 2-6</strong> — Magistrates' Court: Unlimited fine. Crown Court: Unlimited fine</li>
+            <li><strong>Breach of Section 7 (employees)</strong> — Magistrates' Court: Unlimited fine. Crown Court: Unlimited fine</li>
+            <li><strong>Breach of Improvement Notice</strong> — Magistrates' Court: Unlimited fine. Crown Court: Unlimited fine and/or 2 years prison</li>
+            <li><strong>Breach of Prohibition Notice</strong> — Magistrates' Court: Unlimited fine and/or 6 months prison. Crown Court: Unlimited fine and/or 2 years prison</li>
+            </ul>
+            
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fee for Intervention (FFI)
-              </p>
-              <p className="text-sm text-white">
-                Since 2012, HSE recovers its costs from duty holders who are found to be in material
-                breach of health and safety law. The current rate is <strong>£163 per hour</strong>{' '}
-                (2024) for all time spent investigating the breach, including site visits,
-                correspondence and enforcement action.
-              </p>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Fee for Intervention (FFI)
+            </p>
+            <p className="text-sm text-white">
+            Since 2012, HSE recovers its costs from duty holders who are found to be in material
+            breach of health and safety law. The current rate is <strong>£163 per hour</strong>{' '}
+            (2024) for all time spent investigating the breach, including site visits,
+            correspondence and enforcement action.
+            </p>
+            
 
             <p className="text-sm text-white italic">
-              <strong>Note:</strong> Corporate Manslaughter and Corporate Homicide Act 2007 creates
-              a separate offence with unlimited fines for organisations whose gross breach causes
-              death.
+            <strong>Note:</strong> Corporate Manslaughter and Corporate Homicide Act 2007 creates
+            a separate offence with unlimited fines for organisations whose gross breach causes
+            death.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Building Services Applications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Building Services Applications</h2>
+          <ConceptBlock title="Building Services Applications">
+            <p><strong>Section 2 - Safe Systems of Work</strong></p>
+            <p className="text-sm text-white mb-3">For electrical work, safe systems include:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Safe isolation procedure:</strong> Switch off, isolate, secure, prove
+            dead, post warnings
+            </li>
+            <li>
+            <strong>Permits to work:</strong> High voltage work, energised work when
+            unavoidable
+            </li>
+            <li>
+            <strong>Risk assessments:</strong> Task-specific assessments for non-routine work
+            </li>
+            <li>
+            <strong>Method statements:</strong> Step-by-step procedures for complex
+            installations
+            </li>
+            </ul>
+            
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Section 2 - Safe Systems of Work
-              </h3>
-              <p className="text-sm text-white mb-3">For electrical work, safe systems include:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Safe isolation procedure:</strong> Switch off, isolate, secure, prove
-                  dead, post warnings
-                </li>
-                <li className="pl-1">
-                  <strong>Permits to work:</strong> High voltage work, energised work when
-                  unavoidable
-                </li>
-                <li className="pl-1">
-                  <strong>Risk assessments:</strong> Task-specific assessments for non-routine work
-                </li>
-                <li className="pl-1">
-                  <strong>Method statements:</strong> Step-by-step procedures for complex
-                  installations
-                </li>
-              </ul>
-            </div>
+            
+            <p><strong>Section 2(2)(c) - Information, Instruction, Training</strong></p>
+            <p className="text-sm text-white mb-3">
+            Building services employers must ensure workers are competent through:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Formal qualifications:</strong> Level 3 Electrotechnical qualification,
+            HNC/HND
+            </li>
+            <li>
+            <strong>Ongoing training:</strong> BS 7671 updates, new technologies,
+            equipment-specific
+            </li>
+            <li>
+            <strong>Supervision:</strong> Appropriate oversight of apprentices and trainees
+            </li>
+            <li>
+            <strong>Information:</strong> Access to current regulations, manufacturer guidance
+            </li>
+            </ul>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Section 2(2)(c) - Information, Instruction, Training
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Building services employers must ensure workers are competent through:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Formal qualifications:</strong> Level 3 Electrotechnical qualification,
-                  HNC/HND
-                </li>
-                <li className="pl-1">
-                  <strong>Ongoing training:</strong> BS 7671 updates, new technologies,
-                  equipment-specific
-                </li>
-                <li className="pl-1">
-                  <strong>Supervision:</strong> Appropriate oversight of apprentices and trainees
-                </li>
-                <li className="pl-1">
-                  <strong>Information:</strong> Access to current regulations, manufacturer guidance
-                </li>
-              </ul>
-            </div>
+            
+            <p><strong>Section 3 - Occupied Premises</strong></p>
+            <p className="text-sm text-white mb-3">
+            When working in occupied buildings, consider:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Coordination:</strong> Inform building manager/FM of work schedule and
+            risks
+            </li>
+            <li>
+            <strong>Segregation:</strong> Barriers, signs, managed access to work areas
+            </li>
+            <li>
+            <strong>Emergency:</strong> Ensure fire escape routes remain accessible
+            </li>
+            <li>
+            <strong>Services:</strong> Minimise disruption while maintaining safety
+            </li>
+            </ul>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Section 3 - Occupied Premises
-              </h3>
-              <p className="text-sm text-white mb-3">
-                When working in occupied buildings, consider:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Coordination:</strong> Inform building manager/FM of work schedule and
-                  risks
-                </li>
-                <li className="pl-1">
-                  <strong>Segregation:</strong> Barriers, signs, managed access to work areas
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency:</strong> Ensure fire escape routes remain accessible
-                </li>
-                <li className="pl-1">
-                  <strong>Services:</strong> Minimise disruption while maintaining safety
-                </li>
-              </ul>
-            </div>
+            
+            <p><strong>Record Keeping</strong></p>
+            <p className="text-sm text-white mb-3">Evidence of HSWA compliance includes:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Written health and safety policy (5+ employees)</li>
+            <li>Risk assessments and method statements</li>
+            <li>Training records and competence evidence</li>
+            <li>Equipment inspection and calibration records</li>
+            <li>Accident/incident reports and investigations</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Record Keeping</h3>
-              <p className="text-sm text-white mb-3">Evidence of HSWA compliance includes:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Written health and safety policy (5+ employees)</li>
-                <li className="pl-1">Risk assessments and method statements</li>
-                <li className="pl-1">Training records and competence evidence</li>
-                <li className="pl-1">Equipment inspection and calibration records</li>
-                <li className="pl-1">Accident/incident reports and investigations</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
+          <ConceptBlock title="Practical Guidance">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Sections to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Section 2:</strong> Employer duties to employees (SFARP)
-                </li>
-                <li className="pl-1">
-                  <strong>Section 3:</strong> Duties to non-employees (SFARP)
-                </li>
-                <li className="pl-1">
-                  <strong>Section 7:</strong> Employee duty of care and cooperation
-                </li>
-                <li className="pl-1">
-                  <strong>Section 8:</strong> Duty not to interfere with safety provisions
-                </li>
-                <li className="pl-1">
-                  <strong>Section 20:</strong> Inspector powers
-                </li>
-                <li className="pl-1">
-                  <strong>Sections 21/22:</strong> Improvement and Prohibition Notices
-                </li>
-              </ul>
+            <p><strong>Key Sections to Remember</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Section 2:</strong> Employer duties to employees (SFARP)
+            </li>
+            <li>
+            <strong>Section 3:</strong> Duties to non-employees (SFARP)
+            </li>
+            <li>
+            <strong>Section 7:</strong> Employee duty of care and cooperation
+            </li>
+            <li>
+            <strong>Section 8:</strong> Duty not to interfere with safety provisions
+            </li>
+            <li>
+            <strong>Section 20:</strong> Inspector powers
+            </li>
+            <li>
+            <strong>Sections 21/22:</strong> Improvement and Prohibition Notices
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">SFARP Assessment</h3>
-              <p className="text-sm text-white mb-2">
-                'So far as reasonably practicable' requires weighing:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Risk:</strong> Likelihood and severity of harm
-                </li>
-                <li className="pl-1">
-                  <strong>vs Sacrifice:</strong> Cost, time, effort to control the risk
-                </li>
-                <li className="pl-1">
-                  If sacrifice is grossly disproportionate to risk, measure may not be required
-                </li>
-                <li className="pl-1">
-                  Burden of proof is on the duty holder to show impracticability
-                </li>
-              </ul>
+            <p><strong>SFARP Assessment</strong></p>
+            <p className="text-sm text-white mb-2">
+            'So far as reasonably practicable' requires weighing:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Risk:</strong> Likelihood and severity of harm
+            </li>
+            <li>
+            <strong>vs Sacrifice:</strong> Cost, time, effort to control the risk
+            </li>
+            <li>
+            If sacrifice is grossly disproportionate to risk, measure may not be required
+            </li>
+            <li>
+            Burden of proof is on the duty holder to show impracticability
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Building Services Breaches
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Inadequate isolation procedures (working live unnecessarily)
-                </li>
-                <li className="pl-1">Insufficient supervision of apprentices/trainees</li>
-                <li className="pl-1">Failure to coordinate with other contractors</li>
-                <li className="pl-1">Poor housekeeping (trip hazards, blocked access)</li>
-                <li className="pl-1">Uncalibrated or damaged test equipment</li>
-              </ul>
+            <p><strong>Common Building Services Breaches</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Inadequate isolation procedures (working live unnecessarily)
+            </li>
+            <li>Insufficient supervision of apprentices/trainees</li>
+            <li>Failure to coordinate with other contractors</li>
+            <li>Poor housekeeping (trip hazards, blocked access)</li>
+            <li>Uncalibrated or damaged test equipment</li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <RegsCallout
+            source="HASAWA 1974 — Section 7"
+            clause="It shall be the duty of every employee while at work to take reasonable care for the health and safety of himself and of other persons who may be affected by his acts or omissions at work; and as regards any duty or requirement imposed on his employer or any other person by or under any of the relevant statutory provisions, to co-operate with him so far as is necessary to enable that duty or requirement to be performed or complied with."
+            meaning={
+              <>
+                Section 7 binds you personally — apprentice, technician, engineer, supervisor or
+                director. It is the legal basis for refusing an unsafe instruction and for raising
+                a written safety concern through your firm&rsquo;s safety management system.
+              </>
+            }
+            cite="Source: Health and Safety at Work etc. Act 1974, s.7 — legislation.gov.uk"
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Duty Holders</p>
-                <ul className="space-y-0.5">
-                  <li>Employers - S.2 (employees) S.3 (others)</li>
-                  <li>Self-employed - S.3(2)</li>
-                  <li>Employees - S.7 (care) S.8 (not interfere)</li>
-                  <li>Manufacturers/suppliers - S.6</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Enforcement</p>
-                <ul className="space-y-0.5">
-                  <li>Improvement Notice - 21 days minimum</li>
-                  <li>Prohibition Notice - Immediate if danger</li>
-                  <li>Fines - Unlimited (all courts)</li>
-                  <li>Prison - Up to 2 years (Crown Court)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="The contractor wants to energise an unfinished MCC for early commissioning"
+            situation={
+              <>
+                You are the building services HNC supervisor on a fit-out. The principal contractor
+                pushes to energise the main switchboard a week early so HVAC commissioning can
+                start, even though the panel build is incomplete and the certifying engineer
+                has not signed off.
+              </>
+            }
+            whatToDo={
+              <>
+                Decline in writing, citing HSWA s.2 (safe systems of work), s.3 (duties to
+                non-employees on site) and EAWR Reg 4 (the absolute duty to keep equipment safe).
+                Offer a controlled alternative: temporary supply to a defined sub-board with
+                isolation, lock-off and a permit-to-work for the limited commissioning scope.
+                Record the decision in the site safety log.
+              </>
+            }
+            whyItMatters={
+              <>
+                Energising an uncertified board exposes the contractor to a Prohibition Notice and
+                exposes you personally to s.7 prosecution. A proportionate alternative protects the
+                programme and the duty-holders.
+              </>
+            }
+          />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'HSWA 1974 is enabling legislation — it sets duties, the regulations made under it (EAWR, CDM, COSHH, PUWER) set the technical detail.',
+              'Section 2 places five core duties on the employer: safe plant/systems, safe handling, ITIS (information, instruction, training, supervision), safe place, welfare.',
+              'Section 3 extends duties to non-employees affected by the work — a critical clause when you are on someone else&rsquo;s site or designing an occupied refurbishment.',
+              'Section 7 puts a personal duty of care on every employee; Section 8 prohibits interference with safety provisions, with personal criminal liability under Section 36.',
+              'SFARP requires a documented balance — risk vs sacrifice. The burden of proof sits with the duty-holder, not the regulator.',
+              'HSE enforcement runs from FFI (£163/hr) through Improvement Notices (21-day minimum) and Prohibition Notices (immediate effect) to unlimited fines and 2-year custodial sentences.',
+              'Employers with 5 or more employees must have a written H&S policy under s.2(3) — make sure you can find your firm&rsquo;s before any job starts.',
+              'On a building services project HSWA underpins your CDM file, your method statements, your permits and your EICs — every layer of paperwork traces back to the Act.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section1-2">
-              Next: Management of Health and Safety
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 1
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section1-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Management of Health and Safety
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

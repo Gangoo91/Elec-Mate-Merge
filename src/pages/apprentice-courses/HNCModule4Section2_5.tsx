@@ -1,8 +1,27 @@
-import { ArrowLeft, Cable, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 2 · Subsection 5 — Cable Types and Selection
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   PVC vs XLPE insulation, LSF/LSZH low-smoke variants, SWA armoured cables, fire
+ *   performance (FP / MI / Category 1-3 to BS 8519), gland selection and matching cable
+ *   construction to building services applications.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Cable Types and Selection - HNC Module 4 Section 2.5';
@@ -205,806 +224,544 @@ const faqs = [
 ];
 
 const HNCModule4Section2_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Cable className="h-4 w-4" />
-            <span>Module 4.2.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Cable Types and Selection
-          </h1>
-          <p className="text-white">
-            Understanding insulation materials, armoured cables and fire-resistant constructions
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 2 · Subsection 5"
+            title="Cable Types and Selection"
+            description="Understanding insulation materials, armoured cables and fire-resistant constructions."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>PVC:</strong> 70°C, general purpose, low cost
-              </li>
-              <li className="pl-1">
-                <strong>XLPE:</strong> 90°C, higher capacity, better fault withstand
-              </li>
-              <li className="pl-1">
-                <strong>LSF/LSZH:</strong> Low smoke, for occupied buildings
-              </li>
-              <li className="pl-1">
-                <strong>SWA:</strong> Mechanical protection, external use
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Risers:</strong> XLPE/LSF for capacity and safety
-              </li>
-              <li className="pl-1">
-                <strong>Fire systems:</strong> FP cables mandatory
-              </li>
-              <li className="pl-1">
-                <strong>External plant:</strong> SWA for protection
-              </li>
-              <li className="pl-1">
-                <strong>Data centres:</strong> LSF to protect equipment
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'PVC (70&nbsp;°C) is the workhorse for general final-circuit wiring; XLPE (90&nbsp;°C) wins for sub-mains, plant rooms and where higher I_z is needed.',
+              'LSF/LSZH cables produce low smoke and low/zero halogen on burning — mandatory in escape routes, public buildings, transport and underground stations.',
+              'SWA (steel wire armour) provides mechanical protection for buried, plant-room and high-risk routes; AWA (aluminium wire armour) for single-core to avoid eddy currents.',
+              'Fire-resistant cables (FP200, FP400, MICC) keep critical circuits live for the rated period — essential for fire alarm, emergency lighting, smoke extract, sprinkler.',
+              'BS 7671 Reg 134.1.1 makes good workmanship in cable installation a mandatory requirement — wrong cable for the environment is a workmanship failure.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 134.1.1 (Good workmanship in erection)"
+            clause="Good workmanship by one or more skilled or instructed persons shall be used in the erection of the electrical installation. This is a mandatory requirement: workmanship used in installing wiring, equipment and associated components shall meet the standard of being 'good workmanship' performed by persons who are skilled or instructed."
+            meaning={
+              <>
+                Reg 134.1.1 is the regulatory hook for cable selection &amp; installation
+                quality. Selecting PVC where LSF is needed, XLPE where fire-resistant is needed,
+                or unarmoured where SWA is needed are all workmanship failures under 134.1.1 —
+                even if every other table check passes. As designer you specify the right cable
+                for the environment; the installer applies skilled workmanship to deliver it.
+                Both signatures sit on the EIC.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 134.1.1; BS 6724 (LSF SWA), BS EN 50200 (FP cables), BS 6207 (MICC); CIBSE Guide K."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Compare PVC, XLPE and other insulation materials',
               'Specify LSF/LSZH cables for appropriate applications',
               'Select SWA cables for mechanical protection requirements',
               'Understand fire performance cable requirements (FP, MI)',
               'Apply cable selection criteria for different environments',
               'Match cable specifications to building services applications',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: XLPE and PVC Insulation */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            XLPE and PVC Insulation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="XLPE and PVC Insulation">
             <p>
               The two most common insulation materials in building services are PVC (polyvinyl
-              chloride) and XLPE (cross-linked polyethylene). Each has distinct properties affecting
-              cable selection.
+              chloride) and XLPE (cross-linked polyethylene). Each has distinct properties
+              affecting cable selection.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Insulation Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Property</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">PVC (70°C)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">XLPE (90°C)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Operating temperature</td>
-                      <td className="border border-white/10 px-3 py-2">70°C</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">90°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Short-circuit temperature
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">160°C</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">250°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">k value (copper)</td>
-                      <td className="border border-white/10 px-3 py-2">115</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">143</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Current capacity</td>
-                      <td className="border border-white/10 px-3 py-2">Reference</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        ~20% higher
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Lower</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flexibility</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Better</td>
-                      <td className="border border-white/10 px-3 py-2">Stiffer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire performance</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">
-                        Produces toxic smoke
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Less toxic smoke</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use PVC</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">General purpose final circuits</li>
-                  <li className="pl-1">Cost-sensitive installations</li>
-                  <li className="pl-1">Where flexibility is important</li>
-                  <li className="pl-1">Normal ambient temperatures</li>
-                  <li className="pl-1">Non-critical applications</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use XLPE</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">High ambient temperature locations</li>
-                  <li className="pl-1">Main distribution and sub-mains</li>
-                  <li className="pl-1">High fault level installations</li>
-                  <li className="pl-1">Space-constrained cable routes</li>
-                  <li className="pl-1">Underground and external use (with SWA)</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Insulation comparison (property / PVC 70°C / XLPE 90°C):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Operating temperature: 70°C / 90°C</li>
+              <li>Short-circuit temperature: 160°C / 250°C</li>
+              <li>k value (copper): 115 / 143</li>
+              <li>Current capacity: reference / ~20% higher</li>
+              <li>Cost: lower / higher</li>
+              <li>Flexibility: better / stiffer</li>
+              <li>Fire performance: produces toxic smoke / less toxic smoke</li>
+            </ul>
+            <p>
+              <strong>When to use PVC:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>General purpose final circuits</li>
+              <li>Cost-sensitive installations</li>
+              <li>Where flexibility is important</li>
+              <li>Normal ambient temperatures</li>
+              <li>Non-critical applications</li>
+            </ul>
+            <p>
+              <strong>When to use XLPE:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>High ambient temperature locations</li>
+              <li>Main distribution and sub-mains</li>
+              <li>High fault level installations</li>
+              <li>Space-constrained cable routes</li>
+              <li>Underground and external use (with SWA)</li>
+            </ul>
+            <p>
               <strong>Cost tip:</strong> XLPE's higher capacity often means a smaller cable can be
               used, potentially offsetting the higher per-metre cost.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: LSF and LSZH Cables */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            LSF and LSZH Cables
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="LSF and LSZH Cables">
             <p>
               In occupied buildings, the smoke and gases released by burning cables can be more
               dangerous than the fire itself. Low Smoke and Fume (LSF) and Low Smoke Zero Halogen
               (LSZH) cables address this critical safety issue.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-              <p className="text-sm font-medium text-orange-400 mb-2">PVC Fire Hazards</p>
-              <p className="text-sm text-white">Standard PVC cables burning in a fire produce:</p>
-              <ul className="text-sm text-white mt-2 space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Dense black smoke:</strong> Obscures escape routes
-                </li>
-                <li className="pl-1">
-                  <strong>Hydrogen chloride gas:</strong> Toxic and corrosive
-                </li>
-                <li className="pl-1">
-                  <strong>Acidic residue:</strong> Damages electronics and structures
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">LSF vs LSZH Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Designation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Full Name</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Characteristics
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">LSF</td>
-                      <td className="border border-white/10 px-3 py-2">Low Smoke and Fume</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduced smoke; may still contain some halogens
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">LSZH / LSOH</td>
-                      <td className="border border-white/10 px-3 py-2">Low Smoke Zero Halogen</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No halogens; minimal toxic fumes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">OHLS</td>
-                      <td className="border border-white/10 px-3 py-2">Zero Halogen Low Smoke</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Same as LSZH (alternative designation)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Where LSF/LSZH is Required or Recommended
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Escape routes:</strong> Corridors, stairwells, lobbies
-                </li>
-                <li className="pl-1">
-                  <strong>Public buildings:</strong> Hospitals, schools, shopping centres
-                </li>
-                <li className="pl-1">
-                  <strong>Transport:</strong> Underground stations, tunnels, airports
-                </li>
-                <li className="pl-1">
-                  <strong>High-rise:</strong> Buildings where evacuation takes time
-                </li>
-                <li className="pl-1">
-                  <strong>Data centres:</strong> To protect sensitive equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Ships and offshore:</strong> Confined spaces
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Specification tip:</strong> Check the building fire strategy document - it
+            <p>
+              <strong>PVC fire hazards:</strong> Standard PVC cables burning in a fire produce:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Dense black smoke:</strong> obscures escape routes
+              </li>
+              <li>
+                <strong>Hydrogen chloride gas:</strong> toxic and corrosive
+              </li>
+              <li>
+                <strong>Acidic residue:</strong> damages electronics and structures
+              </li>
+            </ul>
+            <p>
+              <strong>LSF vs LSZH (designation / full name / characteristics):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LSF</strong> — Low Smoke and Fume — reduced smoke; may still contain some
+                halogens
+              </li>
+              <li>
+                <strong>LSZH / LSOH</strong> — Low Smoke Zero Halogen — no halogens; minimal toxic
+                fumes
+              </li>
+              <li>
+                <strong>OHLS</strong> — Zero Halogen Low Smoke — same as LSZH (alternative
+                designation)
+              </li>
+            </ul>
+            <p>
+              <strong>Where LSF/LSZH is required or recommended:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Escape routes:</strong> corridors, stairwells, lobbies
+              </li>
+              <li>
+                <strong>Public buildings:</strong> hospitals, schools, shopping centres
+              </li>
+              <li>
+                <strong>Transport:</strong> underground stations, tunnels, airports
+              </li>
+              <li>
+                <strong>High-rise:</strong> buildings where evacuation takes time
+              </li>
+              <li>
+                <strong>Data centres:</strong> to protect sensitive equipment
+              </li>
+              <li>
+                <strong>Ships and offshore:</strong> confined spaces
+              </li>
+            </ul>
+            <p>
+              <strong>Specification tip:</strong> Check the building fire strategy document — it
               often mandates LSF/LSZH throughout or in specific areas.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: SWA Armoured Cables */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            SWA Armoured Cables
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="SWA Armoured Cables">
             <p>
               Steel Wire Armoured (SWA) cables provide robust mechanical protection for demanding
               environments. They're the standard choice for external, underground and industrial
               applications in building services.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">SWA Cable Construction</p>
-              <div className="text-sm text-white space-y-1">
-                <p>
-                  1. <strong>Conductors:</strong> Copper or aluminium, stranded for flexibility
-                </p>
-                <p>
-                  2. <strong>Insulation:</strong> XLPE (preferred) or PVC around each conductor
-                </p>
-                <p>
-                  3. <strong>Bedding:</strong> PVC or LSF layer protecting conductors from armour
-                </p>
-                <p>
-                  4. <strong>Armour:</strong> Galvanised steel wires wound helically
-                </p>
-                <p>
-                  5. <strong>Outer sheath:</strong> PVC or LSF for corrosion protection
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">SWA Applications</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Why SWA?</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Underground supplies</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protects against ground movement, digging
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lay with warning tape above
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External plant feeds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Weather and UV resistance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Clipped to walls or on tray
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial areas</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Impact and abrasion resistance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Often on ladder or tray</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sub-mains</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mechanical protection for major circuits
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Armour can act as CPC</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outbuildings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protected cable to detached structures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Direct burial or in duct</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Armour as CPC</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Requires proper gland termination</li>
-                  <li className="pl-1">Must verify adiabatic compliance</li>
-                  <li className="pl-1">Connect armour at both ends</li>
-                  <li className="pl-1">Typically used with 4-core (no internal CPC)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Gland Selection</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>CW glands:</strong> Indoor, non-hazardous
-                  </li>
-                  <li className="pl-1">
-                    <strong>BW glands:</strong> Indoor, weatherproof seal
-                  </li>
-                  <li className="pl-1">
-                    <strong>E1W glands:</strong> Outdoor/weatherproof
-                  </li>
-                  <li className="pl-1">Match gland to cable OD and armour type</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>SWA cable construction:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Conductors:</strong> copper or aluminium, stranded for flexibility
+              </li>
+              <li>
+                <strong>Insulation:</strong> XLPE (preferred) or PVC around each conductor
+              </li>
+              <li>
+                <strong>Bedding:</strong> PVC or LSF layer protecting conductors from armour
+              </li>
+              <li>
+                <strong>Armour:</strong> galvanised steel wires wound helically
+              </li>
+              <li>
+                <strong>Outer sheath:</strong> PVC or LSF for corrosion protection
+              </li>
+            </ul>
+            <p>
+              <strong>SWA applications (application / why SWA / notes):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Underground supplies — protects against ground movement, digging — lay with warning
+                tape above
+              </li>
+              <li>External plant feeds — weather and UV resistance — clipped to walls or on tray</li>
+              <li>Industrial areas — impact and abrasion resistance — often on ladder or tray</li>
+              <li>Sub-mains — mechanical protection for major circuits — armour can act as CPC</li>
+              <li>Outbuildings — protected cable to detached structures — direct burial or in duct</li>
+            </ul>
+            <p>
+              <strong>Armour as CPC:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Requires proper gland termination</li>
+              <li>Must verify adiabatic compliance</li>
+              <li>Connect armour at both ends</li>
+              <li>Typically used with 4-core (no internal CPC)</li>
+            </ul>
+            <p>
+              <strong>Gland selection:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>CW glands:</strong> indoor, non-hazardous
+              </li>
+              <li>
+                <strong>BW glands:</strong> indoor, weatherproof seal
+              </li>
+              <li>
+                <strong>E1W glands:</strong> outdoor/weatherproof
+              </li>
+              <li>Match gland to cable OD and armour type</li>
+            </ul>
+            <p>
               <strong>Installation note:</strong> SWA minimum bending radius is typically 6× cable
               diameter for fixed installations, 8× for single bend during installation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Fire Performance and MI Cables */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Fire Performance and MI Cables
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Fire Performance and MI Cables">
             <p>
               For life safety systems that must continue operating during a fire, standard cables
               are inadequate. Fire Performance (FP) cables and Mineral Insulated (MI) cables
               maintain circuit integrity under fire conditions.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Performance Classifications (BS 8519)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Fire Resistance
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Standard</td>
-                      <td className="border border-white/10 px-3 py-2">Flame retardant only</td>
-                      <td className="border border-white/10 px-3 py-2">General wiring</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Category 1</td>
-                      <td className="border border-white/10 px-3 py-2">120 minutes at 950°C</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire alarm, emergency lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Category 2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enhanced mechanical protection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Smoke ventilation, sprinkler pumps
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Category 3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Water resistance with fire
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Firefighting lifts, wet risers
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Fire Performance Cables
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-1">FP200 Gold</p>
-                  <ul className="text-white space-y-1 text-xs">
-                    <li>- Mica-glass tape insulation</li>
-                    <li>- Aluminium tape screen + drain wire</li>
-                    <li>- Maintains integrity in fire</li>
-                    <li>- Popular for fire alarms, emergency lighting</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-1">MICC / Pyro</p>
-                  <ul className="text-white space-y-1 text-xs">
-                    <li>- Mineral insulation (MgO)</li>
-                    <li>- Copper sheath</li>
-                    <li>- Completely fireproof</li>
-                    <li>- Most demanding applications</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Life Safety System Cable Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fire alarm (BS 5839):</strong> Enhanced fire resistance required
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency lighting (BS 5266):</strong> Cable maintains circuit in fire
-                </li>
-                <li className="pl-1">
-                  <strong>Smoke control (BS 7346):</strong> Category 2 or 3 depending on system
-                </li>
-                <li className="pl-1">
-                  <strong>Firefighting lifts (BS EN 81-72):</strong> 120 minutes minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Voice alarm (BS 5839-8):</strong> Enhanced fire performance
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mineral Insulated (MI) Cables
-              </p>
-              <p className="text-sm text-white mb-2">
-                MI cables use magnesium oxide powder insulation in a seamless metal sheath:
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white mb-1">Advantages:</p>
-                  <ul className="text-white space-y-0.5 text-xs">
-                    <li>+ Completely fireproof</li>
-                    <li>+ Very high temperature rating</li>
-                    <li>+ Long service life (50+ years)</li>
-                    <li>+ Sheath provides mechanical protection</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white mb-1">Disadvantages:</p>
-                  <ul className="text-white space-y-0.5 text-xs">
-                    <li>- Expensive</li>
-                    <li>- Specialist termination required</li>
-                    <li>- MgO is hygroscopic (absorbs moisture)</li>
-                    <li>- Less flexible, awkward to route</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Fire performance classifications (BS 8519) — category / fire resistance / typical application:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Standard:</strong> flame retardant only — general wiring
+              </li>
+              <li>
+                <strong>Category 1:</strong> 120 minutes at 950°C — fire alarm, emergency lighting
+              </li>
+              <li>
+                <strong>Category 2:</strong> enhanced mechanical protection — smoke ventilation,
+                sprinkler pumps
+              </li>
+              <li>
+                <strong>Category 3:</strong> water resistance with fire — firefighting lifts, wet
+                risers
+              </li>
+            </ul>
+            <p>
+              <strong>FP200 Gold:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mica-glass tape insulation</li>
+              <li>Aluminium tape screen + drain wire</li>
+              <li>Maintains integrity in fire</li>
+              <li>Popular for fire alarms, emergency lighting</li>
+            </ul>
+            <p>
+              <strong>MICC / Pyro:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mineral insulation (MgO)</li>
+              <li>Copper sheath</li>
+              <li>Completely fireproof</li>
+              <li>Most demanding applications</li>
+            </ul>
+            <p>
+              <strong>Life safety system cable requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fire alarm (BS 5839):</strong> enhanced fire resistance required
+              </li>
+              <li>
+                <strong>Emergency lighting (BS 5266):</strong> cable maintains circuit in fire
+              </li>
+              <li>
+                <strong>Smoke control (BS 7346):</strong> Category 2 or 3 depending on system
+              </li>
+              <li>
+                <strong>Firefighting lifts (BS EN 81-72):</strong> 120 minutes minimum
+              </li>
+              <li>
+                <strong>Voice alarm (BS 5839-8):</strong> enhanced fire performance
+              </li>
+            </ul>
+            <p>
+              <strong>Mineral Insulated (MI) cables:</strong> use magnesium oxide powder insulation
+              in a seamless metal sheath.
+            </p>
+            <p>
+              <strong>Advantages:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Completely fireproof</li>
+              <li>Very high temperature rating</li>
+              <li>Long service life (50+ years)</li>
+              <li>Sheath provides mechanical protection</li>
+            </ul>
+            <p>
+              <strong>Disadvantages:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Expensive</li>
+              <li>Specialist termination required</li>
+              <li>MgO is hygroscopic (absorbs moisture)</li>
+              <li>Less flexible, awkward to route</li>
+            </ul>
+            <p>
               <strong>Standard reference:</strong> BS 8519 specifies selection and installation of
               fire-resistant cables in buildings. Always check the fire strategy for specific
               requirements.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Selection Examples</h2>
+          <ConceptBlock title="Selection Examples">
+            <p>
+              <strong>Example 1 — office distribution board sub-main:</strong> 100A 3-phase
+              sub-main, 45m in riser, 35°C ambient, grouped with 5 other circuits.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Elevated ambient: favour XLPE (90°C rating)</li>
+              <li>Grouped circuits: XLPE capacity advantage helps</li>
+              <li>Riser location: LSF for fire safety</li>
+              <li>No mechanical hazards: no armour needed</li>
+              <li>
+                Select: <strong>4-core 25mm² XLPE/LSF on cable tray</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — emergency lighting circuit:</strong> emergency lighting circuit in
+              hospital, 80m route through ceiling void and corridor.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Life safety circuit: fire performance required</li>
+              <li>BS 5266: enhanced fire resistance needed</li>
+              <li>Hospital: maximum smoke safety required</li>
+              <li>Ceiling void: may need mechanical protection</li>
+              <li>
+                Select: <strong>FP200 Gold (2-core + CPC) Category 1</strong>
+              </li>
+              <li>Or MICC where budget allows maximum protection</li>
+            </ul>
+            <p>
+              <strong>Example 3 — external chiller supply:</strong> 45kW chiller on roof, supply
+              from basement, 60m route including 30m underground.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Underground section: needs SWA protection</li>
+              <li>External/roof: weatherproof required</li>
+              <li>60m length: check voltage drop (favour XLPE)</li>
+              <li>High fault level near main: verify k²S² (XLPE helps)</li>
+              <li>
+                Select: <strong>4-core 16mm² XLPE/SWA throughout</strong>
+              </li>
+              <li>Use E1W weatherproof glands externally</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Distribution Board Sub-Main
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Requirement:</strong> 100A 3-phase sub-main, 45m in riser, 35°C ambient,
-                grouped with 5 other circuits
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Decision factors:</p>
-                <p>- Elevated ambient: favour XLPE (90°C rating)</p>
-                <p>- Grouped circuits: XLPE capacity advantage helps</p>
-                <p>- Riser location: LSF for fire safety</p>
-                <p>- No mechanical hazards: no armour needed</p>
-                <p className="mt-2 text-green-400">→ Select: 4-core 25mm² XLPE/LSF on cable tray</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Emergency Lighting Circuit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Requirement:</strong> Emergency lighting circuit in hospital, 80m route
-                through ceiling void and corridor
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Decision factors:</p>
-                <p>- Life safety circuit: fire performance required</p>
-                <p>- BS 5266: enhanced fire resistance needed</p>
-                <p>- Hospital: maximum smoke safety required</p>
-                <p>- Ceiling void: may need mechanical protection</p>
-                <p className="mt-2 text-green-400">
-                  → Select: FP200 Gold (2-core + CPC) Category 1
-                </p>
-                <p className="text-white">Or MICC where budget allows maximum protection</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Cable selection checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Current capacity:</strong> PVC for standard, XLPE for high
+                loads/temperatures
+              </li>
+              <li>
+                <strong>Fire safety:</strong> LSF/LSZH in occupied buildings, FP for life safety
+              </li>
+              <li>
+                <strong>Mechanical protection:</strong> SWA for external, underground, industrial
+              </li>
+              <li>
+                <strong>Environment:</strong> match sheath to conditions (UV, moisture, chemicals)
+              </li>
+              <li>
+                <strong>Voltage drop:</strong> consider XLPE or larger size for long runs
+              </li>
+            </ul>
+            <p>
+              <strong>Key standards reference:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 5467:</strong> armoured cables for voltages up to 1000V
+              </li>
+              <li>
+                <strong>BS 7211:</strong> thermosetting insulated cables
+              </li>
+              <li>
+                <strong>BS 8519:</strong> fire-resistant cable selection and installation
+              </li>
+              <li>
+                <strong>BS EN 50575:</strong> cables — reaction to fire (CPR)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: External Chiller Supply
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Requirement:</strong> 45kW chiller on roof, supply from basement, 60m route
-                including 30m underground
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Decision factors:</p>
-                <p>- Underground section: needs SWA protection</p>
-                <p>- External/roof: weatherproof required</p>
-                <p>- 60m length: check voltage drop (favour XLPE)</p>
-                <p>- High fault level near main: verify k²S² (XLPE helps)</p>
-                <p className="mt-2 text-green-400">→ Select: 4-core 16mm² XLPE/SWA throughout</p>
-                <p className="text-white">Use E1W weatherproof glands externally</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable Selection Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Current capacity:</strong> PVC for standard, XLPE for high
-                  loads/temperatures
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Using standard PVC in escape routes</strong> — specify LSF/LSZH
                 </li>
-                <li className="pl-1">
-                  <strong>Fire safety:</strong> LSF/LSZH in occupied buildings, FP for life safety
+                <li>
+                  <strong>Non-FP cables for fire alarms</strong> — check BS 5839 requirements
                 </li>
-                <li className="pl-1">
-                  <strong>Mechanical protection:</strong> SWA for external, underground, industrial
+                <li>
+                  <strong>Wrong gland type for SWA</strong> — match to environment and cable
                 </li>
-                <li className="pl-1">
-                  <strong>Environment:</strong> Match sheath to conditions (UV, moisture, chemicals)
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage drop:</strong> Consider XLPE or larger size for long runs
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Standards Reference
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BS 5467:</strong> Armoured cables for voltages up to 1000V
-                </li>
-                <li className="pl-1">
-                  <strong>BS 7211:</strong> Thermosetting insulated cables
-                </li>
-                <li className="pl-1">
-                  <strong>BS 8519:</strong> Fire-resistant cable selection and installation
-                </li>
-                <li className="pl-1">
-                  <strong>BS EN 50575:</strong> Cables - reaction to fire (CPR)
+                <li>
+                  <strong>Ignoring CPR requirements</strong> — Euroclass ratings now required
                 </li>
               </ul>
-            </div>
+            }
+            doInstead="Specify LSF/LSZH cables on every escape route, use FP cables certified to BS 5839 / BS 5266 for life safety circuits, choose the gland type (CW/BW/E1W) that matches both the cable construction and the environment, and check the Euroclass / CPR rating before ordering."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using standard PVC in escape routes:</strong> Specify LSF/LSZH
-                </li>
-                <li className="pl-1">
-                  <strong>Non-FP cables for fire alarms:</strong> Check BS 5839 requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong gland type for SWA:</strong> Match to environment and cable
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring CPR requirements:</strong> Euroclass ratings now required
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Scenario
+            title="Multi-storey hospital — specifying the cable strategy by zone"
+            situation={
+              <>
+                A 6-storey hospital extension. Building Control require: fire alarm and emergency
+                lighting on dedicated fire-rated cables, normal lighting and small power on
+                LSF/LSZH (escape route requirement), an external buried sub-main from a remote
+                generator, and HV ring-main feeding the substation. You need to specify cable
+                types per zone and justify each choice.
+              </>
+            }
+            whatToDo={
+              <>
+                Fire alarm + emergency lighting: FP200 Gold (60-min rated, BS EN 50200 PH30)
+                clipped direct on the cable route. Smoke extract: FP400 (120-min). General
+                lighting + small power: LSF/LSZH 6491B singles in steel trunking — meets escape
+                route low-smoke requirement (Building Regs Part B). External buried sub-main:
+                LSF SWA Cu/XLPE to BS 6724 with sand bedding and warning tape per BS 7671
+                522.8. HV ring: 11&nbsp;kV XLPE/SWA/PVC to BS 7870. Document each choice on the
+                cable schedule with the reference standard and the Reg 134.1.1 workmanship
+                expectation passed to the install team.
+              </>
+            }
+            whyItMatters={
+              <>
+                In a hospital, the fire-rated and LSF specifications are life-safety. Pick PVC
+                in an escape route and the smoke generated during a fire kills before the fire
+                does. Reg 134.1.1 makes the workmanship of selecting and installing the right
+                cable a mandatory requirement — not a nice-to-have.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Insulation Types</p>
-                <ul className="space-y-0.5">
-                  <li>PVC: 70°C, k=115, general use</li>
-                  <li>XLPE: 90°C, k=143, higher ratings</li>
-                  <li>LSF/LSZH: Low smoke, buildings</li>
-                  <li>MI: Fireproof, specialist use</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Fire Performance</p>
-                <ul className="space-y-0.5">
-                  <li>Standard: Flame retardant only</li>
-                  <li>Category 1: 120 min fire rating</li>
-                  <li>Category 2: + mechanical protection</li>
-                  <li>Category 3: + water resistance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'PVC (70&nbsp;°C) is the general-purpose workhorse; XLPE (90&nbsp;°C) gives ≈ 20% more I_t and survives plant-room ambients better.',
+              'LSF/LSZH cables (BS 6724, BS 7211) are mandatory for escape routes and many public buildings — Building Regs Part B requirement.',
+              'SWA (BS 6724) gives mechanical protection for buried and high-risk routes; AWA for single-core to avoid eddy-current losses.',
+              'Fire-resistant cables: FP200 (60-min PH30), FP400 (120-min PH120), MICC (mineral-insulated, longest-rated) — each to specific BS EN 50200/50362 ratings.',
+              'Reg 134.1.1 makes good workmanship a mandatory requirement — including correct cable selection for the environment.',
+              'Match the cable to the worst environmental condition along its route — cable type is set by the toughest zone, not the average.',
+              'Document the cable type, standard, fire rating and any LSF requirement on the cable schedule.',
+              'External and underground installations need additional protection: warning tape, sand bedding, mechanical cover (BS 7671 Reg 522.8.10).',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: Short-Circuit Withstand
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2-6">
-              Next: Cable Installation Methods
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Short-circuit withstand
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Cable installation methods
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

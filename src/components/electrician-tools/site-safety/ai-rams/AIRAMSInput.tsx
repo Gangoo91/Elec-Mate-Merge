@@ -3,8 +3,10 @@ import { MobileButton } from '@/components/ui/mobile-button';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { Textarea } from '@/components/ui/textarea';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Sparkles, Zap, ChevronDown, Shield, TestTube2 } from 'lucide-react';
+import { Sparkles, Zap, ChevronDown, Shield, TestTube2, FileText } from 'lucide-react';
 import { JobScaleBadge } from './JobScaleBadge';
+import { QuoteSelectorSheet, type QuotePickerRow } from './QuoteSelectorSheet';
+import { toast } from '@/hooks/use-toast';
 
 export interface AIRAMSInputProps {
   onGenerate: (
@@ -53,6 +55,30 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   );
   const [scaleConfidence, setScaleConfidence] = useState<number>(0);
   const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
+  // ELE-300 — pre-fill from quote
+  const [quoteSheetOpen, setQuoteSheetOpen] = useState(false);
+
+  const handlePickQuote = (q: QuotePickerRow) => {
+    const description =
+      q.job_details?.description?.trim() || q.job_details?.title?.trim() || '';
+    if (description) setJobDescription(description);
+    setProjectInfo((prev) => ({
+      ...prev,
+      projectName:
+        q.job_details?.title?.trim() ||
+        (q.client_data?.name ? `${q.client_data.name} job` : prev.projectName),
+      location:
+        q.job_details?.location?.trim() ||
+        q.client_data?.address?.trim() ||
+        prev.location,
+    }));
+    toast({
+      title: 'Pre-filled from quote',
+      description: q.client_data?.name
+        ? `Using details from ${q.client_data.name}'s quote.`
+        : 'Quote details applied.',
+    });
+  };
 
   const examplePrompts: Record<'domestic' | 'commercial' | 'industrial', string[]> = {
     domestic: [
@@ -421,11 +447,20 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
       {/* Divider */}
       <div className="h-px bg-white/[0.08] my-4" />
 
-      {/* Test Data Button */}
+      {/* Test Data + Pre-fill Buttons */}
       <div
-        className="mt-4 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
+        className="mt-4 flex items-center gap-4 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
         style={{ animationDelay: '250ms' }}
       >
+        <button
+          type="button"
+          onClick={() => setQuoteSheetOpen(true)}
+          disabled={isProcessing}
+          className="flex items-center gap-1.5 text-xs text-elec-yellow hover:text-elec-yellow/80 transition-colors disabled:opacity-50 touch-manipulation"
+        >
+          <FileText className="h-3.5 w-3.5" />
+          <span>Pre-fill from quote</span>
+        </button>
         <button
           onClick={loadMockData}
           disabled={isProcessing}
@@ -435,6 +470,12 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
           <span>Load test data</span>
         </button>
       </div>
+
+      <QuoteSelectorSheet
+        open={quoteSheetOpen}
+        onOpenChange={setQuoteSheetOpen}
+        onPick={handlePickQuote}
+      />
 
       {/* Sticky Bottom CTA - Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.08] md:hidden z-50 safe-area-bottom">

@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 3 · Subsection 2 — Frequency, Period and Amplitude Relationships
+ * HNC Electrical Engineering for Building Services (Pearson U4019)
+ *   Time-domain anatomy of an AC waveform — frequency, period, angular frequency,
+ *   peak/RMS amplitude. The mathematical bridge from supply theory to motor speed,
+ *   reactance and equipment compatibility on a building services project.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Frequency, Period and Amplitude Relationships - HNC Module 3 Section 3.2';
@@ -205,838 +224,403 @@ const faqs = [
 ];
 
 const HNCModule3Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Frequency, Period and Amplitude Relationships
-          </h1>
-          <p className="text-white">
-            Time-domain characteristics of AC waveforms essential for building services engineering
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 3 · Subsection 2"
+            title="Frequency, Period and Amplitude Relationships"
+            description="Time-domain characteristics of AC waveforms essential for building services engineering"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Frequency (f):</strong> Cycles per second in Hertz - UK standard 50Hz
-              </li>
-              <li className="pl-1">
-                <strong>Period (T):</strong> Time for one cycle - T = 1/f = 20ms at 50Hz
-              </li>
-              <li className="pl-1">
-                <strong>Angular frequency (ω):</strong> 2πf = 314 rad/s at 50Hz
-              </li>
-              <li className="pl-1">
-                <strong>Amplitude (Vm):</strong> Peak value = Vrms × √2 = 325V
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>UK 50Hz supply:</strong> All equipment must be rated accordingly
-              </li>
-              <li className="pl-1">
-                <strong>Motor speeds:</strong> Synchronous speed depends on frequency
-              </li>
-              <li className="pl-1">
-                <strong>Reactive components:</strong> XL and XC vary with frequency
-              </li>
-              <li className="pl-1">
-                <strong>Equipment compatibility:</strong> 50Hz vs 60Hz considerations
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You design every UK BSE installation around 50 Hz, T = 20 ms, &omega; = 314 rad/s — these three numbers anchor every reactance, motor-speed and waveform calculation you will produce.',
+              'You convert between RMS and peak (V&#x2098; = V&#x1d63;&#x2098;&#x209b; &times; &radic;2) when sizing insulation, semiconductors and surge protection — peak is what punctures, RMS is what heats.',
+              'You apply n&#x209b; = 120f/p to verify motor synchronous speed before mechanical sizing — a 60 Hz import on UK supply runs 17 % slow and may overheat.',
+              'You recognise X&#x2097; rises and X&#x1d04; falls with frequency — relevant when DNO frequency excursions or VSD harmonic content shift the operating point.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS EN 50160 — Voltage characteristics of electricity supplied by public distribution networks"
+            clause="The nominal frequency of the supply voltage shall be 50 Hz. Under normal operating conditions the mean value of the fundamental frequency measured over 10 s shall be within 50 Hz &plusmn; 1 % during 99.5 % of a year."
+            meaning={
+              <>
+                BS EN 50160 is the standard the DNO works to. Your BSE designs assume
+                49.5&ndash;50.5 Hz as the normal operating envelope. Outside this band
+                (e.g. island-mode generation following grid loss), motor speeds, transformer
+                losses and PFC capacitor performance all drift — which is why generator
+                changeover sequences must verify frequency before re-energising loads.
+              </>
+            }
+            cite="Source: BS EN 50160; BS 7671:2018+A4:2026, Reg 132.2.1 (suitability for service conditions)"
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Define frequency, period and amplitude with correct SI units',
               'Calculate period from frequency using T = 1/f',
               'Apply angular frequency ω = 2πf in instantaneous value equations',
               'Determine peak voltage from RMS using Vm = Vrms × √2',
               'Understand wavelength considerations at power frequencies',
               'Analyse 50Hz vs 60Hz equipment compatibility issues',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Frequency */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Frequency - The Foundation of AC Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Frequency - The Foundation of AC Systems">
             <p>
               Frequency (f) defines how many complete cycles an AC waveform completes per second. It
               is the fundamental parameter that determines motor speeds, transformer design, and the
               behaviour of reactive components throughout a building's electrical system.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key facts about frequency:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">1 Hertz (Hz) = 1 cycle per second</li>
-                <li className="pl-1">UK mains frequency is 50Hz (±1% under normal conditions)</li>
-                <li className="pl-1">
-                  Frequency is maintained by National Grid generators synchronised together
-                </li>
-                <li className="pl-1">Symbol: f, Unit: Hertz (Hz)</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Global Frequency Standards
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Region</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Voltage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Period</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">UK / Europe</td>
-                      <td className="border border-white/10 px-3 py-2 font-semibold">50Hz</td>
-                      <td className="border border-white/10 px-3 py-2">230V</td>
-                      <td className="border border-white/10 px-3 py-2">20ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">North America</td>
-                      <td className="border border-white/10 px-3 py-2">60Hz</td>
-                      <td className="border border-white/10 px-3 py-2">120V</td>
-                      <td className="border border-white/10 px-3 py-2">16.67ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Japan (East)</td>
-                      <td className="border border-white/10 px-3 py-2">50Hz</td>
-                      <td className="border border-white/10 px-3 py-2">100V</td>
-                      <td className="border border-white/10 px-3 py-2">20ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Japan (West)</td>
-                      <td className="border border-white/10 px-3 py-2">60Hz</td>
-                      <td className="border border-white/10 px-3 py-2">100V</td>
-                      <td className="border border-white/10 px-3 py-2">16.67ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Australia</td>
-                      <td className="border border-white/10 px-3 py-2">50Hz</td>
-                      <td className="border border-white/10 px-3 py-2">230V</td>
-                      <td className="border border-white/10 px-3 py-2">20ms</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>Key facts about frequency:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1 Hertz (Hz) = 1 cycle per second</li>
+              <li>UK mains frequency is 50Hz (±1% under normal conditions)</li>
+              <li>Frequency is maintained by National Grid generators synchronised together</li>
+              <li>Symbol: f, Unit: Hertz (Hz)</li>
+            </ul>
+            <p>
+              <strong>Global Frequency Standards:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>UK / Europe — 50Hz, 230V, 20ms period</li>
+              <li>North America — 60Hz, 120V, 16.67ms period</li>
+              <li>Japan (East) — 50Hz, 100V, 20ms period</li>
+              <li>Japan (West) — 60Hz, 100V, 16.67ms period</li>
+              <li>Australia — 50Hz, 230V, 20ms period</li>
+            </ul>
+            <p>
               <strong>Remember:</strong> UK frequency of 50Hz means the voltage crosses zero 100
               times per second (twice per cycle) - this affects lighting flicker calculations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Period and the T = 1/f Relationship */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Period - Time for One Complete Cycle
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Period - Time for One Complete Cycle">
             <p>
               Period (T) is the time taken for one complete cycle of the waveform. It has a simple
               but fundamental reciprocal relationship with frequency: as frequency increases, the
               period decreases proportionally.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Fundamental Relationship
-              </p>
-              <p className="font-mono text-center text-xl mb-2">
-                T = 1/f &nbsp;&nbsp;&nbsp; and &nbsp;&nbsp;&nbsp; f = 1/T
-              </p>
-              <p className="text-xs text-white text-center">
-                Where T is in seconds and f is in Hertz
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">UK 50Hz Supply</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Period T = 1/50 = <strong>0.02s = 20ms</strong>
-                  </li>
-                  <li className="pl-1">Each cycle takes 20 milliseconds</li>
-                  <li className="pl-1">Positive half-cycle: 10ms</li>
-                  <li className="pl-1">Negative half-cycle: 10ms</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  60Hz System (Reference)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Period T = 1/60 = <strong>0.0167s = 16.67ms</strong>
-                  </li>
-                  <li className="pl-1">Each cycle takes 16.67 milliseconds</li>
-                  <li className="pl-1">Positive half-cycle: 8.33ms</li>
-                  <li className="pl-1">Negative half-cycle: 8.33ms</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Angular Frequency (ω)</p>
-              <p className="mb-3">
-                Angular frequency expresses how fast the phase angle changes, measured in radians
-                per second. Since one complete cycle equals 2π radians:
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="font-mono text-center text-lg mb-2">ω = 2πf = 2π/T</p>
-                <p className="text-xs text-white text-center">
-                  For UK 50Hz: ω = 2 × π × 50 = <strong>314.16 rad/s ≈ 314 rad/s</strong>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>The Fundamental Relationship:</strong> T = 1/f and f = 1/T (where T is in
+              seconds and f is in Hertz).
+            </p>
+            <p>
+              <strong>UK 50Hz Supply:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Period T = 1/50 = <strong>0.02s = 20ms</strong></li>
+              <li>Each cycle takes 20 milliseconds</li>
+              <li>Positive half-cycle: 10ms</li>
+              <li>Negative half-cycle: 10ms</li>
+            </ul>
+            <p>
+              <strong>60Hz System (Reference):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Period T = 1/60 = <strong>0.0167s = 16.67ms</strong></li>
+              <li>Each cycle takes 16.67 milliseconds</li>
+              <li>Positive half-cycle: 8.33ms</li>
+              <li>Negative half-cycle: 8.33ms</li>
+            </ul>
+            <p>
+              <strong>Angular Frequency (ω):</strong> Angular frequency expresses how fast the
+              phase angle changes, measured in radians per second. Since one complete cycle equals
+              2π radians: ω = 2πf = 2π/T. For UK 50Hz: ω = 2 × π × 50 = <strong>314.16 rad/s ≈ 314
+              rad/s</strong>.
+            </p>
+            <p>
               <strong>Exam tip:</strong> Remember ω = 314 rad/s for UK 50Hz. For 60Hz systems, ω =
               377 rad/s.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Amplitude and Peak Values */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Amplitude and Instantaneous Values
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Amplitude and Instantaneous Values">
             <p>
               Amplitude refers to the maximum value (peak) of the waveform. In AC circuits, we
               typically work with RMS values, but understanding peak values is essential for
               insulation ratings, semiconductor selection, and transient analysis.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key amplitude relationships:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Peak value:</strong> Vm = Vrms × √2 = Vrms × 1.414
-                </li>
-                <li className="pl-1">
-                  <strong>Peak-to-peak:</strong> Vp-p = 2 × Vm = 2.828 × Vrms
-                </li>
-                <li className="pl-1">
-                  <strong>UK mains:</strong> Vm = 230 × 1.414 = <strong>325V peak</strong>
-                </li>
-                <li className="pl-1">
-                  <strong>Peak-to-peak:</strong> Vp-p = 2 × 325 = <strong>650V</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Instantaneous Value Equation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                v = V<sub>m</sub> sin(ωt)
-              </p>
-              <p className="text-xs text-white text-center mb-3">
-                Where v is instantaneous voltage, Vm is peak voltage, ω is angular frequency, t is
-                time
-              </p>
-              <p className="font-mono text-center text-base">
-                For UK mains: v = 325 sin(314t) volts
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Instantaneous Values at Key Points (50Hz)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Time (ms)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Angle (°)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">sin(ωt)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Voltage (V)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0</td>
-                      <td className="border border-white/10 px-3 py-2">0°</td>
-                      <td className="border border-white/10 px-3 py-2">0</td>
-                      <td className="border border-white/10 px-3 py-2">0V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2.5</td>
-                      <td className="border border-white/10 px-3 py-2">45°</td>
-                      <td className="border border-white/10 px-3 py-2">0.707</td>
-                      <td className="border border-white/10 px-3 py-2">230V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">90°</td>
-                      <td className="border border-white/10 px-3 py-2">1.000</td>
-                      <td className="border border-white/10 px-3 py-2 font-semibold">
-                        325V (peak)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10</td>
-                      <td className="border border-white/10 px-3 py-2">180°</td>
-                      <td className="border border-white/10 px-3 py-2">0</td>
-                      <td className="border border-white/10 px-3 py-2">0V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">15</td>
-                      <td className="border border-white/10 px-3 py-2">270°</td>
-                      <td className="border border-white/10 px-3 py-2">-1.000</td>
-                      <td className="border border-white/10 px-3 py-2 font-semibold">
-                        -325V (neg peak)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">20</td>
-                      <td className="border border-white/10 px-3 py-2">360°</td>
-                      <td className="border border-white/10 px-3 py-2">0</td>
-                      <td className="border border-white/10 px-3 py-2">0V (cycle complete)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>Key amplitude relationships:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Peak value:</strong> Vm = Vrms × √2 = Vrms × 1.414</li>
+              <li><strong>Peak-to-peak:</strong> Vp-p = 2 × Vm = 2.828 × Vrms</li>
+              <li><strong>UK mains:</strong> Vm = 230 × 1.414 = <strong>325V peak</strong></li>
+              <li><strong>Peak-to-peak:</strong> Vp-p = 2 × 325 = <strong>650V</strong></li>
+            </ul>
+            <p>
+              <strong>Instantaneous Value Equation:</strong> v = Vm sin(ωt). Where v is
+              instantaneous voltage, Vm is peak voltage, ω is angular frequency, t is time. For UK
+              mains: v = 325 sin(314t) volts.
+            </p>
+            <p>
+              <strong>Instantaneous Values at Key Points (50Hz):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>0 ms (0°) — sin(ωt) = 0 — Voltage 0V</li>
+              <li>2.5 ms (45°) — sin(ωt) = 0.707 — Voltage 230V</li>
+              <li>5 ms (90°) — sin(ωt) = 1.000 — Voltage <strong>325V (peak)</strong></li>
+              <li>10 ms (180°) — sin(ωt) = 0 — Voltage 0V</li>
+              <li>15 ms (270°) — sin(ωt) = -1.000 — Voltage <strong>-325V (negative peak)</strong></li>
+              <li>20 ms (360°) — sin(ωt) = 0 — Voltage 0V (cycle complete)</li>
+            </ul>
+            <p>
               <strong>Practical note:</strong> The instantaneous voltage equals the RMS value (230V)
               at 45° and 135° - these are the points where sin(ωt) = 0.707 = 1/√2.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 4: Frequency Effects on Components and Equipment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Frequency Effects on Reactive Components and Equipment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Frequency Effects on Reactive Components and Equipment">
             <p>
               Frequency directly affects how inductors and capacitors behave in AC circuits. This
               has major implications for motor operation, power factor correction, and equipment
               compatibility in building services installations.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reactance Equations</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-center">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">
-                    X<sub>L</sub> = 2πfL = ωL
-                  </p>
-                  <p className="text-white text-xs">Inductive reactance increases with f</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">
-                    X<sub>C</sub> = 1/(2πfC) = 1/(ωC)
-                  </p>
-                  <p className="text-white text-xs">Capacitive reactance decreases with f</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Effect of Frequency on Building Services Equipment
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Effect of Lower Frequency (50Hz vs 60Hz)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Practical Consideration
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Induction motors</td>
-                      <td className="border border-white/10 px-3 py-2">Speed reduced by 17%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fan/pump output reduced; may overheat
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Core flux increases; may saturate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Increased heating and losses
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capacitor banks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher Xc, less reactive current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PFC effectiveness reduced
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fluorescent ballasts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Different operating point
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        May not start or run correctly
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electronic loads</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SMPS usually 50-60Hz tolerant
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check equipment rating plate
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Motor Synchronous Speed
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="font-mono text-center text-lg mb-2">
-                  n<sub>s</sub> = (120 × f) / p
-                </p>
-                <p className="text-xs text-white text-center">
-                  Where ns is synchronous speed (RPM), f is frequency (Hz), p is number of poles
-                </p>
-              </div>
-              <div className="mt-4 overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Poles</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        50Hz Speed (RPM)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        60Hz Speed (RPM)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">3000</td>
-                      <td className="border border-white/10 px-3 py-2">3600</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">1500</td>
-                      <td className="border border-white/10 px-3 py-2">1800</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">1000</td>
-                      <td className="border border-white/10 px-3 py-2">1200</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">750</td>
-                      <td className="border border-white/10 px-3 py-2">900</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Reactance Equations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>XL = 2πfL = ωL — Inductive reactance increases with f</li>
+              <li>XC = 1/(2πfC) = 1/(ωC) — Capacitive reactance decreases with f</li>
+            </ul>
+            <p>
+              <strong>Effect of Frequency on Building Services Equipment (50Hz vs 60Hz):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Induction motors — Speed reduced by 17%; Fan/pump output reduced; may overheat</li>
+              <li>Transformers — Core flux increases; may saturate; Increased heating and losses</li>
+              <li>Capacitor banks — Higher Xc, less reactive current; PFC effectiveness reduced</li>
+              <li>Fluorescent ballasts — Different operating point; May not start or run correctly</li>
+              <li>Electronic loads — SMPS usually 50-60Hz tolerant; Check equipment rating plate</li>
+            </ul>
+            <p>
+              <strong>Motor Synchronous Speed:</strong> ns = (120 × f) / p. Where ns is
+              synchronous speed (RPM), f is frequency (Hz), p is number of poles.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>2 poles — 50Hz: 3000 RPM, 60Hz: 3600 RPM</li>
+              <li>4 poles — 50Hz: 1500 RPM, 60Hz: 1800 RPM</li>
+              <li>6 poles — 50Hz: 1000 RPM, 60Hz: 1200 RPM</li>
+              <li>8 poles — 50Hz: 750 RPM, 60Hz: 900 RPM</li>
+            </ul>
+            <p>
               <strong>Wavelength note:</strong> At 50Hz with typical cable propagation velocity
               (~2×10⁸ m/s), wavelength λ = v/f ≈ 4,000km. This is vastly longer than building
               installations, so transmission line effects are negligible.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1: Instantaneous Voltage Calculation.</strong> Calculate the
+              instantaneous voltage of UK mains supply at t = 3ms after a positive zero crossing.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Given: Vrms = 230V, f = 50Hz, t = 3ms = 0.003s</li>
+              <li>Vm = Vrms × √2 = 230 × 1.414 = <strong>325V</strong></li>
+              <li>ω = 2πf = 2 × π × 50 = <strong>314 rad/s</strong></li>
+              <li>v = Vm sin(ωt) = 325 × sin(314 × 0.003) = 325 × sin(0.942 rad) = 325 × sin(54°)</li>
+              <li>v = 325 × 0.809 = <strong>263V</strong></li>
+            </ul>
+            <p>
+              <strong>Example 2: Motor Speed at Different Frequencies.</strong> A 4-pole motor
+              designed for 60Hz is connected to UK 50Hz supply. Calculate the speed change.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Synchronous speed formula: ns = (120 × f) / p</li>
+              <li>At 60Hz (design frequency): ns = (120 × 60) / 4 = <strong>1800 RPM</strong></li>
+              <li>At 50Hz (UK supply): ns = (120 × 50) / 4 = <strong>1500 RPM</strong></li>
+              <li>Speed reduction: Change = (1800 - 1500) / 1800 × 100 = <strong>16.7% slower</strong></li>
+              <li>Motor will run slower and may overheat if mechanically loaded</li>
+            </ul>
+            <p>
+              <strong>Example 3: Reactance Change with Frequency.</strong> A 100µF capacitor is
+              used for power factor correction. Calculate its reactance at 50Hz and 60Hz.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Capacitive reactance: Xc = 1 / (2πfC)</li>
+              <li>At 50Hz: Xc = 1 / (2 × π × 50 × 100×10⁻⁶) = 1 / 0.0314 = <strong>31.8Ω</strong></li>
+              <li>At 60Hz: Xc = 1 / (2 × π × 60 × 100×10⁻⁶) = 1 / 0.0377 = <strong>26.5Ω</strong></li>
+              <li>Lower Xc at higher frequency means more reactive current flows</li>
+              <li>Capacitor provides more VAr at 60Hz than at 50Hz</li>
+            </ul>
+            <p>
+              <strong>Example 4: Time to Reach Peak Voltage.</strong> Starting from zero crossing,
+              how long until UK mains reaches its positive peak?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Peak occurs when sin(ωt) = 1, i.e., ωt = π/2 (90°)</li>
+              <li>t = (π/2) / ω = (π/2) / 314 = 1.571 / 314 = 0.005s = <strong>5ms</strong></li>
+              <li>Verification: Peak is at T/4 = 20ms/4 = 5ms — One quarter cycle from zero to positive peak</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Instantaneous Voltage Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the instantaneous voltage of UK mains supply at
-                t = 3ms after a positive zero crossing.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given: Vrms = 230V, f = 50Hz, t = 3ms = 0.003s</p>
-                <p className="mt-2">Step 1: Calculate peak voltage</p>
-                <p>
-                  Vm = Vrms × √2 = 230 × 1.414 = <strong>325V</strong>
-                </p>
-                <p className="mt-2">Step 2: Calculate angular frequency</p>
-                <p>
-                  ω = 2πf = 2 × π × 50 = <strong>314 rad/s</strong>
-                </p>
-                <p className="mt-2">Step 3: Calculate instantaneous voltage</p>
-                <p>v = Vm sin(ωt) = 325 × sin(314 × 0.003)</p>
-                <p>v = 325 × sin(0.942 rad) = 325 × sin(54°)</p>
-                <p>
-                  v = 325 × 0.809 = <strong>263V</strong>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Motor Speed at Different Frequencies
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 4-pole motor designed for 60Hz is connected to UK 50Hz
-                supply. Calculate the speed change.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Synchronous speed formula: ns = (120 × f) / p</p>
-                <p className="mt-2">At 60Hz (design frequency):</p>
-                <p>
-                  ns = (120 × 60) / 4 = <strong>1800 RPM</strong>
-                </p>
-                <p className="mt-2">At 50Hz (UK supply):</p>
-                <p>
-                  ns = (120 × 50) / 4 = <strong>1500 RPM</strong>
-                </p>
-                <p className="mt-2">Speed reduction:</p>
-                <p>
-                  Change = (1800 - 1500) / 1800 × 100 = <strong>16.7% slower</strong>
-                </p>
-                <p className="mt-2 text-orange-400">
-                  ⚠ Motor will run slower and may overheat if mechanically loaded
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical Guidance">
+            <p>
+              <strong>Essential Formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>T = 1/f</strong> — Period-frequency relationship</li>
+              <li><strong>ω = 2πf</strong> — Angular frequency (UK 50Hz: ω = 314 rad/s)</li>
+              <li><strong>v = Vm sin(ωt)</strong> — Instantaneous voltage</li>
+              <li><strong>Vm = Vrms × √2</strong> — Peak from RMS (UK: 325V peak)</li>
+              <li><strong>ns = (120f)/p</strong> — Motor synchronous speed</li>
+              <li><strong>XL = 2πfL</strong> — Inductive reactance</li>
+              <li><strong>XC = 1/(2πfC)</strong> — Capacitive reactance</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>UK frequency: <strong>50Hz</strong></li>
+              <li>UK period: <strong>20ms</strong></li>
+              <li>Angular frequency (50Hz): <strong>ω = 314 rad/s</strong></li>
+              <li>UK peak voltage: <strong>325V</strong> (from 230V RMS)</li>
+              <li>√2 = <strong>1.414</strong></li>
+              <li>2π = <strong>6.283</strong></li>
+            </ul>
+            <p>
+              <strong>50Hz vs 60Hz Equipment Checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Motors:</strong> Will run 17% slower at 50Hz - check cooling and torque requirements</li>
+              <li><strong>Transformers:</strong> May overheat at lower frequency - verify VA rating</li>
+              <li><strong>Electronic equipment:</strong> Check for "50/60Hz" or "50-60Hz" rating</li>
+              <li><strong>Timers/clocks:</strong> Mains-synchronised clocks run slow at 50Hz</li>
+              <li><strong>Capacitors:</strong> Deliver less VAr at 50Hz than 60Hz</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Reactance Change with Frequency
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 100µF capacitor is used for power factor correction.
-                Calculate its reactance at 50Hz and 60Hz.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Capacitive reactance: Xc = 1 / (2πfC)</p>
-                <p className="mt-2">At 50Hz:</p>
-                <p>Xc = 1 / (2 × π × 50 × 100×10⁻⁶)</p>
-                <p>
-                  Xc = 1 / 0.0314 = <strong>31.8Ω</strong>
-                </p>
-                <p className="mt-2">At 60Hz:</p>
-                <p>Xc = 1 / (2 × π × 60 × 100×10⁻⁶)</p>
-                <p>
-                  Xc = 1 / 0.0377 = <strong>26.5Ω</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Lower Xc at higher frequency means more reactive current flows
-                </p>
-                <p className="text-white">→ Capacitor provides more VAr at 60Hz than at 50Hz</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Time to Reach Peak Voltage
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Starting from zero crossing, how long until UK mains
-                reaches its positive peak?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Peak occurs when sin(ωt) = 1, i.e., ωt = π/2 (90°)</p>
-                <p className="mt-2">Solving for t:</p>
-                <p>t = (π/2) / ω = (π/2) / 314</p>
-                <p>
-                  t = 1.571 / 314 = 0.005s = <strong>5ms</strong>
-                </p>
-                <p className="mt-2 text-white">Verification: Peak is at T/4 = 20ms/4 = 5ms ✓</p>
-                <p className="mt-2 text-green-400">
-                  ✓ One quarter cycle from zero to positive peak
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>T = 1/f</strong> — Period-frequency relationship
-                </li>
-                <li className="pl-1">
-                  <strong>ω = 2πf</strong> — Angular frequency (UK 50Hz: ω = 314 rad/s)
-                </li>
-                <li className="pl-1">
-                  <strong>v = Vm sin(ωt)</strong> — Instantaneous voltage
-                </li>
-                <li className="pl-1">
-                  <strong>Vm = Vrms × √2</strong> — Peak from RMS (UK: 325V peak)
-                </li>
-                <li className="pl-1">
-                  <strong>ns = (120f)/p</strong> — Motor synchronous speed
-                </li>
-                <li className="pl-1">
-                  <strong>XL = 2πfL</strong> — Inductive reactance
-                </li>
-                <li className="pl-1">
-                  <strong>XC = 1/(2πfC)</strong> — Capacitive reactance
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using degrees instead of radians</strong> — Ensure calculator is in correct mode for sin(ωt)</li>
+                <li><strong>Confusing peak and RMS</strong> — Always clarify which value is given/required</li>
+                <li><strong>Wrong ω value</strong> — Remember ω = 314 rad/s for 50Hz, not 50</li>
+                <li><strong>Forgetting frequency affects reactance</strong> — XL and XC change with frequency</li>
+                <li><strong>Assuming equipment is frequency-agnostic</strong> — Always check rating plates</li>
               </ul>
-            </div>
+            }
+            doInstead="Use radians (not degrees) when computing sin(ωt) on a calculator. Always state whether a quoted voltage is peak or RMS. Memorise ω = 314 rad/s for 50Hz, ω = 377 rad/s for 60Hz. Re-check XL and XC for the actual supply frequency. Verify the rating plate before importing or repurposing equipment."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  UK frequency: <strong>50Hz</strong>
-                </li>
-                <li className="pl-1">
-                  UK period: <strong>20ms</strong>
-                </li>
-                <li className="pl-1">
-                  Angular frequency (50Hz): <strong>ω = 314 rad/s</strong>
-                </li>
-                <li className="pl-1">
-                  UK peak voltage: <strong>325V</strong> (from 230V RMS)
-                </li>
-                <li className="pl-1">
-                  √2 = <strong>1.414</strong>
-                </li>
-                <li className="pl-1">
-                  2π = <strong>6.283</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                50Hz vs 60Hz Equipment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motors:</strong> Will run 17% slower at 50Hz - check cooling and torque
-                  requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Transformers:</strong> May overheat at lower frequency - verify VA rating
-                </li>
-                <li className="pl-1">
-                  <strong>Electronic equipment:</strong> Check for "50/60Hz" or "50-60Hz" rating
-                </li>
-                <li className="pl-1">
-                  <strong>Timers/clocks:</strong> Mains-synchronised clocks run slow at 50Hz
-                </li>
-                <li className="pl-1">
-                  <strong>Capacitors:</strong> Deliver less VAr at 50Hz than 60Hz
-                </li>
-              </ul>
-            </div>
+          <Scenario
+            title="Imported 60 Hz chiller commissioning on a 50 Hz UK site"
+            situation={
+              <>
+                A 75 kW screw chiller imported from a US project is being installed on a
+                London commercial fit-out. Nameplate: 460 V, 60 Hz, 4-pole, 1750 RPM full
+                load. The MCC is 400 V, 50 Hz. The contractor proposes simply re-tapping
+                the 460 V transformer and connecting direct.
+              </>
+            }
+            whatToDo={
+              <>
+                Reject the proposal. At 50 Hz the synchronous speed drops to (120 &times;
+                50)/4 = 1500 RPM &mdash; a 16.7 % speed reduction and refrigerant flow
+                shortfall that will not meet design duty. Magnetising current rises (V/f
+                ratio increases from 7.67 to 8.0) so the motor draws more no-load current
+                and the windings heat. Specify a properly rated VSD or a 50 Hz replacement
+                motor; do not connect the as-imported machine. Record the variation against
+                the design submission.
+              </>
+            }
+            whyItMatters={
+              <>
+                Cross-frequency motor connection is one of the commonest commissioning
+                failures on imported equipment. It breaches BS 7671 132.2.1 (suitability
+                for service conditions), invalidates the manufacturer&rsquo;s warranty, and
+                under refrigerant duty may breach F-Gas Regulation 517/2014 if the unit
+                trips repeatedly.
+              </>
+            }
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using degrees instead of radians</strong> — Ensure calculator is in
-                  correct mode for sin(ωt)
-                </li>
-                <li className="pl-1">
-                  <strong>Confusing peak and RMS</strong> — Always clarify which value is
-                  given/required
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong ω value</strong> — Remember ω = 314 rad/s for 50Hz, not 50
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting frequency affects reactance</strong> — XL and XC change with
-                  frequency
-                </li>
-                <li className="pl-1">
-                  <strong>Assuming equipment is frequency-agnostic</strong> — Always check rating
-                  plates
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Fundamental Relationships</p>
-                <ul className="space-y-0.5">
-                  <li>Frequency f (Hz) = cycles per second</li>
-                  <li>Period T (s) = 1/f = time per cycle</li>
-                  <li>Angular frequency ω = 2πf rad/s</li>
-                  <li>Amplitude Vm = Vrms × √2</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">UK 50Hz Values</p>
-                <ul className="space-y-0.5">
-                  <li>Period: T = 20ms</li>
-                  <li>Angular frequency: ω = 314 rad/s</li>
-                  <li>Peak voltage: 325V (from 230V RMS)</li>
-                  <li>2-pole motor speed: 3000 RPM</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'T = 1/f — UK 50 Hz gives T = 20 ms; 60 Hz systems give T = 16.67 ms. Memorise both for international equipment work.',
+              '&omega; = 2&pi;f — UK 50 Hz gives &omega; = 314 rad/s; 60 Hz gives 377 rad/s. Used in every instantaneous-value and reactance calculation.',
+              'V&#x2098; = V&#x1d63;&#x2098;&#x209b; &times; &radic;2 — UK 230 V RMS &harr; 325 V peak. Insulation rated to peak, conductors rated to RMS.',
+              'v(t) = V&#x2098; sin(&omega;t) — set your calculator to radians, not degrees, when computing instantaneous values.',
+              'Motor synchronous speed n&#x209b; = 120f/p — drops 17 % when 60 Hz equipment is run on 50 Hz, with consequent torque and cooling implications.',
+              'X&#x2097; = 2&pi;fL rises with frequency; X&#x1d04; = 1/(2&pi;fC) falls with frequency — drives PFC capacitor sizing and harmonic resonance studies.',
+              'Wavelength at 50 Hz is ~4000 km — transmission line effects are negligible inside any building, but matter on long-haul HV.',
+              'BS EN 50160 fixes UK supply at 50 Hz &plusmn; 1 % under normal conditions — your BSE designs assume this envelope.',
+            ]}
+          />
 
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section3-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: AC Waveform Characteristics
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section3-3">
-              Next: Phase Difference and Vectors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section3-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                AC Waveform Characteristics
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section3-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Phase Difference and Vectors
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

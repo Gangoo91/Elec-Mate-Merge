@@ -682,19 +682,24 @@ const InvoicesPage = () => {
       </header>
 
       {/* Content */}
-      <main className="px-4 py-4 space-y-4 pb-24">
+      <main className="px-4 py-4 space-y-6 pb-24">
         {/* Stripe Connect Banner */}
         <StripeConnectBanner refreshKey={stripeRefreshKey} />
 
-        {/* Revenue hero — matching QuotesPage pipeline exactly */}
+        {/* 01 · REVENUE — editorial eyebrow + hero (mirrors QuotesPage 01 · PIPELINE) */}
         <div className="space-y-3">
+          <div className="flex items-baseline gap-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">· Revenue</span>
+          </div>
+
           {/* Gradient accent */}
           <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
 
           {/* Main value */}
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-[10px] text-white uppercase tracking-widest font-medium">Revenue</p>
+              <p className="text-[10px] text-white uppercase tracking-widest font-medium">This month</p>
               <p className="text-[38px] font-extrabold text-elec-yellow leading-none tracking-tight mt-1">
                 {formatCurrency(stats.monthlyTotal)}
               </p>
@@ -763,15 +768,19 @@ const InvoicesPage = () => {
           )}
         </div>
 
-        {/* Invoices List */}
-        <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider">
-              {activeFilter === 'all'
-                ? 'All Invoices'
-                : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Invoices`}
-            </h2>
-            <span className="text-[11px] text-white/50">
+        {/* 02 · INVOICES — list (mirrors QuotesPage 02 · QUOTES) */}
+        <section className="space-y-3 pt-2 border-t border-white/[0.04]">
+          <div className="flex items-baseline justify-between gap-3 pt-4">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
+                ·{' '}
+                {activeFilter === 'all'
+                  ? 'All invoices'
+                  : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} invoices`}
+              </span>
+            </div>
+            <span className="text-[11px] text-white/50 tabular-nums">
               {filteredInvoices.length} {filteredInvoices.length === 1 ? 'invoice' : 'invoices'}
             </span>
           </div>

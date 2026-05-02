@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 6 · Subsection 4 — Design Tools and Software
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   SBEM, DSM, dynamic simulation tools, lighting/CFD/acoustic specialists and
+ *   BIM integration — choosing the right tool for each design and compliance
+ *   workstream on a building services project.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Design Tools and Software - HNC Module 2 Section 6.4';
@@ -254,769 +273,489 @@ const faqs = [
 ];
 
 const HNCModule2Section6_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2.6.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Design Tools and Software
-          </h1>
-          <p className="text-white">
-            Building energy and environmental simulation software for design and compliance
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 6 · Subsection 4"
+            title="Design Tools and Software"
+            description="Building energy and environmental simulation software for design and compliance."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>SBEM:</strong> Simple Part L compliance (&lt;1,000m²)
-              </li>
-              <li className="pl-1">
-                <strong>IES VE / TAS:</strong> Dynamic simulation for complex buildings
-              </li>
-              <li className="pl-1">
-                <strong>EnergyPlus:</strong> Free research-grade simulation engine
-              </li>
-              <li className="pl-1">
-                <strong>Choice depends:</strong> Project complexity and team skills
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Applications</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Part L compliance:</strong> BER vs TER comparison
-              </li>
-              <li className="pl-1">
-                <strong>Energy prediction:</strong> TM54 operational energy
-              </li>
-              <li className="pl-1">
-                <strong>Comfort analysis:</strong> TM52 overheating
-              </li>
-              <li className="pl-1">
-                <strong>Design optimisation:</strong> Compare options
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You pick SBEM (or SAP for dwellings) for routine Part L compliance and DSM (IES VE, TAS, DesignBuilder) when SBEM cannot model the system (CHP, complex HVAC, automatic blinds).',
+              'You use DIALux/Relux for lighting, ODEON/CATT for acoustics, ANSYS/CFX for CFD — separate specialist tools whose outputs feed into the integrated DSM.',
+              'You drive simulation from the BIM (Revit/IFC) export to keep geometry, U-values and zoning consistent across consultants.',
+              'You document the tool, version, weather file and assumptions in every report — auditability is non-negotiable.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="Building Regulations 2010 — Approved Document L (England); BRE / DLUHC SBEM and DSM Compliance Methodology"
+            clause="Part L compliance is demonstrated using either SBEM (Simplified Building Energy Model) for typical buildings, or an approved Dynamic Simulation Model (DSM) for buildings with features SBEM cannot represent — both calculating Building Emission Rate against the Target Emission Rate."
+            meaning={
+              <>
+                The choice between SBEM and DSM is regulatorily defined. As HNC engineer
+                you flag at Stage-2 whether the design will need DSM (CHP, ASHP, mixed-mode
+                HVAC, complex glazing controls) — DSM is significantly more expensive
+                and time-consuming, so the procurement plan needs to know early.
+              </>
+            }
+            cite="Source: Building Regulations 2010, Approved Document L — gov.uk; BRE National Calculation Methodology; DLUHC SBEM and DSM Compliance Documentation."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Understand the capabilities of major simulation software',
               'Select appropriate tools for different project types',
               'Recognise Part L compliance tool requirements',
               'Distinguish between SBEM and DSM approaches',
               'Understand BIM integration with simulation',
               'Identify when specialist analysis is needed',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Compliance Tools */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Part L Compliance Tools
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Part L Compliance Tools"
+            plainEnglish="Part L compares your building's BER (carbon) against a TER target. SBEM is the simplified calculator for ordinary buildings; DSM is needed once you go big or fancy."
+          >
             <p>
               Part L of the Building Regulations requires demonstration that a building's carbon
               emissions (BER - Building Emission Rate) do not exceed the target (TER - Target
               Emission Rate). Different tools are approved for this calculation.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SBEM (Simplified Building Energy Model)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Purpose:</strong> Part L compliance for non-domestic buildings
-                </li>
-                <li className="pl-1">
-                  <strong>Interface:</strong> iSBEM (web-based input)
-                </li>
-                <li className="pl-1">
-                  <strong>Method:</strong> Monthly quasi-steady-state calculation
-                </li>
-                <li className="pl-1">
-                  <strong>Suitable for:</strong> Simple buildings under 1,000m²
-                </li>
-                <li className="pl-1">
-                  <strong>Output:</strong> EPC rating, BER/TER comparison
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When DSM is Required (instead of SBEM)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Feature
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">SBEM</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">DSM Required</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Floor area &gt;1,000m²</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">Yes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Atrium &gt;3 storeys</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">Yes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Displacement ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">Yes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chilled beams/ceilings</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">Yes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple AC office &lt;1,000m²
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Yes</td>
-                      <td className="border border-white/10 px-3 py-2">Optional</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                NCM (National Calculation Methodology)
-              </p>
-              <p className="text-sm text-white">
-                Both SBEM and approved DSM tools must follow the NCM, which specifies:
-              </p>
-              <ul className="text-sm text-white mt-2 space-y-1 list-disc list-outside ml-5">
-                <li>Standard occupancy and equipment schedules</li>
-                <li>Notional building specifications for TER calculation</li>
-                <li>System efficiency assumptions</li>
-                <li>Weather data (standard UK locations)</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>SBEM (Simplified Building Energy Model):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Purpose:</strong> Part L compliance for non-domestic buildings
+              </li>
+              <li>
+                <strong>Interface:</strong> iSBEM (web-based input)
+              </li>
+              <li>
+                <strong>Method:</strong> Monthly quasi-steady-state calculation
+              </li>
+              <li>
+                <strong>Suitable for:</strong> Simple buildings under 1,000m²
+              </li>
+              <li>
+                <strong>Output:</strong> EPC rating, BER/TER comparison
+              </li>
+            </ul>
+            <p>
+              <strong>When DSM is required (instead of SBEM):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Floor area &gt;1,000m²: DSM required</li>
+              <li>Atrium &gt;3 storeys: DSM required</li>
+              <li>Displacement ventilation: DSM required</li>
+              <li>Chilled beams/ceilings: DSM required</li>
+              <li>Simple AC office &lt;1,000m²: SBEM suitable, DSM optional</li>
+            </ul>
+            <p>
+              <strong>NCM (National Calculation Methodology):</strong> Both SBEM and approved DSM
+              tools must follow the NCM, which specifies standard occupancy and equipment schedules,
+              notional building specifications for TER calculation, system efficiency assumptions,
+              and weather data (standard UK locations).
+            </p>
+            <p>
               <strong>Key point:</strong> The NCM creates a level playing field - all buildings are
               compared against the same standardised assumptions, not actual operational patterns.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Dynamic Simulation Software */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Dynamic Simulation Software
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Dynamic Simulation Software"
+            plainEnglish="For complex buildings, you need an hour-by-hour engine. The big UK names are IES VE and TAS; EnergyPlus is the free engine many tools use under the hood."
+          >
             <p>
               For complex buildings and detailed design analysis, dynamic simulation software
               provides hourly or sub-hourly calculation of building thermal performance throughout
               the year.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Major UK Simulation Packages
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Software</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Developer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Features</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IES VE</td>
-                      <td className="border border-white/10 px-3 py-2">IES Ltd</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integrated suite: thermal, daylight, CFD
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TAS</td>
-                      <td className="border border-white/10 px-3 py-2">EDSL</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dynamic simulation, Part L approved
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DesignBuilder</td>
-                      <td className="border border-white/10 px-3 py-2">DesignBuilder</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EnergyPlus interface, user-friendly
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EnergyPlus</td>
-                      <td className="border border-white/10 px-3 py-2">US DOE</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Free, powerful, text-based input
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">OpenStudio</td>
-                      <td className="border border-white/10 px-3 py-2">NREL</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open-source, EnergyPlus platform
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">IES VE Suite Components:</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li>
-                      <strong>ModelIT:</strong> Geometry modelling
-                    </li>
-                    <li>
-                      <strong>ApacheSim:</strong> Dynamic thermal simulation
-                    </li>
-                    <li>
-                      <strong>MacroFlo:</strong> Natural ventilation
-                    </li>
-                    <li>
-                      <strong>SunCast:</strong> Shading analysis
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li>
-                      <strong>RadianceIES:</strong> Daylight simulation
-                    </li>
-                    <li>
-                      <strong>MicroFlo:</strong> CFD analysis
-                    </li>
-                    <li>
-                      <strong>ASHRAE 140:</strong> Validated engine
-                    </li>
-                    <li>
-                      <strong>UK Part L:</strong> Approved for compliance
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EnergyPlus Capabilities
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li>Heat balance based thermal simulation</li>
-                <li>Sub-hourly timesteps (down to 1 minute)</li>
-                <li>Detailed HVAC system modelling</li>
-                <li>Multizone airflow (AirflowNetwork)</li>
-                <li>Ground heat transfer</li>
-                <li>Extensive validation (ASHRAE 140, BESTEST)</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Major UK simulation packages:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>IES VE (IES Ltd):</strong> Integrated suite - thermal, daylight, CFD
+              </li>
+              <li>
+                <strong>TAS (EDSL):</strong> Dynamic simulation, Part L approved
+              </li>
+              <li>
+                <strong>DesignBuilder:</strong> EnergyPlus interface, user-friendly
+              </li>
+              <li>
+                <strong>EnergyPlus (US DOE):</strong> Free, powerful, text-based input
+              </li>
+              <li>
+                <strong>OpenStudio (NREL):</strong> Open-source, EnergyPlus platform
+              </li>
+            </ul>
+            <p>
+              <strong>IES VE suite components:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>ModelIT:</strong> Geometry modelling
+              </li>
+              <li>
+                <strong>ApacheSim:</strong> Dynamic thermal simulation
+              </li>
+              <li>
+                <strong>MacroFlo:</strong> Natural ventilation
+              </li>
+              <li>
+                <strong>SunCast:</strong> Shading analysis
+              </li>
+              <li>
+                <strong>RadianceIES:</strong> Daylight simulation
+              </li>
+              <li>
+                <strong>MicroFlo:</strong> CFD analysis
+              </li>
+              <li>
+                <strong>ASHRAE 140:</strong> Validated engine
+              </li>
+              <li>
+                <strong>UK Part L:</strong> Approved for compliance
+              </li>
+            </ul>
+            <p>
+              <strong>EnergyPlus capabilities:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Heat balance based thermal simulation</li>
+              <li>Sub-hourly timesteps (down to 1 minute)</li>
+              <li>Detailed HVAC system modelling</li>
+              <li>Multizone airflow (AirflowNetwork)</li>
+              <li>Ground heat transfer</li>
+              <li>Extensive validation (ASHRAE 140, BESTEST)</li>
+            </ul>
+            <p>
               <strong>Tip:</strong> EnergyPlus is free but requires scripting or a graphical
               interface like DesignBuilder or OpenStudio for practical use.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Selecting the Right Tool */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Selecting the Right Tool
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Selecting the Right Tool"
+            plainEnglish="Match the tool to the question. SBEM for simple compliance, dynamic suites for complex buildings, simplified tools for early-stage option testing."
+          >
             <p>
               Tool selection depends on project requirements, team capabilities, available time, and
               budget. Using overly complex tools for simple projects wastes time; using simple tools
               for complex projects risks inaccurate results.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Tool Selection Guide</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Project Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recommended Tool
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Justification</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple office &lt;1,000m²
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">SBEM/iSBEM</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compliance compliant, quick
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Large office building</td>
-                      <td className="border border-white/10 px-3 py-2">IES VE or TAS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DSM required, detailed analysis
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building with atrium</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IES VE with MacroFlo/MicroFlo
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Natural ventilation/CFD needed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Early concept stage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simplified tools or benchmarks
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Quick iteration, design fluid
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Research / academic</td>
-                      <td className="border border-white/10 px-3 py-2">EnergyPlus / OpenStudio</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Free, documented, reproducible
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Decision Factors:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Regulatory requirement:</strong> What does Part L/BREEAM require?
-                </li>
-                <li className="pl-1">
-                  <strong>Building complexity:</strong> Simple box or complex geometry?
-                </li>
-                <li className="pl-1">
-                  <strong>HVAC systems:</strong> Standard or advanced systems?
-                </li>
-                <li className="pl-1">
-                  <strong>Analysis needs:</strong> Compliance only or design optimisation?
-                </li>
-                <li className="pl-1">
-                  <strong>Team skills:</strong> What tools does the team know?
-                </li>
-                <li className="pl-1">
-                  <strong>Time available:</strong> Detailed modelling takes time
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-              <p className="text-sm font-medium text-orange-400 mb-2">Common Pitfall</p>
-              <p className="text-sm text-white">
-                Don't use complex simulation for every project. A well-run SBEM calculation for a
-                simple building is often more useful than a poorly-executed dynamic simulation.
-                Match tool complexity to project needs and team capability.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Tool selection guide (project type / recommended tool / justification):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simple office &lt;1,000m² → SBEM/iSBEM (compliance compliant, quick)</li>
+              <li>Large office building → IES VE or TAS (DSM required, detailed analysis)</li>
+              <li>Building with atrium → IES VE with MacroFlo/MicroFlo (natural ventilation/CFD needed)</li>
+              <li>Early concept stage → Simplified tools or benchmarks (quick iteration, design fluid)</li>
+              <li>Research / academic → EnergyPlus / OpenStudio (free, documented, reproducible)</li>
+            </ul>
+            <p>
+              <strong>Decision factors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Regulatory requirement:</strong> What does Part L/BREEAM require?
+              </li>
+              <li>
+                <strong>Building complexity:</strong> Simple box or complex geometry?
+              </li>
+              <li>
+                <strong>HVAC systems:</strong> Standard or advanced systems?
+              </li>
+              <li>
+                <strong>Analysis needs:</strong> Compliance only or design optimisation?
+              </li>
+              <li>
+                <strong>Team skills:</strong> What tools does the team know?
+              </li>
+              <li>
+                <strong>Time available:</strong> Detailed modelling takes time
+              </li>
+            </ul>
+            <p>
+              <strong>Common pitfall:</strong> Don't use complex simulation for every project. A
+              well-run SBEM calculation for a simple building is often more useful than a
+              poorly-executed dynamic simulation. Match tool complexity to project needs and team
+              capability.
+            </p>
+            <p>
               <strong>Best practice:</strong> Start simple, add complexity only when needed to
               answer specific design questions or meet compliance requirements.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 4: Integration and Workflows */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            BIM Integration and Workflows
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="BIM Integration and Workflows"
+            plainEnglish="You can pull architect geometry into a sim tool via gbXML or IFC, but expect to spend time cleaning it up. BIM saves time only if you plan the export properly."
+          >
             <p>
               Modern building design increasingly uses BIM (Building Information Modelling).
               Simulation tools can import geometry from BIM, though translation requires care to
               maintain accuracy and efficiency.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BIM-to-Simulation Data Exchange
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Format</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">gbXML</td>
-                      <td className="border border-white/10 px-3 py-2">Green Building XML</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most common for energy simulation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IFC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Industry Foundation Classes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open BIM standard, improving
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Native plugins</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Direct Revit/ArchiCAD links
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Tightest integration</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Geometry only</td>
-                      <td className="border border-white/10 px-3 py-2">DXF/DWG import</td>
-                      <td className="border border-white/10 px-3 py-2">Tracing over CAD</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">BIM Import Considerations:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Geometry simplification:</strong> Remove small details irrelevant to
-                  energy
-                </li>
-                <li className="pl-1">
-                  <strong>Zone definition:</strong> BIM rooms may need combining/splitting
-                </li>
-                <li className="pl-1">
-                  <strong>Construction assignment:</strong> Check materials translate correctly
-                </li>
-                <li className="pl-1">
-                  <strong>Window properties:</strong> Often need manual specification
-                </li>
-                <li className="pl-1">
-                  <strong>Second floor boundaries:</strong> Check adjacencies are correct
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Workflow</p>
-              <ol className="text-sm text-white space-y-1 list-decimal list-outside ml-5">
-                <li>Receive BIM model from architect (Revit, ArchiCAD)</li>
-                <li>Export to gbXML (with energy analysis settings)</li>
-                <li>Import to simulation tool (IES, TAS, DesignBuilder)</li>
-                <li>Review and fix geometry issues</li>
-                <li>Assign/verify constructions and glazing</li>
-                <li>Define zones and HVAC systems</li>
-                <li>Add schedules and internal gains</li>
-                <li>Run simulation and analyse results</li>
-              </ol>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>BIM-to-simulation data exchange (format / description / typical use):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>gbXML - Green Building XML - most common for energy simulation</li>
+              <li>IFC - Industry Foundation Classes - open BIM standard, improving</li>
+              <li>Native plugins - direct Revit/ArchiCAD links - tightest integration</li>
+              <li>Geometry only - DXF/DWG import - tracing over CAD</li>
+            </ul>
+            <p>
+              <strong>BIM import considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Geometry simplification:</strong> Remove small details irrelevant to energy
+              </li>
+              <li>
+                <strong>Zone definition:</strong> BIM rooms may need combining/splitting
+              </li>
+              <li>
+                <strong>Construction assignment:</strong> Check materials translate correctly
+              </li>
+              <li>
+                <strong>Window properties:</strong> Often need manual specification
+              </li>
+              <li>
+                <strong>Second floor boundaries:</strong> Check adjacencies are correct
+              </li>
+            </ul>
+            <p>
+              <strong>Typical workflow:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Receive BIM model from architect (Revit, ArchiCAD)</li>
+              <li>Export to gbXML (with energy analysis settings)</li>
+              <li>Import to simulation tool (IES, TAS, DesignBuilder)</li>
+              <li>Review and fix geometry issues</li>
+              <li>Assign/verify constructions and glazing</li>
+              <li>Define zones and HVAC systems</li>
+              <li>Add schedules and internal gains</li>
+              <li>Run simulation and analyse results</li>
+            </ul>
+            <p>
               <strong>Reality check:</strong> BIM-to-simulation transfer rarely works perfectly
               first time. Budget 20-30% of modelling time for geometry cleanup and verification.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three scenarios picking the right tool: a small retail unit, a large mixed-mode office, and a BREEAM Excellent school needing several analyses."
+          >
+            <p>
+              <strong>Example 1 - Tool selection:</strong> 800m² retail unit with simple split DX
+              cooling, seeking Part L compliance.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Floor area: 800m² (&lt;1,000m² threshold)</li>
+              <li>HVAC: Simple split system (no complex features)</li>
+              <li>No atrium or special ventilation</li>
+              <li>Decision: <strong>SBEM/iSBEM is appropriate</strong></li>
+              <li>Building under 1,000m² - SBEM permitted; simple systems - no DSM-only features; compliance focus - detailed analysis not needed</li>
+              <li>Time estimate: 1-2 days for model and report</li>
+            </ul>
+            <p>
+              <strong>Example 2 - DSM requirement:</strong> 5,000m² office with chilled beams and
+              mixed-mode ventilation.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Floor area: 5,000m² (&gt;1,000m² threshold)</li>
+              <li>HVAC: Chilled beams (DSM-only system)</li>
+              <li>Mixed-mode: Natural + mechanical ventilation</li>
+              <li>Decision: <strong>Dynamic Simulation Model required</strong></li>
+              <li>Recommended: IES VE or TAS for Part L compliance, MacroFlo/natural vent module for mixed-mode, TM52 analysis for overheating (BREEAM)</li>
+              <li>Time estimate: 2-3 weeks for full analysis</li>
+            </ul>
+            <p>
+              <strong>Example 3 - BREEAM analysis suite:</strong> New school targeting BREEAM
+              Excellent, requiring multiple simulation outputs.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Part L compliance (Ene 01) → IES VE or TAS with NCM module</li>
+              <li>TM52 overheating (Hea 04) → Dynamic simulation with DSY weather</li>
+              <li>Daylight factor (Hea 01) → RadianceIES or TAS daylighting</li>
+              <li>Energy prediction for Soft Landings → TM54 analysis using same model</li>
+              <li>Single IES VE model serves all analyses, consistent geometry and constructions, different weather files for different purposes</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Tool Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> 800m² retail unit with simple split DX cooling, seeking
-                Part L compliance.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Analysis:</p>
-                <p>- Floor area: 800m² (&lt;1,000m² threshold)</p>
-                <p>- HVAC: Simple split system (no complex features)</p>
-                <p>- No atrium or special ventilation</p>
-                <p className="mt-2">Decision:</p>
-                <p className="text-green-400">→ SBEM/iSBEM is appropriate</p>
-                <p className="mt-2">Rationale:</p>
-                <p>- Building under 1,000m² - SBEM permitted</p>
-                <p>- Simple systems - no DSM-only features</p>
-                <p>- Compliance focus - detailed analysis not needed</p>
-                <p className="mt-2">Time estimate: 1-2 days for model and report</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: DSM Requirement
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> 5,000m² office with chilled beams and mixed-mode
-                ventilation.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Analysis:</p>
-                <p>- Floor area: 5,000m² (&gt;1,000m² threshold)</p>
-                <p>- HVAC: Chilled beams (DSM-only system)</p>
-                <p>- Mixed-mode: Natural + mechanical ventilation</p>
-                <p className="mt-2">Decision:</p>
-                <p className="text-green-400">→ Dynamic Simulation Model required</p>
-                <p className="mt-2">Recommended approach:</p>
-                <p>- IES VE or TAS for Part L compliance</p>
-                <p>- MacroFlo/natural vent module for mixed-mode</p>
-                <p>- TM52 analysis for overheating (BREEAM)</p>
-                <p className="mt-2">Time estimate: 2-3 weeks for full analysis</p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The starter steps and quality checks that make a simulation report defendable to a client or BCO."
+          >
+            <p>
+              <strong>Getting started with simulation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Complete vendor training for your chosen software</li>
+              <li>Practice on simple, known buildings first</li>
+              <li>Compare results to benchmarks and published examples</li>
+              <li>Join user groups and forums for support</li>
+              <li>Consider vendor certification for professional credibility</li>
+            </ul>
+            <p>
+              <strong>Quality assurance checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Zone areas match drawings/brief</li>
+              <li>Construction U-values match specification</li>
+              <li>Glazing properties (U, g, VT) are correct</li>
+              <li>HVAC systems match design intent</li>
+              <li>Schedules reflect intended operation</li>
+              <li>Results are sense-checked against benchmarks</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: BREEAM Analysis Suite
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> New school targeting BREEAM Excellent, requiring multiple
-                simulation outputs.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Required analyses and tools:</p>
-                <p className="mt-2">1. Part L compliance (Ene 01)</p>
-                <p> → IES VE or TAS with NCM module</p>
-                <p className="mt-2">2. TM52 overheating (Hea 04)</p>
-                <p> → Dynamic simulation with DSY weather</p>
-                <p className="mt-2">3. Daylight factor (Hea 01)</p>
-                <p> → RadianceIES or TAS daylighting</p>
-                <p className="mt-2">4. Energy prediction for Soft Landings</p>
-                <p> → TM54 analysis using same model</p>
-                <p className="mt-2">Approach:</p>
-                <p>- Single IES VE model serves all analyses</p>
-                <p>- Consistent geometry and constructions</p>
-                <p>- Different weather files for different purposes</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Getting Started with Simulation
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Complete vendor training for your chosen software</li>
-                <li className="pl-1">Practice on simple, known buildings first</li>
-                <li className="pl-1">Compare results to benchmarks and published examples</li>
-                <li className="pl-1">Join user groups and forums for support</li>
-                <li className="pl-1">Consider vendor certification for professional credibility</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Quality Assurance Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Zone areas match drawings/brief</li>
-                <li className="pl-1">Construction U-values match specification</li>
-                <li className="pl-1">Glazing properties (U, g, VT) are correct</li>
-                <li className="pl-1">HVAC systems match design intent</li>
-                <li className="pl-1">Schedules reflect intended operation</li>
-                <li className="pl-1">Results are sense-checked against benchmarks</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Over-complex models:</strong> Don't model every room separately
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Default schedules:</strong> Verify they match project requirements
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring warnings:</strong> Simulation warnings often indicate problems
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>No sanity check:</strong> Results should align with expectations
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Group similar rooms into representative zones, swap default schedules for project-specific ones, investigate every simulation warning, and benchmark output against TM46 or similar buildings as a sense check."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Selecting the modelling toolkit for a Net-Zero new-build school"
+            situation={
+              <>
+                You are mobilising a Stage-3 design for a new 8,500 m² primary school
+                targeting Net-Zero in operation: PV + GSHP + MVHR + automatic external
+                shading. Soft Landings is a contractual deliverable. The design programme
+                is 16 weeks to RIBA-4.
+              </>
+            }
+            whatToDo={
+              <>
+                SBEM cannot represent the GSHP-PV-MVHR-shading interaction credibly — flag
+                DSM as essential. Pick IES VE (or DesignBuilder/EnergyPlus) for the
+                DSM. Run TM52 for the classrooms, TM54 for operational forecast, AM11
+                methodology for model construction and reporting. Use DIALux for lighting
+                lux/UGR/glare on the open studios. Use ODEON for the multi-purpose hall
+                acoustics. Drive geometry from the architect&rsquo;s Revit model via gbXML
+                or IFC. Lock the weather file, occupancy schedules and HVAC controls in a
+                version-controlled documentation pack.
+              </>
+            }
+            whyItMatters={
+              <>
+                Net-Zero schools attract DfE funding scrutiny and BREEAM Excellent / Outstanding
+                contractual targets. A Part L-only SBEM submission will not credibly model
+                the GSHP-PV interaction — and every credit hangs on a defendable model.
+                The right tool stack at Stage-3 saves a six-figure rework at Stage-4.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Part L Compliance</p>
-                <ul className="space-y-0.5">
-                  <li>SBEM: Simple buildings &lt;1,000m²</li>
-                  <li>DSM: Complex buildings &gt;1,000m²</li>
-                  <li>NCM: Standard calculation method</li>
-                  <li>Output: BER vs TER comparison</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Major DSM Tools</p>
-                <ul className="space-y-0.5">
-                  <li>IES VE - UK market leader</li>
-                  <li>TAS - EDSL package</li>
-                  <li>EnergyPlus - Free US DOE engine</li>
-                  <li>DesignBuilder - EnergyPlus interface</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'SBEM = Simplified Building Energy Model for routine Part L compliance on non-domestic buildings.',
+              'SAP = Standard Assessment Procedure for dwellings — equivalent role to SBEM.',
+              'DSM = Dynamic Simulation Model — IES VE, TAS, DesignBuilder, EnergyPlus — used when SBEM cannot represent the design.',
+              'DSM mandatory for: CHP, advanced HVAC controls, automatic shading, mixed-mode, demand-response.',
+              'Specialist tools: DIALux/Relux (lighting), ODEON/CATT (acoustics), ANSYS/CFX (CFD), TRNSYS (renewables systems).',
+              'BIM integration via gbXML or IFC keeps simulation geometry consistent with the federated BIM model.',
+              'Always document tool, version, weather file, calibration evidence and assumptions in the report appendix.',
+              'Approved Document L mandates the SBEM-or-DSM choice for compliance demonstration.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section6-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section6-5">
-              Next: System Integration
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Building simulation
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                System integration
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

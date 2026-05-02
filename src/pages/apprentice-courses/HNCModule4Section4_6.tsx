@@ -1,8 +1,28 @@
-import { ArrowLeft, Leaf, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 4 · Subsection 6 — Energy Efficient Lighting
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   LED selection (efficacy / CRI / L70 life), Building Regs Part L 2021 minimum
+ *   95 luminaire lm/W, BS EN 15193-1 LENI calculation methodology and benchmarks,
+ *   constant light output (CLO), task-ambient design and combined-controls savings
+ *   (50-70%).
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Energy Efficient Lighting - HNC Module 4 Section 4.6';
@@ -208,826 +228,505 @@ const faqs = [
 ];
 
 const HNCModule4Section4_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Leaf className="h-4 w-4" />
-            <span>Module 4.4.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Energy Efficient Lighting
-          </h1>
-          <p className="text-white">
-            Designing sustainable lighting systems that meet Part L requirements while maintaining
-            visual quality
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 4 · Subsection 6"
+            title="Energy Efficient Lighting"
+            description="Designing sustainable lighting systems that meet Part L requirements while maintaining visual quality."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>LED efficacy:</strong> 120-150 lm/W typical
-              </li>
-              <li className="pl-1">
-                <strong>Part L minimum:</strong> 95 luminaire lm/W
-              </li>
-              <li className="pl-1">
-                <strong>LENI:</strong> kWh/m²/year metric for compliance
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> 50-70% savings potential
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Strategies</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>High-efficacy LEDs:</strong> Maximise lumens per watt
-              </li>
-              <li className="pl-1">
-                <strong>Smart controls:</strong> Occupancy + daylight linking
-              </li>
-              <li className="pl-1">
-                <strong>Task-ambient:</strong> Light where needed
-              </li>
-              <li className="pl-1">
-                <strong>CLO:</strong> Constant light output control
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Select LED luminaires based on efficacy and quality criteria',
               'Understand Part L requirements for lighting installations',
               'Calculate LENI for compliance demonstration',
               'Design control strategies for maximum energy savings',
               'Apply constant light output and other efficiency features',
               'Document and commission energy efficient lighting systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <TLDR
+            points={[
+              'Modern LED luminaires hit 130–180 lm/W; the days of 60 lm/W as a Part L floor are gone — current targets are luminaire (not source) efficacy ≥ 95 lm/W for general office.',
+              'LENI (Lighting Energy Numerical Indicator, kWh/m²/yr) per BS EN 15193-1 is the calculation Part L uses. Includes parasitic + emergency + control loads — easy to under-count.',
+              'Constant Light Output (CLO) compensates for L70 lumen depreciation by starting at 70–80 % power and ramping over the lifetime — saves 10–15 % over the design life.',
+              'Driver quality matters: high power factor (≥ 0.95), low THD (&lt; 15 %), flicker-free per IEEE 1789, and DALI-2 compliance for future-proof controls.',
+              'AFDD (Reg 421.1.7) is now recommended for AC final circuits — particularly relevant for LED final lighting circuits where driver-end faults can develop arcing.',
+            ]}
+          />
 
-        {/* Section 1: LED Selection */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            LED Selection and Efficacy Targets
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 421.1.7"
+            clause="Regulation 421.1.7 has been introduced recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits of a fixed installation due to the effects of arc fault currents."
+            meaning={
+              <>
+                A4:2026 introduced Reg 421.1.7 as a <strong>recommendation</strong> (not a
+                mandate) — note the wording carefully. AFDDs detect series and parallel arc faults
+                that an MCB or RCD won’t see. For dense LED lighting circuits with multiple
+                luminaire drivers in series, drivers ageing in elevated ambients, or routes through
+                combustible materials, AFDD on the final circuit is a sensible design choice. The
+                HNC designer’s job is to apply the recommendation through risk assessment — call
+                it out on the load schedule where the fire-load justifies it.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="LED Selection and Efficacy Targets">
             <p>
               LED technology has transformed lighting energy efficiency. Modern LEDs achieve
-              efficacies that were unthinkable with traditional sources, while providing excellent
-              colour quality and controllability. Selecting the right LED involves balancing
-              efficacy with other quality parameters.
+              efficacies that were unthinkable with traditional sources, while providing
+              excellent colour quality and controllability. Selecting the right LED involves
+              balancing efficacy with other quality parameters.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key LED selection criteria:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Efficacy (lm/W):</strong> Higher is better, but not at expense of quality
-                </li>
-                <li className="pl-1">
-                  <strong>CRI (Ra):</strong> Minimum 80 for offices, 90 for colour-critical
-                </li>
-                <li className="pl-1">
-                  <strong>CCT:</strong> Appropriate colour temperature for application
-                </li>
-                <li className="pl-1">
-                  <strong>L70 life:</strong> Rated hours to 70% lumen maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Warranty:</strong> Minimum 5 years for commercial applications
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Light Source Efficacy Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Source Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Efficacy
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical CRI</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Incandescent</td>
-                      <td className="border border-white/10 px-3 py-2">10-15 lm/W</td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Halogen</td>
-                      <td className="border border-white/10 px-3 py-2">15-25 lm/W</td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fluorescent T8</td>
-                      <td className="border border-white/10 px-3 py-2">60-80 lm/W</td>
-                      <td className="border border-white/10 px-3 py-2">80-90</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fluorescent T5</td>
-                      <td className="border border-white/10 px-3 py-2">80-100 lm/W</td>
-                      <td className="border border-white/10 px-3 py-2">80-90</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED (standard)</td>
-                      <td className="border border-white/10 px-3 py-2">100-130 lm/W</td>
-                      <td className="border border-white/10 px-3 py-2">80-90</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED (high efficacy)</td>
-                      <td className="border border-white/10 px-3 py-2">150-200 lm/W</td>
-                      <td className="border border-white/10 px-3 py-2">80-90</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LED Life Rating (Lumen Maintenance)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>L70:</strong> Hours until 70% of initial lumens (common rating)
-                </li>
-                <li className="pl-1">
-                  <strong>L80:</strong> Hours until 80% of initial lumens (premium rating)
-                </li>
-                <li className="pl-1">
-                  <strong>B10:</strong> 10% of population will fall below L value
-                </li>
-                <li className="pl-1">
-                  Example: L70B10 = 50,000h means 90% of LEDs will still produce 70% output at
-                  50,000h
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Specification tip:</strong> Request IES TM-21 projections for LED life claims.
-              Be wary of manufacturers claiming very long lives without supporting test data.
+            <p>
+              <strong>Key LED selection criteria:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Efficacy (lm/W):</strong> higher is better, but not at expense of quality
+              </li>
+              <li>
+                <strong>CRI (Ra):</strong> minimum 80 for offices, 90 for colour-critical
+              </li>
+              <li>
+                <strong>CCT:</strong> appropriate colour temperature for application
+              </li>
+              <li>
+                <strong>L70 life:</strong> rated hours to 70% lumen maintenance
+              </li>
+              <li>
+                <strong>Warranty:</strong> minimum 5 years for commercial applications
+              </li>
+            </ul>
+            <p>
+              <strong>Light source efficacy comparison (source type / typical efficacy / typical CRI):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Incandescent — 10-15 lm/W — 100</li>
+              <li>Halogen — 15-25 lm/W — 100</li>
+              <li>Fluorescent T8 — 60-80 lm/W — 80-90</li>
+              <li>Fluorescent T5 — 80-100 lm/W — 80-90</li>
+              <li>LED (standard) — 100-130 lm/W — 80-90</li>
+              <li>LED (high efficacy) — 150-200 lm/W — 80-90</li>
+            </ul>
+            <p>
+              <strong>LED life rating (lumen maintenance):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>L70:</strong> hours until 70% of initial lumens (common rating)
+              </li>
+              <li>
+                <strong>L80:</strong> hours until 80% of initial lumens (premium rating)
+              </li>
+              <li>
+                <strong>B10:</strong> 10% of population will fall below L value
+              </li>
+              <li>
+                Example: L70B10 = 50,000h means 90% of LEDs will still produce 70% output at
+                50,000h
+              </li>
+            </ul>
+            <p>
+              <strong>Specification tip:</strong> Request IES TM-21 projections for LED life
+              claims. Be wary of manufacturers claiming very long lives without supporting test
+              data.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Part L Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Part L Requirements for Lighting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Part L Requirements for Lighting">
             <p>
               Building Regulations Approved Document L sets mandatory requirements for lighting
-              energy efficiency in new and refurbished buildings. Compliance is demonstrated through
-              the LENI (Lighting Energy Numeric Indicator) calculation methodology.
+              energy efficiency in new and refurbished buildings. Compliance is demonstrated
+              through the LENI (Lighting Energy Numeric Indicator) calculation methodology.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L Lighting Requirements Summary
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimum luminaire efficacy (general)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        95 luminaire lumens/circuit-watt
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimum luminaire efficacy (display)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        70 luminaire lumens/circuit-watt
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        External lighting efficacy
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        70 luminaire lumens/circuit-watt
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Occupancy control (spaces &gt;30m²)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Required</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daylight control (within 3m of windows)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Required</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Local manual switching</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Accessible from task position
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Lighting Zones (Part L)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Perimeter zone:</strong> Within 3m of external windows
-                  </li>
-                  <li className="pl-1">
-                    <strong>Core zone:</strong> Areas without significant daylight
-                  </li>
-                  <li className="pl-1">
-                    <strong>Circulation:</strong> Corridors, stairs, lobbies
-                  </li>
-                  <li className="pl-1">
-                    <strong>Task areas:</strong> Workstations, desks
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Requirements</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Perimeter: Daylight-linked dimming</li>
-                  <li className="pl-1">Spaces &gt;30m²: Occupancy detection</li>
-                  <li className="pl-1">All areas: Manual override capability</li>
-                  <li className="pl-1">External: Photocell + time scheduling</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Note:</strong> Part L requirements vary between new buildings, extensions, and
-              refurbishments. Check the specific requirements for your project type in the current
-              Approved Document L.
+            <p>
+              <strong>Part L lighting requirements (requirement / value):</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimum luminaire efficacy (general) — 95 luminaire lumens/circuit-watt</li>
+              <li>Minimum luminaire efficacy (display) — 70 luminaire lumens/circuit-watt</li>
+              <li>External lighting efficacy — 70 luminaire lumens/circuit-watt</li>
+              <li>Occupancy control (spaces &gt;30m²) — required</li>
+              <li>Daylight control (within 3m of windows) — required</li>
+              <li>Local manual switching — accessible from task position</li>
+            </ul>
+            <p>
+              <strong>Lighting zones (Part L):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Perimeter zone:</strong> within 3m of external windows
+              </li>
+              <li>
+                <strong>Core zone:</strong> areas without significant daylight
+              </li>
+              <li>
+                <strong>Circulation:</strong> corridors, stairs, lobbies
+              </li>
+              <li>
+                <strong>Task areas:</strong> workstations, desks
+              </li>
+            </ul>
+            <p>
+              <strong>Control requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Perimeter: daylight-linked dimming</li>
+              <li>Spaces &gt;30m²: occupancy detection</li>
+              <li>All areas: manual override capability</li>
+              <li>External: photocell + time scheduling</li>
+            </ul>
+            <p>
+              <strong>Note:</strong> Part L requirements vary between new buildings, extensions,
+              and refurbishments. Check the specific requirements for your project type in the
+              current Approved Document L.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: LENI Calculation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            LENI Calculations for Compliance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="LENI Calculations for Compliance">
             <p>
               LENI (Lighting Energy Numeric Indicator) is the method used to demonstrate Part L
               compliance. It calculates annual lighting energy consumption per unit floor area,
               accounting for installed power, operating hours, and control system effectiveness.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LENI Calculation Formula (BS EN 15193-1)
-              </p>
-              <p className="font-mono text-center text-lg mb-4">
-                LENI = W × (t<sub>D</sub> × F<sub>D</sub> × F<sub>O</sub>) + (t<sub>N</sub> × F
-                <sub>O</sub>) / A
-              </p>
-              <div className="text-sm">
-                <ul className="space-y-1">
-                  <li>
-                    <strong>W</strong> = Total installed lighting power (W)
-                  </li>
-                  <li>
-                    <strong>
-                      t<sub>D</sub>
-                    </strong>{' '}
-                    = Annual daylight time hours
-                  </li>
-                  <li>
-                    <strong>
-                      t<sub>N</sub>
-                    </strong>{' '}
-                    = Annual non-daylight time hours
-                  </li>
-                  <li>
-                    <strong>
-                      F<sub>D</sub>
-                    </strong>{' '}
-                    = Daylight dependency factor (0-1)
-                  </li>
-                  <li>
-                    <strong>
-                      F<sub>O</sub>
-                    </strong>{' '}
-                    = Occupancy dependency factor (0-1)
-                  </li>
-                  <li>
-                    <strong>A</strong> = Floor area (m²)
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical LENI Targets by Building Type
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">LENI Target</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office (air-conditioned)</td>
-                      <td className="border border-white/10 px-3 py-2">25 kWh/m²/year</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typical 2500 operating hours
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Office (naturally ventilated)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">22 kWh/m²/year</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        More daylight opportunity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail (non-food)</td>
-                      <td className="border border-white/10 px-3 py-2">45 kWh/m²/year</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher display lighting load
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse</td>
-                      <td className="border border-white/10 px-3 py-2">15 kWh/m²/year</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower illuminance, good height
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">School</td>
-                      <td className="border border-white/10 px-3 py-2">18 kWh/m²/year</td>
-                      <td className="border border-white/10 px-3 py-2">Limited occupied hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital (24hr areas)</td>
-                      <td className="border border-white/10 px-3 py-2">55 kWh/m²/year</td>
-                      <td className="border border-white/10 px-3 py-2">Continuous operation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control Factors for LENI
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>
-                    F<sub>O</sub> (Occupancy):
-                  </strong>{' '}
-                  0.9-1.0 (manual), 0.7-0.9 (presence), 0.6-0.8 (absence)
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    F<sub>D</sub> (Daylight):
-                  </strong>{' '}
-                  0.5-0.7 (dimming within 3m), 0.8-0.9 (switching), 1.0 (no control)
-                </li>
-                <li className="pl-1">Lower factors = better controls = lower LENI</li>
-                <li className="pl-1">Must be supported by compliant control specification</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>LENI calculation formula (BS EN 15193-1):</strong> LENI = W × (t<sub>D</sub>{' '}
+              × F<sub>D</sub> × F<sub>O</sub>) + (t<sub>N</sub> × F<sub>O</sub>) / A.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>W</strong> = total installed lighting power (W)
+              </li>
+              <li>
+                <strong>t<sub>D</sub></strong> = annual daylight time hours
+              </li>
+              <li>
+                <strong>t<sub>N</sub></strong> = annual non-daylight time hours
+              </li>
+              <li>
+                <strong>F<sub>D</sub></strong> = daylight dependency factor (0-1)
+              </li>
+              <li>
+                <strong>F<sub>O</sub></strong> = occupancy dependency factor (0-1)
+              </li>
+              <li>
+                <strong>A</strong> = floor area (m²)
+              </li>
+            </ul>
+            <p>
+              <strong>Typical LENI targets by building type (building type / LENI target / notes):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Office (air-conditioned) — 25 kWh/m²/year — typical 2500 operating hours</li>
+              <li>Office (naturally ventilated) — 22 kWh/m²/year — more daylight opportunity</li>
+              <li>Retail (non-food) — 45 kWh/m²/year — higher display lighting load</li>
+              <li>Warehouse — 15 kWh/m²/year — lower illuminance, good height</li>
+              <li>School — 18 kWh/m²/year — limited occupied hours</li>
+              <li>Hospital (24hr areas) — 55 kWh/m²/year — continuous operation</li>
+            </ul>
+            <p>
+              <strong>Control factors for LENI:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>F<sub>O</sub> (occupancy):</strong> 0.9-1.0 (manual), 0.7-0.9 (presence),
+                0.6-0.8 (absence)
+              </li>
+              <li>
+                <strong>F<sub>D</sub> (daylight):</strong> 0.5-0.7 (dimming within 3m), 0.8-0.9
+                (switching), 1.0 (no control)
+              </li>
+              <li>Lower factors = better controls = lower LENI</li>
+              <li>Must be supported by compliant control specification</li>
+            </ul>
+            <p>
               <strong>Important:</strong> LENI calculation must use actual installed power, not
               design allowance. Verify luminaire quantities and wattages match the as-installed
               condition.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Control Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Controls Strategy for Energy Efficiency
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Controls Strategy for Energy Efficiency">
             <p>
               Lighting controls are essential for achieving energy efficiency targets. The right
               combination of occupancy sensing, daylight linking, scheduling, and constant light
               output can deliver savings of 50-70% compared to manually controlled systems.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control Strategy Energy Savings
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Control Strategy
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Saving</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Best Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Presence detection (auto on/off)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-30%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Toilets, corridors, stores
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Absence detection (manual on)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                      <td className="border border-white/10 px-3 py-2">Offices, meeting rooms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Daylight-linked dimming</td>
-                      <td className="border border-white/10 px-3 py-2">20-40%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Perimeter zones (within 6m)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Time scheduling</td>
-                      <td className="border border-white/10 px-3 py-2">10-20%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All areas with fixed schedules
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Constant light output (CLO)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-15%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Areas with long operating hours
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Task-ambient lighting</td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                      <td className="border border-white/10 px-3 py-2">Open plan offices</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Constant Light Output (CLO)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">New LEDs start at reduced power (~80%)</li>
-                  <li className="pl-1">Output increases as lumens depreciate</li>
-                  <li className="pl-1">Maintains consistent illuminance</li>
-                  <li className="pl-1">Saves 10-15% over luminaire life</li>
-                  <li className="pl-1">Requires DALI or compatible dimming</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Task-Ambient Approach
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Lower ambient level (300 lux typical)</li>
-                  <li className="pl-1">Task lighting at workstations (500 lux)</li>
-                  <li className="pl-1">User control of task light</li>
-                  <li className="pl-1">Reduces total installed power</li>
-                  <li className="pl-1">Provides individual control</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Set daylight sensor target illuminance and verify response</li>
-                <li className="pl-1">Adjust occupancy sensor sensitivity and time delays</li>
-                <li className="pl-1">Configure time schedules to match actual building use</li>
-                <li className="pl-1">Enable and verify CLO functionality</li>
-                <li className="pl-1">Test scene settings and document for users</li>
-                <li className="pl-1">Provide building operator training</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Controls only save energy when properly commissioned.
-              Budget adequate time and resource for setup and user training. Monitor post-occupancy
-              to verify performance.
+            <p>
+              <strong>Control strategy energy savings (control / typical saving / best application):</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Presence detection (auto on/off) — 20-30% — toilets, corridors, stores
+              </li>
+              <li>Absence detection (manual on) — 30-50% — offices, meeting rooms</li>
+              <li>Daylight-linked dimming — 20-40% — perimeter zones (within 6m)</li>
+              <li>Time scheduling — 10-20% — all areas with fixed schedules</li>
+              <li>Constant light output (CLO) — 10-15% — areas with long operating hours</li>
+              <li>Task-ambient lighting — 15-25% — open plan offices</li>
+            </ul>
+            <p>
+              <strong>Constant light output (CLO):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>New LEDs start at reduced power (~80%)</li>
+              <li>Output increases as lumens depreciate</li>
+              <li>Maintains consistent illuminance</li>
+              <li>Saves 10-15% over luminaire life</li>
+              <li>Requires DALI or compatible dimming</li>
+            </ul>
+            <p>
+              <strong>Task-ambient approach:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lower ambient level (300 lux typical)</li>
+              <li>Task lighting at workstations (500 lux)</li>
+              <li>User control of task light</li>
+              <li>Reduces total installed power</li>
+              <li>Provides individual control</li>
+            </ul>
+            <p>
+              <strong>Commissioning checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Set daylight sensor target illuminance and verify response</li>
+              <li>Adjust occupancy sensor sensitivity and time delays</li>
+              <li>Configure time schedules to match actual building use</li>
+              <li>Enable and verify CLO functionality</li>
+              <li>Test scene settings and document for users</li>
+              <li>Provide building operator training</li>
+            </ul>
+            <p>
+              <strong>Remember:</strong> Controls only save energy when properly commissioned.
+              Budget adequate time and resource for setup and user training. Monitor
+              post-occupancy to verify performance.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — LENI calculation:</strong> Calculate LENI for a 500m² office
+              with 5kW installed lighting, daylight dimming and absence detection.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Floor area (A) = 500m²</li>
+              <li>Installed power (W) = 5000W</li>
+              <li>Operating hours: tD = 2250h, tN = 250h (from BS EN 15193)</li>
+              <li>FD = 0.6 (daylight dimming)</li>
+              <li>FO = 0.7 (absence detection)</li>
+              <li>LENI = W × [(tD × FD × FO) + (tN × FO)] / A</li>
+              <li>= 5000 × [(2250 × 0.6 × 0.7) + (250 × 0.7)] / 500</li>
+              <li>= 5000 × [945 + 175] / 500</li>
+              <li>= 5000 × 1120 / 500</li>
+              <li>= 5,600,000 / 500</li>
+              <li>
+                = <strong>11,200 Wh/m²/year = 11.2 kWh/m²/year</strong>
+              </li>
+              <li>Target for office: 25 kWh/m²/year — compliant (11.2 &lt; 25)</li>
+            </ul>
+            <p>
+              <strong>Example 2 — Part L efficacy check:</strong> A luminaire produces 4000
+              luminaire lumens and consumes 38W (including driver). Does it comply?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Luminaire efficacy = luminaire lumens / circuit watts</li>
+              <li>= 4000 / 38</li>
+              <li>
+                = <strong>105 luminaire lm/W</strong>
+              </li>
+              <li>Part L minimum (general lighting): 95 llm/W</li>
+              <li>Compliant (105 &gt; 95)</li>
+              <li>Note: circuit watts includes driver/control gear losses</li>
+            </ul>
+            <p>
+              <strong>Example 3 — control strategy energy saving:</strong> Estimate annual energy
+              saving from adding absence detection to a 10kW office lighting load.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Base case (manual control): FO = 1.0</li>
+              <li>With absence detection: FO = 0.7</li>
+              <li>Annual hours: 2500h</li>
+              <li>Base energy = 10kW × 2500h × 1.0 = 25,000 kWh/year</li>
+              <li>With controls = 10kW × 2500h × 0.7 = 17,500 kWh/year</li>
+              <li>
+                Saving = 25,000 − 17,500 = <strong>7,500 kWh/year</strong>
+              </li>
+              <li>
+                = <strong>30% reduction</strong>
+              </li>
+              <li>At £0.30/kWh = £2,250/year cost saving</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: LENI Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> Calculate LENI for a 500m² office with 5kW installed
-                lighting, daylight dimming and absence detection.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given data:</p>
-                <p>- Floor area (A) = 500m²</p>
-                <p>- Installed power (W) = 5000W</p>
-                <p>- Operating hours: tD = 2250h, tN = 250h (from BS EN 15193)</p>
-                <p>- FD = 0.6 (daylight dimming)</p>
-                <p>- FO = 0.7 (absence detection)</p>
-                <p className="mt-2">LENI = W × [(tD × FD × FO) + (tN × FO)] / A</p>
-                <p className="mt-2">= 5000 × [(2250 × 0.6 × 0.7) + (250 × 0.7)] / 500</p>
-                <p>= 5000 × [945 + 175] / 500</p>
-                <p>= 5000 × 1120 / 500</p>
-                <p>= 5,600,000 / 500</p>
-                <p>
-                  = <strong>11,200 Wh/m²/year = 11.2 kWh/m²/year</strong>
-                </p>
-                <p className="mt-2">Target for office: 25 kWh/m²/year</p>
-                <p className="text-green-400">✓ COMPLIANT (11.2 &lt; 25)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Part L Efficacy Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A luminaire produces 4000 luminaire lumens and consumes
-                38W (including driver). Does it comply?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Luminaire efficacy = Luminaire lumens / Circuit watts</p>
-                <p>= 4000 / 38</p>
-                <p>
-                  = <strong>105 luminaire lm/W</strong>
-                </p>
-                <p className="mt-2">Part L minimum (general lighting): 95 llm/W</p>
-                <p className="mt-2 text-green-400">✓ COMPLIANT (105 &gt; 95)</p>
-                <p className="mt-2 text-white">
-                  Note: Circuit watts includes driver/control gear losses
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Design for efficiency checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Specify high-efficacy LEDs (≥100 lm/W system)</li>
+              <li>Design to target illuminance (avoid over-lighting)</li>
+              <li>Maximise daylight contribution where possible</li>
+              <li>Zone controls appropriately (perimeter/core/task)</li>
+              <li>Include CLO for areas with long operating hours</li>
+              <li>Calculate LENI to verify compliance</li>
+            </ul>
+            <p>
+              <strong>Compliance documentation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>LENI calculation with assumptions</li>
+              <li>Luminaire schedule with efficacy data</li>
+              <li>Controls specification and zone drawings</li>
+              <li>Commissioning records and certificates</li>
+              <li>Building log book information</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Control Strategy Energy Saving
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> Estimate annual energy saving from adding absence detection
-                to a 10kW office lighting load.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Base case (manual control): FO = 1.0</p>
-                <p>With absence detection: FO = 0.7</p>
-                <p className="mt-2">Annual hours: 2500h</p>
-                <p className="mt-2">Base energy = 10kW × 2500h × 1.0 = 25,000 kWh/year</p>
-                <p>With controls = 10kW × 2500h × 0.7 = 17,500 kWh/year</p>
-                <p className="mt-2">
-                  Saving = 25,000 - 17,500 = <strong>7,500 kWh/year</strong>
-                </p>
-                <p>
-                  = <strong>30% reduction</strong>
-                </p>
-                <p className="mt-2 text-white">At £0.30/kWh = £2,250/year cost saving</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Design for Efficiency Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Specify high-efficacy LEDs (≥100 lm/W system)</li>
-                <li className="pl-1">Design to target illuminance (avoid over-lighting)</li>
-                <li className="pl-1">Maximise daylight contribution where possible</li>
-                <li className="pl-1">Zone controls appropriately (perimeter/core/task)</li>
-                <li className="pl-1">Include CLO for areas with long operating hours</li>
-                <li className="pl-1">Calculate LENI to verify compliance</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Ignoring parasitic loads</strong> — include standby power in
+                  calculations
+                </li>
+                <li>
+                  <strong>Poor commissioning</strong> — controls need proper setup to save energy
+                </li>
+                <li>
+                  <strong>Over-lighting</strong> — designing above required illuminance wastes
+                  energy
+                </li>
+                <li>
+                  <strong>Wrong control factors</strong> — use realistic FD and FO values
+                </li>
               </ul>
-            </div>
+            }
+            doInstead="Add control / sensor parasitic loads to the LENI total, scope a real commissioning visit, design to the BS EN 12464-1 task lux (no headroom), and pick FD / FO factors from BS EN 15193-1 that match the controls actually specified."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Compliance Documentation
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">LENI calculation with assumptions</li>
-                <li className="pl-1">Luminaire schedule with efficacy data</li>
-                <li className="pl-1">Controls specification and zone drawings</li>
-                <li className="pl-1">Commissioning records and certificates</li>
-                <li className="pl-1">Building log book information</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring parasitic loads:</strong> Include standby power in calculations
-                </li>
-                <li className="pl-1">
-                  <strong>Poor commissioning:</strong> Controls need proper setup to save energy
-                </li>
-                <li className="pl-1">
-                  <strong>Over-lighting:</strong> Designing above required illuminance wastes energy
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong control factors:</strong> Use realistic FD and FO values
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Hitting LENI ≤ 25 kWh/m²/yr on a flagship office fit-out"
+            situation={
+              <>
+                You’re leading the lighting design for a 4-storey, 6,000 m² speculative office.
+                Client targets BREEAM Excellent and a LENI ≤ 25 kWh/m²/yr to evidence Part L 2021
+                compliance plus BREEAM Hea 06 and Ene 03. Open-plan, meeting rooms, breakout, WCs,
+                back-of-house. You’ve got the lighting criteria locked from sub-section 4.1.
+              </>
+            }
+            whatToDo={
+              <>
+                Spec luminaire efficacy ≥ 110 lm/W (open plan), ≥ 90 lm/W (meeting / breakout). Use
+                CLO drivers with DALI-2, PF ≥ 0.95, THD &lt; 15 %, flicker-free. Strategy: absence
+                detection across the open plan, presence in meeting rooms and WCs, daylight-linked
+                dimming on perimeter. Run the LENI calc in BS EN 15193-1: include parasitic
+                (sensor + emergency drivers ≈ 1.5 kWh/m²/yr), control factor FD = 0.7 (daylight
+                response), FO = 0.8 (occupancy). Initial calc lands at 18 kWh/m²/yr — comfortable
+                margin against 25. On the load schedule, flag the open-plan and meeting-room
+                final circuits for AFDD per Reg 421.1.7 recommendation given the high luminaire
+                density and combustible ceiling void. Include the LENI workings, the photometric
+                files, and the controls narrative in the O&amp;M pack.
+              </>
+            }
+            whyItMatters={
+              <>
+                LENI is a <em>calculated</em> compliance route — easy to under-count parasitics
+                and over-claim daylight savings. A defensible LENI ≤ 25 with margin protects the
+                design when the SBEM modeller runs the building through Part L proper.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Luminaire efficacy ≥ 95 lm/W is the working Part L 2021 floor — modern offices target 110–130 lm/W.',
+              'LENI per BS EN 15193-1: include parasitic (sensors, emergency, controls) and pick realistic FD / FO factors.',
+              'Constant Light Output (CLO) holds the maintained illuminance over life — saves 10–15 % across the design horizon.',
+              'Drivers: PF ≥ 0.95, THD &lt; 15 %, flicker-free per IEEE 1789, DALI-2 for full controls compatibility.',
+              'Controls (absence + daylight) are where the real LENI savings come from — efficacy alone won’t hit 25 kWh/m²/yr.',
+              'Reg 421.1.7 (A4:2026) recommends AFDDs for AC final circuits — apply to lighting where fire-load justifies it.',
+              'Commission with a real measurement visit — modelled LENI is design intent, measured kWh is reality.',
+              'Document driver, photometric file, controls narrative and LENI workings in the O&amp;M for compliance audit.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Part L Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>General efficacy: ≥95 llm/W</li>
-                  <li>Display efficacy: ≥70 llm/W</li>
-                  <li>Occupancy: spaces &gt;30m²</li>
-                  <li>Daylight: within 3m of windows</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Typical Savings</p>
-                <ul className="space-y-0.5">
-                  <li>Absence detection: 30-50%</li>
-                  <li>Daylight linking: 20-40%</li>
-                  <li>Combined: 50-70%</li>
-                  <li>CLO: 10-15%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section4-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: External Lighting
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section5">
-              Next: Section 5
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                External lighting
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Back to module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Module 4
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

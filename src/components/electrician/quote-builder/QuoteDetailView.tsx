@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Quote } from '@/types/quote';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
   Package,
@@ -23,15 +25,18 @@ import {
   Bell,
   AlertTriangle,
   Eye,
+  GitBranch,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { VariationDialog } from './VariationDialog';
 
 interface QuoteDetailViewProps {
   quote: Quote;
 }
 
 export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
+  const [variationOpen, setVariationOpen] = useState(false);
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'labour':
@@ -419,6 +424,26 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                       {/* Mobile Layout */}
                       <div className="col-span-1 sm:col-span-5">
                         <p className="text-white font-medium mb-1 sm:mb-0">{item.description}</p>
+                        {/* ELE-888 — per-item adjustment chip */}
+                        {typeof item.itemAdjustmentPercent === 'number' &&
+                          item.itemAdjustmentPercent !== 0 && (
+                            <span
+                              className={cn(
+                                'inline-flex items-center gap-1 mt-1 text-[10px] font-semibold px-1.5 py-0.5 rounded tabular-nums',
+                                item.itemAdjustmentPercent > 0
+                                  ? 'bg-amber-500/15 text-amber-300'
+                                  : 'bg-emerald-500/15 text-emerald-300'
+                              )}
+                            >
+                              {item.itemAdjustmentPercent > 0 ? '+' : ''}
+                              {item.itemAdjustmentPercent}%
+                              {item.itemAdjustmentLabel && (
+                                <span className="text-white/60 font-normal">
+                                  · {item.itemAdjustmentLabel}
+                                </span>
+                              )}
+                            </span>
+                          )}
                         {/* Mobile: Show qty and prices below description */}
                         <div className="flex items-center justify-between sm:hidden text-white text-xs">
                           <span>
@@ -456,6 +481,29 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             <span>Subtotal</span>
             <span className="font-medium">£{(quote.subtotal || 0).toFixed(2)}</span>
           </div>
+
+          {/* ELE-891 — per-category adjustment lines (show only if non-zero) */}
+          {quote.settings?.categoryAdjustments &&
+            (
+              [
+                ['labour', quote.settings.categoryAdjustments.labour],
+                ['materials', quote.settings.categoryAdjustments.materials],
+                ['equipment', quote.settings.categoryAdjustments.equipment],
+              ] as const
+            )
+              .filter(([, v]) => typeof v === 'number' && v !== 0)
+              .map(([cat, pct]) => (
+                <div
+                  key={cat}
+                  className="flex justify-between text-[12px] text-white/70 -mt-1"
+                >
+                  <span className="capitalize">
+                    {cat} {pct! > 0 ? 'markup' : 'discount'} ({pct! > 0 ? '+' : ''}
+                    {pct}%)
+                  </span>
+                  <span className="font-medium">included in subtotal</span>
+                </div>
+              ))}
 
           {quote.overhead !== undefined && quote.overhead > 0 && (
             <div className="flex justify-between text-white">
@@ -560,6 +608,31 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
           </div>
         </Card>
       )}
+
+      {/* ELE-956 — Variation trigger on accepted quotes */}
+      {(quote.acceptance_status === 'accepted' || quote.status === 'approved') && (
+        <Card className="glass-premium p-5">
+          <div className="flex items-start gap-3">
+            <GitBranch className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <h3 className="font-semibold text-white mb-1">Job changed on site?</h3>
+              <p className="text-sm text-white/60 mb-3">
+                Create a variation — same client, new version, the diff is what they sign off.
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setVariationOpen(true)}
+                className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                Create variation →
+              </Button>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      <VariationDialog open={variationOpen} onOpenChange={setVariationOpen} parentQuote={quote} />
     </div>
   );
 };

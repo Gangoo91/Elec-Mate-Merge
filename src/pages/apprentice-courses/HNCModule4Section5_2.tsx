@@ -1,8 +1,27 @@
-import { ArrowLeft, LayoutGrid, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 5 · Subsection 2 — Distribution Board Design
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Ways calculation, diversity factor application (BS 7671 Appendix 1), Regulation
+ *   514.9 labelling, three-phase load balancing, mounting heights and IP ratings for
+ *   final distribution boards.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Distribution Board Design - HNC Module 4 Section 5.2';
@@ -199,723 +218,449 @@ const faqs = [
 ];
 
 const HNCModule4Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <LayoutGrid className="h-4 w-4" />
-            <span>Module 4.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Distribution Board Design
-          </h1>
-          <p className="text-white">
-            Designing distribution systems for reliable final circuit protection and power delivery
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 5 · Subsection 2"
+            title="Distribution Board Design"
+            description="Designing distribution systems for reliable final circuit protection and power delivery."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Ways calculation:</strong> Total circuits + 20-30% spare
-              </li>
-              <li className="pl-1">
-                <strong>Diversity:</strong> Reduces maximum demand calculation
-              </li>
-              <li className="pl-1">
-                <strong>Labelling:</strong> Reg 514.9 - all circuits identified
-              </li>
-              <li className="pl-1">
-                <strong>Access:</strong> 450-1200mm mounting height
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Phase balance:</strong> Critical for 3-phase boards
-              </li>
-              <li className="pl-1">
-                <strong>RCD split:</strong> Prevent total loss of power
-              </li>
-              <li className="pl-1">
-                <strong>IP rating:</strong> Match to environment
-              </li>
-              <li className="pl-1">
-                <strong>Schedules:</strong> Essential documentation
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Calculate number of ways required including future expansion',
               'Apply diversity factors to reduce maximum demand',
               'Specify labelling to comply with Regulation 514',
               'Design for accessibility and safe operation',
               'Select appropriate IP ratings for different environments',
               'Balance phase loads in three-phase distribution',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <TLDR
+            points={[
+              'Way count = current circuits + 20–30 % spare. Three-phase boards add complexity around phase balance — keep single-phase totals within 10 % of each other.',
+              'Diversity from On-Site Guide Appendix A is the engineer’s tool to right-size sub-mains. Diversity is not optional — it’s how you avoid grossly oversized cables.',
+              'Phase balance: aim for ≤ 10 % imbalance between L1, L2, L3. Worst case the neutral carries the difference (and on third-harmonic-rich loads, a lot more).',
+              'Labelling per Section 514: every way unambiguously labelled at the device, plus a printed/laminated circuit chart inside the cover and the periodic-inspection notice (Reg 514.12.1) outside.',
+              'Pick the IP rating from the actual location (cleaner store IP4X / IP41 minimum, plant room IP54), and the IK rating from the impact risk.',
+            ]}
+          />
 
-        {/* Section 1: Ways Calculation */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Ways Calculation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 514.12.1"
+            clause="An instruction notice of such durable material as to be likely to remain easily legible throughout the life of the installation shall be fixed in a prominent position at or near the relevant distribution board or boards upon completion of the work carried out in accordance with Chapter 64 or 65 as applicable. The notice shall be clearly and durably marked and shall read as follows: Important — This installation should be periodically inspected and tested and a report on its condition obtained, as prescribed in BS 7671 Requirements for Electrical Installations. Date of last inspection ............ Recommended date of next inspection ............"
+            meaning={
+              <>
+                Reg 514.12.1 is a design deliverable, not an electrician’s afterthought. Your DB
+                schedule has to call for a durable periodic-inspection notice on every board — fix
+                method, location, wording. It’s how the next dutyholder knows when their EICR is
+                due. The exception for domestic premises applies, but commercial/industrial DBs
+                always carry the notice.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 514.12.1."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Ways Calculation">
             <p>
               Correctly sizing distribution boards ensures adequate capacity for current
               requirements and future expansion. Under-sizing leads to expensive modifications;
               over-sizing wastes resources and space.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Steps for calculating ways:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Count all lighting circuits (typically 1 per 100m² in offices)
-                </li>
-                <li className="pl-1">Count all power circuits (socket outlets, fixed equipment)</li>
-                <li className="pl-1">
-                  Add dedicated circuits (air conditioning, water heaters, etc.)
-                </li>
-                <li className="pl-1">Include essential/emergency circuits if applicable</li>
-                <li className="pl-1">Add 20-30% spare capacity for future expansion</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Standard Distribution Board Sizes
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Common Sizes</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-phase consumer unit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">12, 16, 18, 21 way</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic, small commercial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-phase distribution board
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">12, 18, 24, 36 way</td>
-                      <td className="border border-white/10 px-3 py-2">Commercial floor DBs</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-phase TPN board</td>
-                      <td className="border border-white/10 px-3 py-2">12, 18, 24 way per phase</td>
-                      <td className="border border-white/10 px-3 py-2">Commercial, industrial</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Panelboard</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 72 way</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large commercial, data centres
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Steps for calculating ways:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Count all lighting circuits (typically 1 per 100m² in offices)</li>
+              <li>Count all power circuits (socket outlets, fixed equipment)</li>
+              <li>Add dedicated circuits (air conditioning, water heaters, etc.)</li>
+              <li>Include essential/emergency circuits if applicable</li>
+              <li>Add 20-30% spare capacity for future expansion</li>
+            </ul>
+            <p>
+              <strong>Standard distribution board sizes (type / common sizes / typical application):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single-phase consumer unit — 12, 16, 18, 21 way — domestic, small commercial</li>
+              <li>Single-phase distribution board — 12, 18, 24, 36 way — commercial floor DBs</li>
+              <li>Three-phase TPN board — 12, 18, 24 way per phase — commercial, industrial</li>
+              <li>Panelboard — up to 72 way — large commercial, data centres</li>
+            </ul>
+            <p>
               <strong>Design tip:</strong> Always round up to the next standard size. The cost
               difference is minimal compared to future modification costs.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Diversity Application */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Diversity Application
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Diversity Application">
             <p>
               Diversity factors account for the fact that not all connected loads operate
               simultaneously at full capacity. Applying diversity correctly reduces cable sizes,
               switchgear ratings, and ultimately project costs.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Diversity Factors (BS 7671 Appendix 1)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Circuit Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Diversity Factor
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">66% (0.66)</td>
-                      <td className="border border-white/10 px-3 py-2">Office/commercial areas</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Socket outlets (first 10A)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">Minimum demand</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Socket outlets (remainder)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">40% (0.4)</td>
-                      <td className="border border-white/10 px-3 py-2">Offices, general areas</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooking appliances</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        First 10A + 30% remainder
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Domestic cooking</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water heating</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">Continuous loads</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air conditioning</td>
-                      <td className="border border-white/10 px-3 py-2">80-100%</td>
-                      <td className="border border-white/10 px-3 py-2">Depends on building use</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Diversity Calculation Example
-              </p>
-              <p className="text-sm text-white mb-2">Office floor with 200m² area:</p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  Lighting: 2.4kW connected × 0.66 = <strong>1.58kW</strong>
-                </li>
-                <li>Sockets: First 10A = 2.3kW, remainder 8kW × 0.4 = 3.2kW</li>
-                <li>
-                  Total sockets: <strong>5.5kW</strong>
-                </li>
-                <li>
-                  Air conditioning: 4kW × 0.8 = <strong>3.2kW</strong>
-                </li>
-                <li className="mt-2 font-medium">Maximum demand: 10.28kW (45A at 230V)</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Diversity factors per BS 7671 Appendix 1 (circuit type / diversity factor / notes):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lighting — 66% (0.66) — office/commercial areas</li>
+              <li>Socket outlets (first 10A) — 100% — minimum demand</li>
+              <li>Socket outlets (remainder) — 40% (0.4) — offices, general areas</li>
+              <li>Cooking appliances — first 10A + 30% remainder — domestic cooking</li>
+              <li>Water heating — 100% — continuous loads</li>
+              <li>Air conditioning — 80-100% — depends on building use</li>
+            </ul>
+            <p>
+              <strong>Diversity calculation example — office floor 200m²:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Lighting: 2.4kW connected × 0.66 = <strong>1.58kW</strong>
+              </li>
+              <li>Sockets: First 10A = 2.3kW, remainder 8kW × 0.4 = 3.2kW</li>
+              <li>
+                Total sockets: <strong>5.5kW</strong>
+              </li>
+              <li>
+                Air conditioning: 4kW × 0.8 = <strong>3.2kW</strong>
+              </li>
+              <li>
+                Maximum demand: <strong>10.28kW (45A at 230V)</strong>
+              </li>
+            </ul>
+            <p>
               <strong>Caution:</strong> Do not apply diversity to single-circuit loads or where
               loads are known to operate continuously.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Labelling Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Labelling Requirements (Regulation 514)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Labelling Requirements (Regulation 514)">
             <p>
               Clear, durable labelling is essential for safe operation and maintenance. BS 7671
               Regulation 514.9 specifies requirements for circuit identification that enable safe
               isolation and fault finding.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Regulation 514.9 requirements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Every circuit must be identified at the distribution board</li>
-                <li className="pl-1">Labels must be legible and suitably positioned</li>
-                <li className="pl-1">
-                  Labels must be durable for the expected life of installation
-                </li>
-                <li className="pl-1">
-                  Circuit charts should be fixed within or adjacent to the DB
-                </li>
-                <li className="pl-1">RCD coverage must be clearly indicated</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Distribution Board Schedule Content
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Column</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Information Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circuit number</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sequential reference (1, 2, 3...)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circuit description</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Location and type (e.g., "Floor 1 Lighting")
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protective device</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Type and rating (e.g., MCB 16A Type B)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable size</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CSA and type (e.g., 2.5mm² T+E)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Load</td>
-                      <td className="border border-white/10 px-3 py-2">Design current (Amps)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Which RCD protects the circuit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phase</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        L1, L2, L3 for three-phase boards
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Warning Labels Required
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">"Safety Electrical Connection - Do Not Remove"</li>
-                  <li className="pl-1">RCD test notice (test quarterly)</li>
-                  <li className="pl-1">Dual supply warning where applicable</li>
-                  <li className="pl-1">Periodic inspection due date</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Label Durability</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Engraved or printed plastic labels</li>
-                  <li className="pl-1">UV-resistant for external locations</li>
-                  <li className="pl-1">Fixed with screws or permanent adhesive</li>
-                  <li className="pl-1">Handwritten labels not acceptable</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Regulation 514.9 requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Every circuit must be identified at the distribution board</li>
+              <li>Labels must be legible and suitably positioned</li>
+              <li>Labels must be durable for the expected life of installation</li>
+              <li>Circuit charts should be fixed within or adjacent to the DB</li>
+              <li>RCD coverage must be clearly indicated</li>
+            </ul>
+            <p>
+              <strong>Distribution board schedule content (column / information required):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Circuit number:</strong> Sequential reference (1, 2, 3...)
+              </li>
+              <li>
+                <strong>Circuit description:</strong> Location and type (e.g., "Floor 1 Lighting")
+              </li>
+              <li>
+                <strong>Protective device:</strong> Type and rating (e.g., MCB 16A Type B)
+              </li>
+              <li>
+                <strong>Cable size:</strong> CSA and type (e.g., 2.5mm² T+E)
+              </li>
+              <li>
+                <strong>Load:</strong> Design current (Amps)
+              </li>
+              <li>
+                <strong>RCD:</strong> Which RCD protects the circuit
+              </li>
+              <li>
+                <strong>Phase:</strong> L1, L2, L3 for three-phase boards
+              </li>
+            </ul>
+            <p>
+              <strong>Warning labels required:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>"Safety Electrical Connection - Do Not Remove"</li>
+              <li>RCD test notice (test quarterly)</li>
+              <li>Dual supply warning where applicable</li>
+              <li>Periodic inspection due date</li>
+            </ul>
+            <p>
+              <strong>Label durability:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Engraved or printed plastic labels</li>
+              <li>UV-resistant for external locations</li>
+              <li>Fixed with screws or permanent adhesive</li>
+              <li>Handwritten labels not acceptable</li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Use laminated circuit charts in clear pockets attached
               inside DB doors. Update whenever circuits change.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Access Requirements and IP Ratings */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Access Requirements and IP Ratings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Access Requirements and IP Ratings">
             <p>
               Distribution boards must be accessible for safe operation and maintenance while being
               protected from environmental hazards. Correct positioning and IP rating selection
               ensures long-term reliability.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mounting Height Guidelines
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Minimum height</td>
-                      <td className="border border-white/10 px-3 py-2">450mm to lowest device</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Avoid low-level operation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maximum height</td>
-                      <td className="border border-white/10 px-3 py-2">1200mm to highest device</td>
-                      <td className="border border-white/10 px-3 py-2">Accessibility compliance</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ideal operating height</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        900-1000mm to main switch
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Comfortable operation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Front clearance</td>
-                      <td className="border border-white/10 px-3 py-2">700mm minimum</td>
-                      <td className="border border-white/10 px-3 py-2">Safe working space</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IP Ratings for Different Locations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Minimum IP</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Considerations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Office electrical cupboard
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">IP2X</td>
-                      <td className="border border-white/10 px-3 py-2">Basic finger protection</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corridor/circulation</td>
-                      <td className="border border-white/10 px-3 py-2">IP3X</td>
-                      <td className="border border-white/10 px-3 py-2">Protection from tools</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plant room</td>
-                      <td className="border border-white/10 px-3 py-2">IP4X to IP54</td>
-                      <td className="border border-white/10 px-3 py-2">Dust and possible splash</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Kitchen</td>
-                      <td className="border border-white/10 px-3 py-2">IP55</td>
-                      <td className="border border-white/10 px-3 py-2">Wash-down cleaning</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External (covered)</td>
-                      <td className="border border-white/10 px-3 py-2">IP55</td>
-                      <td className="border border-white/10 px-3 py-2">Rain and dust</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External (exposed)</td>
-                      <td className="border border-white/10 px-3 py-2">IP65</td>
-                      <td className="border border-white/10 px-3 py-2">Full weather exposure</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Accessibility note:</strong> Consider users with disabilities - ensure clear
+            <p>
+              <strong>Mounting height guidelines (aspect / requirement / reason):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimum height — 450mm to lowest device — avoid low-level operation</li>
+              <li>Maximum height — 1200mm to highest device — accessibility compliance</li>
+              <li>Ideal operating height — 900-1000mm to main switch — comfortable operation</li>
+              <li>Front clearance — 700mm minimum — safe working space</li>
+            </ul>
+            <p>
+              <strong>IP ratings for different locations (location / minimum IP / considerations):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Office electrical cupboard — IP2X — basic finger protection</li>
+              <li>Corridor/circulation — IP3X — protection from tools</li>
+              <li>Plant room — IP4X to IP54 — dust and possible splash</li>
+              <li>Kitchen — IP55 — wash-down cleaning</li>
+              <li>External (covered) — IP55 — rain and dust</li>
+              <li>External (exposed) — IP65 — full weather exposure</li>
+            </ul>
+            <p>
+              <strong>Accessibility note:</strong> Consider users with disabilities — ensure clear
               approach route, adequate lighting, and handles operable with one hand.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — DB sizing for office floor:</strong> Design a distribution board
+              for a 400m² office floor.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lighting: 400m² ÷ 100m² per circuit = 4 circuits</li>
+              <li>Power: 400m² ÷ 50m² per circuit = 8 circuits</li>
+              <li>Dedicated: 2 (server room, kitchen)</li>
+              <li>Total circuits: 14</li>
+              <li>With 25% spare: 14 × 1.25 = 17.5</li>
+              <li>
+                Specification: <strong>18-way single-phase DB</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — three-phase load balancing:</strong> Allocate circuits to achieve
+              balanced phases.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Available: lighting 3 × 6A circuits (18A total)</li>
+              <li>Available: sockets 6 × 20A circuits (120A total)</li>
+              <li>Available: HVAC 2 × 16A three-phase loads</li>
+              <li>L1: 1 lighting (6A) + 2 sockets (40A) = 46A</li>
+              <li>L2: 1 lighting (6A) + 2 sockets (40A) = 46A</li>
+              <li>L3: 1 lighting (6A) + 2 sockets (40A) = 46A</li>
+              <li>
+                <strong>Balanced within 5% — acceptable</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — maximum demand with diversity:</strong> Calculate maximum demand
+              for incoming cable sizing.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lighting: 6kW × 0.66 = 3.96kW</li>
+              <li>Sockets: First 10A (2.3kW) + (30A × 0.4 × 0.23) = 5.06kW</li>
+              <li>Server room: 4kW × 1.0 = 4.00kW</li>
+              <li>HVAC: 8kW × 0.8 = 6.40kW</li>
+              <li>
+                Maximum demand: <strong>19.42kW</strong>
+              </li>
+              <li>
+                Current at 230V: 19420 ÷ 230 = <strong>84.4A</strong> — specify 100A incoming device
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: DB Sizing for Office Floor
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design a distribution board for a 400m² office floor.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Circuit count:</p>
-                <p>Lighting: 400m² ÷ 100m² per circuit = 4 circuits</p>
-                <p>Power: 400m² ÷ 50m² per circuit = 8 circuits</p>
-                <p>Dedicated: 2 (server room, kitchen)</p>
-                <p>Total circuits: 14</p>
-                <p className="mt-2">With 25% spare: 14 × 1.25 = 17.5</p>
-                <p className="mt-2">
-                  Specification: <strong>18-way single-phase DB</strong>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Three-Phase Load Balancing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Allocate circuits to achieve balanced phases.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Available loads:</p>
-                <p>• Lighting: 3 × 6A circuits (18A total)</p>
-                <p>• Sockets: 6 × 20A circuits (120A total)</p>
-                <p>• HVAC: 2 × 16A three-phase loads</p>
-                <p className="mt-2">Phase allocation:</p>
-                <p>L1: 1 lighting (6A) + 2 sockets (40A) = 46A</p>
-                <p>L2: 1 lighting (6A) + 2 sockets (40A) = 46A</p>
-                <p>L3: 1 lighting (6A) + 2 sockets (40A) = 46A</p>
-                <p className="text-green-400 mt-2">Balanced within 5% - acceptable</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>RCD configuration:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Split circuits between multiple RCDs to avoid total loss</li>
+              <li>Keep lighting and power on separate RCDs</li>
+              <li>Consider RCBOs for critical circuits</li>
+              <li>Type A RCDs for general use, Type B for VFDs</li>
+            </ul>
+            <p>
+              <strong>Design checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify fault rating matches prospective fault current</li>
+              <li>Confirm IP rating suits the environment</li>
+              <li>Check mounting height for accessibility</li>
+              <li>Ensure 700mm working clearance</li>
+              <li>Include spare ways for future expansion</li>
+              <li>Specify circuit chart and labelling requirements</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Minimum mounting height: <strong>450mm</strong>
+              </li>
+              <li>
+                Maximum mounting height: <strong>1200mm</strong>
+              </li>
+              <li>
+                Ideal operating height: <strong>900-1000mm</strong>
+              </li>
+              <li>
+                Front clearance: <strong>700mm minimum</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Maximum Demand with Diversity
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate maximum demand for incoming cable sizing.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Connected loads:</p>
-                <p>Lighting: 6kW × 0.66 = 3.96kW</p>
-                <p>Sockets: First 10A (2.3kW) + (30A × 0.4 × 0.23) = 5.06kW</p>
-                <p>Server room: 4kW × 1.0 = 4.00kW</p>
-                <p>HVAC: 8kW × 0.8 = 6.40kW</p>
-                <p className="mt-2">
-                  Maximum demand: <strong>19.42kW</strong>
-                </p>
-                <p>
-                  Current at 230V: 19420 ÷ 230 = <strong>84.4A</strong>
-                </p>
-                <p className="text-white">Specify 100A incoming device</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">RCD Configuration</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Split circuits between multiple RCDs to avoid total loss</li>
-                <li className="pl-1">Keep lighting and power on separate RCDs</li>
-                <li className="pl-1">Consider RCBOs for critical circuits</li>
-                <li className="pl-1">Type A RCDs for general use, Type B for VFDs</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Checklist</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Verify fault rating matches prospective fault current</li>
-                <li className="pl-1">Confirm IP rating suits the environment</li>
-                <li className="pl-1">Check mounting height for accessibility</li>
-                <li className="pl-1">Ensure 700mm working clearance</li>
-                <li className="pl-1">Include spare ways for future expansion</li>
-                <li className="pl-1">Specify circuit chart and labelling requirements</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Design Errors</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>No spare ways</strong> - Always include 20-30% spare
+          <CommonMistake
+            title="Common design errors"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>No spare ways</strong> — always include 20-30% spare
                 </li>
-                <li className="pl-1">
-                  <strong>Unbalanced phases</strong> - Check phase allocation
+                <li>
+                  <strong>Unbalanced phases</strong> — check phase allocation
                 </li>
-                <li className="pl-1">
-                  <strong>Single RCD</strong> - Split loads to prevent total blackout
+                <li>
+                  <strong>Single RCD</strong> — split loads to prevent total blackout
                 </li>
-                <li className="pl-1">
-                  <strong>Poor labelling</strong> - Specify durable, clear labels
+                <li>
+                  <strong>Poor labelling</strong> — specify durable, clear labels
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Build in 20-30% spare ways, balance the phase allocation on the schedule, split loads across multiple RCDs (or use RCBOs for critical circuits), and specify engraved or printed labels with a laminated circuit chart that can be kept up to date."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="36-way TP+N DB — sizing, balancing and labelling"
+            situation={
+              <>
+                You’re designing a 36-way TP+N distribution board for a medium-sized office floor.
+                Lighting, small power, mechanical services, IT comms cabinet, hand dryers, AC
+                FCUs. Spare capacity for a future tea-point. 400 V incomer, 250 A. Loads schedule
+                is in Excel. The contractor wants a single-line diagram and labelling spec by end
+                of week.
+              </>
+            }
+            whatToDo={
+              <>
+                Sum the active circuits: 27 used + 9 spare (25 % headroom) = 36 ways. Apply OSG
+                Appendix A diversity to the lighting (90 %) and small power (40 % beyond the
+                first), AC FCUs full load. Phase balance: walk down the schedule and rotate
+                circuits across L1/L2/L3 so each phase carries 80–90 A on the maximum-demand
+                calc. Specify Type B RCBOs (30 mA) on every circuit — granular protection beats a
+                board-level RCD that nuisance-trips half the office. Spec engraved Traffolyte way
+                labels, plus a printed and laminated circuit chart inside the door, plus the Reg
+                514.12.1 periodic-inspection notice on the door front. Add Reg 514.15.1 warning
+                notice if there’s a backup source. Single-line diagram references the BS EN 61439
+                board reference and the form-of-separation drawing.
+              </>
+            }
+            whyItMatters={
+              <>
+                A 36-way board with no spare ways becomes a £4 k modification when the client adds
+                a coffee point. A board with 30 % imbalance trips the protective device on the
+                heaviest phase first. A board without a 514.12.1 notice fails the next EICR.
+                Design choices, not site choices.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Diversity Factors</p>
-                <ul className="space-y-0.5">
-                  <li>Lighting: 66%</li>
-                  <li>Sockets: First 10A + 40%</li>
-                  <li>Cooking: First 10A + 30%</li>
-                  <li>Water heating: 100%</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Mounting Heights</p>
-                <ul className="space-y-0.5">
-                  <li>Minimum: 450mm</li>
-                  <li>Maximum: 1200mm</li>
-                  <li>Ideal: 900-1000mm</li>
-                  <li>Clearance: 700mm front</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              'Way count = current circuits + 20–30 % spare. Build in headroom or pay for it later.',
+              'Diversity per OSG Appendix A — the right-sizing tool for sub-mains and the incomer.',
+              'Phase balance ≤ 10 % imbalance — neutral current and equipment heating both depend on it.',
+              'RCBOs over board-level RCDs in commercial — granular tripping, faster fault-finding.',
+              'IP rating from environment, IK from impact risk — surface-mounted in a corridor needs IK08+.',
+              'Section 514 labelling: way labels (514.1.1), circuit chart (514.9), periodic-inspection notice (514.12.1).',
+              'Single-line diagram on the inside of the door + laminated circuit chart — keeps the FM team honest.',
+              'For boards with alternative supplies (PV, generator, battery), add Reg 514.15.1 warning notices at every isolation point.',
+            ]}
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section5-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: LV Switchgear
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section5-3">
-              Next: Busbar Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section5-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                LV switchgear selection
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section5-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Busbar systems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

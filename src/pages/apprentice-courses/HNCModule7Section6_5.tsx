@@ -213,7 +213,7 @@ const faqs = [
   {
     question: 'How do I determine acceptable earth fault loop impedance values?',
     answer:
-      'Maximum Zs values are found in BS 7671 Tables 41.2-41.5 for different protective device types and ratings. The measured value must be less than 80% of the tabulated value to allow for temperature rise during fault conditions. For example, a 32A Type B MCB has a maximum Zs of 1.37Ω at 20°C, so the measured value should not exceed 1.09Ω (1.37 × 0.8).',
+      'Maximum Zs values are found in BS 7671:2018+A4:2026 Tables 41.2-41.5 for different protective device types and ratings. The measured value must be less than 80% of the tabulated value to allow for temperature rise during fault conditions. For example, a 32A Type B MCB has a maximum Zs of 1.37Ω (A4:2026 Table 41.3, Cmin = 0.95 applied), so the measured value should not exceed 1.10Ω (1.37 × 0.8).',
   },
   {
     question: 'What should I do if insulation resistance test results are below the minimum?',
@@ -305,7 +305,7 @@ const HNCModule7Section6_5 = () => {
                 <strong>Test voltage:</strong> 500V DC for 230V circuits
               </li>
               <li className="pl-1">
-                <strong>RCD trip time:</strong> &lt;300ms at IΔn, &lt;40ms at 5×IΔn
+                <strong>RCD trip time (BS 7671:2018+A4:2026 Reg 643.3):</strong> ≤300ms at IΔn (single AC test, regardless of RCD Type — Table 3A deleted)
               </li>
               <li className="pl-1">
                 <strong>Disconnection:</strong> 0.4s for TN final circuits ≤63A
@@ -645,37 +645,38 @@ const HNCModule7Section6_5 = () => {
                       <th className="border border-white/10 px-3 py-2 text-left">Type D Zs (Ω)</th>
                     </tr>
                   </thead>
+                  {/* Zs values from canonical source: src/lib/calculators/bs7671-data/protectiveDevices.ts (BS 7671:2018+A4:2026 Table 41.3) */}
                   <tbody>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">6A</td>
-                      <td className="border border-white/10 px-3 py-2">7.67</td>
-                      <td className="border border-white/10 px-3 py-2">3.83</td>
-                      <td className="border border-white/10 px-3 py-2">1.92</td>
+                      <td className="border border-white/10 px-3 py-2">7.28</td>
+                      <td className="border border-white/10 px-3 py-2">3.64</td>
+                      <td className="border border-white/10 px-3 py-2">1.82</td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">16A</td>
-                      <td className="border border-white/10 px-3 py-2">2.87</td>
-                      <td className="border border-white/10 px-3 py-2">1.44</td>
-                      <td className="border border-white/10 px-3 py-2">0.72</td>
+                      <td className="border border-white/10 px-3 py-2">2.73</td>
+                      <td className="border border-white/10 px-3 py-2">1.37</td>
+                      <td className="border border-white/10 px-3 py-2">0.68</td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">32A</td>
-                      <td className="border border-white/10 px-3 py-2">1.44</td>
-                      <td className="border border-white/10 px-3 py-2">0.72</td>
-                      <td className="border border-white/10 px-3 py-2">0.36</td>
+                      <td className="border border-white/10 px-3 py-2">1.37</td>
+                      <td className="border border-white/10 px-3 py-2">0.68</td>
+                      <td className="border border-white/10 px-3 py-2">0.34</td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">63A</td>
-                      <td className="border border-white/10 px-3 py-2">0.73</td>
-                      <td className="border border-white/10 px-3 py-2">0.36</td>
-                      <td className="border border-white/10 px-3 py-2">0.18</td>
+                      <td className="border border-white/10 px-3 py-2">0.69</td>
+                      <td className="border border-white/10 px-3 py-2">0.35</td>
+                      <td className="border border-white/10 px-3 py-2">0.17</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <p className="text-xs text-white mt-2">
-                Apply 0.8 multiplier to account for conductor temperature rise during fault
-                conditions
+                Values from BS 7671:2018+A4:2026 Table 41.3 (Cmin = 0.95 applied). Apply 0.8 multiplier to account for conductor temperature rise during fault
+                conditions.
               </p>
             </div>
 
@@ -713,10 +714,10 @@ const HNCModule7Section6_5 = () => {
                       <td className="border border-white/10 px-3 py-2">Must trip ≤300ms</td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2">5× test</td>
+                      <td className="border border-white/10 px-3 py-2">5× test (pre-A4 only)</td>
                       <td className="border border-white/10 px-3 py-2">5× IΔn (150mA)</td>
                       <td className="border border-white/10 px-3 py-2">40ms</td>
-                      <td className="border border-white/10 px-3 py-2">Must trip ≤40ms</td>
+                      <td className="border border-white/10 px-3 py-2">No longer required by BS 7671 — A4:2026 deleted Table 3A and verifies at IΔn only (Reg 643.3)</td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Ramp test</td>
@@ -922,10 +923,10 @@ const HNCModule7Section6_5 = () => {
                 <p className="mt-2">Step 1: Calculate total Zs</p>
                 <p>Zs = Ze + (R1+R2)</p>
                 <p>Zs = 0.35 + 0.72 = 1.07Ω</p>
-                <p className="mt-2">Step 2: Check against BS 7671 Table 41.3</p>
-                <p>Maximum Zs for 32A Type B = 1.44Ω</p>
-                <p>Apply 0.8 correction: 1.44 × 0.8 = 1.15Ω</p>
-                <p className="mt-2 text-green-400">Result: 1.07Ω &lt; 1.15Ω - COMPLIANT</p>
+                <p className="mt-2">Step 2: Check against BS 7671:2018+A4:2026 Table 41.3</p>
+                <p>Maximum Zs for 32A Type B = 1.37Ω (Cmin = 0.95 applied)</p>
+                <p>Apply 0.8 correction: 1.37 × 0.8 = 1.10Ω</p>
+                <p className="mt-2 text-green-400">Result: 1.07Ω &lt; 1.10Ω - COMPLIANT</p>
               </div>
             </div>
 
@@ -970,10 +971,9 @@ const HNCModule7Section6_5 = () => {
                 <p>Result: Device did not trip ✓</p>
                 <p className="mt-2">Test 2: 100% IΔn (30mA) - Full load test</p>
                 <p>Result: Tripped in 28ms ✓ (must be ≤300ms)</p>
-                <p className="mt-2">Test 3: 5× IΔn (150mA) - Fast trip test</p>
-                <p>Result: Tripped in 12ms ✓ (must be ≤40ms)</p>
-                <p className="mt-2">Test 4: Ramp test</p>
+                <p className="mt-2">Test 3: Ramp test (informational, manufacturer guidance)</p>
                 <p>Result: Tripped at 24mA (within 50-100% of IΔn) ✓</p>
+                <p className="text-white/70">Note: BS 7671:2018+A4:2026 (Reg 643.3) verifies at IΔn only — the older 5×IΔn shot and Appendix 3 Table 3A have been deleted.</p>
                 <p className="mt-2 text-green-400">
                   All RCD tests PASS - Record results on schedule
                 </p>
@@ -1023,10 +1023,7 @@ const HNCModule7Section6_5 = () => {
                   Minimum IR for 230V circuits: <strong>1.0 MΩ</strong> at 500V DC
                 </li>
                 <li className="pl-1">
-                  RCD trip time at IΔn: <strong>≤300ms</strong>
-                </li>
-                <li className="pl-1">
-                  RCD trip time at 5×IΔn: <strong>≤40ms</strong>
+                  RCD trip time at IΔn (BS 7671:2018+A4:2026 Reg 643.3, single AC test): <strong>≤300ms</strong>
                 </li>
                 <li className="pl-1">
                   TN disconnection time ≤63A: <strong>0.4 seconds</strong>
@@ -1096,7 +1093,7 @@ const HNCModule7Section6_5 = () => {
                 <ul className="space-y-0.5">
                   <li>Earth fault loop impedance (Zs)</li>
                   <li>Prospective fault current (PFC)</li>
-                  <li>RCD operation (no-trip, IΔn, 5×IΔn)</li>
+                  <li>RCD operation (no-trip at 0.5 × IΔn, full test at IΔn — single AC test per BS 7671:2018+A4:2026 Reg 643.3)</li>
                   <li>Functional testing of all systems</li>
                 </ul>
               </div>

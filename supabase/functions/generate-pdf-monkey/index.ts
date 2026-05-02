@@ -208,6 +208,51 @@ function buildInvoiceTermsList(invoiceTermsJson: string | null): string[] {
   }
 }
 
+// ELE-888 + ELE-891 — adjustment helpers (kept inline; deno can't import @/utils)
+function applyItemAdjustment(item: any) {
+  const qty = parseFloat(item.quantity) || 0;
+  const rawUnit = parseFloat(item.unitPrice) || parseFloat(item.unit_price) || 0;
+  const adj =
+    typeof item.itemAdjustmentPercent === 'number' ? item.itemAdjustmentPercent : 0;
+  const effectiveUnit = adj !== 0 ? rawUnit * (1 + adj / 100) : rawUnit;
+  const effectiveTotal = qty * effectiveUnit;
+  let description = item.description || item.name || '';
+  if (adj !== 0) {
+    const sign = adj > 0 ? '+' : '';
+    const note = item.itemAdjustmentLabel
+      ? `${sign}${adj}% · ${item.itemAdjustmentLabel}`
+      : `${sign}${adj}%`;
+    description = `${description}\n(${note})`;
+  }
+  return { effectiveUnit, effectiveTotal, description, adj, label: item.itemAdjustmentLabel };
+}
+
+function buildCategoryAdjustments(
+  items: Array<{ category: string; effectiveTotal: number }>,
+  settings: any
+): Array<{ category: string; percent: number; delta: number; label: string }> {
+  const cats: Record<string, number> = {};
+  for (const i of items) {
+    const c = i.category || 'manual';
+    cats[c] = (cats[c] || 0) + i.effectiveTotal;
+  }
+  const adj = settings?.categoryAdjustments || {};
+  const out: Array<{ category: string; percent: number; delta: number; label: string }> = [];
+  for (const [cat, subtotal] of Object.entries(cats)) {
+    const pct = typeof adj[cat] === 'number' ? adj[cat] : 0;
+    if (pct !== 0) {
+      const delta = subtotal * (pct / 100);
+      out.push({
+        category: cat,
+        percent: pct,
+        delta,
+        label: `${cat.charAt(0).toUpperCase() + cat.slice(1)} ${pct > 0 ? 'markup' : 'discount'} (${pct > 0 ? '+' : ''}${pct}%)`,
+      });
+    }
+  }
+  return out;
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -489,8 +534,24 @@ serve(async (req) => {
         unitPrice: number;
       }>;
 
+      // ELE-888 — pre-compute item-adjusted versions of every line for both views
+      const adjustedRawItems = (freshQuote?.items || []).map((item: any) => {
+        const a = applyItemAdjustment(item);
+        const qty = item.actualQuantity !== undefined ? item.actualQuantity : (parseFloat(item.quantity) || 0);
+        return {
+          raw: item,
+          category: item.category || 'manual',
+          quantity: qty,
+          unitPrice: a.effectiveUnit,
+          totalPrice: qty * a.effectiveUnit,
+          description: a.description,
+          adjustmentPercent: a.adj,
+          adjustmentLabel: a.label,
+        };
+      });
+
       if (showSummaryView) {
-        // Summary view: Group items by category
+        // Summary view: Group items by category (uses item-adjusted totals)
         const categoryTotals: Record<string, number> = {};
         const categoryLabels: Record<string, string> = {
           labour: 'Labour',
@@ -499,12 +560,9 @@ serve(async (req) => {
           manual: 'Other',
         };
 
-        for (const item of freshQuote?.items || []) {
-          const category = item.category || 'manual';
-          const qty = item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
-          const total = (qty || 0) * (item.unitPrice || 0);
-          if (!categoryTotals[category]) categoryTotals[category] = 0;
-          categoryTotals[category] += total;
+        for (const it of adjustedRawItems) {
+          if (!categoryTotals[it.category]) categoryTotals[it.category] = 0;
+          categoryTotals[it.category] += it.totalPrice;
         }
 
         // Build summary items in order
@@ -520,15 +578,26 @@ serve(async (req) => {
           }));
 
       } else {
-        // Detailed view: Show all items individually
-        processedItems = (freshQuote?.items || []).map((item: any) => ({
-          name: item.description || '',
-          description: item.notes || '',
-          quantity: item.quantity || 0,
-          unit: item.unit || 'each',
-          unitPrice: item.unitPrice || 0,
+        // Detailed view: Show all items individually with adjustments applied
+        processedItems = adjustedRawItems.map((it) => ({
+          name: it.description,
+          description: it.raw.notes || '',
+          quantity: it.quantity,
+          unit: it.raw.unit || 'each',
+          unitPrice: it.unitPrice,
+          totalPrice: it.totalPrice,
+          category: it.category,
+          itemAdjustmentPercent: it.adjustmentPercent || 0,
+          itemAdjustmentLabel: it.adjustmentLabel || '',
         }));
       }
+
+      // ELE-888 + ELE-891 — also expose category-keyed arrays for templates
+      // that group items by category (parity with quote template)
+      const invLabourItems = processedItems.filter((i: any) => i.category === 'labour');
+      const invMaterialItems = processedItems.filter((i: any) => i.category === 'materials');
+      const invEquipmentItems = processedItems.filter((i: any) => i.category === 'equipment');
+      const invManualItems = processedItems.filter((i: any) => i.category === 'manual');
 
       const transformedInvoice = {
         invoiceNumber: freshQuote?.invoice_number || '',
@@ -580,13 +649,22 @@ serve(async (req) => {
         showSummaryView: showSummaryView,
       };
 
-      // Calculate totals from items
-      const itemsSubtotal = transformedInvoice.items.reduce(
-        (sum, item) => sum + item.quantity * item.unitPrice,
+      // ELE-888 + ELE-891 — calculate totals using item-adjusted lines + per-category
+      const settings = freshQuote?.settings || {};
+      const itemAdjustedInvSubtotal = adjustedRawItems.reduce(
+        (sum, it) => sum + it.totalPrice,
         0
       );
+      const invCategoryAdjustments = buildCategoryAdjustments(
+        adjustedRawItems.map((i) => ({ category: i.category, effectiveTotal: i.totalPrice })),
+        settings
+      );
+      const invCategoryAdjustmentDelta = invCategoryAdjustments.reduce(
+        (sum, c) => sum + c.delta,
+        0
+      );
+      const itemsSubtotal = itemAdjustedInvSubtotal + invCategoryAdjustmentDelta;
 
-      const settings = freshQuote?.settings || {};
       const overhead = itemsSubtotal * ((settings.overheadPercentage || 0) / 100);
       const profit = (itemsSubtotal + overhead) * ((settings.profitMargin || 0) / 100);
       const invoiceSubtotalWithMarkups = itemsSubtotal + overhead + profit;
@@ -624,6 +702,10 @@ serve(async (req) => {
         // Add explicit calculation fields for template
         calculations: {
           subtotal: itemsSubtotal,
+          // ELE-888 + ELE-891 — adjustment surfacing for templates
+          itemAdjustedSubtotal: itemAdjustedInvSubtotal,
+          categoryAdjustments: invCategoryAdjustments,
+          categoryAdjustmentDelta: invCategoryAdjustmentDelta,
           overhead: overhead,
           overheadPercentage: settings.overheadPercentage || 0,
           profit: profit,
@@ -669,24 +751,26 @@ serve(async (req) => {
       const clientData = freshQuote?.client || freshQuote?.client_data || {};
       const quoteSettings = freshQuote?.settings || {};
 
-      // Transform items to ensure consistent format for PDF template
-      const transformedItems = quoteItems.map((item: any) => ({
-        id: item.id || '',
-        description: item.description || item.name || '',
-        quantity: parseFloat(item.quantity) || 1,
-        unit: item.unit || 'each',
-        unitPrice: parseFloat(item.unitPrice) || parseFloat(item.unit_price) || 0,
-        totalPrice:
-          parseFloat(item.totalPrice) ||
-          parseFloat(item.total_price) ||
-          parseFloat(item.quantity || 1) * parseFloat(item.unitPrice || item.unit_price || 0),
-        category: item.category || 'manual',
-        subcategory: item.subcategory || '',
-        workerType: item.workerType || item.worker_type || '',
-        hours: parseFloat(item.hours) || 0,
-        hourlyRate: parseFloat(item.hourlyRate) || parseFloat(item.hourly_rate) || 0,
-        notes: item.notes || '',
-      }));
+      // ELE-888 — apply per-item adjustments to unitPrice + annotate description
+      const transformedItems = quoteItems.map((item: any) => {
+        const a = applyItemAdjustment(item);
+        return {
+          id: item.id || '',
+          description: a.description,
+          quantity: parseFloat(item.quantity) || 1,
+          unit: item.unit || 'each',
+          unitPrice: a.effectiveUnit,
+          totalPrice: a.effectiveTotal,
+          category: item.category || 'manual',
+          subcategory: item.subcategory || '',
+          workerType: item.workerType || item.worker_type || '',
+          hours: parseFloat(item.hours) || 0,
+          hourlyRate: parseFloat(item.hourlyRate) || parseFloat(item.hourly_rate) || 0,
+          notes: item.notes || '',
+          itemAdjustmentPercent: a.adj || 0,
+          itemAdjustmentLabel: a.label || '',
+        };
+      });
 
       // Group items by category for template
       const labourItems = transformedItems.filter((item: any) => item.category === 'labour');
@@ -694,17 +778,25 @@ serve(async (req) => {
       const equipmentItems = transformedItems.filter((item: any) => item.category === 'equipment');
       const manualItems = transformedItems.filter((item: any) => item.category === 'manual');
 
-      // Calculate totals from items
-      const itemsSubtotal = transformedItems.reduce(
+      // Item-adjusted subtotal (before per-category)
+      const itemAdjustedSubtotal = transformedItems.reduce(
         (sum: number, item: any) => sum + (item.totalPrice || 0),
         0
       );
-      const overhead =
-        parseFloat(freshQuote?.overhead) ||
-        itemsSubtotal * ((quoteSettings.overheadPercentage || 0) / 100);
-      const profit =
-        parseFloat(freshQuote?.profit) ||
-        (itemsSubtotal + overhead) * ((quoteSettings.profitMargin || 0) / 100);
+
+      // ELE-891 — per-category adjustments
+      const categoryAdjustmentLines = buildCategoryAdjustments(
+        transformedItems.map((i: any) => ({ category: i.category, effectiveTotal: i.totalPrice })),
+        quoteSettings
+      );
+      const categoryAdjustmentDelta = categoryAdjustmentLines.reduce(
+        (sum, c) => sum + c.delta,
+        0
+      );
+      const itemsSubtotal = itemAdjustedSubtotal + categoryAdjustmentDelta;
+
+      const overhead = itemsSubtotal * ((quoteSettings.overheadPercentage || 0) / 100);
+      const profit = (itemsSubtotal + overhead) * ((quoteSettings.profitMargin || 0) / 100);
       const subtotalWithMarkups = itemsSubtotal + overhead + profit;
 
       // Discount/deduction (CIS etc.)
@@ -785,6 +877,50 @@ serve(async (req) => {
             : null,
           accepted_by_name: freshQuote?.accepted_by_name || null,
           accepted_by_email: freshQuote?.accepted_by_email || null,
+          // ELE-956 — variation / versioning surfaced for the PDF
+          versionNumber: freshQuote?.version_number || 1,
+          isVariation: (freshQuote?.version_number || 1) > 1,
+          variationReason: freshQuote?.variation_reason || null,
+          variationType: freshQuote?.variation_type || null,
+          parentQuoteId: freshQuote?.parent_quote_id || null,
+          supersedesId: freshQuote?.supersedes_id || null,
+          // ELE-954 — deposit info (amount in £ for templates)
+          depositRequired: !!freshQuote?.deposit_required,
+          depositAmount:
+            freshQuote?.deposit_amount_pennies
+              ? freshQuote.deposit_amount_pennies / 100
+              : null,
+          depositAmountFormatted:
+            freshQuote?.deposit_amount_pennies
+              ? `£${(freshQuote.deposit_amount_pennies / 100).toFixed(2)}`
+              : null,
+          depositInvoiceId: freshQuote?.deposit_invoice_id || null,
+          depositPaidAt: freshQuote?.deposit_paid_at
+            ? new Date(freshQuote.deposit_paid_at).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              })
+            : null,
+          // ELE-955 — booked slot info
+          isBooked:
+            !!(freshQuote?.booked_slot_start && freshQuote?.booked_slot_end),
+          bookedSlotStart: freshQuote?.booked_slot_start
+            ? new Date(freshQuote.booked_slot_start).toLocaleString('en-GB', {
+                weekday: 'short',
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })
+            : null,
+          bookedSlotEnd: freshQuote?.booked_slot_end
+            ? new Date(freshQuote.booked_slot_end).toLocaleString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit',
+              })
+            : null,
         },
         // Client details
         client: {
@@ -817,6 +953,10 @@ serve(async (req) => {
         // Financial totals
         totals: {
           subtotal: itemsSubtotal,
+          // ELE-888 + ELE-891 — visibility of adjustments for templates
+          itemAdjustedSubtotal: itemAdjustedSubtotal,
+          categoryAdjustments: categoryAdjustmentLines,
+          categoryAdjustmentDelta: categoryAdjustmentDelta,
           overhead: overhead,
           overheadPercentage: quoteSettings.overheadPercentage || 0,
           profit: profit,

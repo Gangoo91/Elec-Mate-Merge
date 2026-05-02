@@ -1,8 +1,29 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 2 · Subsection 2 — Risk Assessment Process
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   The HSE five-step risk assessment, likelihood-severity matrices and ALARP. Engineer-in-training
+ *   perspective: producing a defendable RA that the principal contractor and HSE will accept,
+ *   not a tick-box exercise.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Risk Assessment Process - HNC Module 1 Section 2.2';
@@ -211,960 +232,616 @@ const faqs = [
 ];
 
 const HNCModule1Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 2
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Risk Assessment Process
-          </h1>
-          <p className="text-white">
-            Systematic evaluation of workplace hazards using the HSE five-step approach for building
-            services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.2.2"
+            title="Risk Assessment Process"
+            description="Systematic evaluation of workplace hazards using the HSE five-step approach for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>5 Steps:</strong> Identify hazards, who's at risk, evaluate, record, review
-              </li>
-              <li className="pl-1">
-                <strong>Risk Formula:</strong> Risk = Likelihood × Severity
-              </li>
-              <li className="pl-1">
-                <strong>Recording:</strong> Required for employers with 5+ staff
-              </li>
-              <li className="pl-1">
-                <strong>Review:</strong> When circumstances change or after incidents
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Electrical hazards:</strong> Shock, burns, arc flash
-              </li>
-              <li className="pl-1">
-                <strong>Work at height:</strong> Cable trays, distribution boards
-              </li>
-              <li className="pl-1">
-                <strong>Manual handling:</strong> Cable drums, transformers
-              </li>
-              <li className="pl-1">
-                <strong>Site conditions:</strong> Confined spaces, occupied premises
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will produce risk assessments that satisfy MHSWR Reg 3 — &ldquo;suitable and sufficient&rdquo; — and survive HSE scrutiny after an incident.',
+              'You apply the HSE five-step process consistently — identify hazards, identify who could be harmed, evaluate risk, record significant findings, review.',
+              'You can use a 3×3 or 5×5 matrix and explain ALARP versus the Tolerability of Risk model — including when residual risk crosses the broadly acceptable line.',
+              'You write residual-risk content that the supervisor and operative can act on, not legalistic prose nobody reads.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply the HSE five steps to risk assessment systematically',
-              'Use likelihood and severity scales to calculate risk scores',
-              'Interpret 3×3 and 5×5 risk matrices correctly',
-              'Record significant findings to meet legal requirements',
-              'Identify triggers for risk assessment review and updates',
-              'Apply risk assessment principles to building services scenarios',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 3(6)"
+            clause="An employer or self-employed person shall review the assessment required by paragraph (1) or (2) if—(a) there is reason to suspect that it is no longer valid; or (b) there has been a significant change in the matters to which it relates; and where as a result of any such review changes to an assessment are required, the employer or self-employed person concerned shall make them."
+            meaning={
+              <>
+                A risk assessment that has not been reviewed after a change is presumed
+                inadequate. As an HNC supervisor you trigger reviews on equipment change,
+                personnel change, layout change, near-miss and incident.
+              </>
+            }
+            cite="Source: Management of Health and Safety at Work Regulations 1999, Reg 3(6) — legislation.gov.uk"
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <LearningOutcomes
+            outcomes={[
+              "Apply the HSE five steps to risk assessment systematically",
+              "Use likelihood and severity scales to calculate risk scores",
+              "Interpret 3×3 and 5×5 risk matrices correctly",
+              "Record significant findings to meet legal requirements",
+              "Identify triggers for risk assessment review and updates",
+              "Apply risk assessment principles to building services scenarios",
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Section 1: HSE Five Steps */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            HSE Five Steps to Risk Assessment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>HSE Five Steps to Risk Assessment</ContentEyebrow>
+
+          <ConceptBlock title="HSE Five Steps to Risk Assessment">
             <p>
-              The Health and Safety Executive (HSE) provides a straightforward five-step process for
-              conducting risk assessments. This systematic approach ensures all significant hazards
-              are identified and properly controlled in building services installations.
+            The Health and Safety Executive (HSE) provides a straightforward five-step process for
+            conducting risk assessments. This systematic approach ensures all significant hazards
+            are identified and properly controlled in building services installations.
             </p>
 
             <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5 border-l-4 border-elec-yellow">
-                <p className="text-sm font-medium text-elec-yellow mb-2">
-                  Step 1: Identify the Hazards
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Walk around the workplace and observe activities</li>
-                  <li className="pl-1">Consult employees who perform the tasks daily</li>
-                  <li className="pl-1">Review manufacturer instructions and data sheets</li>
-                  <li className="pl-1">Check accident and ill-health records</li>
-                  <li className="pl-1">Consider non-routine operations and maintenance</li>
-                </ul>
-              </div>
+            <div className="p-4 rounded-lg bg-white/5 border-l-4 border-elec-yellow">
+            <p className="text-sm font-medium text-elec-yellow mb-2">
+            Step 1: Identify the Hazards
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Walk around the workplace and observe activities</li>
+            <li>Consult employees who perform the tasks daily</li>
+            <li>Review manufacturer instructions and data sheets</li>
+            <li>Check accident and ill-health records</li>
+            <li>Consider non-routine operations and maintenance</li>
+            </ul>
+            </div>
 
-              <div className="p-4 rounded-lg bg-white/5 border-l-4 border-blue-400">
-                <p className="text-sm font-medium text-blue-400 mb-2">
-                  Step 2: Decide Who Might Be Harmed and How
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Workers directly involved in the task</li>
-                  <li className="pl-1">Other workers nearby (cleaners, maintenance)</li>
-                  <li className="pl-1">Contractors and visitors on site</li>
-                  <li className="pl-1">Members of the public</li>
-                  <li className="pl-1">
-                    Vulnerable groups: young workers, pregnant women, disabled persons
-                  </li>
-                </ul>
-              </div>
+            <div className="p-4 rounded-lg bg-white/5 border-l-4 border-blue-400">
+            <p className="text-sm font-medium text-blue-400 mb-2">
+            Step 2: Decide Who Might Be Harmed and How
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Workers directly involved in the task</li>
+            <li>Other workers nearby (cleaners, maintenance)</li>
+            <li>Contractors and visitors on site</li>
+            <li>Members of the public</li>
+            <li>
+            Vulnerable groups: young workers, pregnant women, disabled persons
+            </li>
+            </ul>
+            </div>
 
-              <div className="p-4 rounded-lg bg-white/5 border-l-4 border-green-400">
-                <p className="text-sm font-medium text-green-400 mb-2">
-                  Step 3: Evaluate Risks and Decide on Precautions
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Consider existing control measures already in place</li>
-                  <li className="pl-1">Calculate risk score (likelihood × severity)</li>
-                  <li className="pl-1">
-                    Compare against industry standards and legal requirements
-                  </li>
-                  <li className="pl-1">
-                    Apply hierarchy of control: eliminate, substitute, engineer, admin, PPE
-                  </li>
-                  <li className="pl-1">Reduce risks to ALARP (As Low As Reasonably Practicable)</li>
-                </ul>
-              </div>
+            <div className="p-4 rounded-lg bg-white/5 border-l-4 border-green-400">
+            <p className="text-sm font-medium text-green-400 mb-2">
+            Step 3: Evaluate Risks and Decide on Precautions
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Consider existing control measures already in place</li>
+            <li>Calculate risk score (likelihood × severity)</li>
+            <li>
+            Compare against industry standards and legal requirements
+            </li>
+            <li>
+            Apply hierarchy of control: eliminate, substitute, engineer, admin, PPE
+            </li>
+            <li>Reduce risks to ALARP (As Low As Reasonably Practicable)</li>
+            </ul>
+            </div>
 
-              <div className="p-4 rounded-lg bg-white/5 border-l-4 border-purple-400">
-                <p className="text-sm font-medium text-purple-400 mb-2">
-                  Step 4: Record Your Significant Findings
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Document hazards and who is at risk</li>
-                  <li className="pl-1">List existing and additional control measures</li>
-                  <li className="pl-1">Assign responsibilities and target dates for actions</li>
-                  <li className="pl-1">Legal requirement if you have 5 or more employees</li>
-                  <li className="pl-1">Good practice regardless of size</li>
-                </ul>
-              </div>
+            <div className="p-4 rounded-lg bg-white/5 border-l-4 border-purple-400">
+            <p className="text-sm font-medium text-purple-400 mb-2">
+            Step 4: Record Your Significant Findings
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Document hazards and who is at risk</li>
+            <li>List existing and additional control measures</li>
+            <li>Assign responsibilities and target dates for actions</li>
+            <li>Legal requirement if you have 5 or more employees</li>
+            <li>Good practice regardless of size</li>
+            </ul>
+            </div>
 
-              <div className="p-4 rounded-lg bg-white/5 border-l-4 border-orange-400">
-                <p className="text-sm font-medium text-orange-400 mb-2">
-                  Step 5: Review and Update
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Set a review date (typically annually for low-risk activities)
-                  </li>
-                  <li className="pl-1">Review immediately after accidents or near-misses</li>
-                  <li className="pl-1">Update when work processes or equipment change</li>
-                  <li className="pl-1">Consider new information about hazards</li>
-                  <li className="pl-1">Verify control measures remain effective</li>
-                </ul>
-              </div>
+            <div className="p-4 rounded-lg bg-white/5 border-l-4 border-orange-400">
+            <p className="text-sm font-medium text-orange-400 mb-2">
+            Step 5: Review and Update
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Set a review date (typically annually for low-risk activities)
+            </li>
+            <li>Review immediately after accidents or near-misses</li>
+            <li>Update when work processes or equipment change</li>
+            <li>Consider new information about hazards</li>
+            <li>Verify control measures remain effective</li>
+            </ul>
+            </div>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Risk assessment is an ongoing process, not a one-time
-              paperwork exercise. It should be 'suitable and sufficient' - proportionate to the
-              level of risk.
+            <strong>Remember:</strong> Risk assessment is an ongoing process, not a one-time
+            paperwork exercise. It should be 'suitable and sufficient' - proportionate to the
+            level of risk.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Likelihood and Severity Scales */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Likelihood and Severity Scales
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Likelihood and Severity Scales</ContentEyebrow>
+
+          <ConceptBlock title="Likelihood and Severity Scales">
             <p>
-              Risk assessment requires quantifying both how likely harm is to occur and how severe
-              the consequences would be. Standard scales allow consistent evaluation across
-              different hazards and enable prioritisation of control measures.
+            Risk assessment requires quantifying both how likely harm is to occur and how severe
+            the consequences would be. Standard scales allow consistent evaluation across
+            different hazards and enable prioritisation of control measures.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                5-Point Likelihood Scale
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Score</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">1</td>
-                      <td className="border border-white/10 px-3 py-2">Rare</td>
-                      <td className="border border-white/10 px-3 py-2">Unlikely to ever occur</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">2</td>
-                      <td className="border border-white/10 px-3 py-2">Unlikely</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Could occur but not expected
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">3</td>
-                      <td className="border border-white/10 px-3 py-2">Possible</td>
-                      <td className="border border-white/10 px-3 py-2">Might occur occasionally</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">4</td>
-                      <td className="border border-white/10 px-3 py-2">Likely</td>
-                      <td className="border border-white/10 px-3 py-2">Probably will occur</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">5</td>
-                      <td className="border border-white/10 px-3 py-2">Almost Certain</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Expected to occur frequently
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            5-Point Likelihood Scale
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1</strong> — Rating: Rare. Description: Unlikely to ever occur</li>
+            <li><strong>2</strong> — Rating: Unlikely. Description: Could occur but not expected</li>
+            <li><strong>3</strong> — Rating: Possible. Description: Might occur occasionally</li>
+            <li><strong>4</strong> — Rating: Likely. Description: Probably will occur</li>
+            <li><strong>5</strong> — Rating: Almost Certain. Description: Expected to occur frequently</li>
+            </ul>
+            
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">5-Point Severity Scale</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Score</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">1</td>
-                      <td className="border border-white/10 px-3 py-2">Negligible</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minor injury, no lost time
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">2</td>
-                      <td className="border border-white/10 px-3 py-2">Minor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        First aid injury, short absence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">3</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medical treatment, extended absence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">4</td>
-                      <td className="border border-white/10 px-3 py-2">Major</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Serious injury, long-term disability
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">5</td>
-                      <td className="border border-white/10 px-3 py-2">Catastrophic</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fatality or multiple serious injuries
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">5-Point Severity Scale</p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1</strong> — Rating: Negligible. Description: Minor injury, no lost time</li>
+            <li><strong>2</strong> — Rating: Minor. Description: First aid injury, short absence</li>
+            <li><strong>3</strong> — Rating: Moderate. Description: Medical treatment, extended absence</li>
+            <li><strong>4</strong> — Rating: Major. Description: Serious injury, long-term disability</li>
+            <li><strong>5</strong> — Rating: Catastrophic. Description: Fatality or multiple serious injuries</li>
+            </ul>
+            
+            
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Factors Affecting Likelihood
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Frequency of exposure to hazard</li>
-                  <li className="pl-1">Duration of exposure</li>
-                  <li className="pl-1">Existing control measures</li>
-                  <li className="pl-1">Competence of workers</li>
-                  <li className="pl-1">Condition of equipment</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Factors Affecting Severity
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Nature of the hazard (voltage, height, weight)</li>
-                  <li className="pl-1">Number of people potentially affected</li>
-                  <li className="pl-1">Vulnerability of those at risk</li>
-                  <li className="pl-1">PPE and emergency response available</li>
-                  <li className="pl-1">Environmental conditions</li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Factors Affecting Likelihood
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Frequency of exposure to hazard</li>
+            <li>Duration of exposure</li>
+            <li>Existing control measures</li>
+            <li>Competence of workers</li>
+            <li>Condition of equipment</li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Factors Affecting Severity
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Nature of the hazard (voltage, height, weight)</li>
+            <li>Number of people potentially affected</li>
+            <li>Vulnerability of those at risk</li>
+            <li>PPE and emergency response available</li>
+            <li>Environmental conditions</li>
+            </ul>
+            </div>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Always consider severity 'with existing controls in
-              place' but likelihood 'if controls fail or are absent' to identify residual risk.
+            <strong>Key principle:</strong> Always consider severity 'with existing controls in
+            place' but likelihood 'if controls fail or are absent' to identify residual risk.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Risk Matrices */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Risk Matrices (3×3 and 5×5)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Risk Matrices (3×3 and 5×5)</ContentEyebrow>
+
+          <ConceptBlock title="Risk Matrices (3×3 and 5×5)">
             <p>
-              Risk matrices provide a visual tool for combining likelihood and severity scores to
-              determine overall risk levels. The resulting risk score guides the priority and type
-              of control measures required.
+            Risk matrices provide a visual tool for combining likelihood and severity scores to
+            determine overall risk levels. The resulting risk score guides the priority and type
+            of control measures required.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                3×3 Risk Matrix (Simple)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse text-center">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2"></th>
-                      <th className="border border-white/10 px-3 py-2">Low Severity (1)</th>
-                      <th className="border border-white/10 px-3 py-2">Medium Severity (2)</th>
-                      <th className="border border-white/10 px-3 py-2">High Severity (3)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 bg-white/5 font-medium">
-                        High Likelihood (3)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 bg-yellow-500/30">
-                        3 - Medium
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 bg-orange-500/30">
-                        6 - High
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 bg-red-500/30">
-                        9 - Very High
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 bg-white/5 font-medium">
-                        Medium Likelihood (2)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 bg-green-500/30">2 - Low</td>
-                      <td className="border border-white/10 px-3 py-2 bg-yellow-500/30">
-                        4 - Medium
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 bg-orange-500/30">
-                        6 - High
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 bg-white/5 font-medium">
-                        Low Likelihood (1)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 bg-green-500/30">1 - Low</td>
-                      <td className="border border-white/10 px-3 py-2 bg-green-500/30">2 - Low</td>
-                      <td className="border border-white/10 px-3 py-2 bg-yellow-500/30">
-                        3 - Medium
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                3×3 matrix: scores 1-2 = Low, 3-4 = Medium, 6 = High, 9 = Very High
-              </p>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+            3×3 Risk Matrix (Simple)
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>High Likelihood (3)</strong> — Low Severity (1): 3 - Medium. Medium Severity (2): 6 - High. High Severity (3): 9 - Very High</li>
+            <li><strong>Medium Likelihood (2)</strong> — Low Severity (1): 2 - Low. Medium Severity (2): 4 - Medium. High Severity (3): 6 - High</li>
+            <li><strong>Low Likelihood (1)</strong> — Low Severity (1): 1 - Low. Medium Severity (2): 2 - Low. High Severity (3): 3 - Medium</li>
+            </ul>
+            
+            <p className="text-xs text-white mt-2">
+            3×3 matrix: scores 1-2 = Low, 3-4 = Medium, 6 = High, 9 = Very High
+            </p>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                5×5 Risk Matrix (Detailed)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-xs text-white w-full border-collapse text-center">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-1.5"></th>
-                      <th className="border border-white/10 px-2 py-1.5">Negligible (1)</th>
-                      <th className="border border-white/10 px-2 py-1.5">Minor (2)</th>
-                      <th className="border border-white/10 px-2 py-1.5">Moderate (3)</th>
-                      <th className="border border-white/10 px-2 py-1.5">Major (4)</th>
-                      <th className="border border-white/10 px-2 py-1.5">Catastrophic (5)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1.5 bg-white/5 font-medium">
-                        Almost Certain (5)
-                      </td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-yellow-500/30">5</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">10</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">15</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-red-500/30">20</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-red-500/40">25</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1.5 bg-white/5 font-medium">
-                        Likely (4)
-                      </td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-green-500/30">4</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-yellow-500/30">8</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">12</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">16</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-red-500/30">20</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1.5 bg-white/5 font-medium">
-                        Possible (3)
-                      </td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-green-500/30">3</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-yellow-500/30">6</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-yellow-500/30">9</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">12</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">15</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1.5 bg-white/5 font-medium">
-                        Unlikely (2)
-                      </td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-green-500/30">2</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-green-500/30">4</td>
-                      <td className="border border-white/10 px-2 py-1.1.5 bg-yellow-500/30">6</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-yellow-500/30">8</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">10</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1.5 bg-white/5 font-medium">
-                        Rare (1)
-                      </td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-green-500/30">1</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-green-500/30">2</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-green-500/30">3</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-green-500/30">4</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-yellow-500/30">5</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+            5×5 Risk Matrix (Detailed)
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Almost Certain (5)</strong> — Negligible (1): 5. Minor (2): 10. Moderate (3): 15. Major (4): 20. Catastrophic (5): 25</li>
+            <li><strong>Likely (4)</strong> — Negligible (1): 4. Minor (2): 8. Moderate (3): 12. Major (4): 16. Catastrophic (5): 20</li>
+            <li><strong>Possible (3)</strong> — Negligible (1): 3. Minor (2): 6. Moderate (3): 9. Major (4): 12. Catastrophic (5): 15</li>
+            <li><strong>Unlikely (2)</strong> — Negligible (1): 2. Minor (2): 4. Moderate (3): 6. Major (4): 8. Catastrophic (5): 10</li>
+            <li><strong>Rare (1)</strong> — Negligible (1): 1. Minor (2): 2. Moderate (3): 3. Major (4): 4. Catastrophic (5): 5</li>
+            </ul>
+            
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Risk Level Actions (5×5 Matrix)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Score</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Required Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 bg-green-500/20">1-4</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Monitor and maintain existing controls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 bg-yellow-500/20">5-9</td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Additional controls required; implement reasonably practicable measures
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 bg-orange-500/20">10-16</td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Urgent action required; work should not proceed until risk reduced
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 bg-red-500/20">17-25</td>
-                      <td className="border border-white/10 px-3 py-2">Very High</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Intolerable; stop work immediately; eliminate hazard or find alternative
-                        method
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Risk Level Actions (5×5 Matrix)
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1-4</strong> — Level: Low. Required Action: Monitor and maintain existing controls</li>
+            <li><strong>5-9</strong> — Level: Medium. Required Action: Additional controls required; implement reasonably practicable measures</li>
+            <li><strong>10-16</strong> — Level: High. Required Action: Urgent action required; work should not proceed until risk reduced</li>
+            <li><strong>17-25</strong> — Level: Very High. Required Action: Intolerable; stop work immediately; eliminate hazard or find alternative method</li>
+            </ul>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> 5×5 matrices offer finer granularity for complex
-              operations. 3×3 matrices are simpler and often sufficient for routine work with clear
-              hazards.
+            <strong>Practical tip:</strong> 5×5 matrices offer finer granularity for complex
+            operations. 3×3 matrices are simpler and often sufficient for routine work with clear
+            hazards.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Recording and Review */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Recording Significant Findings and Review Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Recording Significant Findings and Review Requirements</ContentEyebrow>
+
+          <ConceptBlock title="Recording Significant Findings and Review Requirements">
             <p>
-              The Management of Health and Safety at Work Regulations 1999 require employers with
-              five or more employees to record the significant findings of their risk assessments.
-              Good record-keeping is also essential evidence of due diligence.
+            The Management of Health and Safety at Work Regulations 1999 require employers with
+            five or more employees to record the significant findings of their risk assessments.
+            Good record-keeping is also essential evidence of due diligence.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">What to Record</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Activity/task:</strong> Clear description of the work being assessed
-                </li>
-                <li className="pl-1">
-                  <strong>Hazards identified:</strong> All significant hazards that could cause harm
-                </li>
-                <li className="pl-1">
-                  <strong>Who is at risk:</strong> Specific groups including vulnerable persons
-                </li>
-                <li className="pl-1">
-                  <strong>Existing controls:</strong> Measures already in place
-                </li>
-                <li className="pl-1">
-                  <strong>Risk rating:</strong> Likelihood, severity, and overall score
-                </li>
-                <li className="pl-1">
-                  <strong>Additional controls:</strong> Further measures to reduce risk
-                </li>
-                <li className="pl-1">
-                  <strong>Action owner:</strong> Person responsible for implementing controls
-                </li>
-                <li className="pl-1">
-                  <strong>Target date:</strong> When actions will be completed
-                </li>
-                <li className="pl-1">
-                  <strong>Review date:</strong> When assessment will be reviewed
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">What to Record</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Activity/task:</strong> Clear description of the work being assessed
+            </li>
+            <li>
+            <strong>Hazards identified:</strong> All significant hazards that could cause harm
+            </li>
+            <li>
+            <strong>Who is at risk:</strong> Specific groups including vulnerable persons
+            </li>
+            <li>
+            <strong>Existing controls:</strong> Measures already in place
+            </li>
+            <li>
+            <strong>Risk rating:</strong> Likelihood, severity, and overall score
+            </li>
+            <li>
+            <strong>Additional controls:</strong> Further measures to reduce risk
+            </li>
+            <li>
+            <strong>Action owner:</strong> Person responsible for implementing controls
+            </li>
+            <li>
+            <strong>Target date:</strong> When actions will be completed
+            </li>
+            <li>
+            <strong>Review date:</strong> When assessment will be reviewed
+            </li>
+            </ul>
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Example: Cable Installation Risk Assessment Extract
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-xs text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/10">
-                      <th className="border border-white/10 px-2 py-1.5 text-left">Hazard</th>
-                      <th className="border border-white/10 px-2 py-1.5 text-left">Who at Risk</th>
-                      <th className="border border-white/10 px-2 py-1.5 text-left">L</th>
-                      <th className="border border-white/10 px-2 py-1.5 text-left">S</th>
-                      <th className="border border-white/10 px-2 py-1.5 text-left">R</th>
-                      <th className="border border-white/10 px-2 py-1.5 text-left">Controls</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1.5">
-                        Electric shock (isolation failure)
-                      </td>
-                      <td className="border border-white/10 px-2 py-1.5">Electricians</td>
-                      <td className="border border-white/10 px-2 py-1.5">2</td>
-                      <td className="border border-white/10 px-2 py-1.5">5</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">10</td>
-                      <td className="border border-white/10 px-2 py-1.5">
-                        Safe isolation, GS38 probes, lock-off
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1.5">
-                        Manual handling (cable drums)
-                      </td>
-                      <td className="border border-white/10 px-2 py-1.5">All workers</td>
-                      <td className="border border-white/10 px-2 py-1.5">4</td>
-                      <td className="border border-white/10 px-2 py-1.5">3</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">12</td>
-                      <td className="border border-white/10 px-2 py-1.5">
-                        Mechanical aids, team lifts, training
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1.5">
-                        Work at height (cable trays)
-                      </td>
-                      <td className="border border-white/10 px-2 py-1.5">Electricians</td>
-                      <td className="border border-white/10 px-2 py-1.5">3</td>
-                      <td className="border border-white/10 px-2 py-1.5">4</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-orange-500/30">12</td>
-                      <td className="border border-white/10 px-2 py-1.5">
-                        MEWP, scaffolding, harness systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1.5">
-                        Trips (trailing cables)
-                      </td>
-                      <td className="border border-white/10 px-2 py-1.5">All building users</td>
-                      <td className="border border-white/10 px-2 py-1.5">3</td>
-                      <td className="border border-white/10 px-2 py-1.5">2</td>
-                      <td className="border border-white/10 px-2 py-1.5 bg-yellow-500/30">6</td>
-                      <td className="border border-white/10 px-2 py-1.5">
-                        Cable covers, barriers, signage
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                L = Likelihood, S = Severity, R = Risk Score (L×S)
-              </p>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+            Example: Cable Installation Risk Assessment Extract
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Electric shock (isolation failure)</strong> — Who at Risk: Electricians. L: 2. S: 5. R: 10. Controls: Safe isolation, GS38 probes, lock-off</li>
+            <li><strong>Manual handling (cable drums)</strong> — Who at Risk: All workers. L: 4. S: 3. R: 12. Controls: Mechanical aids, team lifts, training</li>
+            <li><strong>Work at height (cable trays)</strong> — Who at Risk: Electricians. L: 3. S: 4. R: 12. Controls: MEWP, scaffolding, harness systems</li>
+            <li><strong>Trips (trailing cables)</strong> — Who at Risk: All building users. L: 3. S: 2. R: 6. Controls: Cable covers, barriers, signage</li>
+            </ul>
+            
+            <p className="text-xs text-white mt-2">
+            L = Likelihood, S = Severity, R = Risk Score (L×S)
+            </p>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Triggers for Review</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-xs font-medium text-red-400 mb-2">Immediate Review Required</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Accident or near-miss incident</li>
-                    <li>Significant change in process</li>
-                    <li>New equipment introduced</li>
-                    <li>New hazard information available</li>
-                    <li>Regulatory changes</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-xs font-medium text-green-400 mb-2">Periodic Review</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>At least annually for most activities</li>
-                    <li>More frequently for high-risk work</li>
-                    <li>Before contract renewals</li>
-                    <li>Following staff changes</li>
-                    <li>As part of safety audits</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Triggers for Review</p>
+            
+            
+            <p className="text-xs font-medium text-red-400 mb-2">Immediate Review Required</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Accident or near-miss incident</li>
+            <li>Significant change in process</li>
+            <li>New equipment introduced</li>
+            <li>New hazard information available</li>
+            <li>Regulatory changes</li>
+            </ul>
+            
+            
+            <p className="text-xs font-medium text-green-400 mb-2">Periodic Review</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>At least annually for most activities</li>
+            <li>More frequently for high-risk work</li>
+            <li>Before contract renewals</li>
+            <li>Following staff changes</li>
+            <li>As part of safety audits</li>
+            </ul>
+            
+            
+            
 
             <p className="text-sm text-white italic">
-              <strong>Legal note:</strong> Risk assessments must be readily accessible to those who
-              need them - workers, safety representatives, and enforcement officers.
+            <strong>Legal note:</strong> Risk assessments must be readily accessible to those who
+            need them - workers, safety representatives, and enforcement officers.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Building Services Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">
-            Building Services Risk Assessment Examples
-          </h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Consumer Unit Replacement
-              </h3>
-              <p className="text-sm text-white mb-3">
-                <strong>Task:</strong> Replace existing consumer unit in occupied domestic property
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white space-y-2">
-                <p>
-                  <strong>Key Hazards Identified:</strong>
-                </p>
-                <ul className="list-disc list-inside ml-2 space-y-1">
-                  <li>Electric shock during isolation verification (L:2, S:5, R:10 - High)</li>
-                  <li>Arc flash if live working required (L:2, S:4, R:8 - Medium)</li>
-                  <li>Manual handling of unit and cables (L:3, S:2, R:6 - Medium)</li>
-                  <li>Dust inhalation from drilling (L:4, S:2, R:8 - Medium)</li>
-                </ul>
-                <p className="mt-3">
-                  <strong>Control Measures:</strong>
-                </p>
-                <ul className="list-disc list-inside ml-2 space-y-1">
-                  <li>Safe isolation procedure with GS38 compliant test equipment</li>
-                  <li>Lock-off devices and warning labels</li>
-                  <li>RPE for drilling operations</li>
-                  <li>Inform occupants of isolation periods</li>
-                </ul>
-              </div>
+          <ConceptBlock title="Building Services Risk Assessment Examples">
+            <p><strong>Example 1: Consumer Unit Replacement</strong></p>
+            <p className="text-sm text-white mb-3">
+            <strong>Task:</strong> Replace existing consumer unit in occupied domestic property
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white space-y-2">
+            <p>
+            <strong>Key Hazards Identified:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Electric shock during isolation verification (L:2, S:5, R:10 - High)</li>
+            <li>Arc flash if live working required (L:2, S:4, R:8 - Medium)</li>
+            <li>Manual handling of unit and cables (L:3, S:2, R:6 - Medium)</li>
+            <li>Dust inhalation from drilling (L:4, S:2, R:8 - Medium)</li>
+            </ul>
+            <p className="mt-3">
+            <strong>Control Measures:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Safe isolation procedure with GS38 compliant test equipment</li>
+            <li>Lock-off devices and warning labels</li>
+            <li>RPE for drilling operations</li>
+            <li>Inform occupants of isolation periods</li>
+            </ul>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Commercial Lighting Installation
-              </h3>
-              <p className="text-sm text-white mb-3">
-                <strong>Task:</strong> Install new LED lighting system in occupied office building
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white space-y-2">
-                <p>
-                  <strong>Key Hazards Identified:</strong>
-                </p>
-                <ul className="list-disc list-inside ml-2 space-y-1">
-                  <li>Falls from height using access equipment (L:3, S:4, R:12 - High)</li>
-                  <li>Electric shock from existing circuits (L:2, S:5, R:10 - High)</li>
-                  <li>Dropped objects onto office workers (L:3, S:3, R:9 - Medium)</li>
-                  <li>Eye strain from temporary lighting (L:4, S:1, R:4 - Low)</li>
-                </ul>
-                <p className="mt-3">
-                  <strong>Control Measures:</strong>
-                </p>
-                <ul className="list-disc list-inside ml-2 space-y-1">
-                  <li>MEWP or scaffolding for sustained work at height</li>
-                  <li>Exclusion zones below work areas</li>
-                  <li>Out-of-hours working where possible</li>
-                  <li>Phased isolation to maintain emergency lighting</li>
-                </ul>
-              </div>
+            
+            <p><strong>Example 2: Commercial Lighting Installation</strong></p>
+            <p className="text-sm text-white mb-3">
+            <strong>Task:</strong> Install new LED lighting system in occupied office building
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white space-y-2">
+            <p>
+            <strong>Key Hazards Identified:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Falls from height using access equipment (L:3, S:4, R:12 - High)</li>
+            <li>Electric shock from existing circuits (L:2, S:5, R:10 - High)</li>
+            <li>Dropped objects onto office workers (L:3, S:3, R:9 - Medium)</li>
+            <li>Eye strain from temporary lighting (L:4, S:1, R:4 - Low)</li>
+            </ul>
+            <p className="mt-3">
+            <strong>Control Measures:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>MEWP or scaffolding for sustained work at height</li>
+            <li>Exclusion zones below work areas</li>
+            <li>Out-of-hours working where possible</li>
+            <li>Phased isolation to maintain emergency lighting</li>
+            </ul>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Distribution Board Testing
-              </h3>
-              <p className="text-sm text-white mb-3">
-                <strong>Task:</strong> Periodic inspection and testing of three-phase distribution
-                board
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white space-y-2">
-                <p>
-                  <strong>Key Hazards Identified:</strong>
-                </p>
-                <ul className="list-disc list-inside ml-2 space-y-1">
-                  <li>Contact with 400V live parts (L:2, S:5, R:10 - High)</li>
-                  <li>Arc flash during panel removal (L:2, S:5, R:10 - High)</li>
-                  <li>Disruption to critical circuits (L:3, S:3, R:9 - Medium)</li>
-                  <li>Working in cramped switch room (L:3, S:2, R:6 - Medium)</li>
-                </ul>
-                <p className="mt-3">
-                  <strong>Control Measures:</strong>
-                </p>
-                <ul className="list-disc list-inside ml-2 space-y-1">
-                  <li>Partial isolation where full isolation not possible</li>
-                  <li>Arc-rated PPE (face shield, gloves, FR clothing)</li>
-                  <li>Barrier and insulating matting</li>
-                  <li>Coordination with building management</li>
-                </ul>
-              </div>
+            
+            <p><strong>Example 3: Distribution Board Testing</strong></p>
+            <p className="text-sm text-white mb-3">
+            <strong>Task:</strong> Periodic inspection and testing of three-phase distribution
+            board
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white space-y-2">
+            <p>
+            <strong>Key Hazards Identified:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Contact with 400V live parts (L:2, S:5, R:10 - High)</li>
+            <li>Arc flash during panel removal (L:2, S:5, R:10 - High)</li>
+            <li>Disruption to critical circuits (L:3, S:3, R:9 - Medium)</li>
+            <li>Working in cramped switch room (L:3, S:2, R:6 - Medium)</li>
+            </ul>
+            <p className="mt-3">
+            <strong>Control Measures:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Partial isolation where full isolation not possible</li>
+            <li>Arc-rated PPE (face shield, gloves, FR clothing)</li>
+            <li>Barrier and insulating matting</li>
+            <li>Coordination with building management</li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
+          <ConceptBlock title="Practical Guidance">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Risk Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Have all significant hazards been identified?</li>
-                <li className="pl-1">Have all people who might be affected been considered?</li>
-                <li className="pl-1">Are existing controls documented and effective?</li>
-                <li className="pl-1">Has the risk been reduced to ALARP?</li>
-                <li className="pl-1">Are responsibilities and timescales assigned?</li>
-                <li className="pl-1">Is a review date set and communicated?</li>
-              </ul>
+            <p><strong>Risk Assessment Checklist</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Have all significant hazards been identified?</li>
+            <li>Have all people who might be affected been considered?</li>
+            <li>Are existing controls documented and effective?</li>
+            <li>Has the risk been reduced to ALARP?</li>
+            <li>Are responsibilities and timescales assigned?</li>
+            <li>Is a review date set and communicated?</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Hierarchy of Control (ERICPD)
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Eliminate:</strong> Remove the hazard entirely (e.g., design out work at
-                  height)
-                </li>
-                <li className="pl-1">
-                  <strong>Reduce:</strong> Substitute with less hazardous alternative
-                </li>
-                <li className="pl-1">
-                  <strong>Isolate:</strong> Engineering controls to separate people from hazard
-                </li>
-                <li className="pl-1">
-                  <strong>Control:</strong> Safe systems of work, procedures
-                </li>
-                <li className="pl-1">
-                  <strong>PPE:</strong> Personal protective equipment as last resort
-                </li>
-                <li className="pl-1">
-                  <strong>Discipline:</strong> Training, supervision, enforcement
-                </li>
-              </ul>
+            <p><strong>Hierarchy of Control (ERICPD)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Eliminate:</strong> Remove the hazard entirely (e.g., design out work at
+            height)
+            </li>
+            <li>
+            <strong>Reduce:</strong> Substitute with less hazardous alternative
+            </li>
+            <li>
+            <strong>Isolate:</strong> Engineering controls to separate people from hazard
+            </li>
+            <li>
+            <strong>Control:</strong> Safe systems of work, procedures
+            </li>
+            <li>
+            <strong>PPE:</strong> Personal protective equipment as last resort
+            </li>
+            <li>
+            <strong>Discipline:</strong> Training, supervision, enforcement
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Generic only:</strong> Using generic assessments without site-specific
-                  additions
-                </li>
-                <li className="pl-1">
-                  <strong>Never reviewed:</strong> Treating risk assessment as one-time paperwork
-                </li>
-                <li className="pl-1">
-                  <strong>PPE first:</strong> Jumping straight to PPE without considering higher
-                  controls
-                </li>
-                <li className="pl-1">
-                  <strong>Missing groups:</strong> Forgetting contractors, visitors, or public
-                </li>
-                <li className="pl-1">
-                  <strong>No actions:</strong> Identifying risks but not implementing controls
-                </li>
-              </ul>
+            <p><strong>Common Mistakes to Avoid</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Generic only:</strong> Using generic assessments without site-specific
+            additions
+            </li>
+            <li>
+            <strong>Never reviewed:</strong> Treating risk assessment as one-time paperwork
+            </li>
+            <li>
+            <strong>PPE first:</strong> Jumping straight to PPE without considering higher
+            controls
+            </li>
+            <li>
+            <strong>Missing groups:</strong> Forgetting contractors, visitors, or public
+            </li>
+            <li>
+            <strong>No actions:</strong> Identifying risks but not implementing controls
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Risk-assessing a temporary mains supply for a marquee event"
+            situation={
+              <>
+                Your firm is providing temporary supply for a 5-day outdoor event. 100 m runs
+                of armoured cable from a rented genset to a single marquee distribution unit.
+                Public access throughout, heavy footfall, possible rain.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply the five steps. Identify hazards (electric shock, trip, fire, public
+                contact, weather). Identify who could be harmed (event staff, public, performers,
+                you). Evaluate using a 5×5 matrix — likelihood (5 — public touch), severity (5 —
+                fatal). Record significant findings — TT supply with 30 mA RCD, BS 7671 Section
+                711 compliance, IP44 distribution, ramped cable protectors, perimeter fencing,
+                daily insulation testing, signage. Review on day 3 after weather forecast change.
+              </>
+            }
+            whyItMatters={
+              <>
+                Section 711 (events) and Section 740 (mobile units) of BS 7671 set the technical
+                framework, but the risk assessment is what makes the design defendable in court.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">HSE Five Steps</p>
-                <ul className="space-y-0.5">
-                  <li>1. Identify the hazards</li>
-                  <li>2. Decide who might be harmed</li>
-                  <li>3. Evaluate risks, decide on precautions</li>
-                  <li>4. Record significant findings</li>
-                  <li>5. Review and update</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Risk Matrix (5×5)</p>
-                <ul className="space-y-0.5">
-                  <li>1-4: Low - Monitor existing controls</li>
-                  <li>5-9: Medium - Additional controls needed</li>
-                  <li>10-16: High - Urgent action required</li>
-                  <li>17-25: Very High - Stop work immediately</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'HSE five-step risk assessment: identify hazards, identify who, evaluate risk, record significant findings, review.',
+              'MHSWR Reg 3 requires &ldquo;suitable and sufficient&rdquo; — the depth scales with the complexity of the work.',
+              'Likelihood × severity matrix is a tool, not the answer — your judgement on residual risk is what counts.',
+              'ALARP (As Low As Reasonably Practicable) is the UK regulator&rsquo;s preferred test — risk reduced until further reduction would be grossly disproportionate.',
+              'Tolerability of Risk: intolerable region (must be reduced regardless of cost), tolerable region (apply ALARP), broadly acceptable region (no further action normally needed).',
+              'Record significant findings only — burying important controls in a 30-page document defeats the purpose.',
+              'Review triggers: change of equipment, personnel, location, substance, procedure or after any near-miss or incident.',
+              'Generic risk assessments are a starting point — the duty is on the employer to make them site-specific.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Types of Hazards
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section2-3">
-              Next: Control Measures
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 2
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section2-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Control Measures
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

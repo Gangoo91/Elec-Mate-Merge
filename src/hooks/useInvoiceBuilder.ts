@@ -8,44 +8,21 @@ import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generato
 import { supabase } from '@/integrations/supabase/client';
 import type { CompanyProfile } from '@/types/company';
 import { logger, generateRequestId } from '@/utils/logger';
+import { computeQuoteTotals } from '@/utils/quote-calculations';
 
-// Helper to safely get item price with NaN protection
-// Always calculate from quantity * unitPrice to ensure consistency with PDF generation
-const safeItemPrice = (item: InvoiceItem): number => {
-  const price = (item.quantity || 0) * (item.unitPrice || 0);
-  return isNaN(price) ? 0 : price;
-};
-
-// Helper to calculate safe subtotal from items
-const calculateSafeSubtotal = (items: InvoiceItem[]): number => {
-  return items.reduce((sum, item) => sum + safeItemPrice(item), 0);
-};
-
-// Shared calculation logic — single source of truth for all totals
+// Shared calculation logic — single source of truth for all totals.
+// ELE-888 + ELE-891: per-item and per-category adjustments now applied
+// via the shared utility before discount/overhead/VAT.
 const calculateAllTotals = (items: InvoiceItem[], settings: InvoiceSettings) => {
-  const subtotal = calculateSafeSubtotal(items);
-  const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
-  const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
-
-  // Discount / CIS deduction
-  let discountAmount = 0;
-  if (settings.discountEnabled && (settings.discountValue || 0) > 0) {
-    if (settings.discountType === 'percentage') {
-      discountAmount = subtotal * ((settings.discountValue || 0) / 100);
-    } else {
-      // Fixed amount
-      discountAmount = settings.discountValue || 0;
-    }
-  }
-  discountAmount = Math.round(discountAmount * 100) / 100;
-
-  const taxableAmount = subtotal + overhead + profit - discountAmount;
-  const vatAmount = settings.vatRegistered
-    ? Math.round(taxableAmount * ((settings.vatRate || 0) / 100) * 100) / 100
-    : 0;
-  const total = Math.round((taxableAmount + vatAmount) * 100) / 100;
-
-  return { subtotal, overhead, profit, discountAmount, vatAmount, total };
+  const t = computeQuoteTotals(items, settings, { applyOverheadAndProfit: true });
+  return {
+    subtotal: t.subtotal,
+    overhead: t.overhead,
+    profit: t.profit,
+    discountAmount: t.discountAmount,
+    vatAmount: t.vatAmount,
+    total: t.total,
+  };
 };
 
 const generateInvoiceNumber = async (): Promise<string> => {
@@ -234,10 +211,14 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   }, [companyProfile, sourceQuote, existingInvoice]);
 
   const addInvoiceItem = useCallback((item: Omit<InvoiceItem, 'id' | 'totalPrice'>) => {
+    const base = item.quantity * item.unitPrice;
+    const adj = item.itemAdjustmentPercent;
+    const totalPrice =
+      typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
     const newItem: InvoiceItem = {
       ...item,
       id: uuidv4(),
-      totalPrice: item.quantity * item.unitPrice,
+      totalPrice,
       completionStatus: 'completed',
       actualQuantity: item.quantity,
     };
@@ -260,30 +241,20 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   }, []);
 
   const updateInvoiceItem = useCallback((itemId: string, updates: Partial<InvoiceItem>) => {
+    const recompute = (item: InvoiceItem): InvoiceItem => {
+      const merged = { ...item, ...updates };
+      const base = (merged.quantity || 0) * (merged.unitPrice || 0);
+      const adj = merged.itemAdjustmentPercent;
+      merged.totalPrice =
+        typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
+      return merged;
+    };
     setInvoice((prev) => {
       const updatedInvoice = {
         ...prev,
-        items: prev.items?.map((item) =>
-          item.id === itemId
-            ? {
-                ...item,
-                ...updates,
-                totalPrice:
-                  ((updates.quantity ?? item.quantity) || 0) *
-                  ((updates.unitPrice ?? item.unitPrice) || 0),
-              }
-            : item
-        ),
+        items: prev.items?.map((item) => (item.id === itemId ? recompute(item) : item)),
         additional_invoice_items: prev.additional_invoice_items?.map((item) =>
-          item.id === itemId
-            ? {
-                ...item,
-                ...updates,
-                totalPrice:
-                  ((updates.quantity ?? item.quantity) || 0) *
-                  ((updates.unitPrice ?? item.unitPrice) || 0),
-              }
-            : item
+          item.id === itemId ? recompute(item) : item
         ),
       };
 

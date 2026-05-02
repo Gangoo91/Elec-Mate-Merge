@@ -77,7 +77,7 @@ interface WinbackStats {
 type SegmentKey = 'all' | 'never' | 'cancelled';
 type ViewKey = 'target' | 'sent';
 const BATCH_SIZE = 40;
-const EMAIL_VERSION = 'v10';
+const EMAIL_VERSION = 'v11';
 
 function getInitials(name: string | null | undefined, fallback: string | null | undefined) {
   const source = (name || fallback || '').trim();
@@ -235,7 +235,7 @@ export default function AdminWinback() {
     },
     onSuccess: () => {
       haptic.success();
-      toast({ title: 'V10 sent', variant: 'success' });
+      toast({ title: 'V11 sent', variant: 'success' });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-segments'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
@@ -278,7 +278,7 @@ export default function AdminWinback() {
     },
     onSuccess: () => {
       haptic.success();
-      toast({ title: 'V10 sent to that address', variant: 'success' });
+      toast({ title: 'V11 sent to that address', variant: 'success' });
       setManualEmail('');
       queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
@@ -491,7 +491,7 @@ export default function AdminWinback() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="flex items-center gap-3">
                 <Eyebrow>{EMAIL_VERSION.toUpperCase()} · Win-Back email</Eyebrow>
-                <Pill tone="yellow">£9.99/mo</Pill>
+                <Pill tone="yellow">£7.99/mo</Pill>
               </div>
               <div className="flex items-center gap-2">
                 <TextAction onClick={() => setShowPreview(true)}>
@@ -832,7 +832,7 @@ export default function AdminWinback() {
                 ) : !sentUsers || sentUsers.length === 0 ? (
                   <EmptyState
                     title="No emails sent yet"
-                    description="Send V10 to a segment to start tracking results here."
+                    description="Send V11 to a segment to start tracking results here."
                     action="Go to Target"
                     onAction={() => setActiveView('target')}
                   />
@@ -894,7 +894,7 @@ export default function AdminWinback() {
               />
               <div className="px-5 sm:px-6 py-4 space-y-3">
                 <p className="text-[12.5px] text-white">
-                  Preview V10 end-to-end. Subject prefixed [TEST]. Nobody marked sent.
+                  Preview V11 end-to-end. Subject prefixed [TEST]. Nobody marked sent.
                 </p>
                 <div className="flex gap-2">
                   <Input
@@ -939,7 +939,7 @@ export default function AdminWinback() {
                   <div className="space-y-3">
                     <div>
                       <div className="text-[13px] font-semibold text-white">
-                        Send real V10 to a specific address
+                        Send real V11 to a specific address
                       </div>
                       <p className="mt-1 text-[11.5px] text-white leading-relaxed">
                         Full send — goes through suppression check, logged, counts as sent.
@@ -1078,7 +1078,7 @@ export default function AdminWinback() {
                   ) : (
                     <>
                       <Send className="h-4 w-4" />
-                      Send V10 to this user
+                      Send V11 to this user
                     </>
                   )}
                 </Button>
@@ -1094,7 +1094,7 @@ export default function AdminWinback() {
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6 bg-[hsl(0_0%_10%)] border-white/[0.06]">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight text-white">
-                Send V10 to {confirmCount} {confirmLabel} electricians?
+                Send V11 to {confirmCount} {confirmLabel} electricians?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
                 <div className="text-sm leading-relaxed space-y-2 text-white">
@@ -1141,18 +1141,18 @@ export default function AdminWinback() {
                 <SheetTitle asChild>
                   <div className="flex items-center gap-2 text-left">
                     <span className="text-[13px] font-semibold text-white">
-                      V10 Preview
+                      V11 Preview
                     </span>
-                    <Pill tone="yellow">V10</Pill>
+                    <Pill tone="yellow">V11</Pill>
                   </div>
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-hidden bg-black">
                 <iframe
-                  title="V10 email preview"
+                  title="V11 email preview"
                   sandbox="allow-same-origin"
                   className="w-full h-full border-0"
-                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin:12px 0 8px;font-size:28px;letter-spacing:-0.5px}p{color:#a1a1aa;font-size:14px;line-height:1.6;max-width:320px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}.price{font-size:36px;color:#fff;font-weight:700;margin-top:18px;letter-spacing:-1px}.mut{color:#52525b;font-size:12px;margin-top:8px}</style></head><body><div class="badge">V10 · Win-Back</div><h2>We've been building.</h2><p>Hero card + I&amp;T redesign, Quotes &amp; Invoices, Room Planner, Stock Tracker, founder note.</p><div class="price">£9.99<span style="font-size:14px;color:#a1a1aa;font-weight:400">/mo</span></div><p class="mut">Send a test email (Advanced) to preview the full rendered template.</p></body></html>`}
+                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fff;margin:12px 0 8px;font-size:28px;letter-spacing:-0.5px}.eyebrow{color:#fbbf24;font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:800;margin-bottom:6px}p{color:#a1a1aa;font-size:14px;line-height:1.6;max-width:340px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}.price{font-size:36px;color:#fff;font-weight:700;margin-top:18px;letter-spacing:-1px}.discount{color:#fbbf24;font-size:13px;font-weight:600;margin-top:4px}.mut{color:#52525b;font-size:12px;margin-top:14px}.gift{margin-top:20px;padding:14px 18px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);border-radius:14px;font-size:12px;color:#f4f4f5;max-width:300px}</style></head><body><div class="badge">V11 · Win-Back</div><div class="eyebrow">BS 7671:2018 + A4:2026</div><h2>A4:2026 is here.</h2><p>Free A4 cheatsheet hero · 16 certs A4-ready · calculations updated · Study Centre rebuilt · Elec-AI grounded on the new amendment.</p><div class="gift">🎁 Free 4-page A4:2026 changes cheatsheet — no email gate</div><div class="price">£7.99<span style="font-size:14px;color:#a1a1aa;font-weight:400">/mo</span></div><div class="discount">£7/mo off normal £14.99 — thank-you for trying us</div><p class="mut">Send a test email (Advanced) to preview the full rendered template.</p></body></html>`}
                 />
               </div>
             </div>

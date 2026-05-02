@@ -32,10 +32,10 @@ const quickCheckQuestions = [
     id: 'check-2',
     question:
       'What is the maximum measured earth fault loop impedance (Zs) for a 32A Type B MCB to achieve 0.4 second disconnection?',
-    options: ['0.72 ohms', '1.15 ohms', '1.44 ohms', '2.30 ohms'],
+    options: ['0.69 ohms', '1.10 ohms', '1.37 ohms', '2.19 ohms'],
     correctIndex: 2,
     explanation:
-      'BS 7671 Table 41.3 gives Zs max for a 32A Type B MCB as 1.44 ohms. This is the maximum value to ensure the MCB trips within 0.4 seconds under fault conditions. Measured values must be below this, accounting for temperature rise (multiply by 0.8 if testing cold circuits).',
+      'BS 7671:2018+A4:2026 Table 41.3 gives Zs max for a 32A Type B MCB as 1.37 ohms (Cmin = 0.95 applied; the older pre-A4 value of 1.44 ohms is now obsolete). This is the maximum value to ensure the MCB trips within 0.4 seconds under fault conditions. Measured values must be below this, accounting for temperature rise (multiply by 0.8 if testing cold circuits, giving 1.10 ohms).',
   },
   {
     id: 'check-3',
@@ -109,13 +109,13 @@ const quizQuestions = [
       'The measured Zs at a socket outlet is 1.85 ohms. The circuit is protected by a 32A Type B MCB. Is this acceptable for a TN system?',
     options: [
       'Yes - the value is below the BS 7671 maximum of 2.30 ohms',
-      'No - the value exceeds the BS 7671 maximum of 1.44 ohms',
+      'No - the value exceeds the BS 7671 maximum of 1.37 ohms',
       'Cannot determine without knowing the cable size',
       'Yes - but only if an RCD is also fitted',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671 Table 41.3 specifies maximum Zs for a 32A Type B MCB as 1.44 ohms (for 0.4s disconnection). The measured value of 1.85 ohms exceeds this limit, meaning the MCB may not operate within the required time during a fault. Remedial action is needed - either reduce circuit length, increase cable size, or add RCD protection.',
+      'BS 7671:2018+A4:2026 Table 41.3 specifies maximum Zs for a 32A Type B MCB as 1.37 ohms (for 0.4s disconnection, Cmin = 0.95 applied). The measured value of 1.85 ohms exceeds this limit, meaning the MCB may not operate within the required time during a fault. Remedial action is needed - either reduce circuit length, increase cable size, or add RCD protection.',
   },
   {
     id: 5,
@@ -724,7 +724,7 @@ const Level3Module4Section2_2 = () => {
                   <li>Zs = Ze + (R1 + R2)</li>
                   <li>Apply factor 0.8 for cold circuits</li>
                   <li>Compare with BS 7671 Table 41.3</li>
-                  <li>32A Type B max Zs = 1.44R</li>
+                  <li>32A Type B max Zs = 1.37Ω (A4:2026)</li>
                 </ul>
               </div>
             </div>

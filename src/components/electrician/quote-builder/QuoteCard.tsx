@@ -117,6 +117,17 @@ export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCar
                 {quote.quoteNumber}
               </span>
             )}
+            {/* ELE-956 — version badge for v2+ */}
+            {(quote.version_number ?? 1) > 1 && (
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25">
+                v{quote.version_number}
+              </span>
+            )}
+            {quote.status === 'superseded' && (
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/[0.06] text-white/60">
+                Superseded
+              </span>
+            )}
             {(quote.email_open_count ?? 0) > 0 && (
               <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/15 text-blue-400">
                 Viewed{(quote.email_open_count ?? 0) > 1 ? ` ${quote.email_open_count}×` : ''}

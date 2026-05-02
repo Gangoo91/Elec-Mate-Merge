@@ -1,8 +1,27 @@
-import { ArrowLeft, Wind, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 5 · Subsection 4 — Air Infiltration and Ventilation
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Air change rate, permeability (m³/h·m² @ 50 Pa), stack and wind drivers,
+ *   equivalent area sizing — the air-movement physics behind Part L compliance,
+ *   Part F minimum rates and natural ventilation design.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Air Infiltration and Ventilation - HNC Module 2 Section 5.4';
@@ -230,730 +249,458 @@ const faqs = [
 ];
 
 const HNCModule2Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Wind className="h-4 w-4" />
-            <span>Module 2.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Air Infiltration and Ventilation
-          </h1>
-          <p className="text-white">
-            Air movement in buildings: infiltration, natural ventilation, and driving forces
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 5 · Subsection 4"
+            title="Air Infiltration and Ventilation"
+            description="Air movement in buildings: infiltration, natural ventilation, and driving forces."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Infiltration:</strong> Uncontrolled air leakage through gaps
-              </li>
-              <li className="pl-1">
-                <strong>Ventilation:</strong> Controlled fresh air supply
-              </li>
-              <li className="pl-1">
-                <strong>Stack effect:</strong> Buoyancy-driven flow (warm air rises)
-              </li>
-              <li className="pl-1">
-                <strong>Wind effect:</strong> Pressure-driven cross-flow
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Part F:</strong> Minimum ventilation requirements
-              </li>
-              <li className="pl-1">
-                <strong>Part L:</strong> Airtightness testing (max 8 m³/h/m²)
-              </li>
-              <li className="pl-1">
-                <strong>Heat loss:</strong> Ventilation often 30-50% of total
-              </li>
-              <li className="pl-1">
-                <strong>IAQ:</strong> CO2, moisture, pollutant control
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You convert between ach and l/s/person using V × n / 3.6 = total l/s, and apply Part F minimum rates as a non-negotiable floor.',
+              'You read air-permeability test results (m³/h·m² @ 50 Pa) and convert to natural infiltration ach using the AIVC rule of thumb (≈ 1/20).',
+              'You size natural ventilation openings using equivalent area Aeq driven by wind ΔP and stack ΔP (ΔPstack = ρ × g × h × ΔT/T).',
+              'You compute ventilation heat loss Q = 0.33 × n × V × ΔT and add it to the fabric heat-loss schedule.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="Building Regulations 2010 — Approved Document F (Ventilation) and Approved Document L (Conservation of fuel and power)"
+            clause="Part F sets minimum ventilation rates for dwellings and non-domestic buildings to provide adequate indoor air quality. Part L sets a maximum air permeability target for new and refurbished envelopes (typically 8 m³/h·m² @ 50 Pa or lower for compliance) demonstrated by pressure testing."
+            meaning={
+              <>
+                Parts F and L are the regulatory bookends. As HNC engineer you size
+                ventilation to Part F minimums (occupancy-driven), then verify the
+                permeability target from Part L is achievable in build, and back-calculate
+                the natural infiltration component for the heating-load schedule.
+              </>
+            }
+            cite="Source: Building Regulations 2010, Approved Documents F and L — gov.uk; CIBSE Guide A — Environmental Design; AM10 Natural Ventilation in Non-Domestic Buildings."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate ventilation rates and air change rates',
               'Understand air permeability testing and Part L requirements',
               'Apply stack effect and wind pressure principles',
               'Determine ventilation heat losses',
               'Design natural ventilation openings using equivalent area',
               'Select appropriate ventilation strategies for different buildings',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Air Changes and Permeability */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Air Changes and Air Permeability
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Air Changes and Air Permeability"
+            plainEnglish="Air change rate tells you how often the room air swaps. Permeability tells you how leaky the envelope is at 50Pa - a standardised pressure for comparing buildings."
+          >
             <p>
               Air change rate describes how often the room air is replaced, while air permeability
               measures building envelope leakage. Both affect energy use and indoor air quality.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key definitions:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Air change rate (ach):</strong> Volume changes per hour (V/h ÷ Room
-                  volume)
-                </li>
-                <li className="pl-1">
-                  <strong>Air permeability (q50):</strong> m³/h per m² envelope at 50Pa pressure
-                </li>
-                <li className="pl-1">
-                  <strong>n50:</strong> Air changes at 50Pa (alternative airtightness metric)
-                </li>
-                <li className="pl-1">
-                  <strong>Infiltration:</strong> Unintentional leakage through fabric
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ventilation Rate Calculation
-              </p>
-              <p className="font-mono text-center text-sm mb-2">V̇ = n × Volume</p>
-              <p className="text-xs text-white text-center">
-                Where V̇ = flow rate (m³/h), n = air changes per hour, Volume = room volume (m³)
-              </p>
-              <p className="text-xs text-white text-center mt-2">To convert: m³/h ÷ 3.6 = l/s</p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Air Permeability Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Standard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Maximum q50</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part L 2021 (dwellings)</td>
-                      <td className="border border-white/10 px-3 py-2">8 m³/(h.m²)</td>
-                      <td className="border border-white/10 px-3 py-2">Design value for SAP</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part L 2021 (other)</td>
-                      <td className="border border-white/10 px-3 py-2">8 m³/(h.m²)</td>
-                      <td className="border border-white/10 px-3 py-2">With MVHR: 5 recommended</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Best practice</td>
-                      <td className="border border-white/10 px-3 py-2">3-5 m³/(h.m²)</td>
-                      <td className="border border-white/10 px-3 py-2">Good energy performance</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Passivhaus</td>
-                      <td className="border border-white/10 px-3 py-2">≤0.6 ach @ 50Pa</td>
-                      <td className="border border-white/10 px-3 py-2">Different metric (n50)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key definitions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Air change rate (ach):</strong> Volume changes per hour (V/h ÷ Room volume)
+              </li>
+              <li>
+                <strong>Air permeability (q50):</strong> m³/h per m² envelope at 50Pa pressure
+              </li>
+              <li>
+                <strong>n50:</strong> Air changes at 50Pa (alternative airtightness metric)
+              </li>
+              <li>
+                <strong>Infiltration:</strong> Unintentional leakage through fabric
+              </li>
+            </ul>
+            <p>
+              <strong>Ventilation rate calculation:</strong> V̇ = n × Volume. Where V̇ = flow rate
+              (m³/h), n = air changes per hour, Volume = room volume (m³). To convert: m³/h ÷ 3.6 = l/s.
+            </p>
+            <p>
+              <strong>Air permeability requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Part L 2021 (dwellings): max 8 m³/(h.m²) - design value for SAP</li>
+              <li>Part L 2021 (other): max 8 m³/(h.m²) - with MVHR, 5 recommended</li>
+              <li>Best practice: 3-5 m³/(h.m²) - good energy performance</li>
+              <li>Passivhaus: ≤0.6 ach @ 50Pa (different metric n50)</li>
+            </ul>
+            <p>
               <strong>Rule of thumb:</strong> Divide q50 by 20 to estimate normal infiltration rate.
               A building testing at 5 m³/h/m² would have ~0.25 ach infiltration under typical
               conditions.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Stack Effect */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Stack Effect - Buoyancy-Driven Ventilation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Stack Effect - Buoyancy-Driven Ventilation"
+            plainEnglish="Warm air is lighter, so it rises. That gives you free ventilation if you have an opening up high and another down low - and it gets stronger as ΔT and height grow."
+          >
             <p>
               Stack effect occurs because warm air is less dense than cool air. In heated buildings,
               warm air rises and exits at high level, creating negative pressure that draws in
               cooler air at low level. This natural buoyancy can provide significant ventilation.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Stack Pressure Formula</p>
-              <p className="font-mono text-center text-sm mb-2">
-                ΔP = ρ × g × h × (T<sub>i</sub> - T<sub>o</sub>) / T<sub>o</sub>
-              </p>
-              <p className="text-xs text-white text-center">
-                Simplified: ΔP ≈ 0.04 × h × ΔT (Pa) for typical conditions
-              </p>
-              <p className="text-xs text-white text-center mt-2">
-                Where h = height between openings (m), ΔT = temperature difference (K)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Stack effect principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Neutral pressure level:</strong> Mid-height where inside = outside
-                  pressure
-                </li>
-                <li className="pl-1">
-                  <strong>Below NPL:</strong> Air enters (positive stack pressure outside)
-                </li>
-                <li className="pl-1">
-                  <strong>Above NPL:</strong> Air exits (negative stack pressure outside)
-                </li>
-                <li className="pl-1">
-                  <strong>Height effect:</strong> Taller buildings have stronger stack effect
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Stack Pressures
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Height (m)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">ΔT = 10K</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">ΔT = 20K</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">ΔT = 30K</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3m (single storey)</td>
-                      <td className="border border-white/10 px-3 py-2">1.2 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">2.4 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">3.6 Pa</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10m (3 storey)</td>
-                      <td className="border border-white/10 px-3 py-2">4 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">8 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">12 Pa</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">30m (atrium)</td>
-                      <td className="border border-white/10 px-3 py-2">12 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">24 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">36 Pa</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Stack pressure formula:</strong> ΔP = ρ × g × h × (Ti - To) / To. Simplified:
+              ΔP ≈ 0.04 × h × ΔT (Pa) for typical conditions. Where h = height between openings (m),
+              ΔT = temperature difference (K).
+            </p>
+            <p>
+              <strong>Stack effect principles:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Neutral pressure level:</strong> Mid-height where inside = outside pressure
+              </li>
+              <li>
+                <strong>Below NPL:</strong> Air enters (positive stack pressure outside)
+              </li>
+              <li>
+                <strong>Above NPL:</strong> Air exits (negative stack pressure outside)
+              </li>
+              <li>
+                <strong>Height effect:</strong> Taller buildings have stronger stack effect
+              </li>
+            </ul>
+            <p>
+              <strong>Typical stack pressures (height × ΔT):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>3m (single storey): 1.2 Pa @ 10K, 2.4 Pa @ 20K, 3.6 Pa @ 30K</li>
+              <li>10m (3 storey): 4 Pa @ 10K, 8 Pa @ 20K, 12 Pa @ 30K</li>
+              <li>30m (atrium): 12 Pa @ 10K, 24 Pa @ 20K, 36 Pa @ 30K</li>
+            </ul>
+            <p>
               <strong>Design application:</strong> Stack effect is strongest in winter (high ΔT) but
               may be needed most in summer (low ΔT). Atria and chimneys increase effective height to
               enhance stack ventilation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Wind Pressure */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Wind Pressure - Cross-Ventilation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Wind Pressure - Cross-Ventilation"
+            plainEnglish="Wind pushes on the windward face and sucks on the leeward. That pressure difference drives cross-flow if you give it openings to use."
+          >
             <p>
               Wind creates pressure differences around buildings that can drive ventilation. The
               windward face experiences positive pressure (pushing air in), while leeward and side
               faces experience suction (pulling air out). This pressure difference enables
               cross-ventilation.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wind Pressure Formula</p>
-              <p className="font-mono text-center text-sm mb-2">
-                P<sub>wind</sub> = ½ × ρ × C<sub>p</sub> × v²
-              </p>
-              <p className="text-xs text-white text-center">
-                Where ρ = air density (1.2 kg/m³), Cp = pressure coefficient, v = wind speed (m/s)
-              </p>
-              <p className="text-xs text-white text-center mt-2">
-                Simplified: P ≈ 0.6 × Cp × v² (Pa)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Pressure coefficients (Cp):</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Face</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Cp</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effect</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Windward (upwind)</td>
-                      <td className="border border-white/10 px-3 py-2">+0.5 to +0.8</td>
-                      <td className="border border-white/10 px-3 py-2">Positive pressure (in)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Leeward (downwind)</td>
-                      <td className="border border-white/10 px-3 py-2">-0.3 to -0.5</td>
-                      <td className="border border-white/10 px-3 py-2">Suction (out)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Side walls</td>
-                      <td className="border border-white/10 px-3 py-2">-0.4 to -0.7</td>
-                      <td className="border border-white/10 px-3 py-2">Suction (out)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flat roof</td>
-                      <td className="border border-white/10 px-3 py-2">-0.5 to -0.8</td>
-                      <td className="border border-white/10 px-3 py-2">Suction (up and out)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cross-Ventilation Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Openings on opposite facades</li>
-                  <li className="pl-1">Maximum depth ~12-15m or 5× height</li>
-                  <li className="pl-1">Clear air path across space</li>
-                  <li className="pl-1">Perpendicular to prevailing wind</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Single-Sided Ventilation
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Relies on wind turbulence</li>
-                  <li className="pl-1">Maximum depth ~2× ceiling height</li>
-                  <li className="pl-1">~6m for 3m ceiling</li>
-                  <li className="pl-1">Less predictable/reliable</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Wind pressure formula:</strong> P_wind = ½ × ρ × Cp × v². Where ρ = air
+              density (1.2 kg/m³), Cp = pressure coefficient, v = wind speed (m/s). Simplified:
+              P ≈ 0.6 × Cp × v² (Pa).
+            </p>
+            <p>
+              <strong>Pressure coefficients (Cp) by face:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Windward (upwind): +0.5 to +0.8 - positive pressure (in)</li>
+              <li>Leeward (downwind): -0.3 to -0.5 - suction (out)</li>
+              <li>Side walls: -0.4 to -0.7 - suction (out)</li>
+              <li>Flat roof: -0.5 to -0.8 - suction (up and out)</li>
+            </ul>
+            <p>
+              <strong>Cross-ventilation requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Openings on opposite facades</li>
+              <li>Maximum depth ~12-15m or 5× height</li>
+              <li>Clear air path across space</li>
+              <li>Perpendicular to prevailing wind</li>
+            </ul>
+            <p>
+              <strong>Single-sided ventilation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Relies on wind turbulence</li>
+              <li>Maximum depth ~2× ceiling height</li>
+              <li>~6m for 3m ceiling</li>
+              <li>Less predictable/reliable</li>
+            </ul>
+            <p>
               <strong>Combined effect:</strong> Total ventilation pressure = stack + wind, but they
               don't simply add. On windward side with high-level exhaust, they can reinforce; on
               leeward inlet, they may oppose.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 4: Ventilation Heat Loss */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Ventilation Heat Loss Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Ventilation Heat Loss Calculations"
+            plainEnglish="Bringing in cold fresh air costs heat. Two formulas give you the same number depending on whether you're working in ach or l/s."
+          >
             <p>
               Ventilation and infiltration are significant heat loss pathways, often accounting for
               30-50% of total building heat loss. As buildings become better insulated, the relative
               importance of ventilation loss increases.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ventilation Heat Loss Formulas
-              </p>
-              <p className="font-mono text-center text-sm mb-2">
-                Q<sub>v</sub> = 0.33 × n × V × ΔT (Watts)
-              </p>
-              <p className="text-xs text-white text-center">
-                Where n = ach, V = volume (m³), ΔT = temp diff (K)
-              </p>
-              <p className="font-mono text-center text-sm mt-3 mb-2">
-                Q<sub>v</sub> = 1.2 × q × ΔT (Watts)
-              </p>
-              <p className="text-xs text-white text-center">
-                Where q = flow rate (l/s), ΔT = temp diff (K)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Ventilation heat loss coefficient:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>
-                    H<sub>v</sub> = 0.33 × n × V
-                  </strong>{' '}
-                  (W/K) - heat loss per degree difference
-                </li>
-                <li className="pl-1">
-                  Compare with fabric: H<sub>f</sub> = ΣUA (W/K)
-                </li>
-                <li className="pl-1">
-                  Total: H<sub>total</sub> = H<sub>f</sub> + H<sub>v</sub>
-                </li>
-                <li className="pl-1">Annual loss = H × degree-days × 24 (Wh)</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Ventilation Rates (Part F)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rate</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Basis</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office</td>
-                      <td className="border border-white/10 px-3 py-2">10 l/s per person</td>
-                      <td className="border border-white/10 px-3 py-2">Occupancy</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Classroom</td>
-                      <td className="border border-white/10 px-3 py-2">8 l/s per person</td>
-                      <td className="border border-white/10 px-3 py-2">Occupancy</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Kitchen (commercial)</td>
-                      <td className="border border-white/10 px-3 py-2">25-40 l/s per m²</td>
-                      <td className="border border-white/10 px-3 py-2">Floor area</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">WC</td>
-                      <td className="border border-white/10 px-3 py-2">6 l/s per WC pan</td>
-                      <td className="border border-white/10 px-3 py-2">Fixture count</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dwelling (whole house)</td>
-                      <td className="border border-white/10 px-3 py-2">0.3-0.5 ach</td>
-                      <td className="border border-white/10 px-3 py-2">Air change rate</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Ventilation heat loss formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Qv = 0.33 × n × V × ΔT (W). Where n = ach, V = volume (m³), ΔT = temp diff (K)</li>
+              <li>Qv = 1.2 × q × ΔT (W). Where q = flow rate (l/s), ΔT = temp diff (K)</li>
+            </ul>
+            <p>
+              <strong>Ventilation heat loss coefficient:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hv = 0.33 × n × V</strong> (W/K) - heat loss per degree difference
+              </li>
+              <li>Compare with fabric: Hf = ΣUA (W/K)</li>
+              <li>Total: H_total = Hf + Hv</li>
+              <li>Annual loss = H × degree-days × 24 (Wh)</li>
+            </ul>
+            <p>
+              <strong>Typical ventilation rates (Part F):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Office: 10 l/s per person (occupancy basis)</li>
+              <li>Classroom: 8 l/s per person (occupancy basis)</li>
+              <li>Kitchen (commercial): 25-40 l/s per m² (floor area basis)</li>
+              <li>WC: 6 l/s per WC pan (fixture count basis)</li>
+              <li>Dwelling (whole house): 0.3-0.5 ach (air change rate basis)</li>
+            </ul>
+            <p>
               <strong>Heat recovery:</strong> MVHR can recover 70-90% of ventilation heat loss while
               maintaining fresh air supply. Essential for very airtight buildings where infiltration
               alone cannot provide adequate ventilation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Four sums covering ach from supply rate, ventilation heat loss, stack pressure in an atrium, and the windward/leeward pressure split for cross-vent."
+          >
+            <p>
+              <strong>Example 1 - Air change rate:</strong> An office (8m × 10m × 3m) requires
+              400 l/s ventilation. What is the air change rate?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Volume = 8 × 10 × 3 = 240 m³</li>
+              <li>Flow rate = 400 l/s = 400 × 3.6 = 1440 m³/h</li>
+              <li>ach = 1440 / 240 = <strong>6 air changes per hour</strong></li>
+              <li>This is high for standard conditioning; check if cooling load driven</li>
+            </ul>
+            <p>
+              <strong>Example 2 - Ventilation heat loss:</strong> Calculate the ventilation heat
+              loss for a 500m³ room with 1.5 ach, internal temperature 21°C, external -2°C.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>ΔT = 21 - (-2) = 23K</li>
+              <li>Qv = 0.33 × n × V × ΔT</li>
+              <li>Qv = 0.33 × 1.5 × 500 × 23</li>
+              <li>Qv = <strong>5693W ≈ 5.7kW</strong></li>
+              <li>This must be added to fabric losses for total heating load</li>
+            </ul>
+            <p>
+              <strong>Example 3 - Stack effect pressure:</strong> An atrium has inlet at ground and
+              outlet 20m above. Internal temp 22°C, external 10°C. Calculate the stack pressure.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Using simplified formula: ΔP ≈ 0.04 × h × ΔT</li>
+              <li>ΔP = 0.04 × 20 × (22-10)</li>
+              <li>ΔP = 0.04 × 20 × 12 = <strong>9.6 Pa</strong></li>
+              <li>Sufficient to drive significant natural ventilation flow</li>
+            </ul>
+            <p>
+              <strong>Example 4 - Wind pressure:</strong> Wind speed is 5 m/s. Calculate pressure
+              on windward face (Cp = +0.6) and leeward face (Cp = -0.4). What is the
+              cross-ventilation driving pressure?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>P = 0.6 × Cp × v²</li>
+              <li>Windward: P = 0.6 × (+0.6) × 5² = +9 Pa</li>
+              <li>Leeward: P = 0.6 × (-0.4) × 5² = -6 Pa</li>
+              <li>Driving pressure = 9 - (-6) = <strong>15 Pa</strong></li>
+              <li>This drives airflow from windward to leeward openings</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Air Change Rate
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An office (8m × 10m × 3m) requires 400 l/s ventilation.
-                What is the air change rate?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Volume = 8 × 10 × 3 = 240 m³</p>
-                <p>Flow rate = 400 l/s = 400 × 3.6 = 1440 m³/h</p>
-                <p className="mt-2">
-                  ach = 1440 / 240 = <strong>6 air changes per hour</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This is high for standard conditioning; check if cooling load driven
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Ventilation Heat Loss
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the ventilation heat loss for a 500m³ room with
-                1.5 ach, internal temperature 21°C, external -2°C.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>ΔT = 21 - (-2) = 23K</p>
-                <p>Qv = 0.33 × n × V × ΔT</p>
-                <p>Qv = 0.33 × 1.5 × 500 × 23</p>
-                <p>
-                  Qv = <strong>5693W ≈ 5.7kW</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This must be added to fabric losses for total heating load
-                </p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The headline values and formulas you'll reach for when sizing openings, estimating losses, or arguing about Part L test results."
+          >
+            <p>
+              <strong>Essential formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>ach = V̇ / Volume:</strong> Air changes from flow rate
+              </li>
+              <li>
+                <strong>Qv = 0.33 × n × V × ΔT:</strong> Ventilation heat loss (W)
+              </li>
+              <li>
+                <strong>ΔP = 0.04 × h × ΔT:</strong> Stack pressure (Pa)
+              </li>
+              <li>
+                <strong>P = 0.6 × Cp × v²:</strong> Wind pressure (Pa)
+              </li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Part L max permeability: <strong>8 m³/h/m² @ 50Pa</strong>
+              </li>
+              <li>
+                Office ventilation: <strong>10 l/s per person</strong>
+              </li>
+              <li>
+                Cross-ventilation depth: <strong>12-15m max</strong>
+              </li>
+              <li>
+                Single-sided depth: <strong>2× ceiling height</strong>
+              </li>
+              <li>
+                q50 to infiltration: <strong>divide by 20</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Stack Effect Pressure
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An atrium has inlet at ground and outlet 20m above.
-                Internal temp 22°C, external 10°C. Calculate the stack pressure.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using simplified formula: ΔP ≈ 0.04 × h × ΔT</p>
-                <p>ΔP = 0.04 × 20 × (22-10)</p>
-                <p>
-                  ΔP = 0.04 × 20 × 12 = <strong>9.6 Pa</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Sufficient to drive significant natural ventilation flow
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Wind Pressure
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Wind speed is 5 m/s. Calculate pressure on windward face
-                (Cp = +0.6) and leeward face (Cp = -0.4). What is the cross-ventilation driving
-                pressure?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>P = 0.6 × Cp × v²</p>
-                <p>Windward: P = 0.6 × (+0.6) × 5² = +9 Pa</p>
-                <p>Leeward: P = 0.6 × (-0.4) × 5² = -6 Pa</p>
-                <p className="mt-2">
-                  Driving pressure = 9 - (-6) = <strong>15 Pa</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This drives airflow from windward to leeward openings
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>ach = V̇ / Volume:</strong> Air changes from flow rate
-                </li>
-                <li className="pl-1">
-                  <strong>Qv = 0.33 × n × V × ΔT:</strong> Ventilation heat loss (W)
-                </li>
-                <li className="pl-1">
-                  <strong>ΔP = 0.04 × h × ΔT:</strong> Stack pressure (Pa)
-                </li>
-                <li className="pl-1">
-                  <strong>P = 0.6 × Cp × v²:</strong> Wind pressure (Pa)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Part L max permeability: <strong>8 m³/h/m² @ 50Pa</strong>
-                </li>
-                <li className="pl-1">
-                  Office ventilation: <strong>10 l/s per person</strong>
-                </li>
-                <li className="pl-1">
-                  Cross-ventilation depth: <strong>12-15m max</strong>
-                </li>
-                <li className="pl-1">
-                  Single-sided depth: <strong>2× ceiling height</strong>
-                </li>
-                <li className="pl-1">
-                  q50 to infiltration: <strong>divide by 20</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Forgetting infiltration:</strong> Add to designed ventilation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring wind direction:</strong> Inlets should face prevailing wind
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Summer stack:</strong> Low ΔT = weak stack effect
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Oversizing openings:</strong> Too large = poor control
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Add infiltration on top of designed ventilation, orient inlets to the prevailing wind, plan for wind-driven flow when summer ΔT is low, and size openings for control as well as flow capacity."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Sizing natural ventilation openings for a stack-driven school hall"
+            situation={
+              <>
+                A 600 m² primary-school assembly hall (4.5 m floor-to-ceiling) is targeting
+                BB101-compliant natural ventilation. Capacity 250 children + 20 staff, so
+                Part F demands ~3 l/s/person × 270 = 810 l/s of fresh air during summer
+                full-occupancy.
+              </>
+            }
+            whatToDo={
+              <>
+                Calculate stack pressure ΔPstack from indoor 24 °C, outdoor 18 °C,
+                stack height 4 m: ΔPstack ≈ ρ × g × h × ΔT/T ≈ 1.2 × 9.81 × 4 ×
+                6/297 ≈ 0.95 Pa. Add a wind contribution from regional design wind
+                pressure. Calculate equivalent area Aeq from V̇ = Cd × Aeq × √(2ΔP/ρ).
+                Specify high-level + low-level openings sized for the larger of stack-only
+                and wind-only cases. Cross-check with CIBSE AM10 procedure.
+              </>
+            }
+            whyItMatters={
+              <>
+                Schools designed to BB101 must demonstrate adequate ventilation by calculation,
+                not assertion. Undersized openings means CO₂ rises above 1500 ppm during
+                lessons, learning outcomes drop, and the design fails LA scrutiny. The AM10
+                methodology is the auditable design route.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Ventilation Rates</p>
-                <ul className="space-y-0.5">
-                  <li>Office: 10 l/s per person</li>
-                  <li>Classroom: 8 l/s per person</li>
-                  <li>Dwelling: 0.3-0.5 ach whole house</li>
-                  <li>Convert: m³/h ÷ 3.6 = l/s</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Natural Ventilation</p>
-                <ul className="space-y-0.5">
-                  <li>Stack: ΔP = 0.04 × h × ΔT</li>
-                  <li>Wind: P = 0.6 × Cp × v²</li>
-                  <li>Cross-vent depth: 12-15m</li>
-                  <li>Single-sided: 2× height</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Air change rate n (ach) = total air supply ÷ room volume per hour.',
+              'Air permeability tested at 50 Pa over the building envelope — typical Part L target ≤ 8 m³/h·m².',
+              'Natural infiltration ach ≈ permeability ÷ 20 (rule of thumb for typical exposure).',
+              'Stack-effect ΔP = ρ × g × h × ΔT/T — drives buoyancy ventilation in winter.',
+              'Wind-effect ΔP = Cp × ½ρv² — drives cross ventilation in summer.',
+              'Equivalent area Aeq combines opening geometry with discharge coefficient Cd ≈ 0.6.',
+              'Ventilation heat loss Q = 0.33 × n × V × ΔT.',
+              'Approved Documents F and L set the legal envelope; CIBSE AM10 is the design methodology for natural ventilation.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section5-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section5-5">
-              Next: Thermal Comfort
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Thermal mass and time lag
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section5-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Thermal comfort
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

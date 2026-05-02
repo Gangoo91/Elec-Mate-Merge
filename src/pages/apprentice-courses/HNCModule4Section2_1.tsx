@@ -1,8 +1,27 @@
-import { ArrowLeft, Gauge, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 2 · Subsection 1 — Current-Carrying Capacity
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   BS 7671 Appendix 4 tables, the seven installation reference methods (A-G), the
+ *   Ib ≤ In ≤ Iz hierarchy, and how to convert tabulated It into safe Iz once the
+ *   correction factors (Ca, Cg, Ci) are applied.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Current-Carrying Capacity - HNC Module 4 Section 2.1';
@@ -209,746 +228,494 @@ const faqs = [
 ];
 
 const HNCModule4Section2_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Gauge className="h-4 w-4" />
-            <span>Module 4.2.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Current-Carrying Capacity
-          </h1>
-          <p className="text-white">
-            Using BS 7671 Appendix 4 tables and installation reference methods for safe cable
-            selection
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 2 · Subsection 1"
+            title="Current-Carrying Capacity"
+            description="Using BS 7671 Appendix 4 tables and installation reference methods for safe cable selection."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>It:</strong> Tabulated current from BS 7671 Appendix 4
-              </li>
-              <li className="pl-1">
-                <strong>Reference methods:</strong> Define installation conditions
-              </li>
-              <li className="pl-1">
-                <strong>Selection:</strong> Ib ≤ In ≤ Iz ensures protection
-              </li>
-              <li className="pl-1">
-                <strong>Tables:</strong> 4D1A-4J4A cover all cable types
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Cable tray:</strong> Method E - commercial preference
-              </li>
-              <li className="pl-1">
-                <strong>Containment:</strong> Methods A, B for smaller cables
-              </li>
-              <li className="pl-1">
-                <strong>SWA direct:</strong> Method C for external runs
-              </li>
-              <li className="pl-1">
-                <strong>HVAC plant:</strong> Higher ambient temperatures
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Cable selection hierarchy: I_b (design current) ≤ I_n (device rating) ≤ I_z (cable capacity after derating).',
+              'BS 7671 Appendix 4 gives I_t (tabulated current) under reference conditions; you derate for grouping (Cg), ambient (Ca), thermal insulation (Ci) and harmonics (Cf).',
+              'Reference method (A–G) is set by how the cable is installed — clipped direct, in conduit, in trunking, on a tray, in a duct, in thermal insulation. Get the method wrong and your I_z is wrong.',
+              'For three-phase circuits with high triplen-harmonic content (>33% 3rd), Appendix 11 sets a fourth derating factor for neutral loading.',
+              'BS 7671 Reg 311.1 obliges design within thermal limits and admissible voltage drop — current-carrying capacity is the &lsquo;thermal limits&rsquo; half of that duty.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 311.1 (Maximum demand and diversity, design within thermal limits)"
+            clause="For economic and reliable design of an installation within thermal limits and admissible voltage drop, the maximum demand shall be determined as required by Regulation 311.1. This determination is mandatory to ensure conductor and protective device sizing are appropriate."
+            meaning={
+              <>
+                Reg 311.1 explicitly ties cable sizing to &lsquo;thermal limits and admissible
+                voltage drop&rsquo;. The thermal-limits half is delivered by Appendix 4: pick
+                the right reference method for the actual installation, apply every derating
+                factor that applies (Cg, Ca, Ci, Cf), and verify that the resulting I_z is at
+                least equal to I_n. Skip a derating factor and the cable runs above its design
+                temperature, accelerates insulation ageing and ultimately fails — often as a
+                fire.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 311.1; BS 7671 Appendix 4 (Current-carrying capacity); BS 7671 Appendix 11 (Effect of harmonic content)."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Navigate BS 7671 Appendix 4 current-carrying capacity tables',
               'Identify and apply correct installation reference methods',
               'Calculate design current for single and three-phase loads',
               'Apply the cable selection hierarchy: Ib ≤ In ≤ Iz',
               'Select appropriate tables for different cable types',
               'Understand the relationship between It and actual capacity',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: BS 7671 Appendix 4 Tables */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BS 7671 Appendix 4 Tables
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="BS 7671 Appendix 4 Tables">
             <p>
               Appendix 4 of BS 7671 contains the authoritative tables for cable current-carrying
               capacity. These tables provide the tabulated current (It) under reference conditions
               which must then be adjusted for actual installation conditions.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Appendix 4 Tables</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Table</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cable Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4D1A</td>
-                      <td className="border border-white/10 px-3 py-2">Single-core PVC (copper)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Conduit, trunking installations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4D2A</td>
-                      <td className="border border-white/10 px-3 py-2">Multicore PVC (copper)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Twin & earth, flat cables
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4D5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multicore 70°C thermoplastic
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Flexible cords</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4E1A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-core XLPE (copper)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High temperature applications
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4E2A</td>
-                      <td className="border border-white/10 px-3 py-2">Multicore XLPE (copper)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SWA cables, higher ratings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4E4A</td>
-                      <td className="border border-white/10 px-3 py-2">Multicore XLPE armoured</td>
-                      <td className="border border-white/10 px-3 py-2">SWA power distribution</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reference Conditions</p>
-              <p className="text-sm text-white mb-2">
-                All tabulated values assume standard reference conditions:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Ambient temperature: <strong>30°C</strong> (or 25°C for buried cables)
-                </li>
-                <li className="pl-1">
-                  Single circuit: <strong>No grouping</strong> with other cables
-                </li>
-                <li className="pl-1">
-                  Installation: <strong>Not in thermal insulation</strong>
-                </li>
-                <li className="pl-1">
-                  Conductor: Operating at <strong>maximum temperature</strong>
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key Appendix 4 tables:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>4D1A:</strong> single-core PVC (copper) — conduit, trunking installations
+              </li>
+              <li>
+                <strong>4D2A:</strong> multicore PVC (copper) — twin &amp; earth, flat cables
+              </li>
+              <li>
+                <strong>4D5:</strong> multicore 70°C thermoplastic — flexible cords
+              </li>
+              <li>
+                <strong>4E1A:</strong> single-core XLPE (copper) — high temperature applications
+              </li>
+              <li>
+                <strong>4E2A:</strong> multicore XLPE (copper) — SWA cables, higher ratings
+              </li>
+              <li>
+                <strong>4E4A:</strong> multicore XLPE armoured — SWA power distribution
+              </li>
+            </ul>
+            <p>
+              <strong>Reference conditions (assumed by all tabulated values):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Ambient temperature: <strong>30°C</strong> (or 25°C for buried cables)
+              </li>
+              <li>
+                Single circuit: <strong>no grouping</strong> with other cables
+              </li>
+              <li>
+                Installation: <strong>not in thermal insulation</strong>
+              </li>
+              <li>
+                Conductor: operating at <strong>maximum temperature</strong>
+              </li>
+            </ul>
+            <p>
               <strong>Remember:</strong> Tables ending in 'A' are for copper conductors; those
               ending in 'B' are for aluminium.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 2: Installation Reference Methods */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Installation Reference Methods
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Installation Reference Methods">
             <p>
               The installation reference method defines how a cable is installed and directly
               affects its current-carrying capacity. Better cooling means higher capacity;
               restricted heat dissipation means lower capacity.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Reference Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cooling</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enclosed in conduit in thermally insulated wall
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">Poorest</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">B</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enclosed in conduit/trunking on wall or ceiling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-300">Poor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">C</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Clipped direct to surface
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">D</td>
-                      <td className="border border-white/10 px-3 py-2">In ducts in the ground</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-300">
-                        Ground temp
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">E</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Free air or perforated cable tray
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Good</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">F</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-core touching on tray
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-green-300">Good</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">G</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-core spaced on tray
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-green-500">Best</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Building Services Usage
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Method B:</strong> Office trunking systems
-                  </li>
-                  <li className="pl-1">
-                    <strong>Method C:</strong> SWA to plant rooms
-                  </li>
-                  <li className="pl-1">
-                    <strong>Method E:</strong> Risers, plant rooms
-                  </li>
-                  <li className="pl-1">
-                    <strong>Method D:</strong> External supplies
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Capacity Comparison (6mm² Cu)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Method A:</strong> 32A
-                  </li>
-                  <li className="pl-1">
-                    <strong>Method B:</strong> 36A
-                  </li>
-                  <li className="pl-1">
-                    <strong>Method C:</strong> 47A
-                  </li>
-                  <li className="pl-1">
-                    <strong>Method E:</strong> 51A
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>BS 7671 reference methods (description / cooling):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>A:</strong> enclosed in conduit in thermally insulated wall — poorest
+              </li>
+              <li>
+                <strong>B:</strong> enclosed in conduit/trunking on wall or ceiling — poor
+              </li>
+              <li>
+                <strong>C:</strong> clipped direct to surface — moderate
+              </li>
+              <li>
+                <strong>D:</strong> in ducts in the ground — ground temperature dependent
+              </li>
+              <li>
+                <strong>E:</strong> free air or perforated cable tray — good
+              </li>
+              <li>
+                <strong>F:</strong> single-core touching on tray — good
+              </li>
+              <li>
+                <strong>G:</strong> single-core spaced on tray — best
+              </li>
+            </ul>
+            <p>
+              <strong>Building services usage:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Method B:</strong> office trunking systems
+              </li>
+              <li>
+                <strong>Method C:</strong> SWA to plant rooms
+              </li>
+              <li>
+                <strong>Method E:</strong> risers, plant rooms
+              </li>
+              <li>
+                <strong>Method D:</strong> external supplies
+              </li>
+            </ul>
+            <p>
+              <strong>Capacity comparison (6mm² Cu):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Method A: 32A</li>
+              <li>Method B: 36A</li>
+              <li>Method C: 47A</li>
+              <li>Method E: 51A</li>
+            </ul>
+            <p>
               <strong>Selection tip:</strong> Using Method E (cable tray) instead of Method B
               (trunking) can allow a smaller cable size, reducing material costs.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 3: Design Current Calculation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Design Current Calculation (Ib)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Design Current Calculation (Ib)">
             <p>
               The design current (Ib) is the current the circuit is expected to carry in normal
               service. This is the starting point for all cable selection calculations and must be
               accurately determined.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Design Current Formulas
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-center text-sm">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Single-Phase</p>
-                  <p className="font-mono">Ib = P / (V × pf)</p>
-                  <p className="text-white text-xs mt-1">Resistive loads: pf = 1</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Three-Phase</p>
-                  <p className="font-mono">Ib = P / (√3 × VL × pf)</p>
-                  <p className="text-white text-xs mt-1">VL = 400V line voltage</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Design Currents
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Load</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Power</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Supply</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Ib</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water heater</td>
-                      <td className="border border-white/10 px-3 py-2">3kW</td>
-                      <td className="border border-white/10 px-3 py-2">230V 1φ</td>
-                      <td className="border border-white/10 px-3 py-2">13.0A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electric shower</td>
-                      <td className="border border-white/10 px-3 py-2">9.5kW</td>
-                      <td className="border border-white/10 px-3 py-2">230V 1φ</td>
-                      <td className="border border-white/10 px-3 py-2">41.3A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AHU motor (pf 0.85)</td>
-                      <td className="border border-white/10 px-3 py-2">11kW</td>
-                      <td className="border border-white/10 px-3 py-2">400V 3φ</td>
-                      <td className="border border-white/10 px-3 py-2">18.7A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chiller (pf 0.85)</td>
-                      <td className="border border-white/10 px-3 py-2">45kW</td>
-                      <td className="border border-white/10 px-3 py-2">400V 3φ</td>
-                      <td className="border border-white/10 px-3 py-2">76.4A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lift motor</td>
-                      <td className="border border-white/10 px-3 py-2">22kW</td>
-                      <td className="border border-white/10 px-3 py-2">400V 3φ</td>
-                      <td className="border border-white/10 px-3 py-2">37.4A</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Design current formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single-phase:</strong> Ib = P / (V × pf) — resistive loads: pf = 1
+              </li>
+              <li>
+                <strong>Three-phase:</strong> Ib = P / (√3 × VL × pf) — VL = 400V line voltage
+              </li>
+            </ul>
+            <p>
+              <strong>Typical design currents (load / power / supply / Ib):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Water heater / 3kW / 230V 1φ / 13.0A</li>
+              <li>Electric shower / 9.5kW / 230V 1φ / 41.3A</li>
+              <li>AHU motor (pf 0.85) / 11kW / 400V 3φ / 18.7A</li>
+              <li>Chiller (pf 0.85) / 45kW / 400V 3φ / 76.4A</li>
+              <li>Lift motor / 22kW / 400V 3φ / 37.4A</li>
+            </ul>
+            <p>
               <strong>Motor circuits:</strong> Allow for starting current (typically 6-8× full load)
               when selecting protective devices, though cable sizing is based on running current.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 4: Cable Selection Process */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Cable Selection Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Cable Selection Process">
             <p>
               Cable selection follows a systematic process ensuring the cable is adequately rated
               for both normal load current and protection against overload and fault conditions.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                The Selection Hierarchy
-              </p>
-              <div className="text-center p-3 rounded bg-black/30 font-mono text-lg">
-                I<sub>b</sub> ≤ I<sub>n</sub> ≤ I<sub>z</sub>
-              </div>
-              <div className="mt-3 text-sm text-white">
-                <p>
-                  <strong>Ib</strong> = Design current (load requirement)
-                </p>
-                <p>
-                  <strong>In</strong> = Protective device nominal rating
-                </p>
-                <p>
-                  <strong>Iz</strong> = Cable effective current-carrying capacity
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Step-by-Step Selection</p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Calculate Ib:</strong> Determine design current from load data
-                </li>
-                <li className="pl-1">
-                  <strong>Select In:</strong> Choose protective device rating ≥ Ib
-                </li>
-                <li className="pl-1">
-                  <strong>Determine method:</strong> Identify installation reference method
-                </li>
-                <li className="pl-1">
-                  <strong>Apply factors:</strong> Calculate minimum It required: It = In / (Ca × Cg
-                  × Ci)
-                </li>
-                <li className="pl-1">
-                  <strong>Select cable:</strong> Choose cable with tabulated It ≥ calculated minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Verify Vd:</strong> Check voltage drop is within limits
-                </li>
-                <li className="pl-1">
-                  <strong>Check fault:</strong> Verify fault withstand capability
-                </li>
-              </ol>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example: Office Fan Coil Unit
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Load: 2.5kW single-phase, 230V</p>
-                <p className="mt-2">
-                  Step 1: Ib = 2500 / 230 = <strong>10.9A</strong>
-                </p>
-                <p>
-                  Step 2: Select In = <strong>16A</strong> MCB (next standard size up)
-                </p>
-                <p>
-                  Step 3: Installation: Trunking on wall = <strong>Method B</strong>
-                </p>
-                <p>Step 4: Ambient 35°C, 4 circuits grouped</p>
-                <p className="ml-4">Ca = 0.94, Cg = 0.65</p>
-                <p className="ml-4">
-                  Min It = 16 / (0.94 × 0.65) = <strong>26.2A</strong>
-                </p>
-                <p>Step 5: Table 4D2A Method B: 2.5mm² = 20A (too small)</p>
-                <p className="ml-4">4mm² = 27A (adequate)</p>
-                <p className="mt-2 text-green-400">→ Select 4mm² twin and earth</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>The selection hierarchy:</strong> Ib ≤ In ≤ Iz
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ib</strong> = design current (load requirement)
+              </li>
+              <li>
+                <strong>In</strong> = protective device nominal rating
+              </li>
+              <li>
+                <strong>Iz</strong> = cable effective current-carrying capacity
+              </li>
+            </ul>
+            <p>
+              <strong>Step-by-step selection:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1 — Calculate Ib:</strong> determine design current from load data
+              </li>
+              <li>
+                <strong>Step 2 — Select In:</strong> choose protective device rating ≥ Ib
+              </li>
+              <li>
+                <strong>Step 3 — Determine method:</strong> identify installation reference method
+              </li>
+              <li>
+                <strong>Step 4 — Apply factors:</strong> calculate minimum It required: It = In /
+                (Ca × Cg × Ci)
+              </li>
+              <li>
+                <strong>Step 5 — Select cable:</strong> choose cable with tabulated It ≥ calculated
+                minimum
+              </li>
+              <li>
+                <strong>Step 6 — Verify Vd:</strong> check voltage drop is within limits
+              </li>
+              <li>
+                <strong>Step 7 — Check fault:</strong> verify fault withstand capability
+              </li>
+            </ul>
+            <p>
+              <strong>Example — office fan coil unit (2.5kW single-phase, 230V):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Step 1: Ib = 2500 / 230 = <strong>10.9A</strong>
+              </li>
+              <li>
+                Step 2: select In = <strong>16A</strong> MCB (next standard size up)
+              </li>
+              <li>
+                Step 3: installation: trunking on wall = <strong>Method B</strong>
+              </li>
+              <li>
+                Step 4: ambient 35°C, 4 circuits grouped — Ca = 0.94, Cg = 0.65; min It = 16 / (0.94
+                × 0.65) = <strong>26.2A</strong>
+              </li>
+              <li>
+                Step 5: Table 4D2A Method B: 2.5mm² = 20A (too small), 4mm² = 27A (adequate)
+              </li>
+              <li>Select 4mm² twin and earth</li>
+            </ul>
+            <p>
               <strong>Important:</strong> The calculated minimum It includes the effect of
               correction factors. Always verify the final selection meets voltage drop requirements.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — lighting circuit:</strong> Select cable for 20 × 45W LED
+              luminaires on a 230V circuit, cables in trunking (Method B), 30°C ambient, no
+              grouping.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Total load = 20 × 45W = 900W</li>
+              <li>
+                Ib = 900 / 230 = <strong>3.9A</strong>
+              </li>
+              <li>
+                Select In = <strong>6A</strong> MCB (Type B)
+              </li>
+              <li>No correction factors apply (reference conditions); min It = 6A</li>
+              <li>Table 4D2A Method B: 1.5mm² = 14.5A</li>
+              <li>1.5mm² adequate (but verify voltage drop for circuit length)</li>
+            </ul>
+            <p>
+              <strong>Example 2 — three-phase motor:</strong> Size cable for 15kW AHU motor (pf
+              0.85), 400V 3φ, XLPE/SWA on cable tray (Method E), 40°C plant room.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Ib = 15000 / (√3 × 400 × 0.85) = <strong>25.5A</strong>
+              </li>
+              <li>
+                Select In = <strong>32A</strong> MCCB
+              </li>
+              <li>Correction for 40°C (XLPE): Ca = 0.91</li>
+              <li>
+                Min It = 32 / 0.91 = <strong>35.2A</strong>
+              </li>
+              <li>Table 4E2A Method E: 4mm² = 42A</li>
+              <li>4mm² 4-core XLPE/SWA suitable</li>
+            </ul>
+            <p>
+              <strong>Example 3 — grouped circuits:</strong> 6 × 20A circuits in conduit on wall
+              (Method B), 30°C ambient. What cable size?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>In = 20A per circuit</li>
+              <li>Grouping factor for 6 circuits: Cg = 0.57</li>
+              <li>
+                Min It = 20 / 0.57 = <strong>35.1A</strong>
+              </li>
+              <li>Table 4D1A Method B: 4mm² = 30A (too small), 6mm² = 38A (adequate)</li>
+              <li>6mm² singles in conduit required</li>
+              <li>Heavy grouping penalty — consider separate routes</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Lighting Circuit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Select cable for 20 × 45W LED luminaires on a 230V
-                circuit, cables in trunking (Method B), 30°C ambient, no grouping.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Total load = 20 × 45W = 900W</p>
-                <p>
-                  Ib = 900 / 230 = <strong>3.9A</strong>
-                </p>
-                <p className="mt-2">
-                  Select In = <strong>6A</strong> MCB (Type B)
-                </p>
-                <p className="mt-2">No correction factors apply (reference conditions)</p>
-                <p>Min It = 6A</p>
-                <p className="mt-2">Table 4D2A Method B: 1.5mm² = 14.5A</p>
-                <p className="mt-2 text-green-400">
-                  → 1.5mm² adequate (but verify voltage drop for circuit length)
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Three-Phase Motor
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Size cable for 15kW AHU motor (pf 0.85), 400V 3φ,
-                XLPE/SWA on cable tray (Method E), 40°C plant room.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Ib = 15000 / (√3 × 400 × 0.85) = <strong>25.5A</strong>
-                </p>
-                <p className="mt-2">
-                  Select In = <strong>32A</strong> MCCB
-                </p>
-                <p className="mt-2">Correction for 40°C (XLPE): Ca = 0.91</p>
-                <p>
-                  Min It = 32 / 0.91 = <strong>35.2A</strong>
-                </p>
-                <p className="mt-2">Table 4E2A Method E: 4mm² = 42A</p>
-                <p className="mt-2 text-green-400">→ 4mm² 4-core XLPE/SWA suitable</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Grouped Circuits
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> 6 × 20A circuits in conduit on wall (Method B), 30°C
-                ambient. What cable size?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>In = 20A per circuit</p>
-                <p className="mt-2">Grouping factor for 6 circuits: Cg = 0.57</p>
-                <p>
-                  Min It = 20 / 0.57 = <strong>35.1A</strong>
-                </p>
-                <p className="mt-2">Table 4D1A Method B:</p>
-                <p>4mm² = 30A (too small)</p>
-                <p>6mm² = 38A (adequate)</p>
-                <p className="mt-2 text-green-400">→ 6mm² singles in conduit required</p>
-                <p className="mt-2 text-white">
-                  Note: Heavy grouping penalty - consider separate routes
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Essential relationships:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ib ≤ In ≤ Iz</strong> — fundamental cable selection rule
+              </li>
+              <li>
+                <strong>Iz = It × Ca × Cg × Ci</strong> — effective capacity calculation
+              </li>
+              <li>
+                <strong>In ≤ It × Ca × Cg × Ci</strong> — rearranged for selection
+              </li>
+              <li>
+                <strong>Min It = In / (Ca × Cg × Ci)</strong> — minimum tabulated current
+              </li>
+            </ul>
+            <p>
+              <strong>Building services best practice:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use cable tray (Method E) where possible for best capacity</li>
+              <li>Group similar circuits together to optimise derating</li>
+              <li>Allow 20-25% spare capacity for future load growth</li>
+              <li>Consider XLPE for high ambient temperature locations</li>
+              <li>Document all correction factors applied in design calculations</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Relationships
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ib ≤ In ≤ Iz</strong> — Fundamental cable selection rule
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Wrong reference method</strong> — significantly affects tabulated values
                 </li>
-                <li className="pl-1">
-                  <strong>Iz = It × Ca × Cg × Ci</strong> — Effective capacity calculation
+                <li>
+                  <strong>Forgetting grouping</strong> — multiple circuits need Cg factor
                 </li>
-                <li className="pl-1">
-                  <strong>In ≤ It × Ca × Cg × Ci</strong> — Rearranged for selection
-                </li>
-                <li className="pl-1">
-                  <strong>Min It = In / (Ca × Cg × Ci)</strong> — Minimum tabulated current
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Best Practice
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Use cable tray (Method E) where possible for best capacity</li>
-                <li className="pl-1">Group similar circuits together to optimise derating</li>
-                <li className="pl-1">Allow 20-25% spare capacity for future load growth</li>
-                <li className="pl-1">Consider XLPE for high ambient temperature locations</li>
-                <li className="pl-1">
-                  Document all correction factors applied in design calculations
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wrong reference method</strong> — Significantly affects tabulated values
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting grouping</strong> — Multiple circuits need Cg factor
-                </li>
-                <li className="pl-1">
+                <li>
                   <strong>Using wrong table</strong> — PVC vs XLPE, single vs multicore
                 </li>
-                <li className="pl-1">
-                  <strong>Ignoring power factor</strong> — Motor loads need pf in Ib calculation
+                <li>
+                  <strong>Ignoring power factor</strong> — motor loads need pf in Ib calculation
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Identify the actual installation method and use the correct Appendix 4 table for the cable type, apply Cg whenever circuits share containment or trays, and always include power factor for motor / inductive loads in the Ib calculation."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Office ring-final vs radial — picking the cable for an open-plan floorplate"
+            situation={
+              <>
+                A 600&nbsp;m² open-plan office floor needs small-power circuits. You are choosing
+                between traditional 32&nbsp;A ring-finals and 20&nbsp;A radial circuits. The
+                cables run in 2-tier galvanised perimeter trunking with up to 6 circuits grouped,
+                ambient ceiling-void temperature 35&nbsp;°C in summer.
+              </>
+            }
+            whatToDo={
+              <>
+                Reference method B (in trunking). Six circuits grouped: C_g ≈ 0.57 (Appendix 4
+                Table 4C1). Ambient 35&nbsp;°C: C_a ≈ 0.94 for 70&nbsp;°C thermoplastic. For a
+                ring-final on 32&nbsp;A: I_t needed = 32 / (0.57 × 0.94) = ≈ 60&nbsp;A → 4&nbsp;mm²
+                conductors at minimum. For a 20&nbsp;A radial: I_t = 20 / 0.535 = ≈ 38&nbsp;A →
+                2.5&nbsp;mm² fine. Combined with voltage-drop check (Reg 525.202) and cost,
+                radials are usually the cleaner choice on commercial floorplates with grouped
+                circuits.
+              </>
+            }
+            whyItMatters={
+              <>
+                Forget the grouping factor and you have a 32&nbsp;A protective device on a cable
+                with a real I_z below 32&nbsp;A — Reg 311.1 thermal-limits breach, slow
+                insulation ageing, and a fire risk that the periodic inspection should catch but
+                often does not. Reference method matters: trunking (B) is more onerous than
+                clipped direct (C).
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Reference Methods</p>
-                <ul className="space-y-0.5">
-                  <li>A - Conduit in insulated wall (poorest)</li>
-                  <li>B - Trunking on surface</li>
-                  <li>C - Clipped direct</li>
-                  <li>E - Cable tray (best for multicore)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Tables</p>
-                <ul className="space-y-0.5">
-                  <li>4D1A - Single-core PVC copper</li>
-                  <li>4D2A - Multicore PVC copper</li>
-                  <li>4E1A - Single-core XLPE copper</li>
-                  <li>4E2A - Multicore XLPE copper</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Selection hierarchy: I_b ≤ I_n ≤ I_z. All three must be satisfied — and I_z is the derated capacity, not the table value.',
+              'BS 7671 Appendix 4 tabulates I_t under reference conditions (30&nbsp;°C ambient, no grouping, single circuit, no thermal insulation).',
+              'Apply every derating factor that applies: C_g (grouping), C_a (ambient), C_i (thermal insulation), C_f (harmonics) — multiply, do not pick the lowest.',
+              'Reference method (A–G) follows the actual installation. Clipped direct (C) is more generous than in-trunking (B) is more generous than fully embedded (A).',
+              'For three-phase circuits with >33% 3rd harmonic, apply BS 7671 Appendix 11 derating to account for neutral loading.',
+              'Cu vs Al: Al cables need ≈ 30% larger CSA for the same I_t. Match terminations and bi-metal joints to avoid corrosion failures.',
+              'Reg 311.1 mandates design within thermal limits and admissible voltage drop — current-carrying capacity is the thermal-limits half.',
+              'Always document the reference method, derating factors and resulting I_z on the cable schedule for verification under Part 6.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section2-2">
-              Next: Voltage Drop Calculations
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Cable selection and sizing
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section2-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Voltage drop calculations
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -3,26 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <style>
+      /* @page margins handle padding on EVERY page automatically — page 1,
+         page 2, page 3… all get the same breathing room. Without this, page
+         2 starts at the very top of A4 (no padding) when content overflows. */
+      @page { size: A4; margin: 10mm 8mm; }
       * { box-sizing: border-box; margin: 0; padding: 0; }
       body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #1f2937; line-height: 1.5; background: #ffffff; }
-      .page { padding: 20px; max-width: 210mm; margin: 0 auto; }
+      /* Wrapper has no padding — @page does the work. */
+      .page { padding: 0; max-width: 210mm; margin: 0 auto; }
 
       /* Header */
-      .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid {{ branding.primaryColor | default: '#1e40af' }}; }
-      .logo-section { max-width: 200px; }
+      .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 3px solid {{ branding.primaryColor | default: '#1e40af' }}; }
+      /* ELE-870 — wider logo column + flex centering for the bigger logo */
+      .logo-section { max-width: 280px; display: flex; align-items: center; }
+      .logo-section img { display: block; }
       .company-info { text-align: right; }
       .company-name { font-size: 22px; font-weight: 700; color: {{ branding.primaryColor | default: '#1e40af' }}; margin-bottom: 4px; }
       .company-details { font-size: 11px; color: #6b7280; line-height: 1.6; }
 
       /* Quote Title Banner */
-      .quote-banner { background: linear-gradient(135deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%); color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+      .quote-banner { background: linear-gradient(135deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%); color: white; padding: 18px 22px; border-radius: 12px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; }
       .quote-title { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
       .quote-number { font-size: 14px; opacity: 0.9; margin-top: 4px; }
       .quote-dates { text-align: right; font-size: 12px; }
       .quote-dates strong { color: #ffffff; }
 
       /* Two Column Layout */
-      .two-col { display: flex; gap: 24px; margin-bottom: 24px; }
+      .two-col { display: flex; gap: 20px; margin-bottom: 18px; }
       .col { flex: 1; }
 
       /* Info Cards */
@@ -33,7 +40,7 @@
       .info-value { font-size: 12px; color: #1f2937; margin-bottom: 8px; font-weight: 500; word-break: break-word; overflow-wrap: break-word; }
 
       /* Items Table */
-      .items-section { margin-bottom: 24px; }
+      .items-section { margin-bottom: 18px; }
       .section-title { font-size: 14px; font-weight: 600; color: {{ branding.primaryColor | default: '#1e40af' }}; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid {{ branding.primaryColor | default: '#1e40af' }}; }
       .items-table { width: 100%; border-collapse: collapse; }
       .items-table th { background: {{ branding.secondaryColor | default: '#1e3a5f' }}; color: white; padding: 12px 16px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
@@ -43,23 +50,30 @@
       .items-table tr:nth-child(even) { background: #f8fafc; }
       .items-table .item-desc { font-weight: 500; color: #1f2937; }
       .items-table .item-notes { font-size: 10px; color: #6b7280; margin-top: 2px; }
-      .items-table .qty-unit { color: #6b7280; }
+      .items-table .qty-unit { color: #6b7280; white-space: nowrap; }
+
+      /* ELE-888 — Per-item adjustment pills (markup / discount). Render
+         only when the item carries a non-zero adjustment percentage. */
+      .item-adj { display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #047857; margin-top: 4px; padding: 2px 6px; background: #d1fae5; border-radius: 3px; }
+      .item-adj.discount { color: #b91c1c; background: #fee2e2; }
 
       /* Category Headers */
       .category-header { background: #f1f5f9; padding: 10px 16px; font-weight: 600; color: #475569; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
       .category-header span { color: {{ branding.primaryColor | default: '#1e40af' }}; }
 
       /* Totals */
-      .totals-section { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+      .totals-section { display: flex; justify-content: flex-end; margin-bottom: 22px; }
       .totals-box { width: 320px; }
       .totals-row { display: flex; justify-content: space-between; padding: 10px 16px; font-size: 12px; border-bottom: 1px solid #e2e8f0; }
       .totals-row:first-child { border-radius: 8px 8px 0 0; background: #f8fafc; }
       .totals-row.total { background: linear-gradient(135deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%); color: white; font-size: 16px; font-weight: 700; border-radius: 0 0 8px 8px; padding: 14px 16px; border: none; }
-      .totals-row .amount { font-weight: 600; color: #1f2937; }
+      /* ELE-837 — keep "-£500" on a single line */
+      .totals-row .amount { font-weight: 600; color: #1f2937; white-space: nowrap; font-variant-numeric: tabular-nums; }
+      .totals-row span:first-child { padding-right: 12px; }
       .totals-row.total .amount { color: #ffffff; }
 
       /* Footer */
-      .footer { margin-top: 30px; padding-top: 12px; border-top: 1px solid #e2e8f0; text-align: center; }
+      .footer { margin-top: 22px; padding-top: 10px; border-top: 1px solid #e2e8f0; text-align: center; }
       .footer-text { font-size: 9px; color: #9ca3af; }
       .footer-brand { color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 600; }
     </style>
@@ -73,7 +87,7 @@
           <img
             src="{{ companyProfile.logo_url }}"
             alt="{{ companyProfile.company_name }}"
-            style="max-width: {{ companyProfile.logo_width | default: 120 }}px; max-height: {{ companyProfile.logo_height | default: 120 }}px; object-fit: contain;"
+            style="max-width: {{ companyProfile.logo_width | default: 220 }}px; max-height: {{ companyProfile.logo_height | default: 110 }}px; object-fit: contain;"
           />
           {% else %}
           <div class="company-name">{{ companyProfile.company_name }}</div>
@@ -190,8 +204,10 @@
                 {% if item.notes != blank %}
                 <div class="item-notes">{{ item.notes }}</div>
                 {% endif %}
+                {% if item.markup_percentage and item.markup_percentage != 0 %}<span class="item-adj">+{{ item.markup_percentage }}% markup</span>{% endif %}
+                {% if item.discount_percentage and item.discount_percentage != 0 %}<span class="item-adj discount">−{{ item.discount_percentage }}% discount</span>{% endif %}
               </td>
-              <td class="qty-unit">{{ item.quantity }}</td>
+              <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
               <td>£{{ item.unitPrice | round: 2 }}</td>
               <td>£{{ item.totalPrice | round: 2 }}</td>
             </tr>
@@ -206,8 +222,10 @@
                 {% if item.notes != blank %}
                 <div class="item-notes">{{ item.notes }}</div>
                 {% endif %}
+                {% if item.markup_percentage and item.markup_percentage != 0 %}<span class="item-adj">+{{ item.markup_percentage }}% markup</span>{% endif %}
+                {% if item.discount_percentage and item.discount_percentage != 0 %}<span class="item-adj discount">−{{ item.discount_percentage }}% discount</span>{% endif %}
               </td>
-              <td class="qty-unit">{{ item.quantity }}</td>
+              <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
               <td>£{{ item.unitPrice | round: 2 }}</td>
               <td>£{{ item.totalPrice | round: 2 }}</td>
             </tr>
@@ -222,8 +240,10 @@
                 {% if item.notes != blank %}
                 <div class="item-notes">{{ item.notes }}</div>
                 {% endif %}
+                {% if item.markup_percentage and item.markup_percentage != 0 %}<span class="item-adj">+{{ item.markup_percentage }}% markup</span>{% endif %}
+                {% if item.discount_percentage and item.discount_percentage != 0 %}<span class="item-adj discount">−{{ item.discount_percentage }}% discount</span>{% endif %}
               </td>
-              <td class="qty-unit">{{ item.quantity }}</td>
+              <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
               <td>£{{ item.unitPrice | round: 2 }}</td>
               <td>£{{ item.totalPrice | round: 2 }}</td>
             </tr>
@@ -238,8 +258,10 @@
                 {% if item.notes != blank %}
                 <div class="item-notes">{{ item.notes }}</div>
                 {% endif %}
+                {% if item.markup_percentage and item.markup_percentage != 0 %}<span class="item-adj">+{{ item.markup_percentage }}% markup</span>{% endif %}
+                {% if item.discount_percentage and item.discount_percentage != 0 %}<span class="item-adj discount">−{{ item.discount_percentage }}% discount</span>{% endif %}
               </td>
-              <td class="qty-unit">{{ item.quantity }}</td>
+              <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
               <td>£{{ item.unitPrice | round: 2 }}</td>
               <td>£{{ item.totalPrice | round: 2 }}</td>
             </tr>
@@ -252,7 +274,7 @@
                 <div class="item-notes">{{ item.notes }}</div>
                 {% endif %}
               </td>
-              <td class="qty-unit">{{ item.quantity }}</td>
+              <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
               <td>£{{ item.unitPrice | round: 2 }}</td>
               <td>£{{ item.totalPrice | round: 2 }}</td>
             </tr>
@@ -278,7 +300,20 @@
             <span>Profit ({{ totals.profitMargin }}%)</span>
             <span class="amount">£{{ totals.profit | round: 2 }}</span>
           </div>
-          {% endif %} {% if totals.discountAmount > 0 %}
+          {% endif %}
+          {% if totals.labourDiscountAmount and totals.labourDiscountAmount > 0 %}
+          <div class="totals-row" style="color: #dc2626;">
+            <span>{{ totals.labourDiscountLabel | default: 'Labour discount' }}</span>
+            <span class="amount" style="color: #dc2626;">-£{{ totals.labourDiscountAmount | round: 2 }}</span>
+          </div>
+          {% endif %}
+          {% if totals.materialDiscountAmount and totals.materialDiscountAmount > 0 %}
+          <div class="totals-row" style="color: #dc2626;">
+            <span>{{ totals.materialDiscountLabel | default: 'Materials discount' }}</span>
+            <span class="amount" style="color: #dc2626;">-£{{ totals.materialDiscountAmount | round: 2 }}</span>
+          </div>
+          {% endif %}
+          {% if totals.discountAmount > 0 %}
           <div class="totals-row" style="color: #dc2626;">
             <span>{{ totals.discountLabel }}</span>
             <span class="amount" style="color: #dc2626;">-£{{ totals.discountAmount | round: 2 }}</span>

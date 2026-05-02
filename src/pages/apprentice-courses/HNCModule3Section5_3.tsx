@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 5 · Subsection 3 — Single-Phase vs Three-Phase Transformers
+ * HNC Electrical Engineering for Building Services (Pearson U4019)
+ *   Single-phase, three-phase, vector groups, parallel operation, autotransformers
+ *   and isolating transformers — the full transformer-selection toolkit for BSE
+ *   distribution and specialist applications.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Single-Phase vs Three-Phase Transformers - HNC Module 3 Section 5.3';
@@ -217,364 +236,215 @@ const faqs = [
 ];
 
 const HNCModule3Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Single-Phase vs Three-Phase Transformers
-          </h1>
-          <p className="text-white">
-            Construction types, vector groups, parallel operation, and specialist transformer
-            applications for building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 5 · Subsection 3"
+            title="Single-phase vs three-phase transformers"
+            description="Construction types, vector groups, parallel operation, and specialist transformer applications for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Single-phase:</strong> Simple, used for small loads up to ~100 kVA
-              </li>
-              <li className="pl-1">
-                <strong>Three-phase:</strong> More efficient, compact, standard for distribution
-              </li>
-              <li className="pl-1">
-                <strong>Vector groups:</strong> Define winding connections and phase shifts
-              </li>
-              <li className="pl-1">
-                <strong>Dyn11:</strong> UK standard for 11 kV/400V distribution
-              </li>
+          <TLDR
+            points={[
+              'You select three-phase transformers (Dyn11) for any UK distribution duty above ~100 kVA — single-phase is reserved for specialist isolating, control and instrument transformers.',
+              'You read vector groups (Dyn11, Yyn0) on every transformer nameplate to verify parallel operation compatibility and understand the 30&deg; phase shift.',
+              'You specify autotransformers only where galvanic isolation is not required — never for safety-isolation duty under BS 7671 414.',
+              'You apply BS EN 61558 isolating transformers for medical / SELV / FELV duty where independent earth or true galvanic separation is mandated.',
+            ]}
+          />
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 411.1 (Protective measure: automatic disconnection of supply)"
+            clause="The protective measure 'automatic disconnection of supply' shall consist of basic protection by basic insulation of live parts or by barriers or enclosures, and fault protection by protective earthing, protective equipotential bonding and automatic disconnection in case of a fault."
+            meaning={
+              <>
+                Why this matters for transformer selection: an autotransformer&rsquo;s
+                primary and secondary share a winding, so a fault on the secondary can
+                directly impose primary voltage on the load. BS 7671 411 ADS is therefore
+                jeopardised if you specify an autotransformer for safety isolation duty.
+                For medical, fountain, marina, SELV/PELV, locations conducting electrical
+                situations, and laboratory bench-top isolation, you must specify a true
+                isolating transformer to BS EN 61558 with separated windings.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026, Regs 411 + 414 (SELV/PELV) + 710 (medical); BS EN 61558-2-x (transformer safety series); BS EN 60076 (general)"
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="In 30 seconds">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Single-phase:</strong> Simple, used for small loads up to ~100 kVA</li>
+              <li><strong>Three-phase:</strong> More efficient, compact, standard for distribution</li>
+              <li><strong>Vector groups:</strong> Define winding connections and phase shifts</li>
+              <li><strong>Dyn11:</strong> UK standard for 11 kV/400V distribution</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Distribution:</strong> 11 kV/400V package substations
-              </li>
-              <li className="pl-1">
-                <strong>Internal:</strong> Dry-type for fire safety
-              </li>
-              <li className="pl-1">
-                <strong>Isolation:</strong> IT system supplies for critical loads
-              </li>
-              <li className="pl-1">
-                <strong>Auto-transformers:</strong> Motor starting, voltage matching
-              </li>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Distribution:</strong> 11 kV/400V package substations</li>
+              <li><strong>Internal:</strong> Dry-type for fire safety</li>
+              <li><strong>Isolation:</strong> IT system supplies for critical loads</li>
+              <li><strong>Auto-transformers:</strong> Motor starting, voltage matching</li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Compare single-phase and three-phase transformer construction',
-              'Identify core-type and shell-type magnetic circuit arrangements',
-              'Interpret vector group designations (Dyn11, Yy0, etc.)',
-              'Apply requirements for parallel operation of transformers',
-              'Explain auto-transformer operation and applications',
-              'Describe Scott connection for two-phase conversion',
-              'Specify neutral earthing transformers for unearthed systems',
-              'Select appropriate transformers for building services installations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Single-Phase Transformer Construction */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Single-Phase Transformer Construction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Single-Phase Transformer Construction">
             <p>
               Single-phase transformers are the simplest form, consisting of primary and secondary
               windings on a common magnetic core. They are widely used for lighting, small power
               supplies, and where single-phase loads predominate.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Core Types</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Core Type</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Windings surround the core limbs</li>
-                    <li className="pl-1">Simple construction, easy cooling</li>
-                    <li className="pl-1">Used for high-voltage transformers</li>
-                    <li className="pl-1">Lower mechanical strength</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Shell Type</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Core surrounds the windings</li>
-                    <li className="pl-1">Better mechanical protection</li>
-                    <li className="pl-1">Preferred for high-current, low-voltage</li>
-                    <li className="pl-1">Better short-circuit withstand</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+              <p className="text-sm font-medium text-elec-yellow/80">Core Types</p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Core Type</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Windings surround the core limbs</li>
+                    <li>Simple construction, easy cooling</li>
+                    <li>Used for high-voltage transformers</li>
+                    <li>Lower mechanical strength</li>
+                  </ul>
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Shell Type</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Core surrounds the windings</li>
+                    <li>Better mechanical protection</li>
+                    <li>Preferred for high-current, low-voltage</li>
+                    <li>Better short-circuit withstand</li>
+                  </ul>
+
+              
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Single-Phase Transformer Applications
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Domestic supply (rural)</td>
-                      <td className="border border-white/10 px-3 py-2">16-50 kVA</td>
-                      <td className="border border-white/10 px-3 py-2">Pole-mounted, 11 kV/230V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control circuits</td>
-                      <td className="border border-white/10 px-3 py-2">0.1-5 kVA</td>
-                      <td className="border border-white/10 px-3 py-2">400V/110V or 230V/24V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Isolation transformers</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-10 kVA</td>
-                      <td className="border border-white/10 px-3 py-2">1:1 ratio for IT systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Site tool supplies</td>
-                      <td className="border border-white/10 px-3 py-2">3-10 kVA</td>
-                      <td className="border border-white/10 px-3 py-2">230V/110V CTE</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Welding supplies</td>
-                      <td className="border border-white/10 px-3 py-2">5-50 kVA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High current, low voltage secondary
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Domestic supply (rural)</strong> — 16-50 kVA — Pole-mounted, 11 kV/230V</li>
+              <li><strong>Control circuits</strong> — 0.1-5 kVA — 400V/110V or 230V/24V</li>
+              <li><strong>Isolation transformers</strong> — 0.5-10 kVA — 1:1 ratio for IT systems</li>
+              <li><strong>Site tool supplies</strong> — 3-10 kVA — 230V/110V CTE</li>
+              <li><strong>Welding supplies</strong> — 5-50 kVA — High current, low voltage secondary</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Design consideration:</strong> Three single-phase transformers can provide
               three-phase supply with individual unit redundancy - if one fails, the remaining two
               can supply reduced load via open-delta connection.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 2: Three-Phase Transformer Types */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Three-Phase Transformer Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Three-Phase Transformer Types">
             <p>
               Three-phase transformers are the standard choice for commercial and industrial
               distribution. They offer significant advantages in size, weight, and efficiency
               compared to equivalent banks of single-phase units.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Three-Phase Core-Type Construction
               </p>
-              <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white mb-3">
+
+                <p>
                   The most common construction uses a three-limbed core where each phase winding
                   occupies one limb. The magnetic flux from each phase combines in the common yokes
                   connecting the limbs.
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Centre limb:</strong> Slightly shorter flux path than outer limbs
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Yoke:</strong> Connects limbs, carries resultant flux
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Balanced load:</strong> Net flux in yoke is zero (fluxes cancel)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Unbalanced load:</strong> Small residual flux in yoke
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Three-Phase Shell-Type Construction
               </p>
-              <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white mb-3">
+
+                <p>
                   Each phase has its own magnetic circuit surrounding the windings. This provides
                   independent operation of each phase with better mechanical support and fault
                   containment.
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Five-limbed core:</strong> Three wound limbs plus two return limbs
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Independent phases:</strong> Fault in one phase less likely to affect
                     others
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Higher cost:</strong> More core material required
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Large transformers:</strong> Used for generator step-up transformers
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Comparison: Three-Phase vs Single-Phase Bank
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Three-Phase Unit
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Three Single-Phase
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Core material</td>
-                      <td className="border border-white/10 px-3 py-2">~15% less</td>
-                      <td className="border border-white/10 px-3 py-2">Baseline</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Copper material</td>
-                      <td className="border border-white/10 px-3 py-2">~15% less</td>
-                      <td className="border border-white/10 px-3 py-2">Baseline</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Floor space</td>
-                      <td className="border border-white/10 px-3 py-2">Smaller footprint</td>
-                      <td className="border border-white/10 px-3 py-2">Larger total area</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost</td>
-                      <td className="border border-white/10 px-3 py-2">Lower</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                      <td className="border border-white/10 px-3 py-2">Slightly lower</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Redundancy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complete failure if faulty
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open-delta operation possible
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transport</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        May exceed limits at large ratings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Easier for very large installations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Core material</strong> — ~15% less — Baseline</li>
+              <li><strong>Copper material</strong> — ~15% less — Baseline</li>
+              <li><strong>Floor space</strong> — Smaller footprint — Larger total area</li>
+              <li><strong>Cost</strong> — Lower — Higher</li>
+              <li><strong>Efficiency</strong> — Higher — Slightly lower</li>
+              <li><strong>Redundancy</strong> — Complete failure if faulty — Open-delta operation possible</li>
+              <li><strong>Transport</strong> — May exceed limits at large ratings — Easier for very large installations</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 3: Vector Groups */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Vector Groups
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Vector Groups">
             <p>
               Vector groups describe the winding connections and the phase displacement between
               primary and secondary voltages. Understanding vector groups is essential for parallel
               operation and protection coordination.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Vector Group Notation (IEC 60076-1)
               </p>
-              <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white mb-3">
+
+                <p>
                   The notation uses capital letters for HV winding, lowercase for LV winding, and a
                   clock number for phase displacement.
                 </p>
-                <div className="grid sm:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <p className="font-medium text-white mb-1">Winding Connections</p>
-                    <ul className="text-white space-y-0.5">
+
+                  
+                    <p className="text-sm font-medium text-elec-yellow/80">Winding Connections</p>
+                    <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                       <li>
                         <strong>D or d:</strong> Delta
                       </li>
@@ -588,10 +458,10 @@ const HNCModule3Section5_3 = () => {
                         <strong>n:</strong> Neutral brought out
                       </li>
                     </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white mb-1">Clock Number</p>
-                    <ul className="text-white space-y-0.5">
+
+                  
+                    <p className="text-sm font-medium text-elec-yellow/80">Clock Number</p>
+                    <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                       <li>
                         <strong>0:</strong> 0° displacement
                       </li>
@@ -605,10 +475,10 @@ const HNCModule3Section5_3 = () => {
                         <strong>11:</strong> 330° lead (30° lag)
                       </li>
                     </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white mb-1">Example: Dyn11</p>
-                    <ul className="text-white space-y-0.5">
+
+                  
+                    <p className="text-sm font-medium text-elec-yellow/80">Example: Dyn11</p>
+                    <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                       <li>
                         <strong>D:</strong> HV delta
                       </li>
@@ -622,882 +492,541 @@ const HNCModule3Section5_3 = () => {
                         <strong>11:</strong> 330° lead
                       </li>
                     </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Vector Groups</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Vector Group</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Phase Shift</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Dyn11</td>
-                      <td className="border border-white/10 px-3 py-2">330° (LV leads)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        UK distribution standard (11kV/400V)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Yy0</td>
-                      <td className="border border-white/10 px-3 py-2">0°</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transmission (problems with 3rd harmonic)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Dd0</td>
-                      <td className="border border-white/10 px-3 py-2">0°</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Industrial, no neutral required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Yd1</td>
-                      <td className="border border-white/10 px-3 py-2">30° (LV lags)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Step-up transformers at generators
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Dy11</td>
-                      <td className="border border-white/10 px-3 py-2">330° (LV leads)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Step-up from LV generation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">YNd1</td>
-                      <td className="border border-white/10 px-3 py-2">30° (LV lags)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transmission with HV neutral
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Dzn0</td>
-                      <td className="border border-white/10 px-3 py-2">0°</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Earthing/grounding transformers
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">Common Vector Groups</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Dyn11</strong> — 330° (LV leads) — UK distribution standard (11kV/400V)</li>
+              <li><strong>Yy0</strong> — 0° — Transmission (problems with 3rd harmonic)</li>
+              <li><strong>Dd0</strong> — 0° — Industrial, no neutral required</li>
+              <li><strong>Yd1</strong> — 30° (LV lags) — Step-up transformers at generators</li>
+              <li><strong>Dy11</strong> — 330° (LV leads) — Step-up from LV generation</li>
+              <li><strong>YNd1</strong> — 30° (LV lags) — Transmission with HV neutral</li>
+              <li><strong>Dzn0</strong> — 0° — Earthing/grounding transformers</li>
+            </ul>
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Why Dyn11 is the UK Standard
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Delta primary:</strong> Allows third harmonic currents to circulate,
                   preventing waveform distortion
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Star secondary:</strong> Provides neutral for single-phase loads (230V
                   from 400V three-phase)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Neutral available:</strong> Essential for TN-C-S and TN-S earthing systems
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Zero-sequence isolation:</strong> Earth faults on LV do not reflect to HV
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Unbalanced loads:</strong> Can supply unbalanced single-phase loads
                   without problems
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Remember:</strong> The clock number indicates where the LV voltage phasor
               points when the HV phasor points to 12 o'clock. Each hour represents 30°.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Parallel Operation Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Parallel Operation Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Parallel Operation Requirements">
             <p>
               Parallel operation of transformers increases capacity and provides redundancy.
               However, strict conditions must be met to prevent circulating currents and ensure
               proper load sharing.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Essential Requirements for Parallel Operation
               </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Mandatory Requirements</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Mandatory Requirements</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>
                       <strong>Same voltage ratio:</strong> ±0.5% tolerance
                     </li>
-                    <li className="pl-1">
+                    <li>
                       <strong>Same vector group:</strong> Identical phase displacement
                     </li>
-                    <li className="pl-1">
+                    <li>
                       <strong>Same phase sequence:</strong> R-Y-B matching
                     </li>
-                    <li className="pl-1">
+                    <li>
                       <strong>Same polarity:</strong> Subtractive or additive
                     </li>
                   </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Desirable Requirements</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Desirable Requirements</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>
                       <strong>Similar impedance:</strong> Within ±10%
                     </li>
-                    <li className="pl-1">
+                    <li>
                       <strong>Similar X/R ratio:</strong> For reactive load sharing
                     </li>
-                    <li className="pl-1">
+                    <li>
                       <strong>kVA ratio:</strong> Maximum 3:1 between units
                     </li>
-                    <li className="pl-1">
+                    <li>
                       <strong>Same tap position:</strong> Equal voltage setting
                     </li>
                   </ul>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+              
+
               <p className="text-sm font-medium text-red-400 mb-2">
                 Consequences of Incorrect Paralleling
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Different voltage ratios:</strong> Circulating current proportional to
                   voltage difference
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Different vector groups:</strong> Large circulating currents (potentially
                   fault-level)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Different impedances:</strong> Unequal load sharing - low Z takes more
                   load
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Wrong phase sequence:</strong> Short circuit between phases
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Load Sharing with Different Impedances
               </p>
-              <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white mb-2">
+
+                <p>
                   When transformers with different impedances are paralleled, they share load
                   inversely proportional to their per-unit impedances:
                 </p>
-                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
+
                   <p>S₁ = S_total × (Z₂ / (Z₁ + Z₂))</p>
                   <p>S₂ = S_total × (Z₁ / (Z₁ + Z₂))</p>
-                </div>
-                <p className="text-sm text-white">
+
+                <p>
                   The lower impedance transformer carries more than its proportionate share of load.
                 </p>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Parallel Operation Checks
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Check</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Acceptable Result
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage ratio</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measure secondary open-circuit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Within ±0.5%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phase sequence</td>
-                      <td className="border border-white/10 px-3 py-2">Phase rotation meter</td>
-                      <td className="border border-white/10 px-3 py-2">Same sequence (R-Y-B)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phase angle</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Voltage across open switch
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Zero or very low voltage</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Polarity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Polarity test or nameplate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Same polarity markings</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Voltage ratio</strong> — Measure secondary open-circuit — Within ±0.5%</li>
+              <li><strong>Phase sequence</strong> — Phase rotation meter — Same sequence (R-Y-B)</li>
+              <li><strong>Phase angle</strong> — Voltage across open switch — Zero or very low voltage</li>
+              <li><strong>Polarity</strong> — Polarity test or nameplate — Same polarity markings</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 5: Auto-Transformers */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Auto-Transformers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Auto-Transformers">
             <p>
               An auto-transformer uses a single winding with tapping points to provide voltage
               transformation. Part of the winding is common to both primary and secondary circuits,
               resulting in smaller size but no electrical isolation.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operating Principle</p>
-              <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white mb-3">
+              <p className="text-sm font-medium text-elec-yellow/80">Operating Principle</p>
+
+                <p>
                   The winding consists of a series section and a common section. For step-down
                   operation, the full winding receives the input voltage, and the output is taken
                   from a tap point.
                 </p>
-                <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="font-medium text-white mb-1">Advantages</p>
-                    <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
-                      <li className="pl-1">Smaller and lighter</li>
-                      <li className="pl-1">Lower cost</li>
-                      <li className="pl-1">Higher efficiency</li>
-                      <li className="pl-1">Better voltage regulation</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white mb-1">Disadvantages</p>
-                    <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
-                      <li className="pl-1">No electrical isolation</li>
-                      <li className="pl-1">Higher fault current transfer</li>
-                      <li className="pl-1">Not suitable for large ratios</li>
-                      <li className="pl-1">Safety concerns for personnel</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Size Advantage Formula</p>
-              <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white mb-2">
+                  
+                    <p className="text-sm font-medium text-elec-yellow/80">Advantages</p>
+                    <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                      <li>Smaller and lighter</li>
+                      <li>Lower cost</li>
+                      <li>Higher efficiency</li>
+                      <li>Better voltage regulation</li>
+                    </ul>
+
+                  
+                    <p className="text-sm font-medium text-elec-yellow/80">Disadvantages</p>
+                    <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                      <li>No electrical isolation</li>
+                      <li>Higher fault current transfer</li>
+                      <li>Not suitable for large ratios</li>
+                      <li>Safety concerns for personnel</li>
+                    </ul>
+
+                
+
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">Size Advantage Formula</p>
+
+                <p>
                   The kVA rating of an auto-transformer required for a given load is:
                 </p>
-                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
+
                   <p>kVA_auto = kVA_load × (1 - V₂/V₁)</p>
-                  <p className="mt-2 text-white">
+                  <p>
                     For 400V to 230V: kVA_auto = kVA_load × (1 - 230/400) = 0.425 × kVA_load
                   </p>
-                </div>
-                <p className="text-sm text-white">
+
+                <p>
                   The auto-transformer need only be rated at 42.5% of the load for a 400V/230V
                   conversion.
                 </p>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Auto-Transformer Applications
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Ratio</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motor starting</td>
-                      <td className="border border-white/10 px-3 py-2">80%, 65%, 50% taps</td>
-                      <td className="border border-white/10 px-3 py-2">Reduced voltage starting</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage regulators</td>
-                      <td className="border border-white/10 px-3 py-2">Variable ±10%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Voltage correction (variacs)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Interconnection</td>
-                      <td className="border border-white/10 px-3 py-2">400kV/275kV</td>
-                      <td className="border border-white/10 px-3 py-2">Grid voltage matching</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Test supplies</td>
-                      <td className="border border-white/10 px-3 py-2">Variable 0-100%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Laboratory voltage adjustment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Buck-boost</td>
-                      <td className="border border-white/10 px-3 py-2">±5% to ±15%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Voltage correction for equipment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Motor starting</strong> — 80%, 65%, 50% taps — Reduced voltage starting</li>
+              <li><strong>Voltage regulators</strong> — Variable ±10% — Voltage correction (variacs)</li>
+              <li><strong>Interconnection</strong> — 400kV/275kV — Grid voltage matching</li>
+              <li><strong>Test supplies</strong> — Variable 0-100% — Laboratory voltage adjustment</li>
+              <li><strong>Buck-boost</strong> — ±5% to ±15% — Voltage correction for equipment</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Safety note:</strong> Auto-transformers must not be used where isolation is
               required for safety (e.g., SELV circuits) as the primary and secondary share a common
               conductor.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 6: Scott Connection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Scott Connection for Two-Phase Conversion
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Scott Connection for Two-Phase Conversion">
             <p>
               The Scott connection (or Scott-T connection) converts three-phase supply to two-phase
               (90° displaced) or vice versa. Though two-phase systems are largely obsolete, Scott
               connections remain important for specific applications.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Construction and Operation
               </p>
-              <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white mb-3">
+
+                <p>
                   Two single-phase transformers are used:
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Main transformer:</strong> Connected across two phases (e.g., R-B)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Teaser transformer:</strong> Primary has 86.6% turns, connected to Y and
                     main transformer centre tap
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Output:</strong> Two single-phase supplies 90° apart
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Balanced load:</strong> Results in balanced three-phase current
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modern Applications</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Railway Electrification</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">25 kV AC railway supply from three-phase grid</li>
-                    <li className="pl-1">Adjacent sections fed 90° out of phase</li>
-                    <li className="pl-1">Neutral sections at transformer outputs</li>
-                    <li className="pl-1">Balanced loading of three-phase supply</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Electric Arc Furnaces</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Historic installations with two-phase furnaces</li>
-                    <li className="pl-1">Conversion from three-phase supply</li>
-                    <li className="pl-1">Independent control of each phase</li>
-                    <li className="pl-1">Now largely replaced by three-phase designs</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            
 
-            <div className="my-6 p-4 rounded bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">Modern Applications</p>
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Railway Electrification</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>25 kV AC railway supply from three-phase grid</li>
+                    <li>Adjacent sections fed 90° out of phase</li>
+                    <li>Neutral sections at transformer outputs</li>
+                    <li>Balanced loading of three-phase supply</li>
+                  </ul>
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Electric Arc Furnaces</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Historic installations with two-phase furnaces</li>
+                    <li>Conversion from three-phase supply</li>
+                    <li>Independent control of each phase</li>
+                    <li>Now largely replaced by three-phase designs</li>
+                  </ul>
+
+              
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Voltage and Turn Ratios
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Main transformer: N₁ turns (full winding)</p>
                 <p>Teaser transformer primary: 0.866 × N₁ turns (86.6%)</p>
-                <p className="mt-2">
+                <p>
                   For equal secondary voltages, both secondaries have the same turns
                 </p>
-                <p className="mt-2 text-white">
+                <p>
                   The 86.6% factor is √3/2, derived from three-phase geometry
                 </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 7: Neutral Earthing Transformers */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
-            Neutral Earthing Transformers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Neutral Earthing Transformers">
             <p>
               Neutral earthing transformers (NETs) create an artificial neutral point for systems
               where no natural neutral exists, enabling earth fault protection on delta-connected or
               unearthed systems.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Types of Neutral Earthing Transformers
               </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Zigzag (Zn) Type</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Most common for creating neutral</li>
-                    <li className="pl-1">Each limb has two windings in opposition</li>
-                    <li className="pl-1">Low zero-sequence impedance</li>
-                    <li className="pl-1">Compact and economical</li>
-                    <li className="pl-1">No secondary winding needed</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Star-Delta (YNd) Type</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Star primary creates neutral</li>
-                    <li className="pl-1">Delta secondary may supply auxiliary loads</li>
-                    <li className="pl-1">Higher cost than zigzag</li>
-                    <li className="pl-1">Used when auxiliary supply needed</li>
-                    <li className="pl-1">More flexible but larger</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Applications</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Generator earthing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Delta-connected generators
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provide earth reference, limit fault current
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Delta secondary</td>
-                      <td className="border border-white/10 px-3 py-2">Dd0 transformer output</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enable earth fault protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial systems</td>
-                      <td className="border border-white/10 px-3 py-2">Imported delta supplies</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Create TN system from IT supply
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resistance earthing</td>
-                      <td className="border border-white/10 px-3 py-2">Medium voltage systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limit earth fault current to safe level
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Zigzag (Zn) Type</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Most common for creating neutral</li>
+                    <li>Each limb has two windings in opposition</li>
+                    <li>Low zero-sequence impedance</li>
+                    <li>Compact and economical</li>
+                    <li>No secondary winding needed</li>
+                  </ul>
 
-            <div className="my-6 p-4 rounded bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Star-Delta (YNd) Type</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Star primary creates neutral</li>
+                    <li>Delta secondary may supply auxiliary loads</li>
+                    <li>Higher cost than zigzag</li>
+                    <li>Used when auxiliary supply needed</li>
+                    <li>More flexible but larger</li>
+                  </ul>
+
+              
+
+              <p className="text-sm font-medium text-elec-yellow/80">Applications</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Generator earthing</strong> — Delta-connected generators — Provide earth reference, limit fault current</li>
+              <li><strong>Delta secondary</strong> — Dd0 transformer output — Enable earth fault protection</li>
+              <li><strong>Industrial systems</strong> — Imported delta supplies — Create TN system from IT supply</li>
+              <li><strong>Resistance earthing</strong> — Medium voltage systems — Limit earth fault current to safe level</li>
+            </ul>
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Sizing Neutral Earthing Transformers
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Continuous rating:</strong> Based on normal unbalance current (typically
                   small)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Short-time rating:</strong> Based on earth fault current × fault duration
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Typical specification:</strong> 10 seconds at rated fault current
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Zero-sequence impedance:</strong> Determines fault current magnitude
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Section 8: Building Services Applications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
-            Building Services: Transformer Selection and Installation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Building Services: Transformer Selection and Installation">
             <p>
               Transformer selection for building services requires consideration of electrical
               requirements, fire safety, acoustic impact, space constraints, and maintenance access.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Transformer Types for Buildings
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cooling</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Fire Safety</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Oil-filled (ONAN)</td>
-                      <td className="border border-white/10 px-3 py-2">Natural oil/air</td>
-                      <td className="border border-white/10 px-3 py-2">Fire chamber required</td>
-                      <td className="border border-white/10 px-3 py-2">External substations</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ester-filled</td>
-                      <td className="border border-white/10 px-3 py-2">Natural oil/air</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        K-class fluid, reduced risk
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Indoor with restrictions</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cast resin (AN)</td>
-                      <td className="border border-white/10 px-3 py-2">Air natural</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        F1 class - self-extinguishing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Indoor substations</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cast resin (AF)</td>
-                      <td className="border border-white/10 px-3 py-2">Forced air</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        F1 class - self-extinguishing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher loading in buildings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VPI dry-type</td>
-                      <td className="border border-white/10 px-3 py-2">Air natural</td>
-                      <td className="border border-white/10 px-3 py-2">Good fire performance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Clean indoor environments
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Oil-filled (ONAN)</strong> — Natural oil/air — Fire chamber required — External substations</li>
+              <li><strong>Ester-filled</strong> — Natural oil/air — K-class fluid, reduced risk — Indoor with restrictions</li>
+              <li><strong>Cast resin (AN)</strong> — Air natural — F1 class - self-extinguishing — Indoor substations</li>
+              <li><strong>Cast resin (AF)</strong> — Forced air — F1 class - self-extinguishing — Higher loading in buildings</li>
+              <li><strong>VPI dry-type</strong> — Air natural — Good fire performance — Clean indoor environments</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Installation Requirements
               </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Space and Access</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Minimum 1m clearance sides/rear</li>
-                    <li className="pl-1">2m clearance at front for access</li>
-                    <li className="pl-1">Adequate height for lifting/maintenance</li>
-                    <li className="pl-1">Transport route for replacement</li>
-                    <li className="pl-1">Cable entry/exit provisions</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Ventilation</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Natural ventilation: 0.35 m²/100 kVA losses</li>
-                    <li className="pl-1">Inlet low, outlet high (convection)</li>
-                    <li className="pl-1">Mechanical ventilation for basements</li>
-                    <li className="pl-1">Maximum ambient 40°C (derate above)</li>
-                    <li className="pl-1">Consider summer peak temperatures</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Space and Access</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Minimum 1m clearance sides/rear</li>
+                    <li>2m clearance at front for access</li>
+                    <li>Adequate height for lifting/maintenance</li>
+                    <li>Transport route for replacement</li>
+                    <li>Cable entry/exit provisions</li>
+                  </ul>
+
+                
+                  <p className="text-sm font-medium text-elec-yellow/80">Ventilation</p>
+                  <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                    <li>Natural ventilation: 0.35 m²/100 kVA losses</li>
+                    <li>Inlet low, outlet high (convection)</li>
+                    <li>Mechanical ventilation for basements</li>
+                    <li>Maximum ambient 40°C (derate above)</li>
+                    <li>Consider summer peak temperatures</li>
+                  </ul>
+
+              
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Fire Safety Requirements (Oil-Filled)
               </p>
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Fire-resistant enclosure:</strong> Typically 4-hour rating
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Bunding:</strong> 110% of oil volume containment
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Fire suppression:</strong> Automatic system (water mist, FM200, etc.)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Drainage:</strong> To safe collection point
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Separation:</strong> 7.5m from buildings without fire wall
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Detection:</strong> Smoke/heat detection linked to fire alarm
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Acoustic Considerations
               </p>
-              <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white mb-2">
+
+                <p>
                   Transformer noise is predominantly at 100 Hz (twice supply frequency) due to
                   magnetostriction.
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Typical levels:</strong> 55-70 dB(A) depending on size
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Low-noise designs:</strong> Available at premium cost
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Anti-vibration mounts:</strong> Prevent structure-borne transmission
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Acoustic enclosures:</strong> For sensitive locations
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Location:</strong> Away from occupied spaces where possible
                   </li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Selection Checklist</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Consideration</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rating (kVA)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maximum demand + growth allowance (typically 20%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage ratio</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        11kV/400V standard, check DNO requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Vector group</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dyn11 for distribution with neutral
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Impedance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typically 4-6% for distribution
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooling class</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AN/AF for indoor, ONAN for outdoor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Losses</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Eco-design Tier 2 minimum (EU 2019/1783)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Noise level</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specify maximum dB(A) for location
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Tap range</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ±5% in 2.5% steps typical
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
 
-            <p className="text-sm text-elec-yellow/70">
+              <p className="text-sm font-medium text-elec-yellow/80">Selection Checklist</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Rating (kVA)</strong> — Maximum demand + growth allowance (typically 20%)</li>
+              <li><strong>Voltage ratio</strong> — 11kV/400V standard, check DNO requirements</li>
+              <li><strong>Vector group</strong> — Dyn11 for distribution with neutral</li>
+              <li><strong>Impedance</strong> — Typically 4-6% for distribution</li>
+              <li><strong>Cooling class</strong> — AN/AF for indoor, ONAN for outdoor</li>
+              <li><strong>Losses</strong> — Eco-design Tier 2 minimum (EU 2019/1783)</li>
+              <li><strong>Noise level</strong> — Specify maximum dB(A) for location</li>
+              <li><strong>Tap range</strong> — ±5% in 2.5% steps typical</li>
+            </ul>
+
+            <p>
               <strong>Design tip:</strong> For buildings with critical loads, consider two smaller
               transformers in parallel rather than one large unit - this provides N+1 redundancy
               with 50% capacity maintained on single unit failure.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">
                 Example 1: Parallel Transformer Load Sharing
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> Two transformers, 500 kVA (4% impedance) and 300 kVA (5%
                 impedance), are paralleled. How do they share a 600 kVA load?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Convert to per-unit impedances on common base (800 kVA):</p>
                 <p>Z₁(pu) = 4% × (800/500) = 6.4%</p>
                 <p>Z₂(pu) = 5% × (800/300) = 13.3%</p>
-                <p className="mt-2">Load sharing (inversely proportional to Z):</p>
+                <p>Load sharing (inversely proportional to Z):</p>
                 <p>
                   S₁ = 600 × (13.3/(6.4+13.3)) = 600 × 0.675 = <strong>405 kVA</strong>
                 </p>
                 <p>
                   S₂ = 600 × (6.4/(6.4+13.3)) = 600 × 0.325 = <strong>195 kVA</strong>
                 </p>
-                <p className="mt-2 text-white">The 500 kVA unit takes 405 kVA (81% loading)</p>
+                <p>The 500 kVA unit takes 405 kVA (81% loading)</p>
                 <p className="text-white">The 300 kVA unit takes 195 kVA (65% loading)</p>
                 <p className="mt-2 text-green-400">
                   Low impedance unit takes more than proportionate share
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 2: Auto-Transformer Size Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> Calculate the kVA rating of an auto-transformer to supply
                 a 100 kVA load at 380V from a 400V supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Auto-transformer kVA = Load kVA × (1 - V₂/V₁)</p>
-                <p className="mt-2">kVA_auto = 100 × (1 - 380/400)</p>
+                <p>kVA_auto = 100 × (1 - 380/400)</p>
                 <p>kVA_auto = 100 × (1 - 0.95)</p>
                 <p>
                   kVA_auto = 100 × 0.05 = <strong>5 kVA</strong>
                 </p>
-                <p className="mt-2 text-white">
+                <p>
                   Only 5% of load kVA required due to small voltage change
                 </p>
                 <p className="mt-2 text-green-400">
                   Compare to 100 kVA for double-wound transformer
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 3: Substation Ventilation
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A 1000 kVA dry-type transformer has 1.5% no-load losses
                 and 5% full-load losses. Calculate ventilation requirements at 75% load.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>No-load losses = 1.5% × 1000 = 15 kW (constant)</p>
                 <p>Full-load copper losses = 5% × 1000 = 50 kW</p>
                 <p>Copper losses at 75% = 50 × 0.75² = 50 × 0.5625 = 28.1 kW</p>
-                <p className="mt-2">
+                <p>
                   Total losses = 15 + 28.1 = <strong>43.1 kW</strong>
                 </p>
-                <p className="mt-2">
+                <p>
                   Natural ventilation area (rule of thumb: 0.35 m² per 100 kW):
                 </p>
                 <p>
@@ -1507,182 +1036,206 @@ const HNCModule3Section5_3 = () => {
                 <p className="mt-2 text-green-400">
                   Provide 0.15 m² low-level inlet + 0.15 m² high-level outlet
                 </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Knowledge</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Knowledge</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Vector groups:</strong> D = delta, Y = star, n = neutral, number = phase
                   shift (×30°)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>UK distribution:</strong> Dyn11 standard (11kV delta, 400V star with
                   neutral)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Parallel operation:</strong> Same ratio, same vector group, similar
                   impedance
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Auto-transformer:</strong> Size advantage = (1 - V₂/V₁) × load kVA
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Fire safety:</strong> Dry-type preferred indoors; oil requires fire
                   chamber
                 </li>
               </ul>
-            </div>
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Standards</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-elec-yellow/80">Key Standards</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>IEC 60076:</strong> Power transformer specification series
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>BS EN 50588:</strong> Medium power transformers (distribution)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>EU 2019/1783:</strong> Eco-design requirements (Tier 2)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>ENA TS 35-1:</strong> Distribution transformer specification
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>BS 7671:</strong> Requirements for transformer installations
                 </li>
               </ul>
-            </div>
+          </ConceptBlock>
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Paralleling different vector groups:</strong> Will cause catastrophic
                   circulating currents
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Inadequate ventilation:</strong> Leads to overheating and premature
                   failure
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring acoustic impact:</strong> 100 Hz hum travels through structures
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>No access for replacement:</strong> Consider future transformer changes
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Auto-transformer for isolation:</strong> They provide NO electrical
                   isolation
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+              </>
+            }
+            doInstead="Apply the formulas with care, verify with measured values where possible, and always cross-check against BS 7671 and equipment manufacturer data."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Vector Groups</p>
-                <ul className="space-y-0.5">
+          <ConceptBlock title="Quick Reference">
+            <p className="text-sm font-medium text-elec-yellow/80">Vector Groups</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Dyn11 - UK distribution standard</li>
                   <li>Yy0 - No phase shift, star both sides</li>
                   <li>Dd0 - No phase shift, delta both sides</li>
                   <li>Clock number × 30° = phase displacement</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Parallel Requirements</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Parallel Requirements</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Same voltage ratio (±0.5%)</li>
                   <li>Same vector group (mandatory)</li>
                   <li>Similar impedance (±10%)</li>
                   <li>Same phase sequence</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Installation</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Building Installation</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Dry-type preferred indoors</li>
                   <li>Oil requires fire chamber</li>
                   <li>Ventilation: 0.35 m²/100 kW losses</li>
                   <li>Anti-vibration mounts for noise</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Auto-Transformer</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Auto-Transformer</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Size = Load × (1 - V₂/V₁)</li>
                   <li>No electrical isolation</li>
                   <li>Used for small voltage ratios</li>
                   <li>Motor starting, buck-boost</li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <Scenario
+            title="Operating-theatre IT system &mdash; medical isolating transformer specification"
+            situation={
+              <>
+                A new operating theatre requires an IT (Isolated Terre) earthing system for
+                Group 2 medical locations under BS 7671 Section 710. The medical contractor
+                proposes a 5 kVA single-phase transformer for the patient circuits with an
+                insulation monitor (IMD) to BS EN 61557-8.
+              </>
+            }
+            whatToDo={
+              <>
+                Specify an isolating transformer to BS EN 61558-2-15 (specifically for
+                medical use): single-phase, 230 V/230 V, 5 kVA continuous, with a
+                permanently-installed insulation monitoring device to BS EN 61557-8.
+                The transformer must be a true two-winding type (not autotransformer),
+                with primary and secondary fully galvanically separated, screen between
+                primary and secondary earthed via a dedicated medical earth conductor.
+                BS 7671 710.512.1.1 mandates the IMD trip on any single insulation fault
+                with audible / visual alarm at the operator panel.
+              </>
+            }
+            whyItMatters={
+              <>
+                Group 2 medical (operating, intensive care, cardiac cath labs) cannot
+                tolerate a circuit interruption mid-procedure. The IT system + isolating
+                transformer ensures a single first fault does not cause disconnection;
+                the IMD alerts staff to act before a second fault. Autotransformer use
+                here would be a safety failure with potentially fatal consequence and a
+                serious BS 7671 / HTM 06-01 breach.
+              </>
+            }
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Three-phase preferred for distribution above ~100 kVA — efficiency, footprint and balance all favour 3-phase.',
+              'Vector groups: D=delta, Y=star, n=neutral brought out, number = 30&deg; phase shift in clock notation. UK distribution standard: Dyn11.',
+              'Parallel operation requires identical vector group, voltage ratio, %Z and tap position — mismatched parallel = circulating current.',
+              'Autotransformers: smaller / cheaper than two-winding for ratios &le; 2:1 but no galvanic isolation — never for safety-isolation duty.',
+              'Isolating transformers (BS EN 61558) provide true two-winding separation — mandatory for medical IT systems, SELV/PELV, marina, locations conducting electrical situations.',
+              'Three-phase transformer construction: core type (3 limbs) for symmetric 3-phase, shell type for single-phase or asymmetric loading.',
+              'Step-down 11 kV/415 V Dyn11 is the workhorse UK distribution transformer in private substations.',
+              'BS 7671 411 ADS depends on a known fault loop &mdash; autotransformer common winding compromises this assumption.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section5-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Transformer Theory
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section5-4">
-              Next: AC Motors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section5-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Transformer theory, losses and efficiency
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section5-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Induction motors (construction, operation, performance)
+              </div>
+            </button>
+          </div>
+
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,30 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 3 · Subsection 1 — Safety Policy and Organisation
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   The written H&S policy under HSWA s.2(3), the organisation chart and the arrangements
+ *   that turn intent into practice. Engineer-in-training perspective: how an HNC supervisor
+ *   uses the firm&rsquo;s policy as the operational lever for everything from training to
+ *   audit.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Safety Policy and Organisation - HNC Module 1 Section 3.1';
@@ -252,691 +274,504 @@ const faqs = [
 ];
 
 const HNCModule1Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 3
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Safety Policy and Organisation
-          </h1>
-          <p className="text-white">
-            The foundation of effective safety management in building services organisations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.3.1"
+            title="Safety Policy and Organisation"
+            description="The foundation of effective safety management in building services organisations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Statement of intent:</strong> Signed commitment from top management
-              </li>
-              <li className="pl-1">
-                <strong>Organisation:</strong> Clear chain of responsibility and accountability
-              </li>
-              <li className="pl-1">
-                <strong>Arrangements:</strong> Practical procedures and systems
-              </li>
-              <li className="pl-1">
-                <strong>Communication:</strong> Cascaded through all levels effectively
-              </li>
+          <TLDR
+            points={[
+              'You will know the three required parts of a safety policy under HSWA s.2(3) — statement of intent, organisation, arrangements — and find them in your firm&rsquo;s policy on day one.',
+              'You can map roles up the chain (board, director, manager, supervisor, operative) and explain who has which named duty.',
+              'You apply HSG65 (Plan-Do-Check-Act) as the framework that links policy to practice.',
+              'You recognise when a policy is unfit for purpose — out-of-date, unsigned, generic, untranslated for the workforce — and trigger revision.',
+            ]}
+          />
+
+          <RegsCallout
+            source="HASAWA 1974 — Section 2(3)"
+            clause="Except in such cases as may be prescribed, it shall be the duty of every employer to prepare and as often as may be appropriate revise a written statement of his general policy with respect to the health and safety at work of his employees and the organisation and arrangements for the time being in force for carrying out that policy, and to bring the statement and any revision of it to the notice of all of his employees."
+            meaning={
+              <>
+                Five-or-more employees triggers the written-policy duty. As an HNC supervisor
+                you check that the policy is current, signed by the most senior officer, and
+                accessible to every operative — translated where the workforce&rsquo;s first
+                language is not English.
+              </>
+            }
+            cite="Source: Health and Safety at Work etc. Act 1974, s.2(3) — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain the three essential elements of a health and safety policy",
+              "Describe organisational responsibilities from directors to operatives",
+              "Understand the role of competent persons in safety management",
+              "Identify effective methods for communicating safety information",
+              "Apply policy requirements to building services contexts",
+              "Recognise triggers for policy review and update",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The Health and Safety Policy</ContentEyebrow>
+
+          <ConceptBlock title="The Health and Safety Policy">
+            <p>
+            The health and safety policy is the cornerstone of an organisation's safety management
+            system. Under Section 2(3) of the Health and Safety at Work etc. Act 1974, every
+            employer with five or more employees must prepare and revise a written statement of
+            general policy on health and safety.
+            </p>
+
+            
+            <p className="text-sm font-medium text-white mb-2">The three essential elements:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>General Statement of Intent:</strong> The commitment from top management
+            </li>
+            <li>
+            <strong>Organisation:</strong> Who is responsible for what
+            </li>
+            <li>
+            <strong>Arrangements:</strong> How health and safety is managed in practice
+            </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Statement of Intent Requirements
             </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Electrical hazards:</strong> Specific isolation procedures required
-              </li>
-              <li className="pl-1">
-                <strong>Multi-contractor:</strong> Coordination arrangements essential
-              </li>
-              <li className="pl-1">
-                <strong>Site work:</strong> Mobile workforce communication challenges
-              </li>
-              <li className="pl-1">
-                <strong>Competence:</strong> Qualified persons for specific tasks
-              </li>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Signature</strong> — Requirement: MD/CEO/Owner must sign. Purpose: Demonstrates commitment</li>
+            <li><strong>Date</strong> — Requirement: Date of issue/review. Purpose: Shows currency of policy</li>
+            <li><strong>Commitment</strong> — Requirement: Clear statement of intent. Purpose: Sets organisational culture</li>
+            <li><strong>Objectives</strong> — Requirement: Key safety goals. Purpose: Provides direction</li>
+            <li><strong>Review date</strong> — Requirement: Next review scheduled. Purpose: Ensures regular update</li>
             </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the three essential elements of a health and safety policy',
-              'Describe organisational responsibilities from directors to operatives',
-              'Understand the role of competent persons in safety management',
-              'Identify effective methods for communicating safety information',
-              'Apply policy requirements to building services contexts',
-              'Recognise triggers for policy review and update',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: The Health and Safety Policy */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Health and Safety Policy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              The health and safety policy is the cornerstone of an organisation's safety management
-              system. Under Section 2(3) of the Health and Safety at Work etc. Act 1974, every
-              employer with five or more employees must prepare and revise a written statement of
-              general policy on health and safety.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">The three essential elements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>General Statement of Intent:</strong> The commitment from top management
-                </li>
-                <li className="pl-1">
-                  <strong>Organisation:</strong> Who is responsible for what
-                </li>
-                <li className="pl-1">
-                  <strong>Arrangements:</strong> How health and safety is managed in practice
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Statement of Intent Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Signature</td>
-                      <td className="border border-white/10 px-3 py-2">MD/CEO/Owner must sign</td>
-                      <td className="border border-white/10 px-3 py-2">Demonstrates commitment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Date</td>
-                      <td className="border border-white/10 px-3 py-2">Date of issue/review</td>
-                      <td className="border border-white/10 px-3 py-2">Shows currency of policy</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Commitment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Clear statement of intent
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sets organisational culture
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Objectives</td>
-                      <td className="border border-white/10 px-3 py-2">Key safety goals</td>
-                      <td className="border border-white/10 px-3 py-2">Provides direction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Review date</td>
-                      <td className="border border-white/10 px-3 py-2">Next review scheduled</td>
-                      <td className="border border-white/10 px-3 py-2">Ensures regular update</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Legal requirement:</strong> The policy must be brought to the attention of all
-              employees. Simply having a policy locked in a cabinet does not fulfil this legal duty.
+            <strong>Legal requirement:</strong> The policy must be brought to the attention of all
+            employees. Simply having a policy locked in a cabinet does not fulfil this legal duty.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Organisation and Responsibilities */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Organisation and Responsibilities
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Organisation and Responsibilities</ContentEyebrow>
+
+          <ConceptBlock title="Organisation and Responsibilities">
             <p>
-              The organisation section establishes a clear chain of responsibility for health and
-              safety, from the boardroom to the shop floor. Every person must understand their role
-              and to whom they are accountable for safety matters.
+            The organisation section establishes a clear chain of responsibility for health and
+            safety, from the boardroom to the shop floor. Every person must understand their role
+            and to whom they are accountable for safety matters.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Responsibility Structure
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Role</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Responsibilities
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Directors/Senior Management
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ultimate accountability, policy approval, resource allocation, strategic
-                        direction
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Contracts/Project Managers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Risk assessments, method statements, site safety plans, contractor
-                        coordination
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Site Supervisors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daily supervision, toolbox talks, compliance monitoring, incident reporting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Electricians/Operatives
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Follow safe systems, use PPE, report hazards, cooperate with employer
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Competent Person
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Advise on H&S matters, assist with compliance, provide specialist guidance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Typical Responsibility Structure
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Directors/Senior Management</strong> — Key Responsibilities: Ultimate accountability, policy approval, resource allocation, strategic direction</li>
+            <li><strong>Contracts/Project Managers</strong> — Key Responsibilities: Risk assessments, method statements, site safety plans, contractor coordination</li>
+            <li><strong>Site Supervisors</strong> — Key Responsibilities: Daily supervision, toolbox talks, compliance monitoring, incident reporting</li>
+            <li><strong>Electricians/Operatives</strong> — Key Responsibilities: Follow safe systems, use PPE, report hazards, cooperate with employer</li>
+            <li><strong>Competent Person</strong> — Key Responsibilities: Advise on H&S matters, assist with compliance, provide specialist guidance</li>
+            </ul>
+            
+            
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Competent Person</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Required under Reg 7 MHSWR 1999</li>
-                  <li className="pl-1">Must have sufficient training and experience</li>
-                  <li className="pl-1">Advises on compliance with H&S law</li>
-                  <li className="pl-1">Can be internal or external appointment</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Building Services Specifics
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Authorised Person for electrical systems</li>
-                  <li className="pl-1">Appointed persons for first aid</li>
-                  <li className="pl-1">Fire wardens for occupied premises</li>
-                  <li className="pl-1">Permit issuers for high-risk work</li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Competent Person</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Required under Reg 7 MHSWR 1999</li>
+            <li>Must have sufficient training and experience</li>
+            <li>Advises on compliance with H&S law</li>
+            <li>Can be internal or external appointment</li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Building Services Specifics
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Authorised Person for electrical systems</li>
+            <li>Appointed persons for first aid</li>
+            <li>Fire wardens for occupied premises</li>
+            <li>Permit issuers for high-risk work</li>
+            </ul>
+            </div>
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Responsibility can be delegated, but accountability
-              cannot. The most senior person remains ultimately accountable for health and safety.
+            <strong>Key principle:</strong> Responsibility can be delegated, but accountability
+            cannot. The most senior person remains ultimately accountable for health and safety.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Arrangements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Arrangements - Practical Implementation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Arrangements - Practical Implementation</ContentEyebrow>
+
+          <ConceptBlock title="Arrangements - Practical Implementation">
             <p>
-              The arrangements section describes how health and safety is actually managed in
-              practice. This is the 'how' of safety management and should be specific to your
-              organisation's activities and hazards.
+            The arrangements section describes how health and safety is actually managed in
+            practice. This is the 'how' of safety management and should be specific to your
+            organisation's activities and hazards.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key arrangement areas for building services:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Risk assessment:</strong> Process for identifying and controlling hazards
-                </li>
-                <li className="pl-1">
-                  <strong>Safe systems of work:</strong> Method statements, procedures, permits
-                </li>
-                <li className="pl-1">
-                  <strong>Training:</strong> Induction, ongoing, task-specific, refresher
-                </li>
-                <li className="pl-1">
-                  <strong>Consultation:</strong> How workers are involved in safety decisions
-                </li>
-                <li className="pl-1">
-                  <strong>Monitoring:</strong> Inspections, audits, health surveillance
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency procedures:</strong> Fire, first aid, evacuation, rescue
-                </li>
-              </ul>
-            </div>
+            
+            <p className="text-sm font-medium text-white mb-2">
+            Key arrangement areas for building services:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Risk assessment:</strong> Process for identifying and controlling hazards
+            </li>
+            <li>
+            <strong>Safe systems of work:</strong> Method statements, procedures, permits
+            </li>
+            <li>
+            <strong>Training:</strong> Induction, ongoing, task-specific, refresher
+            </li>
+            <li>
+            <strong>Consultation:</strong> How workers are involved in safety decisions
+            </li>
+            <li>
+            <strong>Monitoring:</strong> Inspections, audits, health surveillance
+            </li>
+            <li>
+            <strong>Emergency procedures:</strong> Fire, first aid, evacuation, rescue
+            </li>
+            </ul>
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Specific Arrangements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Required Arrangements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical work</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Isolation procedures, lock-off systems, testing protocols, live working
-                        controls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Working at height</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Access equipment selection, inspection regimes, rescue plans
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Confined spaces</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Entry permits, atmospheric testing, standby arrangements, rescue equipment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hot work</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Permit system, fire watch, isolation of services, PPE requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Asbestos</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Survey requirements, licensed removal, awareness training, emergency
-                        procedures
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Building Services Specific Arrangements
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Electrical work</strong> — Required Arrangements: Isolation procedures, lock-off systems, testing protocols, live working controls</li>
+            <li><strong>Working at height</strong> — Required Arrangements: Access equipment selection, inspection regimes, rescue plans</li>
+            <li><strong>Confined spaces</strong> — Required Arrangements: Entry permits, atmospheric testing, standby arrangements, rescue equipment</li>
+            <li><strong>Hot work</strong> — Required Arrangements: Permit system, fire watch, isolation of services, PPE requirements</li>
+            <li><strong>Asbestos</strong> — Required Arrangements: Survey requirements, licensed removal, awareness training, emergency procedures</li>
+            </ul>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> The arrangements section often references separate
-              detailed documents (procedures, method statements, permits). Keep these as controlled
-              documents that can be updated without reissuing the entire policy.
+            <strong>Practical tip:</strong> The arrangements section often references separate
+            detailed documents (procedures, method statements, permits). Keep these as controlled
+            documents that can be updated without reissuing the entire policy.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 4: Communication and Review */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Communication and Review
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Communication and Review</ContentEyebrow>
+
+          <ConceptBlock title="Communication and Review">
             <p>
-              Effective communication ensures everyone understands and follows safety arrangements.
-              Regular review keeps the policy current and relevant. Both are essential for a 'live'
-              safety management system.
+            Effective communication ensures everyone understands and follows safety arrangements.
+            Regular review keeps the policy current and relevant. Both are essential for a 'live'
+            safety management system.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Communication Methods
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Induction training:</strong> New starters and site arrivals
-                  </li>
-                  <li className="pl-1">
-                    <strong>Toolbox talks:</strong> Regular brief safety sessions
-                  </li>
-                  <li className="pl-1">
-                    <strong>Safety briefings:</strong> Before high-risk activities
-                  </li>
-                  <li className="pl-1">
-                    <strong>Notice boards:</strong> Policy, procedures, alerts
-                  </li>
-                  <li className="pl-1">
-                    <strong>Safety meetings:</strong> Formal consultation forum
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Triggers for Policy Review
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Annual review:</strong> Minimum requirement
-                  </li>
-                  <li className="pl-1">
-                    <strong>Legislative changes:</strong> New or amended regulations
-                  </li>
-                  <li className="pl-1">
-                    <strong>Organisational changes:</strong> Structure, activities, locations
-                  </li>
-                  <li className="pl-1">
-                    <strong>After incidents:</strong> Accidents, near misses, enforcement
-                  </li>
-                  <li className="pl-1">
-                    <strong>Audit findings:</strong> Internal or external audit results
-                  </li>
-                </ul>
-              </div>
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Communication Methods
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Induction training:</strong> New starters and site arrivals
+            </li>
+            <li>
+            <strong>Toolbox talks:</strong> Regular brief safety sessions
+            </li>
+            <li>
+            <strong>Safety briefings:</strong> Before high-risk activities
+            </li>
+            <li>
+            <strong>Notice boards:</strong> Policy, procedures, alerts
+            </li>
+            <li>
+            <strong>Safety meetings:</strong> Formal consultation forum
+            </li>
+            </ul>
             </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Triggers for Policy Review
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Annual review:</strong> Minimum requirement
+            </li>
+            <li>
+            <strong>Legislative changes:</strong> New or amended regulations
+            </li>
+            <li>
+            <strong>Organisational changes:</strong> Structure, activities, locations
+            </li>
+            <li>
+            <strong>After incidents:</strong> Accidents, near misses, enforcement
+            </li>
+            <li>
+            <strong>Audit findings:</strong> Internal or external audit results
+            </li>
+            </ul>
+            </div>
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cascade Communication Model
-              </p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  <strong>Level 1:</strong> Directors communicate strategic decisions to managers
-                </p>
-                <p>
-                  <strong>Level 2:</strong> Managers brief supervisors on implementation
-                  requirements
-                </p>
-                <p>
-                  <strong>Level 3:</strong> Supervisors deliver toolbox talks to operatives
-                </p>
-                <p>
-                  <strong>Level 4:</strong> Operatives provide feedback up the chain
-                </p>
-              </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Cascade Communication Model
+            </p>
+            <div className="text-sm text-white space-y-2">
+            <p>
+            <strong>Level 1:</strong> Directors communicate strategic decisions to managers
+            </p>
+            <p>
+            <strong>Level 2:</strong> Managers brief supervisors on implementation
+            requirements
+            </p>
+            <p>
+            <strong>Level 3:</strong> Supervisors deliver toolbox talks to operatives
+            </p>
+            <p>
+            <strong>Level 4:</strong> Operatives provide feedback up the chain
+            </p>
             </div>
+            
 
             <p className="text-sm text-white italic">
-              <strong>Two-way communication:</strong> Employees must have the opportunity to raise
-              concerns and provide feedback. This consultation is a legal requirement under the
-              Safety Representatives and Safety Committees Regulations or the Health and Safety
-              (Consultation with Employees) Regulations.
+            <strong>Two-way communication:</strong> Employees must have the opportunity to raise
+            concerns and provide feedback. This consultation is a legal requirement under the
+            Safety Representatives and Safety Committees Regulations or the Health and Safety
+            (Consultation with Employees) Regulations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Application</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Small Electrical Contractor
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A 12-person electrical contracting company needs to
-                develop their safety policy.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Statement of Intent:</strong>
-                </p>
-                <p className="ml-4">- Signed by the Managing Director</p>
-                <p className="ml-4">
-                  - States commitment to safe electrical work and compliance with BS 7671
-                </p>
-                <p className="mt-2">
-                  <strong>Organisation:</strong>
-                </p>
-                <p className="ml-4">- MD: Ultimate responsibility, resource provision</p>
-                <p className="ml-4">- Contracts Manager: Risk assessments, method statements</p>
-                <p className="ml-4">- Lead Electricians: Site supervision, toolbox talks</p>
-                <p className="ml-4">- All Electricians: Follow safe systems, report hazards</p>
-                <p className="mt-2">
-                  <strong>Arrangements:</strong>
-                </p>
-                <p className="ml-4">- References separate procedures for isolation, testing, PPE</p>
-                <p className="ml-4">- Training matrix showing competencies</p>
-                <p className="ml-4">- Accident reporting procedure</p>
-              </div>
+          <ConceptBlock title="Practical Application">
+            <p><strong>Example 1: Small Electrical Contractor</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Scenario:</strong> A 12-person electrical contracting company needs to
+            develop their safety policy.
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p>
+            <strong>Statement of Intent:</strong>
+            </p>
+            <p className="ml-4">- Signed by the Managing Director</p>
+            <p className="ml-4">
+            - States commitment to safe electrical work and compliance with BS 7671
+            </p>
+            <p className="mt-2">
+            <strong>Organisation:</strong>
+            </p>
+            <p className="ml-4">- MD: Ultimate responsibility, resource provision</p>
+            <p className="ml-4">- Contracts Manager: Risk assessments, method statements</p>
+            <p className="ml-4">- Lead Electricians: Site supervision, toolbox talks</p>
+            <p className="ml-4">- All Electricians: Follow safe systems, report hazards</p>
+            <p className="mt-2">
+            <strong>Arrangements:</strong>
+            </p>
+            <p className="ml-4">- References separate procedures for isolation, testing, PPE</p>
+            <p className="ml-4">- Training matrix showing competencies</p>
+            <p className="ml-4">- Accident reporting procedure</p>
             </div>
+            
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Policy Communication on Multi-Contractor Site
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> How to ensure all workers understand safety requirements
-                on a large commercial project.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p>
-                  <strong>Communication Strategy:</strong>
-                </p>
-                <p className="ml-4">
-                  1. Site induction for all personnel - covers key policy points
-                </p>
-                <p className="ml-4">2. Safety notice boards at entrance and welfare facilities</p>
-                <p className="ml-4">
-                  3. Weekly coordination meetings with all contractor supervisors
-                </p>
-                <p className="ml-4">4. Daily activity briefings before work commences</p>
-                <p className="ml-4">5. Toolbox talks on specific hazards (minimum weekly)</p>
-                <p className="ml-4">6. Site rules document issued to all contractors</p>
-                <p className="mt-2 text-green-400">
-                  Key: Two-way communication - feedback mechanism through supervisors to safety
-                  committee
-                </p>
-              </div>
+            
+            <p><strong>Example 2: Policy Communication on Multi-Contractor Site</strong></p>
+            <p className="text-sm text-white mb-2">
+            <strong>Scenario:</strong> How to ensure all workers understand safety requirements
+            on a large commercial project.
+            </p>
+            <div className="bg-black/30 p-3 rounded text-sm text-white">
+            <p>
+            <strong>Communication Strategy:</strong>
+            </p>
+            <p className="ml-4">
+            1. Site induction for all personnel - covers key policy points
+            </p>
+            <p className="ml-4">2. Safety notice boards at entrance and welfare facilities</p>
+            <p className="ml-4">
+            3. Weekly coordination meetings with all contractor supervisors
+            </p>
+            <p className="ml-4">4. Daily activity briefings before work commences</p>
+            <p className="ml-4">5. Toolbox talks on specific hazards (minimum weekly)</p>
+            <p className="ml-4">6. Site rules document issued to all contractors</p>
+            <p className="mt-2 text-green-400">
+            Key: Two-way communication - feedback mechanism through supervisors to safety
+            committee
+            </p>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Key Points Summary</h2>
-
-          <div className="space-y-6">
+          <ConceptBlock title="Key Points Summary">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Legal Requirements</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Written policy required for 5+ employees (HASAWA s.2(3))</li>
-                <li className="pl-1">Must be brought to attention of all employees</li>
-                <li className="pl-1">Competent person must be appointed (MHSWR Reg 7)</li>
-                <li className="pl-1">Employees must be consulted on H&S matters</li>
-                <li className="pl-1">Policy must be reviewed and revised as necessary</li>
-              </ul>
+            <p><strong>Legal Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Written policy required for 5+ employees (HASAWA s.2(3))</li>
+            <li>Must be brought to attention of all employees</li>
+            <li>Competent person must be appointed (MHSWR Reg 7)</li>
+            <li>Employees must be consulted on H&S matters</li>
+            <li>Policy must be reviewed and revised as necessary</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Effective Policy Characteristics
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Specific to the organisation's activities and hazards</li>
-                <li className="pl-1">Clear responsibilities assigned to named positions</li>
-                <li className="pl-1">Practical arrangements that are actually followed</li>
-                <li className="pl-1">Regularly reviewed and updated</li>
-                <li className="pl-1">Actively communicated to all personnel</li>
-              </ul>
+            <p><strong>Effective Policy Characteristics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Specific to the organisation's activities and hazards</li>
+            <li>Clear responsibilities assigned to named positions</li>
+            <li>Practical arrangements that are actually followed</li>
+            <li>Regularly reviewed and updated</li>
+            <li>Actively communicated to all personnel</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Failures</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Generic templates:</strong> Not tailored to actual work activities
-                </li>
-                <li className="pl-1">
-                  <strong>Shelf documents:</strong> Not communicated or implemented
-                </li>
-                <li className="pl-1">
-                  <strong>Outdated content:</strong> Not reviewed after changes
-                </li>
-                <li className="pl-1">
-                  <strong>Unclear responsibilities:</strong> No named accountable persons
-                </li>
-                <li className="pl-1">
-                  <strong>Missing arrangements:</strong> Key hazards not addressed
-                </li>
-              </ul>
+            <p><strong>Common Failures</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Generic templates:</strong> Not tailored to actual work activities
+            </li>
+            <li>
+            <strong>Shelf documents:</strong> Not communicated or implemented
+            </li>
+            <li>
+            <strong>Outdated content:</strong> Not reviewed after changes
+            </li>
+            <li>
+            <strong>Unclear responsibilities:</strong> No named accountable persons
+            </li>
+            <li>
+            <strong>Missing arrangements:</strong> Key hazards not addressed
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="A 12-person building services contractor without a current policy"
+            situation={
+              <>
+                You join a 12-person building services contractor as an HNC engineer. The
+                firm&rsquo;s safety policy is six years old, signed by a director who has
+                left, and references regulations that have since been replaced.
+              </>
+            }
+            whatToDo={
+              <>
+                Flag the breach (HSWA s.2(3) — must be revised &ldquo;as often as may be
+                appropriate&rdquo;). Draft a revised three-part policy: statement of intent
+                signed by the current MD, organisation chart with named roles and deputies,
+                arrangements covering RAMS, training, PPE, isolation, accident reporting,
+                consultation. Issue and brief every operative, get a signed receipt. Refresh
+                annually and after any structural change.
+              </>
+            }
+            whyItMatters={
+              <>
+                An out-of-date policy will be one of the first documents an HSE inspector
+                requests after an incident — and the absence of a current policy is presumed
+                evidence of a wider management failing.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Policy Elements</p>
-                <ul className="space-y-0.5">
-                  <li>Statement of Intent - Signed commitment</li>
-                  <li>Organisation - Responsibility chain</li>
-                  <li>Arrangements - Practical procedures</li>
-                  <li>Review - Annual minimum</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Regulations</p>
-                <ul className="space-y-0.5">
-                  <li>HASAWA 1974 s.2(3) - Policy requirement</li>
-                  <li>MHSWR 1999 Reg 7 - Competent person</li>
-                  <li>SRSCR 1977 - Union safety reps</li>
-                  <li>HSCER 1996 - Employee consultation</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'HSWA s.2(3) requires a written H&S policy for any employer with five or more employees.',
+              'Three required parts: statement of intent (signed by senior officer), organisation (named roles), arrangements (procedures).',
+              'HSG65 (Plan-Do-Check-Act) is the HSE-recommended framework that links policy to operational practice.',
+              'Policy must be brought to the notice of every employee — printed, posted, briefed, signed-for.',
+              'Review trigger: change of organisation, change of activity, change of legislation, after any incident, and at least annually.',
+              'Roles up the chain: board accountability, director assignment, manager ownership, supervisor delivery, operative compliance.',
+              'Worker consultation under HSWA s.2(6) and Safety Reps Regulations 1977 is part of the &ldquo;arrangements&rdquo; section.',
+              'A generic, off-the-shelf policy is presumed inadequate — it must reflect the firm&rsquo;s actual activities and structure.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section3-2">
-              Next: Safety Culture and Leadership
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 3
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section3-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Safety Culture and Leadership
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

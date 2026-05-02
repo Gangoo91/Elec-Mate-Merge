@@ -409,7 +409,7 @@ export default function Sub2() {
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Ze typical ranges</strong> — TN-S 0.5-1.0 Ω; TN-C-S 0.35-0.65 Ω; TT 50-200+ Ω; IT undefined.</li>
               <li><strong>R1+R2</strong> — depends on circuit length and conductor sizes. BS 7671 OSG (On-Site Guide) Appendix has typical values per cable size and length.</li>
-              <li><strong>Zs limit</strong> — Table 41.3 (BS EN 60898 MCBs) or 41.4 (BS EN 61009 RCBOs). Example: 32 A B-curve MCB Zs limit 1.37 Ω at 230 V; 16 A B-curve 2.87 Ω.</li>
+              <li><strong>Zs limit</strong> — Table 41.3 (BS EN 60898 MCBs) or 41.4 (BS EN 61009 RCBOs). Example: 32 A B-curve MCB Zs limit 1.37 Ω at 230 V; 16 A B-curve 2.73 Ω (BS 7671:2018+A4:2026).</li>
               <li><strong>Zs reading high</strong> — fault path has higher impedance than expected. Likely causes: HRJ in supply, broken or high-resistance CPC, bad MCB connection.</li>
               <li><strong>Zs reading inconsistent</strong> — varies between MFT readings on same circuit. Likely intermittent connection somewhere; vibrate cable runs and retest.</li>
             </ul>

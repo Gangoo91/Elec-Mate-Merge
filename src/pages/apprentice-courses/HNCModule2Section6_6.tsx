@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 6 · Subsection 6 — Compliance and Verification
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Building Regulations Part L, BREEAM, NABERS UK, DEC and post-occupancy
+ *   evaluation — the regulatory and voluntary verification regimes the HNC
+ *   engineer navigates from RIBA-2 to year-3 aftercare.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Compliance and Verification - HNC Module 2 Section 6.6';
@@ -232,780 +251,487 @@ const faqs = [
 ];
 
 const HNCModule2Section6_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2.6.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Compliance and Verification
-          </h1>
-          <p className="text-white">
-            Building Regulations, BREEAM, NABERS, post-occupancy evaluation, and performance
-            verification
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 6 · Subsection 6"
+            title="Compliance and Verification"
+            description="Building Regulations, BREEAM, NABERS, post-occupancy evaluation, and performance verification."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Part L:</strong> Mandatory energy regulations
-              </li>
-              <li className="pl-1">
-                <strong>BREEAM:</strong> Voluntary sustainability rating
-              </li>
-              <li className="pl-1">
-                <strong>DEC:</strong> Operational energy certificate
-              </li>
-              <li className="pl-1">
-                <strong>POE:</strong> Verifies actual performance
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Compliance Hierarchy</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Legal minimum:</strong> Part L compliance
-              </li>
-              <li className="pl-1">
-                <strong>Planning:</strong> Often requires BREEAM
-              </li>
-              <li className="pl-1">
-                <strong>Best practice:</strong> POE and Soft Landings
-              </li>
-              <li className="pl-1">
-                <strong>Market demand:</strong> NABERS, WELL, sustainability
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You demonstrate Part L compliance via SBEM/SAP showing Building Emission Rate ≤ Target Emission Rate, plus permeability testing and the building log book.',
+              'You navigate BREEAM (Pass/Good/Very Good/Excellent/Outstanding) by category — picking credits with the best cost-benefit per credit point.',
+              'You design with NABERS UK in mind so the building can deliver a credible operational rating once metered.',
+              'You scope post-occupancy evaluation (POE) at 12 and 36 months as the bridge between predicted and operational performance.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="Building Regulations 2010 — Approved Document L (Conservation of fuel and power); BREEAM UK New Construction; NABERS UK"
+            clause="Part L compliance demonstrated by Building Emission Rate ≤ Target Emission Rate calculated by SBEM (non-domestic) or SAP (domestic), with mandatory air-permeability testing and building log book at handover. BREEAM and NABERS UK are voluntary frameworks for environmental and operational rating respectively."
+            meaning={
+              <>
+                Part L is the legal floor; BREEAM and NABERS UK are voluntary but commonly
+                contractually required (planning conditions, lender requirements, ESG
+                strategy). As HNC engineer you sequence Part L compliance first (mandatory),
+                then BREEAM credits where they don&rsquo;t add disproportionate cost, then
+                NABERS UK design rating to align design intent with measured operational
+                performance.
+              </>
+            }
+            cite="Source: Building Regulations 2010, Approved Document L — gov.uk; BREEAM UK New Construction Technical Manual; NABERS UK Energy for Offices Rules; CIBSE TM22 Energy Assessment and Reporting Methodology."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Understand Part L Building Regulations requirements',
               'Describe BREEAM assessment categories and ratings',
               'Explain NABERS UK operational rating system',
               'Conduct post-occupancy evaluation',
               'Apply Soft Landings framework principles',
               'Interpret Display Energy Certificates',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Part L Building Regulations */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Part L Building Regulations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Part L Building Regulations"
+            plainEnglish="Part L is the legal floor for energy efficiency. New builds prove compliance with BER ≤ TER, plus airtightness testing and a building log book at handover."
+          >
             <p>
               Part L of the Building Regulations sets mandatory requirements for the conservation of
               fuel and power in buildings. It applies to new buildings and certain works to existing
               buildings, covering fabric performance, building services efficiency, and carbon
               emissions.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L Structure (England)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Document</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Applies To</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Requirements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part L1A</td>
-                      <td className="border border-white/10 px-3 py-2">New dwellings</td>
-                      <td className="border border-white/10 px-3 py-2">TER/DER comparison</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part L1B</td>
-                      <td className="border border-white/10 px-3 py-2">Existing dwellings</td>
-                      <td className="border border-white/10 px-3 py-2">Works standards</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part L2A</td>
-                      <td className="border border-white/10 px-3 py-2">New non-domestic</td>
-                      <td className="border border-white/10 px-3 py-2">BER/TER + BBER/BTBER</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part L2B</td>
-                      <td className="border border-white/10 px-3 py-2">Existing non-domestic</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Consequential improvements
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key Part L 2021 Requirements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Carbon targets:</strong> BER must not exceed TER (30-31% below Part L
-                  2013)
-                </li>
-                <li className="pl-1">
-                  <strong>Fabric standards:</strong> Limiting U-values for elements
-                </li>
-                <li className="pl-1">
-                  <strong>Primary energy:</strong> BBER must not exceed BTBER
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal bridging:</strong> Accredited details or calculations
-                </li>
-                <li className="pl-1">
-                  <strong>Air tightness:</strong> Testing required (&lt;5 m³/h/m² at 50Pa)
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> Building log book required
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Compliance Demonstration
-              </p>
-              <ol className="text-sm text-white space-y-1 list-decimal list-outside ml-5">
-                <li>Design stage calculations (SBEM or DSM)</li>
-                <li>As-built calculations reflecting actual construction</li>
-                <li>Air tightness testing</li>
-                <li>Commissioning of building services</li>
-                <li>Production of building log book</li>
-                <li>Production of EPC</li>
-              </ol>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Part L structure (England):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Part L1A:</strong> New dwellings - TER/DER comparison
+              </li>
+              <li>
+                <strong>Part L1B:</strong> Existing dwellings - works standards
+              </li>
+              <li>
+                <strong>Part L2A:</strong> New non-domestic - BER/TER + BBER/BTBER
+              </li>
+              <li>
+                <strong>Part L2B:</strong> Existing non-domestic - consequential improvements
+              </li>
+            </ul>
+            <p>
+              <strong>Key Part L 2021 requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Carbon targets:</strong> BER must not exceed TER (30-31% below Part L 2013)
+              </li>
+              <li>
+                <strong>Fabric standards:</strong> Limiting U-values for elements
+              </li>
+              <li>
+                <strong>Primary energy:</strong> BBER must not exceed BTBER
+              </li>
+              <li>
+                <strong>Thermal bridging:</strong> Accredited details or calculations
+              </li>
+              <li>
+                <strong>Air tightness:</strong> Testing required (&lt;5 m³/h/m² at 50Pa)
+              </li>
+              <li>
+                <strong>Commissioning:</strong> Building log book required
+              </li>
+            </ul>
+            <p>
+              <strong>Compliance demonstration:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Design stage calculations (SBEM or DSM)</li>
+              <li>As-built calculations reflecting actual construction</li>
+              <li>Air tightness testing</li>
+              <li>Commissioning of building services</li>
+              <li>Production of building log book</li>
+              <li>Production of EPC</li>
+            </ul>
+            <p>
               <strong>Future direction:</strong> The Future Buildings Standard (expected 2025) will
               further tighten requirements, requiring net zero ready buildings with no fossil fuel
               heating.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: BREEAM */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            BREEAM Assessment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="BREEAM Assessment"
+            plainEnglish="BREEAM rates buildings across nine categories with Energy and Health & Wellbeing carrying the most weight. Excellent (≥70%) is now the market expectation for prime offices."
+          >
             <p>
               BREEAM is the world's leading sustainability assessment method for buildings. While
               voluntary, it is often required by planning authorities, funding bodies, and clients
               seeking to demonstrate environmental commitment.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BREEAM Categories and Weightings (UK NC 2018)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Weighting</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Credits</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy (Ene)</td>
-                      <td className="border border-white/10 px-3 py-2">15%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Beyond Part L, metering, efficiency
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Health & Wellbeing (Hea)</td>
-                      <td className="border border-white/10 px-3 py-2">14%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daylight, thermal comfort, air quality
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Materials (Mat)</td>
-                      <td className="border border-white/10 px-3 py-2">13.5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Environmental impact, responsible sourcing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Management (Man)</td>
-                      <td className="border border-white/10 px-3 py-2">11.5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Soft Landings, commissioning
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water (Wat)</td>
-                      <td className="border border-white/10 px-3 py-2">6%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Consumption reduction, metering
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transport (Tra)</td>
-                      <td className="border border-white/10 px-3 py-2">9%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Public transport, cycling facilities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Land Use & Ecology (LE)</td>
-                      <td className="border border-white/10 px-3 py-2">10%</td>
-                      <td className="border border-white/10 px-3 py-2">Site ecology enhancement</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Waste (Wst)</td>
-                      <td className="border border-white/10 px-3 py-2">7%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Construction waste, operational waste
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pollution (Pol)</td>
-                      <td className="border border-white/10 px-3 py-2">7%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refrigerant impact, NOx emissions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Innovation</td>
-                      <td className="border border-white/10 px-3 py-2">+10%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Exemplary performance, innovation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">BREEAM Ratings</p>
-              <div className="grid grid-cols-5 gap-2 text-center text-sm">
-                <div className="p-2 rounded bg-white/5">
-                  <p className="font-bold text-white">Pass</p>
-                  <p className="text-white text-xs">≥30%</p>
-                </div>
-                <div className="p-2 rounded bg-white/5">
-                  <p className="font-bold text-white">Good</p>
-                  <p className="text-white text-xs">≥45%</p>
-                </div>
-                <div className="p-2 rounded bg-white/5">
-                  <p className="font-bold text-white">Very Good</p>
-                  <p className="text-white text-xs">≥55%</p>
-                </div>
-                <div className="p-2 rounded bg-white/5">
-                  <p className="font-bold text-green-400">Excellent</p>
-                  <p className="text-white text-xs">≥70%</p>
-                </div>
-                <div className="p-2 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow">Outstanding</p>
-                  <p className="text-white text-xs">≥85%</p>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>BREEAM categories and weightings (UK NC 2018) - category / weighting / key credits:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Energy (Ene) - 15% - beyond Part L, metering, efficiency</li>
+              <li>Health &amp; Wellbeing (Hea) - 14% - daylight, thermal comfort, air quality</li>
+              <li>Materials (Mat) - 13.5% - environmental impact, responsible sourcing</li>
+              <li>Management (Man) - 11.5% - Soft Landings, commissioning</li>
+              <li>Water (Wat) - 6% - consumption reduction, metering</li>
+              <li>Transport (Tra) - 9% - public transport, cycling facilities</li>
+              <li>Land Use &amp; Ecology (LE) - 10% - site ecology enhancement</li>
+              <li>Waste (Wst) - 7% - construction waste, operational waste</li>
+              <li>Pollution (Pol) - 7% - refrigerant impact, NOx emissions</li>
+              <li>Innovation - +10% - exemplary performance, innovation</li>
+            </ul>
+            <p>
+              <strong>BREEAM ratings:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pass:</strong> ≥30%
+              </li>
+              <li>
+                <strong>Good:</strong> ≥45%
+              </li>
+              <li>
+                <strong>Very Good:</strong> ≥55%
+              </li>
+              <li>
+                <strong>Excellent:</strong> ≥70%
+              </li>
+              <li>
+                <strong>Outstanding:</strong> ≥85%
+              </li>
+            </ul>
+            <p>
               <strong>Market expectation:</strong> BREEAM Excellent is increasingly the minimum for
               prime commercial office space in major UK cities.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: NABERS and DECs */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            NABERS UK and Display Energy Certificates
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="NABERS UK and Display Energy Certificates"
+            plainEnglish="NABERS and DECs use actual metered energy, not design calculations. They tell investors and tenants whether a building actually performs - not just whether it was promised to."
+          >
             <p>
               Operational energy ratings measure actual building performance, providing
               accountability that design-stage ratings cannot. NABERS UK and DECs both serve this
               purpose using different methodologies.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                NABERS UK Energy Rating
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Origin:</strong> Adapted from successful Australian scheme
-                </li>
-                <li className="pl-1">
-                  <strong>Application:</strong> Office buildings (base building and tenancy)
-                </li>
-                <li className="pl-1">
-                  <strong>Basis:</strong> Actual energy consumption normalised for climate, hours,
-                  occupancy
-                </li>
-                <li className="pl-1">
-                  <strong>Rating:</strong> 1-6 stars (6 stars = market-leading performance)
-                </li>
-                <li className="pl-1">
-                  <strong>Use:</strong> Design for Performance, investor requirements
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Display Energy Certificates (DECs)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Required for</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Public buildings &gt;250m² with public access
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data basis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        12 months actual metered consumption
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Benchmark</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CIBSE TM46 typical values
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rating scale</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        A-G (A = best, 100 = typical)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Validity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1 year (must be renewed annually)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Advisory report</td>
-                      <td className="border border-white/10 px-3 py-2">Required every 7 years</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DEC vs EPC Comparison</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">EPC (Asset Rating)</p>
-                  <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
-                    <li>Based on design calculations</li>
-                    <li>Standard occupancy assumptions</li>
-                    <li>Valid 10 years</li>
-                    <li>Required for sale/let</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">DEC (Operational Rating)</p>
-                  <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
-                    <li>Based on actual consumption</li>
-                    <li>Reflects real operation</li>
-                    <li>Valid 1 year</li>
-                    <li>Required for public buildings</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>NABERS UK energy rating:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Origin:</strong> Adapted from successful Australian scheme
+              </li>
+              <li>
+                <strong>Application:</strong> Office buildings (base building and tenancy)
+              </li>
+              <li>
+                <strong>Basis:</strong> Actual energy consumption normalised for climate, hours, occupancy
+              </li>
+              <li>
+                <strong>Rating:</strong> 1-6 stars (6 stars = market-leading performance)
+              </li>
+              <li>
+                <strong>Use:</strong> Design for Performance, investor requirements
+              </li>
+            </ul>
+            <p>
+              <strong>Display Energy Certificates (DECs):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Required for: public buildings &gt;250m² with public access</li>
+              <li>Data basis: 12 months actual metered consumption</li>
+              <li>Benchmark: CIBSE TM46 typical values</li>
+              <li>Rating scale: A-G (A = best, 100 = typical)</li>
+              <li>Validity: 1 year (must be renewed annually)</li>
+              <li>Advisory report: required every 7 years</li>
+            </ul>
+            <p>
+              <strong>DEC vs EPC comparison:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>EPC (asset rating):</strong> Based on design calculations, standard occupancy assumptions, valid 10 years, required for sale/let
+              </li>
+              <li>
+                <strong>DEC (operational rating):</strong> Based on actual consumption, reflects real operation, valid 1 year, required for public buildings
+              </li>
+            </ul>
+            <p>
               <strong>Trend:</strong> Operational ratings are increasingly valued by investors and
               tenants who want evidence of actual performance, not just design intent.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Post-Occupancy Evaluation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Post-Occupancy Evaluation and Soft Landings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock
+            title="Post-Occupancy Evaluation and Soft Landings"
+            plainEnglish="POE and Soft Landings close the loop. Once the building is in use you check it actually works as designed - and feed that back into both this building and the next one."
+          >
             <p>
               Post-Occupancy Evaluation (POE) systematically assesses building performance after
               occupation. Combined with the Soft Landings framework, it closes the feedback loop
               between design intent and operational reality.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">POE Components</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meter data vs TM54 prediction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Identify performance gap</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">User surveys</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BUS methodology or similar
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Occupant satisfaction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Environmental monitoring</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Temperature, CO2, humidity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Comfort conditions</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Walkthrough</td>
-                      <td className="border border-white/10 px-3 py-2">Physical inspection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Defects, usability issues
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS review</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Control strategy analysis
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Optimisation opportunities
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Soft Landings Framework
-              </p>
-              <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stage 1 - Inception:</strong> Set performance targets and POE plan
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 2 - Design:</strong> Reality checks, buildability reviews
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 3 - Pre-handover:</strong> Prepare for operation, training
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 4 - Initial aftercare:</strong> Intensive support (weeks 1-4)
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 5 - Extended aftercare:</strong> Monitoring and tuning (3 years)
-                </li>
-              </ol>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/20">
-              <p className="text-sm font-medium text-green-400 mb-2">POE Benefits</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Identifies issues before they become embedded problems</li>
-                <li className="pl-1">Validates design decisions for future projects</li>
-                <li className="pl-1">Supports energy optimisation and cost savings</li>
-                <li className="pl-1">Improves occupant satisfaction and productivity</li>
-                <li className="pl-1">Provides feedback to design teams</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>POE components (component / method / purpose):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Energy analysis - meter data vs TM54 prediction - identify performance gap</li>
+              <li>User surveys - BUS methodology or similar - occupant satisfaction</li>
+              <li>Environmental monitoring - temperature, CO2, humidity - comfort conditions</li>
+              <li>Walkthrough - physical inspection - defects, usability issues</li>
+              <li>BMS review - control strategy analysis - optimisation opportunities</li>
+            </ul>
+            <p>
+              <strong>Soft Landings framework:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stage 1 - Inception:</strong> Set performance targets and POE plan
+              </li>
+              <li>
+                <strong>Stage 2 - Design:</strong> Reality checks, buildability reviews
+              </li>
+              <li>
+                <strong>Stage 3 - Pre-handover:</strong> Prepare for operation, training
+              </li>
+              <li>
+                <strong>Stage 4 - Initial aftercare:</strong> Intensive support (weeks 1-4)
+              </li>
+              <li>
+                <strong>Stage 5 - Extended aftercare:</strong> Monitoring and tuning (3 years)
+              </li>
+            </ul>
+            <p>
+              <strong>POE benefits:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identifies issues before they become embedded problems</li>
+              <li>Validates design decisions for future projects</li>
+              <li>Supports energy optimisation and cost savings</li>
+              <li>Improves occupant satisfaction and productivity</li>
+              <li>Provides feedback to design teams</li>
+            </ul>
+            <p>
               <strong>BREEAM credit:</strong> Man 04 provides credits for Soft Landings commitment,
               recognising the value of structured aftercare in achieving design performance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three examples covering a Part L pass/fail check, a school's DEC rating, and the Ene 01 BREEAM credits earned by exceeding Part L."
+          >
+            <p>
+              <strong>Example 1 - Part L compliance check:</strong> New office building SBEM
+              results.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>TER (Target Emission Rate): 28.5 kgCO₂/m²/year</li>
+              <li>BER (Building Emission Rate): 25.2 kgCO₂/m²/year</li>
+              <li>BTBER (Target Primary Energy): 145 kWh/m²/year</li>
+              <li>BBER (Building Primary Energy): 132 kWh/m²/year</li>
+              <li>BER (25.2) ≤ TER (28.5) ✓</li>
+              <li>BBER (132) ≤ BTBER (145) ✓</li>
+              <li><strong>Building COMPLIES with Part L 2021</strong></li>
+              <li>Margin: 11.6% below TER (headroom for as-built)</li>
+            </ul>
+            <p>
+              <strong>Example 2 - DEC rating calculation:</strong> School building annual energy
+              consumption.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Floor area: 3,500 m² (GIA); Electricity: 185,000 kWh/year; Gas: 420,000 kWh/year</li>
+              <li>EUI: electricity 52.9 kWh/m², gas 120 kWh/m²</li>
+              <li>TM46 typical (schools): elec 41 kWh/m², fossil 150 kWh/m²</li>
+              <li>Actual CO₂: (52.9 × 0.233) + (120 × 0.184) = 34.4 kgCO₂/m²</li>
+              <li>Typical CO₂: (41 × 0.233) + (150 × 0.184) = 37.1 kgCO₂/m²</li>
+              <li>DEC Rating: (34.4 / 37.1) × 100 = <strong>93 (Band D)</strong></li>
+              <li>School performs better than typical</li>
+            </ul>
+            <p>
+              <strong>Example 3 - BREEAM energy credits:</strong> Office targeting BREEAM
+              Excellent - Ene 01 credits.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>EPRNC = (BER × 1.0 + BBER × 0.5) / (TER × 1.0 + BTBER × 0.5)</li>
+              <li>Building data: BER 22 kgCO₂/m², TER 28 kgCO₂/m², BBER 115 kWh/m², BTBER 145 kWh/m²</li>
+              <li>EPRNC = (22 + 57.5) / (28 + 72.5) = 79.5 / 100.5 = 0.79</li>
+              <li>EPRNC of 0.79 = 21% improvement over Part L</li>
+              <li><strong>5 Ene 01 credits (BREEAM 2018 scoring)</strong></li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Part L Compliance Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> New office building SBEM results.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Calculation results:</p>
-                <p>TER (Target Emission Rate): 28.5 kgCO₂/m²/year</p>
-                <p>BER (Building Emission Rate): 25.2 kgCO₂/m²/year</p>
-                <p className="mt-2">BTBER (Target Primary Energy): 145 kWh/m²/year</p>
-                <p>BBER (Building Primary Energy): 132 kWh/m²/year</p>
-                <p className="mt-2">Compliance check:</p>
-                <p>BER (25.2) ≤ TER (28.5) ✓</p>
-                <p>BBER (132) ≤ BTBER (145) ✓</p>
-                <p className="mt-2 text-green-400">Building COMPLIES with Part L 2021</p>
-                <p className="mt-2">Margin: 11.6% below TER (headroom for as-built)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: DEC Rating Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> School building annual energy consumption.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Building data:</p>
-                <p>Floor area: 3,500 m² (GIA)</p>
-                <p>Electricity: 185,000 kWh/year</p>
-                <p>Gas: 420,000 kWh/year</p>
-                <p className="mt-2">Energy Use Intensity:</p>
-                <p>Electricity: 185,000 / 3,500 = 52.9 kWh/m²</p>
-                <p>Gas: 420,000 / 3,500 = 120 kWh/m²</p>
-                <p className="mt-2">TM46 typical (schools):</p>
-                <p>Electricity: 41 kWh/m², Fossil: 150 kWh/m²</p>
-                <p className="mt-2">CO₂ calculation:</p>
-                <p>Actual: (52.9 × 0.233) + (120 × 0.184) = 34.4 kgCO₂/m²</p>
-                <p>Typical: (41 × 0.233) + (150 × 0.184) = 37.1 kgCO₂/m²</p>
-                <p className="mt-2">
-                  DEC Rating: (34.4 / 37.1) × 100 = <strong>93 (Band D)</strong>
-                </p>
-                <p className="text-green-400">School performs better than typical</p>
-              </div>
-            </div>
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="The compliance documents you need to assemble, plus the POE habits that make sure the building actually delivers."
+          >
+            <p>
+              <strong>Compliance checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Part L calculations (design stage and as-built)</li>
+              <li>Air tightness testing</li>
+              <li>Commissioning certificates</li>
+              <li>Building log book</li>
+              <li>EPC certificate</li>
+              <li>BREEAM assessment (if required)</li>
+            </ul>
+            <p>
+              <strong>POE planning:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Define POE scope and budget at project inception</li>
+              <li>Install sub-metering for meaningful energy analysis</li>
+              <li>Plan user surveys at 12 months</li>
+              <li>Allow for seasonal commissioning verification</li>
+              <li>Document design intent for comparison</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: BREEAM Energy Credits
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Office targeting BREEAM Excellent - Ene 01 credits.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Ene 01 credit requirements:</p>
-                <p className="mt-2">EPRNC (Energy Performance Ratio - New Construction)</p>
-                <p>= (BER × 1.0 + BBER × 0.5) / (TER × 1.0 + BTBER × 0.5)</p>
-                <p className="mt-2">Building data:</p>
-                <p>BER: 22 kgCO₂/m², TER: 28 kgCO₂/m²</p>
-                <p>BBER: 115 kWh/m², BTBER: 145 kWh/m²</p>
-                <p className="mt-2">EPRNC = (22 + 57.5) / (28 + 72.5) = 79.5 / 100.5 = 0.79</p>
-                <p className="mt-2">EPRNC of 0.79 = 21% improvement over Part L</p>
-                <p className="text-green-400">→ 5 Ene 01 credits (BREEAM 2018 scoring)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Compliance Checklist</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Part L calculations (design stage and as-built)</li>
-                <li className="pl-1">Air tightness testing</li>
-                <li className="pl-1">Commissioning certificates</li>
-                <li className="pl-1">Building log book</li>
-                <li className="pl-1">EPC certificate</li>
-                <li className="pl-1">BREEAM assessment (if required)</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">POE Planning</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Define POE scope and budget at project inception</li>
-                <li className="pl-1">Install sub-metering for meaningful energy analysis</li>
-                <li className="pl-1">Plan user surveys at 12 months</li>
-                <li className="pl-1">Allow for seasonal commissioning verification</li>
-                <li className="pl-1">Document design intent for comparison</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Compliance Issues</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common compliance issues"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>As-built differs from design:</strong> Re-run calculations
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Air tightness failure:</strong> Remediate and retest
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Missing commissioning:</strong> Cannot sign off without
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Log book incomplete:</strong> Part L requirement
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Re-run as-built calculations whenever the install differs from design, remediate and retest after any air-tightness failure, get full commissioning evidence before sign-off, and complete the building log book before practical completion."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Designing-in NABERS UK 5-star for a Build-to-Rent commercial tower"
+            situation={
+              <>
+                A 28,000 m² commercial tower in central London is targeting NABERS UK
+                Design Reviewed Target Rating of 5 stars (operational energy ≤ 70
+                kWh/m²·year). The lease structure is leveraging NABERS as a tenant
+                attraction. You are the M&amp;E lead from RIBA-2.
+              </>
+            }
+            whatToDo={
+              <>
+                At Stage-2: lock the form-factor, glazing ratio and orientation with
+                early-stage TM54 forecasting against the NABERS 5-star envelope. At
+                Stage-3: drive the HVAC strategy (typically VRF or 4-pipe FCU + heat
+                recovery + free cooling), lighting LPD, and landlord small power. At
+                Stage-4: complete the NABERS UK Design Reviewed Target Rating submission
+                with full TM54 backing. At year-1 operation: verify against 12-month
+                metered consumption per the NABERS UK Rules. At year-3: re-rate.
+              </>
+            }
+            whyItMatters={
+              <>
+                NABERS UK 5-star buildings command 5–10% lease premium and lower void rates
+                in central London. The rating is operational, not theoretical — so design
+                decisions taken at Stage-2 (form factor, services strategy) determine
+                whether 5 stars is achievable. Get the NABERS forecast wrong at Stage-2 and
+                the entire commercial proposition is at risk.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Part L Compliance</p>
-                <ul className="space-y-0.5">
-                  <li>BER ≤ TER (carbon)</li>
-                  <li>BBER ≤ BTBER (primary energy)</li>
-                  <li>Air tightness testing</li>
-                  <li>Building log book required</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">BREEAM Ratings</p>
-                <ul className="space-y-0.5">
-                  <li>Pass ≥30%, Good ≥45%</li>
-                  <li>Very Good ≥55%</li>
-                  <li>Excellent ≥70%</li>
-                  <li>Outstanding ≥85%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Part L compliance: BER ≤ TER via SBEM (non-domestic) or SAP (domestic); legal floor.',
+              'Compliance evidence: SBEM/SAP report, air-permeability test, building log book, commissioning records.',
+              'BREEAM rating: Pass / Good / Very Good / Excellent / Outstanding — credit-based across 9 categories.',
+              'NABERS UK: operational rating from 1–6 stars based on metered energy use over 12 months.',
+              'DEC (Display Energy Certificate): mandatory for public buildings &gt; 250 m² — operational kWh/m²·year.',
+              'POE (post-occupancy evaluation) at 12 and 36 months — the bridge between predicted and operational.',
+              'CIBSE TM22 is the UK methodology for measured energy reporting and benchmarking.',
+              'Voluntary schemes (BREEAM, NABERS UK) are increasingly contractually mandated by lenders and planning.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section6-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../hnc">
-              Back to HNC
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                System integration
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Back to module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                HNC Module 2
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

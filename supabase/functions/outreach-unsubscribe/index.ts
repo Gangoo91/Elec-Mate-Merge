@@ -184,33 +184,41 @@ Deno.serve(async (req) => {
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
-    // ─── POST = actually unsubscribe ─────────────────────────────
+    // Both GET and POST suppress immediately — single-click unsubscribe,
+    // matching the winback flow. Lands users on the branded
+    // unsubscribed.html on the marketing site instead of an inline page.
+    // (Per-recipient HMAC token already proves intent — anti-prefetcher
+    // confirm step traded for UX consistency with the rest of the app.)
+    let method = req.method === 'POST' ? 'rfc8058_one_click' : 'link_click';
     if (req.method === 'POST') {
-      // RFC 8058 one-click clients POST with no body or with
-      // "List-Unsubscribe=One-Click" form data. Either way, suppress.
-      let method = 'confirmation_form';
       try {
         const body = await req.text();
-        if (body.includes('List-Unsubscribe=One-Click')) method = 'rfc8058_one_click';
+        if (!body.includes('List-Unsubscribe=One-Click')) method = 'confirmation_form';
       } catch {
-        method = 'rfc8058_one_click';
+        // fall through with rfc8058_one_click
       }
-
-      await suppressEmail(supabase, email, {
-        campaign_id: campaignId,
-        method,
-        user_agent: userAgent,
-        ip,
-      });
-
-      console.log(`[unsub] suppressed ${email} via ${method}${campaignId ? ` (campaign ${campaignId})` : ''}`);
-
-      return htmlResponse(successPage(email), 200);
     }
 
-    // ─── GET = show confirmation page (no suppression yet) ───────
-    // Safe against Gmail/Outlook link pre-fetchers.
-    return htmlResponse(confirmPage(email, token, campaignId), 200);
+    await suppressEmail(supabase, email, {
+      campaign_id: campaignId,
+      method,
+      user_agent: userAgent,
+      ip,
+    });
+
+    console.log(`[unsub] suppressed ${email} via ${method}${campaignId ? ` (campaign ${campaignId})` : ''}`);
+
+    // RFC 8058 one-click clients ignore the body — 200 OK is enough.
+    if (method === 'rfc8058_one_click') {
+      return new Response('OK', { status: 200, headers: corsHeaders });
+    }
+
+    // Browser GET / form POST: redirect to the branded confirmation page.
+    const redirectUrl = `https://www.elec-mate.com/unsubscribed.html?email=${encodeURIComponent(email)}`;
+    return new Response(null, {
+      status: 302,
+      headers: { ...corsHeaders, Location: redirectUrl, 'Cache-Control': 'no-store' },
+    });
   } catch (err) {
     console.error('[unsub] error:', err instanceof Error ? err.message : err);
     return htmlResponse(errorPage('Something went wrong. Please try again.'), 500);
@@ -273,16 +281,6 @@ function confirmPage(email: string, token: string, campaignId: string | null) {
       <button type="submit" class="btn btn-primary">Yes, unsubscribe me</button>
     </form>
     <p style="margin-top:22px"><a href="https://elec-mate.com" class="btn-ghost">No &mdash; take me to elec-mate.com</a></p>
-  `);
-}
-
-function successPage(email: string) {
-  return shell(`
-    <div class="status-dot status-ok">&#10003;</div>
-    <h1>You&apos;re unsubscribed.</h1>
-    <p><strong>${escapeHtml(email)}</strong> will no longer receive outreach emails from Elec-Mate.</p>
-    <p style="font-size:13px;color:#71717a">Changed your mind? Reply to any previous email and we&apos;ll re-add you.</p>
-    <p><a href="https://elec-mate.com" class="btn-ghost">Visit elec-mate.com</a></p>
   `);
 }
 

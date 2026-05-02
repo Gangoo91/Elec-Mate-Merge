@@ -1,8 +1,27 @@
-import { ArrowLeft, Sliders, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 4 · Subsection 4 — Lighting Controls
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   DALI / DALI-2 protocol (IEC 62386, 16V DC bus, 64 devices, 16 groups / scenes,
+ *   300m cable), presence vs absence detection, PIR / ultrasonic / dual-tech sensors,
+ *   daylight-linked dimming, time scheduling, BMS integration, Part L compliance.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Lighting Controls - HNC Module 4 Section 4.4';
@@ -211,770 +230,494 @@ const faqs = [
 ];
 
 const HNCModule4Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Sliders className="h-4 w-4" />
-            <span>Module 4.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Lighting Controls
-          </h1>
-          <p className="text-white">
-            Digital control systems for energy efficiency, comfort and flexibility in modern
-            building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 4 · Subsection 4"
+            title="Lighting Controls"
+            description="Digital control systems for energy efficiency, comfort and flexibility in modern building services."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>DALI:</strong> 64 devices, 16 groups, two-way comms
-              </li>
-              <li className="pl-1">
-                <strong>Presence:</strong> Auto on/off based on occupancy
-              </li>
-              <li className="pl-1">
-                <strong>Absence:</strong> Manual on, auto off (preferred)
-              </li>
-              <li className="pl-1">
-                <strong>Daylight:</strong> Dim artificial when natural available
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Energy Savings Potential</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Daylight linking:</strong> 20-40% (perimeter zones)
-              </li>
-              <li className="pl-1">
-                <strong>Occupancy detection:</strong> 30-50%
-              </li>
-              <li className="pl-1">
-                <strong>Combined strategies:</strong> 50-70%
-              </li>
-              <li className="pl-1">
-                <strong>Constant light output:</strong> 10-15%
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Understand DALI protocol architecture and capabilities',
               'Design presence and absence detection strategies',
               'Apply daylight-linked dimming for energy efficiency',
               'Implement time scheduling for building management',
               'Create scene settings for different activities',
               'Integrate lighting controls with BMS systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <TLDR
+            points={[
+              'DALI (IEC 62386) gives every luminaire a digital address on a 2-wire bus — up to 64 short addresses, 16 groups, 16 scenes per loop.',
+              'Absence detection saves more energy than presence (occupants must turn on, lights turn off automatically). Default in offices.',
+              'Daylight-linked dimming: closed-loop on the row nearest the window, gradual setpoint transition, 30 s minimum to avoid flicker irritation.',
+              'Scene control: 4–8 scenes per space is the practical limit — beyond that users get lost. Always include a manual override.',
+              'BMS integration via DALI gateway → BACnet/IP. Time schedules, holiday calendars, fault status all flow back to the head-end.',
+            ]}
+          />
 
-        {/* Section 1: DALI Protocol */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            DALI Protocol - Digital Addressable Lighting Interface
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 559.5.1"
+            clause="At each fixed lighting point one of the following shall be used for the termination of the wiring system: (a) a ceiling rose complying with BS 67; (b) a luminaire supporting coupler (LSC) complying with BS 6972 or BS 7001; (c) a batten lampholder or a pendant set complying with BS EN 60598; (d) a luminaire complying with BS EN 60598; (e) a suitable socket-outlet complying with BS 1363-2, BS 546 or BS EN IEC 60309-2; (f) a plug-in lighting distribution unit complying with BS 5733; (g) a connection unit complying with BS 1363-4; (h) appropriate terminals enclosed in a box complying with the relevant part of BS EN 60670 series or BS 4662; (i) a device for connecting a luminaire (DCL) outlet complying with BS EN 61995-1."
+            meaning={
+              <>
+                Even with DALI, the lighting point still terminates under Reg 559.5.1. A controllable
+                luminaire is typically option (d) — a BS EN 60598 luminaire with an embedded DALI
+                driver. Plug-in lighting distribution systems (option (f), BS 5733) are popular for
+                modular ceilings and play nicely with DALI head-ends. The control protocol is laid
+                on top of a compliant termination — it doesn’t replace it.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 559.5.1."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="DALI Protocol — Digital Addressable Lighting Interface">
             <p>
               DALI is the international standard (IEC 62386) for digital lighting control. It
               enables individual addressing of luminaires, flexible grouping, scene setting and
-              two-way communication for status monitoring - all on a simple two-wire bus.
+              two-way communication for status monitoring — all on a simple two-wire bus.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">DALI system characteristics:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Bus voltage:</strong> 16V DC nominal (11.5V-22.5V)
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum devices:</strong> 64 per bus (can be expanded)
-                </li>
-                <li className="pl-1">
-                  <strong>Groups:</strong> Up to 16 simultaneous groups
-                </li>
-                <li className="pl-1">
-                  <strong>Scenes:</strong> Up to 16 pre-programmed scenes
-                </li>
-                <li className="pl-1">
-                  <strong>Cable length:</strong> Maximum 300m
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DALI System Components</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI driver</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LED driver with DALI dimming control input
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI controller</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Master device that sends commands to bus
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI power supply</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provides 16V DC to the control bus
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI sensor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Occupancy or light level sensor on bus
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI switch/button</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        User input device for manual control
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI gateway</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Interface to BMS (BACnet, KNX, Modbus)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DALI vs 1-10V Dimming</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white mb-1">DALI advantages:</p>
-                  <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Individual addressing</li>
-                    <li className="pl-1">Two-way communication</li>
-                    <li className="pl-1">Soft dimming curves</li>
-                    <li className="pl-1">Remote commissioning</li>
-                    <li className="pl-1">Fault reporting</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white mb-1">1-10V limitations:</p>
-                  <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
-                    <li className="pl-1">No addressing (all together)</li>
-                    <li className="pl-1">One-way only</li>
-                    <li className="pl-1">Separate control cable per zone</li>
-                    <li className="pl-1">No status feedback</li>
-                    <li className="pl-1">Manual commissioning</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>DALI system characteristics:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Bus voltage:</strong> 16V DC nominal (11.5V-22.5V)
+              </li>
+              <li>
+                <strong>Maximum devices:</strong> 64 per bus (can be expanded)
+              </li>
+              <li>
+                <strong>Groups:</strong> up to 16 simultaneous groups
+              </li>
+              <li>
+                <strong>Scenes:</strong> up to 16 pre-programmed scenes
+              </li>
+              <li>
+                <strong>Cable length:</strong> maximum 300m
+              </li>
+            </ul>
+            <p>
+              <strong>DALI system components (component / function):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>DALI driver — LED driver with DALI dimming control input</li>
+              <li>DALI controller — master device that sends commands to bus</li>
+              <li>DALI power supply — provides 16V DC to the control bus</li>
+              <li>DALI sensor — occupancy or light level sensor on bus</li>
+              <li>DALI switch/button — user input device for manual control</li>
+              <li>DALI gateway — interface to BMS (BACnet, KNX, Modbus)</li>
+            </ul>
+            <p>
+              <strong>DALI advantages:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Individual addressing</li>
+              <li>Two-way communication</li>
+              <li>Soft dimming curves</li>
+              <li>Remote commissioning</li>
+              <li>Fault reporting</li>
+            </ul>
+            <p>
+              <strong>1-10V limitations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>No addressing (all together)</li>
+              <li>One-way only</li>
+              <li>Separate control cable per zone</li>
+              <li>No status feedback</li>
+              <li>Manual commissioning</li>
+            </ul>
+            <p>
               <strong>DALI-2:</strong> The updated standard adds standardised control devices,
               colour control (Tc, RGBW) and improved interoperability. Specify DALI-2 for new
               installations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Occupancy Detection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Presence and Absence Detection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Presence and Absence Detection">
             <p>
-              Occupancy-based control automatically adjusts lighting based on whether spaces are in
-              use. The choice between presence detection (auto on/off) and absence detection (manual
-              on, auto off) significantly affects both energy savings and user satisfaction.
+              Occupancy-based control automatically adjusts lighting based on whether spaces are
+              in use. The choice between presence detection (auto on/off) and absence detection
+              (manual on, auto off) significantly affects both energy savings and user
+              satisfaction.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Presence Detection</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Lights switch ON automatically when occupied</li>
-                  <li className="pl-1">Lights switch OFF automatically when vacant</li>
-                  <li className="pl-1">Hands-free operation</li>
-                  <li className="pl-1">Can waste energy (switching on unnecessarily)</li>
-                  <li className="pl-1">Suitable for: toilets, corridors, stores</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Absence Detection (Preferred)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">User must switch ON manually</li>
-                  <li className="pl-1">Lights switch OFF automatically when vacant</li>
-                  <li className="pl-1">Encourages energy awareness</li>
-                  <li className="pl-1">Greater energy savings</li>
-                  <li className="pl-1">Suitable for: offices, meeting rooms</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sensor Technologies</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Detection Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PIR (Passive Infrared)</td>
-                      <td className="border border-white/10 px-3 py-2">Body heat movement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General use, cost-effective
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ultrasonic</td>
-                      <td className="border border-white/10 px-3 py-2">Sound wave reflection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fine movement, partitioned spaces
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Microwave</td>
-                      <td className="border border-white/10 px-3 py-2">Radio wave reflection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Through materials, outdoor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dual technology</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PIR + ultrasonic combined
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduced false triggers, offices
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sensor Placement Guidelines
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">PIR: Position facing direction of movement (not parallel)</li>
-                <li className="pl-1">Avoid HVAC outlets, direct sunlight, heat sources</li>
-                <li className="pl-1">Consider furniture obstructions and partitions</li>
-                <li className="pl-1">Check coverage patterns in manufacturer data</li>
-                <li className="pl-1">Typical coverage: 6-8m diameter for ceiling mount</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Presence detection:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lights switch ON automatically when occupied</li>
+              <li>Lights switch OFF automatically when vacant</li>
+              <li>Hands-free operation</li>
+              <li>Can waste energy (switching on unnecessarily)</li>
+              <li>Suitable for: toilets, corridors, stores</li>
+            </ul>
+            <p>
+              <strong>Absence detection (preferred):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>User must switch ON manually</li>
+              <li>Lights switch OFF automatically when vacant</li>
+              <li>Encourages energy awareness</li>
+              <li>Greater energy savings</li>
+              <li>Suitable for: offices, meeting rooms</li>
+            </ul>
+            <p>
+              <strong>Sensor technologies (type / detection method / best for):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>PIR (passive infrared) — body heat movement — general use, cost-effective</li>
+              <li>
+                Ultrasonic — sound wave reflection — fine movement, partitioned spaces
+              </li>
+              <li>Microwave — radio wave reflection — through materials, outdoor</li>
+              <li>Dual technology — PIR + ultrasonic combined — reduced false triggers, offices</li>
+            </ul>
+            <p>
+              <strong>Sensor placement guidelines:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>PIR: position facing direction of movement (not parallel)</li>
+              <li>Avoid HVAC outlets, direct sunlight, heat sources</li>
+              <li>Consider furniture obstructions and partitions</li>
+              <li>Check coverage patterns in manufacturer data</li>
+              <li>Typical coverage: 6-8m diameter for ceiling mount</li>
+            </ul>
+            <p>
               <strong>Time delay:</strong> Set hold-on time (10-20 minutes for offices) to avoid
               nuisance switching during brief periods of stillness.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Daylight Linking */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Daylight Linking and Photocell Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Daylight Linking and Photocell Control">
             <p>
               Daylight-linked dimming maintains constant illuminance on the task area by reducing
               artificial lighting when natural daylight is available. Photocells measure light
-              levels and adjust luminaire output, providing significant energy savings in perimeter
-              zones.
+              levels and adjust luminaire output, providing significant energy savings in
+              perimeter zones.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Daylight linking approaches:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Closed-loop:</strong> Sensor measures actual task illuminance, adjusts to
-                  maintain setpoint
-                </li>
-                <li className="pl-1">
-                  <strong>Open-loop:</strong> Sensor measures daylight only, assumes proportional
-                  contribution
-                </li>
-                <li className="pl-1">
-                  <strong>Switching:</strong> Rows of luminaires switch off near windows
-                </li>
-                <li className="pl-1">
-                  <strong>Dimming:</strong> Smooth adjustment of light level (preferred)
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Photocell Positioning
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Ceiling-mounted, angled toward task area</li>
-                  <li className="pl-1">Away from direct sunlight patches</li>
-                  <li className="pl-1">Not obscured by shelving or partitions</li>
-                  <li className="pl-1">Consider blinds position effect</li>
-                  <li className="pl-1">One sensor per control zone</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Control Zone Considerations
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Separate zones by window proximity</li>
-                  <li className="pl-1">Zone depth typically 4-6m from window</li>
-                  <li className="pl-1">Consider blinds/shading interaction</li>
-                  <li className="pl-1">Multiple zones for deep plan spaces</li>
-                  <li className="pl-1">Core areas may not need daylight linking</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Set target illuminance level (e.g., 500 lux for office)</li>
-                <li className="pl-1">Commission during overcast daytime conditions</li>
-                <li className="pl-1">Verify smooth dimming without visible steps</li>
-                <li className="pl-1">Set minimum dimming level (typically 10-20%)</li>
-                <li className="pl-1">Adjust dead-band to prevent hunting</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Energy savings:</strong> Daylight linking typically saves 20-40% in perimeter
-              zones. Savings depend on window area, orientation, shading and occupancy patterns.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Scheduling and Scenes */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Time Scheduling and Scene Setting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Time scheduling automatically adjusts lighting based on building occupation patterns,
-              while scene setting provides pre-programmed lighting configurations for different
-              activities. Together they enhance both energy efficiency and user experience.
+              <strong>Daylight linking approaches:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Time Scheduling Strategies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Time Period</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Before core hours (e.g., 06:00)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduced level or off, sensor-only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Core hours (e.g., 08:00-18:00)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Normal operation with daylight/occupancy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        After hours (e.g., 20:00)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sweep-off, sensor-only operation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Night (e.g., 23:00-06:00)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Off except emergency/security
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Weekends/holidays</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimal operation, sensor-controlled only
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Scene Settings</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Scene</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Light Level
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Full</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">General work, cleaning</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Presentation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        30-50% (front), off (screen area)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meeting rooms, lecture theatres
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Video conference</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        70% (face lighting important)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meeting rooms with cameras
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dimmed</td>
-                      <td className="border border-white/10 px-3 py-2">20-30%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Evening events, relaxation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">All off</td>
-                      <td className="border border-white/10 px-3 py-2">0% (except emergency)</td>
-                      <td className="border border-white/10 px-3 py-2">End of day, secure areas</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Integration with BMS</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Central monitoring of all lighting status</li>
-                <li className="pl-1">Energy consumption logging per zone</li>
-                <li className="pl-1">Lamp failure alerts for maintenance</li>
-                <li className="pl-1">Demand response for load shedding</li>
-                <li className="pl-1">Fire alarm integration (full on, escape routes)</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>User override:</strong> Always provide local override capability for occupant
-              comfort. Log overrides to identify spaces where automatic settings need adjustment.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Closed-loop:</strong> sensor measures actual task illuminance, adjusts to
+                maintain setpoint
+              </li>
+              <li>
+                <strong>Open-loop:</strong> sensor measures daylight only, assumes proportional
+                contribution
+              </li>
+              <li>
+                <strong>Switching:</strong> rows of luminaires switch off near windows
+              </li>
+              <li>
+                <strong>Dimming:</strong> smooth adjustment of light level (preferred)
+              </li>
+            </ul>
+            <p>
+              <strong>Photocell positioning:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ceiling-mounted, angled toward task area</li>
+              <li>Away from direct sunlight patches</li>
+              <li>Not obscured by shelving or partitions</li>
+              <li>Consider blinds position effect</li>
+              <li>One sensor per control zone</li>
+            </ul>
+            <p>
+              <strong>Control zone considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Separate zones by window proximity</li>
+              <li>Zone depth typically 4-6m from window</li>
+              <li>Consider blinds/shading interaction</li>
+              <li>Multiple zones for deep plan spaces</li>
+              <li>Core areas may not need daylight linking</li>
+            </ul>
+            <p>
+              <strong>Commissioning requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Set target illuminance level (e.g., 500 lux for office)</li>
+              <li>Commission during overcast daytime conditions</li>
+              <li>Verify smooth dimming without visible steps</li>
+              <li>Set minimum dimming level (typically 10-20%)</li>
+              <li>Adjust dead-band to prevent hunting</li>
+            </ul>
+            <p>
+              <strong>Energy savings:</strong> Daylight linking typically saves 20-40% in
+              perimeter zones. Savings depend on window area, orientation, shading and occupancy
+              patterns.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Time Scheduling and Scene Setting">
+            <p>
+              Time scheduling automatically adjusts lighting based on building occupation
+              patterns, while scene setting provides pre-programmed lighting configurations for
+              different activities. Together they enhance both energy efficiency and user
+              experience.
+            </p>
+            <p>
+              <strong>Time scheduling strategies (time period / typical action):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Before core hours (e.g., 06:00) — reduced level or off, sensor-only</li>
+              <li>Core hours (e.g., 08:00-18:00) — normal operation with daylight/occupancy</li>
+              <li>After hours (e.g., 20:00) — sweep-off, sensor-only operation</li>
+              <li>Night (e.g., 23:00-06:00) — off except emergency/security</li>
+              <li>Weekends/holidays — minimal operation, sensor-controlled only</li>
+            </ul>
+            <p>
+              <strong>Common scene settings (scene / typical light level / application):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Full — 100% — general work, cleaning</li>
+              <li>
+                Presentation — 30-50% (front), off (screen area) — meeting rooms, lecture theatres
+              </li>
+              <li>
+                Video conference — 70% (face lighting important) — meeting rooms with cameras
+              </li>
+              <li>Dimmed — 20-30% — evening events, relaxation</li>
+              <li>All off — 0% (except emergency) — end of day, secure areas</li>
+            </ul>
+            <p>
+              <strong>Integration with BMS:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Central monitoring of all lighting status</li>
+              <li>Energy consumption logging per zone</li>
+              <li>Lamp failure alerts for maintenance</li>
+              <li>Demand response for load shedding</li>
+              <li>Fire alarm integration (full on, escape routes)</li>
+            </ul>
+            <p>
+              <strong>User override:</strong> Always provide local override capability for
+              occupant comfort. Log overrides to identify spaces where automatic settings need
+              adjustment.
+            </p>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: DALI System Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> An open plan office has 48 luminaires to be controlled with
-                DALI. How many buses are required?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>DALI maximum: 64 devices per bus</p>
-                <p className="mt-2">Luminaires: 48</p>
-                <p>Additional devices required:</p>
-                <p>- 4 occupancy sensors</p>
-                <p>- 4 daylight sensors</p>
-                <p>- 2 switch modules</p>
-                <p className="mt-2">
-                  Total devices: 48 + 4 + 4 + 2 = <strong>58 devices</strong>
-                </p>
-                <p className="mt-2">58 &lt; 64 limit</p>
-                <p className="text-green-400">✓ Single DALI bus sufficient</p>
-                <p className="mt-2 text-white">Note: Allow headroom for future expansion</p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Control Zone Layout
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An office is 15m deep with windows on one side. How many
-                daylight control zones are appropriate?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Daylight penetration typically 4-6m effective depth</p>
-                <p className="mt-2">Room depth: 15m from window</p>
-                <p className="mt-2">
-                  <strong>Recommended zones:</strong>
-                </p>
-                <p>Zone 1: 0-5m (perimeter) - daylight-linked dimming</p>
-                <p>Zone 2: 5-10m (intermediate) - daylight-linked dimming</p>
-                <p>Zone 3: 10-15m (core) - occupancy control only</p>
-                <p className="mt-2">
-                  <strong>3 control zones recommended</strong>
-                </p>
-                <p className="mt-2 text-white">Each zone: separate photocell + DALI group</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Energy Savings Estimate
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> Estimate annual energy savings for lighting controls in a
-                500m² office operating 2500 hours/year.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Base case (no controls): 10 W/m² × 500m² × 2500h = 12,500 kWh/year</p>
-                <p className="mt-2">Control savings estimates:</p>
-                <p>- Daylight linking (40% area): 30% saving = 1500 kWh</p>
-                <p>- Absence detection (100% area): 35% saving = 4375 kWh</p>
-                <p>- Combined (with overlap factor 0.7):</p>
-                <p className="mt-2">
-                  Total saving: (1500 + 4375) × 0.7 = <strong>4113 kWh/year</strong>
-                </p>
-                <p className="mt-2">
-                  Percentage saving: 4113/12500 = <strong>33%</strong>
-                </p>
-                <p className="mt-2 text-white">At £0.30/kWh = £1234/year cost saving</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — DALI system sizing:</strong> An open plan office has 48
+              luminaires to be controlled with DALI. How many buses are required?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>DALI maximum: 64 devices per bus</li>
+              <li>Luminaires: 48</li>
+              <li>4 occupancy sensors</li>
+              <li>4 daylight sensors</li>
+              <li>2 switch modules</li>
+              <li>
+                Total devices: 48 + 4 + 4 + 2 = <strong>58 devices</strong>
+              </li>
+              <li>58 &lt; 64 limit — single DALI bus sufficient</li>
+              <li>Allow headroom for future expansion</li>
+            </ul>
+            <p>
+              <strong>Example 2 — control zone layout:</strong> An office is 15m deep with windows
+              on one side. How many daylight control zones are appropriate?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Daylight penetration typically 4-6m effective depth</li>
+              <li>Room depth: 15m from window</li>
+              <li>Zone 1: 0-5m (perimeter) — daylight-linked dimming</li>
+              <li>Zone 2: 5-10m (intermediate) — daylight-linked dimming</li>
+              <li>Zone 3: 10-15m (core) — occupancy control only</li>
+              <li>
+                <strong>3 control zones recommended</strong>
+              </li>
+              <li>Each zone: separate photocell + DALI group</li>
+            </ul>
+            <p>
+              <strong>Example 3 — energy savings estimate:</strong> Estimate annual energy savings
+              for lighting controls in a 500m² office operating 2500 hours/year.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Base case (no controls): 10 W/m² × 500m² × 2500h = 12,500 kWh/year</li>
+              <li>Daylight linking (40% area): 30% saving = 1500 kWh</li>
+              <li>Absence detection (100% area): 35% saving = 4375 kWh</li>
+              <li>Combined (with overlap factor 0.7):</li>
+              <li>
+                Total saving: (1500 + 4375) × 0.7 = <strong>4113 kWh/year</strong>
+              </li>
+              <li>
+                Percentage saving: 4113/12,500 = <strong>33%</strong>
+              </li>
+              <li>At £0.30/kWh = £1234/year cost saving</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>DALI design checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Count total devices (luminaires + sensors + switches)</li>
+              <li>Check cable length does not exceed 300m</li>
+              <li>Include DALI power supply (2W typical per bus)</li>
+              <li>Plan groups and scenes during design</li>
+              <li>Specify DALI-2 for new installations</li>
+            </ul>
+            <p>
+              <strong>Part L compliance:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Presence/absence detection in spaces &gt;30m²</li>
+              <li>Daylight dimming within 3m of windows</li>
+              <li>Local switching for rooms &lt;4 luminaires</li>
+              <li>Addressable control for larger installations</li>
+              <li>Controls contribute to LENI calculation</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DALI Design Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Count total devices (luminaires + sensors + switches)</li>
-                <li className="pl-1">Check cable length does not exceed 300m</li>
-                <li className="pl-1">Include DALI power supply (2W typical per bus)</li>
-                <li className="pl-1">Plan groups and scenes during design</li>
-                <li className="pl-1">Specify DALI-2 for new installations</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Sensor blind spots</strong> — check coverage patterns carefully
+                </li>
+                <li>
+                  <strong>Too few zones</strong> — large zones reduce savings potential
+                </li>
+                <li>
+                  <strong>No local override</strong> — occupants will bypass controls
+                </li>
+                <li>
+                  <strong>Poor commissioning</strong> — controls only effective when properly set
+                  up
+                </li>
               </ul>
-            </div>
+            }
+            doInstead="Map sensor coverage against the floor plan, split daylight + occupancy into the smallest practical zones, give every space a manual override, and plan a commissioning visit (with daylight measurements) before handover."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Part L Compliance</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Presence/absence detection in spaces &gt;30m²</li>
-                <li className="pl-1">Daylight dimming within 3m of windows</li>
-                <li className="pl-1">Local switching for rooms &lt;4 luminaires</li>
-                <li className="pl-1">Addressable control for larger installations</li>
-                <li className="pl-1">Controls contribute to LENI calculation</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sensor blind spots:</strong> Check coverage patterns carefully
-                </li>
-                <li className="pl-1">
-                  <strong>Too few zones:</strong> Large zones reduce savings potential
-                </li>
-                <li className="pl-1">
-                  <strong>No local override:</strong> Occupants will bypass controls
-                </li>
-                <li className="pl-1">
-                  <strong>Poor commissioning:</strong> Controls only effective when properly set up
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="DALI scheme on a 1,200 m² open-plan office — control strategy"
+            situation={
+              <>
+                You’re drafting the controls narrative for an open-plan office: 96 luminaires
+                across 12 desk pods, glazed south façade, three meeting rooms off the floor, a
+                breakout zone and a print bay. Client wants Part L compliance, BREEAM Hea 06 credit
+                and zero complaints in the first month.
+              </>
+            }
+            whatToDo={
+              <>
+                Architect the DALI loop: two universes of 64 addresses give you headroom (96 fits
+                in one but split for resilience). Group by row of three luminaires for daylight
+                response — closest-to-glass row dimmed first, mid-row second, deepest row
+                manually-set baseline. Set the strategy to absence detection across the open plan
+                (occupants press to turn on, sensor turns off after 15 min absence) and presence
+                in the meeting rooms and print bay. Daylight setpoint 500 lx maintained, dimming
+                rate 30 s minimum to avoid distraction. Three scenes per meeting room (Present,
+                Video Call, Cleaning). Wire DALI gateway → BACnet/IP into the BMS for monitoring
+                and time schedules (07:30 ramp-up, 19:00 ramp-down, weekend lock-out with manual
+                override). Document everything on the controls schedule so the commissioning
+                engineer knows the intent, not just the addresses.
+              </>
+            }
+            whyItMatters={
+              <>
+                Without an explicit controls narrative, the commissioning engineer guesses, the FM
+                team gets blamed for poor performance, and the BREEAM credit is lost. DALI is only
+                as smart as the brief that goes with it.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'DALI (IEC 62386) — 64 addresses, 16 groups, 16 scenes per loop, 2-wire polarity-insensitive bus.',
+              'Absence detection beats presence in offices — Part L and BREEAM both reward it.',
+              'Daylight-linked dimming: closed-loop, slow transitions (≥ 30 s), zoned by window distance.',
+              'Scene count ≤ 8 per space; always provide a manual override for occupant agency.',
+              'Sensor coverage planning is a floor-plan exercise — never trust “rule of thumb” spacings.',
+              'BMS integration via DALI → BACnet/IP gateway: time schedules, fault reporting, calendar events.',
+              'Commission with daylight measurements present — the as-built scene only works in the actual lighting environment.',
+              'Every controllable luminaire still terminates per BS 7671 Reg 559.5.1 — the protocol sits on top of the wiring rules.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">DALI Specifications</p>
-                <ul className="space-y-0.5">
-                  <li>Bus voltage: 16V DC nominal</li>
-                  <li>Max devices: 64 per bus</li>
-                  <li>Groups: 16 max</li>
-                  <li>Scenes: 16 max</li>
-                  <li>Cable length: 300m max</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Control Strategies</p>
-                <ul className="space-y-0.5">
-                  <li>Absence detection preferred</li>
-                  <li>Daylight zone depth: 4-6m</li>
-                  <li>Hold-on time: 10-20 min</li>
-                  <li>Local override essential</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section4-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Emergency Lighting
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section4-5">
-              Next: External Lighting
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Emergency lighting design
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                External lighting
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 6 · Subsection 3 — Load Management and Demand Reduction
+ * HNC Electrical Engineering for Building Services (Pearson U4019)
+ *   Maximum demand, load factor, demand response, peak shaving, time-of-use tariffs,
+ *   BMS-coordinated staggered starts. The financial-engineering side of BSE design
+ *   that converts kVA to kWh to cash.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Load Management and Demand Reduction - HNC Module 3 Section 6.3';
@@ -195,804 +214,448 @@ const faqs = [
 ];
 
 const HNCModule3Section6_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.6.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Load Management and Demand Reduction
-          </h1>
-          <p className="text-white">
-            Strategies and techniques to optimise electrical demand, reduce peak loads and minimise
-            energy costs in building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 6 · Subsection 3"
+            title="Load management and demand reduction"
+            description="Strategies and techniques to optimise electrical demand, reduce peak loads and minimise energy costs in building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Maximum demand:</strong> Peak power averaged over 30 minutes
-              </li>
-              <li className="pl-1">
-                <strong>Load factor:</strong> Average demand / Maximum demand
-              </li>
-              <li className="pl-1">
-                <strong>Peak shaving:</strong> Reduce grid peaks using storage or generation
-              </li>
-              <li className="pl-1">
-                <strong>Load shifting:</strong> Move flexible loads to off-peak periods
-              </li>
+          <TLDR
+            points={[
+              'You compute load factor (LF = average demand / maximum demand) on every metered building &mdash; LF &lt; 0.4 indicates spikey load profile and PFC / battery storage opportunity.',
+              'You design BMS staggered starts and load-shedding schemes that respect motor inrush sequencing and equipment criticality &mdash; sized to keep MD below DNO capacity-charge bands.',
+              'You combine peak-shaving (battery / generator) with time-of-use (TOU) tariff arbitrage on commercial sites &mdash; typical payback 5&ndash;8 years with current red/amber/green DUoS bands.',
+              'You document the demand-management strategy against ESOS Phase 3+ (Energy Savings Opportunity Scheme) for sites &gt; 250 employees or &pound;44m turnover.',
+            ]}
+          />
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 311.1 (Maximum demand)"
+            clause="The maximum demand of an installation shall be assessed."
+            meaning={
+              <>
+                BS 7671 311.1 makes maximum-demand assessment compulsory at design stage.
+                Once the building is in service, &ldquo;maximum demand&rdquo; becomes a
+                continuously-billed quantity on commercial half-hourly DNO tariffs &mdash;
+                the difference between sized MD and operational MD is where load
+                management lives. As the BSE engineer you specify the BMS load-shedding
+                logic, generator interlocks, battery dispatch and EV-charger throttling
+                that keep operational MD below the contractual cap.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026, Reg 311.1; ENA Engineering Recommendation P29 (security of supply); ESOS Regulations 2014 (large enterprise energy audit); CIBSE Guide F (energy efficiency)"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Calculate maximum demand and load factor for buildings",
+              "Explain demand response and load shedding strategies",
+              "Apply peak shaving techniques using storage and generation",
+              "Understand time-of-use tariff structures and optimisation",
+              "Quantify power factor correction benefits",
+              "Design BMS load control schemes with staggered starting",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="In 30 seconds">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Maximum demand:</strong> Peak power averaged over 30 minutes</li>
+              <li><strong>Load factor:</strong> Average demand / Maximum demand</li>
+              <li><strong>Peak shaving:</strong> Reduce grid peaks using storage or generation</li>
+              <li><strong>Load shifting:</strong> Move flexible loads to off-peak periods</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BMS control:</strong> Automated demand limiting
-              </li>
-              <li className="pl-1">
-                <strong>Staggered starting:</strong> Avoid motor inrush coincidence
-              </li>
-              <li className="pl-1">
-                <strong>ToU tariffs:</strong> 2-3x cost difference peak vs off-peak
-              </li>
-              <li className="pl-1">
-                <strong>Power factor:</strong> Reduce kVA for same kW output
-              </li>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Context</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BMS control:</strong> Automated demand limiting</li>
+              <li><strong>Staggered starting:</strong> Avoid motor inrush coincidence</li>
+              <li><strong>ToU tariffs:</strong> 2-3x cost difference peak vs off-peak</li>
+              <li><strong>Power factor:</strong> Reduce kVA for same kW output</li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Calculate maximum demand and load factor for buildings',
-              'Explain demand response and load shedding strategies',
-              'Apply peak shaving techniques using storage and generation',
-              'Understand time-of-use tariff structures and optimisation',
-              'Quantify power factor correction benefits',
-              'Design BMS load control schemes with staggered starting',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Maximum Demand and Load Factor */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Maximum Demand and Load Factor
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Maximum Demand and Load Factor">
             <p>
               Maximum demand (MD) is the highest average power drawn by a building over a defined
               period, typically 30 minutes. It determines supply infrastructure sizing, affects
               electricity costs, and is the key metric for load management strategies.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key definitions:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">Key definitions:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Maximum Demand (MD):</strong> Highest average power over integration
                   period (kW or kVA)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Integration Period:</strong> Time over which demand is averaged (typically
                   30 minutes)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Connected Load:</strong> Total installed equipment rating
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Diversity Factor:</strong> Ratio of maximum demand to connected load
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Load Factor Calculation
               </p>
-              <p className="font-mono text-center text-lg mb-2">
+              <p><strong>
                 Load Factor = Average Demand / Maximum Demand
-              </p>
-              <p className="text-xs text-white text-center">
+              </strong></p>
+              <p>
                 Also expressed as: Total Energy (kWh) / (MD × Operating Hours)
               </p>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Typical Load Factors by Building Type
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Load Factor
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Characteristics
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Continuous process industry
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.80 - 0.95</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        24/7 operation, stable loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office building</td>
-                      <td className="border border-white/10 px-3 py-2">0.40 - 0.60</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Peak morning start-up, daytime only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail premises</td>
-                      <td className="border border-white/10 px-3 py-2">0.50 - 0.65</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extended hours, variable occupancy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schools and colleges</td>
-                      <td className="border border-white/10 px-3 py-2">0.30 - 0.45</td>
-                      <td className="border border-white/10 px-3 py-2">Term-time only, holidays</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Residential</td>
-                      <td className="border border-white/10 px-3 py-2">0.25 - 0.35</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Morning/evening peaks, diverse occupancy
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Continuous process industry</strong> — 0.80 - 0.95 — 24/7 operation, stable loads</li>
+              <li><strong>Office building</strong> — 0.40 - 0.60 — Peak morning start-up, daytime only</li>
+              <li><strong>Retail premises</strong> — 0.50 - 0.65 — Extended hours, variable occupancy</li>
+              <li><strong>Schools and colleges</strong> — 0.30 - 0.45 — Term-time only, holidays</li>
+              <li><strong>Residential</strong> — 0.25 - 0.35 — Morning/evening peaks, diverse occupancy</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Commercial benefit:</strong> Higher load factor means better utilisation of
               supply infrastructure. Many suppliers offer lower unit rates to customers with high
               load factors.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Demand Response Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Demand Response Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Demand Response Strategies">
             <p>
               Demand response (DR) encompasses actions taken to reduce electricity consumption
               during periods of peak demand or grid stress. Participation in DR programmes can
               provide significant financial benefits whilst supporting grid stability.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Types of demand response:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <p className="text-sm font-medium text-white">Types of demand response:</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Price-based DR:</strong> Respond to time-varying electricity prices
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Incentive-based DR:</strong> Receive payments for reducing load when
                   called upon
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Emergency DR:</strong> Mandatory reductions during grid emergencies
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Capacity market:</strong> Commit to providing demand reduction capacity
                 </li>
               </ul>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   UK Demand Response Schemes
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Demand Flexibility Service:</strong> National Grid payments for shifting
                     load
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>STOR:</strong> Short-term operating reserve
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Capacity Market:</strong> Annual payments for availability
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Triad avoidance:</strong> Avoid top 3 demand peaks
                   </li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical DR Actions</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Pre-cool buildings before DR event</li>
-                  <li className="pl-1">Reduce HVAC setpoints temporarily</li>
-                  <li className="pl-1">Dim non-essential lighting</li>
-                  <li className="pl-1">Defer EV charging and water heating</li>
-                </ul>
-              </div>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Typical DR Actions</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Pre-cool buildings before DR event</li>
+                  <li>Reduce HVAC setpoints temporarily</li>
+                  <li>Dim non-essential lighting</li>
+                  <li>Defer EV charging and water heating</li>
+                </ul>
+
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 DR Event Notification Timeline
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Notice Period</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Programme
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Payment Level</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Day-ahead</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Scheduled DR, Triad avoidance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lower</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2-4 hours</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Demand Flexibility Service
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">20-30 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">STOR, Emergency response</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Day-ahead</strong> — Scheduled DR, Triad avoidance — Lower</li>
+              <li><strong>2-4 hours</strong> — Demand Flexibility Service — Medium</li>
+              <li><strong>20-30 minutes</strong> — STOR, Emergency response — Higher</li>
+            </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Building automation:</strong> BMS integration with aggregator platforms
               enables automatic DR response, maximising participation without manual intervention.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 3: Load Shedding and Prioritisation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Load Shedding and Prioritisation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Load Shedding and Prioritisation">
             <p>
               Load shedding is the systematic reduction of electrical loads to keep demand below a
               threshold. Effective load shedding requires careful prioritisation to maintain
               essential services whilst reducing non-critical consumption.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Load Priority Categories
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Priority</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example Loads</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Shedding</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-red-400 font-medium">
-                        1 - Critical
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Life safety</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire systems, emergency lighting, lifts
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Never shed</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400 font-medium">
-                        2 - Essential
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Core operations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IT servers, security, critical process
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Only in emergency</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400 font-medium">
-                        3 - Important
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Comfort critical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Primary HVAC, main lighting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Reduce before shed</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400 font-medium">
-                        4 - Deferrable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Flexible loads</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EV charging, water heating, storage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">First to shed</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-blue-400 font-medium">
-                        5 - Non-essential
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Amenity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Decorative lighting, displays, vending
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Shed freely</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1 - Critical</strong> — Life safety — Fire systems, emergency lighting, lifts — Never shed</li>
+              <li><strong>2 - Essential</strong> — Core operations — IT servers, security, critical process — Only in emergency</li>
+              <li><strong>3 - Important</strong> — Comfort critical — Primary HVAC, main lighting — Reduce before shed</li>
+              <li><strong>4 - Deferrable</strong> — Flexible loads — EV charging, water heating, storage — First to shed</li>
+              <li><strong>5 - Non-essential</strong> — Amenity — Decorative lighting, displays, vending — Shed freely</li>
+            </ul>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Load Shedding Strategies
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Rotating shed:</strong> Cycle loads on/off in sequence
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Duty cycling:</strong> Limit run-time percentage
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Staged reduction:</strong> Progressive load removal
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Demand limiting:</strong> Auto-shed at threshold
                   </li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Implementation Requirements
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Real-time demand monitoring</li>
-                  <li className="pl-1">Controllable load circuits/contactors</li>
-                  <li className="pl-1">BMS integration and programming</li>
-                  <li className="pl-1">Occupant communication protocols</li>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Real-time demand monitoring</li>
+                  <li>Controllable load circuits/contactors</li>
+                  <li>BMS integration and programming</li>
+                  <li>Occupant communication protocols</li>
                 </ul>
-              </div>
-            </div>
 
-            <p className="text-sm text-white italic">
+            
+
+            <p><em>
               <strong>Regulatory note:</strong> BS 7671 and building regulations require that life
               safety systems remain operational. Load shedding schemes must be designed to protect
               these circuits.
-            </p>
-          </div>
-        </section>
+            </em></p>
+          </ConceptBlock>
 
-        {/* Section 4: Peak Shaving Techniques */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Peak Shaving Techniques
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Peak Shaving Techniques">
             <p>
               Peak shaving reduces maximum demand by supplementing grid supply with local generation
               or storage during peak periods. This reduces demand charges, improves supply
               resilience, and can provide significant cost savings.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Peak Shaving Technologies
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Response Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Battery storage (BESS)</td>
-                      <td className="border border-white/10 px-3 py-2">Milliseconds</td>
-                      <td className="border border-white/10 px-3 py-2">1-4 hours</td>
-                      <td className="border border-white/10 px-3 py-2">Daily peak shaving, DR</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Diesel/gas generator</td>
-                      <td className="border border-white/10 px-3 py-2">30-60 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">Hours (fuel limited)</td>
-                      <td className="border border-white/10 px-3 py-2">Extended peaks, backup</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        CHP (combined heat/power)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Minutes</td>
-                      <td className="border border-white/10 px-3 py-2">Continuous</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Base load with heat demand
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Solar PV</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Instant (when generating)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Daylight hours</td>
-                      <td className="border border-white/10 px-3 py-2">Daytime peak reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermal storage (ice/water)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Minutes</td>
-                      <td className="border border-white/10 px-3 py-2">Hours</td>
-                      <td className="border border-white/10 px-3 py-2">HVAC peak shifting</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Battery storage (BESS)</strong> — Milliseconds — 1-4 hours — Daily peak shaving, DR</li>
+              <li><strong>Diesel/gas generator</strong> — 30-60 seconds — Hours (fuel limited) — Extended peaks, backup</li>
+              <li><strong>CHP (combined heat/power)</strong> — Minutes — Continuous — Base load with heat demand</li>
+              <li><strong>Solar PV</strong> — Instant (when generating) — Daylight hours — Daytime peak reduction</li>
+              <li><strong>Thermal storage (ice/water)</strong> — Minutes — Hours — HVAC peak shifting</li>
+            </ul>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Battery Sizing for Peak Shaving
               </p>
-              <p className="font-mono text-center text-base mb-2">
+              <p><strong>
                 Required Capacity (kWh) = Peak Reduction (kW) x Duration (hours) / DoD
-              </p>
-              <p className="text-xs text-white text-center">
+              </strong></p>
+              <p>
                 DoD = Depth of Discharge (typically 0.8-0.9 for lithium-ion)
               </p>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6 text-sm">
-              <div className="p-3 rounded bg-white/5">
+              
                 <p className="font-medium text-elec-yellow mb-1">Example: Battery Sizing</p>
                 <p className="text-white">Reduce peak by 100 kW for 2 hours</p>
                 <p className="text-white">Capacity = 100 x 2 / 0.85 = 235 kWh</p>
-              </div>
-              <div className="p-3 rounded bg-white/5">
+
+              
                 <p className="font-medium text-elec-yellow mb-1">Economic Benefit</p>
                 <p className="text-white">MD reduction: 100 kW</p>
                 <p className="text-white">At £15/kVA/month = £18,000/year saving</p>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            
+
+            <p>
               <strong>Hybrid systems:</strong> Combining solar PV with battery storage maximises
               peak shaving benefits - PV reduces daytime peaks whilst batteries handle morning
               start-up and evening peaks.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 5: Time-of-Use Tariffs */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Time-of-Use Tariffs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Time-of-Use Tariffs">
             <p>
               Time-of-use (ToU) tariffs charge different rates depending on when electricity is
               consumed. Understanding tariff structures is essential for optimising load scheduling
               and achieving cost savings through load shifting.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Typical UK ToU Tariff Periods
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Period</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Times</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rate (example)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-red-400 font-medium">
-                        Peak (Red)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">16:00-19:00 weekdays</td>
-                      <td className="border border-white/10 px-3 py-2">30-45p/kWh</td>
-                      <td className="border border-white/10 px-3 py-2">Minimise consumption</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400 font-medium">
-                        High (Amber)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">07:00-16:00, 19:00-23:00</td>
-                      <td className="border border-white/10 px-3 py-2">18-25p/kWh</td>
-                      <td className="border border-white/10 px-3 py-2">Normal operations</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400 font-medium">
-                        Off-peak (Green)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">23:00-07:00, weekends</td>
-                      <td className="border border-white/10 px-3 py-2">8-15p/kWh</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shift flexible loads here
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Peak (Red)</strong> — 16:00-19:00 weekdays — 30-45p/kWh — Minimise consumption</li>
+              <li><strong>High (Amber)</strong> — 07:00-16:00, 19:00-23:00 — 18-25p/kWh — Normal operations</li>
+              <li><strong>Off-peak (Green)</strong> — 23:00-07:00, weekends — 8-15p/kWh — Shift flexible loads here</li>
+            </ul>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
+              <p className="text-sm font-medium text-white">
                 Loads suitable for time shifting:
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Electric vehicle charging:</strong> Easily deferred to overnight
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Water heating:</strong> Thermal storage provides flexibility
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ice storage:</strong> Make ice overnight for daytime cooling
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Batch processes:</strong> Schedule to avoid peak periods
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Battery charging:</strong> Charge off-peak, discharge on-peak
                 </li>
               </ul>
-            </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Triad Periods (Half-Hourly Metered Sites)
               </p>
-              <p className="text-sm text-white mb-2">
+              <p>
                 Triads are the three highest demand periods on the national grid between November
                 and February. Transmission charges (TNUoS) are based on your demand during these
                 periods.
               </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">Typical Triad periods: 17:00-18:00 on cold winter weekdays</li>
-                <li className="pl-1">Triad charges: £50-70/kW depending on region</li>
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>Typical Triad periods: 17:00-18:00 on cold winter weekdays</li>
+                <li>Triad charges: £50-70/kW depending on region</li>
+                <li>
                   Reducing demand by 100 kW during Triads saves £5,000-7,000/year
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Forecasting:</strong> National Grid publishes Triad warnings. BMS systems can
               integrate these alerts to automatically reduce demand during likely Triad periods.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 6: Power Factor Correction Benefits */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Power Factor Correction Benefits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Power Factor Correction Benefits">
             <p>
               Power factor correction (PFC) reduces the reactive power drawn from the supply,
               lowering apparent power (kVA) for the same real power (kW). This reduces maximum
               demand charges, cable losses, and may avoid supply capacity upgrades.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Power Factor Relationships
               </p>
-              <div className="grid grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-black/20">
+
+                
                   <p className="font-bold text-elec-yellow mb-1">pf = kW / kVA</p>
                   <p className="text-white text-xs">Power factor definition</p>
-                </div>
-                <div className="p-3 rounded bg-black/20">
+
+                
                   <p className="font-bold text-elec-yellow mb-1">kVAr = kVA x sin(cos⁻¹pf)</p>
                   <p className="text-white text-xs">Reactive power</p>
-                </div>
-                <div className="p-3 rounded bg-black/20">
+
+                
                   <p className="font-bold text-elec-yellow mb-1">kVA = kW / pf</p>
                   <p className="text-white text-xs">Apparent power</p>
-                </div>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Benefits of Power Factor Improvement
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Benefit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Saving</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reduced MD charges</td>
-                      <td className="border border-white/10 px-3 py-2">Lower kVA demand</td>
-                      <td className="border border-white/10 px-3 py-2">5-15% of demand charge</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Avoid pf penalty</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suppliers penalise pf &lt; 0.90
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Varies by supplier</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Released capacity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        More kW from same kVA supply
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Avoid supply upgrade cost
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reduced I²R losses</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower current = less heat loss
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1-3% energy saving</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage improvement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Less voltage drop in cables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Improved equipment performance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Reduced MD charges</strong> — Lower kVA demand — 5-15% of demand charge</li>
+              <li><strong>Avoid pf penalty</strong> — Suppliers penalise pf &lt; 0.90 — Varies by supplier</li>
+              <li><strong>Released capacity</strong> — More kW from same kVA supply — Avoid supply upgrade cost</li>
+              <li><strong>Reduced I²R losses</strong> — Lower current = less heat loss — 1-3% energy saving</li>
+              <li><strong>Voltage improvement</strong> — Less voltage drop in cables — Improved equipment performance</li>
+            </ul>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">PFC Equipment Types</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">PFC Equipment Types</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Fixed capacitors:</strong> Simple, low-cost, constant loads
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Auto-switching:</strong> Banks with contactors for varying loads
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Static (thyristor):</strong> Fast-switching, harmonic-filtered
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Active filters:</strong> For non-linear loads with harmonics
                   </li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Capacitor Sizing</p>
-                <p className="text-sm text-white mb-2">Required kVAr to correct from pf₁ to pf₂:</p>
-                <p className="font-mono text-sm text-center bg-black/20 p-2 rounded">
-                  kVAr = kW × (tan(cos⁻¹pf₁) - tan(cos⁻¹pf₂))
-                </p>
-              </div>
-            </div>
 
-            <p className="text-sm text-white italic">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">Capacitor Sizing</p>
+                <p>Required kVAr to correct from pf₁ to pf₂:</p>
+                <p><strong>
+                  kVAr = kW × (tan(cos⁻¹pf₁) - tan(cos⁻¹pf₂))
+                </strong></p>
+
+            
+
+            <p><em>
               <strong>Warning:</strong> Over-correction (leading pf) can cause voltage rise and
               equipment damage. Target pf of 0.95-0.98 is recommended.
-            </p>
-          </div>
-        </section>
+            </em></p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 7: Demand Side Management */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
-            Demand Side Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Demand Side Management">
             <p>
               Demand side management (DSM) encompasses all strategies to modify consumer demand
               patterns through efficiency improvements, load shifting, and demand reduction.
@@ -1000,522 +663,423 @@ const HNCModule3Section6_3 = () => {
               goals.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DSM Strategy Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Example Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Peak Clipping
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Reduce peaks directly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Load shedding, demand limiting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Valley Filling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Increase off-peak consumption
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Off-peak water/ice storage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Load Shifting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Move loads from peak to off-peak
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EV charging, batch processes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Strategic Conservation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Permanent demand reduction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Efficiency upgrades, LED retrofit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Flexible Load Shape
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Adapt to grid conditions</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Smart controls, price response
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <p className="text-sm font-medium text-elec-yellow/80">DSM Strategy Types</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Peak Clipping</strong> — Reduce peaks directly — Load shedding, demand limiting</li>
+              <li><strong>Valley Filling</strong> — Increase off-peak consumption — Off-peak water/ice storage</li>
+              <li><strong>Load Shifting</strong> — Move loads from peak to off-peak — EV charging, batch processes</li>
+              <li><strong>Strategic Conservation</strong> — Permanent demand reduction — Efficiency upgrades, LED retrofit</li>
+              <li><strong>Flexible Load Shape</strong> — Adapt to grid conditions — Smart controls, price response</li>
+            </ul>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 DSM Implementation Hierarchy
               </p>
               <ol className="text-sm text-white space-y-1 list-decimal list-outside ml-5">
-                <li className="pl-1">
+                <li>
                   <strong>Measure:</strong> Install sub-metering to understand load profiles
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Analyse:</strong> Identify peak contributors and flexible loads
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Reduce:</strong> Implement efficiency measures to lower base load
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Shift:</strong> Reschedule flexible loads to off-peak periods
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Automate:</strong> Integrate controls with BMS for automatic optimisation
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Monitor:</strong> Track performance and refine strategies
                 </li>
               </ol>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6 text-sm">
-              <div className="p-3 rounded bg-white/5">
+              
                 <p className="font-medium text-elec-yellow mb-1">Quick Wins</p>
-                <ul className="text-white space-y-1 list-disc list-outside ml-4">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Stagger start-up sequences</li>
                   <li>Optimise HVAC schedules</li>
                   <li>Control hot water heating times</li>
                   <li>Adjust EV charging times</li>
                 </ul>
-              </div>
-              <div className="p-3 rounded bg-white/5">
+
+              
                 <p className="font-medium text-elec-yellow mb-1">Strategic Investments</p>
-                <ul className="text-white space-y-1 list-disc list-outside ml-4">
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Battery energy storage</li>
                   <li>Thermal storage systems</li>
                   <li>Smart building controls</li>
                   <li>On-site generation (PV, CHP)</li>
                 </ul>
-              </div>
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            
+
+            <p>
               <strong>Grid services:</strong> Buildings with effective DSM can participate in
               balancing services, frequency response, and capacity markets, creating revenue streams
               from flexibility.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 8: Building Services - BMS Load Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
-            Building Services: BMS Load Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Building Services: BMS Load Control">
             <p>
               Building Management Systems (BMS) provide the automation platform for implementing
               load management strategies. Effective BMS programming can significantly reduce maximum
               demand through demand limiting, optimum start, and staggered equipment control.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 BMS Load Control Functions
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">MD Reduction</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Demand limiting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Auto-shed loads at threshold
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-20%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Staggered starting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sequential equipment start-up
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15-30%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Optimum start</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-condition before occupancy
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5-10%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Duty cycling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limit equipment run-time %
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-15%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Load rotation</td>
-                      <td className="border border-white/10 px-3 py-2">Cycle similar loads</td>
-                      <td className="border border-white/10 px-3 py-2">5-10%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Demand limiting</strong> — Auto-shed loads at threshold — 10-20%</li>
+              <li><strong>Staggered starting</strong> — Sequential equipment start-up — 15-30%</li>
+              <li><strong>Optimum start</strong> — Pre-condition before occupancy — 5-10%</li>
+              <li><strong>Duty cycling</strong> — Limit equipment run-time % — 10-15%</li>
+              <li><strong>Load rotation</strong> — Cycle similar loads — 5-10%</li>
+            </ul>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Staggered Motor Starting Sequence
               </p>
-              <p className="text-sm text-white mb-3">
+              <p>
                 Without staggered starting, coincident motor inrush can create demand spikes 6-8
                 times running current. A typical sequence for building start-up:
               </p>
               <ol className="text-sm text-white space-y-1 list-decimal list-outside ml-5">
-                <li className="pl-1">
+                <li>
                   <strong>T+0s:</strong> Supply fans start (priority ventilation)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>T+15s:</strong> Return fans start
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>T+30s:</strong> Chilled water pumps start
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>T+45s:</strong> Heating water pumps start
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>T+60s:</strong> Chiller 1 starts
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>T+90s:</strong> Chiller 2 starts (if required)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>T+120s:</strong> Non-essential loads enabled
                 </li>
               </ol>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Demand Limiting Algorithm
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Monitor kW at 1-minute intervals</li>
-                  <li className="pl-1">Predict end-of-period demand</li>
-                  <li className="pl-1">Shed loads when threshold approached</li>
-                  <li className="pl-1">Restore loads in priority order</li>
-                  <li className="pl-1">Minimum off-time to protect equipment</li>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Monitor kW at 1-minute intervals</li>
+                  <li>Predict end-of-period demand</li>
+                  <li>Shed loads when threshold approached</li>
+                  <li>Restore loads in priority order</li>
+                  <li>Minimum off-time to protect equipment</li>
                 </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">
                   Load Priority Programming
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Assign priority levels 1-10</li>
-                  <li className="pl-1">Lowest priority shed first</li>
-                  <li className="pl-1">Set minimum on/off times</li>
-                  <li className="pl-1">Protect critical equipment</li>
-                  <li className="pl-1">Log all shed events for analysis</li>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Assign priority levels 1-10</li>
+                  <li>Lowest priority shed first</li>
+                  <li>Set minimum on/off times</li>
+                  <li>Protect critical equipment</li>
+                  <li>Log all shed events for analysis</li>
                 </ul>
-              </div>
-            </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Soft Starter and VSD Benefits
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Soft starters:</strong> Reduce starting current from 6-8x to 2-3x FLC
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>VSDs:</strong> Eliminate starting current spike entirely, enable speed
                   control
                 </li>
-                <li className="pl-1">
+                <li>
                   Both reduce peak demand during start-up and protect supply infrastructure
                 </li>
-                <li className="pl-1">
+                <li>
                   VSDs additionally reduce running power at part-load (follows cube law for
                   fans/pumps)
                 </li>
               </ul>
-            </div>
 
-            <p className="text-sm text-white italic">
+            <p><em>
               <strong>Commissioning note:</strong> Staggered start sequences must be tested during
               commissioning to verify delays are appropriate and no critical services are delayed
               excessively.
-            </p>
-          </div>
-        </section>
+            </em></p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">
                 Example 1: Load Factor Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> An office building consumes 15,000 kWh over a 22-day
                 working month, operating 10 hours per day. Maximum demand is 95 kW. Calculate the
                 load factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Operating hours = 22 days x 10 hours = 220 hours</p>
-                <p className="mt-2">Average demand = Total energy / Operating hours</p>
+                <p>Average demand = Total energy / Operating hours</p>
                 <p>
                   Average demand = 15,000 kWh / 220 h = <strong>68.2 kW</strong>
                 </p>
-                <p className="mt-2">Load Factor = Average demand / Maximum demand</p>
+                <p>Load Factor = Average demand / Maximum demand</p>
                 <p>
                   Load Factor = 68.2 / 95 = <strong>0.72 (72%)</strong>
                 </p>
-                <p className="mt-2 text-white">
+                <p>
                   → Good load factor indicates efficient supply utilisation
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 2: Power Factor Correction Savings
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A factory has 400 kW load at 0.75 pf. Calculate the kVAr
                 required to improve to 0.95 pf, and the kVA reduction achieved.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>
                   Original kVA = kW / pf = 400 / 0.75 = <strong>533 kVA</strong>
                 </p>
-                <p className="mt-2">Required kVAr = kW x (tan(cos⁻¹0.75) - tan(cos⁻¹0.95))</p>
+                <p>Required kVAr = kW x (tan(cos⁻¹0.75) - tan(cos⁻¹0.95))</p>
                 <p>tan(cos⁻¹0.75) = 0.882</p>
                 <p>tan(cos⁻¹0.95) = 0.329</p>
                 <p>
                   kVAr = 400 x (0.882 - 0.329) = 400 x 0.553 = <strong>221 kVAr</strong>
                 </p>
-                <p className="mt-2">
+                <p>
                   New kVA = 400 / 0.95 = <strong>421 kVA</strong>
                 </p>
-                <p className="mt-2">
+                <p>
                   kVA reduction = 533 - 421 = <strong>112 kVA (21%)</strong>
                 </p>
                 <p className="mt-2 text-green-400">
                   At £12/kVA/month = £1,344/month = £16,128/year saving
                 </p>
-              </div>
-            </div>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+            
+
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Example 3: Battery Sizing for Peak Shaving
-              </h3>
-              <p className="text-sm text-white mb-2">
+              </p>
+              <p>
                 <strong>Question:</strong> A building has maximum demand of 600 kW. You want to
                 limit grid demand to 450 kW for a 3-hour peak period using battery storage. Size the
                 system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+
                 <p>Peak reduction required = 600 - 450 = 150 kW</p>
-                <p className="mt-2">Energy required = Power x Time = 150 kW x 3 h = 450 kWh</p>
-                <p className="mt-2">Accounting for 85% depth of discharge:</p>
+                <p>Energy required = Power x Time = 150 kW x 3 h = 450 kWh</p>
+                <p>Accounting for 85% depth of discharge:</p>
                 <p>
                   Battery capacity = 450 / 0.85 = <strong>529 kWh</strong>
                 </p>
-                <p className="mt-2">
+                <p>
                   Inverter rating = Peak power = <strong>150 kW minimum</strong>
                 </p>
-                <p className="mt-2 text-white">→ Specify 530 kWh / 200 kW battery system</p>
+                <p>→ Specify 530 kWh / 200 kW battery system</p>
                 <p className="mt-2 text-green-400">
                   At £15/kVA/month demand saving = £2,250/month = £27,000/year
                 </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas</p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Load Factor = Average Demand / Maximum Demand</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>kVA = kW / Power Factor</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>kVAr = kW x tan(cos⁻¹pf)</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Battery kWh = Peak Reduction (kW) x Duration (h) / DoD</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Annual Saving = MD Reduction x Rate x 12 months</strong>
                 </li>
               </ul>
-            </div>
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+              <p className="text-sm font-medium text-elec-yellow/80">
                 Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              </p>
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   Integration period: typically <strong>30 minutes</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   Target power factor: <strong>0.95-0.98</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   Motor inrush: <strong>6-8x FLC</strong> (DOL starting)
                 </li>
-                <li className="pl-1">
+                <li>
                   Soft starter inrush: <strong>2-3x FLC</strong>
                 </li>
-                <li className="pl-1">
+                <li>
                   Typical stagger delay: <strong>10-30 seconds</strong>
                 </li>
               </ul>
-            </div>
+          </ConceptBlock>
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Over-correcting pf:</strong> Leading power factor damages equipment
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Shedding critical loads:</strong> Life safety must be protected
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring rebound:</strong> Released loads can create new peak
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Inadequate monitoring:</strong> Cannot manage what you do not measure
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+              </>
+            }
+            doInstead="Apply the formulas with care, verify with measured values where possible, and always cross-check against BS 7671 and equipment manufacturer data."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Load Management Metrics</p>
-                <ul className="space-y-0.5">
+          <ConceptBlock title="Quick Reference">
+            <p className="text-sm font-medium text-elec-yellow/80">Load Management Metrics</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Maximum Demand - Highest 30-min average power</li>
                   <li>Load Factor - Average/Maximum demand ratio</li>
                   <li>Diversity Factor - MD/Connected load ratio</li>
                   <li>Power Factor - kW/kVA ratio</li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">DSM Strategies</p>
-                <ul className="space-y-0.5">
+
+              
+                <p className="text-sm font-medium text-elec-yellow/80">DSM Strategies</p>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
                   <li>Peak clipping - Reduce peak directly</li>
                   <li>Load shifting - Move to off-peak periods</li>
                   <li>Valley filling - Increase off-peak use</li>
                   <li>Strategic conservation - Efficiency gains</li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <Scenario
+            title="Distribution warehouse with EV fleet &mdash; peak-shaving battery business case"
+            situation={
+              <>
+                A distribution warehouse has a 1500 kVA DNO supply, current peak demand
+                900 kVA, average demand 380 kVA (load factor 0.42). The operator plans
+                to add 30 fleet EV chargers (22 kW each) for overnight charging. Naive
+                addition would push peak to ~1450 kVA, just within supply capacity but
+                tipping into the highest red-zone DUoS charge band. Operator asks the
+                BSE engineer for a smart-charging + battery storage business case.
+              </>
+            }
+            whatToDo={
+              <>
+                Three-step: (a) BMS smart-charging schedules EV chargers to start in
+                staggered groups overnight, capping aggregate EV demand at 400 kW
+                instead of 660 kW &mdash; brings peak to ~1240 kVA, below the
+                red-zone trigger; (b) install a 200 kWh / 100 kW battery storage system
+                that charges off-peak (green zone) and discharges during the morning
+                business peak &mdash; further trims peak to ~1100 kVA; (c) integrate
+                with the DNO&rsquo;s Demand Flexibility Service for additional revenue.
+                Document payback (typically 6&ndash;9 years on storage alone, 4&ndash;6
+                years with DUoS arbitrage) in the operator&rsquo;s ESOS submission.
+              </>
+            }
+            whyItMatters={
+              <>
+                EV fleet electrification is shifting peak demand for warehouse, retail
+                and depot operators. Without load management, every operator faces
+                expensive substation upgrades. The HNC engineer who designs smart
+                charging + storage as part of the EV connection avoids the
+                substation upgrade and unlocks the DUoS arbitrage. The financial
+                modelling is increasingly part of the BSE deliverable.
+              </>
+            }
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Maximum demand: highest 30-min average kVA over the billing period &mdash; basis of DNO capacity charges.',
+              'Load factor (LF) = average demand / maximum demand &mdash; closer to 1 is flatter, more efficient.',
+              'Demand response: paying users to reduce demand during grid stress &mdash; revenue stream on commercial / industrial sites via DSO services.',
+              'Peak shaving: battery / generator dispatch during peak periods to suppress recorded MD.',
+              'Time-of-use (TOU) tariffs: DUoS red / amber / green zones (and DNO-specific equivalents) drive arbitrage opportunity.',
+              'BMS staggered starts: sequence motors during morning warm-up to avoid inrush coincidence on the busbar.',
+              'Power-factor correction lifts effective kW capacity within the same kVA contract &mdash; cheap demand management.',
+              'BS 7671 311.1 + ESOS Regulations 2014 anchor the regulatory case for active demand management.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section6-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Efficiency Calculations
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section6-4">
-              Next: Motor and Lighting Design
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section6-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Efficiency calculations for equipment and systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module3-section6-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Energy-efficient motor and lighting design
+              </div>
+            </button>
+          </div>
+
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,29 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 4 · Subsection 1 — Duty of Care and Accountability
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   Common-law duty of care, statutory duties, personal liability under HSWA s.36/s.37,
+ *   corporate manslaughter. Engineer-in-training perspective: how an HNC engineer&rsquo;s
+ *   personal liability tracks alongside the firm&rsquo;s.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Duty of Care and Accountability - HNC Module 1 Section 4.1';
@@ -228,905 +249,618 @@ const faqs = [
 ];
 
 const HNCModule1Section4_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 4
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Duty of Care and Accountability
-          </h1>
-          <p className="text-white">
-            Legal obligations, liability, and consequences for health and safety failures in
-            building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.4.1"
+            title="Duty of Care and Accountability"
+            description="Legal obligations, liability, and consequences for health and safety failures in building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Duty of care:</strong> Legal obligation not to cause foreseeable harm
-              </li>
-              <li className="pl-1">
-                <strong>Criminal liability:</strong> HASAWA breaches, fines, imprisonment
-              </li>
-              <li className="pl-1">
-                <strong>Civil liability:</strong> Negligence claims for compensation
-              </li>
-              <li className="pl-1">
-                <strong>Personal accountability:</strong> Directors liable under Section 37
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Designers:</strong> Duties to eliminate foreseeable risks
-              </li>
-              <li className="pl-1">
-                <strong>Installers:</strong> Duty to work safely and to standard
-              </li>
-              <li className="pl-1">
-                <strong>Maintainers:</strong> Ongoing duty for safe systems
-              </li>
-              <li className="pl-1">
-                <strong>Multi-party:</strong> Client, contractor, subcontractor duties
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will hold both common-law and statutory duties of care — and you can articulate the difference (negligence claim vs criminal prosecution).',
+              'You apply HSWA s.36 (offence by another person) and s.37 (consent, connivance, neglect by directors and managers) to understand personal liability up the chain.',
+              'You recognise Corporate Manslaughter and Corporate Homicide Act 2007 — the gross-breach corporate offence — and the parallel individual gross-negligence-manslaughter route.',
+              'You document decisions in real time — the contemporaneous record is the strongest defence in any subsequent investigation.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Understand the legal basis for duty of care in common and statute law',
-              'Explain the elements required to prove negligence in civil claims',
-              'Describe corporate and personal criminal liability under HASAWA',
-              'Identify when directors can be personally prosecuted under Section 37',
-              'Explain the Corporate Manslaughter Act and its application',
-              'Apply the Health and Safety Sentencing Guidelines principles',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <RegsCallout
+            source="HASAWA 1974 — Section 37(1)"
+            clause="Where an offence under any of the relevant statutory provisions committed by a body corporate is proved to have been committed with the consent or connivance of, or to have been attributable to any neglect on the part of, any director, manager, secretary or other similar officer of the body corporate or a person who was purporting to act in any such capacity, he as well as the body corporate shall be guilty of that offence and shall be liable to be proceeded against and punished accordingly."
+            meaning={
+              <>
+                Section 37 reaches up to directors and senior managers. As an HNC supervisor in
+                a small or growing firm, the day you take a senior role this clause applies to
+                you personally — &ldquo;neglect&rdquo; is a low bar.
+              </>
+            }
+            cite="Source: Health and Safety at Work etc. Act 1974, s.37(1) — legislation.gov.uk"
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <LearningOutcomes
+            outcomes={[
+              "Understand the legal basis for duty of care in common and statute law",
+              "Explain the elements required to prove negligence in civil claims",
+              "Describe corporate and personal criminal liability under HASAWA",
+              "Identify when directors can be personally prosecuted under Section 37",
+              "Explain the Corporate Manslaughter Act and its application",
+              "Apply the Health and Safety Sentencing Guidelines principles",
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Section 1: The Duty of Care */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Legal Duty of Care
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The Legal Duty of Care</ContentEyebrow>
+
+          <ConceptBlock title="The Legal Duty of Care">
             <p>
-              The duty of care is a fundamental legal concept that requires persons to take
-              reasonable care to avoid acts or omissions that could foreseeably cause harm to
-              others. In the workplace, this duty is established through both common law (case law)
-              and statute law (Acts of Parliament).
+            The duty of care is a fundamental legal concept that requires persons to take
+            reasonable care to avoid acts or omissions that could foreseeably cause harm to
+            others. In the workplace, this duty is established through both common law (case law)
+            and statute law (Acts of Parliament).
             </p>
 
             <div className="my-6 grid sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Common Law Duty</p>
-                <p className="text-sm text-white mb-3">
-                  Established through court cases over centuries:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Employers must provide safe systems of work</li>
-                  <li className="pl-1">Competent fellow employees must be employed</li>
-                  <li className="pl-1">Safe plant and equipment must be provided</li>
-                  <li className="pl-1">A safe place of work must be maintained</li>
-                  <li className="pl-1">Duty extends to reasonably foreseeable harm</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Statutory Duty</p>
-                <p className="text-sm text-white mb-3">
-                  Codified in legislation, primarily HASAWA 1974:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Section 2:</strong> Employer duties to employees
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 3:</strong> Duties to non-employees
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 4:</strong> Duties regarding premises
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 7:</strong> Employee duties
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 8:</strong> Duty not to interfere
-                  </li>
-                </ul>
-              </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <p className="text-sm font-medium text-elec-yellow mb-2">Common Law Duty</p>
+            <p className="text-sm text-white mb-3">
+            Established through court cases over centuries:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Employers must provide safe systems of work</li>
+            <li>Competent fellow employees must be employed</li>
+            <li>Safe plant and equipment must be provided</li>
+            <li>A safe place of work must be maintained</li>
+            <li>Duty extends to reasonably foreseeable harm</li>
+            </ul>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <p className="text-sm font-medium text-elec-yellow mb-2">Statutory Duty</p>
+            <p className="text-sm text-white mb-3">
+            Codified in legislation, primarily HASAWA 1974:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Section 2:</strong> Employer duties to employees
+            </li>
+            <li>
+            <strong>Section 3:</strong> Duties to non-employees
+            </li>
+            <li>
+            <strong>Section 4:</strong> Duties regarding premises
+            </li>
+            <li>
+            <strong>Section 7:</strong> Employee duties
+            </li>
+            <li>
+            <strong>Section 8:</strong> Duty not to interfere
+            </li>
+            </ul>
+            </div>
             </div>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Who Owes a Duty of Care?
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Duty Holder</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duty Owed To</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Services Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Employers</td>
-                      <td className="border border-white/10 px-3 py-2">Employees</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safe isolation procedures for electricians
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Employers</td>
-                      <td className="border border-white/10 px-3 py-2">Non-employees</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Public protected from work activities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Employees</td>
-                      <td className="border border-white/10 px-3 py-2">Self and others</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Following permit-to-work requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Designers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Those who build, use, maintain
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Designing for safe maintenance access
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Controllers of premises</td>
-                      <td className="border border-white/10 px-3 py-2">Those using the premises</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safe electrical installations in buildings
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Who Owes a Duty of Care?
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Employers</strong> — Duty Owed To: Employees. Building Services Example: Safe isolation procedures for electricians</li>
+            <li><strong>Employers</strong> — Duty Owed To: Non-employees. Building Services Example: Public protected from work activities</li>
+            <li><strong>Employees</strong> — Duty Owed To: Self and others. Building Services Example: Following permit-to-work requirements</li>
+            <li><strong>Designers</strong> — Duty Owed To: Those who build, use, maintain. Building Services Example: Designing for safe maintenance access</li>
+            <li><strong>Controllers of premises</strong> — Duty Owed To: Those using the premises. Building Services Example: Safe electrical installations in buildings</li>
+            </ul>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> The duty of care requires action that is 'reasonably
-              practicable' - balancing risk against the cost and difficulty of reducing it, with the
-              balance weighted towards safety.
+            <strong>Key principle:</strong> The duty of care requires action that is 'reasonably
+            practicable' - balancing risk against the cost and difficulty of reducing it, with the
+            balance weighted towards safety.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Civil Negligence */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Civil Negligence and Compensation Claims
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Civil Negligence and Compensation Claims</ContentEyebrow>
+
+          <ConceptBlock title="Civil Negligence and Compensation Claims">
             <p>
-              Civil claims for negligence allow injured parties to seek compensation for harm caused
-              by another's failure to exercise reasonable care. These proceedings are brought in
-              civil courts (County Court or High Court) and are separate from criminal prosecutions.
+            Civil claims for negligence allow injured parties to seek compensation for harm caused
+            by another's failure to exercise reasonable care. These proceedings are brought in
+            civil courts (County Court or High Court) and are separate from criminal prosecutions.
             </p>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Elements of Negligence</p>
-              <p className="text-sm text-white mb-3">
-                A claimant must prove all three elements on the balance of probabilities:
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="p-3 rounded bg-white/5 text-center">
-                  <p className="font-bold text-elec-yellow mb-1">1. Duty Existed</p>
-                  <p className="text-xs text-white">
-                    The defendant owed the claimant a duty of care
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5 text-center">
-                  <p className="font-bold text-elec-yellow mb-1">2. Breach of Duty</p>
-                  <p className="text-xs text-white">
-                    The defendant failed to meet the required standard of care
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5 text-center">
-                  <p className="font-bold text-elec-yellow mb-1">3. Causation</p>
-                  <p className="text-xs text-white">
-                    The breach caused the harm (damage, injury, or loss)
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Standard of Care</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  The standard is that of a 'reasonable person' in that position
-                </li>
-                <li className="pl-1">
-                  For professionals, it is the standard of a reasonably competent person in that
-                  profession
-                </li>
-                <li className="pl-1">
-                  Specialists are judged against the standard of reasonable specialists
-                </li>
-                <li className="pl-1">
-                  The court considers what was reasonably foreseeable at the time
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-300 mb-2">Building Services Example</p>
-              <p className="text-sm text-white">
-                <strong>Scenario:</strong> An electrician fails to properly terminate a cable joint,
-                which later fails and causes a fire injuring an occupant.
-                <br />
-                <br />
-                <strong>Analysis:</strong> (1) The electrician's employer owed a duty of care to
-                building occupants (Section 3 HASAWA). (2) The work fell below the standard expected
-                of a competent electrician (breach). (3) The inadequate termination caused the fire
-                and injury (causation). The injured party can claim compensation from the employer
-                (vicarious liability) and the installing company.
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Types of Damages Recoverable
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>General damages:</strong> Pain, suffering, loss of amenity
-                  </li>
-                  <li className="pl-1">
-                    <strong>Special damages:</strong> Quantifiable financial losses
-                  </li>
-                  <li className="pl-1">
-                    <strong>Loss of earnings:</strong> Past and future
-                  </li>
-                  <li className="pl-1">
-                    <strong>Medical costs:</strong> Treatment and care
-                  </li>
-                  <li className="pl-1">
-                    <strong>Property damage:</strong> Repair or replacement
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Defences to Negligence
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>No duty existed:</strong> Harm not foreseeable
-                  </li>
-                  <li className="pl-1">
-                    <strong>No breach:</strong> Reasonable standard was met
-                  </li>
-                  <li className="pl-1">
-                    <strong>No causation:</strong> Breach did not cause harm
-                  </li>
-                  <li className="pl-1">
-                    <strong>Contributory negligence:</strong> Claimant partly at fault
-                  </li>
-                  <li className="pl-1">
-                    <strong>Volenti:</strong> Claimant accepted the risk
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Limitation period:</strong> Civil claims must generally be brought within 3
-              years of the date of knowledge of the injury (6 years for property damage).
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Elements of Negligence</p>
+            <p className="text-sm text-white mb-3">
+            A claimant must prove all three elements on the balance of probabilities:
             </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Corporate and Personal Criminal Liability */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Corporate and Personal Criminal Liability
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Health and safety offences are primarily criminal matters, with prosecution by the
-              Health and Safety Executive (HSE) or local authorities. Criminal proceedings can be
-              brought against companies, partnerships, and individuals including directors,
-              managers, and employees.
+            
+            <div className="p-3 rounded bg-white/5 text-center">
+            <p className="font-bold text-elec-yellow mb-1">1. Duty Existed</p>
+            <p className="text-xs text-white">
+            The defendant owed the claimant a duty of care
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Corporate Criminal Liability
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Offence Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Legal Basis</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maximum Penalty
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Section 2 breach (employees)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">HASAWA 1974</td>
-                      <td className="border border-white/10 px-3 py-2">Unlimited fine</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Section 3 breach (non-employees)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">HASAWA 1974</td>
-                      <td className="border border-white/10 px-3 py-2">Unlimited fine</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Regulation breach</td>
-                      <td className="border border-white/10 px-3 py-2">Various regulations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlimited fine (triable either way)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corporate manslaughter</td>
-                      <td className="border border-white/10 px-3 py-2">CMCHA 2007</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlimited fine + publicity order
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Section 37 HASAWA - Personal Liability of Directors
-              </p>
-              <p className="text-sm text-white mb-3">
-                Where an offence by a body corporate is proved to have been committed with the{' '}
-                <strong>consent</strong> or <strong>connivance</strong> of, or to have been
-                attributable to any <strong>neglect</strong> on the part of, any director, manager,
-                secretary or similar officer, that person as well as the body corporate shall be
-                guilty of the offence.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Consent:</strong> Actively agreed to the unsafe practice
-                </li>
-                <li className="pl-1">
-                  <strong>Connivance:</strong> Knew and turned a blind eye
-                </li>
-                <li className="pl-1">
-                  <strong>Neglect:</strong> Failed to take reasonable steps to prevent
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Personal Liability - Who Can Be Prosecuted?
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Person</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Basis of Liability
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maximum Penalty
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Company directors</td>
-                      <td className="border border-white/10 px-3 py-2">Section 37 HASAWA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlimited fine and/or 2 years imprisonment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Managers</td>
-                      <td className="border border-white/10 px-3 py-2">Section 37 HASAWA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlimited fine and/or 2 years imprisonment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Employees</td>
-                      <td className="border border-white/10 px-3 py-2">Section 7/8 HASAWA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlimited fine (rarely imprisonment)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Self-employed</td>
-                      <td className="border border-white/10 px-3 py-2">Section 3 HASAWA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlimited fine and/or 2 years imprisonment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Company Directors Disqualification Act 1986
-              </p>
-              <p className="text-sm text-white">
-                In addition to criminal penalties, courts can disqualify directors from holding
-                company directorships:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 mt-2">
-                <li className="pl-1">
-                  Up to 15 years disqualification for conviction on indictment
-                </li>
-                <li className="pl-1">Up to 5 years for summary conviction</li>
-                <li className="pl-1">
-                  Applies to all companies, not just the one where the offence occurred
-                </li>
-                <li className="pl-1">
-                  Acting as director while disqualified is a criminal offence
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical point:</strong> Personal criminal liability cannot be insured against
-              - directors must pay fines personally.
+            <div className="p-3 rounded bg-white/5 text-center">
+            <p className="font-bold text-elec-yellow mb-1">2. Breach of Duty</p>
+            <p className="text-xs text-white">
+            The defendant failed to meet the required standard of care
             </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Sentencing Guidelines */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Health and Safety Sentencing Guidelines
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              The Definitive Sentencing Guidelines for Health and Safety Offences, Corporate
-              Manslaughter, and Food Safety and Hygiene Offences came into force in February 2016.
-              They fundamentally changed how courts calculate fines, with significantly increased
-              penalties particularly for large organisations.
+            </div>
+            <div className="p-3 rounded bg-white/5 text-center">
+            <p className="font-bold text-elec-yellow mb-1">3. Causation</p>
+            <p className="text-xs text-white">
+            The breach caused the harm (damage, injury, or loss)
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Step 1: Culpability Assessment
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Indicators</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold text-red-400">
-                        Very High
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Deliberate breach or flagrant disregard
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ignored warnings, profit-driven risk-taking
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold text-orange-400">
-                        High
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fell far short of standard
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Serious and obvious risk ignored
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold text-yellow-400">
-                        Medium
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Fell short of standard</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Risk foreseeable but not obvious
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold text-green-400">
-                        Low
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Minor failing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Isolated incident, systems in place
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
+            
+            
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Step 2: Harm Assessment
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Seriousness of Harm Risked
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Likelihood of Harm
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold">Category 1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Death or physical/mental impairment causing lifelong effects
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold">Category 2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical/mental impairment, serious, long-term
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold">Category 3</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate harm</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold">Category 4</td>
-                      <td className="border border-white/10 px-3 py-2">Low risk of harm</td>
-                      <td className="border border-white/10 px-3 py-2">Remote</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Standard of Care</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            The standard is that of a 'reasonable person' in that position
+            </li>
+            <li>
+            For professionals, it is the standard of a reasonably competent person in that
+            profession
+            </li>
+            <li>
+            Specialists are judged against the standard of reasonable specialists
+            </li>
+            <li>
+            The court considers what was reasonably foreseeable at the time
+            </li>
+            </ul>
+            
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Organisation Size Categories (Annual Turnover)
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Micro</p>
-                  <p className="text-white text-xs">Up to £2m</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Small</p>
-                  <p className="text-white text-xs">£2m - £10m</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Medium</p>
-                  <p className="text-white text-xs">£10m - £50m</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Large</p>
-                  <p className="text-white text-xs">£50m+</p>
-                </div>
-              </div>
-            </div>
+            <CommonMistake
+            title="Building Services Example"
+            whatHappens={<><p className="text-sm text-white">
+            <strong>Scenario:</strong> An electrician fails to properly terminate a cable joint,
+            which later fails and causes a fire injuring an occupant.
+            <br />
+            <br />
+            <strong>Analysis:</strong> (1) The electrician's employer owed a duty of care to
+            building occupants (Section 3 HASAWA). (2) The work fell below the standard expected
+            of a competent electrician (breach). (3) The inadequate termination caused the fire
+            and injury (causation). The injured party can claim compensation from the employer
+            (vicarious liability) and the installing company.
+            </p></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Fine Ranges for Large Organisations (£50m+ turnover)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-xs text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-1 text-left">Harm Category</th>
-                      <th className="border border-white/10 px-2 py-1 text-left">
-                        Very High Culpability
-                      </th>
-                      <th className="border border-white/10 px-2 py-1 text-left">
-                        High Culpability
-                      </th>
-                      <th className="border border-white/10 px-2 py-1 text-left">
-                        Medium Culpability
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1">1 (Death risk)</td>
-                      <td className="border border-white/10 px-2 py-1 text-red-400">
-                        £2.6m - £10m+
-                      </td>
-                      <td className="border border-white/10 px-2 py-1">£1.5m - £4m</td>
-                      <td className="border border-white/10 px-2 py-1">£550k - £1.5m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1">2 (Serious harm)</td>
-                      <td className="border border-white/10 px-2 py-1">£1m - £3m</td>
-                      <td className="border border-white/10 px-2 py-1">£450k - £1.5m</td>
-                      <td className="border border-white/10 px-2 py-1">£200k - £750k</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Note: These are starting points - actual fines can exceed these ranges based on
-                aggravating factors.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Aggravating and Mitigating Factors
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-red-500/10">
-                  <p className="font-medium text-red-400 text-sm mb-2">
-                    Aggravating (Increase Fine)
-                  </p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Previous convictions or warnings</li>
-                    <li className="pl-1">Cost-cutting as motivation</li>
-                    <li className="pl-1">Obstruction of investigation</li>
-                    <li className="pl-1">Poor health and safety record</li>
-                    <li className="pl-1">Failure to heed warnings</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-green-500/10">
-                  <p className="font-medium text-green-400 text-sm mb-2">
-                    Mitigating (Reduce Fine)
-                  </p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">No previous convictions</li>
-                    <li className="pl-1">Good health and safety record</li>
-                    <li className="pl-1">Immediate remedial steps taken</li>
-                    <li className="pl-1">High level of cooperation</li>
-                    <li className="pl-1">Self-reporting of breach</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Guilty plea discount:</strong> Up to one-third reduction for early guilty
-              plea, reducing to one-tenth if entered at trial.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
+            
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Legal Principles to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Reasonably practicable:</strong> Cost must be grossly disproportionate to
-                  risk before measures can be avoided
-                </li>
-                <li className="pl-1">
-                  <strong>Foreseeability:</strong> Duty extends to risks that could reasonably be
-                  foreseen
-                </li>
-                <li className="pl-1">
-                  <strong>Vicarious liability:</strong> Employers liable for employees' negligence
-                  in course of employment
-                </li>
-                <li className="pl-1">
-                  <strong>Non-delegable duty:</strong> Cannot escape duty by delegating to
-                  contractors
-                </li>
-                <li className="pl-1">
-                  <strong>Criminal vs civil:</strong> Different standards of proof, separate
-                  proceedings
-                </li>
-              </ul>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Types of Damages Recoverable
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>General damages:</strong> Pain, suffering, loss of amenity
+            </li>
+            <li>
+            <strong>Special damages:</strong> Quantifiable financial losses
+            </li>
+            <li>
+            <strong>Loss of earnings:</strong> Past and future
+            </li>
+            <li>
+            <strong>Medical costs:</strong> Treatment and care
+            </li>
+            <li>
+            <strong>Property damage:</strong> Repair or replacement
+            </li>
+            </ul>
+            </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Defences to Negligence
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>No duty existed:</strong> Harm not foreseeable
+            </li>
+            <li>
+            <strong>No breach:</strong> Reasonable standard was met
+            </li>
+            <li>
+            <strong>No causation:</strong> Breach did not cause harm
+            </li>
+            <li>
+            <strong>Contributory negligence:</strong> Claimant partly at fault
+            </li>
+            <li>
+            <strong>Volenti:</strong> Claimant accepted the risk
+            </li>
+            </ul>
+            </div>
+            
+
+            <p className="text-sm text-elec-yellow/70">
+            <strong>Limitation period:</strong> Civil claims must generally be brought within 3
+            years of the date of knowledge of the injury (6 years for property damage).
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Corporate and Personal Criminal Liability</ContentEyebrow>
+
+          <ConceptBlock title="Corporate and Personal Criminal Liability">
+            <p>
+            Health and safety offences are primarily criminal matters, with prosecution by the
+            Health and Safety Executive (HSE) or local authorities. Criminal proceedings can be
+            brought against companies, partnerships, and individuals including directors,
+            managers, and employees.
+            </p>
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Corporate Criminal Liability
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Section 2 breach (employees)</strong> — Legal Basis: HASAWA 1974. Maximum Penalty: Unlimited fine</li>
+            <li><strong>Section 3 breach (non-employees)</strong> — Legal Basis: HASAWA 1974. Maximum Penalty: Unlimited fine</li>
+            <li><strong>Regulation breach</strong> — Legal Basis: Various regulations. Maximum Penalty: Unlimited fine (triable either way)</li>
+            <li><strong>Corporate manslaughter</strong> — Legal Basis: CMCHA 2007. Maximum Penalty: Unlimited fine + publicity order</li>
+            </ul>
+            
+            
+
+            <CommonMistake
+            title="Section 37 HASAWA - Personal Liability of Directors"
+            whatHappens={<><p className="text-sm text-white mb-3">
+            Where an offence by a body corporate is proved to have been committed with the{' '}
+            <strong>consent</strong> or <strong>connivance</strong> of, or to have been
+            attributable to any <strong>neglect</strong> on the part of, any director, manager,
+            secretary or similar officer, that person as well as the body corporate shall be
+            guilty of the offence.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Consent:</strong> Actively agreed to the unsafe practice
+            </li>
+            <li>
+            <strong>Connivance:</strong> Knew and turned a blind eye
+            </li>
+            <li>
+            <strong>Neglect:</strong> Failed to take reasonable steps to prevent
+            </li>
+            </ul></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Personal Liability - Who Can Be Prosecuted?
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Company directors</strong> — Basis of Liability: Section 37 HASAWA. Maximum Penalty: Unlimited fine and/or 2 years imprisonment</li>
+            <li><strong>Managers</strong> — Basis of Liability: Section 37 HASAWA. Maximum Penalty: Unlimited fine and/or 2 years imprisonment</li>
+            <li><strong>Employees</strong> — Basis of Liability: Section 7/8 HASAWA. Maximum Penalty: Unlimited fine (rarely imprisonment)</li>
+            <li><strong>Self-employed</strong> — Basis of Liability: Section 3 HASAWA. Maximum Penalty: Unlimited fine and/or 2 years imprisonment</li>
+            </ul>
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Company Directors Disqualification Act 1986
+            </p>
+            <p className="text-sm text-white">
+            In addition to criminal penalties, courts can disqualify directors from holding
+            company directorships:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Up to 15 years disqualification for conviction on indictment
+            </li>
+            <li>Up to 5 years for summary conviction</li>
+            <li>
+            Applies to all companies, not just the one where the offence occurred
+            </li>
+            <li>
+            Acting as director while disqualified is a criminal offence
+            </li>
+            </ul>
+            
+
+            <p className="text-sm text-elec-yellow/70">
+            <strong>Critical point:</strong> Personal criminal liability cannot be insured against
+            - directors must pay fines personally.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Health and Safety Sentencing Guidelines</ContentEyebrow>
+
+          <ConceptBlock title="Health and Safety Sentencing Guidelines">
+            <p>
+            The Definitive Sentencing Guidelines for Health and Safety Offences, Corporate
+            Manslaughter, and Food Safety and Hygiene Offences came into force in February 2016.
+            They fundamentally changed how courts calculate fines, with significantly increased
+            penalties particularly for large organisations.
+            </p>
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Step 1: Culpability Assessment
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Very High</strong> — Description: Deliberate breach or flagrant disregard. Indicators: Ignored warnings, profit-driven risk-taking</li>
+            <li><strong>High</strong> — Description: Fell far short of standard. Indicators: Serious and obvious risk ignored</li>
+            <li><strong>Medium</strong> — Description: Fell short of standard. Indicators: Risk foreseeable but not obvious</li>
+            <li><strong>Low</strong> — Description: Minor failing. Indicators: Isolated incident, systems in place</li>
+            </ul>
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Step 2: Harm Assessment
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Category 1</strong> — Seriousness of Harm Risked: Death or physical/mental impairment causing lifelong effects. Likelihood of Harm: High</li>
+            <li><strong>Category 2</strong> — Seriousness of Harm Risked: Physical/mental impairment, serious, long-term. Likelihood of Harm: Medium</li>
+            <li><strong>Category 3</strong> — Seriousness of Harm Risked: Moderate harm. Likelihood of Harm: Low</li>
+            <li><strong>Category 4</strong> — Seriousness of Harm Risked: Low risk of harm. Likelihood of Harm: Remote</li>
+            </ul>
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Organisation Size Categories (Annual Turnover)
+            </p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Micro</p>
+            <p className="text-white text-xs">Up to £2m</p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Small</p>
+            <p className="text-white text-xs">£2m - £10m</p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Medium</p>
+            <p className="text-white text-xs">£10m - £50m</p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Large</p>
+            <p className="text-white text-xs">£50m+</p>
+            
+            
+            
+
+            <CommonMistake
+            title="Fine Ranges for Large Organisations (£50m+ turnover)"
+            whatHappens={<><ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1 (Death risk)</strong> — Very High Culpability: £2.6m - £10m+. High Culpability: £1.5m - £4m. Medium Culpability: £550k - £1.5m</li>
+            <li><strong>2 (Serious harm)</strong> — Very High Culpability: £1m - £3m. High Culpability: £450k - £1.5m. Medium Culpability: £200k - £750k</li>
+            </ul>
+            
+            <p className="text-xs text-white mt-2">
+            Note: These are starting points - actual fines can exceed these ranges based on
+            aggravating factors.
+            </p></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Aggravating and Mitigating Factors
+            </p>
+            
+            
+            <p className="font-medium text-red-400 text-sm mb-2">
+            Aggravating (Increase Fine)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Previous convictions or warnings</li>
+            <li>Cost-cutting as motivation</li>
+            <li>Obstruction of investigation</li>
+            <li>Poor health and safety record</li>
+            <li>Failure to heed warnings</li>
+            </ul>
+            
+            
+            <p className="font-medium text-green-400 text-sm mb-2">
+            Mitigating (Reduce Fine)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>No previous convictions</li>
+            <li>Good health and safety record</li>
+            <li>Immediate remedial steps taken</li>
+            <li>High level of cooperation</li>
+            <li>Self-reporting of breach</li>
+            </ul>
+            
+            
+            
+
+            <p className="text-sm text-elec-yellow/70">
+            <strong>Guilty plea discount:</strong> Up to one-third reduction for early guilty
+            plea, reducing to one-tenth if entered at trial.
+            </p>
+            
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Practical Guidance">
+            <div>
+            <p><strong>Key Legal Principles to Remember</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Reasonably practicable:</strong> Cost must be grossly disproportionate to
+            risk before measures can be avoided
+            </li>
+            <li>
+            <strong>Foreseeability:</strong> Duty extends to risks that could reasonably be
+            foreseen
+            </li>
+            <li>
+            <strong>Vicarious liability:</strong> Employers liable for employees' negligence
+            in course of employment
+            </li>
+            <li>
+            <strong>Non-delegable duty:</strong> Cannot escape duty by delegating to
+            contractors
+            </li>
+            <li>
+            <strong>Criminal vs civil:</strong> Different standards of proof, separate
+            proceedings
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Protecting Yourself as a Building Services Professional
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Ensure competence through training and CPD</li>
-                <li className="pl-1">Document risk assessments and safe systems of work</li>
-                <li className="pl-1">Follow industry standards (BS 7671, guidance notes)</li>
-                <li className="pl-1">Report concerns through proper channels</li>
-                <li className="pl-1">Maintain records of work, inspections, and tests</li>
-              </ul>
+            <p><strong>Protecting Yourself as a Building Services Professional</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Ensure competence through training and CPD</li>
+            <li>Document risk assessments and safe systems of work</li>
+            <li>Follow industry standards (BS 7671, guidance notes)</li>
+            <li>Report concerns through proper channels</li>
+            <li>Maintain records of work, inspections, and tests</li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Failures Leading to Prosecution
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Inadequate risk assessment:</strong> Generic or paper-exercise assessments
-                </li>
-                <li className="pl-1">
-                  <strong>Poor supervision:</strong> Workers left unsupervised for high-risk tasks
-                </li>
-                <li className="pl-1">
-                  <strong>Lack of safe systems:</strong> No permit-to-work where required
-                </li>
-                <li className="pl-1">
-                  <strong>Inadequate training:</strong> Workers not competent for tasks assigned
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring warnings:</strong> Known risks not addressed after near misses
-                </li>
-              </ul>
+            <p><strong>Common Failures Leading to Prosecution</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Inadequate risk assessment:</strong> Generic or paper-exercise assessments
+            </li>
+            <li>
+            <strong>Poor supervision:</strong> Workers left unsupervised for high-risk tasks
+            </li>
+            <li>
+            <strong>Lack of safe systems:</strong> No permit-to-work where required
+            </li>
+            <li>
+            <strong>Inadequate training:</strong> Workers not competent for tasks assigned
+            </li>
+            <li>
+            <strong>Ignoring warnings:</strong> Known risks not addressed after near misses
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Director pressure to skip an isolation procedure"
+            situation={
+              <>
+                A director instructs you, the HNC site supervisor, to authorise live work on
+                an HV switchboard to keep a deadline. There is no Reg 14 documentation, no
+                permit, no risk assessment update. The director says &ldquo;just sign it
+                off, the lads know what they&rsquo;re doing.&rdquo;
+              </>
+            }
+            whatToDo={
+              <>
+                Refuse in writing. Cite EAWR Reg 14 (live-work test), HSWA s.7 (your personal
+                duty), HSWA s.37 (the director&rsquo;s personal liability), HSWA s.36 (the
+                liability of any other person whose act or default leads to the offence).
+                Escalate above the director if necessary. Document the conversation, the
+                refusal and the rationale. If the work proceeds without your sign-off,
+                report to HSE — your protection under ERA 1996 s.44 (whistleblowing) applies.
+              </>
+            }
+            whyItMatters={
+              <>
+                Going along with the instruction transfers no liability — the supervisor and
+                operatives become co-defendants. A documented refusal is the only defence,
+                and the law actively protects the refuser.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key HASAWA Sections</p>
-                <ul className="space-y-0.5">
-                  <li>S.2 - Employer duties to employees</li>
-                  <li>S.3 - Duties to non-employees</li>
-                  <li>S.7 - Employee duties</li>
-                  <li>S.37 - Directors' personal liability</li>
-                  <li>CMCHA 2007 - Corporate manslaughter</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Liability Summary</p>
-                <ul className="space-y-0.5">
-                  <li>Criminal: Unlimited fines, up to 2 years prison</li>
-                  <li>Civil: Compensation for injury/loss</li>
-                  <li>Directors: Personal liability under S.37</li>
-                  <li>Disqualification: Up to 15 years</li>
-                  <li>Vicarious: Employer liable for employee acts</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Common-law duty of care underpins civil claims (negligence, vicarious liability); statutory duty drives criminal prosecution.',
+              'HSWA s.36 — offence by another person — covers anyone whose act or default led to a breach, not just the employer.',
+              'HSWA s.37 — directors and managers personally liable for offences attributable to their consent, connivance or neglect.',
+              'Corporate Manslaughter and Corporate Homicide Act 2007 — gross-breach corporate offence with unlimited fines.',
+              'Gross negligence manslaughter — individual common-law offence, up to life imprisonment.',
+              'Sentencing Council 2016 guidelines tie fines to turnover and culpability — multi-million-pound fines now routine.',
+              'Whistleblowing protection: ERA 1996 s.44 protects workers refusing unsafe work or raising safety concerns.',
+              'Contemporaneous documentation is the strongest defence — record decisions, conversations, refusals and rationale at the time.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section4-2">
-              Next: Competence and Training
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 4
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section4-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Competence and Training
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

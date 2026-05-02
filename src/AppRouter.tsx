@@ -49,6 +49,8 @@ const ScopeSharePage = lazy(() => import('@/pages/public/ScopeSharePage'));
 const CompletionSignOffPage = lazy(() => import('@/pages/public/CompletionSignOffPage'));
 const SharedPortfolioView = lazy(() => import('@/pages/public/SharedPortfolioView'));
 const InvoiceMarkPaid = lazy(() => import('@/pages/public/InvoiceMarkPaid'));
+const BookingSlotPicker = lazy(() => import('@/pages/public/BookingSlotPicker'));
+const ForCollegesPage = lazy(() => import('@/pages/public/ForCollegesPage'));
 const LaTeXPDFGeneratorPage = lazy(() => import('@/pages/LaTeXPDFGeneratorPage'));
 const InvoiceQuoteBuilder = lazy(() => import('@/pages/electrician/InvoiceQuoteBuilder'));
 const InvoiceViewPage = lazy(() => import('@/pages/electrician/InvoiceViewPage'));
@@ -491,6 +493,26 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <PublicBooking />
+            </LazyRoute>
+          }
+        />
+        {/* ELE-955 — public slot picker reached after a quote is accepted */}
+        <Route
+          path="/book-slot/:quoteId"
+          element={
+            <LazyRoute>
+              <BookingSlotPicker />
+            </LazyRoute>
+          }
+        />
+        {/* College outreach landing — CTA target from cold-pitch email.
+            Form posts into Brevo list 9 (warm college leads) via the
+            college-request-info edge fn. */}
+        <Route
+          path="/for-colleges"
+          element={
+            <LazyRoute>
+              <ForCollegesPage />
             </LazyRoute>
           }
         />

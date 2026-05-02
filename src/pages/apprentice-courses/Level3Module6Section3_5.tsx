@@ -104,10 +104,10 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'A type B MCB has maximum Zs of 1.44 ohms for 0.4s disconnection. If Ze=0.35 ohms, what is maximum R1+R2?',
-    options: ['1.09 ohms', '1.44 ohms', '1.79 ohms', '0.35 ohms'],
+      'A 32A type B MCB has maximum Zs of 1.37 ohms for 0.4s disconnection (BS 7671:2018+A4:2026 Table 41.3). If Ze=0.35 ohms, what is maximum R1+R2?',
+    options: ['1.02 ohms', '1.37 ohms', '1.72 ohms', '0.35 ohms'],
     correctAnswer: 0,
-    explanation: 'Zs = Ze + R1 + R2. Therefore R1+R2 = Zs - Ze = 1.44 - 0.35 = 1.09 ohms maximum.',
+    explanation: 'Zs = Ze + R1 + R2. Therefore R1+R2 = Zs - Ze = 1.37 - 0.35 = 1.02 ohms maximum.',
   },
   {
     id: 7,
@@ -321,13 +321,14 @@ const Level3Module6Section3_5 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Maximum Zs Values (Type B MCB, 0.4s):
               </p>
+              {/* Zs values from canonical source: src/lib/calculators/bs7671-data/protectiveDevices.ts (BS 7671:2018+A4:2026 Table 41.3) */}
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>6A: 7.67 ohms</li>
-                <li>10A: 4.60 ohms</li>
-                <li>16A: 2.87 ohms</li>
-                <li>20A: 2.30 ohms</li>
-                <li>32A: 1.44 ohms</li>
-                <li>40A: 1.15 ohms</li>
+                <li>6A: 7.28 ohms</li>
+                <li>10A: 4.37 ohms</li>
+                <li>16A: 2.73 ohms</li>
+                <li>20A: 2.19 ohms</li>
+                <li>32A: 1.37 ohms</li>
+                <li>40A: 1.09 ohms</li>
               </ul>
             </div>
           </div>
@@ -343,15 +344,15 @@ const Level3Module6Section3_5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               <strong>Shower circuit:</strong> 9.5kW shower, 18m from consumer unit, Ze = 0.35 ohms,
-              40A Type B MCB.
+              50A Type B MCB.
             </p>
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Current Capacity:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Ib = 9500/230 = 41.3A</li>
-                <li>Select 45A MCB (next standard rating above Ib)</li>
+                <li>Select 50A MCB (next standard BS 7671 rating above Ib — 45A is non-standard)</li>
                 <li>Ca=1.0, Cg=1.0, Ci=1.0 (single circuit, standard conditions)</li>
-                <li>It &gt;= 45A, select 10mm2 (It = 64A)</li>
+                <li>It &gt;= 50A, select 10mm2 (It = 64A)</li>
               </ul>
             </div>
             <div className="my-6">
@@ -363,10 +364,10 @@ const Level3Module6Section3_5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Earth Fault Loop:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Max Zs for 45A Type B = 1.02 ohms</li>
+                <li>Max Zs for 50A Type B = 0.87 ohms (BS 7671:2018+A4:2026 Table 41.3)</li>
                 <li>R1+R2/m for 10/4mm2 = 6.44 milliohms/m</li>
                 <li>R1+R2 = 0.00644 x 18 = 0.116 ohms</li>
-                <li>Zs = 0.35 + 0.116 = 0.466 ohms (OK, under 1.02)</li>
+                <li>Zs = 0.35 + 0.116 = 0.466 ohms (OK, under 0.87)</li>
               </ul>
             </div>
           </div>

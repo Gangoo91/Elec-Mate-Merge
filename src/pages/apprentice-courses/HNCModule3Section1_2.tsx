@@ -1,8 +1,27 @@
-import { ArrowLeft, Calculator, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 1 · Subsection 2 — Ohm's Law
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   The single most-used relationship in building services electrical design — V = IR
+ *   sits behind every cable size, every voltage drop check and every Zs verification.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = "Ohm's Law - HNC Module 3 Section 1.2";
@@ -165,539 +184,407 @@ const faqs = [
 ];
 
 const HNCModule3Section1_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Calculator className="h-4 w-4" />
-            <span>Module 3.1.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">Ohm's Law</h1>
-          <p className="text-white">
-            The fundamental relationship between voltage, current and resistance that governs all
-            electrical circuits
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 1 · Subsection 2"
+            title="Ohm's Law"
+            description="The fundamental relationship between voltage, current and resistance that governs all electrical circuits"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>V = I × R</strong> - The fundamental equation
-              </li>
-              <li className="pl-1">
-                Rearranged: <strong>I = V/R</strong> and <strong>R = V/I</strong>
-              </li>
-              <li className="pl-1">Applies to linear (ohmic) resistive elements</li>
-              <li className="pl-1">Foundation for all circuit calculations</li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Applications
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Cable sizing:</strong> Voltage drop calculations
-              </li>
-              <li className="pl-1">
-                <strong>Load current:</strong> Protection device selection
-              </li>
-              <li className="pl-1">
-                <strong>Fault current:</strong> Earth loop impedance
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> Sensor circuit design
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can rearrange V = IR three ways and use it to size a cable, calculate a fault current or pick a current-limiting resistor for an indicator LED.',
+              'You can tell ohmic from non-ohmic devices and recognise that LEDs, NTC thermistors and lamp filaments need different treatment.',
+              'You can run a voltage-drop check using cable mO/m values, the go-and-return rule and the BS 7671 limits (3 % lighting, 5 % power).',
+              'You can compute prospective fault current at a point from I_f = U\u2080 / Z_s and judge whether the upstream device disconnects in time.',
+              'You can apply the temperature correction (\u22480.4 % per \u00b0C, factor \u22481.2 at 70 \u00b0C) when working from a measured 20 \u00b0C resistance.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671 — Appendix 12 (Voltage drop)"
+            clause="The voltage at the terminals of any current-using equipment shall be greater than the lower limit corresponding to the relevant standard. Where the public supply is used, voltage drop within the consumer's installation should not exceed 3 % for lighting and 5 % for other uses of the nominal voltage."
+            meaning={
+              <>
+                Voltage drop is the headline application of Ohm\u2019s law in BS 7671. Use cable
+                mV/A/m tables (or the underlying mO/m \u00d7 length \u00d7 2 calculation) and
+                check against 6.9 V (lighting) or 11.5 V (power) at 230 V nominal.
+              </>
+            }
+            cite="Source: BS 7671 (latest edition incl. A4:2026) Appendix 12."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               "State and apply Ohm's Law in all three forms (V=IR, I=V/R, R=V/I)",
               'Distinguish between ohmic and non-ohmic devices',
               "Calculate voltage drop in cables using Ohm's Law",
               "Apply Ohm's Law to fault current calculations",
               'Design current-limiting circuits for LEDs and sensors',
               'Understand the temperature dependence of resistance',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Ohm's Law Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Ohm's Law Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="V=IR is the master equation. Rearrange it to find current or resistance, and use it for cable sizing, fault current and load analysis."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>V = I × R</strong> - The fundamental equation
+              </li>
+              <li>
+                Rearranged: <strong>I = V/R</strong> and <strong>R = V/I</strong>
+              </li>
+              <li>Applies to linear (ohmic) resistive elements</li>
+              <li>Foundation for all circuit calculations</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Building Services Applications</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable sizing:</strong> Voltage drop calculations
+              </li>
+              <li>
+                <strong>Load current:</strong> Protection device selection
+              </li>
+              <li>
+                <strong>Fault current:</strong> Earth loop impedance
+              </li>
+              <li>
+                <strong>Controls:</strong> Sensor circuit design
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Ohm's Law Fundamentals">
             <p>
               Georg Ohm discovered in 1827 that current through a conductor is directly proportional
               to the voltage across it, with resistance as the constant of proportionality.
             </p>
+            <p className="text-sm font-medium text-elec-yellow/80">The Three Forms of Ohm's Law</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>V = I × R</strong> — Find voltage
+              </li>
+              <li>
+                <strong>I = V / R</strong> — Find current
+              </li>
+              <li>
+                <strong>R = V / I</strong> — Find resistance
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-white">The VIR Triangle:</p>
+            <p>Cover what you want to find — the remaining show the formula. V at the top, I and R at the bottom: V over (I × R).</p>
+            <p className="text-sm font-medium text-white">Key Relationships:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Current is <strong>directly proportional</strong> to voltage (double V, double I)
+              </li>
+              <li>
+                Current is <strong>inversely proportional</strong> to resistance (double R, halve I)
+              </li>
+              <li>
+                These relationships only hold for <strong>ohmic (linear)</strong> components
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-4">
-                The Three Forms of Ohm's Law
-              </p>
-              <div className="grid grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-black/30 border border-elec-yellow/30">
-                  <p className="text-xl font-bold text-elec-yellow mb-1">V = I × R</p>
-                  <p className="text-white text-xs">Find voltage</p>
-                </div>
-                <div className="p-3 rounded bg-black/30 border border-blue-500/30">
-                  <p className="text-xl font-bold text-blue-400 mb-1">I = V / R</p>
-                  <p className="text-white text-xs">Find current</p>
-                </div>
-                <div className="p-3 rounded bg-black/30 border border-green-500/30">
-                  <p className="text-xl font-bold text-green-400 mb-1">R = V / I</p>
-                  <p className="text-white text-xs">Find resistance</p>
-                </div>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-3">The VIR Triangle:</p>
-              <div className="bg-white/5 p-4 rounded mb-3 flex flex-col items-center">
-                <div className="relative w-32 h-28">
-                  {/* Triangle shape */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-elec-yellow">V</span>
-                  </div>
-                  <div className="absolute bottom-0 left-2 w-12 h-12 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-blue-400">I</span>
-                  </div>
-                  <div className="absolute bottom-0 right-2 w-12 h-12 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-green-400">R</span>
-                  </div>
-                  {/* Division line */}
-                  <div className="absolute top-12 left-1/2 -translate-x-1/2 w-20 h-0.5 bg-white/40"></div>
-                  {/* Multiplication symbol */}
-                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white text-lg">
-                    ×
-                  </div>
-                </div>
-                <p className="text-xs text-white mt-2 text-center">
-                  Cover what you want to find - the remaining show the formula
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key Relationships:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Current is <strong>directly proportional</strong> to voltage (double V, double I)
-                </li>
-                <li className="pl-1">
-                  Current is <strong>inversely proportional</strong> to resistance (double R, halve
-                  I)
-                </li>
-                <li className="pl-1">
-                  These relationships only hold for <strong>ohmic (linear)</strong> components
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Ohmic vs Non-Ohmic */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Ohmic vs Non-Ohmic Devices
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Ohmic vs Non-Ohmic Devices">
             <p>
               Not all components follow Ohm's Law. Understanding which devices are linear helps you
               know when to apply simple calculations versus when more complex analysis is needed.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
-                <p className="text-sm font-medium text-green-400 mb-2">Ohmic (Linear) Devices</p>
-                <p className="text-xs text-white mb-2">Resistance remains constant:</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Fixed resistors</strong> - Carbon, metal film
-                  </li>
-                  <li className="pl-1">
-                    <strong>Copper conductors</strong> - At constant temp
-                  </li>
-                  <li className="pl-1">
-                    <strong>Heating elements</strong> - Approximately
-                  </li>
-                  <li className="pl-1">
-                    <strong>Potentiometers</strong> - At fixed setting
-                  </li>
-                </ul>
-                <p className="text-xs text-white mt-2">
-                  V-I Graph: Straight line through origin
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
-                <p className="text-sm font-medium text-amber-400 mb-2">
-                  Non-Ohmic (Non-Linear) Devices
-                </p>
-                <p className="text-xs text-white mb-2">Resistance varies with conditions:</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>LEDs</strong> - R drops when forward biased
-                  </li>
-                  <li className="pl-1">
-                    <strong>Thermistors</strong> - NTC: R decreases with temp
-                  </li>
-                  <li className="pl-1">
-                    <strong>Diodes</strong> - High R reverse, low R forward
-                  </li>
-                  <li className="pl-1">
-                    <strong>Lamps</strong> - R increases when hot
-                  </li>
-                </ul>
-                <p className="text-xs text-white mt-2">V-I Graph: Curved line, slope varies</p>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Ohmic (Linear) Devices — Resistance remains constant:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fixed resistors</strong> - Carbon, metal film
+              </li>
+              <li>
+                <strong>Copper conductors</strong> - At constant temp
+              </li>
+              <li>
+                <strong>Heating elements</strong> - Approximately
+              </li>
+              <li>
+                <strong>Potentiometers</strong> - At fixed setting
+              </li>
+            </ul>
+            <p>V-I Graph: Straight line through origin</p>
+            <p className="text-sm font-medium text-elec-yellow/80">Non-Ohmic (Non-Linear) Devices — Resistance varies with conditions:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LEDs</strong> - R drops when forward biased
+              </li>
+              <li>
+                <strong>Thermistors</strong> - NTC: R decreases with temp
+              </li>
+              <li>
+                <strong>Diodes</strong> - High R reverse, low R forward
+              </li>
+              <li>
+                <strong>Lamps</strong> - R increases when hot
+              </li>
+            </ul>
+            <p>V-I Graph: Curved line, slope varies</p>
             <p className="text-sm text-elec-yellow/70">
               <strong>BMS Note:</strong> Temperature sensors often use NTC thermistors (10kΩ at 25°C
               is common). Their non-linear response requires lookup tables or linearisation for
               accurate measurement.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 3: Building Services Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Building Services Applications
-          </h2>
-          <div className="text-white space-y-6 leading-relaxed">
-            {/* Cable Voltage Drop */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-blue-400 mb-3">
-                Application 1: Cable Voltage Drop
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Every cable has resistance. When current flows, Ohm's Law dictates that voltage is
-                dropped across this resistance.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono text-lg">
-                  <strong>
-                    Voltage Drop = I × R<sub>cable</sub> × 2
-                  </strong>
-                </p>
-                <p className="text-xs text-white mt-1">
-                  (×2 accounts for line and neutral conductors)
-                </p>
-              </div>
-              <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> 20A load, 30m cable run, 2.5mm² copper
-                </p>
-                <p>Cable resistance: 7.41 mΩ/m</p>
-                <p className="mt-2">
-                  R<sub>total</sub> = 30m × 2 × 7.41mΩ/m = 0.445Ω
-                </p>
-                <p>
-                  V<sub>drop</sub> = 20A × 0.445Ω = <strong>8.9V</strong>
-                </p>
-                <p className="mt-2">
-                  As percentage of 230V: (8.9/230) × 100 = <strong>3.9%</strong>
-                </p>
-                <p className="text-green-400 mt-1">✓ Within 5% limit for power circuits</p>
-              </div>
-              <div className="mt-3 text-xs text-white">
-                <strong>BS 7671 Limits:</strong> Lighting circuits: 3% (6.9V) | Other circuits: 5%
-                (11.5V)
-              </div>
-            </div>
+          <SectionRule />
 
-            {/* Fault Current */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-red-400 mb-3">
-                Application 2: Earth Fault Loop Impedance
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Ohm's Law calculates fault current, which determines if protective devices operate
-                fast enough.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono text-lg">
-                  <strong>
-                    I<sub>f</sub> = U₀ / Z<sub>s</sub>
-                  </strong>
-                </p>
-                <p className="text-xs text-white mt-1">
-                  Fault current = Nominal voltage ÷ Earth fault loop impedance
-                </p>
-              </div>
-              <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> Z<sub>s</sub> measured = 1.2Ω, U₀ = 230V
-                </p>
-                <p className="mt-2">
-                  Fault current I<sub>f</sub> = 230V / 1.2Ω = <strong>192A</strong>
-                </p>
-                <p className="mt-2">For a 32A Type B MCB, requires 160A (5× In)</p>
-                <p className="text-green-400 mt-1">✓ 192A &gt; 160A, MCB will trip within 0.4s</p>
-              </div>
-              <p className="text-xs text-red-400/80 mt-3">
-                <strong>Critical:</strong> If Zs is too high, fault current is too low, and the
-                protective device may not operate in time.
-              </p>
-            </div>
+          <ConceptBlock title="Application 1: Cable Voltage Drop">
+            <p>
+              Every cable has resistance. When current flows, Ohm's Law dictates that voltage is
+              dropped across this resistance.
+            </p>
+            <p>
+              <strong>Voltage Drop = I × R<sub>cable</sub> × 2</strong> (×2 accounts for line and
+              neutral conductors)
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> 20A load, 30m cable run, 2.5mm² copper
+              </li>
+              <li>Cable resistance: 7.41 mΩ/m</li>
+              <li>R<sub>total</sub> = 30m × 2 × 7.41mΩ/m = 0.445Ω</li>
+              <li>V<sub>drop</sub> = 20A × 0.445Ω = <strong>8.9V</strong></li>
+              <li>As percentage of 230V: (8.9/230) × 100 = <strong>3.9%</strong> ✓ Within 5% limit for power circuits</li>
+            </ul>
+            <p>
+              <strong>BS 7671 Limits:</strong> Lighting circuits: 3% (6.9V) | Other circuits: 5%
+              (11.5V)
+            </p>
+          </ConceptBlock>
 
-            {/* LED Current Limiting */}
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-green-400 mb-3">
-                Application 3: LED Current Limiting
-              </h3>
-              <p className="text-sm text-white mb-3">
-                LEDs require current-limiting resistors because they are non-ohmic - without
-                limiting, current would destroy them.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono text-lg">
-                  <strong>
-                    R = (V<sub>supply</sub> - V<sub>LED</sub>) / I<sub>LED</sub>
-                  </strong>
-                </p>
-              </div>
-              <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Given:</strong> 24V DC supply, green LED (V<sub>f</sub>=2.2V, I=20mA)
-                </p>
-                <p className="mt-2">Voltage across resistor = 24V - 2.2V = 21.8V</p>
-                <p>
-                  R = 21.8V / 0.02A = <strong>1090Ω</strong>
-                </p>
-                <p className="mt-1">
-                  Use nearest standard value: <strong>1.1kΩ</strong>
-                </p>
-                <p className="mt-2">Power dissipation: P = I²R = 0.02² × 1100 = 0.44W</p>
-                <p className="text-white">Use 0.5W or 1W rated resistor</p>
-              </div>
-              <p className="text-xs text-white mt-3">
-                <strong>BMS Application:</strong> Status indicator LEDs on control panels commonly
-                use this calculation.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Application 2: Earth Fault Loop Impedance">
+            <p>
+              Ohm's Law calculates fault current, which determines if protective devices operate
+              fast enough.
+            </p>
+            <p>
+              <strong>I<sub>f</sub> = U₀ / Z<sub>s</sub></strong> — Fault current = Nominal voltage
+              ÷ Earth fault loop impedance
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> Z<sub>s</sub> measured = 1.2Ω, U₀ = 230V
+              </li>
+              <li>Fault current I<sub>f</sub> = 230V / 1.2Ω = <strong>192A</strong></li>
+              <li>For a 32A Type B MCB, requires 160A (5× In)</li>
+              <li>✓ 192A &gt; 160A, MCB will trip within 0.4s</li>
+            </ul>
+            <p className="text-sm text-orange-300">
+              <strong>Critical:</strong> If Zs is too high, fault current is too low, and the
+              protective device may not operate in time.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Application 3: LED Current Limiting">
+            <p>
+              LEDs require current-limiting resistors because they are non-ohmic - without
+              limiting, current would destroy them.
+            </p>
+            <p>
+              <strong>R = (V<sub>supply</sub> - V<sub>LED</sub>) / I<sub>LED</sub></strong>
+            </p>
+            <p className="text-sm font-medium text-white">Worked Example:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Given:</strong> 24V DC supply, green LED (V<sub>f</sub>=2.2V, I=20mA)
+              </li>
+              <li>Voltage across resistor = 24V - 2.2V = 21.8V</li>
+              <li>R = 21.8V / 0.02A = <strong>1090Ω</strong></li>
+              <li>Use nearest standard value: <strong>1.1kΩ</strong></li>
+              <li>Power dissipation: P = I²R = 0.02² × 1100 = 0.44W</li>
+              <li>Use 0.5W or 1W rated resistor</li>
+            </ul>
+            <p>
+              <strong>BMS Application:</strong> Status indicator LEDs on control panels commonly
+              use this calculation.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 4: Temperature Effects */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Temperature Effects on Resistance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Temperature Effects on Resistance">
             <p>
               Conductor resistance increases with temperature. This is important for cable sizing
               and testing.
             </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Temperature Coefficient of Copper</p>
+            <p>
+              R<sub>t</sub> = R<sub>20</sub> × [1 + α(t - 20)] — Where α = 0.00393/°C for copper
+            </p>
+            <p className="text-sm font-medium text-white">Practical Implications:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cables at 70°C have ~20% higher resistance than at 20°C</li>
+              <li>Use factor of 1.2 to convert measured R to operating R</li>
+              <li>BS 7671 tables already account for this in current ratings</li>
+              <li>Cold cables have lower resistance - relevant for motor starting</li>
+            </ul>
+            <p className="text-sm font-medium text-white">Worked Example:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cable measured at 20°C: R = 0.5Ω</li>
+              <li>Operating at 70°C: R = 0.5 × [1 + 0.00393 × 50]</li>
+              <li>R = 0.5 × 1.197 = <strong>0.6Ω</strong></li>
+              <li>(Or use quick factor: 0.5 × 1.2 = 0.6Ω)</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-purple-400 mb-3">
-                Temperature Coefficient of Copper
-              </p>
-              <div className="bg-black/30 p-3 rounded text-center mb-3">
-                <p className="font-mono">
-                  R<sub>t</sub> = R<sub>20</sub> × [1 + α(t - 20)]
-                </p>
-                <p className="text-xs text-white mt-1">Where α = 0.00393/°C for copper</p>
-              </div>
+          <SectionRule />
 
-              <p className="text-sm font-medium text-white mb-2">Practical Implications:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Cables at 70°C have ~20% higher resistance than at 20°C</li>
-                <li className="pl-1">Use factor of 1.2 to convert measured R to operating R</li>
-                <li className="pl-1">BS 7671 tables already account for this in current ratings</li>
-                <li className="pl-1">
-                  Cold cables have lower resistance - relevant for motor starting
-                </li>
-              </ul>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Ohm's Law Applications</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>V = IR</strong> — Calculate voltage drop in cables
+              </li>
+              <li>
+                <strong>I = V/R</strong> — Calculate load current or fault current
+              </li>
+              <li>
+                <strong>R = V/I</strong> — Determine load resistance from measurements
+              </li>
+              <li>Always multiply cable length by 2 for single-phase circuits</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Quick Reference</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Power circuits: 5% (11.5V)</li>
+              <li>Lighting circuits: 3% (6.9V)</li>
+              <li>Formula: Vd = I × R × 2</li>
+            </ul>
+          </ConceptBlock>
 
-              <p className="text-sm font-medium text-white mb-2 mt-4">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Cable measured at 20°C: R = 0.5Ω</p>
-                <p>Operating at 70°C: R = 0.5 × [1 + 0.00393 × 50]</p>
-                <p>
-                  R = 0.5 × 1.197 = <strong>0.6Ω</strong>
-                </p>
-                <p className="text-white mt-1">(Or use quick factor: 0.5 × 1.2 = 0.6Ω)</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <CommonMistake
+            title="Common Ohm's Law mistakes"
+            whatHappens={
+              <>
+                Forgetting to double cable length (both conductors carry current). Assuming LEDs are
+                ohmic — they need a current-limiting resistor. Not accounting for hot-cable
+                resistance. Confusing mΩ with Ω: 7.41mΩ = 0.00741Ω.
+              </>
+            }
+            doInstead={
+              <>
+                Always ×2 the cable run for Vd. Use the LED current-limiting formula. Apply the 1.2
+                factor for 70°C cables. Convert all resistances to Ω before substituting.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <Scenario
+            title="Verifying Zs at the furthest socket on a basement plant-room final circuit"
+            situation={
+              <>
+                You have just installed a new 32 A radial circuit in a basement plant room
+                feeding a control-panel power supply 28 m from the distribution board on
+                4 mm\u00b2 thermoplastic. The Zs measured at the furthest socket reads 1.10 \u03a9.
+                The protective device is a 32 A Type B MCB.
+              </>
+            }
+            whatToDo={
+              <>
+                Apply Ohm\u2019s law to the loop: I_f = U\u2080 / Z_s = 230 / 1.10 \u2248 209 A.
+                A Type B MCB needs 5 \u00d7 I_n = 160 A to disconnect within 0.1 s, so 209 A
+                clears the requirement comfortably. Cross-check Z_s against BS 7671 Table 41.3
+                (or the 80 % rule of thumb on the manufacturer\u2019s figure) before signing the
+                certificate. Record the measured value, the calculated I_f and the disconnection
+                time on the schedule of test results.
+              </>
+            }
+            whyItMatters={
+              <>
+                Ohm\u2019s law is the single calculation that decides whether a fault is cleared
+                fast enough to be safe. A circuit that meets voltage drop but fails on Z_s is
+                non-compliant and unsafe to energise. As the engineer of record, your name is
+                on the certificate \u2014 the math has to be defendable.
+              </>
+            }
+          />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ohm's Law Applications
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>V = IR</strong> — Calculate voltage drop in cables
-                </li>
-                <li className="pl-1">
-                  <strong>I = V/R</strong> — Calculate load current or fault current
-                </li>
-                <li className="pl-1">
-                  <strong>R = V/I</strong> — Determine load resistance from measurements
-                </li>
-                <li className="pl-1">
-                  Always multiply cable length by 2 for single-phase circuits
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Forgetting to double cable length</strong> — Both conductors have
-                  resistance
-                </li>
-                <li className="pl-1">
-                  <strong>Assuming LEDs are ohmic</strong> — They need current limiting
-                </li>
-                <li className="pl-1">
-                  <strong>Not accounting for temperature</strong> — Use 1.2 factor for 70°C
-                </li>
-                <li className="pl-1">
-                  <strong>Confusing mΩ with Ω</strong> — 7.41mΩ = 0.00741Ω in calculations
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'V = IR \u2014 the master equation. Three rearrangements (V = IR, I = V/R, R = V/I) cover most building services calculations.',
+              'Ohmic devices (fixed resistors, copper conductors at constant temperature, heating elements) plot a straight line on V vs I.',
+              'Non-ohmic devices (LEDs, NTC thermistors, diodes, lamp filaments) need a current-limiting resistor or a lookup table \u2014 not a single R value.',
+              'Voltage drop V_d = I \u00d7 R \u00d7 2 for single-phase \u2014 the \u00d72 is the go-and-return path.',
+              'BS 7671 Appendix 12 limits: 3 % for lighting (6.9 V at 230 V), 5 % for power (11.5 V at 230 V).',
+              'Fault current I_f = U\u2080 / Z_s \u2014 the basis for confirming protective device disconnection times to BS 7671 Table 41.3.',
+              'Copper resistance rises \u22480.4 % per \u00b0C \u2014 cable at 70 \u00b0C is \u224820 % more resistive than at 20 \u00b0C. Apply the 1.2 factor when starting from a 20 \u00b0C R\u2081 measurement.',
+              'Convert units before substituting: 7.41 m\u03a9/m = 0.00741 \u03a9/m. Mixing m\u03a9 and \u03a9 is the most common source of order-of-magnitude errors.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Ohm's Law Forms</p>
-                <ul className="space-y-0.5">
-                  <li>V = I × R — Find voltage</li>
-                  <li>I = V / R — Find current</li>
-                  <li>R = V / I — Find resistance</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Voltage Drop Limits</p>
-                <ul className="space-y-0.5">
-                  <li>Power circuits: 5% (11.5V)</li>
-                  <li>Lighting circuits: 3% (6.9V)</li>
-                  <li>Formula: Vd = I × R × 2</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-3">
-              Next: Series Circuits
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Voltage, Current, Resistance and Power
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Series Circuits
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

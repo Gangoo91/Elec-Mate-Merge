@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 5,
     question:
       'On a TN-C-S supply with declared Ze = 0.35 Ω, what is the maximum permitted Zs for a 32 A B-curve MCB circuit per BS 7671 A4:2026 Table 41.3 (for the 230 V column)?',
-    options: ['1.37 Ω', '1.37 Ω', '0.86 Ω', '0.55 Ω'],
+    options: ['1.44 Ω (pre-A4)', '1.37 Ω', '0.86 Ω', '0.55 Ω'],
     correctAnswer: 1,
     explanation:
-      'BS 7671 A4:2026 Table 41.3 max Zs for a B32 (230 V) is 1.37 Ω. The pre-A4 figure was 1.37 Ω; the A4:2026 amendment tightened it to 1.37 Ω because the underlying calculation now uses the Cmin = 0.95 voltage factor formally. Many older study materials and OSG editions still quote 1.37 Ω — that figure is now obsolete. Always work from the current Table 41.3 values for design and verification.',
+      'BS 7671 A4:2026 Table 41.3 max Zs for a B32 (230 V) is 1.37 Ω. The pre-A4 figure was 1.44 Ω; the A4:2026 amendment tightened it to 1.37 Ω because the underlying calculation now uses the Cmin = 0.95 voltage factor formally. Many older study materials and OSG editions still quote 1.44 Ω — that figure is now obsolete. Always work from the current Table 41.3 values for design and verification.',
   },
   {
     id: 6,
@@ -801,7 +801,7 @@ export default function Sub6() {
               'Battery installations are governed by Reg 551 — bidirectional protection, G98/G99 compliance for grid synchronisation and anti-islanding, clear isolation scheme.',
               'Heat pumps are sized to manufacturer continuous-current spec with appropriate inrush protection. 2.5 mm² T&E on a 20 A RCBO is the typical 8 kW air-source spec for a 12 m run.',
               'Meter tails for a 100 A TN-C-S supply are 25 mm² standard for runs up to ~3 m; verify the DNO connection agreement for any tighter spec.',
-              'BS 7671 A4:2026 Table 41.3 max Zs for B32 = 1.37 Ω (the pre-A4 figure of 1.37 Ω is now obsolete). Always work from the current Table 41.3 values for design and verification.',
+              'BS 7671 A4:2026 Table 41.3 max Zs for B32 = 1.37 Ω (the pre-A4 figure of 1.44 Ω is now obsolete). Always work from the current Table 41.3 values for design and verification.',
               'Reg 132.13 design pack is part of the deliverable. Single-line diagram, cable schedule with all four gates documented, protective device specs, future-load notes, operating notes for the homeowner — bigger systems need more documentation, not less.',
             ]}
           />

@@ -1,8 +1,29 @@
-import { ArrowLeft, GraduationCap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 4 · Subsection 2 — Competence and Training
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   Establishing, verifying and maintaining workforce competence — knowledge, skill,
+ *   experience, attitude. Engineer-in-training perspective: how an HNC supervisor evidences
+ *   competence in line with EAWR Reg 16 and MHSWR Reg 13.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Competence and Training - HNC Module 1 Section 4.2';
@@ -230,847 +251,611 @@ const faqs = [
 ];
 
 const HNCModule1Section4_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 4
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <GraduationCap className="h-4 w-4" />
-            <span>Module 1.4.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Competence and Training
-          </h1>
-          <p className="text-white">
-            Establishing, verifying, and maintaining workforce competence in building services
-            engineering
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.4.2"
+            title="Competence and Training"
+            description="Establishing, verifying, and maintaining workforce competence in building services engineering"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Competence:</strong> Training + Experience + Knowledge + Ability
-              </li>
-              <li className="pl-1">
-                <strong>Legal duty:</strong> Employers must ensure competent workers
-              </li>
-              <li className="pl-1">
-                <strong>Task-specific:</strong> Competence for one job differs from another
-              </li>
-              <li className="pl-1">
-                <strong>Verification:</strong> Qualifications, observation, assessment
-              </li>
+          <TLDR
+            points={[
+              'You will treat competence as the four-leg stool — knowledge, skill, experience, attitude — and reject the assumption that a card alone makes someone competent.',
+              'You apply EAWR Reg 16 (technical knowledge or experience) and MHSWR Reg 13 (capabilities and training) on every task allocation.',
+              'You differentiate skilled, instructed and ordinary persons (BS 7671 Part 2) and place each operative correctly.',
+              'You record evidence — qualifications, in-house assessments, supervised work logs — in a competence matrix.',
+            ]}
+          />
+
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 13(1)"
+            clause="Every employer shall, in entrusting tasks to his employees, take into account their capabilities as regards health and safety."
+            meaning={
+              <>
+                Reg 13 is the legal hook for matching task to person. As an HNC supervisor your
+                allocation decisions — who installs, who tests, who certifies — must be
+                defendable on the basis of recorded competence, not gut feel.
+              </>
+            }
+            cite="Source: Management of Health and Safety at Work Regulations 1999, Reg 13(1) — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Define competence and its legal requirements under health and safety law",
+              "Conduct a Training Needs Analysis to identify competence gaps",
+              "Apply appropriate methods for verifying worker competence",
+              "Explain the JIB/ECS card scheme and qualification requirements",
+              "Maintain effective training records to demonstrate compliance",
+              "Evaluate training effectiveness using recognised frameworks",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Understanding Competence</ContentEyebrow>
+
+          <ConceptBlock title="Understanding Competence">
+            <p>
+            Competence is central to workplace health and safety. The law requires that work be
+            carried out by competent persons, but competence is not simply about holding
+            qualifications - it encompasses a combination of training, experience, knowledge, and
+            personal qualities.
+            </p>
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Legal Definition of Competence
+            </p>
+            <p className="text-sm text-white italic mb-3">
+            "A competent person is someone who has sufficient training and experience or
+            knowledge and other qualities that allow them to assist you properly."
+            </p>
+            <p className="text-xs text-white">
+            — Management of Health and Safety at Work Regulations 1999
+            </p>
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Components of Competence
+            </p>
+            
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <p className="text-sm font-medium text-elec-yellow mb-2">Knowledge</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Understanding of relevant hazards and risks</li>
+            <li>Knowledge of legal requirements and standards</li>
+            <li>Technical knowledge of systems and equipment</li>
+            <li>Awareness of safe working procedures</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>ECS cards:</strong> Industry competence verification scheme
-              </li>
-              <li className="pl-1">
-                <strong>AM2 assessment:</strong> Practical skills verification
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Requires competent persons for electrical work
-              </li>
-              <li className="pl-1">
-                <strong>Regulation 16:</strong> Electricity at Work competence duty
-              </li>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <p className="text-sm font-medium text-elec-yellow mb-2">Skills</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Practical ability to perform tasks safely</li>
+            <li>Use of tools and equipment correctly</li>
+            <li>Application of inspection and testing procedures</li>
+            <li>Problem-solving and decision-making ability</li>
             </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Define competence and its legal requirements under health and safety law',
-              'Conduct a Training Needs Analysis to identify competence gaps',
-              'Apply appropriate methods for verifying worker competence',
-              'Explain the JIB/ECS card scheme and qualification requirements',
-              'Maintain effective training records to demonstrate compliance',
-              'Evaluate training effectiveness using recognised frameworks',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Understanding Competence */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding Competence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Competence is central to workplace health and safety. The law requires that work be
-              carried out by competent persons, but competence is not simply about holding
-              qualifications - it encompasses a combination of training, experience, knowledge, and
-              personal qualities.
-            </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Legal Definition of Competence
-              </p>
-              <p className="text-sm text-white italic mb-3">
-                "A competent person is someone who has sufficient training and experience or
-                knowledge and other qualities that allow them to assist you properly."
-              </p>
-              <p className="text-xs text-white">
-                — Management of Health and Safety at Work Regulations 1999
-              </p>
             </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Components of Competence
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-sm font-medium text-elec-yellow mb-2">Knowledge</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Understanding of relevant hazards and risks</li>
-                    <li className="pl-1">Knowledge of legal requirements and standards</li>
-                    <li className="pl-1">Technical knowledge of systems and equipment</li>
-                    <li className="pl-1">Awareness of safe working procedures</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-sm font-medium text-elec-yellow mb-2">Skills</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Practical ability to perform tasks safely</li>
-                    <li className="pl-1">Use of tools and equipment correctly</li>
-                    <li className="pl-1">Application of inspection and testing procedures</li>
-                    <li className="pl-1">Problem-solving and decision-making ability</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-sm font-medium text-elec-yellow mb-2">Attitude</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Commitment to working safely</li>
-                    <li className="pl-1">Willingness to follow procedures</li>
-                    <li className="pl-1">Recognition of limitations</li>
-                    <li className="pl-1">Willingness to seek help when needed</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-sm font-medium text-elec-yellow mb-2">Experience</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Practical exposure to real work situations</li>
-                    <li className="pl-1">Supervised practice building confidence</li>
-                    <li className="pl-1">Exposure to different scenarios and problems</li>
-                    <li className="pl-1">Learning from mistakes in safe environment</li>
-                  </ul>
-                </div>
-              </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <p className="text-sm font-medium text-elec-yellow mb-2">Attitude</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Commitment to working safely</li>
+            <li>Willingness to follow procedures</li>
+            <li>Recognition of limitations</li>
+            <li>Willingness to seek help when needed</li>
+            </ul>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-300 mb-2">Task-Specific Competence</p>
-              <p className="text-sm text-white">
-                Competence is task-specific, not a general attribute. An electrician competent to
-                install domestic wiring may not be competent for industrial three-phase systems,
-                high voltage work, or hazardous area installations. Each new type of work requires
-                specific assessment and potentially additional training.
-              </p>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <p className="text-sm font-medium text-elec-yellow mb-2">Experience</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Practical exposure to real work situations</li>
+            <li>Supervised practice building confidence</li>
+            <li>Exposure to different scenarios and problems</li>
+            <li>Learning from mistakes in safe environment</li>
+            </ul>
             </div>
+            
+            
+
+            <CommonMistake
+            title="Task-Specific Competence"
+            whatHappens={<><p className="text-sm text-white">
+            Competence is task-specific, not a general attribute. An electrician competent to
+            install domestic wiring may not be competent for industrial three-phase systems,
+            high voltage work, or hazardous area installations. Each new type of work requires
+            specific assessment and potentially additional training.
+            </p></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Nobody is competent for all tasks - competence must be
-              matched to the specific work being undertaken.
+            <strong>Key principle:</strong> Nobody is competent for all tasks - competence must be
+            matched to the specific work being undertaken.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Training Needs Analysis */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Training Needs Analysis (TNA)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Training Needs Analysis (TNA)</ContentEyebrow>
+
+          <ConceptBlock title="Training Needs Analysis (TNA)">
             <p>
-              Training Needs Analysis is a systematic process for identifying the gap between
-              current workforce competence and required competence. It ensures training resources
-              are targeted where they will have most impact on health and safety performance.
+            Training Needs Analysis is a systematic process for identifying the gap between
+            current workforce competence and required competence. It ensures training resources
+            are targeted where they will have most impact on health and safety performance.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">TNA Process Steps</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Output</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Job analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Identify tasks, hazards, and competence requirements
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Job competence profile</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Current assessment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Evaluate workers' current knowledge, skills, experience
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Individual competence profiles
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Gap analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compare required vs. actual competence
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Training needs identified
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Prioritisation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rank needs by risk, legal requirement, urgency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Priority training list</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Training plan</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Determine training methods, resources, schedule
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Training programme</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">TNA Process Steps</p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1. Job analysis</strong> — Activity: Identify tasks, hazards, and competence requirements. Output: Job competence profile</li>
+            <li><strong>2. Current assessment</strong> — Activity: Evaluate workers' current knowledge, skills, experience. Output: Individual competence profiles</li>
+            <li><strong>3. Gap analysis</strong> — Activity: Compare required vs. actual competence. Output: Training needs identified</li>
+            <li><strong>4. Prioritisation</strong> — Activity: Rank needs by risk, legal requirement, urgency. Output: Priority training list</li>
+            <li><strong>5. Training plan</strong> — Activity: Determine training methods, resources, schedule. Output: Training programme</li>
+            </ul>
+            
+            
 
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Triggers for Training
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>New starters:</strong> Induction and job-specific training
-                  </li>
-                  <li className="pl-1">
-                    <strong>New equipment:</strong> Operating procedures and hazards
-                  </li>
-                  <li className="pl-1">
-                    <strong>Changed regulations:</strong> Updated legal requirements
-                  </li>
-                  <li className="pl-1">
-                    <strong>Incidents:</strong> Lessons learned, corrective training
-                  </li>
-                  <li className="pl-1">
-                    <strong>Role changes:</strong> New responsibilities or tasks
-                  </li>
-                  <li className="pl-1">
-                    <strong>Refresher:</strong> Periodic knowledge update
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Training Methods</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Classroom:</strong> Theory, regulations, procedures
-                  </li>
-                  <li className="pl-1">
-                    <strong>Practical:</strong> Hands-on skills development
-                  </li>
-                  <li className="pl-1">
-                    <strong>On-the-job:</strong> Supervised work experience
-                  </li>
-                  <li className="pl-1">
-                    <strong>E-learning:</strong> Flexible self-paced modules
-                  </li>
-                  <li className="pl-1">
-                    <strong>Toolbox talks:</strong> Short, focused safety briefings
-                  </li>
-                  <li className="pl-1">
-                    <strong>Simulation:</strong> Practice without real risks
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Legal Training Requirements (Regulation 13)
-              </p>
-              <p className="text-sm text-white mb-3">
-                The Management of Health and Safety at Work Regulations 1999 require training to be
-                provided:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">On being recruited into the employer's undertaking</li>
-                <li className="pl-1">
-                  On being exposed to new or increased risks due to transfer, change of
-                  responsibilities, introduction of new equipment, new technology, or new systems of
-                  work
-                </li>
-                <li className="pl-1">Training must be repeated periodically as appropriate</li>
-                <li className="pl-1">
-                  Training must be adapted to take account of new or changed risks
-                </li>
-                <li className="pl-1">Training must take place during working hours</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Record keeping:</strong> Document training provided, attendees, content
-              covered, assessments completed, and trainer details for compliance evidence.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 3: JIB/ECS Card Scheme */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            JIB/ECS Card Scheme and Qualification Framework
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              The Electrotechnical Certification Scheme (ECS) is managed by the Joint Industry Board
-              (JIB) and provides industry-recognised cards that verify the competence and
-              qualifications of electrical workers. The scheme is increasingly required for site
-              access across the construction industry.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ECS Card Types and Grades
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Card Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Colour</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Holder Profile</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Requirements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Apprentice</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">Red</td>
-                      <td className="border border-white/10 px-3 py-2">Registered apprentice</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        JIB registered apprenticeship
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Trainee</td>
-                      <td className="border border-white/10 px-3 py-2 text-amber-400">Amber</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Training towards qualification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enrolled on approved course
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Provisional</td>
-                      <td className="border border-white/10 px-3 py-2 text-amber-400">Amber</td>
-                      <td className="border border-white/10 px-3 py-2">NVQ Level 3 but no AM2</td>
-                      <td className="border border-white/10 px-3 py-2">Working towards AM2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold">
-                        Installation Electrician
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Gold</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Qualified installation electrician
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">NVQ L3 + AM2 + H&S test</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold">
-                        Approved Electrician
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Gold</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Experienced installation electrician
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        As above + experience + assessment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Technician</td>
-                      <td className="border border-white/10 px-3 py-2 text-blue-400">Blue</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technical/supervisory role
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HNC/HND or equivalent + experience
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Experienced Worker</td>
-                      <td className="border border-white/10 px-3 py-2 text-gray-400">Grey</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Significant industry experience
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Employer letter + H&S test
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">AM2 Assessment</p>
-              <p className="text-sm text-white mb-3">
-                The AM2 (Achievement Measurement 2) is a practical end-point assessment for
-                electrical apprentices that tests:
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Safe isolation procedures</li>
-                  <li className="pl-1">Installation of wiring systems</li>
-                  <li className="pl-1">Inspection and testing</li>
-                  <li className="pl-1">Fault diagnosis</li>
-                </ul>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Completion of documentation</li>
-                  <li className="pl-1">Cable selection and sizing</li>
-                  <li className="pl-1">Earthing and bonding</li>
-                  <li className="pl-1">Professional behaviours</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Health and Safety Assessment
-              </p>
-              <p className="text-sm text-white mb-3">
-                All ECS card holders must pass the CSCS Health, Safety and Environment test
-                appropriate to their occupation:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Tests are occupation-specific (e.g., Electrician test for electricians)
-                </li>
-                <li className="pl-1">Valid for 2 years at the time of card application</li>
-                <li className="pl-1">
-                  Multiple choice questions covering site safety, hazard awareness, legal
-                  requirements
-                </li>
-                <li className="pl-1">Must be passed at approved test centres</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-300 mb-2">Card Validity and Renewal</p>
-              <p className="text-sm text-white">
-                Most ECS cards are valid for <strong>5 years</strong>. To renew, cardholders must
-                demonstrate continuing competence through relevant work experience and CPD activity.
-                Evidence of ongoing training, additional qualifications, and up-to-date health and
-                safety awareness is required. The H&S test must also be current at the time of
-                renewal.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Site access:</strong> Many construction sites now require valid ECS cards for
-              all electrical workers as evidence of competence and safety awareness.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Competence Verification and Records */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Competence Verification and Training Records
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Verifying competence requires objective evidence that workers have the necessary
-              knowledge, skills, and experience for their work. Training records provide essential
-              evidence of compliance with legal duties and support defence in any subsequent
-              proceedings.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Methods for Verifying Competence
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What It Verifies
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Limitations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Qualification check</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Formal knowledge and training completed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Does not verify current skills
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ECS card verification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Industry-recognised competence level
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Task-specific competence still needed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Practical assessment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ability to perform specific tasks
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Time-consuming, requires assessor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Work observation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Real-world performance and behaviour
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        May modify behaviour when observed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Knowledge testing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Understanding of procedures and hazards
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Does not verify practical ability
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reference/experience check
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Previous work history and performance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Relies on third-party accuracy
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Evaluating Training Effectiveness - Kirkpatrick Model
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Level 1: Reaction</p>
-                  <p className="text-xs text-white">
-                    Did trainees find the training engaging and relevant?
-                  </p>
-                  <p className="text-xs text-white mt-1">
-                    Method: Feedback forms, verbal feedback
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Level 2: Learning</p>
-                  <p className="text-xs text-white">
-                    Did trainees gain the intended knowledge and skills?
-                  </p>
-                  <p className="text-xs text-white mt-1">
-                    Method: Tests, demonstrations, assessments
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Level 3: Behaviour</p>
-                  <p className="text-xs text-white">
-                    Are trainees applying learning in their work?
-                  </p>
-                  <p className="text-xs text-white mt-1">
-                    Method: Observation, supervisor feedback
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Level 4: Results</p>
-                  <p className="text-xs text-white">Has training improved safety outcomes?</p>
-                  <p className="text-xs text-white mt-1">
-                    Method: Incident rates, audit findings
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Training Record Requirements
-              </p>
-              <p className="text-sm text-white mb-3">
-                Effective training records should capture:
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Employee name and identification</li>
-                  <li className="pl-1">Training title and content covered</li>
-                  <li className="pl-1">Date, duration, and location</li>
-                  <li className="pl-1">Trainer name and qualifications</li>
-                </ul>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Assessment results if applicable</li>
-                  <li className="pl-1">Competence declaration signed</li>
-                  <li className="pl-1">Certificates or qualifications awarded</li>
-                  <li className="pl-1">Refresher/renewal dates due</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-300 mb-2">Record Retention</p>
-              <p className="text-sm text-white">
-                Training records should be retained for the duration of employment plus a reasonable
-                period after (typically 3-6 years, longer for exposure to hazardous substances).
-                Records may be needed for: incident investigations, civil claims, regulatory
-                inspections, demonstrating compliance, and defending legal proceedings - all of
-                which may arise years after the training occurred.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Digital records:</strong> Electronic training management systems can track
-              competence, flag renewal dates, and generate compliance reports - but must be backed
-              up and accessible.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
+            
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building a Competence Management System
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Define roles:</strong> Create competence profiles for each job role
-                </li>
-                <li className="pl-1">
-                  <strong>Assess gaps:</strong> Compare individual competence against role
-                  requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Plan training:</strong> Prioritise training based on risk and legal
-                  requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Verify competence:</strong> Use appropriate methods to confirm capability
-                </li>
-                <li className="pl-1">
-                  <strong>Document:</strong> Maintain comprehensive training and competence records
-                </li>
-                <li className="pl-1">
-                  <strong>Review:</strong> Regularly reassess competence and update training
-                </li>
-              </ul>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Triggers for Training
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>New starters:</strong> Induction and job-specific training
+            </li>
+            <li>
+            <strong>New equipment:</strong> Operating procedures and hazards
+            </li>
+            <li>
+            <strong>Changed regulations:</strong> Updated legal requirements
+            </li>
+            <li>
+            <strong>Incidents:</strong> Lessons learned, corrective training
+            </li>
+            <li>
+            <strong>Role changes:</strong> New responsibilities or tasks
+            </li>
+            <li>
+            <strong>Refresher:</strong> Periodic knowledge update
+            </li>
+            </ul>
+            </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Training Methods</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Classroom:</strong> Theory, regulations, procedures
+            </li>
+            <li>
+            <strong>Practical:</strong> Hands-on skills development
+            </li>
+            <li>
+            <strong>On-the-job:</strong> Supervised work experience
+            </li>
+            <li>
+            <strong>E-learning:</strong> Flexible self-paced modules
+            </li>
+            <li>
+            <strong>Toolbox talks:</strong> Short, focused safety briefings
+            </li>
+            <li>
+            <strong>Simulation:</strong> Practice without real risks
+            </li>
+            </ul>
+            </div>
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Legal Training Requirements (Regulation 13)
+            </p>
+            <p className="text-sm text-white mb-3">
+            The Management of Health and Safety at Work Regulations 1999 require training to be
+            provided:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>On being recruited into the employer's undertaking</li>
+            <li>
+            On being exposed to new or increased risks due to transfer, change of
+            responsibilities, introduction of new equipment, new technology, or new systems of
+            work
+            </li>
+            <li>Training must be repeated periodically as appropriate</li>
+            <li>
+            Training must be adapted to take account of new or changed risks
+            </li>
+            <li>Training must take place during working hours</li>
+            </ul>
+            
+
+            <p className="text-sm text-elec-yellow/70">
+            <strong>Record keeping:</strong> Document training provided, attendees, content
+            covered, assessments completed, and trainer details for compliance evidence.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>JIB/ECS Card Scheme and Qualification Framework</ContentEyebrow>
+
+          <ConceptBlock title="JIB/ECS Card Scheme and Qualification Framework">
+            <p>
+            The Electrotechnical Certification Scheme (ECS) is managed by the Joint Industry Board
+            (JIB) and provides industry-recognised cards that verify the competence and
+            qualifications of electrical workers. The scheme is increasingly required for site
+            access across the construction industry.
+            </p>
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            ECS Card Types and Grades
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Apprentice</strong> — Colour: Red. Holder Profile: Registered apprentice. Key Requirements: JIB registered apprenticeship</li>
+            <li><strong>Trainee</strong> — Colour: Amber. Holder Profile: Training towards qualification. Key Requirements: Enrolled on approved course</li>
+            <li><strong>Provisional</strong> — Colour: Amber. Holder Profile: NVQ Level 3 but no AM2. Key Requirements: Working towards AM2</li>
+            <li><strong>Installation Electrician</strong> — Colour: Gold. Holder Profile: Qualified installation electrician. Key Requirements: NVQ L3 + AM2 + H&S test</li>
+            <li><strong>Approved Electrician</strong> — Colour: Gold. Holder Profile: Experienced installation electrician. Key Requirements: As above + experience + assessment</li>
+            <li><strong>Technician</strong> — Colour: Blue. Holder Profile: Technical/supervisory role. Key Requirements: HNC/HND or equivalent + experience</li>
+            <li><strong>Experienced Worker</strong> — Colour: Grey. Holder Profile: Significant industry experience. Key Requirements: Employer letter + H&S test</li>
+            </ul>
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">AM2 Assessment</p>
+            <p className="text-sm text-white mb-3">
+            The AM2 (Achievement Measurement 2) is a practical end-point assessment for
+            electrical apprentices that tests:
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Safe isolation procedures</li>
+            <li>Installation of wiring systems</li>
+            <li>Inspection and testing</li>
+            <li>Fault diagnosis</li>
+            </ul>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Completion of documentation</li>
+            <li>Cable selection and sizing</li>
+            <li>Earthing and bonding</li>
+            <li>Professional behaviours</li>
+            </ul>
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Health and Safety Assessment
+            </p>
+            <p className="text-sm text-white mb-3">
+            All ECS card holders must pass the CSCS Health, Safety and Environment test
+            appropriate to their occupation:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Tests are occupation-specific (e.g., Electrician test for electricians)
+            </li>
+            <li>Valid for 2 years at the time of card application</li>
+            <li>
+            Multiple choice questions covering site safety, hazard awareness, legal
+            requirements
+            </li>
+            <li>Must be passed at approved test centres</li>
+            </ul>
+            
+
+            <CommonMistake
+            title="Card Validity and Renewal"
+            whatHappens={<><p className="text-sm text-white">
+            Most ECS cards are valid for <strong>5 years</strong>. To renew, cardholders must
+            demonstrate continuing competence through relevant work experience and CPD activity.
+            Evidence of ongoing training, additional qualifications, and up-to-date health and
+            safety awareness is required. The H&S test must also be current at the time of
+            renewal.
+            </p></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
+
+            <p className="text-sm text-elec-yellow/70">
+            <strong>Site access:</strong> Many construction sites now require valid ECS cards for
+            all electrical workers as evidence of competence and safety awareness.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Competence Verification and Training Records</ContentEyebrow>
+
+          <ConceptBlock title="Competence Verification and Training Records">
+            <p>
+            Verifying competence requires objective evidence that workers have the necessary
+            knowledge, skills, and experience for their work. Training records provide essential
+            evidence of compliance with legal duties and support defence in any subsequent
+            proceedings.
+            </p>
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Methods for Verifying Competence
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Qualification check</strong> — What It Verifies: Formal knowledge and training completed. Limitations: Does not verify current skills</li>
+            <li><strong>ECS card verification</strong> — What It Verifies: Industry-recognised competence level. Limitations: Task-specific competence still needed</li>
+            <li><strong>Practical assessment</strong> — What It Verifies: Ability to perform specific tasks. Limitations: Time-consuming, requires assessor</li>
+            <li><strong>Work observation</strong> — What It Verifies: Real-world performance and behaviour. Limitations: May modify behaviour when observed</li>
+            <li><strong>Knowledge testing</strong> — What It Verifies: Understanding of procedures and hazards. Limitations: Does not verify practical ability</li>
+            <li><strong>Reference/experience check</strong> — What It Verifies: Previous work history and performance. Limitations: Relies on third-party accuracy</li>
+            </ul>
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Evaluating Training Effectiveness - Kirkpatrick Model
+            </p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Level 1: Reaction</p>
+            <p className="text-xs text-white">
+            Did trainees find the training engaging and relevant?
+            </p>
+            <p className="text-xs text-white mt-1">
+            Method: Feedback forms, verbal feedback
+            </p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Level 2: Learning</p>
+            <p className="text-xs text-white">
+            Did trainees gain the intended knowledge and skills?
+            </p>
+            <p className="text-xs text-white mt-1">
+            Method: Tests, demonstrations, assessments
+            </p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Level 3: Behaviour</p>
+            <p className="text-xs text-white">
+            Are trainees applying learning in their work?
+            </p>
+            <p className="text-xs text-white mt-1">
+            Method: Observation, supervisor feedback
+            </p>
+            
+            
+            <p className="font-bold text-elec-yellow mb-1">Level 4: Results</p>
+            <p className="text-xs text-white">Has training improved safety outcomes?</p>
+            <p className="text-xs text-white mt-1">
+            Method: Incident rates, audit findings
+            </p>
+            
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Training Record Requirements
+            </p>
+            <p className="text-sm text-white mb-3">
+            Effective training records should capture:
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Employee name and identification</li>
+            <li>Training title and content covered</li>
+            <li>Date, duration, and location</li>
+            <li>Trainer name and qualifications</li>
+            </ul>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Assessment results if applicable</li>
+            <li>Competence declaration signed</li>
+            <li>Certificates or qualifications awarded</li>
+            <li>Refresher/renewal dates due</li>
+            </ul>
+            
+            
+
+            <CommonMistake
+            title="Record Retention"
+            whatHappens={<><p className="text-sm text-white">
+            Training records should be retained for the duration of employment plus a reasonable
+            period after (typically 3-6 years, longer for exposure to hazardous substances).
+            Records may be needed for: incident investigations, civil claims, regulatory
+            inspections, demonstrating compliance, and defending legal proceedings - all of
+            which may arise years after the training occurred.
+            </p></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
+
+            <p className="text-sm text-elec-yellow/70">
+            <strong>Digital records:</strong> Electronic training management systems can track
+            competence, flag renewal dates, and generate compliance reports - but must be backed
+            up and accessible.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Practical Guidance">
+            <div>
+            <p><strong>Building a Competence Management System</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Define roles:</strong> Create competence profiles for each job role
+            </li>
+            <li>
+            <strong>Assess gaps:</strong> Compare individual competence against role
+            requirements
+            </li>
+            <li>
+            <strong>Plan training:</strong> Prioritise training based on risk and legal
+            requirements
+            </li>
+            <li>
+            <strong>Verify competence:</strong> Use appropriate methods to confirm capability
+            </li>
+            <li>
+            <strong>Document:</strong> Maintain comprehensive training and competence records
+            </li>
+            <li>
+            <strong>Review:</strong> Regularly reassess competence and update training
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Supervision Requirements
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Workers developing competence must be supervised by competent persons
-                </li>
-                <li className="pl-1">
-                  Level of supervision must match the risk and the trainee's current competence
-                </li>
-                <li className="pl-1">
-                  Supervision can reduce as competence increases, documented by assessment
-                </li>
-                <li className="pl-1">
-                  Higher-risk tasks require closer supervision regardless of experience
-                </li>
-              </ul>
+            <p><strong>Supervision Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Workers developing competence must be supervised by competent persons
+            </li>
+            <li>
+            Level of supervision must match the risk and the trainee's current competence
+            </li>
+            <li>
+            Supervision can reduce as competence increases, documented by assessment
+            </li>
+            <li>
+            Higher-risk tasks require closer supervision regardless of experience
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Competence Failures
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Assumption of competence:</strong> Relying on job title without
-                  verification
-                </li>
-                <li className="pl-1">
-                  <strong>One-time assessment:</strong> Not reassessing when roles or risks change
-                </li>
-                <li className="pl-1">
-                  <strong>Paper compliance:</strong> Records exist but competence not actually
-                  verified
-                </li>
-                <li className="pl-1">
-                  <strong>Generic training:</strong> Not tailored to specific workplace risks
-                </li>
-                <li className="pl-1">
-                  <strong>No refresher:</strong> Allowing skills and knowledge to become outdated
-                </li>
-              </ul>
+            <p><strong>Common Competence Failures</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Assumption of competence:</strong> Relying on job title without
+            verification
+            </li>
+            <li>
+            <strong>One-time assessment:</strong> Not reassessing when roles or risks change
+            </li>
+            <li>
+            <strong>Paper compliance:</strong> Records exist but competence not actually
+            verified
+            </li>
+            <li>
+            <strong>Generic training:</strong> Not tailored to specific workplace risks
+            </li>
+            <li>
+            <strong>No refresher:</strong> Allowing skills and knowledge to become outdated
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Allocating an EICR to an electrician with a 2391 from 2014"
+            situation={
+              <>
+                You need to allocate an EICR on a commercial premises to an electrician on
+                your team. They hold the 2391 inspection &amp; testing qualification from
+                2014, but have done little I&amp;T work in the last three years.
+              </>
+            }
+            whatToDo={
+              <>
+                Treat the 2391 as one input, not the whole picture. Verify currency: BS 7671
+                edition (must be A4:2026 trained), recent supervised EICR work, calibration
+                and use of test instruments, knowledge of new periodic inspection requirements.
+                If gaps exist, schedule a refresher (BS 7671 update + supervised EICR), record
+                the development plan in the competence matrix and only release for
+                independent EICR work after sign-off.
+              </>
+            }
+            whyItMatters={
+              <>
+                Letting a card-holder loose on certification work without checking currency
+                exposes the firm to negligence claims and the supervisor to an MHSWR Reg 13
+                breach. The card is necessary; it is not sufficient.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Competence Components (KSA+E)</p>
-                <ul className="space-y-0.5">
-                  <li>Knowledge - Understanding of hazards and procedures</li>
-                  <li>Skills - Practical ability to perform tasks</li>
-                  <li>Attitudes - Commitment to safe working</li>
-                  <li>Experience - Supervised practice in real situations</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key ECS Cards</p>
-                <ul className="space-y-0.5">
-                  <li>Apprentice (Red) - Registered apprentice</li>
-                  <li>Installation Electrician (Gold) - NVQ3 + AM2</li>
-                  <li>Approved Electrician (Gold) - Plus experience</li>
-                  <li>Technician (Blue) - HNC/HND level</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Competence = knowledge + skill + experience + attitude. A qualification card alone is none of these in full.',
+              'EAWR 1989 Reg 16 — no person shall do work needing technical knowledge or experience without it (or with appropriate supervision).',
+              'MHSWR 1999 Reg 13 — match task to capability when allocating work.',
+              'BS 7671 Part 2 distinguishes skilled, instructed and ordinary persons — each level has different work scope.',
+              'Competence matrix: name × task × evidence × verifier × review date — the live record.',
+              'Currency matters — BS 7671 amendments (A4:2026), new technologies (EV, PV, BESS) require regular refresh.',
+              'Supervised work and signed log books are the route from instructed to skilled person.',
+              'Document the assessment — &ldquo;I judged him competent&rdquo; is not enough; show the reasoning.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section4-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Duty of Care
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section4-3">
-              Next: Safety Representatives
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 4
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section4-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Safety Representatives
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

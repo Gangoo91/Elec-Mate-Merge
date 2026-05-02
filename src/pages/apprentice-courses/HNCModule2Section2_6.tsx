@@ -1,8 +1,27 @@
-import { ArrowLeft, Droplets, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 2 · Section 2 · Subsection 6 — System Curves and Operating Points
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Matching pumps to systems, parallel/series operation, VSD energy savings. Where the
+ *   pump curve and system curve cross is the duty point — and shifting either curve
+ *   shifts the answer.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  SectionRule,
+  FAQ,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'System Curves and Operating Points - HNC Module 2 Section 2.6';
@@ -65,7 +84,7 @@ const quizQuestions = [
     question:
       'A system has 5m static head and requires 15m total head at 10 l/s design flow. What is the system constant K?',
     options: ['0.1', '1.0', '1.5', '10'],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Using H = H_static + KQ²: 15 = 5 + K(10)². Therefore K = (15-5)/100 = 0.1. The friction component is 10m at 10 l/s.',
   },
@@ -244,783 +263,389 @@ const faqs = [
 ];
 
 const HNCModule2Section2_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module2-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Droplets className="h-4 w-4" />
-            <span>Module 2.2.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            System Curves and Operating Points
-          </h1>
-          <p className="text-white">
-            Matching pumps to systems, parallel/series operation, and variable speed control
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 2 · Section 2 · Subsection 6"
+            title="System Curves and Operating Points"
+            description="Match pumps to systems, understand parallel/series operation, and use VSDs to save energy."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>System Curve:</strong> H = H_static + KQ² (parabolic)
+          <TLDR
+            points={[
+              'You will plot a system curve (parabolic — H_static + k·Q²) on the same axes as the pump curve and identify the operating point at the intersection.',
+              'You can manipulate the system curve (open/close valves, vary load) and the pump curve (change speed via VSD) to land the duty point at the BEP.',
+              'You evaluate parallel pump operation (Q doubles at fixed H, then both curves change) and series operation (H doubles at fixed Q).',
+              'You quantify VSD energy savings using the affinity laws — and show why a constant-speed pump throttled by valves wastes most of the saved energy as heat.',
+            ]}
+          />
+
+          <RegsCallout
+            source="CIBSE TM 22 — Energy Assessment and Reporting Methodology; CIBSE Guide H — BMS"
+            clause="Variable-speed pumping with sensor-controlled feedback (differential pressure or proportional pressure setpoint) is the recognised design solution for variable-flow water systems in commercial buildings, delivering energy savings of typically 50-80% over constant-speed pumping with throttle valves on equivalent loads."
+            meaning={
+              <>
+                CIBSE TM 22 and Guide H position VSD pumping as the default for variable-load
+                building services water systems. As an HNC designer the case for VSD is rarely
+                technical — it is regulatory (Part L), economic (lifecycle cost) and practical
+                (acoustic comfort).
+              </>
+            }
+            cite="Source: CIBSE TM 22 — Energy Assessment and Reporting Methodology; CIBSE Guide H — Building Control Systems; CIBSE Guide B1 — Heating"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Construct a system resistance curve from static and friction components',
+              'Find the operating point where pump and system curves cross',
+              'Predict how changes in resistance shift the operating point',
+              'Understand parallel and series pump combinations',
+              'Apply primary-secondary pumping for hydraulic decoupling',
+              'Choose VSD control strategies for energy efficiency',
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="The system resistance curve"
+            plainEnglish="Plot how much head your pipework needs to push water through, at every flow rate. It's a parabola: H = static head + K × Q². Friction loss scales with the square of flow."
+          >
+            <p>
+              The system curve shows how much head the pipework demands at each flow rate. Two
+              components add up:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Static head (Hstatic):</strong> Elevation difference between suction and
+                discharge — independent of flow
               </li>
-              <li className="pl-1">
-                <strong>Operating Point:</strong> Pump curve meets system curve
+              <li>
+                <strong>Friction head (KQ²):</strong> Pipe and fitting losses — scales with the
+                square of flow
               </li>
-              <li className="pl-1">
-                <strong>Parallel:</strong> Flows add at same head
-              </li>
-              <li className="pl-1">
-                <strong>Series:</strong> Heads add at same flow
+              <li>
+                <strong>Total:</strong> H = Hstatic + KQ²
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
+            <p>
+              <strong>Closed-loop systems (heating, chilled water):</strong> Static head ≈ 0
+              because the loop is balanced. System curve passes through the origin: H = KQ².
             </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Variable volume:</strong> VSD control saves 50%+ energy
+            <p>
+              <strong>Open systems (booster sets, cooling towers):</strong> Significant static
+              head. Curve starts at Hstatic at zero flow.
+            </p>
+            <p>
+              <strong>Doubling flow quadruples friction loss.</strong> That's why oversized
+              pumps with control valves throttled down waste so much energy — they're operating
+              against an inflated resistance curve.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="The operating point"
+            plainEnglish="The pump and the system meet at one flow rate — that's the operating point. Change either curve and the operating point moves."
+          >
+            <p>
+              The operating point is where the pump curve crosses the system curve. At that
+              point, head produced equals head needed. The system reaches equilibrium and runs
+              steady-state.
+            </p>
+            <p>
+              <strong>How the operating point shifts:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Throttle valves (close): system curve steepens → operating point shifts left (lower flow, higher head)</li>
+              <li>Open valves: system curve flattens → operating point shifts right (higher flow, lower head)</li>
+              <li>Reduce pump speed (VSD): pump curve drops → operating point follows down an affinity law line</li>
+              <li>Air lock or blockage: dramatic system steepening → pump heads towards shutoff (low flow, high head, motor heat)</li>
+            </ul>
+            <p>
+              <strong>Aim:</strong> Operating point should sit close to the pump's BEP. Too far
+              left = recirculation, vibration, motor heat. Too far right = cavitation risk,
+              motor overload.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="Pumps in parallel and in series"
+            plainEnglish="Two pumps in parallel = double the flow at the same head (in theory). Two in series = double the head at the same flow. In practice the parabolic system curve eats into both."
+          >
+            <p>
+              <strong>Parallel pumps:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Flows add at the same head</li>
+              <li>Used for variable demand, redundancy (N+1), staged capacity</li>
+              <li>Combined curve doubles flow only if the system curve is flat — usually you get 40-60% more flow</li>
+              <li>Standard for HVAC primary distribution</li>
+            </ul>
+            <p>
+              <strong>Series pumps:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Heads add at the same flow</li>
+              <li>Used for high-rise lift, long distribution mains, booster sets</li>
+              <li>Two identical pumps in series ≈ double head, same flow</li>
+              <li>Multi-stage centrifugal pumps internally do this</li>
+            </ul>
+            <p>
+              <strong>Primary-secondary arrangement:</strong> Common in modern HVAC. Primary
+              pumps run at constant flow through the boiler/chiller. Secondary pumps handle
+              building distribution, often with VSDs. A bypass pipe hydraulically decouples the
+              two circuits, so secondary flow can vary without disturbing plant flow.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="VSDs and control strategies"
+            plainEnglish="VSDs slow the pump down to match demand. Power drops with the cube of speed. The trick is picking the right setpoint — flat pressure wastes some energy; proportional pressure follows demand exactly."
+          >
+            <p>
+              Variable speed drives change pump speed by adjusting the motor frequency. Combined
+              with the affinity laws (P ∝ N³), they cut energy dramatically when system demand
+              varies.
+            </p>
+            <p>
+              <strong>Throttling vs VSD:</strong> Throttling closes a valve, raising system
+              resistance, pushing the pump up its curve — same power, less flow. VSD slows the
+              pump, moving down affinity law lines — much less power for the same flow. A 20%
+              flow cut by throttling saves ~10%; the same cut via VSD saves ~50%.
+            </p>
+            <p>
+              <strong>VSD control strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Constant discharge pressure:</strong> Simple, but wastes energy at low loads (pump still maintains full pressure)
               </li>
-              <li className="pl-1">
-                <strong>Redundancy:</strong> Parallel pumps for N+1 backup
+              <li>
+                <strong>Constant differential pressure (across index circuit):</strong> Better
+                efficiency, maintains valve authority
               </li>
-              <li className="pl-1">
-                <strong>High-rise:</strong> Series pumps or booster sets
+              <li>
+                <strong>Proportional pressure:</strong> Setpoint reduces with flow — best
+                efficiency for variable-volume systems
               </li>
-              <li className="pl-1">
-                <strong>Closed loops:</strong> Zero static head systems
+              <li>
+                <strong>Sensorless:</strong> Estimates ΔP from speed/power — simpler install,
+                slightly less precise
               </li>
             </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Construct and interpret system resistance curves',
-              'Determine pump-system operating points',
-              'Analyse parallel and series pump configurations',
-              'Apply variable speed drive control strategies',
-              'Understand primary-secondary pumping systems',
-              'Optimise pump selection for energy efficiency',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: System Resistance Curves */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            System Resistance Curves
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A system resistance curve shows the head required to move fluid through a piping
-              system at various flow rates. Understanding this curve is essential for pump selection
-              and control.
+              <strong>Minimum speed:</strong> Typically 30-40% of full speed. Below that,
+              motor cooling fails, pump efficiency collapses, and bearings suffer.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Curve Equation</p>
-              <p className="font-mono text-center text-lg mb-2">
-                H<sub>system</sub> = H<sub>static</sub> + KQ²
-              </p>
-              <div className="text-xs text-white mt-3">
-                <p>
-                  <strong>
-                    H<sub>static</sub>
-                  </strong>{' '}
-                  = Elevation difference (constant, independent of flow)
-                </p>
-                <p>
-                  <strong>K</strong> = System resistance coefficient (depends on pipe size, length,
-                  fittings)
-                </p>
-                <p>
-                  <strong>Q</strong> = Volumetric flow rate
-                </p>
-                <p>
-                  <strong>KQ²</strong> = Friction head loss (increases with square of flow)
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key characteristics:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Parabolic shape:</strong> Friction loss proportional to Q²
-                </li>
-                <li className="pl-1">
-                  <strong>Y-intercept:</strong> Static head (zero for closed loops)
-                </li>
-                <li className="pl-1">
-                  <strong>Steepness:</strong> Indicates system resistance - steeper = more
-                  resistance
-                </li>
-                <li className="pl-1">
-                  <strong>Shifts:</strong> Valve positions change the system curve
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Static Head</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Curve Shape</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Closed loop</td>
-                      <td className="border border-white/10 px-3 py-2">Zero</td>
-                      <td className="border border-white/10 px-3 py-2">Through origin (H = KQ²)</td>
-                      <td className="border border-white/10 px-3 py-2">HVAC heating/cooling</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open - lifting</td>
-                      <td className="border border-white/10 px-3 py-2">Positive</td>
-                      <td className="border border-white/10 px-3 py-2">Offset above origin</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Booster sets, cooling towers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open - gravity assist</td>
-                      <td className="border border-white/10 px-3 py-2">Negative</td>
-                      <td className="border border-white/10 px-3 py-2">Starts below zero</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Drainage from elevated tank
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design tip:</strong> For closed-loop HVAC systems, static head is zero - the
-              pump only needs to overcome friction losses. This simplifies pump selection
-              significantly.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Operating Point Analysis */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Operating Point Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Worked examples"
+            plainEnglish="Three calcs: system constant K, the affinity law applied to a duty change, and a friction-head check."
+          >
             <p>
-              The operating point is where the pump curve intersects the system curve. At this
-              point, the pump delivers exactly the head the system requires - the system is in
-              equilibrium.
+              <strong>Example 1 - finding the system constant K:</strong> A system has 5 m static
+              head and needs 15 m total head at 10 l/s.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Finding the operating point:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Plot the pump H-Q curve from manufacturer data</li>
-                <li className="pl-1">Plot the system curve using H = H_static + KQ²</li>
-                <li className="pl-1">The intersection is the operating point</li>
-                <li className="pl-1">Check this point falls within 70-120% of pump BEP</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operating Point Shifts</p>
-              <p className="text-sm text-white mb-3">
-                Changes to the system affect where the operating point falls:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Change</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Effect on System Curve
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Operating Point Moves
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Valves close</td>
-                      <td className="border border-white/10 px-3 py-2">Curve becomes steeper</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Left and up (less flow, more head)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Valves open</td>
-                      <td className="border border-white/10 px-3 py-2">Curve becomes flatter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Right and down (more flow, less head)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Blockage/air lock</td>
-                      <td className="border border-white/10 px-3 py-2">Curve much steeper</td>
-                      <td className="border border-white/10 px-3 py-2">Far left towards shutoff</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pump speed reduced</td>
-                      <td className="border border-white/10 px-3 py-2">Pump curve shifts down</td>
-                      <td className="border border-white/10 px-3 py-2">Left along system curve</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">
-                Poor Operating Point Consequences
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Too far left:</strong> Low flow, overheating, recirculation damage
-                </li>
-                <li className="pl-1">
-                  <strong>Too far right:</strong> Motor overload, cavitation risk, low head
-                </li>
-                <li className="pl-1">
-                  <strong>Away from BEP:</strong> Poor efficiency, increased vibration and noise
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Selection rule:</strong> Choose a pump where the design operating point falls
-              on the pump curve within 80-110% of the BEP flow rate for optimal efficiency and
-              reliability.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Parallel and Series Pump Operation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Parallel and Series Pump Operation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>15 = 5 + K × 10² → K = 10/100 = <strong>0.1</strong></li>
+              <li>System curve: H = 5 + 0.1Q²</li>
+            </ul>
             <p>
-              Multiple pumps can be arranged in parallel or series to achieve performance beyond a
-              single pump's capability, or to provide redundancy and flexibility.
+              <strong>Example 2 - VSD speed reduction:</strong> Pump at 15 l/s, 20 m head. Reduce
+              speed via VSD until flow = 12 l/s.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pumps in Parallel</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Principle:</strong> Flows add at any given head
-                </li>
-                <li className="pl-1">
-                  <strong>Combined curve:</strong> Add Q values horizontally at each H
-                </li>
-                <li className="pl-1">
-                  <strong>Applications:</strong> Variable demand, redundancy, staged capacity
-                </li>
-                <li className="pl-1">
-                  <strong>Caution:</strong> Flow increase less than double due to parabolic system
-                  curve
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Parallel Pump Reality Check
-              </p>
-              <p className="text-sm text-white mb-3">
-                Due to the parabolic system curve, adding a second identical pump does NOT double
-                the flow:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">One pump operating: 100% design flow at 100% head</li>
-                <li className="pl-1">Two pumps operating: typically 140-160% flow (not 200%)</li>
-                <li className="pl-1">Each pump operates at a different point on its curve</li>
-                <li className="pl-1">
-                  Ensure both pumps have non-return valves to prevent backflow
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pumps in Series</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Principle:</strong> Heads add at any given flow
-                </li>
-                <li className="pl-1">
-                  <strong>Combined curve:</strong> Add H values vertically at each Q
-                </li>
-                <li className="pl-1">
-                  <strong>Applications:</strong> High-rise buildings, booster sets, long pipework
-                  runs
-                </li>
-                <li className="pl-1">
-                  <strong>Caution:</strong> Second pump casing must withstand combined pressure
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Configuration Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Parallel</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Series</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flow increase</td>
-                      <td className="border border-white/10 px-3 py-2">Yes (40-60% more)</td>
-                      <td className="border border-white/10 px-3 py-2">No (same flow)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Head increase</td>
-                      <td className="border border-white/10 px-3 py-2">No (same head)</td>
-                      <td className="border border-white/10 px-3 py-2">Yes (nearly double)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Redundancy</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent (N+1)</td>
-                      <td className="border border-white/10 px-3 py-2">None (both required)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical use</td>
-                      <td className="border border-white/10 px-3 py-2">HVAC variable load</td>
-                      <td className="border border-white/10 px-3 py-2">High-rise boosters</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>HVAC practice:</strong> Most building services use duty/standby or duty/assist
-              parallel pump arrangements. Series pumps are mainly found in high-rise pressure
-              boosting applications.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Variable Speed Drives */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Variable Speed Drives (VSDs)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Speed ratio = 12/15 = 0.8</li>
+              <li>H₂ = 20 × 0.8² = <strong>12.8 m</strong></li>
+              <li>P₂/P₁ = 0.8³ = 0.512 → 49% energy saving</li>
+            </ul>
             <p>
-              Variable speed drives adjust pump speed to match system demand, following the affinity
-              laws for dramatic energy savings compared to throttling or bypass control.
+              <strong>Example 3 - friction loss doubling effect:</strong> A circuit at 1 m/s
+              loses 5 kPa/m friction. At 2 m/s flow, what does it lose?
             </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Friction ∝ v² → ratio (2/1)² = 4</li>
+              <li>New loss = 5 × 4 = <strong>20 kPa/m</strong></li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">VSD Energy Savings</p>
-              <div className="grid grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Throttling</p>
-                  <p className="text-white text-xs">Pump at full speed</p>
-                  <p className="text-red-400 text-xs">Poor efficiency</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">Bypass</p>
-                  <p className="text-white text-xs">Constant flow pump</p>
-                  <p className="text-red-400 text-xs">Wastes energy</p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-elec-yellow mb-1">VSD</p>
-                  <p className="text-white text-xs">Speed matches load</p>
-                  <p className="text-green-400 text-xs">P ∝ N³ savings</p>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">VSD Control Strategies:</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Setpoint</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Energy Efficiency
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Constant pressure</td>
-                      <td className="border border-white/10 px-3 py-2">Fixed at pump discharge</td>
-                      <td className="border border-white/10 px-3 py-2">Good</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Differential pressure</td>
-                      <td className="border border-white/10 px-3 py-2">Across index circuit</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Better</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Proportional pressure</td>
-                      <td className="border border-white/10 px-3 py-2">Varies with flow</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Best</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sensorless</td>
-                      <td className="border border-white/10 px-3 py-2">Estimated from pump data</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Very good</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">VSD Operating Limits</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Minimum speed:</strong> 30-40% to ensure motor cooling and pump stability
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum speed:</strong> Typically 50Hz/60Hz nameplate, some allow 10%
-                  overspeed
-                </li>
-                <li className="pl-1">
-                  <strong>Minimum flow:</strong> Use bypass valve if system can close off completely
-                </li>
-                <li className="pl-1">
-                  <strong>NPSH:</strong> Check NPSHa at all operating points, not just design
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Primary-Secondary Systems
-              </p>
-              <p className="text-sm text-white mb-3">
-                Modern HVAC often uses primary-secondary pumping with VSD on secondary:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Primary:</strong> Constant flow through boiler/chiller (fixed speed)
-                </li>
-                <li className="pl-1">
-                  <strong>Secondary:</strong> Variable flow to building (VSD controlled)
-                </li>
-                <li className="pl-1">
-                  <strong>Bypass:</strong> Hydraulically decouples the two circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Benefit:</strong> Variable building flow without affecting plant equipment
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Energy saving:</strong> A VSD pump operating at 50% load for 50% of the time
-              saves approximately 75% of the energy compared to a fixed-speed pump with throttling
-              control.
+          <ConceptBlock
+            title="Practical guidance"
+            plainEnglish="A handful of formulas, parallel/series rules, and the VSD habit that turns 20% less flow into 50% less energy."
+          >
+            <p>
+              <strong>Essential formulas and rules:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>H = Hstatic + KQ²</strong> — System curve
+              </li>
+              <li>
+                <strong>Operating point</strong> — pump curve ∩ system curve
+              </li>
+              <li>
+                <strong>Parallel:</strong> Q adds at the same H
+              </li>
+              <li>
+                <strong>Series:</strong> H adds at the same Q
+              </li>
+              <li>
+                <strong>VSD:</strong> P ∝ N³ (huge energy savings at part load)
+              </li>
+            </ul>
+            <p>
+              <strong>Design targets:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Operate within <strong>±20% of BEP</strong>
+              </li>
+              <li>
+                VSD min speed: <strong>30-40%</strong>
+              </li>
+              <li>
+                Maintain min flow: typically <strong>10-25% of BEP</strong>
+              </li>
+              <li>
+                Closed loop static head: <strong>~0</strong>
+              </li>
+              <li>
+                Differential-pressure setpoint: across <strong>index circuit</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: System Curve Construction
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A closed-loop HVAC system requires 25m head at 20 l/s
-                design flow. Construct the system curve equation and find the head at 15 l/s.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Closed loop: H_static = 0 (no elevation head)</p>
-                <p className="mt-2">Using H = KQ² at design point:</p>
-                <p>25 = K × (20)²</p>
-                <p>
-                  K = 25/400 = <strong>0.0625</strong>
-                </p>
-                <p className="mt-2">System curve: H = 0.0625Q²</p>
-                <p className="mt-2">At Q = 15 l/s:</p>
-                <p>
-                  H = 0.0625 × (15)² = 0.0625 × 225 = <strong>14.1m</strong>
-                </p>
-                <p className="mt-2 text-white">→ Head reduces with square of flow reduction</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Parallel Pump Operation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A single pump delivers 18 l/s at its operating point with
-                this system. If an identical second pump is started in parallel, estimate the new
-                total flow.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>System: H = 0.0625Q² (from Example 1)</p>
-                <p className="mt-2">Two identical pumps: combined flow = Q₁ + Q₂ at same head</p>
-                <p>At operating point, both pumps operate at same head</p>
-                <p className="mt-2">If each pump gives 18 l/s at H = 20.25m with single pump:</p>
-                <p>Two pumps can deliver more, but system curve limits actual increase</p>
-                <p className="mt-2">
-                  Approximate: total flow ≈ 18 × 1.4 to 1.5 = <strong>25-27 l/s</strong>
-                </p>
-                <p className="mt-2">
-                  New head: H = 0.0625 × (26)² ≈ <strong>42m</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → 44% flow increase, not 100% (due to parabolic system curve)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: VSD Energy Savings
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A pump runs at full speed consuming 4 kW. The system only
-                requires 60% of design flow. Compare power with throttling vs. VSD control.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Throttling control:</strong>
-                </p>
-                <p>Pump still runs at full speed</p>
-                <p>Power reduction from reduced flow ≈ 10-15%</p>
-                <p>Estimated power ≈ 3.4-3.6 kW</p>
-                <p className="mt-2">
-                  <strong>VSD control:</strong>
-                </p>
-                <p>Speed ratio = 0.6 (to achieve 60% flow)</p>
-                <p>Power ratio = (0.6)³ = 0.216</p>
-                <p>
-                  Power = 4 × 0.216 = <strong>0.86 kW</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  ✓ VSD saves 4.0 - 0.86 = 3.14 kW (78% reduction)
-                </p>
-                <p className="text-green-400">✓ Throttling saves only ~0.5 kW (12% reduction)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>H = H_static + KQ²</strong> — System curve equation
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Sizing the pump in isolation</strong> — Always plot the system curve too
                 </li>
-                <li className="pl-1">
-                  <strong>K = (H - H_static) / Q²</strong> — Find system constant
+                <li>
+                  <strong>Throttling instead of slowing</strong> — Wastes energy compared with VSD
                 </li>
-                <li className="pl-1">
-                  <strong>Parallel:</strong> Q_total = Q₁ + Q₂ at same H
+                <li>
+                  <strong>No bypass in primary-secondary</strong> — Disturbs plant flow when secondary varies
                 </li>
-                <li className="pl-1">
-                  <strong>Series:</strong> H_total = H₁ + H₂ at same Q
-                </li>
-                <li className="pl-1">
-                  <strong>P ∝ N³</strong> — VSD power savings
+                <li>
+                  <strong>Ignoring minimum flow</strong> — Bearings and motor cooling suffer at very low flow
                 </li>
               </ul>
-            </div>
+            }
+            doInstead="Plot pump and system curves together. Use VSDs whenever flow varies. Decouple primary and secondary loops with a bypass. Keep flow above the pump's minimum, with a min-flow valve or VSD floor."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Design Values</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Operating point: <strong>80-110%</strong> of BEP flow
-                </li>
-                <li className="pl-1">
-                  Parallel flow increase: <strong>40-60%</strong> (not 100%)
-                </li>
-                <li className="pl-1">
-                  VSD minimum speed: <strong>30-40%</strong>
-                </li>
-                <li className="pl-1">
-                  Closed loop static head: <strong>Zero</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Assuming doubled flow:</strong> Parallel pumps do not double flow
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring system curve:</strong> Must plot both pump and system
-                </li>
-                <li className="pl-1">
-                  <strong>VSD too slow:</strong> Minimum speed limits prevent damage
-                </li>
-                <li className="pl-1">
-                  <strong>No NRVs:</strong> Parallel pumps need non-return valves
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Energy retrofit: replacing a 5.5 kW constant-speed CHW pump"
+            situation={
+              <>
+                A 5.5 kW constant-speed CHW pump runs 8,760 hours per year on an office
+                chilled-water system. Average load is 50% of design. The client asks for an
+                energy retrofit option.
+              </>
+            }
+            whatToDo={
+              <>
+                Specify VSD pump matched to the system curve. Apply affinity laws — at 50%
+                load (50% flow), the system curve gives ~25% head, requiring ~12.5% input
+                power. Annual energy: original 5.5 × 8,760 × 0.5 (load factor) = 24,090 kWh.
+                Retrofit: ~3,000 kWh. Saving: ~21,000 kWh/year, payback typically 18-30
+                months. Specify two-port valves at terminals (not three-port mixers) to
+                preserve variable-flow logic and DP setpoint at the index leg.
+              </>
+            }
+            whyItMatters={
+              <>
+                Pumping accounts for 5-15% of building energy use in commercial buildings.
+                VSD retrofit on existing systems is one of the highest-return energy
+                interventions available — and Part L now drives it on new builds.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">System Curves</p>
-                <ul className="space-y-0.5">
-                  <li>H = H_static + KQ² (parabolic)</li>
-                  <li>Closed loop: H_static = 0</li>
-                  <li>Operating point: pump meets system</li>
-                  <li>Valve closing: curve steepens</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Pump Arrangements</p>
-                <ul className="space-y-0.5">
-                  <li>Parallel: flows add (same head)</li>
-                  <li>Series: heads add (same flow)</li>
-                  <li>VSD: P ∝ N³ (cube law savings)</li>
-                  <li>Min speed: 30-40% for cooling</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              'System curve: H = H_static + k·Q² (parabolic) — friction loss rises with the square of flow.',
+              'Operating point = intersection of pump curve and system curve.',
+              'Move system curve right (lower k, open valves) → operating point moves to higher Q, lower H.',
+              'Move pump curve down (lower N via VSD) → operating point moves to lower Q, lower H.',
+              'Parallel operation: at fixed H, Q doubles; in practice friction shifts the operating point toward higher H.',
+              'Series operation: at fixed Q, H doubles; useful for high-static systems (tall buildings, long pipework).',
+              'Affinity laws + VSD = step-change energy savings on variable-load systems.',
+              'CIBSE TM 22 and Guide H position VSD as the default for variable-flow water systems in commercial buildings.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section2-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Pump Characteristics
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module2-section3">
-              Next: Section 3
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Pump characteristics
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section2-7')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Applications in water and ducts
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

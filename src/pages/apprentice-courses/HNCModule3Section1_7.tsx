@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 3 · Section 1 · Subsection 7 — DC Building Services Applications
+ * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
+ *   Where the DC theory lands on a real building services job — emergency lighting, fire-alarm
+ *   loops, BMS sensor circuits, central battery systems and the 24 V DC controls behind every AHU.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Building Services Applications - HNC Module 3 Section 1.7';
@@ -164,875 +183,550 @@ const faqs = [
 ];
 
 const HNCModule3Section1_7 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.1.7</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Building Services Applications
-          </h1>
-          <p className="text-white">
-            Practical DC circuit applications in emergency lighting, fire alarms, BMS controls and
-            standby power
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 3 · Section 1 · Subsection 7"
+            title="Building Services Applications"
+            description="Practical DC circuit applications in emergency lighting, fire alarms, BMS controls and standby power"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Emergency lighting:</strong> 3-hour battery backup, self-contained or
-                central
-              </li>
-              <li className="pl-1">
-                <strong>Fire alarms:</strong> 24-hour standby + 30 min alarm condition
-              </li>
-              <li className="pl-1">
-                <strong>BMS controls:</strong> 24V DC sensors, actuators, controllers
-              </li>
-              <li className="pl-1">
-                <strong>Standby power:</strong> UPS, generator starting, DC distribution
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BS 5266:</strong> Emergency lighting design and installation
-              </li>
-              <li className="pl-1">
-                <strong>BS 5839-1:</strong> Fire detection and alarm systems
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Wiring requirements for all systems
-              </li>
-              <li className="pl-1">
-                <strong>BS EN 62040:</strong> UPS system requirements
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You can size a 24 V DC BMS sensor circuit \u2014 work out load current, pick the right pull-up / current-limit resistor, allow for cable voltage drop on long sensor runs.',
+              'You can size battery capacity (Ah) for emergency lighting and fire-alarm standby duty using load \u00d7 duration \u00d7 derating.',
+              'You can apply DC voltage-drop limits on long control wiring runs (often 10 % of nominal) and decide when to step up conductor size.',
+              'You can read the DC sections of fire-alarm and emergency-lighting manufacturer cut sheets and translate them to a system design.',
+              'You can spot the difference between an analogue 4-20 mA loop, a 0-10 V control signal and a digital 24 V DC volt-free contact \u2014 each needs different sizing.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 5839-1 — Fire detection and alarm systems for buildings (Code of practice)"
+            clause="The standby battery shall have sufficient capacity to maintain the system in the quiescent condition for at least 24 hours, after which it shall be capable of providing the alarm load for at least 30 minutes."
+            meaning={
+              <>
+                The 24 h + 30 min duty cycle is a DC capacity calculation: I_quiescent \u00d7
+                24 h + I_alarm \u00d7 0.5 h, multiplied by an end-of-life and ambient
+                derating factor (often \u00d71.25). The result is the minimum Ah rating of the
+                sealed lead-acid or LiFePO\u2084 battery in the panel.
+              </>
+            }
+            cite="Source: BS 5839-1 (latest edition) Clause 25."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Calculate emergency lighting battery requirements for 3-hour duration',
               'Size fire alarm standby batteries for 24-hour operation',
               'Analyse loop resistance and voltage drop on detection circuits',
               'Design 24V DC BMS sensor wiring with correct cable sizing',
               'Understand UPS battery bank configurations and DC distribution',
               'Calculate generator starting battery requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Emergency Lighting */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Emergency Lighting Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="In 30 seconds"
+            plainEnglish="DC circuits underpin life safety: emergency lighting, fire alarms, BMS controls and standby power. Each has its own standard, battery and cable rules."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Emergency lighting:</strong> 3-hour battery backup, self-contained or central
+              </li>
+              <li>
+                <strong>Fire alarms:</strong> 24-hour standby + 30 min alarm condition
+              </li>
+              <li>
+                <strong>BMS controls:</strong> 24V DC sensors, actuators, controllers
+              </li>
+              <li>
+                <strong>Standby power:</strong> UPS, generator starting, DC distribution
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Standards</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 5266:</strong> Emergency lighting design and installation
+              </li>
+              <li>
+                <strong>BS 5839-1:</strong> Fire detection and alarm systems
+              </li>
+              <li>
+                <strong>BS 7671:</strong> Wiring requirements for all systems
+              </li>
+              <li>
+                <strong>BS EN 62040:</strong> UPS system requirements
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Emergency Lighting Systems">
             <p>
               Emergency lighting provides illumination when the normal supply fails, enabling safe
               evacuation and emergency services operations. BS 5266 requires specific battery
               capacities and luminaire performance to ensure life safety.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Battery Technology Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Voltage/Cell</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Life</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">NiCd</td>
-                      <td className="border border-white/10 px-3 py-2">1.2V</td>
-                      <td className="border border-white/10 px-3 py-2">4-5 years</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most self-contained units
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">NiMH</td>
-                      <td className="border border-white/10 px-3 py-2">1.2V</td>
-                      <td className="border border-white/10 px-3 py-2">3-4 years</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher capacity applications
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lead-acid (VRLA)</td>
-                      <td className="border border-white/10 px-3 py-2">2.0V</td>
-                      <td className="border border-white/10 px-3 py-2">3-5 years</td>
-                      <td className="border border-white/10 px-3 py-2">Central battery systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LiFePO4</td>
-                      <td className="border border-white/10 px-3 py-2">3.2V</td>
-                      <td className="border border-white/10 px-3 py-2">5-8 years</td>
-                      <td className="border border-white/10 px-3 py-2">Premium/compact units</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Self-Contained Units</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Battery integral to each luminaire</li>
-                  <li className="pl-1">Typical: 3.6V NiCd, 1.5-4Ah capacity</li>
-                  <li className="pl-1">Permanent live feed required</li>
-                  <li className="pl-1">Simple installation, higher maintenance</li>
-                  <li className="pl-1">BS 5266 minimum 3-hour duration</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Central Battery Systems
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Single battery location, distributed luminaires</li>
-                  <li className="pl-1">Typical: 110V or 220V DC distribution</li>
-                  <li className="pl-1">Lower ongoing maintenance</li>
-                  <li className="pl-1">Fire-resistant cables required</li>
-                  <li className="pl-1">Centralised monitoring capability</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Battery Capacity Calculation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">C = P × t / V × 1.25</p>
-              <p className="text-xs text-white text-center">
-                Where C = capacity (Ah), P = power (W), t = time (h), V = voltage (V), 1.25 = ageing
-                factor
-              </p>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Battery Technology Comparison</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>NiCd:</strong> 1.2V/cell — 4-5 years typical life — most self-contained units
+              </li>
+              <li>
+                <strong>NiMH:</strong> 1.2V/cell — 3-4 years — higher capacity applications
+              </li>
+              <li>
+                <strong>Lead-acid (VRLA):</strong> 2.0V/cell — 3-5 years — central battery systems
+              </li>
+              <li>
+                <strong>LiFePO4:</strong> 3.2V/cell — 5-8 years — premium/compact units
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Self-Contained Units</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Battery integral to each luminaire</li>
+              <li>Typical: 3.6V NiCd, 1.5-4Ah capacity</li>
+              <li>Permanent live feed required</li>
+              <li>Simple installation, higher maintenance</li>
+              <li>BS 5266 minimum 3-hour duration</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Central Battery Systems</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single battery location, distributed luminaires</li>
+              <li>Typical: 110V or 220V DC distribution</li>
+              <li>Lower ongoing maintenance</li>
+              <li>Fire-resistant cables required</li>
+              <li>Centralised monitoring capability</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Battery Capacity Calculation</p>
+            <p>
+              <strong>C = P × t / V × 1.25</strong> — Where C = capacity (Ah), P = power (W), t =
+              time (h), V = voltage (V), 1.25 = ageing factor.
+            </p>
             <p className="text-sm text-elec-yellow/70">
               <strong>Design tip:</strong> Always apply 25% capacity margin to account for battery
               ageing over its service life.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Fire Alarm Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fire Alarm Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Fire Alarm Systems">
             <p>
               Fire detection and alarm systems require reliable DC power for continuous monitoring.
               BS 5839-1 mandates specific standby battery requirements ensuring operation during
               mains failure.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">BS 5839-1 Battery Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Category L/P systems:</strong> 24 hours standby + 30 minutes alarm
-                </li>
-                <li className="pl-1">
-                  <strong>Category M systems:</strong> 72 hours standby + 15 minutes alarm
-                </li>
-                <li className="pl-1">
-                  <strong>Replacement:</strong> When capacity drops below 80% of nominal
-                </li>
-                <li className="pl-1">
-                  <strong>Typical battery life:</strong> 4-5 years for VRLA types
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Alarm Circuit Considerations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Value</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Consideration</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Loop voltage</td>
-                      <td className="border border-white/10 px-3 py-2">17-28V DC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Panel dependent, check specs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Max loop resistance</td>
-                      <td className="border border-white/10 px-3 py-2">40Ω</td>
-                      <td className="border border-white/10 px-3 py-2">Limits cable length/size</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Quiescent current</td>
-                      <td className="border border-white/10 px-3 py-2">100-300mA</td>
-                      <td className="border border-white/10 px-3 py-2">Panel + all devices</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Alarm current</td>
-                      <td className="border border-white/10 px-3 py-2">1-3A</td>
-                      <td className="border border-white/10 px-3 py-2">All sounders operating</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable type</td>
-                      <td className="border border-white/10 px-3 py-2">FP200/MICC</td>
-                      <td className="border border-white/10 px-3 py-2">Fire-resistant required</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Loop Resistance Calculation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                R<sub>loop</sub> = 2 × L × r
-              </p>
-              <p className="text-xs text-white text-center">
-                Where L = cable length (m), r = conductor resistance (Ω/m)
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Voltage Drop on Sounder Circuits
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Calculate worst-case (end device)</li>
-                  <li className="pl-1">Include all devices operating</li>
-                  <li className="pl-1">Verify device minimum voltage</li>
-                  <li className="pl-1">Allow for battery end-of-discharge</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Sizing Steps</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">1. Determine total loop current</li>
-                  <li className="pl-1">2. Calculate required loop length</li>
-                  <li className="pl-1">3. Check loop resistance vs max</li>
-                  <li className="pl-1">4. Verify voltage drop acceptable</li>
-                </ul>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-white">BS 5839-1 Battery Requirements</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Category L/P systems:</strong> 24 hours standby + 30 minutes alarm
+              </li>
+              <li>
+                <strong>Category M systems:</strong> 72 hours standby + 15 minutes alarm
+              </li>
+              <li>
+                <strong>Replacement:</strong> When capacity drops below 80% of nominal
+              </li>
+              <li>
+                <strong>Typical battery life:</strong> 4-5 years for VRLA types
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Fire Alarm Circuit Considerations</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Loop voltage:</strong> 17-28V DC — Panel dependent, check specs
+              </li>
+              <li>
+                <strong>Max loop resistance:</strong> 40Ω — Limits cable length/size
+              </li>
+              <li>
+                <strong>Quiescent current:</strong> 100-300mA — Panel + all devices
+              </li>
+              <li>
+                <strong>Alarm current:</strong> 1-3A — All sounders operating
+              </li>
+              <li>
+                <strong>Cable type:</strong> FP200/MICC — Fire-resistant required
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Loop Resistance Calculation</p>
+            <p>
+              <strong>R<sub>loop</sub> = 2 × L × r</strong> — Where L = cable length (m), r =
+              conductor resistance (Ω/m).
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Voltage Drop on Sounder Circuits</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Calculate worst-case (end device)</li>
+              <li>Include all devices operating</li>
+              <li>Verify device minimum voltage</li>
+              <li>Allow for battery end-of-discharge</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Cable Sizing Steps</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Determine total loop current</li>
+              <li>2. Calculate required loop length</li>
+              <li>3. Check loop resistance vs max</li>
+              <li>4. Verify voltage drop acceptable</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Critical:</strong> Fire alarm circuits must use fire-resistant cable (e.g.,
               FP200) maintaining circuit integrity for minimum 30 minutes in fire conditions.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: BMS and Controls */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            BMS and Controls
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="BMS and Controls">
             <p>
               Building Management Systems use 24V DC control circuits extensively for sensors,
               actuators, and controllers. Understanding DC circuit principles is essential for
               reliable BMS wiring design.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common BMS DC Applications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Voltage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Current</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Temperature sensor</td>
-                      <td className="border border-white/10 px-3 py-2">24V DC</td>
-                      <td className="border border-white/10 px-3 py-2">10-20mA</td>
-                      <td className="border border-white/10 px-3 py-2">4-20mA output signal</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CO2 sensor</td>
-                      <td className="border border-white/10 px-3 py-2">24V DC</td>
-                      <td className="border border-white/10 px-3 py-2">30-50mA</td>
-                      <td className="border border-white/10 px-3 py-2">Active sensing element</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Valve actuator</td>
-                      <td className="border border-white/10 px-3 py-2">24V AC/DC</td>
-                      <td className="border border-white/10 px-3 py-2">100-500mA</td>
-                      <td className="border border-white/10 px-3 py-2">Higher during operation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Damper actuator</td>
-                      <td className="border border-white/10 px-3 py-2">24V AC/DC</td>
-                      <td className="border border-white/10 px-3 py-2">200-800mA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Spring return types higher
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outstation/controller</td>
-                      <td className="border border-white/10 px-3 py-2">24V DC</td>
-                      <td className="border border-white/10 px-3 py-2">200-500mA</td>
-                      <td className="border border-white/10 px-3 py-2">Depends on I/O count</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">24V DC Supply Sizing</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Total all device currents</li>
-                  <li className="pl-1">Add 20% growth capacity</li>
-                  <li className="pl-1">Consider inrush currents</li>
-                  <li className="pl-1">Typical PSUs: 2.5A, 5A, 10A</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Selection</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Max 5% voltage drop (1.2V at 24V)</li>
-                  <li className="pl-1">Screened cable for analogue signals</li>
-                  <li className="pl-1">Twisted pairs reduce interference</li>
-                  <li className="pl-1">Segregate from power cables</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sensor Loop Resistance Calculation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                R<sub>max</sub> = V<sub>drop(max)</sub> / I<sub>loop</sub>
-              </p>
-              <p className="text-xs text-white text-center">
-                Example: 1.2V max drop, 50mA loop = 24Ω maximum cable resistance
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Signal Types</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>0-10V DC:</strong> Analogue control signal, voltage referenced to common
-                </li>
-                <li className="pl-1">
-                  <strong>4-20mA:</strong> Current loop, immune to voltage drop, 4mA = live zero
-                </li>
-                <li className="pl-1">
-                  <strong>Digital I/O:</strong> 24V DC switched signals, typically volt-free
-                  contacts
-                </li>
-                <li className="pl-1">
-                  <strong>RS-485:</strong> Serial communication, twisted pair, up to 1200m
-                </li>
-              </ul>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">Common BMS DC Applications</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Temperature sensor:</strong> 24V DC — 10-20mA — 4-20mA output signal
+              </li>
+              <li>
+                <strong>CO2 sensor:</strong> 24V DC — 30-50mA — Active sensing element
+              </li>
+              <li>
+                <strong>Valve actuator:</strong> 24V AC/DC — 100-500mA — Higher during operation
+              </li>
+              <li>
+                <strong>Damper actuator:</strong> 24V AC/DC — 200-800mA — Spring-return types higher
+              </li>
+              <li>
+                <strong>Outstation/controller:</strong> 24V DC — 200-500mA — Depends on I/O count
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">24V DC Supply Sizing</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Total all device currents</li>
+              <li>Add 20% growth capacity</li>
+              <li>Consider inrush currents</li>
+              <li>Typical PSUs: 2.5A, 5A, 10A</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Cable Selection</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Max 5% voltage drop (1.2V at 24V)</li>
+              <li>Screened cable for analogue signals</li>
+              <li>Twisted pairs reduce interference</li>
+              <li>Segregate from power cables</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Sensor Loop Resistance Calculation</p>
+            <p>
+              <strong>R<sub>max</sub> = V<sub>drop(max)</sub> / I<sub>loop</sub></strong> — Example:
+              1.2V max drop, 50mA loop = 24Ω maximum cable resistance.
+            </p>
+            <p className="text-sm font-medium text-white">Signal Types</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>0-10V DC:</strong> Analogue control signal, voltage referenced to common
+              </li>
+              <li>
+                <strong>4-20mA:</strong> Current loop, immune to voltage drop, 4mA = live zero
+              </li>
+              <li>
+                <strong>Digital I/O:</strong> 24V DC switched signals, typically volt-free contacts
+              </li>
+              <li>
+                <strong>RS-485:</strong> Serial communication, twisted pair, up to 1200m
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Best practice:</strong> Use 4-20mA signals for long cable runs - the current
               loop is immune to voltage drop that would affect 0-10V signals.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Standby Power Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Standby Power Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Standby Power Systems">
             <p>
               Standby power systems rely heavily on DC circuits - from UPS battery banks providing
               uninterrupted power to generator starting batteries and DC distribution for critical
               systems.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UPS Battery Configurations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Configuration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Voltage
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small UPS</td>
-                      <td className="border border-white/10 px-3 py-2">12-48V DC</td>
-                      <td className="border border-white/10 px-3 py-2">Desktop, small servers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Medium UPS</td>
-                      <td className="border border-white/10 px-3 py-2">192-240V DC</td>
-                      <td className="border border-white/10 px-3 py-2">Server rooms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Large UPS</td>
-                      <td className="border border-white/10 px-3 py-2">400-480V DC</td>
-                      <td className="border border-white/10 px-3 py-2">Data centres</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modular UPS</td>
-                      <td className="border border-white/10 px-3 py-2">Variable</td>
-                      <td className="border border-white/10 px-3 py-2">Scalable installations</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">UPS Topologies</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Standby (offline):</strong> Cheapest, 5-12ms transfer time, basic
-                  protection
-                </li>
-                <li className="pl-1">
-                  <strong>Line-interactive:</strong> Voltage regulation, 2-4ms transfer, good value
-                </li>
-                <li className="pl-1">
-                  <strong>Online double conversion:</strong> Zero transfer, complete isolation,
-                  highest protection
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Battery Bank Sizing</p>
-              <p className="font-mono text-center text-lg mb-2">Ah = (P × t) / (V × η × DoD)</p>
-              <p className="text-xs text-white text-center">
-                Where η = inverter efficiency (~0.9), DoD = depth of discharge (~0.8 for lead-acid)
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Generator Starting Batteries
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Typically 12V or 24V systems</li>
-                  <li className="pl-1">High CCA (Cold Cranking Amps) rating</li>
-                  <li className="pl-1">Float charging maintains readiness</li>
-                  <li className="pl-1">Multiple start attempts programmed</li>
-                  <li className="pl-1">Heating in cold environments</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">DC Distribution</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">48V DC for telecom equipment</li>
-                  <li className="pl-1">24V DC for control systems</li>
-                  <li className="pl-1">DC circuit breakers required</li>
-                  <li className="pl-1">Polarity protection essential</li>
-                  <li className="pl-1">Fusing sized for battery short-circuit</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Starting Battery Calculation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Generator Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Battery
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">CCA Rating</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10-50 kVA</td>
-                      <td className="border border-white/10 px-3 py-2">12V 100Ah</td>
-                      <td className="border border-white/10 px-3 py-2">600-800 CCA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50-200 kVA</td>
-                      <td className="border border-white/10 px-3 py-2">24V (2×12V) 100Ah</td>
-                      <td className="border border-white/10 px-3 py-2">800-1200 CCA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">200-500 kVA</td>
-                      <td className="border border-white/10 px-3 py-2">24V 150-200Ah</td>
-                      <td className="border border-white/10 px-3 py-2">1200-1500 CCA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">&gt;500 kVA</td>
-                      <td className="border border-white/10 px-3 py-2">24V 200Ah+</td>
-                      <td className="border border-white/10 px-3 py-2">1500+ CCA</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <p className="text-sm font-medium text-elec-yellow/80">UPS Battery Configurations</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Small UPS:</strong> 12-48V DC — Desktop, small servers
+              </li>
+              <li>
+                <strong>Medium UPS:</strong> 192-240V DC — Server rooms
+              </li>
+              <li>
+                <strong>Large UPS:</strong> 400-480V DC — Data centres
+              </li>
+              <li>
+                <strong>Modular UPS:</strong> Variable — Scalable installations
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-white">UPS Topologies</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Standby (offline):</strong> Cheapest, 5-12ms transfer time, basic protection
+              </li>
+              <li>
+                <strong>Line-interactive:</strong> Voltage regulation, 2-4ms transfer, good value
+              </li>
+              <li>
+                <strong>Online double conversion:</strong> Zero transfer, complete isolation, highest protection
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Battery Bank Sizing</p>
+            <p>
+              <strong>Ah = (P × t) / (V × η × DoD)</strong> — Where η = inverter efficiency (~0.9),
+              DoD = depth of discharge (~0.8 for lead-acid).
+            </p>
+            <p className="text-sm font-medium text-elec-yellow/80">Generator Starting Batteries</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Typically 12V or 24V systems</li>
+              <li>High CCA (Cold Cranking Amps) rating</li>
+              <li>Float charging maintains readiness</li>
+              <li>Multiple start attempts programmed</li>
+              <li>Heating in cold environments</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">DC Distribution</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>48V DC for telecom equipment</li>
+              <li>24V DC for control systems</li>
+              <li>DC circuit breakers required</li>
+              <li>Polarity protection essential</li>
+              <li>Fusing sized for battery short-circuit</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Starting Battery Calculation</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>10-50 kVA:</strong> 12V 100Ah — 600-800 CCA
+              </li>
+              <li>
+                <strong>50-200 kVA:</strong> 24V (2×12V) 100Ah — 800-1200 CCA
+              </li>
+              <li>
+                <strong>200-500 kVA:</strong> 24V 150-200Ah — 1200-1500 CCA
+              </li>
+              <li>
+                <strong>&gt;500 kVA:</strong> 24V 200Ah+ — 1500+ CCA
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Safety note:</strong> Large DC battery banks can deliver extremely high fault
               currents. Proper fusing and DC-rated isolation devices are essential.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p className="text-sm font-medium text-elec-yellow/80">Example 1: Emergency Lighting Battery Sizing</p>
+            <p>
+              <strong>Question:</strong> An emergency luminaire uses a 5W LED lamp with 3.6V NiCd
+              battery. Calculate the minimum battery capacity for 3-hour operation.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Energy required = Power × Time = 5W × 3h = <strong>15Wh</strong></li>
+              <li>Battery capacity at 3.6V: C = E / V = 15Wh / 3.6V = 4.17Ah</li>
+              <li>With 25% ageing factor: C<sub>design</sub> = 4.17 × 1.25 = <strong>5.2Ah minimum</strong></li>
+              <li>→ Specify 6Ah battery (next standard size)</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 2: Fire Alarm Battery Calculation</p>
+            <p>
+              <strong>Question:</strong> A fire alarm system has 180mA quiescent current and 2.5A
+              alarm current. Size batteries for 24V system.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Standby (24h): E<sub>standby</sub> = 0.18A × 24h = 4.32Ah</li>
+              <li>Alarm (30 min): E<sub>alarm</sub> = 2.5A × 0.5h = 1.25Ah</li>
+              <li>Total required: E<sub>total</sub> = 4.32 + 1.25 = 5.57Ah</li>
+              <li>With 25% margin: C<sub>design</sub> = 5.57 × 1.25 = <strong>6.96Ah</strong></li>
+              <li>→ Specify 2 × 12V 7Ah batteries in series</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 3: BMS Sensor Loop Resistance</p>
+            <p>
+              <strong>Question:</strong> A 24V DC sensor circuit runs 80m using 0.75mm² cable.
+              Current is 40mA. Check voltage drop is within 5%.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cable resistance (0.75mm²) = 24.5mΩ/m</li>
+              <li>Loop resistance: R = 2 × 80m × 24.5mΩ/m = 3.92Ω</li>
+              <li>Voltage drop: V<sub>drop</sub> = I × R = 0.04A × 3.92Ω = <strong>0.157V</strong></li>
+              <li>As percentage: (0.157 / 24) × 100 = <strong>0.65%</strong></li>
+              <li>✓ Well within 5% limit — 0.75mm² is adequate</li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Example 4: Fire Alarm Loop Resistance Check</p>
+            <p>
+              <strong>Question:</strong> A fire alarm detection loop uses 1.5mm² cable and is 350m
+              long. Will it meet the 40Ω maximum?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cable resistance (1.5mm²) = 12.1mΩ/m</li>
+              <li>Loop resistance: R = 2 × 350m × 12.1mΩ/m = 8.47Ω</li>
+              <li>✓ 8.47Ω is well below 40Ω limit</li>
+              <li>Maximum length with 1.5mm² cable: L<sub>max</sub> = 40Ω / (2 × 12.1mΩ/m) = <strong>1653m</strong></li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Emergency Lighting Battery Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An emergency luminaire uses a 5W LED lamp with 3.6V NiCd
-                battery. Calculate the minimum battery capacity for 3-hour operation.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Energy required = Power × Time</p>
-                <p>
-                  E = 5W × 3h = <strong>15Wh</strong>
-                </p>
-                <p className="mt-2">Battery capacity at 3.6V:</p>
-                <p>C = E / V = 15Wh / 3.6V = 4.17Ah</p>
-                <p className="mt-2">With 25% ageing factor:</p>
-                <p>
-                  C<sub>design</sub> = 4.17 × 1.25 = <strong>5.2Ah minimum</strong>
-                </p>
-                <p className="mt-2 text-white">→ Specify 6Ah battery (next standard size)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Fire Alarm Battery Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A fire alarm system has 180mA quiescent current and 2.5A
-                alarm current. Size batteries for 24V system.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Standby requirement (24 hours):</p>
-                <p>
-                  E<sub>standby</sub> = 0.18A × 24h = 4.32Ah
-                </p>
-                <p className="mt-2">Alarm requirement (30 minutes):</p>
-                <p>
-                  E<sub>alarm</sub> = 2.5A × 0.5h = 1.25Ah
-                </p>
-                <p className="mt-2">Total required:</p>
-                <p>
-                  E<sub>total</sub> = 4.32 + 1.25 = 5.57Ah
-                </p>
-                <p className="mt-2">With 25% margin:</p>
-                <p>
-                  C<sub>design</sub> = 5.57 × 1.25 = <strong>6.96Ah</strong>
-                </p>
-                <p className="mt-2 text-green-400">→ Specify 2 × 12V 7Ah batteries in series</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical Guidance">
+            <p className="text-sm font-medium text-elec-yellow/80">Essential Formulas for Building Services DC</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Battery capacity:</strong> C = (P × t) / V × safety factor
+              </li>
+              <li>
+                <strong>Loop resistance:</strong> R = 2 × L × r (per metre)
+              </li>
+              <li>
+                <strong>Voltage drop:</strong> V<sub>d</sub> = I × R<sub>loop</sub>
+              </li>
+              <li>
+                <strong>Power:</strong> P = V × I (DC circuits)
+              </li>
+              <li>
+                <strong>Energy:</strong> E = V × Ah (Wh) or P × t
+              </li>
+            </ul>
+            <p className="text-sm font-medium text-elec-yellow/80">Key Values to Remember</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Emergency lighting duration: <strong>3 hours</strong> minimum (BS 5266)</li>
+              <li>Fire alarm standby: <strong>24 hours + 30 min</strong> alarm (BS 5839)</li>
+              <li>BMS control voltage: <strong>24V DC</strong> standard</li>
+              <li>Maximum BMS voltage drop: <strong>5%</strong> (1.2V at 24V)</li>
+              <li>Typical fire alarm loop max: <strong>40Ω</strong></li>
+              <li>Battery ageing factor: <strong>1.25</strong> (25% margin)</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: BMS Sensor Loop Resistance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 24V DC sensor circuit runs 80m using 0.75mm² cable.
-                Current is 40mA. Check voltage drop is within 5%.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Cable resistance (0.75mm²) = 24.5mΩ/m</p>
-                <p className="mt-2">Loop resistance:</p>
-                <p>R = 2 × 80m × 24.5mΩ/m = 3.92Ω</p>
-                <p className="mt-2">Voltage drop:</p>
-                <p>
-                  V<sub>drop</sub> = I × R = 0.04A × 3.92Ω = <strong>0.157V</strong>
-                </p>
-                <p className="mt-2">As percentage:</p>
-                <p>
-                  (0.157 / 24) × 100 = <strong>0.65%</strong>
-                </p>
-                <p className="mt-2 text-green-400">✓ Well within 5% limit - 0.75mm² is adequate</p>
-              </div>
-            </div>
+          <CommonMistake
+            title="Common building-services DC mistakes"
+            whatHappens={
+              <>
+                Forgetting the loop factor (cable resistance must include both conductors). Ignoring
+                battery ageing. Mixing AC/DC actuators without checking specs. Using non
+                fire-resistant cable on fire alarm circuits. Undersizing generator starting
+                batteries.
+              </>
+            }
+            doInstead={
+              <>
+                Always ×2 for go and return. Apply a 25% ageing margin. Verify actuator AC/DC
+                rating. Use FP200/MICC on detection and sounder circuits. Size starting batteries
+                for the high CCA rating per generator class.
+              </>
+            }
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Fire Alarm Loop Resistance Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A fire alarm detection loop uses 1.5mm² cable and is 350m
-                long. Will it meet the 40Ω maximum?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Cable resistance (1.5mm²) = 12.1mΩ/m</p>
-                <p className="mt-2">Loop resistance:</p>
-                <p>R = 2 × 350m × 12.1mΩ/m = 8.47Ω</p>
-                <p className="mt-2 text-green-400">✓ 8.47Ω is well below 40Ω limit</p>
-                <p className="mt-2 text-white">Maximum length with 1.5mm² cable:</p>
-                <p>
-                  L<sub>max</sub> = 40Ω / (2 × 12.1mΩ/m) = <strong>1653m</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Sizing a fire-alarm panel battery for a 4-storey office"
+            situation={
+              <>
+                A new BS 5839-1 Category L2 fire-alarm system has a quiescent panel current
+                of 250 mA and a full-alarm current (sounders + beacons + interfaces) of
+                2.4 A. The system requires the standard 24 h standby + 30 min alarm
+                duty.
+              </>
+            }
+            whatToDo={
+              <>
+                Compute the energy demand: 0.250 A \u00d7 24 h = 6.0 Ah quiescent + 2.4 A
+                \u00d7 0.5 h = 1.2 Ah alarm = 7.2 Ah total. Apply BS 5839-1 derating (typically
+                \u00d71.25 for end-of-life capacity loss) \u2192 9.0 Ah minimum. Pick the next
+                standard capacity above that \u2014 typically a pair of 12 V 12 Ah sealed
+                lead-acid batteries in series. Document the calculation in the commissioning
+                certificate and re-check at every annual service.
+              </>
+            }
+            whyItMatters={
+              <>
+                A fire-alarm panel that drops out before the 24 h + 30 min duty is up is a
+                life-safety failure and a Building Regulations non-compliance. The Ah
+                calculation is a direct application of DC circuit theory \u2014 current
+                \u00d7 time \u00d7 derating \u2014 and your name is on the cert.
+              </>
+            }
+          />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <SectionRule />
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Formulas for Building Services DC
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Battery capacity:</strong> C = (P × t) / V × safety factor
-                </li>
-                <li className="pl-1">
-                  <strong>Loop resistance:</strong> R = 2 × L × r (per metre)
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage drop:</strong> V<sub>d</sub> = I × R<sub>loop</sub>
-                </li>
-                <li className="pl-1">
-                  <strong>Power:</strong> P = V × I (DC circuits)
-                </li>
-                <li className="pl-1">
-                  <strong>Energy:</strong> E = V × Ah (Wh) or P × t
-                </li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Emergency lighting duration: <strong>3 hours</strong> minimum (BS 5266)
-                </li>
-                <li className="pl-1">
-                  Fire alarm standby: <strong>24 hours + 30 min</strong> alarm (BS 5839)
-                </li>
-                <li className="pl-1">
-                  BMS control voltage: <strong>24V DC</strong> standard
-                </li>
-                <li className="pl-1">
-                  Maximum BMS voltage drop: <strong>5%</strong> (1.2V at 24V)
-                </li>
-                <li className="pl-1">
-                  Typical fire alarm loop max: <strong>40Ω</strong>
-                </li>
-                <li className="pl-1">
-                  Battery ageing factor: <strong>1.25</strong> (25% margin)
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Forgetting loop factor:</strong> Cable resistance must include both
-                  conductors (×2)
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring ageing:</strong> Batteries lose capacity over time - always add
-                  margin
-                </li>
-                <li className="pl-1">
-                  <strong>Mixing AC/DC:</strong> Some actuators accept both, check specifications
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong cable type:</strong> Fire alarm circuits need fire-resistant cable
-                </li>
-                <li className="pl-1">
-                  <strong>Undersized starting batteries:</strong> Generator cranking needs high CCA
-                  rating
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Building services DC systems live at 12 V, 24 V, 48 V (and sometimes 110 V DC for sub-station tripping batteries) \u2014 pick the right voltage class for the application.',
+              'Battery capacity (Ah) = sum of (current \u00d7 duration) for every duty cycle, multiplied by an end-of-life derating factor (typically \u00d71.25).',
+              'BS 5839-1: fire-alarm panel battery \u2014 24 h standby + 30 min alarm duty.',
+              'BS 5266-1: emergency lighting battery \u2014 1 h or 3 h emergency duration at end-of-life voltage.',
+              'BMS sensor circuits typically use 24 V DC two-wire loops \u2014 voltage-drop budget is tight on long runs (often 10 % of nominal).',
+              '4-20 mA analogue loops are noise-immune and self-checking (0 mA = broken cable) \u2014 the working sensor signal in heavy industrial plant rooms.',
+              '0-10 V analogue control signals are common on damper actuators, EC fans and lighting drivers \u2014 voltage-source, low-current, sensitive to drop on long runs.',
+              'DC fault clearance is harder than AC \u2014 there is no zero crossing, so DC fuses and breakers are physically larger than AC equivalents at the same rating.',
+            ]}
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>BS 5266 - Emergency lighting</li>
-                  <li>BS 5839-1 - Fire detection/alarm</li>
-                  <li>BS 7671 - Wiring regulations</li>
-                  <li>BS EN 62040 - UPS systems</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Typical Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Emergency: 3h duration, NiCd batteries</li>
-                  <li>Fire alarm: 24h standby + 30min alarm</li>
-                  <li>BMS: 24V DC, max 5% voltage drop</li>
-                  <li>UPS: Online for critical, size for load × time</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section1-6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module3-section2">
-              Next: AC Circuit Theory
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section1-6')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Network Theorems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module3-section2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Inductance, capacitance and power factor
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

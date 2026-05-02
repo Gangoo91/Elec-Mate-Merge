@@ -17,6 +17,7 @@ import {
   ChevronUp,
   Pencil,
   Check,
+  Percent,
 } from 'lucide-react';
 import { QuoteItem, JobTemplate } from '@/types/quote';
 import { JobTemplates } from '../JobTemplates';
@@ -28,6 +29,22 @@ import {
   equipmentCategories,
   commonEquipment,
 } from '@/data/electrician/presetData';
+
+// ELE-889 — common UK trade units. Anything outside this list is treated as
+// a "custom" unit and rendered through a free-text input. Kept in declaration
+// order so the Select dropdown matches.
+const UNIT_PRESETS = [
+  'hour',
+  'day',
+  'half-day',
+  'each',
+  'item',
+  'm',
+  'm²',
+  'kit',
+  'callout',
+  'visit',
+] as const;
 import { supabase } from '@/integrations/supabase/client';
 import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from '@/hooks/use-toast';
@@ -75,6 +92,8 @@ export const EnhancedQuoteItemsStep = ({
   // Inline item description editing
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [editingDescription, setEditingDescription] = useState('');
+  // ELE-888 — per-item adjustment editor toggle
+  const [adjustingItemId, setAdjustingItemId] = useState<string | null>(null);
 
   // Global markup from Price Book settings
   const { calcSellPrice } = usePriceBookSettings();
@@ -289,8 +308,18 @@ export const EnhancedQuoteItemsStep = ({
 
   const handleAddItem = () => {
     if (newItem.description && newItem.unitPrice > 0) {
+      // ELE-887 — apply material markup to manually-entered items.
+      // Markup is for materials and equipment only — labour uses its own hourlyRate
+      // and manual/custom items shouldn't be silently uplifted by a materials-scoped markup.
+      const shouldApplyMarkup =
+        (newItem.category === 'materials' || newItem.category === 'equipment') &&
+        !!calculateAdjustedPrice;
+      const finalUnitPrice = shouldApplyMarkup
+        ? calculateAdjustedPrice!(newItem.unitPrice)
+        : newItem.unitPrice;
       const itemToAdd = {
         ...newItem,
+        unitPrice: finalUnitPrice,
         // When using Custom tab, override category with the user's chosen "Appears Under" value
         category: newItem.category === 'manual' ? customCategory : newItem.category,
         quantity:
@@ -761,7 +790,15 @@ export const EnhancedQuoteItemsStep = ({
                 value={quantityInput}
                 onChange={(e) => {
                   const val = e.target.value;
-                  if (val === '' || /^\d*\.?\d*$/.test(val)) setQuantityInput(val);
+                  if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                    setQuantityInput(val);
+                    // ELE-890 — also flush parseable values into newItem so the
+                    // Add button enables before the user blurs the field.
+                    const parsed = parseFloat(val);
+                    if (!isNaN(parsed) && parsed > 0) {
+                      setNewItem((prev) => ({ ...prev, quantity: parsed }));
+                    }
+                  }
                 }}
                 onBlur={() => {
                   const parsed = parseFloat(quantityInput);
@@ -773,6 +810,59 @@ export const EnhancedQuoteItemsStep = ({
                 className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white"
               />
             </div>
+            {/* ELE-889 — Unit type selector. Common UK trade units + custom. */}
+            <div>
+              <label className="text-xs font-medium text-white mb-1.5 block">Unit</label>
+              <Select
+                value={
+                  UNIT_PRESETS.includes(newItem.unit as (typeof UNIT_PRESETS)[number])
+                    ? newItem.unit
+                    : 'custom'
+                }
+                onValueChange={(val) => {
+                  if (val === 'custom') {
+                    // Switch to custom — preserve any existing custom value or default
+                    setNewItem((prev) => ({
+                      ...prev,
+                      unit:
+                        UNIT_PRESETS.includes(prev.unit as (typeof UNIT_PRESETS)[number]) || !prev.unit
+                          ? ''
+                          : prev.unit,
+                    }));
+                  } else {
+                    setNewItem((prev) => ({ ...prev, unit: val }));
+                  }
+                }}
+              >
+                <SelectTrigger className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow">
+                  <SelectValue placeholder="Choose unit" />
+                </SelectTrigger>
+                <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-white">
+                  <SelectItem value="hour">per hour</SelectItem>
+                  <SelectItem value="day">per day</SelectItem>
+                  <SelectItem value="half-day">per half-day</SelectItem>
+                  <SelectItem value="each">each</SelectItem>
+                  <SelectItem value="item">per item</SelectItem>
+                  <SelectItem value="m">per metre</SelectItem>
+                  <SelectItem value="m²">per m²</SelectItem>
+                  <SelectItem value="kit">per kit</SelectItem>
+                  <SelectItem value="callout">per callout</SelectItem>
+                  <SelectItem value="visit">per visit</SelectItem>
+                  <SelectItem value="custom">Custom…</SelectItem>
+                </SelectContent>
+              </Select>
+              {!UNIT_PRESETS.includes(newItem.unit as (typeof UNIT_PRESETS)[number]) && (
+                <Input
+                  type="text"
+                  value={newItem.unit}
+                  onChange={(e) =>
+                    setNewItem((prev) => ({ ...prev, unit: e.target.value }))
+                  }
+                  placeholder="e.g. per circuit, per spur"
+                  className="h-11 px-3 mt-2 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white"
+                />
+              )}
+            </div>
             {/* Unit Price */}
             <div>
               <label className="text-xs font-medium text-white mb-1.5 block">Unit Price (£)</label>
@@ -782,7 +872,19 @@ export const EnhancedQuoteItemsStep = ({
                 value={unitPriceInput}
                 onChange={(e) => {
                   const val = e.target.value;
-                  if (val === '' || /^\d*\.?\d*$/.test(val)) setUnitPriceInput(val);
+                  if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                    setUnitPriceInput(val);
+                    // ELE-890 — flush parseable price to newItem live so the
+                    // Add button enables without requiring a blur. Previously
+                    // the user had to tap outside the field first, which
+                    // looked like a glitch.
+                    const parsed = parseFloat(val);
+                    if (!isNaN(parsed) && parsed > 0) {
+                      setNewItem((prev) => ({ ...prev, unitPrice: parsed }));
+                    } else if (val === '') {
+                      setNewItem((prev) => ({ ...prev, unitPrice: 0 }));
+                    }
+                  }
                 }}
                 onBlur={() => {
                   const parsed = parseFloat(unitPriceInput);
@@ -952,6 +1054,31 @@ export const EnhancedQuoteItemsStep = ({
                       </button>
                       <button
                         type="button"
+                        onClick={() =>
+                          setAdjustingItemId(adjustingItemId === item.id ? null : item.id)
+                        }
+                        className={cn(
+                          'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
+                          adjustingItemId === item.id ||
+                            (typeof item.itemAdjustmentPercent === 'number' &&
+                              item.itemAdjustmentPercent !== 0)
+                            ? 'bg-elec-yellow/20 active:bg-elec-yellow/30'
+                            : 'bg-white/[0.05] active:bg-white/[0.1]'
+                        )}
+                        aria-label="Per-item adjustment"
+                      >
+                        <Percent
+                          className={cn(
+                            'h-4 w-4',
+                            typeof item.itemAdjustmentPercent === 'number' &&
+                              item.itemAdjustmentPercent !== 0
+                              ? 'text-elec-yellow'
+                              : 'text-white'
+                          )}
+                        />
+                      </button>
+                      <button
+                        type="button"
                         onClick={() => onRemove(item.id)}
                         className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:bg-red-500/20 active:scale-95 transition-transform"
                         aria-label="Remove item"
@@ -960,6 +1087,72 @@ export const EnhancedQuoteItemsStep = ({
                       </button>
                     </div>
                   </div>
+
+                  {/* ELE-888 — adjustment chip (when set, not currently editing) */}
+                  {typeof item.itemAdjustmentPercent === 'number' &&
+                    item.itemAdjustmentPercent !== 0 &&
+                    adjustingItemId !== item.id && (
+                      <div className="mt-2 flex items-center gap-1.5 text-[11px]">
+                        <span
+                          className={cn(
+                            'px-1.5 py-0.5 rounded font-semibold tabular-nums',
+                            item.itemAdjustmentPercent > 0
+                              ? 'bg-amber-500/15 text-amber-300'
+                              : 'bg-emerald-500/15 text-emerald-300'
+                          )}
+                        >
+                          {item.itemAdjustmentPercent > 0 ? '+' : ''}
+                          {item.itemAdjustmentPercent}%
+                        </span>
+                        {item.itemAdjustmentLabel && (
+                          <span className="text-white/60">{item.itemAdjustmentLabel}</span>
+                        )}
+                      </div>
+                    )}
+
+                  {/* ELE-888 — adjustment editor */}
+                  {adjustingItemId === item.id && (
+                    <div className="mt-2 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] space-y-2">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="number"
+                          step="0.1"
+                          autoFocus
+                          placeholder="± %"
+                          value={item.itemAdjustmentPercent ?? ''}
+                          onChange={(e) => {
+                            const v = e.target.value;
+                            onUpdate(item.id, {
+                              itemAdjustmentPercent: v === '' ? undefined : parseFloat(v),
+                            });
+                          }}
+                          className="w-20 h-8 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Reason (e.g. mates rate)"
+                          value={item.itemAdjustmentLabel ?? ''}
+                          onChange={(e) =>
+                            onUpdate(item.id, {
+                              itemAdjustmentLabel: e.target.value || undefined,
+                            })
+                          }
+                          className="flex-1 h-8 px-2 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/40"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setAdjustingItemId(null)}
+                          className="w-8 h-8 rounded-lg bg-elec-yellow/20 active:bg-elec-yellow/30 flex items-center justify-center"
+                          aria-label="Done"
+                        >
+                          <Check className="h-4 w-4 text-elec-yellow" />
+                        </button>
+                      </div>
+                      <p className="text-[10px] text-white/50">
+                        Negative = discount (e.g. −20 for mates rate). Positive = markup.
+                      </p>
+                    </div>
+                  )}
                 </div>
               );
             })}

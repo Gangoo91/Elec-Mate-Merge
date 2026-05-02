@@ -1,8 +1,29 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 2 · Subsection 1 — Hazard Identification Methods
+ * HNC Electrical Engineering for Building Services (Pearson U4001 + Building Services context)
+ *   Systematic techniques (HAZOP, what-if, checklist, task analysis, FMEA) for an HNC
+ *   engineer to surface hazards before they bite. Engineer-in-training perspective:
+ *   how to lead a structured hazard ID workshop, not just walk a site with a clipboard.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  ContentEyebrow,
+  SectionRule,
+  LearningOutcomes,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Hazard Identification Methods - HNC Module 1 Section 2.1';
@@ -229,794 +250,563 @@ const faqs = [
 ];
 
 const HNCModule1Section2_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module1-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 2
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.2.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Hazard Identification Methods
-          </h1>
-          <p className="text-white">
-            Systematic techniques for identifying workplace hazards in building services
-            environments
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 1.2.1"
+            title="Hazard Identification Methods"
+            description="Systematic techniques for identifying workplace hazards in building services environments"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Hazard:</strong> Anything with potential to cause harm
-              </li>
-              <li className="pl-1">
-                <strong>Risk:</strong> Likelihood and severity of harm occurring
-              </li>
-              <li className="pl-1">
-                <strong>Methods:</strong> Inspections, JSA, incident analysis, checklists
-              </li>
-              <li className="pl-1">
-                <strong>Categories:</strong> Electrical, mechanical, environmental, ergonomic
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Electrical:</strong> Live working, isolation, arc flash
-              </li>
-              <li className="pl-1">
-                <strong>Mechanical:</strong> Moving parts, pressure systems, lifting
-              </li>
-              <li className="pl-1">
-                <strong>Environmental:</strong> Confined spaces, working at height, asbestos
-              </li>
-              <li className="pl-1">
-                <strong>Ergonomic:</strong> Manual handling, repetitive tasks, posture
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'You will choose the right hazard identification technique for the job — checklist, walk-through, task analysis, what-if, HAZOP, FMEA — rather than defaulting to a generic template.',
+              'You can run a structured workshop (multi-discipline, time-boxed, evidence-based) and capture findings in a register that maps to MHSWR Reg 3.',
+              'You apply the &ldquo;eight categories&rdquo; mental model — physical, chemical, biological, ergonomic, psychosocial, electrical, environmental, organisational — to avoid blind spots.',
+              'You consult the workforce under HSWA s.2(6) and Safety Reps Regs 1977 — and you record the consultation, not just the outcome.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Distinguish between hazards and risks in workplace safety',
-              'Conduct effective workplace safety inspections',
-              'Apply task analysis and Job Safety Analysis (JSA) techniques',
-              'Analyse incident and near-miss data for hazard identification',
-              'Use checklists and observation techniques effectively',
-              'Categorise building services hazards appropriately',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 3(1)"
+            clause="Every employer shall make a suitable and sufficient assessment of—(a) the risks to the health and safety of his employees to which they are exposed whilst they are at work; and (b) the risks to the health and safety of persons not in his employment arising out of or in connection with the conduct by him of his undertaking."
+            meaning={
+              <>
+                Reg 3 starts with hazard identification. &ldquo;Suitable and sufficient&rdquo;
+                means the method matches the complexity of the work. As an HNC engineer your
+                choice of technique (checklist for routine work, HAZOP for novel design) is the
+                first defendable step.
+              </>
+            }
+            cite="Source: Management of Health and Safety at Work Regulations 1999, Reg 3(1) — legislation.gov.uk"
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <LearningOutcomes
+            outcomes={[
+              "Distinguish between hazards and risks in workplace safety",
+              "Conduct effective workplace safety inspections",
+              "Apply task analysis and Job Safety Analysis (JSA) techniques",
+              "Analyse incident and near-miss data for hazard identification",
+              "Use checklists and observation techniques effectively",
+              "Categorise building services hazards appropriately",
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Section 1: Hazard vs Risk */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Definition of Hazard vs Risk
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Definition of Hazard vs Risk</ContentEyebrow>
+
+          <ConceptBlock title="Definition of Hazard vs Risk">
             <p>
-              Understanding the distinction between hazards and risks is fundamental to workplace
-              safety. These terms are often confused but represent different concepts that together
-              form the foundation of risk assessment.
+            Understanding the distinction between hazards and risks is fundamental to workplace
+            safety. These terms are often confused but represent different concepts that together
+            form the foundation of risk assessment.
             </p>
 
             <div className="my-6 grid sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Hazard</p>
-                <p className="text-sm text-white mb-3">
-                  A hazard is anything with the <strong>potential</strong> to cause harm. This
-                  includes:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Physical objects (machinery, cables, heights)</li>
-                  <li className="pl-1">Substances (chemicals, asbestos, fumes)</li>
-                  <li className="pl-1">Energy sources (electricity, heat, radiation)</li>
-                  <li className="pl-1">Work methods (manual handling, repetitive tasks)</li>
-                  <li className="pl-1">Environmental conditions (noise, temperature, lighting)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Risk</p>
-                <p className="text-sm text-white mb-3">
-                  Risk is the <strong>likelihood</strong> of harm occurring combined with its{' '}
-                  <strong>severity</strong>:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">How likely is someone to be exposed?</li>
-                  <li className="pl-1">How often does exposure occur?</li>
-                  <li className="pl-1">How severe could the harm be?</li>
-                  <li className="pl-1">How many people could be affected?</li>
-                  <li className="pl-1">What existing controls are in place?</li>
-                </ul>
-              </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <p className="text-sm font-medium text-elec-yellow mb-2">Hazard</p>
+            <p className="text-sm text-white mb-3">
+            A hazard is anything with the <strong>potential</strong> to cause harm. This
+            includes:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Physical objects (machinery, cables, heights)</li>
+            <li>Substances (chemicals, asbestos, fumes)</li>
+            <li>Energy sources (electricity, heat, radiation)</li>
+            <li>Work methods (manual handling, repetitive tasks)</li>
+            <li>Environmental conditions (noise, temperature, lighting)</li>
+            </ul>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <p className="text-sm font-medium text-elec-yellow mb-2">Risk</p>
+            <p className="text-sm text-white mb-3">
+            Risk is the <strong>likelihood</strong> of harm occurring combined with its{' '}
+            <strong>severity</strong>:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>How likely is someone to be exposed?</li>
+            <li>How often does exposure occur?</li>
+            <li>How severe could the harm be?</li>
+            <li>How many people could be affected?</li>
+            <li>What existing controls are in place?</li>
+            </ul>
+            </div>
             </div>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-300 mb-2">Practical Example</p>
-              <p className="text-sm text-white">
-                <strong>Hazard:</strong> A distribution board with exposed live terminals
-                <br />
-                <strong>Risk assessment considers:</strong> Who has access? Is it locked? How often
-                is it accessed? What voltage? Are workers trained? Is PPE available?
-                <br />
-                <strong>Risk level:</strong> Could range from low (locked room, trained personnel
-                only) to extreme (open access, untrained workers)
-              </p>
-            </div>
+            <CommonMistake
+            title="Practical Example"
+            whatHappens={<><p className="text-sm text-white">
+            <strong>Hazard:</strong> A distribution board with exposed live terminals
+            <br />
+            <strong>Risk assessment considers:</strong> Who has access? Is it locked? How often
+            is it accessed? What voltage? Are workers trained? Is PPE available?
+            <br />
+            <strong>Risk level:</strong> Could range from low (locked room, trained personnel
+            only) to extreme (open access, untrained workers)
+            </p></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Risk Equation</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Definition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Factors</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Likelihood</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Probability of harm occurring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Frequency, duration, existing controls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Severity</td>
-                      <td className="border border-white/10 px-3 py-2">Potential consequences</td>
-                      <td className="border border-white/10 px-3 py-2">Minor injury to fatality</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exposure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Number and vulnerability of people
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Workers, public, vulnerable groups
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Risk Equation</p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Likelihood</strong> — Definition: Probability of harm occurring. Factors: Frequency, duration, existing controls</li>
+            <li><strong>Severity</strong> — Definition: Potential consequences. Factors: Minor injury to fatality</li>
+            <li><strong>Exposure</strong> — Definition: Number and vulnerability of people. Factors: Workers, public, vulnerable groups</li>
+            </ul>
+            
+            
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Hazard identification comes first - you cannot assess
-              risk until you know what hazards exist.
+            <strong>Key principle:</strong> Hazard identification comes first - you cannot assess
+            risk until you know what hazards exist.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Workplace Inspections */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Workplace Inspections and Task Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Workplace Inspections and Task Analysis</ContentEyebrow>
+
+          <ConceptBlock title="Workplace Inspections and Task Analysis">
             <p>
-              Workplace inspections are systematic examinations to identify hazards, assess
-              compliance, and verify that control measures are working. They range from informal
-              daily checks to comprehensive formal audits.
+            Workplace inspections are systematic examinations to identify hazards, assess
+            compliance, and verify that control measures are working. They range from informal
+            daily checks to comprehensive formal audits.
             </p>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Workplace Inspection
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Conducted By</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Informal/Daily</td>
-                      <td className="border border-white/10 px-3 py-2">Daily/continuous</td>
-                      <td className="border border-white/10 px-3 py-2">All workers</td>
-                      <td className="border border-white/10 px-3 py-2">Spot immediate hazards</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scheduled</td>
-                      <td className="border border-white/10 px-3 py-2">Weekly/monthly</td>
-                      <td className="border border-white/10 px-3 py-2">Supervisors, safety reps</td>
-                      <td className="border border-white/10 px-3 py-2">Systematic area checks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Formal audit</td>
-                      <td className="border border-white/10 px-3 py-2">Quarterly/annually</td>
-                      <td className="border border-white/10 px-3 py-2">H&S professionals</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Comprehensive compliance review
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Statutory</td>
-                      <td className="border border-white/10 px-3 py-2">As required by law</td>
-                      <td className="border border-white/10 px-3 py-2">Competent persons</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LOLER, PUWER, pressure systems
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Effective Inspection Practice
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Use structured checklists appropriate to the area</li>
-                  <li className="pl-1">Involve workers who know the area</li>
-                  <li className="pl-1">
-                    Look at normal work, not just tidy 'inspection ready' conditions
-                  </li>
-                  <li className="pl-1">
-                    Check paperwork matches reality (permits, risk assessments)
-                  </li>
-                  <li className="pl-1">Document findings with photos where appropriate</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Building Services Focus Areas
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Electrical switch rooms and distribution areas</li>
-                  <li className="pl-1">Plant rooms (boilers, chillers, pumps)</li>
-                  <li className="pl-1">Roof access and equipment</li>
-                  <li className="pl-1">Cable routes and containment</li>
-                  <li className="pl-1">Access equipment storage and condition</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Task Analysis Process</p>
-              <p className="text-sm text-white mb-3">
-                Task analysis systematically examines how work is actually performed to identify
-                hazards inherent in the task itself:
-              </p>
-              <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Select the task</strong> - prioritise high-risk or frequently performed
-                  tasks
-                </li>
-                <li className="pl-1">
-                  <strong>Break it down</strong> - identify each step in sequence
-                </li>
-                <li className="pl-1">
-                  <strong>Identify hazards</strong> - what could go wrong at each step?
-                </li>
-                <li className="pl-1">
-                  <strong>Assess demands</strong> - physical, mental, environmental
-                </li>
-                <li className="pl-1">
-                  <strong>Consider variations</strong> - what if conditions aren't ideal?
-                </li>
-              </ol>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Inspections identify hazards; they don't replace risk
-              assessments. Findings must be actioned, not just recorded.
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Types of Workplace Inspection
             </p>
-          </div>
-        </section>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Informal/Daily</strong> — Frequency: Daily/continuous. Conducted By: All workers. Purpose: Spot immediate hazards</li>
+            <li><strong>Scheduled</strong> — Frequency: Weekly/monthly. Conducted By: Supervisors, safety reps. Purpose: Systematic area checks</li>
+            <li><strong>Formal audit</strong> — Frequency: Quarterly/annually. Conducted By: H&S professionals. Purpose: Comprehensive compliance review</li>
+            <li><strong>Statutory</strong> — Frequency: As required by law. Conducted By: Competent persons. Purpose: LOLER, PUWER, pressure systems</li>
+            </ul>
+            
+            
 
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Job Safety Analysis and Incident Data */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Job Safety Analysis and Incident Data Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Job Safety Analysis (JSA) - also called Job Hazard Analysis (JHA) - is a technique for
-              systematically identifying hazards associated with specific jobs before work begins.
-              Combined with incident data analysis, it provides both proactive and reactive hazard
-              identification.
-            </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                JSA Development Process
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Action</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Output</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Select job</td>
-                      <td className="border border-white/10 px-3 py-2">Choose task for analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Job title and scope defined
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Break down</td>
-                      <td className="border border-white/10 px-3 py-2">List sequential steps</td>
-                      <td className="border border-white/10 px-3 py-2">10-20 discrete steps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Identify hazards</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        For each step, ask "what could go wrong?"
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Hazard list per step</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Develop controls</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Determine preventive measures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Control measures per hazard
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Review</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Validate with experienced workers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Approved JSA document</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example JSA: DB Installation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Hazards</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Controls</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        1. Transport DB to location
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Manual handling, trips</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trolley, clear route, two-person lift
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Mark fixing positions</td>
-                      <td className="border border-white/10 px-3 py-2">Working at height, dust</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stepladder, eye protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Drill fixings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Buried services, dust, noise
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CAT scan, RPE, hearing protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Mount enclosure</td>
-                      <td className="border border-white/10 px-3 py-2">Lifting, sharp edges</td>
-                      <td className="border border-white/10 px-3 py-2">Two-person lift, gloves</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Incident Data Analysis
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Review accident reports for root causes</li>
-                  <li className="pl-1">Analyse near-miss reports for patterns</li>
-                  <li className="pl-1">Track first-aid cases by type and location</li>
-                  <li className="pl-1">Identify common contributing factors</li>
-                  <li className="pl-1">Compare with industry incident data</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heinrich's Triangle</p>
-                <div className="p-3 rounded bg-white/5 text-center">
-                  <p className="text-xs text-white mb-2">For every:</p>
-                  <p className="text-lg font-bold text-red-400">1 Serious Injury</p>
-                  <p className="text-xs text-white my-1">there are</p>
-                  <p className="text-lg font-bold text-orange-400">29 Minor Injuries</p>
-                  <p className="text-xs text-white my-1">and</p>
-                  <p className="text-lg font-bold text-yellow-400">300 Near Misses</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-300 mb-2">Near Miss Importance</p>
-              <p className="text-sm text-white">
-                Near misses are 'free lessons' - incidents where harm could have occurred but
-                didn't. They reveal the same hazards and system failures as actual injuries but
-                without the human cost. Organisations with strong near-miss reporting cultures have
-                significantly lower injury rates.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> JSAs should be developed with input from workers who
-              actually perform the task - they know the real hazards.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Checklists, Observation and Hazard Categories */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Checklists, Observation Techniques and Hazard Categories
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Checklists and structured observation techniques ensure consistent, thorough hazard
-              identification. Understanding hazard categories helps ensure nothing is overlooked in
-              building services environments.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Effective Use of Checklists
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-green-400 text-sm mb-2">Advantages</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Ensures consistent coverage</li>
-                    <li className="pl-1">Prompts for easily forgotten items</li>
-                    <li className="pl-1">Provides audit trail</li>
-                    <li className="pl-1">Useful for training inspectors</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-red-400 text-sm mb-2">Limitations</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Can become tick-box exercise</li>
-                    <li className="pl-1">May miss unlisted hazards</li>
-                    <li className="pl-1">Generic lists miss site-specific issues</li>
-                    <li className="pl-1">Must be kept current</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Observation Techniques</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technique</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Behavioural observation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Watch work as normally performed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Identifying unsafe acts</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety tours</td>
-                      <td className="border border-white/10 px-3 py-2">Management walkabouts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General awareness, engagement
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety sampling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check specific items randomly
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PPE compliance, housekeeping
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Task observation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Watch complete task performance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Validating JSAs, training needs
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Hazard Categories
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                  <p className="font-medium text-red-400 mb-2">Electrical Hazards</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Electric shock (direct/indirect contact)</li>
-                    <li className="pl-1">Arc flash and arc blast</li>
-                    <li className="pl-1">Burns from overheated equipment</li>
-                    <li className="pl-1">Fire from electrical faults</li>
-                    <li className="pl-1">Explosion in hazardous areas</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                  <p className="font-medium text-blue-400 mb-2">Mechanical Hazards</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Moving parts (fans, pumps, belts)</li>
-                    <li className="pl-1">Pressure systems (compressors, vessels)</li>
-                    <li className="pl-1">Lifting equipment failure</li>
-                    <li className="pl-1">Falling objects</li>
-                    <li className="pl-1">Sharp edges and projections</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                  <p className="font-medium text-green-400 mb-2">Environmental Hazards</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Working at height</li>
-                    <li className="pl-1">Confined spaces</li>
-                    <li className="pl-1">Asbestos (in older buildings)</li>
-                    <li className="pl-1">Extreme temperatures</li>
-                    <li className="pl-1">Noise exposure</li>
-                    <li className="pl-1">Poor lighting</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
-                  <p className="font-medium text-purple-400 mb-2">Ergonomic Hazards</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Manual handling (cables, equipment)</li>
-                    <li className="pl-1">Repetitive movements</li>
-                    <li className="pl-1">Awkward postures</li>
-                    <li className="pl-1">Prolonged standing/kneeling</li>
-                    <li className="pl-1">Vibrating tools (HAVs)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Comprehensive approach:</strong> Check all four hazard categories for every
-              task - electrical work involves more than just electrical hazards.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
+            
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Principles for Hazard Identification
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Be systematic</strong> - use checklists, categories, and structured
-                  methods
-                </li>
-                <li className="pl-1">
-                  <strong>Involve workers</strong> - they know the real hazards from daily
-                  experience
-                </li>
-                <li className="pl-1">
-                  <strong>Look at actual work</strong> - not just procedures and policies
-                </li>
-                <li className="pl-1">
-                  <strong>Consider variations</strong> - what happens when things aren't normal?
-                </li>
-                <li className="pl-1">
-                  <strong>Document and act</strong> - identification without action is pointless
-                </li>
-              </ul>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Effective Inspection Practice
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Use structured checklists appropriate to the area</li>
+            <li>Involve workers who know the area</li>
+            <li>
+            Look at normal work, not just tidy 'inspection ready' conditions
+            </li>
+            <li>
+            Check paperwork matches reality (permits, risk assessments)
+            </li>
+            <li>Document findings with photos where appropriate</li>
+            </ul>
+            </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Building Services Focus Areas
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Electrical switch rooms and distribution areas</li>
+            <li>Plant rooms (boilers, chillers, pumps)</li>
+            <li>Roof access and equipment</li>
+            <li>Cable routes and containment</li>
+            <li>Access equipment storage and condition</li>
+            </ul>
+            </div>
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Task Analysis Process</p>
+            <p className="text-sm text-white mb-3">
+            Task analysis systematically examines how work is actually performed to identify
+            hazards inherent in the task itself:
+            </p>
+            <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
+            <li>
+            <strong>Select the task</strong> - prioritise high-risk or frequently performed
+            tasks
+            </li>
+            <li>
+            <strong>Break it down</strong> - identify each step in sequence
+            </li>
+            <li>
+            <strong>Identify hazards</strong> - what could go wrong at each step?
+            </li>
+            <li>
+            <strong>Assess demands</strong> - physical, mental, environmental
+            </li>
+            <li>
+            <strong>Consider variations</strong> - what if conditions aren't ideal?
+            </li>
+            </ol>
+            
+
+            <p className="text-sm text-elec-yellow/70">
+            <strong>Remember:</strong> Inspections identify hazards; they don't replace risk
+            assessments. Findings must be actioned, not just recorded.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Job Safety Analysis and Incident Data Analysis</ContentEyebrow>
+
+          <ConceptBlock title="Job Safety Analysis and Incident Data Analysis">
+            <p>
+            Job Safety Analysis (JSA) - also called Job Hazard Analysis (JHA) - is a technique for
+            systematically identifying hazards associated with specific jobs before work begins.
+            Combined with incident data analysis, it provides both proactive and reactive hazard
+            identification.
+            </p>
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            JSA Development Process
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1. Select job</strong> — Action: Choose task for analysis. Output: Job title and scope defined</li>
+            <li><strong>2. Break down</strong> — Action: List sequential steps. Output: 10-20 discrete steps</li>
+            <li><strong>3. Identify hazards</strong> — Action: For each step, ask "what could go wrong?". Output: Hazard list per step</li>
+            <li><strong>4. Develop controls</strong> — Action: Determine preventive measures. Output: Control measures per hazard</li>
+            <li><strong>5. Review</strong> — Action: Validate with experienced workers. Output: Approved JSA document</li>
+            </ul>
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Example JSA: DB Installation
+            </p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>1. Transport DB to location</strong> — Hazards: Manual handling, trips. Controls: Trolley, clear route, two-person lift</li>
+            <li><strong>2. Mark fixing positions</strong> — Hazards: Working at height, dust. Controls: Stepladder, eye protection</li>
+            <li><strong>3. Drill fixings</strong> — Hazards: Buried services, dust, noise. Controls: CAT scan, RPE, hearing protection</li>
+            <li><strong>4. Mount enclosure</strong> — Hazards: Lifting, sharp edges. Controls: Two-person lift, gloves</li>
+            </ul>
+            
+            
+
+            
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Incident Data Analysis
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Review accident reports for root causes</li>
+            <li>Analyse near-miss reports for patterns</li>
+            <li>Track first-aid cases by type and location</li>
+            <li>Identify common contributing factors</li>
+            <li>Compare with industry incident data</li>
+            </ul>
+            </div>
+            <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heinrich's Triangle</p>
+            <div className="p-3 rounded bg-white/5 text-center">
+            <p className="text-xs text-white mb-2">For every:</p>
+            <p className="text-lg font-bold text-red-400">1 Serious Injury</p>
+            <p className="text-xs text-white my-1">there are</p>
+            <p className="text-lg font-bold text-orange-400">29 Minor Injuries</p>
+            <p className="text-xs text-white my-1">and</p>
+            <p className="text-lg font-bold text-yellow-400">300 Near Misses</p>
+            </div>
+            </div>
+            
+
+            <CommonMistake
+            title="Near Miss Importance"
+            whatHappens={<><p className="text-sm text-white">
+            Near misses are 'free lessons' - incidents where harm could have occurred but
+            didn't. They reveal the same hazards and system failures as actual injuries but
+            without the human cost. Organisations with strong near-miss reporting cultures have
+            significantly lower injury rates.
+            </p></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
+
+            <p className="text-sm text-elec-yellow/70">
+            <strong>Best practice:</strong> JSAs should be developed with input from workers who
+            actually perform the task - they know the real hazards.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Checklists, Observation Techniques and Hazard Categories</ContentEyebrow>
+
+          <ConceptBlock title="Checklists, Observation Techniques and Hazard Categories">
+            <p>
+            Checklists and structured observation techniques ensure consistent, thorough hazard
+            identification. Understanding hazard categories helps ensure nothing is overlooked in
+            building services environments.
+            </p>
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Effective Use of Checklists
+            </p>
+            
+            
+            <p className="font-medium text-green-400 text-sm mb-2">Advantages</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Ensures consistent coverage</li>
+            <li>Prompts for easily forgotten items</li>
+            <li>Provides audit trail</li>
+            <li>Useful for training inspectors</li>
+            </ul>
+            
+            
+            <p className="font-medium text-red-400 text-sm mb-2">Limitations</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Can become tick-box exercise</li>
+            <li>May miss unlisted hazards</li>
+            <li>Generic lists miss site-specific issues</li>
+            <li>Must be kept current</li>
+            </ul>
+            
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Observation Techniques</p>
+            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li><strong>Behavioural observation</strong> — Description: Watch work as normally performed. Best For: Identifying unsafe acts</li>
+            <li><strong>Safety tours</strong> — Description: Management walkabouts. Best For: General awareness, engagement</li>
+            <li><strong>Safety sampling</strong> — Description: Check specific items randomly. Best For: PPE compliance, housekeeping</li>
+            <li><strong>Task observation</strong> — Description: Watch complete task performance. Best For: Validating JSAs, training needs</li>
+            </ul>
+            
+            
+
+            
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Building Services Hazard Categories
+            </p>
+            
+            <CommonMistake
+            title="Electrical Hazards"
+            whatHappens={<><ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Electric shock (direct/indirect contact)</li>
+            <li>Arc flash and arc blast</li>
+            <li>Burns from overheated equipment</li>
+            <li>Fire from electrical faults</li>
+            <li>Explosion in hazardous areas</li>
+            </ul></>}
+            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
+            />
+            <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+            <p className="font-medium text-blue-400 mb-2">Mechanical Hazards</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Moving parts (fans, pumps, belts)</li>
+            <li>Pressure systems (compressors, vessels)</li>
+            <li>Lifting equipment failure</li>
+            <li>Falling objects</li>
+            <li>Sharp edges and projections</li>
+            </ul>
+            </div>
+            <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+            <p className="font-medium text-green-400 mb-2">Environmental Hazards</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Working at height</li>
+            <li>Confined spaces</li>
+            <li>Asbestos (in older buildings)</li>
+            <li>Extreme temperatures</li>
+            <li>Noise exposure</li>
+            <li>Poor lighting</li>
+            </ul>
+            </div>
+            <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
+            <p className="font-medium text-purple-400 mb-2">Ergonomic Hazards</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Manual handling (cables, equipment)</li>
+            <li>Repetitive movements</li>
+            <li>Awkward postures</li>
+            <li>Prolonged standing/kneeling</li>
+            <li>Vibrating tools (HAVs)</li>
+            </ul>
+            </div>
+            
+            
+
+            <p className="text-sm text-elec-yellow/70">
+            <strong>Comprehensive approach:</strong> Check all four hazard categories for every
+            task - electrical work involves more than just electrical hazards.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Practical Guidance">
+            <div>
+            <p><strong>Key Principles for Hazard Identification</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Be systematic</strong> - use checklists, categories, and structured
+            methods
+            </li>
+            <li>
+            <strong>Involve workers</strong> - they know the real hazards from daily
+            experience
+            </li>
+            <li>
+            <strong>Look at actual work</strong> - not just procedures and policies
+            </li>
+            <li>
+            <strong>Consider variations</strong> - what happens when things aren't normal?
+            </li>
+            <li>
+            <strong>Document and act</strong> - identification without action is pointless
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Legal Requirements</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Management of Health and Safety at Work Regulations 1999 - requires risk
-                  assessment
-                </li>
-                <li className="pl-1">RIDDOR 2013 - requires reporting of specified incidents</li>
-                <li className="pl-1">HASAWA 1974 - general duty to identify and control hazards</li>
-                <li className="pl-1">
-                  CDM Regulations 2015 - specific requirements for construction
-                </li>
-              </ul>
+            <p><strong>Legal Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            Management of Health and Safety at Work Regulations 1999 - requires risk
+            assessment
+            </li>
+            <li>RIDDOR 2013 - requires reporting of specified incidents</li>
+            <li>HASAWA 1974 - general duty to identify and control hazards</li>
+            <li>
+            CDM Regulations 2015 - specific requirements for construction
+            </li>
+            </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Generic assessments</strong> - copying without site-specific consideration
-                </li>
-                <li className="pl-1">
-                  <strong>Desk-based only</strong> - not physically inspecting the work area
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring near misses</strong> - missing valuable leading indicators
-                </li>
-                <li className="pl-1">
-                  <strong>One-time exercise</strong> - not reviewing when conditions change
-                </li>
-                <li className="pl-1">
-                  <strong>Worker exclusion</strong> - not involving those who do the work
-                </li>
-              </ul>
+            <p><strong>Common Mistakes to Avoid</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+            <strong>Generic assessments</strong> - copying without site-specific consideration
+            </li>
+            <li>
+            <strong>Desk-based only</strong> - not physically inspecting the work area
+            </li>
+            <li>
+            <strong>Ignoring near misses</strong> - missing valuable leading indicators
+            </li>
+            <li>
+            <strong>One-time exercise</strong> - not reviewing when conditions change
+            </li>
+            <li>
+            <strong>Worker exclusion</strong> - not involving those who do the work
+            </li>
+            </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="A pre-design HAZOP for a new lithium battery storage system"
+            situation={
+              <>
+                You are the building services HNC engineer brought in to support a 250 kWh
+                lithium-iron-phosphate battery storage installation in a basement plant room of
+                an office. The novel chemistry, the location and the integration with rooftop PV
+                make a generic checklist inadequate.
+              </>
+            }
+            whatToDo={
+              <>
+                Run a HAZOP with the M&amp;E designer, the BMS specialist, the fire engineer and
+                the FM team. Take each &ldquo;node&rdquo; (battery cabinet, BMS, inverter,
+                ventilation, fire suppression, isolation) and apply the guidewords (no, more,
+                less, reverse, other than) to discover hazards. Record findings in a hazard
+                register cross-referenced to BS EN IEC 62619, BS 9991, DSEAR and BS 7671 Section
+                722. Feed the residual risks into the CDM pre-construction information.
+              </>
+            }
+            whyItMatters={
+              <>
+                Lithium battery thermal-runaway events have killed in confined plant rooms.
+                Generic risk assessments routinely miss the propagation pathway. A HAZOP forces
+                the engineer to ask the questions the checklist never anticipated.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Hazard Identification Methods</p>
-                <ul className="space-y-0.5">
-                  <li>Workplace inspections - systematic area checks</li>
-                  <li>Task analysis - breaking down work steps</li>
-                  <li>JSA/JHA - job-specific hazard identification</li>
-                  <li>Incident data analysis - learning from events</li>
-                  <li>Checklists - consistent coverage tool</li>
-                  <li>Behavioural observation - watching actual work</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Building Services Hazard Categories</p>
-                <ul className="space-y-0.5">
-                  <li>Electrical - shock, arc flash, burns, fire</li>
-                  <li>Mechanical - moving parts, pressure, lifting</li>
-                  <li>Environmental - height, confined space, asbestos</li>
-                  <li>Ergonomic - manual handling, posture, vibration</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Hazard identification is the first step of MHSWR Reg 3 — risk assessment cannot start until hazards are surfaced.',
+              'Match technique to work: checklist for routine, walk-through for existing premises, task analysis for procedures, HAZOP for novel/complex design, FMEA for hardware/components.',
+              'Use the eight-category mental model (physical, chemical, biological, ergonomic, psychosocial, electrical, environmental, organisational) to avoid blind spots.',
+              'Multi-discipline workshops surface hazards single-discipline reviews miss — invite design, install, commissioning, FM and end-user.',
+              'Consult workers under HSWA s.2(6) and the Safety Reps Regulations 1977 / HSCER 1996 — records of consultation matter as much as the outcomes.',
+              'Distinguish hazard (the source of harm) from risk (likelihood + severity) — Section 2.2 picks up the risk evaluation step.',
+              'Re-identify when anything material changes — new equipment, new task, new layout, new operator, new substance.',
+              'Hazard register is the live document — it feeds the risk assessment, the method statement and the CDM file.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module1-section2-2">
-              Next: Risk Assessment
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('../h-n-c-module1-section2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Section 2
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('../h-n-c-module1-section2-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Risk Assessment
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

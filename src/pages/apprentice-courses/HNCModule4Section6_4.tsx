@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 6 · Subsection 4 — Design Calculations
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Calculation report structure (cover sheet, design basis, assumptions, results), checking
+ *   levels (self / peer / senior / independent), BS 7671 mandatory calculations (Iz, Vd, Ipf,
+ *   Zs, k²S²) and design review / approval authority by complexity tier.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Design Calculations - HNC Module 4 Section 6.4';
@@ -226,632 +245,437 @@ const faqs = [
 ];
 
 const HNCModule4Section6_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.6.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Design Calculations
-          </h1>
-          <p className="text-white">
-            Documenting, verifying and approving engineering calculations for building services
-            design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 6 · Subsection 4"
+            title="Design Calculations"
+            description="Documenting, verifying and approving engineering calculations for building services design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Demonstrate compliance and enable verification
-              </li>
-              <li className="pl-1">
-                <strong>Content:</strong> Input data, assumptions, method, results
-              </li>
-              <li className="pl-1">
-                <strong>Process:</strong> Prepare, check, verify, approve
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Clear audit trail throughout
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Cable sizing:</strong> Current capacity, voltage drop
-              </li>
-              <li className="pl-1">
-                <strong>Protection:</strong> Fault current, earth loop impedance
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> Lux levels, emergency coverage
-              </li>
-              <li className="pl-1">
-                <strong>Load assessment:</strong> Diversity, maximum demand
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Structure calculation reports for clarity and traceability',
               'Document assumptions and input data sources',
               'Apply verification and checking procedures',
               'Understand design review and approval processes',
               'Manage calculation revisions and change control',
               'Prepare calculations for project handover',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <TLDR
+            points={[
+              'Design calculations cover load, voltage drop, fault level (PSCC, PEFC), earth fault loop impedance (Zs), disconnection time, RCD coordination and discrimination/selectivity.',
+              'Cite sources: BS 7671 tables (Table 4D, Table 41.x, Table 41.5, Appendix 4), DNO PFC letter, manufacturer time-current curves, ambient/grouping/insulation factors.',
+              'Reg 411.5.3 gives the RCD fault-protection equation: Ra × IΔn ≤ 50 V — the figure your TT installation Zs / Ra calculation must satisfy.',
+              'Sign-off pattern: prepared / checked / approved with three engineers, three dates, three signatures. The legal record at handover.',
+              'Software (Amtech, Trimble, ETAP) accelerates the work — but a hand sense-check at the end of every calc set is what catches the input error that ruins a design.',
+            ]}
+          />
 
-        {/* Section 1: Calculation Report Structure */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Calculation Report Structure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 411.5.3"
+            clause="Where an RCD is used for fault protection, the following conditions shall be fulfilled: (a) the disconnection time shall be that required by Regulation 411.3.2.2 or 411.3.2.4; and (b) Ra × IΔn ≤ 50 V where: Ra is the sum of the resistances of the earth electrode and the protective conductor connecting it to the exposed-conductive-parts (in ohms); IΔn is the rated residual operating current of the RCD. The requirements of this regulation are met if the earth fault loop impedance of the circuit protected by the RCD meets the requirements of Table 41.5."
+            meaning={
+              <>
+                Reg 411.5.3 is the headline equation for any TT or RCD-protected design
+                calculation: Ra × IΔn ≤ 50 V. With a 30 mA RCD, that gives Ra ≤ 1,667 Ω — easily
+                achieved on most TT systems. With a 100 mA RCD, Ra ≤ 500 Ω. The HNC designer
+                shows this calc explicitly in the design pack with the assumed Ra (electrode
+                resistance + CPC), the RCD IΔn, and the verification against Table 41.5 Zs at
+                <strong> 1×IΔn</strong> (per A4:2026, NOT 5×IΔn as previous editions read).
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 411.5.3."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Calculation Report Structure">
             <p>
               Well-structured calculation reports enable efficient review, provide clear audit
               trails, and support future reference. A consistent format across projects improves
               quality and reduces errors.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Standard calculation report elements:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cover sheet:</strong> Project, reference, revision, signatures
-                </li>
-                <li className="pl-1">
-                  <strong>Contents:</strong> List of calculations included
-                </li>
-                <li className="pl-1">
-                  <strong>Introduction:</strong> Scope and purpose
-                </li>
-                <li className="pl-1">
-                  <strong>Design basis:</strong> Standards, codes, criteria
-                </li>
-                <li className="pl-1">
-                  <strong>Input data:</strong> Parameters and sources
-                </li>
-                <li className="pl-1">
-                  <strong>Assumptions:</strong> Items assumed for calculation
-                </li>
-                <li className="pl-1">
-                  <strong>Calculations:</strong> Detailed working
-                </li>
-                <li className="pl-1">
-                  <strong>Results summary:</strong> Key findings and compliance
-                </li>
-                <li className="pl-1">
-                  <strong>References:</strong> Standards, drawings, data sources
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cover Sheet Information
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Field</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Project</td>
-                      <td className="border border-white/10 px-3 py-2">Name and number</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Calc reference</td>
-                      <td className="border border-white/10 px-3 py-2">E.g., 12345-E-CALC-001</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Revision</td>
-                      <td className="border border-white/10 px-3 py-2">Rev A, B, C... with date</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Prepared by</td>
-                      <td className="border border-white/10 px-3 py-2">Name, signature, date</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Checked by</td>
-                      <td className="border border-white/10 px-3 py-2">Name, signature, date</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Approved by</td>
-                      <td className="border border-white/10 px-3 py-2">Name, signature, date</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Status</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Preliminary/For Construction/As-built
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Standard calculation report elements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cover sheet:</strong> Project, reference, revision, signatures
+              </li>
+              <li>
+                <strong>Contents:</strong> List of calculations included
+              </li>
+              <li>
+                <strong>Introduction:</strong> Scope and purpose
+              </li>
+              <li>
+                <strong>Design basis:</strong> Standards, codes, criteria
+              </li>
+              <li>
+                <strong>Input data:</strong> Parameters and sources
+              </li>
+              <li>
+                <strong>Assumptions:</strong> Items assumed for calculation
+              </li>
+              <li>
+                <strong>Calculations:</strong> Detailed working
+              </li>
+              <li>
+                <strong>Results summary:</strong> Key findings and compliance
+              </li>
+              <li>
+                <strong>References:</strong> Standards, drawings, data sources
+              </li>
+            </ul>
+            <p>
+              <strong>Cover sheet information (field / content):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Project — name and number</li>
+              <li>Calc reference — e.g., 12345-E-CALC-001</li>
+              <li>Revision — Rev A, B, C... with date</li>
+              <li>Prepared by — name, signature, date</li>
+              <li>Checked by — name, signature, date</li>
+              <li>Approved by — name, signature, date</li>
+              <li>Status — Preliminary / For Construction / As-built</li>
+            </ul>
+            <p>
               <strong>Key point:</strong> Every calculation page should be identifiable with
               project, reference and revision even when separated from the cover.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Verification and Checking */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Verification and Checking Procedures
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Verification and Checking Procedures">
             <p>
               Verification ensures calculations are technically sound and appropriate for purpose. A
               systematic checking process catches errors before they reach site, preventing costly
               remediation and potential safety issues.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Checking levels:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Self-check:</strong> Designer reviews own work before submission
-                </li>
-                <li className="pl-1">
-                  <strong>Peer check:</strong> Colleague at similar level reviews
-                </li>
-                <li className="pl-1">
-                  <strong>Senior review:</strong> Experienced engineer verifies approach
-                </li>
-                <li className="pl-1">
-                  <strong>Independent check:</strong> External party for critical items
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Arithmetic Check</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Numbers correct from input data</li>
-                  <li className="pl-1">Formulas applied correctly</li>
-                  <li className="pl-1">Units consistent throughout</li>
-                  <li className="pl-1">Results reasonable (sense check)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Technical Verification
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Appropriate method selected</li>
-                  <li className="pl-1">Correct standards applied</li>
-                  <li className="pl-1">Assumptions valid and documented</li>
-                  <li className="pl-1">Conclusions supported by results</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Checking Scope by Complexity
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-2 text-left">Complexity</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Example</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Check Level</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Simple</td>
-                      <td className="border border-white/10 px-2 py-2">Final circuit sizing</td>
-                      <td className="border border-white/10 px-2 py-2">Self + peer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Standard</td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Sub-main sizing, lighting
-                      </td>
-                      <td className="border border-white/10 px-2 py-2">Peer + senior review</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Complex</td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Fault calculations, discrimination
-                      </td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Full technical verification
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Critical</td>
-                      <td className="border border-white/10 px-2 py-2">
-                        HV design, specialist systems
-                      </td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Independent external check
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> The checker should be independent from the original
-              calculation - not simply repeating the same method.
+            <p>
+              <strong>Checking levels:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Self-check:</strong> Designer reviews own work before submission
+              </li>
+              <li>
+                <strong>Peer check:</strong> Colleague at similar level reviews
+              </li>
+              <li>
+                <strong>Senior review:</strong> Experienced engineer verifies approach
+              </li>
+              <li>
+                <strong>Independent check:</strong> External party for critical items
+              </li>
+            </ul>
+            <p>
+              <strong>Arithmetic check:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Numbers correct from input data</li>
+              <li>Formulas applied correctly</li>
+              <li>Units consistent throughout</li>
+              <li>Results reasonable (sense check)</li>
+            </ul>
+            <p>
+              <strong>Technical verification:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Appropriate method selected</li>
+              <li>Correct standards applied</li>
+              <li>Assumptions valid and documented</li>
+              <li>Conclusions supported by results</li>
+            </ul>
+            <p>
+              <strong>Checking scope by complexity (complexity / example / check level):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simple — final circuit sizing — self + peer</li>
+              <li>Standard — sub-main sizing, lighting — peer + senior review</li>
+              <li>Complex — fault calculations, discrimination — full technical verification</li>
+              <li>Critical — HV design, specialist systems — independent external check</li>
+            </ul>
+            <p>
+              <strong>Best practice:</strong> The checker should be independent from the original
+              calculation — not simply repeating the same method.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Design Review Process */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Design Review and Approval
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Design Review and Approval">
             <p>
               Design reviews provide structured opportunities to assess calculations and designs
               against requirements. The approval process confirms the design is fit for purpose
               before information is issued for construction.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Design review stages:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Concept review:</strong> Validate approach and methodology
-                </li>
-                <li className="pl-1">
-                  <strong>Detailed design review:</strong> Check calculations against requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Pre-issue review:</strong> Final check before construction issue
-                </li>
-                <li className="pl-1">
-                  <strong>As-built review:</strong> Verify changes during construction
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Review Meeting Agenda</p>
-              <div className="bg-white/5 p-4 rounded text-sm">
-                <ul className="text-white space-y-1 list-disc list-outside ml-5">
-                  <li>Confirm design basis and requirements</li>
-                  <li>Review calculations against specification</li>
-                  <li>Check coordination with other disciplines</li>
-                  <li>Identify outstanding items and actions</li>
-                  <li>Agree approval status and next steps</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Approval Authority Matrix
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-2 text-left">Design Type</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">
-                        Typical Approver
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Standard circuits</td>
-                      <td className="border border-white/10 px-2 py-2">Project Engineer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Distribution systems</td>
-                      <td className="border border-white/10 px-2 py-2">Senior Engineer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">HV/specialist systems</td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Principal Engineer/Director
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Safety-critical</td>
-                      <td className="border border-white/10 px-2 py-2">Independent Certifier</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> Approvers take responsibility for the design - they must
+            <p>
+              <strong>Design review stages:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Concept review:</strong> Validate approach and methodology
+              </li>
+              <li>
+                <strong>Detailed design review:</strong> Check calculations against requirements
+              </li>
+              <li>
+                <strong>Pre-issue review:</strong> Final check before construction issue
+              </li>
+              <li>
+                <strong>As-built review:</strong> Verify changes during construction
+              </li>
+            </ul>
+            <p>
+              <strong>Review meeting agenda:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Confirm design basis and requirements</li>
+              <li>Review calculations against specification</li>
+              <li>Check coordination with other disciplines</li>
+              <li>Identify outstanding items and actions</li>
+              <li>Agree approval status and next steps</li>
+            </ul>
+            <p>
+              <strong>Approval authority matrix (design type / typical approver):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Standard circuits — Project Engineer</li>
+              <li>Distribution systems — Senior Engineer</li>
+              <li>HV/specialist systems — Principal Engineer/Director</li>
+              <li>Safety-critical — Independent Certifier</li>
+            </ul>
+            <p>
+              <strong>Important:</strong> Approvers take responsibility for the design — they must
               have appropriate competence and authority.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 4: Calculation Types and Standards */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Key Calculation Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Key Calculation Types">
             <p>
               Building services electrical design requires specific calculation types to demonstrate
               compliance with BS 7671 and other standards. Each calculation type has defined
               methodology and acceptance criteria.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Required Calculations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-2 text-left">Calculation</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-2 py-2 text-left">Key Criteria</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Cable sizing (Iz)</td>
-                      <td className="border border-white/10 px-2 py-2">Current capacity</td>
-                      <td className="border border-white/10 px-2 py-2">Iz ≥ In ≥ Ib</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Voltage drop</td>
-                      <td className="border border-white/10 px-2 py-2">Supply quality</td>
-                      <td className="border border-white/10 px-2 py-2">≤3% lighting, ≤5% power</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Fault current (Ipf)</td>
-                      <td className="border border-white/10 px-2 py-2">Device breaking capacity</td>
-                      <td className="border border-white/10 px-2 py-2">Device Icn ≥ Ipf</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Earth fault loop (Zs)</td>
-                      <td className="border border-white/10 px-2 py-2">ADS operation</td>
-                      <td className="border border-white/10 px-2 py-2">
-                        Zs ≤ Zs max (Table 41.2-41.4)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">Adiabatic (k²S²)</td>
-                      <td className="border border-white/10 px-2 py-2">Conductor thermal limit</td>
-                      <td className="border border-white/10 px-2 py-2">k²S² ≥ I²t</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Lighting Calculations
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Illuminance (lux levels)</li>
-                  <li className="pl-1">Uniformity ratio</li>
-                  <li className="pl-1">Glare rating (UGR)</li>
-                  <li className="pl-1">Emergency lighting coverage</li>
-                  <li className="pl-1">Energy efficiency (LENI)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Load Assessment</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Connected load summation</li>
-                  <li className="pl-1">Diversity factors applied</li>
-                  <li className="pl-1">Maximum demand calculation</li>
-                  <li className="pl-1">Power factor consideration</li>
-                  <li className="pl-1">Future growth allowance</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>BS 7671 required calculations (calculation / purpose / key criteria):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cable sizing (Iz) — current capacity — Iz ≥ In ≥ Ib</li>
+              <li>Voltage drop — supply quality — ≤3% lighting, ≤5% power</li>
+              <li>Fault current (Ipf) — device breaking capacity — device Icn ≥ Ipf</li>
+              <li>Earth fault loop (Zs) — ADS operation — Zs ≤ Zs max (Table 41.2-41.4)</li>
+              <li>Adiabatic (k²S²) — conductor thermal limit — k²S² ≥ I²t</li>
+            </ul>
+            <p>
+              <strong>Lighting calculations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Illuminance (lux levels)</li>
+              <li>Uniformity ratio</li>
+              <li>Glare rating (UGR)</li>
+              <li>Emergency lighting coverage</li>
+              <li>Energy efficiency (LENI)</li>
+            </ul>
+            <p>
+              <strong>Load assessment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Connected load summation</li>
+              <li>Diversity factors applied</li>
+              <li>Maximum demand calculation</li>
+              <li>Power factor consideration</li>
+              <li>Future growth allowance</li>
+            </ul>
+            <p>
               <strong>Documentation:</strong> All calculations must clearly state the acceptance
               criteria and demonstrate compliance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Documenting assumptions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>State assumptions clearly at the start of calculations</li>
+              <li>Reference sources for assumed values</li>
+              <li>Identify critical assumptions affecting design decisions</li>
+              <li>Flag assumptions requiring site verification</li>
+            </ul>
+            <p>
+              <strong>Software calculation records:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Record software name and version</li>
+              <li>Include all input data in outputs</li>
+              <li>Print/export complete calculation set</li>
+              <li>Verify software is validated for purpose</li>
+            </ul>
+            <p>
+              <strong>Calculation process — quick reference:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Define scope and basis</li>
+              <li>2. Document assumptions</li>
+              <li>3. Perform calculations</li>
+              <li>4. Check and verify</li>
+              <li>5. Review and approve</li>
+            </ul>
+            <p>
+              <strong>Key standards:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 7671</strong> — wiring regulations
+              </li>
+              <li>
+                <strong>BS EN 12464-1</strong> — lighting
+              </li>
+              <li>
+                <strong>BS 5266</strong> — emergency lighting
+              </li>
+              <li>
+                <strong>BS EN 61439</strong> — switchgear
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Documenting Assumptions
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">State assumptions clearly at the start of calculations</li>
-                <li className="pl-1">Reference sources for assumed values</li>
-                <li className="pl-1">Identify critical assumptions affecting design decisions</li>
-                <li className="pl-1">Flag assumptions requiring site verification</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Missing assumptions</strong> — leaving reviewers guessing the basis
+                </li>
+                <li>
+                  <strong>Unsigned calculations</strong> — no accountability or audit trail
+                </li>
+                <li>
+                  <strong>Outdated inputs</strong> — using superseded load data or routes
+                </li>
+                <li>
+                  <strong>Over-reliance on software</strong> — no manual sense-checking
+                </li>
               </ul>
-            </div>
+            }
+            doInstead="State all assumptions and their sources at the front of the calculation, sign and date prepared / checked / approved boxes, refresh input data when loads or routes change, and add a manual sense-check (order-of-magnitude) for every software output."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Software Calculation Records
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Record software name and version</li>
-                <li className="pl-1">Include all input data in outputs</li>
-                <li className="pl-1">Print/export complete calculation set</li>
-                <li className="pl-1">Verify software is validated for purpose</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Missing assumptions</strong> - Leaving reviewers guessing the basis
-                </li>
-                <li className="pl-1">
-                  <strong>Unsigned calculations</strong> - No accountability or audit trail
-                </li>
-                <li className="pl-1">
-                  <strong>Outdated inputs</strong> - Using superseded load data or routes
-                </li>
-                <li className="pl-1">
-                  <strong>Over-reliance on software</strong> - No manual sense-checking
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Sub-main and final-circuit calc pack — the design review meeting"
+            situation={
+              <>
+                You’re presenting the design calculation pack at the Stage 4 internal review for a
+                light-industrial unit. Sub-main is 70 mm² SWA copper, 60 m route from MSB to a TT
+                outbuilding fed by a separate earth electrode. 100 A 4-pole MCCB with a 100 mA
+                S-type RCD upstream of the outbuilding DB. Reviewer asks for the Reg 411.5.3
+                evidence.
+              </>
+            }
+            whatToDo={
+              <>
+                Open the calc pack. Show the inputs: DNO PFC letter (16 kA at the cut-out),
+                ambient 30 °C, grouping factor 1.0, insulation 90 °C XLPE. Walk the reviewer
+                through: (1) load + diversity → 78 A design current; (2) Table 4D4A current
+                rating reference for 70 mm² SWA → 165 A method E single-circuit; (3) Vdrop check
+                — 60 m × 78 A × mV/A/m from Table 4Y → &lt; 5 % at the DB; (4) Zs at the DB,
+                including the line and CPC contributions. (5) For the TT outbuilding: Ra of the
+                local electrode 80 Ω (rod + CPC), 100 mA RCD: Ra × IΔn = 80 × 0.1 = 8 V ≤ 50 V
+                → compliant. Then verify Zs at 1× IΔn against Table 41.5 (per A4:2026 — NOT
+                5× IΔn). Document all four checks, the source of each input, and the prepared/
+                checked/approved signatures.
+              </>
+            }
+            whyItMatters={
+              <>
+                A reviewer who can’t trace your inputs and verify the equation will reject the
+                calc — and rightly so. The Reg 411.5.3 evidence is the load-bearing line of any
+                TT design calculation; everything else is supporting cast.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Calculation report structure: scope, inputs (with sources), assumptions, method, results, conclusions, signatures.',
+              'Cite BS 7671 tables explicitly — Table 4D for cable rating, Table 41.x for Zs, Table 41.5 for RCD-protected Zs.',
+              'A4:2026 currency: B32 max Zs = 1.37 Ω at 230 V (Table 41.3); RCD verification at 1× IΔn (NOT 5× IΔn).',
+              'Reg 411.5.3 gives the TT/RCD design equation: Ra × IΔn ≤ 50 V — explicit on every TT calc.',
+              'Reg 421.1.7 (A4:2026) recommends AFDDs; document where you’ve applied or omitted them and why.',
+              'Sign-off: prepared / checked / approved, three engineers, three dates, three signatures.',
+              'Software (Amtech, Trimble, ETAP) for speed; hand sense-check for catching the input error.',
+              'Revise calculations alongside the drawings they support — never let calc pack and drawings drift apart.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Calculation Process</p>
-                <ul className="space-y-0.5">
-                  <li>1. Define scope and basis</li>
-                  <li>2. Document assumptions</li>
-                  <li>3. Perform calculations</li>
-                  <li>4. Check and verify</li>
-                  <li>5. Review and approve</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671 - Wiring regulations</li>
-                  <li>BS EN 12464-1 - Lighting</li>
-                  <li>BS 5266 - Emergency lighting</li>
-                  <li>BS EN 61439 - Switchgear</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section6-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section6-5">
-              Next: CDM Design Risk Register
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Schedules and data sheets
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                CDM design risk register
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

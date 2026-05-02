@@ -102,7 +102,7 @@ const quizQuestions = [
     question: "What's the maximum Zs for a 32 A B-curve RCBO protecting a domestic ring final on 230 V?",
     options: [
       "5 Ω.",
-      "BS 7671 Table 41.3 — for B-curve circuit breaker, fault disconnection in 0.4 s at U₀ = 230 V: 5×In magnetic threshold = 160 A; required Zs = U₀ / 160 = 230 / 160 = 1.4 Ω. Actual table values: B16 = 2.87 Ω (0.4 s), B32 = 1.37 Ω (0.4 s). For RCD-protected circuits the RCD provides 30 mA earth-fault clearance independent of Zs (the RCD operates on residual current, not loop impedance), but the Zs value is still relevant for short-circuit clearance via the magnetic element of the RCBO.",
+      "BS 7671:2018+A4:2026 Table 41.3 — for B-curve circuit breaker, fault disconnection in 0.4 s at U₀ = 230 V: 5×In magnetic threshold = 160 A; required Zs = (U₀ × Cmin) / Ia = (230 × 0.95) / 160 = 1.37 Ω. Actual A4:2026 table values: B16 = 2.73 Ω (0.4 s), B32 = 1.37 Ω (0.4 s). For RCD-protected circuits the RCD provides 30 mA earth-fault clearance independent of Zs (the RCD operates on residual current, not loop impedance), but the Zs value is still relevant for short-circuit clearance via the magnetic element of the RCBO.",
       "10 Ω.",
       "Doesn't matter.",
     ],
@@ -432,7 +432,7 @@ export default function Sub3() {
             onSite="Standard process: read Zs at the furthest accessory on the circuit using Megger MFT1741+ in loop mode (Hi-Z if RCD-protected). Compare to Table 41.3 / 41.4 limit for the protective device. Adjust for ambient temperature: BS 7671 specifies measured Zs at conductor working temperature; field measurements at lower ambient need correction (standard 0.8 factor for 20°C ambient)."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Zs limits — common devices</strong> — 6 A B-curve MCB: 7.66 Ω; 16 A B: 2.87 Ω; 32 A B: 1.37 Ω. C-curve approx half of B values. RCBO: same overcurrent values, plus 30 mA RCD function.</li>
+              <li><strong>Zs limits — common devices (BS 7671:2018+A4:2026 Table 41.3)</strong> — 6 A B-curve MCB: 7.28 Ω; 16 A B: 2.73 Ω; 32 A B: 1.37 Ω. C-curve approx half of B values. RCBO: same overcurrent values, plus 30 mA RCD function.</li>
               <li><strong>0.4 s vs 5 s disconnection</strong> — final circuits ≤32 A: 0.4 s. Distribution / fixed equipment: 5 s. Lower disconnection time = lower Zs limit = tighter requirement.</li>
               <li><strong>Temperature correction</strong> — standard 0.8 factor (multiply measured Zs by 1.25) to correct field measurement to working temperature.</li>
               <li><strong>Zs above limit</strong> — protective device won't operate within required time. Code C1 on EICR (immediate danger). Investigate and rectify.</li>

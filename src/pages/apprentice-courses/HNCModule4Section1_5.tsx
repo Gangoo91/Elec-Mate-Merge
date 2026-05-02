@@ -1,8 +1,27 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 1 · Subsection 5 — Future Load Allowances
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   Capacity planning across the 30-50 year asset life: spare ways, riser headroom,
+ *   EV charging (Part S), heat-pump electrification, BESS / V2B / on-site generation,
+ *   and how to balance future-proofing against capital cost.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Future Load Allowances - HNC Module 4 Section 1.5';
@@ -222,842 +241,540 @@ const faqs = [
 ];
 
 const HNCModule4Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section1')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Future Load Allowances
-          </h1>
-          <p className="text-white">
-            Planning for growth, technology changes, and evolving building requirements in
-            electrical system design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 1 · Subsection 5"
+            title="Future Load Allowances"
+            description="Planning for growth, technology changes, and evolving building requirements in electrical system design."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Growth allowance:</strong> Typically 20-30% spare capacity
-              </li>
-              <li className="pl-1">
-                <strong>Spare ways:</strong> 20-30% in distribution boards
-              </li>
-              <li className="pl-1">
-                <strong>Containment:</strong> 30% spare capacity for cables
-              </li>
-              <li className="pl-1">
-                <strong>Flexibility:</strong> Design for adaptation, not just current needs
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>EV charging:</strong> Major growth driver
-              </li>
-              <li className="pl-1">
-                <strong>Heat pumps:</strong> Electrification of heating
-              </li>
-              <li className="pl-1">
-                <strong>IT density:</strong> Increasing desk-level loads
-              </li>
-              <li className="pl-1">
-                <strong>BESS:</strong> Battery storage provision
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Building electrical systems live 30–50 years — design for the loads of year 30, not year 1.',
+              'Standard growth headroom: 20–25% on supply capacity, 25–30% spare ways in DBs, 30–40% spare containment fill.',
+              'EV charging is the dominant change driver — domestic 7&nbsp;kW chargers, commercial 7–22&nbsp;kW per bay, rapid 50&nbsp;kW+ DC at strategic sites.',
+              'Building electrification (heat pumps replacing gas, induction kitchens, electric DHW) shifts dwellings from 2–3&nbsp;kVA gas-heated to 4–6&nbsp;kVA all-electric.',
+              'BS 7671 Reg 132.16 makes additions and alterations a design assessment — leaving spare capacity now avoids ripping out switchgear later.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Reg 132.16 (Additions and alterations to an installation)"
+            clause="No addition or alteration, temporary or permanent, shall be made to an existing installation, unless it has been ascertained that the rating and the condition of any existing equipment, including that of the distributor, will be adequate for the altered circumstances. Furthermore, the earthing and bonding arrangements, if necessary for the protective measure applied for the safety of the addition or alteration, shall be adequate."
+            meaning={
+              <>
+                Reg 132.16 is the regulatory hook for future-proofing. Every addition or
+                alteration triggers a re-assessment of supply capacity, switchgear ratings,
+                earthing and bonding. Designing in spare DB ways, oversized containment and
+                supply headroom now is what stops a future heat-pump or EV charger upgrade
+                becoming a full main-board replacement. The cost of designing in 25% headroom
+                upfront is trivial against rip-out and replace later.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 132.16; CIBSE TM54 (operational performance gap)."
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Apply appropriate growth allowances to electrical system design',
               'Plan spare capacity in distribution boards and containment',
               'Design for EV charging infrastructure requirements',
               'Account for building electrification trends',
               'Balance future-proofing against cost constraints',
               'Identify technology changes affecting electrical design',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Capacity Planning Principles */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Capacity Planning Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Capacity Planning Principles">
             <p>
               Building electrical systems typically have a 30-50 year lifespan, during which
               requirements will inevitably change. Effective capacity planning balances current
               needs against future flexibility without excessive over-engineering.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Growth Allowances by Building Element
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Allowance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rationale</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Main supply capacity</td>
-                      <td className="border border-white/10 px-3 py-2">20-30%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DNO upgrades expensive and slow
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformer rating</td>
-                      <td className="border border-white/10 px-3 py-2">20-25%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Replacement requires outage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Main switchboard</td>
-                      <td className="border border-white/10 px-3 py-2">25-30% spare ways</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extensions possible but costly
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution boards</td>
-                      <td className="border border-white/10 px-3 py-2">20-30% spare ways</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Future circuits, circuit splits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable containment</td>
-                      <td className="border border-white/10 px-3 py-2">30-40%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Additional cables easily added
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Riser capacity</td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Structural modifications difficult
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Busbar trunking</td>
-                      <td className="border border-white/10 px-3 py-2">20-30%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tap-off flexibility valuable
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Cost-Benefit Equation
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">
-                    Marginal cost of extra capacity:
-                  </p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Larger cable: +10-20%</li>
-                    <li>More DB ways: +5-15%</li>
-                    <li>Larger containment: +15-25%</li>
-                    <li>Higher supply capacity: +10-30%</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Retrofit cost multiple:</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Replace cables: 3-5× initial</li>
-                    <li>New DB: 2-3× initial</li>
-                    <li>New containment: 5-10× initial</li>
-                    <li>Supply upgrade: 3-10× initial</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Typical growth allowances by building element:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Main supply capacity — 20-30%:</strong> DNO upgrades expensive and slow
+              </li>
+              <li>
+                <strong>Transformer rating — 20-25%:</strong> replacement requires outage
+              </li>
+              <li>
+                <strong>Main switchboard — 25-30% spare ways:</strong> extensions possible but
+                costly
+              </li>
+              <li>
+                <strong>Distribution boards — 20-30% spare ways:</strong> future circuits, circuit
+                splits
+              </li>
+              <li>
+                <strong>Cable containment — 30-40%:</strong> additional cables easily added
+              </li>
+              <li>
+                <strong>Riser capacity — 30-50%:</strong> structural modifications difficult
+              </li>
+              <li>
+                <strong>Busbar trunking — 20-30%:</strong> tap-off flexibility valuable
+              </li>
+            </ul>
+            <p>
+              <strong>The cost-benefit equation — marginal cost of extra capacity:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Larger cable: +10-20%</li>
+              <li>More DB ways: +5-15%</li>
+              <li>Larger containment: +15-25%</li>
+              <li>Higher supply capacity: +10-30%</li>
+            </ul>
+            <p>
+              <strong>Retrofit cost multiple:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Replace cables: 3-5× initial</li>
+              <li>New DB: 2-3× initial</li>
+              <li>New containment: 5-10× initial</li>
+              <li>Supply upgrade: 3-10× initial</li>
+            </ul>
+            <p>
               <strong>Design philosophy:</strong> Infrastructure that is difficult to upgrade later
               warrants higher allowances; elements easily added can be more tightly specified.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Spare Ways and Distribution */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Spare Ways and Distribution Planning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Spare Ways and Distribution Planning">
             <p>
               Distribution board sizing must account for both current circuits and future additions.
               Undersized boards lead to expensive replacements or inappropriate circuit sharing.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Distribution Board Sizing Guidance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Minimum Spare</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Considerations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Domestic consumer unit</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 ways</td>
-                      <td className="border border-white/10 px-3 py-2">EV, heat pump, additions</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small commercial DB</td>
-                      <td className="border border-white/10 px-3 py-2">20-25%</td>
-                      <td className="border border-white/10 px-3 py-2">Tenant changes, circuits</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office floor DB</td>
-                      <td className="border border-white/10 px-3 py-2">25-30%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flexible fit-out expected
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial DB</td>
-                      <td className="border border-white/10 px-3 py-2">20-30%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Process changes, machinery
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Main switchboard</td>
-                      <td className="border border-white/10 px-3 py-2">25-30%</td>
-                      <td className="border border-white/10 px-3 py-2">Major outage to extend</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Spare Provision
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Spare Ways (fitted blanks)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Circuit breaker position available</li>
-                    <li>Busbars rated for future load</li>
-                    <li>Quick addition of new circuits</li>
-                    <li>Cost: Minimal additional</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Space for Extension</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Physical space adjacent to DB</li>
-                    <li>Busbar extension possible</li>
-                    <li>Allows significant expansion</li>
-                    <li>Cost: Planning only</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Future Circuit Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">EV charging points (7-22 kW each)</li>
-                <li className="pl-1">Additional small power circuits for desk density changes</li>
-                <li className="pl-1">Dedicated circuits for high-power equipment</li>
-                <li className="pl-1">Circuit splits to reduce discrimination issues</li>
-                <li className="pl-1">New mechanical equipment (fan coils, pumps)</li>
-                <li className="pl-1">Building automation and control systems</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> Label spare ways with 'SPARE' and record capacity
-              availability in building O&M documentation.
+            <p>
+              <strong>Distribution board sizing guidance:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Domestic consumer unit:</strong> 2-4 spare ways — EV, heat pump, additions
+              </li>
+              <li>
+                <strong>Small commercial DB:</strong> 20-25% spare — tenant changes, circuits
+              </li>
+              <li>
+                <strong>Office floor DB:</strong> 25-30% spare — flexible fit-out expected
+              </li>
+              <li>
+                <strong>Industrial DB:</strong> 20-30% spare — process changes, machinery
+              </li>
+              <li>
+                <strong>Main switchboard:</strong> 25-30% spare — major outage to extend
+              </li>
+            </ul>
+            <p>
+              <strong>Types of spare provision — spare ways (fitted blanks):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Circuit breaker position available</li>
+              <li>Busbars rated for future load</li>
+              <li>Quick addition of new circuits</li>
+              <li>Cost: minimal additional</li>
+            </ul>
+            <p>
+              <strong>Types of spare provision — space for extension:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Physical space adjacent to DB</li>
+              <li>Busbar extension possible</li>
+              <li>Allows significant expansion</li>
+              <li>Cost: planning only</li>
+            </ul>
+            <p>
+              <strong>Common future circuit requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>EV charging points (7-22 kW each)</li>
+              <li>Additional small power circuits for desk density changes</li>
+              <li>Dedicated circuits for high-power equipment</li>
+              <li>Circuit splits to reduce discrimination issues</li>
+              <li>New mechanical equipment (fan coils, pumps)</li>
+              <li>Building automation and control systems</li>
+            </ul>
+            <p>
+              <strong>Practical tip:</strong> Label spare ways with 'SPARE' and record capacity
+              availability in building O&amp;M documentation.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: EV Charging Provision */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            EV Charging Provision
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="EV Charging Provision">
             <p>
               Electric vehicle charging is a major driver of increased electrical demand. Building
               Regulations now require EV infrastructure in new buildings, and existing buildings
               face growing retrofit demand.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Building Regulations Requirements (Part S)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>New residential:</strong> 1 charge point per dwelling with parking
-                </li>
-                <li className="pl-1">
-                  <strong>New non-residential:</strong> 1 charge point per 5 spaces, cable routes
-                  for remainder
-                </li>
-                <li className="pl-1">
-                  <strong>Major renovation:</strong> Similar requirements apply
-                </li>
-                <li className="pl-1">
-                  <strong>Minimum rating:</strong> 7 kW (Mode 3)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EV Charging Infrastructure Levels
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Definition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Investment</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Active (charge point)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full charger installed and operational
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Full cost now</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EV Ready</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full cabling installed, no charger
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">~70% of active cost</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EV Enabled</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable routes and DB capacity only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">~30% of active cost</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Nothing</td>
-                      <td className="border border-white/10 px-3 py-2">No provision</td>
-                      <td className="border border-white/10 px-3 py-2">Retrofit 3-5× cost</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Load Management Strategies
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Unmanaged:</strong> Full power to all chargers simultaneously (7-22 kW
-                  each)
-                </li>
-                <li className="pl-1">
-                  <strong>Static load management:</strong> Fixed reduced power per charger (e.g.,
-                  3.7 kW)
-                </li>
-                <li className="pl-1">
-                  <strong>Dynamic load management:</strong> Intelligent sharing of available
-                  capacity
-                </li>
-                <li className="pl-1">
-                  <strong>Smart charging:</strong> Time-of-use optimisation, grid response
-                  capability
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Capacity Allowance Examples
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Scenario</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Per Space Allowance
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Residential (home)</td>
-                      <td className="border border-white/10 px-3 py-2">7 kW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overnight charging, high diversity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Workplace (smart)</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 kVA diversified</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All-day dwell, load management
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail/destination</td>
-                      <td className="border border-white/10 px-3 py-2">7-22 kW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Short dwell, faster charging needed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fleet depot</td>
-                      <td className="border border-white/10 px-3 py-2">7-22 kW per vehicle</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Managed overnight charging
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Building Regulations requirements (Part S):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>New residential:</strong> 1 charge point per dwelling with parking
+              </li>
+              <li>
+                <strong>New non-residential:</strong> 1 charge point per 5 spaces, cable routes for
+                remainder
+              </li>
+              <li>
+                <strong>Major renovation:</strong> similar requirements apply
+              </li>
+              <li>
+                <strong>Minimum rating:</strong> 7 kW (Mode 3)
+              </li>
+            </ul>
+            <p>
+              <strong>EV charging infrastructure levels:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Active (charge point):</strong> full charger installed and operational —
+                full cost now
+              </li>
+              <li>
+                <strong>EV Ready:</strong> full cabling installed, no charger — ~70% of active cost
+              </li>
+              <li>
+                <strong>EV Enabled:</strong> cable routes and DB capacity only — ~30% of active cost
+              </li>
+              <li>
+                <strong>Nothing:</strong> no provision — retrofit 3-5× cost
+              </li>
+            </ul>
+            <p>
+              <strong>Load management strategies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Unmanaged:</strong> full power to all chargers simultaneously (7-22 kW each)
+              </li>
+              <li>
+                <strong>Static load management:</strong> fixed reduced power per charger (e.g. 3.7
+                kW)
+              </li>
+              <li>
+                <strong>Dynamic load management:</strong> intelligent sharing of available capacity
+              </li>
+              <li>
+                <strong>Smart charging:</strong> time-of-use optimisation, grid response capability
+              </li>
+            </ul>
+            <p>
+              <strong>Capacity allowance examples (per space):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Residential (home):</strong> 7 kW — overnight charging, high diversity
+              </li>
+              <li>
+                <strong>Workplace (smart):</strong> 2-4 kVA diversified — all-day dwell, load
+                management
+              </li>
+              <li>
+                <strong>Retail/destination:</strong> 7-22 kW — short dwell, faster charging needed
+              </li>
+              <li>
+                <strong>Fleet depot:</strong> 7-22 kW per vehicle — managed overnight charging
+              </li>
+            </ul>
+            <p>
               <strong>Key consideration:</strong> The 2030 new car sales deadline means EV
               penetration will accelerate significantly. Plan for 50%+ EV by 2030, 80%+ by 2040.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Technology Changes */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Adapting to Technology Changes
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Adapting to Technology Changes">
             <p>
               Building electrical systems must adapt to technologies that may not exist widely
               today. Designing for flexibility rather than specific technologies reduces future
               obsolescence risk.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Technology Trends Affecting Electrical Design
-              </p>
-              <div className="space-y-3">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">Building Electrification</p>
-                  <p className="text-sm text-white">
-                    Heat pumps replacing gas boilers significantly increases electrical demand,
-                    particularly winter peak. Consider 3-5× current heating-related electrical load.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">On-Site Generation & Storage</p>
-                  <p className="text-sm text-white">
-                    Solar PV, battery storage (BESS), and vehicle-to-building (V2B) require
-                    bidirectional power flow capability and grid interface equipment.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">Smart Grid Interaction</p>
-                  <p className="text-sm text-white">
-                    Demand response, flexible loads, and grid services require intelligent
-                    monitoring, control systems, and potentially export capability.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">Increased IT Density</p>
-                  <p className="text-sm text-white">
-                    Edge computing, IoT devices, and personal technology continue to increase
-                    distributed power demand across buildings.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Future-Proofing Strategies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Infrastructure Provision
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heat pumps</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Additional supply capacity, three-phase provision, space for outdoor units
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Battery storage (BESS)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Identified location with ventilation, structural support, cabling route to
-                        main switchboard
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Solar PV expansion</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Roof structural allowance, inverter space, DC cabling routes, export
-                        metering capability
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vehicle-to-building (V2B)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Bidirectional charger provision, anti-islanding protection, control system
-                        integration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DC distribution</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Segregated containment routes, space for DC distribution equipment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Net Zero Building Implications
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  All-electric buildings have 2-3× the electrical demand of gas-heated equivalents
-                </li>
-                <li className="pl-1">
-                  Demand-side flexibility becomes essential for grid stability
-                </li>
-                <li className="pl-1">On-site generation and storage may become standard</li>
-                <li className="pl-1">
-                  Electrical infrastructure is a key enabler of decarbonisation
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Key technology trends affecting electrical design:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Building electrification:</strong> heat pumps replacing gas boilers
+                significantly increases electrical demand, particularly winter peak — consider 3-5×
+                current heating-related electrical load
+              </li>
+              <li>
+                <strong>On-site generation &amp; storage:</strong> solar PV, battery storage (BESS)
+                and vehicle-to-building (V2B) require bidirectional power flow capability and grid
+                interface equipment
+              </li>
+              <li>
+                <strong>Smart grid interaction:</strong> demand response, flexible loads and grid
+                services require intelligent monitoring, control systems and potentially export
+                capability
+              </li>
+              <li>
+                <strong>Increased IT density:</strong> edge computing, IoT devices and personal
+                technology continue to increase distributed power demand across buildings
+              </li>
+            </ul>
+            <p>
+              <strong>Future-proofing strategies — infrastructure provision:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Heat pumps:</strong> additional supply capacity, three-phase provision,
+                space for outdoor units
+              </li>
+              <li>
+                <strong>Battery storage (BESS):</strong> identified location with ventilation,
+                structural support, cabling route to main switchboard
+              </li>
+              <li>
+                <strong>Solar PV expansion:</strong> roof structural allowance, inverter space, DC
+                cabling routes, export metering capability
+              </li>
+              <li>
+                <strong>Vehicle-to-building (V2B):</strong> bidirectional charger provision,
+                anti-islanding protection, control system integration
+              </li>
+              <li>
+                <strong>DC distribution:</strong> segregated containment routes, space for DC
+                distribution equipment
+              </li>
+            </ul>
+            <p>
+              <strong>Net zero building implications:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                All-electric buildings have 2-3× the electrical demand of gas-heated equivalents
+              </li>
+              <li>Demand-side flexibility becomes essential for grid stability</li>
+              <li>On-site generation and storage may become standard</li>
+              <li>Electrical infrastructure is a key enabler of decarbonisation</li>
+            </ul>
+            <p>
               <strong>Design principle:</strong> Build infrastructure for flexibility. Specific
               equipment can be added when technologies mature; infrastructure is costly to retrofit.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — office building growth allowance:</strong> A new 10,000m² office
+              has calculated initial demand of 650 kVA. What supply capacity should be requested?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Initial demand: 650 kVA</li>
+              <li>Growth allowance: 25% recommended for office</li>
+              <li>Design capacity = 650 × 1.25 = 812 kVA</li>
+              <li>Round to standard sizes</li>
+              <li>
+                Request: <strong>800 kVA or 1000 kVA supply</strong>
+              </li>
+              <li>If EV charging for 100 spaces, add ~200 kVA diversified</li>
+            </ul>
+            <p>
+              <strong>Example 2 — EV charging capacity:</strong> A workplace has 200 parking spaces.
+              Estimate EV charging capacity with smart load management.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Parking spaces: 200</li>
+              <li>Active charge points (Part S min): 200 ÷ 5 = 40</li>
+              <li>Unmanaged capacity: 40 × 7kW = 280 kW</li>
+              <li>With smart management (diversity ~0.4): 280 × 0.4 = 112 kW</li>
+              <li>Future provision (100% spaces): 200 spaces × 2.5 kVA diversified = 500 kVA potential</li>
+              <li>
+                Recommended allowance: <strong>150-200 kVA initially</strong>
+              </li>
+              <li>Design infrastructure for 500 kVA expansion</li>
+            </ul>
+            <p>
+              <strong>Example 3 — distribution board sizing:</strong> An office floor requires 24
+              circuits initially. Size the distribution board.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Initial circuits: 24</li>
+              <li>Spare allowance: 25%</li>
+              <li>Total ways needed: 24 × 1.25 = 30 ways</li>
+              <li>Standard DB sizes: 24, 36, 48 ways (typical)</li>
+              <li>
+                Select: <strong>36-way distribution board</strong>
+              </li>
+              <li>Provides 12 spare ways (33% spare) — good flexibility</li>
+              <li>Consider 48-way if tenant flexibility expected</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Building Growth Allowance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A new 10,000m² office has calculated initial demand of
-                650 kVA. What supply capacity should be requested?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Initial demand: 650 kVA</p>
-                <p>Growth allowance: 25% recommended for office</p>
-                <p className="mt-2">Design capacity = 650 × 1.25 = 812 kVA</p>
-                <p className="mt-2">Round to standard sizes:</p>
-                <p>
-                  Request: <strong>800 kVA or 1000 kVA supply</strong>
-                </p>
-                <p className="text-white mt-2">
-                  Note: If EV charging for 100 spaces, add ~200 kVA diversified
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: EV Charging Capacity
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A workplace has 200 parking spaces. Estimate EV charging
-                capacity with smart load management.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Parking spaces: 200</p>
-                <p>Active charge points (Part S min): 200 ÷ 5 = 40</p>
-                <p className="mt-2">Unmanaged capacity: 40 × 7kW = 280 kW</p>
-                <p>With smart management (diversity ~0.4): 280 × 0.4 = 112 kW</p>
-                <p className="mt-2">Future provision (100% spaces):</p>
-                <p>200 spaces × 2.5 kVA diversified = 500 kVA potential</p>
-                <p className="mt-2">
-                  Recommended allowance: <strong>150-200 kVA initially</strong>
-                </p>
-                <p className="text-white">Design infrastructure for 500 kVA expansion</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Future load planning checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Apply appropriate growth allowances by building element</li>
+              <li>Plan EV charging to Building Regulations minimum plus growth</li>
+              <li>Consider building electrification (heat pumps, no gas)</li>
+              <li>Size containment for 30-40% additional cables</li>
+              <li>Identify BESS and generation locations</li>
+              <li>Document spare capacity in O&amp;M information</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Supply growth allowance: <strong>20-30%</strong>
+              </li>
+              <li>
+                Spare ways: <strong>20-30%</strong>
+              </li>
+              <li>
+                Containment spare: <strong>30-40%</strong>
+              </li>
+              <li>
+                EV diversified: <strong>2-4 kVA/space</strong> (workplace)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Distribution Board Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An office floor requires 24 circuits initially. Size the
-                distribution board.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Initial circuits: 24</p>
-                <p>Spare allowance: 25%</p>
-                <p>Total ways needed: 24 × 1.25 = 30 ways</p>
-                <p className="mt-2">Standard DB sizes: 24, 36, 48 ways (typical)</p>
-                <p className="mt-2">
-                  Select: <strong>36-way distribution board</strong>
-                </p>
-                <p className="text-white mt-2">
-                  Provides 12 spare ways (33% spare) - good flexibility
-                </p>
-                <p className="text-green-400 mt-2">
-                  Consider 48-way if tenant flexibility expected
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Future Load Planning Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Apply appropriate growth allowances by building element</li>
-                <li className="pl-1">
-                  Plan EV charging to Building Regulations minimum plus growth
-                </li>
-                <li className="pl-1">Consider building electrification (heat pumps, no gas)</li>
-                <li className="pl-1">Size containment for 30-40% additional cables</li>
-                <li className="pl-1">Identify BESS and generation locations</li>
-                <li className="pl-1">Document spare capacity in O&M information</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Supply growth allowance: <strong>20-30%</strong>
-                </li>
-                <li className="pl-1">
-                  Spare ways: <strong>20-30%</strong>
-                </li>
-                <li className="pl-1">
-                  Containment spare: <strong>30-40%</strong>
-                </li>
-                <li className="pl-1">
-                  EV diversified: <strong>2-4 kVA/space</strong> (workplace)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>No EV provision</strong> — Building Regulations now require it
                 </li>
-                <li className="pl-1">
-                  <strong>Tight containment</strong> — Future cables impossible without new routes
+                <li>
+                  <strong>Tight containment</strong> — future cables impossible without new routes
                 </li>
-                <li className="pl-1">
-                  <strong>Ignoring electrification</strong> — Heat pump demand is significant
+                <li>
+                  <strong>Ignoring electrification</strong> — heat pump demand is significant
                 </li>
-                <li className="pl-1">
-                  <strong>No spare documentation</strong> — Lost knowledge of available capacity
+                <li>
+                  <strong>No spare documentation</strong> — lost knowledge of available capacity
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Default to Part S compliance plus growth, oversize containment by 30-40%, model the building as if it will go all-electric within 10-15 years, and hand over a clear schedule of spare ways / spare capacity to the building operator."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="40-flat residential block — sizing for future EV and heat-pump uptake"
+            situation={
+              <>
+                A 40-flat new-build apartment block is being designed. Today the dwellings will
+                be gas-heated (DHW and heating) with no EV charging fitted. The client wants the
+                supply &lsquo;EV-ready and heat-pump-ready&rsquo; to avoid a costly DNO upgrade
+                in 5–10 years when both technologies become standard.
+              </>
+            }
+            whatToDo={
+              <>
+                Today&rsquo;s ADMD: 40 × 2.5&nbsp;kVA × 0.5 inter-dwelling diversity ≈ 50&nbsp;kVA.
+                Future ADMD with all-electric heat pumps: 40 × 5&nbsp;kVA × 0.5 ≈ 100&nbsp;kVA.
+                Add EV charging at 7&nbsp;kW per dwelling × 40, with smart-charging diversity
+                ≈ 0.25, ≈ 70&nbsp;kVA. Total future ≈ 170&nbsp;kVA. Specify a 200&nbsp;kVA DNO TX
+                with 250&nbsp;kVA reinforcement headroom, 300&nbsp;A four-pole isolator,
+                400&nbsp;A rated busbar in the meter chamber, and 25% spare in landlord
+                services DBs. Document the design intent against Reg 132.16 in the O&amp;M and
+                the Part L submission.
+              </>
+            }
+            whyItMatters={
+              <>
+                Designing in headroom adds maybe 5% to capital cost. Retro-fitting a DNO upgrade
+                with the building occupied costs 10–20× that, often impossible without a
+                dedicated outage and tenant decant. Reg 132.16 says any addition must check the
+                existing distributor capacity is adequate — leave it short and the DNO blocks the
+                future heat-pump rollout.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Capacity Allowances</p>
-                <ul className="space-y-0.5">
-                  <li>Supply capacity: 20-30% spare</li>
-                  <li>Distribution boards: 20-30% spare ways</li>
-                  <li>Containment: 30-40% spare</li>
-                  <li>Risers: 30-50% spare</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">EV Provision</p>
-                <ul className="space-y-0.5">
-                  <li>Part S: 1 per 5 non-residential spaces</li>
-                  <li>Workplace diversified: 2-4 kVA/space</li>
-                  <li>Residential: 7 kW per dwelling</li>
-                  <li>Smart management essential for scale</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Buildings live 30–50 years — design for the loads of year 30, not year 1.',
+              'Standard growth headroom: 20–25% supply capacity, 25–30% spare DB ways, 30–40% spare containment fill.',
+              'EV charging is the dominant load growth driver: 7&nbsp;kW domestic, 7–22&nbsp;kW commercial, smart-charging diversity 0.2–0.3.',
+              'Building electrification shifts dwelling ADMD from 2–3&nbsp;kVA (gas) to 4–6&nbsp;kVA (all-electric) — design for the heat-pump future today.',
+              'Reg 132.16 forces a capacity re-assessment on every addition or alteration — spare capacity now avoids ripping out switchgear later.',
+              'High-density loads (data, EV bay, server room) need dedicated infrastructure, not shared diversity assumptions.',
+              'Containment first: oversize ladders/trays/risers — they are nearly impossible to upgrade later without major works.',
+              'Document the design intent in O&amp;M — future engineers need to know what you assumed.',
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Harmonic Assessment
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section1-6">
-              Next: Building Services Load Profiles
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section1-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Harmonic assessment
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section1-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Building services load profiles
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

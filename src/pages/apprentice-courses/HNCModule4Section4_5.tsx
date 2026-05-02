@@ -1,8 +1,28 @@
-import { ArrowLeft, Sun, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 4 · Section 4 · Subsection 5 — External Lighting
+ * HNC Electrical Engineering for Building Services (Building Services Specialist)
+ *   EN 12464-2 outdoor workplace illuminance, ILP Environmental Zones E0-E4 with
+ *   Guidance Note 01 obtrusive light limits (ULOR, light into windows, source
+ *   intensity), Building Regs Part L (≥70 llm/W, photocell + time controls), BS 5489
+ *   road lighting, IP65 minimum and facade / car park / security lighting design.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'External Lighting - HNC Module 4 Section 4.5';
@@ -204,799 +224,495 @@ const faqs = [
 ];
 
 const HNCModule4Section4_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module4-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Sun className="h-4 w-4" />
-            <span>Module 4.4.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            External Lighting
-          </h1>
-          <p className="text-white">
-            Designing external lighting for security, amenity and aesthetics while controlling light
-            pollution
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 4 · Section 4 · Subsection 5"
+            title="External Lighting"
+            description="Designing external lighting for security, amenity and aesthetics while controlling light pollution."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Car parks:</strong> 20-75 lux depending on type
-              </li>
-              <li className="pl-1">
-                <strong>Entrances:</strong> 50 lux for security/wayfinding
-              </li>
-              <li className="pl-1">
-                <strong>ULOR:</strong> Limit upward light to control pollution
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> Photocell + time scheduling required
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Guidance</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>EN 12464-2:</strong> Outdoor workplace lighting
-              </li>
-              <li className="pl-1">
-                <strong>ILP GN01:</strong> Reducing obtrusive light
-              </li>
-              <li className="pl-1">
-                <strong>Part L:</strong> Energy and controls requirements
-              </li>
-              <li className="pl-1">
-                <strong>BS 5489:</strong> Road lighting standard
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Design security lighting for building perimeters and entrances',
               'Calculate car park lighting to appropriate standards',
               'Apply ILP Environmental Zone classifications',
               'Minimise light pollution and obtrusive light',
               'Select appropriate luminaires for external applications',
               'Demonstrate Part L compliance for external lighting',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <TLDR
+            points={[
+              'External lighting is designed to EN 12464-2 (outdoor workplaces) and the ILP Guidance Notes (GN01) for environmental zones — E1 (intrinsically dark) through E4 (high district brightness).',
+              'Car parks: P-class lighting (BS EN 13201-2). Typical surface lot Em 10–20 lx with Uo ≥ 0.4. Multi-storey covered: 75 lx working, 30 lx ramps.',
+              'Light pollution: control upward light ratio (ULR), spill onto windows, glare (G class). Curfew dimming after 23:00 is now a standard requirement in many local plans.',
+              'Part L (NDB) requires external luminaires ≥ 60 lm/W with daylight + presence control, OR &lt; 100 W with auto-off after no-occupancy delay.',
+              'Earthing of luminaire columns and the BS 7671 main earthing terminal — every column carries a "Safety Electrical Connection — Do Not Remove" label per Reg 514.13.1.',
+            ]}
+          />
 
-        {/* Section 1: Security Lighting */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Security Lighting Design
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 514.13.1"
+            clause="A warning notice clearly and durably marked with the words 'Safety Electrical Connection — Do Not Remove' shall be securely fixed in a visible position at or near: (a) the point of connection of every earthing conductor to an earth electrode; and (b) the point of connection of every bonding conductor to an extraneous-conductive-part; and (c) the main earthing terminal, where separate from main switchgear."
+            meaning={
+              <>
+                External lighting columns are commonly earthed via local rod electrodes or a buried
+                ring conductor — both fall under Reg 514.13.1. Your construction information needs
+                to specify a BS 951 clamp with the warning label on every electrode connection,
+                every bonding tail, and the MET. The grounds maintenance crew strimming round the
+                column base must not pull a label off and walk away — the label is the audit trail.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 514.13.1."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Security Lighting Design">
             <p>
               Security lighting deters criminal activity and enables surveillance by providing
-              adequate illumination for identification and CCTV operation. The design must balance
-              security effectiveness with energy efficiency and light pollution control.
+              adequate illumination for identification and CCTV operation. The design must
+              balance security effectiveness with energy efficiency and light pollution control.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Security lighting objectives:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Deterrence:</strong> Visible lighting discourages intruders
-                </li>
-                <li className="pl-1">
-                  <strong>Detection:</strong> Uniform illumination reveals movement
-                </li>
-                <li className="pl-1">
-                  <strong>Identification:</strong> Sufficient light for facial recognition
-                </li>
-                <li className="pl-1">
-                  <strong>CCTV support:</strong> Even lighting without harsh shadows
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Security Lighting Illuminance Levels
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Area</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Illuminance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building perimeter</td>
-                      <td className="border border-white/10 px-3 py-2">10-30 lux</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vertical illuminance on walls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Entrances/exits</td>
-                      <td className="border border-white/10 px-3 py-2">50-100 lux</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Facial recognition capability
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Loading bays</td>
-                      <td className="border border-white/10 px-3 py-2">50-100 lux</td>
-                      <td className="border border-white/10 px-3 py-2">Safe vehicle manoeuvring</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pedestrian routes</td>
-                      <td className="border border-white/10 px-3 py-2">20-50 lux</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safe movement, wayfinding
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CCTV coverage</td>
-                      <td className="border border-white/10 px-3 py-2">50+ lux</td>
-                      <td className="border border-white/10 px-3 py-2">Uniformity ratio ≤4:1</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Design Principles for Security
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Avoid creating shadows where intruders can hide</li>
-                <li className="pl-1">Position luminaires to minimise glare to legitimate users</li>
-                <li className="pl-1">Use consistent colour temperature for CCTV colour matching</li>
-                <li className="pl-1">Consider adaptive control - higher levels when triggered</li>
-                <li className="pl-1">Coordinate with security consultants on camera positions</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Note:</strong> Very high lighting levels are counterproductive - they create
+            <p>
+              <strong>Security lighting objectives:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Deterrence:</strong> visible lighting discourages intruders
+              </li>
+              <li>
+                <strong>Detection:</strong> uniform illumination reveals movement
+              </li>
+              <li>
+                <strong>Identification:</strong> sufficient light for facial recognition
+              </li>
+              <li>
+                <strong>CCTV support:</strong> even lighting without harsh shadows
+              </li>
+            </ul>
+            <p>
+              <strong>Security lighting illuminance levels (area / illuminance / notes):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Building perimeter — 10-30 lux — vertical illuminance on walls</li>
+              <li>Entrances/exits — 50-100 lux — facial recognition capability</li>
+              <li>Loading bays — 50-100 lux — safe vehicle manoeuvring</li>
+              <li>Pedestrian routes — 20-50 lux — safe movement, wayfinding</li>
+              <li>CCTV coverage — 50+ lux — uniformity ratio ≤4:1</li>
+            </ul>
+            <p>
+              <strong>Design principles for security:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Avoid creating shadows where intruders can hide</li>
+              <li>Position luminaires to minimise glare to legitimate users</li>
+              <li>Use consistent colour temperature for CCTV colour matching</li>
+              <li>Consider adaptive control — higher levels when triggered</li>
+              <li>Coordinate with security consultants on camera positions</li>
+            </ul>
+            <p>
+              <strong>Note:</strong> Very high lighting levels are counterproductive — they create
               glare that blinds observers and waste energy. Uniform moderate lighting is more
               effective than patchy bright lighting.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 2: Car Park Lighting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Car Park and Amenity Lighting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Car Park and Amenity Lighting">
             <p>
               Car park lighting must provide safe movement for pedestrians and vehicles while
-              meeting security requirements and controlling energy consumption and light pollution.
-              The type of car park determines the appropriate illuminance levels.
+              meeting security requirements and controlling energy consumption and light
+              pollution. The type of car park determines the appropriate illuminance levels.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Car Park Illuminance Requirements (EN 12464-2)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Car Park Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Em (lux)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Uniformity Uo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multi-storey (during use)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">75</td>
-                      <td className="border border-white/10 px-3 py-2">0.40</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multi-storey (24hr operation)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">75</td>
-                      <td className="border border-white/10 px-3 py-2">0.40</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open air - main area</td>
-                      <td className="border border-white/10 px-3 py-2">50</td>
-                      <td className="border border-white/10 px-3 py-2">0.25</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open air - low activity</td>
-                      <td className="border border-white/10 px-3 py-2">20</td>
-                      <td className="border border-white/10 px-3 py-2">0.25</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pedestrian routes</td>
-                      <td className="border border-white/10 px-3 py-2">50</td>
-                      <td className="border border-white/10 px-3 py-2">0.40</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ramps and corners</td>
-                      <td className="border border-white/10 px-3 py-2">75</td>
-                      <td className="border border-white/10 px-3 py-2">0.40</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Multi-Storey Car Parks
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Consider LED linear or surface-mount luminaires</li>
-                  <li className="pl-1">Higher ceilings allow column-mount</li>
-                  <li className="pl-1">IP65 minimum for enclosed structures</li>
-                  <li className="pl-1">Daylight linking for perimeter zones</li>
-                  <li className="pl-1">Emergency lighting to BS 5266</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Surface Car Parks</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Column-mounted luminaires typical</li>
-                  <li className="pl-1">6-10m mounting heights</li>
-                  <li className="pl-1">Control spill light to boundaries</li>
-                  <li className="pl-1">Part-night dimming for energy saving</li>
-                  <li className="pl-1">IP66 for exposed locations</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Car park illuminance — EN 12464-2 (car park type / Em lux / uniformity Uo):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Multi-storey (during use) — 75 — 0.40</li>
+              <li>Multi-storey (24hr operation) — 75 — 0.40</li>
+              <li>Open air — main area — 50 — 0.25</li>
+              <li>Open air — low activity — 20 — 0.25</li>
+              <li>Pedestrian routes — 50 — 0.40</li>
+              <li>Ramps and corners — 75 — 0.40</li>
+            </ul>
+            <p>
+              <strong>Multi-storey car parks:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Consider LED linear or surface-mount luminaires</li>
+              <li>Higher ceilings allow column-mount</li>
+              <li>IP65 minimum for enclosed structures</li>
+              <li>Daylight linking for perimeter zones</li>
+              <li>Emergency lighting to BS 5266</li>
+            </ul>
+            <p>
+              <strong>Surface car parks:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Column-mounted luminaires typical</li>
+              <li>6-10m mounting heights</li>
+              <li>Control spill light to boundaries</li>
+              <li>Part-night dimming for energy saving</li>
+              <li>IP66 for exposed locations</li>
+            </ul>
+            <p>
               <strong>Park Mark:</strong> Car parks seeking Park Mark accreditation must meet
               minimum lighting standards for safety and security. Check current criteria with the
               British Parking Association.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 3: Light Pollution Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Light Pollution and ILP Guidance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Light Pollution and ILP Guidance">
             <p>
-              Light pollution has significant impacts on human health, wildlife, and astronomy. The
-              Institute of Lighting Professionals (ILP) provides guidance on Environmental Zones and
-              acceptable limits for obtrusive light to balance lighting needs with environmental
-              protection.
+              Light pollution has significant impacts on human health, wildlife, and astronomy.
+              The Institute of Lighting Professionals (ILP) provides guidance on Environmental
+              Zones and acceptable limits for obtrusive light to balance lighting needs with
+              environmental protection.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ILP Environmental Zones
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Zone</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Examples</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">E0</td>
-                      <td className="border border-white/10 px-3 py-2">Protected</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        UNESCO starlight reserves, observatories
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">E1</td>
-                      <td className="border border-white/10 px-3 py-2">Natural</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        National parks, AONBs, rural areas
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">E2</td>
-                      <td className="border border-white/10 px-3 py-2">Rural</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Village or small town locations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">E3</td>
-                      <td className="border border-white/10 px-3 py-2">Suburban</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suburban residential areas
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">E4</td>
-                      <td className="border border-white/10 px-3 py-2">Urban</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Town/city centres, high-density urban
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maximum Limits by Zone (ILP GN01)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">E1</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">E2</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">E3</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">E4</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ULOR (max %)</td>
-                      <td className="border border-white/10 px-3 py-2">0%</td>
-                      <td className="border border-white/10 px-3 py-2">2.5%</td>
-                      <td className="border border-white/10 px-3 py-2">5%</td>
-                      <td className="border border-white/10 px-3 py-2">15%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Light into windows (pre-curfew)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2 lux</td>
-                      <td className="border border-white/10 px-3 py-2">5 lux</td>
-                      <td className="border border-white/10 px-3 py-2">10 lux</td>
-                      <td className="border border-white/10 px-3 py-2">25 lux</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Light into windows (post-curfew)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0 lux</td>
-                      <td className="border border-white/10 px-3 py-2">1 lux</td>
-                      <td className="border border-white/10 px-3 py-2">2 lux</td>
-                      <td className="border border-white/10 px-3 py-2">5 lux</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Source intensity (pre-curfew)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.5 kcd</td>
-                      <td className="border border-white/10 px-3 py-2">7.5 kcd</td>
-                      <td className="border border-white/10 px-3 py-2">10 kcd</td>
-                      <td className="border border-white/10 px-3 py-2">25 kcd</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Reducing Obtrusive Light
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Use luminaires with 0% ULOR (full cut-off)</li>
-                <li className="pl-1">Aim luminaires downward, never above horizontal</li>
-                <li className="pl-1">Use shields/louvres to control spill light</li>
-                <li className="pl-1">Position to avoid light trespass onto neighbours</li>
-                <li className="pl-1">Implement curfew dimming or switch-off</li>
-                <li className="pl-1">Use appropriate light output - avoid over-lighting</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Planning:</strong> Many local authorities impose lighting conditions based on
-              ILP guidance. Check with the planning department early in design to avoid
+            <p>
+              <strong>ILP Environmental Zones (zone / description / examples):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>E0</strong> — protected — UNESCO starlight reserves, observatories
+              </li>
+              <li>
+                <strong>E1</strong> — natural — national parks, AONBs, rural areas
+              </li>
+              <li>
+                <strong>E2</strong> — rural — village or small town locations
+              </li>
+              <li>
+                <strong>E3</strong> — suburban — suburban residential areas
+              </li>
+              <li>
+                <strong>E4</strong> — urban — town/city centres, high-density urban
+              </li>
+            </ul>
+            <p>
+              <strong>Maximum limits by zone — ILP GN01 (parameter / E1 / E2 / E3 / E4):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>ULOR (max %) — 0% — 2.5% — 5% — 15%</li>
+              <li>Light into windows (pre-curfew) — 2 lux — 5 lux — 10 lux — 25 lux</li>
+              <li>Light into windows (post-curfew) — 0 lux — 1 lux — 2 lux — 5 lux</li>
+              <li>Source intensity (pre-curfew) — 2.5 kcd — 7.5 kcd — 10 kcd — 25 kcd</li>
+            </ul>
+            <p>
+              <strong>Reducing obtrusive light:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use luminaires with 0% ULOR (full cut-off)</li>
+              <li>Aim luminaires downward, never above horizontal</li>
+              <li>Use shields/louvres to control spill light</li>
+              <li>Position to avoid light trespass onto neighbours</li>
+              <li>Implement curfew dimming or switch-off</li>
+              <li>Use appropriate light output — avoid over-lighting</li>
+            </ul>
+            <p>
+              <strong>Planning:</strong> Many local authorities impose lighting conditions based
+              on ILP guidance. Check with the planning department early in design to avoid
               non-compliance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Part L and Facade Lighting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Part L Compliance and Facade Lighting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Part L Compliance and Facade Lighting">
             <p>
-              Building Regulations Part L sets requirements for external lighting energy efficiency
-              and controls. Facade and architectural lighting adds visual interest but must be
-              designed responsibly to minimise environmental impact.
+              Building Regulations Part L sets requirements for external lighting energy
+              efficiency and controls. Facade and architectural lighting adds visual interest but
+              must be designed responsibly to minimise environmental impact.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L Requirements for External Lighting
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Efficacy:</strong> Minimum 70 luminaire lumens per circuit-watt
-                </li>
-                <li className="pl-1">
-                  <strong>Controls:</strong> Daylight sensing to prevent daytime operation
-                </li>
-                <li className="pl-1">
-                  <strong>ULOR:</strong> Maximum 5% (may be stricter by zone)
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> Controls must be commissioned and documented
-                </li>
-                <li className="pl-1">
-                  <strong>Information:</strong> Operating and maintenance instructions provided
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Facade Lighting Techniques
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Grazing:</strong> Light close to surface for texture
-                  </li>
-                  <li className="pl-1">
-                    <strong>Washing:</strong> Even illumination of surfaces
-                  </li>
-                  <li className="pl-1">
-                    <strong>Spotlighting:</strong> Highlighting specific features
-                  </li>
-                  <li className="pl-1">
-                    <strong>Silhouette:</strong> Backlighting for outline effect
-                  </li>
-                  <li className="pl-1">
-                    <strong>In-ground:</strong> Uplighting from ground level
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Responsible Facade Lighting
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Light top-down where possible</li>
-                  <li className="pl-1">Minimise overshoot beyond building</li>
-                  <li className="pl-1">Use narrow beam angles</li>
-                  <li className="pl-1">Implement curfew hours (typically 23:00)</li>
-                  <li className="pl-1">Match colour to building material</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                External Luminaire Selection
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Criterion</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IP Rating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IP65 minimum (IP66/67 for harsh environments)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IK Rating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IK08+ for accessible locations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Optical control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sharp cut-off, minimal upward light
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Temperature range</td>
-                      <td className="border border-white/10 px-3 py-2">-25°C to +40°C minimum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corrosion resistance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Powder coat or marine grade for coastal
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Part L requirements for external lighting:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Efficacy:</strong> minimum 70 luminaire lumens per circuit-watt
+              </li>
+              <li>
+                <strong>Controls:</strong> daylight sensing to prevent daytime operation
+              </li>
+              <li>
+                <strong>ULOR:</strong> maximum 5% (may be stricter by zone)
+              </li>
+              <li>
+                <strong>Commissioning:</strong> controls must be commissioned and documented
+              </li>
+              <li>
+                <strong>Information:</strong> operating and maintenance instructions provided
+              </li>
+            </ul>
+            <p>
+              <strong>Facade lighting techniques:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Grazing:</strong> light close to surface for texture
+              </li>
+              <li>
+                <strong>Washing:</strong> even illumination of surfaces
+              </li>
+              <li>
+                <strong>Spotlighting:</strong> highlighting specific features
+              </li>
+              <li>
+                <strong>Silhouette:</strong> backlighting for outline effect
+              </li>
+              <li>
+                <strong>In-ground:</strong> uplighting from ground level
+              </li>
+            </ul>
+            <p>
+              <strong>Responsible facade lighting:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Light top-down where possible</li>
+              <li>Minimise overshoot beyond building</li>
+              <li>Use narrow beam angles</li>
+              <li>Implement curfew hours (typically 23:00)</li>
+              <li>Match colour to building material</li>
+            </ul>
+            <p>
+              <strong>External luminaire selection (criterion / requirement):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>IP rating — IP65 minimum (IP66/67 for harsh environments)</li>
+              <li>IK rating — IK08+ for accessible locations</li>
+              <li>Optical control — sharp cut-off, minimal upward light</li>
+              <li>Temperature range — −25°C to +40°C minimum</li>
+              <li>Corrosion resistance — powder coat or marine grade for coastal</li>
+            </ul>
+            <p>
               <strong>Curfew:</strong> Many planning authorities require decorative lighting to
               switch off by 23:00. Design controls to facilitate this automatically.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — surface car park design:</strong> Design lighting for a 50-space
+              surface car park (40m × 30m) in a suburban location (Zone E3).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Target illuminance (EN 12464-2): 50 lux</li>
+              <li>Uniformity required: Uo ≥ 0.25</li>
+              <li>ILP Zone E3 limits — ULOR ≤5%; light into windows ≤10 lux pre-curfew</li>
+              <li>Luminaire selection: 8m column-mount LED floodlights</li>
+              <li>0% ULOR (full cut-off optics)</li>
+              <li>120W, 14,400 lumens, 120 lm/W</li>
+              <li>Layout: 4 columns at 20m spacing</li>
+              <li>
+                Total: <strong>4 luminaires × 120W = 480W</strong>
+              </li>
+              <li>Controls: photocell + time clock (dim to 50% after 23:00)</li>
+            </ul>
+            <p>
+              <strong>Example 2 — ULOR compliance check:</strong> A proposed luminaire has 3%
+              ULOR. Is it compliant for Zone E2?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Zone E2 (rural) ULOR limit: 2.5%</li>
+              <li>Proposed luminaire: 3.0%</li>
+              <li>Not compliant for Zone E2</li>
+              <li>Option 1: select luminaire with lower ULOR (≤2.5%)</li>
+              <li>Option 2: add accessory shield to reduce upward light</li>
+              <li>
+                Option 3: demonstrate by calculation that actual ULOR meets requirement
+                (considering tilt angle)
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — Part L efficacy check:</strong> Verify a proposed luminaire
+              meets Part L efficacy requirements.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>System power: 85W</li>
+              <li>Lamp lumens: 10,200 lm</li>
+              <li>LOR: 92%</li>
+              <li>Luminaire lumens = lamp lumens × LOR = 10,200 × 0.92 = 9,384</li>
+              <li>Efficacy = luminaire lumens / system watts</li>
+              <li>
+                = 9,384 / 85 = <strong>110 luminaire lm/W</strong>
+              </li>
+              <li>Part L minimum: 70 llm/W</li>
+              <li>Compliant (110 &gt; 70)</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Surface Car Park Design
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> Design lighting for a 50-space surface car park (40m × 30m)
-                in a suburban location (Zone E3).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Target illuminance (EN 12464-2): 50 lux</p>
-                <p>Uniformity required: Uo ≥ 0.25</p>
-                <p className="mt-2">ILP Zone E3 limits:</p>
-                <p>- ULOR: ≤5%</p>
-                <p>- Light into windows: ≤10 lux pre-curfew</p>
-                <p className="mt-2">Luminaire selection:</p>
-                <p>- 8m column-mount LED floodlights</p>
-                <p>- 0% ULOR (full cut-off optics)</p>
-                <p>- 120W, 14,400 lumens, 120 lm/W</p>
-                <p className="mt-2">Layout: 4 columns at 20m spacing</p>
-                <p>
-                  Total: <strong>4 luminaires × 120W = 480W</strong>
-                </p>
-                <p className="mt-2">Controls: Photocell + time clock (dim to 50% after 23:00)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: ULOR Compliance Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A proposed luminaire has 3% ULOR. Is it compliant for
-                Zone E2?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Zone E2 (Rural) ULOR limit: 2.5%</p>
-                <p>Proposed luminaire: 3.0%</p>
-                <p className="mt-2 text-red-400">✗ NOT COMPLIANT for Zone E2</p>
-                <p className="mt-2">Options:</p>
-                <p>1. Select luminaire with lower ULOR (≤2.5%)</p>
-                <p>2. Add accessory shield to reduce upward light</p>
-                <p>3. Demonstrate by calculation that actual ULOR</p>
-                <p> meets requirement (considering tilt angle)</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Design checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Determine ILP Environmental Zone</li>
+              <li>Check planning conditions for lighting</li>
+              <li>Select luminaires with appropriate ULOR</li>
+              <li>Calculate illuminance and uniformity</li>
+              <li>Verify Part L efficacy compliance</li>
+              <li>Specify controls (photocell, timer, dimming)</li>
+            </ul>
+            <p>
+              <strong>Key standards:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>EN 12464-2:</strong> outdoor workplace lighting
+              </li>
+              <li>
+                <strong>ILP GN01:</strong> reduction of obtrusive light
+              </li>
+              <li>
+                <strong>BS 5489:</strong> road lighting design
+              </li>
+              <li>
+                <strong>Building Regs Part L:</strong> energy efficiency
+              </li>
+              <li>
+                <strong>BS EN 13201:</strong> road lighting performance
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Part L Efficacy Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> Verify a proposed luminaire meets Part L efficacy
-                requirements.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Luminaire specification:</p>
-                <p>- System power: 85W</p>
-                <p>- Lamp lumens: 10,200 lm</p>
-                <p>- LOR: 92%</p>
-                <p className="mt-2">Luminaire lumens = Lamp lumens × LOR</p>
-                <p>= 10,200 × 0.92 = 9,384 luminaire lumens</p>
-                <p className="mt-2">Efficacy = Luminaire lumens / System watts</p>
-                <p>
-                  = 9,384 / 85 = <strong>110 luminaire lm/W</strong>
-                </p>
-                <p className="mt-2">Part L minimum: 70 llm/W</p>
-                <p className="text-green-400">✓ COMPLIANT (110 &gt; 70)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Checklist</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Determine ILP Environmental Zone</li>
-                <li className="pl-1">Check planning conditions for lighting</li>
-                <li className="pl-1">Select luminaires with appropriate ULOR</li>
-                <li className="pl-1">Calculate illuminance and uniformity</li>
-                <li className="pl-1">Verify Part L efficacy compliance</li>
-                <li className="pl-1">Specify controls (photocell, timer, dimming)</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Standards</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>EN 12464-2:</strong> Outdoor workplace lighting
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Over-lighting</strong> — excessive levels waste energy and worsen
+                  pollution
                 </li>
-                <li className="pl-1">
-                  <strong>ILP GN01:</strong> Reduction of obtrusive light
+                <li>
+                  <strong>Ignoring zones</strong> — check local environmental zone before design
                 </li>
-                <li className="pl-1">
-                  <strong>BS 5489:</strong> Road lighting design
+                <li>
+                  <strong>Poor control</strong> — forgetting to specify curfew or dimming
                 </li>
-                <li className="pl-1">
-                  <strong>Building Regs Part L:</strong> Energy efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>BS EN 13201:</strong> Road lighting performance
+                <li>
+                  <strong>Wrong IP rating</strong> — ensure adequate protection for location
                 </li>
               </ul>
-            </div>
+            }
+            doInstead="Design to the EN 12464-2 task level (don't over-light), look up the ILP zone before sizing, specify a curfew or part-night dim profile in the controls schedule, and choose IP/IK ratings to suit the actual external environment."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Over-lighting:</strong> Excessive levels waste energy and worsen pollution
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring zones:</strong> Check local environmental zone before design
-                </li>
-                <li className="pl-1">
-                  <strong>Poor control:</strong> Forgetting to specify curfew or dimming
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong IP rating:</strong> Ensure adequate protection for location
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Scenario
+            title="60-bay surface car park — designing to the right ILP zone"
+            situation={
+              <>
+                A retail park extension adds a 60-bay surface car park, 90 m × 35 m, edged by a
+                hedge to a residential property and an open service road. The local plan classifies
+                the area as ILP zone E2 (low district brightness). Client wants 6 m columns with
+                LED area luminaires, 100 % switched on operating hours, dimmed at curfew.
+              </>
+            }
+            whatToDo={
+              <>
+                Pick P3 lighting class from BS EN 13201-2 — Em 7.5 lx, Emin 1.5 lx, Uo ≥ 0.4 over
+                the working area. Choose a flat-glass, full-cut-off LED luminaire (G* class, ULR
+                = 0 %) so light goes down, not into the residential property. Size columns at 6 m
+                with a 25 m spacing; verify with DIALux that perimeter spill drops to &lt; 5 lx at
+                the residential boundary (E2 limit). Specify part-night dimming: 100 % until
+                23:00, 50 % to 06:00, full off-curfew if the lot is closed. Each column has its
+                own buried earth rod with a BS 951 clamp and a Reg 514.13.1 label. Part L
+                compliance: luminaire efficacy ≥ 60 lm/W, daylight switching via photocell, BMS
+                schedule on the contactor. Document the ILP zone, the EN 13201 class, the spill
+                limit and the curfew profile in the controls schedule.
+              </>
+            }
+            whyItMatters={
+              <>
+                If you treat the lot as zone E4 (urban centre) you’ll over-light it, the residents
+                will complain to environmental health, and the planning team will pull the consent.
+                Picking the right zone is design, not paperwork.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Illuminance Levels</p>
-                <ul className="space-y-0.5">
-                  <li>Car park (multi): 75 lux</li>
-                  <li>Car park (surface): 50 lux</li>
-                  <li>Entrances: 50-100 lux</li>
-                  <li>Pedestrian routes: 20-50 lux</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Part L Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Efficacy: ≥70 llm/W</li>
-                  <li>Controls: photocell + timer</li>
-                  <li>ULOR: ≤5% (zone dependent)</li>
-                  <li>Minimum IP65 rating</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'EN 12464-2 + ILP GN01 + BS EN 13201 are the three references for outdoor lighting design.',
+              'Environmental zone (E1–E4) sets the spill, glare and curfew limits — get it from the local plan.',
+              'P-class for car parks and amenity, M-class for traffic routes — different tables, different metrics.',
+              'Full-cut-off optics and zero ULR are baseline expectations now; ornamental lanterns need careful justification.',
+              'Curfew dimming (50 % at 23:00) and part-night switching are standard in most planning consents.',
+              'Part L NDB: efficacy ≥ 60 lm/W, daylight + occupancy controls, or ≤ 100 W with auto-off delay.',
+              'Column foundations, buried earth rod, BS 951 clamp, Reg 514.13.1 label — every column, every time.',
+              'IP65 minimum for column-mounted optics; IK08 minimum for impact resistance in publicly accessible areas.',
+            ]}
+          />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section4-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Lighting Controls
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module4-section4-6">
-              Next: Energy Efficient Lighting
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Lighting controls
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Energy efficient lighting
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -2095,7 +2095,9 @@ Deno.serve(async (req) => {
         // Get user details
         const { data: profile, error: profileError } = await supabaseAdmin
           .from('profiles')
-          .select('id, full_name, username, created_at, winback_offer_sent_at')
+          .select(
+            'id, full_name, username, created_at, winback_offer_sent_at, subscribed, free_access_granted, role'
+          )
           .eq('id', userId)
           .single();
 
@@ -2103,6 +2105,12 @@ Deno.serve(async (req) => {
           throw new Error('User not found');
         }
 
+        if (profile.subscribed === true) {
+          throw new Error('User is currently subscribed — refusing to send a discount offer');
+        }
+        if (profile.free_access_granted === true) {
+          throw new Error('User has free access — winback offer not applicable');
+        }
         if (profile.winback_offer_sent_at) {
           throw new Error('Win-back offer already sent to this user');
         }
@@ -2857,20 +2865,60 @@ Deno.serve(async (req) => {
 
         const manualRecipient = manualEmail.trim().toLowerCase();
 
-        // V10 manual path — full send with suppression check, unsubscribe headers, plain text
-        if (!email_version || email_version === 'v10') {
+        // V10 / V11 manual path — full send with suppression + paying-customer check.
+        // Default to v11; v10 only if explicitly requested.
+        if (!email_version || email_version === 'v10' || email_version === 'v11') {
+          const useV11 = !email_version || email_version === 'v11';
+          const versionTag = useV11 ? 'v11' : 'v10';
+
           if (await isSuppressed(supabaseAdmin, manualRecipient)) {
             throw new Error('Recipient is in the suppression list — unsubscribed previously');
           }
 
+          // Defensive: refuse to send a discount offer to a currently-paying user.
+          // Look up by email → profile → check subscribed / free_access_granted.
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: emailRows } = await supabaseAdmin.rpc('get_auth_user_emails');
+          const matchingAuth = (emailRows || []).find(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (u: any) => (u.email as string)?.toLowerCase().trim() === manualRecipient
+          );
+          if (matchingAuth?.id) {
+            const { data: matchProfile } = await supabaseAdmin
+              .from('profiles')
+              .select('subscribed, free_access_granted, full_name')
+              .eq('id', matchingAuth.id)
+              .single();
+            if (matchProfile?.subscribed === true) {
+              throw new Error(
+                'That address belongs to a currently-subscribed user — refusing to send a discount offer'
+              );
+            }
+            if (matchProfile?.free_access_granted === true) {
+              throw new Error(
+                'That address has free access granted — winback offer not applicable'
+              );
+            }
+            // Use the profile's full name if no recipientName was supplied
+            if (!recipientName && matchProfile?.full_name) {
+              recipientName = matchProfile.full_name;
+            }
+          }
+
           const firstName = recipientName?.split(' ')[0] || 'mate';
           const unsubscribeUrl = await buildUnsubscribeUrl(manualRecipient);
-          const html = generateV10WinbackHTML(firstName, unsubscribeUrl);
-          const text = generateV10WinbackPlainText(firstName, unsubscribeUrl);
-          const subject = "We've been building. You should see it.";
+          const html = useV11
+            ? generateV11HTML('winback', firstName, unsubscribeUrl)
+            : generateV10WinbackHTML(firstName, unsubscribeUrl);
+          const text = useV11
+            ? generateV11PlainText('winback', firstName, unsubscribeUrl)
+            : generateV10WinbackPlainText(firstName, unsubscribeUrl);
+          const subject = useV11
+            ? v11Subject('winback', firstName)
+            : "We've been building. You should see it.";
 
           await rateLimiter.acquire(1);
-          const { data: v10ManualData, error: v10ManualErr } = await resend.emails.send({
+          const { data: vManualData, error: vManualErr } = await resend.emails.send({
             from: FROM_V10,
             replyTo: REPLY_TO,
             to: [manualRecipient],
@@ -2880,30 +2928,32 @@ Deno.serve(async (req) => {
             headers: buildUnsubscribeHeaders(unsubscribeUrl),
             tags: [
               { name: 'campaign', value: 'winback' },
-              { name: 'version', value: 'v10' },
+              { name: 'version', value: versionTag },
               { name: 'type', value: 'manual' },
             ],
           });
 
-          if (v10ManualErr) {
-            console.error('V10 manual send error:', v10ManualErr);
-            throw new Error(`Failed to send email: ${v10ManualErr.message}`);
+          if (vManualErr) {
+            console.error(`${versionTag.toUpperCase()} manual send error:`, vManualErr);
+            throw new Error(`Failed to send email: ${vManualErr.message}`);
           }
 
           await supabaseAdmin.from('email_logs').insert({
             to_email: manualRecipient,
             subject,
-            template: 'winback_offer_v10_manual',
+            template: `winback_offer_${versionTag}_manual`,
             status: 'sent',
-            metadata: { email_version: 'v10', resend_id: v10ManualData?.id, type: 'manual' },
+            metadata: { email_version: versionTag, resend_id: vManualData?.id, type: 'manual' },
           });
 
-          console.log(`V10 manual winback sent to ${manualRecipient} by admin ${user.id}`);
+          console.log(
+            `${versionTag.toUpperCase()} manual winback sent to ${manualRecipient} by admin ${user.id}`
+          );
           result = {
             success: true,
             email: manualRecipient,
-            version: 'v10',
-            resend_id: v10ManualData?.id,
+            version: versionTag,
+            resend_id: vManualData?.id,
           };
           break;
         }

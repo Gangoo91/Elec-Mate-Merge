@@ -351,16 +351,21 @@ const QuotesPage = () => {
 
       {/* Content */}
       <PullToRefresh onRefresh={refreshQuotes} isRefreshing={loading}>
-        <div className="px-4 py-4 space-y-4 pb-24">
-          {/* Pipeline hero */}
+        <div className="px-4 py-4 space-y-6 pb-24">
+          {/* 01 · PIPELINE — editorial eyebrow + hero */}
           <div className="space-y-3">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">· Pipeline</span>
+            </div>
+
             {/* Gradient accent */}
             <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
 
             {/* Main value */}
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-[10px] text-white uppercase tracking-widest font-medium">Pipeline</p>
+                <p className="text-[10px] text-white uppercase tracking-widest font-medium">Total value</p>
                 <p className="text-[38px] font-extrabold text-elec-yellow leading-none tracking-tight mt-1">{formatGBP(stats.totalValue)}</p>
               </div>
               <div className="text-right pb-0.5">
@@ -420,15 +425,19 @@ const QuotesPage = () => {
             />
           )}
 
-          {/* Quotes list */}
-          <section className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider">
-                {filter === 'all'
-                  ? 'All Quotes'
-                  : filterOptions.find((f) => f.id === filter)?.label + ' Quotes'}
-              </h2>
-              <span className="text-[11px] text-white">
+          {/* 02 · QUOTES — list */}
+          <section className="space-y-3 pt-2 border-t border-white/[0.04]">
+            <div className="flex items-baseline justify-between gap-3 pt-4">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
+                  ·{' '}
+                  {filter === 'all'
+                    ? 'All quotes'
+                    : (filterOptions.find((f) => f.id === filter)?.label || 'Quotes') + ' quotes'}
+                </span>
+              </div>
+              <span className="text-[11px] text-white/50 tabular-nums">
                 {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
               </span>
             </div>

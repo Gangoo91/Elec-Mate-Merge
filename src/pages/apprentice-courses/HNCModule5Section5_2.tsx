@@ -115,10 +115,10 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What is the maximum permitted Zs for a 32A Type B MCB on a TN-S system?',
-    options: ['0.72 ohms', '1.09 ohms', '1.44 ohms', '2.19 ohms'],
+    options: ['0.69 ohms', '1.09 ohms', '1.37 ohms', '2.19 ohms'],
     correctAnswer: 2,
     explanation:
-      'For a 32A Type B MCB, the maximum Zs from BS 7671 Table 41.3 is 1.44 ohms (at 70 degrees C, the 0.8 factor gives a field test maximum of approximately 1.15 ohms).',
+      'For a 32A Type B MCB, the maximum Zs from BS 7671:2018+A4:2026 Table 41.3 is 1.37 ohms (Cmin = 0.95 applied; the 0.8 factor for ambient measurement gives a field test maximum of approximately 1.10 ohms).',
   },
   {
     id: 6,
@@ -545,7 +545,7 @@ const HNCModule5Section5_2 = () => {
                       <td className="border border-white/10 px-3 py-2">RCD (30mA)</td>
                       <td className="border border-white/10 px-3 py-2">Live at 230V</td>
                       <td className="border border-white/10 px-3 py-2">
-                        300ms at IΔn, 40ms at 5xIΔn
+                        ≤300ms at IΔn (BS 7671:2018+A4:2026 Reg 643.3 — single AC test, all RCD Types)
                       </td>
                     </tr>
                   </tbody>
@@ -883,12 +883,12 @@ const HNCModule5Section5_2 = () => {
                 disconnection requirements.
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>From BS 7671 Table 41.3:</p>
-                <p>Maximum Zs for 32A Type B = 1.44 ohms (at 70°C)</p>
+                <p>From BS 7671:2018+A4:2026 Table 41.3:</p>
+                <p>Maximum Zs for 32A Type B = 1.37 ohms (Cmin = 0.95 applied)</p>
                 <p className="mt-2">Applying 0.8 correction for ambient testing:</p>
-                <p>Field test maximum = 1.44 × 0.8 = 1.15 ohms</p>
+                <p>Field test maximum = 1.37 × 0.8 = 1.10 ohms</p>
                 <p className="mt-2">Measured Zs at furthest socket: 0.92 ohms</p>
-                <p className="text-green-400">→ Pass (0.92 &lt; 1.15 ohms)</p>
+                <p className="text-green-400">→ Pass (0.92 &lt; 1.10 ohms)</p>
               </div>
             </div>
 
@@ -955,10 +955,7 @@ const HNCModule5Section5_2 = () => {
                   Minimum insulation resistance: <strong>1.0 megohm</strong> at 500V DC
                 </li>
                 <li className="pl-1">
-                  30mA RCD at IΔn: <strong>300ms</strong> maximum
-                </li>
-                <li className="pl-1">
-                  30mA RCD at 5×IΔn: <strong>40ms</strong> maximum
+                  30mA RCD at IΔn (BS 7671:2018+A4:2026 Reg 643.3, single AC test): <strong>≤300ms</strong> maximum
                 </li>
                 <li className="pl-1">
                   Temperature correction factor: <strong>0.8</strong> (Zs field testing)
