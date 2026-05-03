@@ -27,6 +27,11 @@ const PRICE_TIER_MAP: Record<string, { tier: string; amount: number }> = {
   // Win-Back pricing (£7.99/mo, £79.99/yr) - expired trial re-engagement
   price_1SvggR2RKw5t5RAmDN29FBzx: { tier: 'electrician', amount: 7.99 },
   price_1SvggR2RKw5t5RAmsrerSmdG: { tier: 'electrician', amount: 79.99 / 12 },
+  // Mate (business_ai) pricing — current £39.99/mo + £399.99/yr, plus legacy £29.99/mo founder + £299.99/yr
+  price_1TRGZo2RKw5t5RAmRl2hc0ru: { tier: 'business_ai', amount: 39.99 },
+  price_1TRGZo2RKw5t5RAmzY50EzaE: { tier: 'business_ai', amount: 399.99 / 12 },
+  price_1T6DUx2RKw5t5RAmpb177NJV: { tier: 'business_ai', amount: 29.99 },
+  price_1T6DUy2RKw5t5RAmo9HgAukW: { tier: 'business_ai', amount: 299.99 / 12 },
   // Employer pricing (£29.99/mo, £39.99/mo, £299.99/yr, £399.99/yr)
   price_1SlyAT2RKw5t5RAmUmTRGimH: { tier: 'employer', amount: 29.99 },
   price_1SlyB82RKw5t5RAmN447YJUW: { tier: 'employer', amount: 299.99 / 12 },
@@ -184,6 +189,7 @@ serve(async (req) => {
       founder: 0,
       apprentice: 0,
       electrician: 0,
+      business_ai: 0,
       employer: 0,
       unknown: 0,
     };
@@ -203,6 +209,7 @@ serve(async (req) => {
       founder: 0,
       apprentice: 0,
       electrician: 0,
+      business_ai: 0,
       employer: 0,
       unknown: 0,
     };

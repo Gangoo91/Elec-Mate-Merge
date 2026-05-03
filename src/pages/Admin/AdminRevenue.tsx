@@ -81,7 +81,8 @@ const tierPrice: Record<string, string> = {
   founder: '£3.99',
   apprentice: '£5.99',
   electrician: '£12.99',
-  employer: '£29.99',
+  business_ai: '£29.99 / £39.99',
+  employer: '£49.99',
 };
 
 function getInitials(name?: string | null, email?: string | null) {
@@ -294,7 +295,7 @@ export default function AdminRevenue() {
         )}
 
         <StatStrip
-          columns={4}
+          columns={5}
           numbered
           stats={[
             {
@@ -304,16 +305,23 @@ export default function AdminRevenue() {
               sub: tierPrice.founder,
             },
             {
+              label: 'Apprentice',
+              value: stripeTierCounts?.apprentice ?? 0,
+              tone: 'blue',
+              sub: tierPrice.apprentice,
+            },
+            {
               label: 'Electrician',
               value: stripeTierCounts?.electrician ?? 0,
               tone: 'emerald',
               sub: tierPrice.electrician,
             },
             {
-              label: 'Apprentice',
-              value: stripeTierCounts?.apprentice ?? 0,
-              tone: 'blue',
-              sub: tierPrice.apprentice,
+              label: 'Mate',
+              value:
+                (stripeTierCounts?.business_ai ?? 0) + (stripeTierCounts?.business_ai_yearly ?? 0),
+              tone: 'yellow',
+              sub: tierPrice.business_ai,
             },
             {
               label: 'Employer',

@@ -532,13 +532,19 @@ export default function AdminDashboard() {
     const t = (tier || '').toLowerCase();
     if (t.includes('founder')) return { label: 'Founder', tone: 'yellow' };
     if (t.includes('apprentice')) return { label: 'Apprentice', tone: 'blue' };
+    if (t.includes('business_ai') || t === 'business ai' || t.includes('mate'))
+      return { label: 'Mate', tone: 'yellow' };
     if (t.includes('employer')) return { label: 'Employer', tone: 'purple' };
     if (t) return { label: t.replace('_', ' '), tone: 'emerald' };
     return { label: 'Free', tone: 'amber' };
   };
 
   return (
-    <PullToRefresh onRefresh={async () => { await handleRefresh(); }}>
+    <PullToRefresh
+      onRefresh={async () => {
+        await handleRefresh();
+      }}
+    >
       <PageFrame>
         <PageHero
           eyebrow="Overview"
@@ -552,10 +558,7 @@ export default function AdminDashboard() {
               aria-label="Refresh"
             >
               <RefreshCw
-                className={cn(
-                  'h-4 w-4',
-                  (isFetching || isRefreshing) && 'animate-spin'
-                )}
+                className={cn('h-4 w-4', (isFetching || isRefreshing) && 'animate-spin')}
               />
             </IconButton>
           }
@@ -672,11 +675,22 @@ export default function AdminDashboard() {
                 </span>
               </span>
             }
-            action={(onlineUsers?.length || 0) > 5 ? (showAllOnline ? 'Show less' : `Show all ${onlineUsers?.length}`) : undefined}
-            onAction={(onlineUsers?.length || 0) > 5 ? () => setShowAllOnline(!showAllOnline) : undefined}
+            action={
+              (onlineUsers?.length || 0) > 5
+                ? showAllOnline
+                  ? 'Show less'
+                  : `Show all ${onlineUsers?.length}`
+                : undefined
+            }
+            onAction={
+              (onlineUsers?.length || 0) > 5 ? () => setShowAllOnline(!showAllOnline) : undefined
+            }
           />
-          {(!onlineUsers || onlineUsers.length === 0) ? (
-            <EmptyState title="No active users" description="When users are on-app, they'll appear here." />
+          {!onlineUsers || onlineUsers.length === 0 ? (
+            <EmptyState
+              title="No active users"
+              description="When users are on-app, they'll appear here."
+            />
           ) : (
             <ListBody>
               {onlineUsers.slice(0, showAllOnline ? onlineUsers.length : 5).map((activity) => {
@@ -689,12 +703,7 @@ export default function AdminDashboard() {
                 return (
                   <ListRow
                     key={activity.user_id}
-                    lead={
-                      <Avatar
-                        initials={getInitials(profile?.full_name)}
-                        online={isOnline}
-                      />
-                    }
+                    lead={<Avatar initials={getInitials(profile?.full_name)} online={isOnline} />}
                     title={profile?.full_name || 'Unknown'}
                     subtitle={
                       isOnline ? `Active now · ${currentPage}` : `${diffMins}m ago · ${currentPage}`
@@ -806,7 +815,9 @@ export default function AdminDashboard() {
                             ? `${rcTrialDelta} trial${rcTrialDelta === 1 ? '' : 's'} in RC not matched`
                             : `${Math.abs(rcTrialDelta)} stale trial${Math.abs(rcTrialDelta) === 1 ? '' : 's'} in DB`)}
                       </div>
-                      <div className="mt-0.5 text-[11px] text-amber-300/70">Tap Sync RC to reconcile</div>
+                      <div className="mt-0.5 text-[11px] text-amber-300/70">
+                        Tap Sync RC to reconcile
+                      </div>
                     </div>
                   </div>
                 )}
@@ -842,8 +853,7 @@ export default function AdminDashboard() {
                                     {' · '}
                                     {formatTimeShort(u.engagement.total_seconds_tracked)}
                                     {' · '}
-                                    {u.engagement.unique_pages_visited}p
-                                    {' · '}
+                                    {u.engagement.unique_pages_visited}p{' · '}
                                     {u.engagement.login_count} logins
                                   </>
                                 )}
@@ -897,8 +907,7 @@ export default function AdminDashboard() {
                                     {' · '}
                                     {formatTimeShort(t.engagement.total_seconds_tracked)}
                                     {' · '}
-                                    {t.engagement.unique_pages_visited}p
-                                    {' · '}
+                                    {t.engagement.unique_pages_visited}p{' · '}
                                     {t.engagement.login_count} logins
                                   </>
                                 )}
@@ -1054,8 +1063,7 @@ export default function AdminDashboard() {
               {recentSubscriptions.map((sub) => {
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
-                const isNewUser =
-                  sub.user_created_at && new Date(sub.user_created_at) >= today;
+                const isNewUser = sub.user_created_at && new Date(sub.user_created_at) >= today;
                 const tier = tierPill(sub.tier);
                 return (
                   <ListRow
@@ -1087,7 +1095,11 @@ export default function AdminDashboard() {
               <ListCardHeader
                 tone="yellow"
                 title="Support Inbox"
-                meta={unreadSupportCount > 0 ? <Pill tone="yellow">{unreadSupportCount} unread</Pill> : undefined}
+                meta={
+                  unreadSupportCount > 0 ? (
+                    <Pill tone="yellow">{unreadSupportCount} unread</Pill>
+                  ) : undefined
+                }
                 action="All"
                 onAction={() => navigate('/admin/user-messages')}
               />
