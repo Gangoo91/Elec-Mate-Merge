@@ -25,7 +25,7 @@ const MATE_VCARD = [
   `IMPP:whatsapp:+${MATE_PHONE_RAW}`,
   'EMAIL;TYPE=WORK:founder@elec-mate.com',
   'URL:https://elec-mate.com',
-  "NOTE:Send anything: voice notes\\, photos\\, questions. \"morning brief\" / \"create a quote\"",
+  'NOTE:Send anything: voice notes\\, photos\\, questions. "morning brief" / "create a quote"',
   'END:VCARD',
   '',
 ].join('\r\n');
@@ -75,7 +75,7 @@ function buildHtml(firstName: string): string {
                     <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;color:#86efac;text-transform:uppercase;">Save Mate to your contacts</div>
                     <div style="margin-top:6px;font-size:18px;font-weight:700;color:#ffffff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;">${MATE_PHONE_DISPLAY}</div>
                     <p style="margin:10px 0 14px 0;font-size:13px;line-height:1.5;color:#cbd5e1;">
-                      Open the attached <strong>Mate.vcf</strong> on your phone — it'll save Mate to your contacts so WhatsApp shows "Mate" instead of a number.
+                      Save Mate to your phone contacts so WhatsApp shows "Mate" instead of a number — <a href="https://elec-mate.com/mate.vcf" style="color:#FFD700;text-decoration:underline;">download the contact card</a>.
                     </p>
                     <a href="${HELLO_LINK}" style="display:inline-block;padding:12px 20px;border-radius:12px;background:#25D366;color:#ffffff;font-weight:600;font-size:14px;text-decoration:none;">Open WhatsApp →</a>
                   </td>
@@ -162,12 +162,9 @@ export async function sendMateActivationEmail(args: SendArgs): Promise<void> {
         to: [{ email: args.toEmail, name: args.fullName || undefined }],
         subject: "You're chatting with Mate ⚡",
         htmlContent: buildHtml(firstName),
-        attachment: [
-          {
-            content: vcardBase64,
-            name: 'Mate.vcf',
-          },
-        ],
+        // Brevo rejects .vcf as a file extension on transactional attachments
+        // ("Unsupported file format: vcf"). The HTML body links to the vCard
+        // download endpoint hosted on elec-mate.com instead.
         tags: ['mate', 'activation'],
       }),
     });

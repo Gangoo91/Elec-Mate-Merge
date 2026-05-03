@@ -41,12 +41,7 @@ interface WaOnboardingBody {
 const CODE_REGEX = /^\d{6}$/;
 const PHONE_REGEX = /^\+\d{10,15}$/;
 
-function jsonError(
-  res: Response,
-  status: number,
-  message: string,
-  reply?: string
-): void {
+function jsonError(res: Response, status: number, message: string, reply?: string): void {
   res.status(status).json({
     success: false,
     error: message,
@@ -222,60 +217,80 @@ export async function handleWaOnboarding(req: Request, res: Response): Promise<v
       { onConflict: 'phone_number' }
     );
 
-    // ── 5. Invoke provision-business-ai with a service-minted user JWT ──
-    // We can't use the service-role key directly because provision-business-ai
-    // calls supabase.auth.getUser() to identify the caller. Mint a 5-minute
-    // user-scoped JWT via the existing get-agent-jwt edge function.
-    const jwtRes = await fetch(`${config.supabaseUrl}/functions/v1/get-agent-jwt`, {
+    // ── 5. Provision the agent. Two steps, no chicken-and-egg JWT dance.
+    //
+    //    a) provision-agent-vps (Supabase edge fn): mints + stores the agent
+    //       JWT, flips agent_status to 'active'. Auths via VPS API key, takes
+    //       user_id directly — works for never-provisioned users.
+    //
+    //    b) /api/provision-agent (this MCP server, called locally): creates
+    //       the per-user workspace, symlinks shared files, registers the
+    //       agent + peer binding in openclaw.json, fixes file ownership, and
+    //       writes the .restart-gateway marker that systemd's path unit
+    //       (openclaw-gateway-reload.path) reacts to. After this returns,
+    //       OpenClaw auto-restarts and the binding goes live.
+    //
+    // The previous flow tried to mint a phone-derived JWT via get-agent-jwt
+    // and call provision-business-ai. That couldn't work for new users
+    // because get-agent-jwt requires an existing agent_jwt_tokens row that
+    // only provisioning creates — pure chicken-and-egg.
+    const dbProvisionRes = await fetch(`${config.supabaseUrl}/functions/v1/provision-agent-vps`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-VPS-API-Key': config.vpsApiKey,
         Authorization: `Bearer ${config.supabaseAnonKey}`,
       },
-      body: JSON.stringify({ phone_number: sender_phone }),
+      body: JSON.stringify({ user_id: userId }),
     });
 
-    if (!jwtRes.ok) {
-      const errBody = (await jwtRes.json().catch(() => ({}))) as Record<string, unknown>;
-      console.error('[wa-onboarding] JWT mint failed:', errBody.error || jwtRes.statusText);
-      // Roll status back so the welcome page surfaces a retry.
-      await supabase
-        .from('profiles')
-        .update({ agent_status: 'provisioning' })
-        .eq('id', userId);
+    if (!dbProvisionRes.ok) {
+      const errBody = (await dbProvisionRes.json().catch(() => ({}))) as Record<string, unknown>;
+      console.error(
+        '[wa-onboarding] DB provision failed:',
+        errBody.error || dbProvisionRes.statusText
+      );
       jsonError(
         res,
         502,
-        'JWT mint failed',
+        'DB provisioning failed',
         "Activation hit a snag — I'll retry in a minute. If it's still not working, tap 'Generate new code' in the app."
       );
       return;
     }
 
-    const { jwt } = (await jwtRes.json()) as { jwt: string };
+    // b) Local VPS provisioning — workspace, openclaw binding, restart marker.
+    //    We need full_name + role for the workspace USER.md.
+    const { data: profileForVps } = await supabase
+      .from('profiles')
+      .select('full_name, role')
+      .eq('id', userId)
+      .maybeSingle();
 
-    const provisionRes = await fetch(
-      `${config.supabaseUrl}/functions/v1/provision-business-ai`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${jwt}`,
-        },
-      }
-    );
+    const vpsRes = await fetch(`http://127.0.0.1:${config.port}/api/provision-agent`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': config.vpsApiKey,
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        phone_number: sender_phone,
+        full_name: profileForVps?.full_name ?? 'Mate User',
+        role: profileForVps?.role ?? 'electrician',
+      }),
+    });
 
-    if (!provisionRes.ok) {
-      const errBody = (await provisionRes.json().catch(() => ({}))) as Record<string, unknown>;
-      console.error('[wa-onboarding] provision failed:', errBody.error || provisionRes.statusText);
-      // provision-business-ai already rolls agent_status back to 'provisioning' on
-      // VPS failure (line 223–238 of that function), so the user's welcome page
-      // will keep polling.
+    if (!vpsRes.ok) {
+      const errBody = (await vpsRes.json().catch(() => ({}))) as Record<string, unknown>;
+      console.error('[wa-onboarding] VPS provision failed:', errBody.error || vpsRes.statusText);
+      // DB side already activated; flip status back to 'provisioning' so the
+      // welcome page keeps polling and surfaces a retry.
+      await supabase.from('profiles').update({ agent_status: 'provisioning' }).eq('id', userId);
       jsonError(
         res,
         502,
-        'Provisioning failed',
+        'VPS provisioning failed',
         "Activation hit a snag — I'll retry in a minute. If it's still not working, tap 'Generate new code' in the app."
       );
       return;
@@ -318,16 +333,11 @@ export async function handleWaOnboarding(req: Request, res: Response): Promise<v
     res.status(200).json({
       success: true,
       reply:
-        "You're in ⚡ I'm Mate, your AI business assistant. Try: \"morning brief\" to see today's plan, or \"create a quote\" to start one.",
+        'You\'re in ⚡ I\'m Mate, your AI business assistant. Try: "morning brief" to see today\'s plan, or "create a quote" to start one.',
       user_id: userId,
     });
   } catch (err) {
     console.error('[wa-onboarding] unhandled error:', err);
-    jsonError(
-      res,
-      500,
-      'Internal error',
-      'Activation hit a snag — please try again in a minute.'
-    );
+    jsonError(res, 500, 'Internal error', 'Activation hit a snag — please try again in a minute.');
   }
 }

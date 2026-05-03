@@ -494,6 +494,172 @@ async function sendPaymentFailedEmail(
   }
 }
 
+/**
+ * Notify the founder (founder@elec-mate.com) every time someone new signs up.
+ * Fired once on `customer.subscription.created` for every tier. For Mate
+ * signups it also reports the live founder-slot count (X of 100) so the
+ * founder gets the dopamine hit of seeing the slots fill up.
+ *
+ * Fire-and-forget — never blocks the webhook response.
+ */
+async function sendFounderSignupNotification(args: {
+  customerEmail: string;
+  customerName: string;
+  customerPhone: string | null;
+  tier: string;
+  tierName: string;
+  isTrial: boolean;
+  isFounder: boolean;
+  amountPence: number;
+  currency: string;
+  isYearly: boolean;
+  subscriptionId: string;
+  userId: string;
+  founderSlotsLeft: number | null;
+  founderSlotsCap: number | null;
+}): Promise<void> {
+  const brevoApiKey = Deno.env.get('BREVO_API_KEY');
+  if (!brevoApiKey) {
+    console.warn('⚠️ BREVO_API_KEY not configured — skipping founder signup notification');
+    return;
+  }
+  const amount = (args.amountPence / 100).toFixed(2);
+  const period = args.isYearly ? '/yr' : '/mo';
+  const cur = args.currency.toUpperCase() === 'GBP' ? '£' : args.currency.toUpperCase() + ' ';
+  const firstName = args.customerName.trim().split(/\s+/)[0] || 'them';
+
+  // Subject — what hits the lock screen. Yellow squares, the name, the tier.
+  // Format: "🎉 Sarah Mitchell · Mate Founder · TRIAL"
+  const founderTag = args.isFounder ? ' Founder' : '';
+  const stateTag = args.isTrial ? ' · TRIAL' : ' · PAID';
+  const subject = `🎉 ${args.customerName} · ${args.tierName}${founderTag}${stateTag}`;
+
+  // Single status line that compresses tier + trial/paid + founder slot.
+  // Examples:
+  //   "Mate · 3-day trial · founder slot 14 of 100"
+  //   "Mate · paid"
+  //   "Apprentice · 7-day trial"
+  const slotsClaimed =
+    args.isFounder && args.founderSlotsLeft !== null && args.founderSlotsCap !== null
+      ? args.founderSlotsCap - args.founderSlotsLeft
+      : null;
+  const trialDaysForTier = args.tier.startsWith('business_ai') ? 3 : 7;
+  const statusBits: string[] = [args.tierName];
+  if (args.isTrial) statusBits.push(`${trialDaysForTier}-day trial`);
+  else statusBits.push('paid');
+  if (args.isFounder && slotsClaimed !== null && args.founderSlotsCap !== null) {
+    statusBits.push(`founder slot ${slotsClaimed} of ${args.founderSlotsCap}`);
+  }
+  const statusLine = statusBits.join(' · ');
+
+  // Founder progress visual — only when this signup *is* a founder claim.
+  const slotPct =
+    args.isFounder && slotsClaimed !== null && args.founderSlotsCap !== null
+      ? Math.round((slotsClaimed * 100) / args.founderSlotsCap)
+      : 0;
+  const slotBar =
+    args.isFounder && slotsClaimed !== null && args.founderSlotsCap !== null
+      ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;">
+  <tr><td style="padding:18px 20px;background:rgba(250,204,21,0.04);border:1px solid rgba(250,204,21,0.12);border-radius:14px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="font-size:11px;font-weight:700;letter-spacing:0.22em;color:#FACC15;text-transform:uppercase;">Founder programme</td>
+        <td align="right" style="font-size:13px;color:rgba(255,255,255,0.85);font-weight:700;">${slotsClaimed}<span style="color:rgba(255,255,255,0.35);font-weight:400;">/${args.founderSlotsCap}</span></td>
+      </tr>
+    </table>
+    <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;margin-top:10px;">
+      <div style="height:100%;width:${slotPct}%;background:linear-gradient(90deg,#FACC15,#F59E0B);border-radius:999px;"></div>
+    </div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:10px;line-height:1.5;">
+      ${args.founderSlotsLeft} spots left. ${args.customerName.split(/\s+/)[0]} locked in <span style="color:#FACC15;font-weight:600;">${cur}${amount}${period} forever</span>.
+    </div>
+  </td></tr>
+</table>`
+      : '';
+
+  const phoneLine = args.customerPhone
+    ? `<tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">Phone</td><td style="padding:6px 0;color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;">${args.customerPhone}</td></tr>`
+    : '';
+
+  const emailHtml = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e2e8f0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0a0a0a;">
+  <tr><td align="center" style="padding:32px 16px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+
+      <tr><td style="padding:0 4px 22px 4px;">
+        <span style="font-size:14px;font-weight:700;letter-spacing:-0.01em;color:#fff;">Elec-<span style="color:#FACC15;">Mate</span></span>
+        <span style="float:right;font-size:11px;font-weight:700;letter-spacing:0.22em;color:rgba(255,255,255,0.4);text-transform:uppercase;">Founder alert</span>
+      </td></tr>
+
+      <tr><td style="background:#111111;border:1px solid rgba(255,255,255,0.06);border-radius:24px;padding:34px 32px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.22em;color:#FACC15;text-transform:uppercase;">New signup ⚡</div>
+        <h1 style="margin:14px 0 6px 0;font-size:42px;line-height:1.05;font-weight:800;letter-spacing:-0.025em;color:#ffffff;">${args.customerName}</h1>
+        <p style="margin:0 0 8px 0;font-size:22px;line-height:1.3;font-weight:500;color:rgba(255,255,255,0.7);">just joined <span style="color:#FACC15;font-weight:700;">${args.tierName}</span>.</p>
+        <p style="margin:0;font-size:13px;line-height:1.5;color:rgba(255,255,255,0.55);">${statusLine}</p>
+        ${slotBar}
+        <div style="height:1px;background:rgba(255,255,255,0.06);margin:30px 0 24px 0;"></div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.22em;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:14px;">Details</div>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px;line-height:1.5;">
+          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);width:90px;">Email</td><td style="padding:6px 0;color:#fff;"><a href="mailto:${args.customerEmail}" style="color:#FACC15;text-decoration:none;">${args.customerEmail}</a></td></tr>
+          ${phoneLine}
+          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">Tier</td><td style="padding:6px 0;color:#fff;">${args.tierName}${args.isFounder ? ' · founder price locked in' : ''}</td></tr>
+          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">Amount</td><td style="padding:6px 0;color:#fff;font-weight:700;">${cur}${amount}${period}${args.isTrial ? ' <span style="color:rgba(255,255,255,0.45);font-weight:400;">(after 3-day trial)</span>' : ''}</td></tr>
+          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">User ID</td><td style="padding:6px 0;color:rgba(255,255,255,0.7);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;">${args.userId}</td></tr>
+          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">Sub ID</td><td style="padding:6px 0;color:rgba(255,255,255,0.7);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;">${args.subscriptionId}</td></tr>
+        </table>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:30px;">
+          <tr>
+            <td style="padding-right:6px;width:50%;">
+              <a href="https://elec-mate.com/admin/mate/${args.userId}" style="display:block;text-align:center;padding:14px;border-radius:14px;background:#FACC15;color:#000;font-weight:700;font-size:14px;text-decoration:none;letter-spacing:-0.01em;">View in admin →</a>
+            </td>
+            <td style="padding-left:6px;width:50%;">
+              <a href="mailto:${args.customerEmail}" style="display:block;text-align:center;padding:14px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;font-weight:600;font-size:14px;text-decoration:none;">Reply to ${firstName}</a>
+            </td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <tr><td style="padding:24px 4px 0 4px;font-size:11px;line-height:1.6;color:rgba(255,255,255,0.4);">
+        Sent ${new Date().toISOString()}. Founder signup notifications are on for this account.
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
+</body></html>`;
+
+  try {
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'api-key': brevoApiKey,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender: { email: 'founder@elec-mate.com', name: 'Elec-Mate Signups' },
+        to: [{ email: 'founder@elec-mate.com', name: 'Elec-Mate Founder' }],
+        replyTo: { email: args.customerEmail, name: args.customerName },
+        subject,
+        htmlContent: emailHtml,
+        tags: ['founder-notification', args.tier],
+      }),
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => '');
+      console.error(
+        `❌ Founder signup notification failed: Brevo ${res.status}: ${body.slice(0, 200)}`
+      );
+    } else {
+      console.log(`✅ Founder signup notification sent (${args.tierName} — ${args.customerName})`);
+    }
+  } catch (err) {
+    console.error('❌ Error sending founder signup notification:', err);
+  }
+}
+
 // Map Stripe price IDs to subscription tiers
 // CURRENT ACTIVE PRICES (as of Jan 2026)
 const PRICE_TO_TIER: Record<string, string> = {
@@ -875,9 +1041,11 @@ serve(async (req) => {
         const isNewSubscription = event.type === 'customer.subscription.created';
 
         // Founder hints — pulled off the subscription itself; no extra Stripe call
-        const subscriptionDiscounts = (subscription.discounts ?? subscription.discount
-          ? [subscription.discount as { coupon?: { id?: string } | null }].filter(Boolean)
-          : []) as Array<{ coupon?: { id?: string } | null }>;
+        const subscriptionDiscounts = (
+          (subscription.discounts ?? subscription.discount)
+            ? [subscription.discount as { coupon?: { id?: string } | null }].filter(Boolean)
+            : []
+        ) as Array<{ coupon?: { id?: string } | null }>;
         const founderHints = {
           subscriptionMeta: (subscription.metadata ?? null) as Record<string, string> | null,
           subscriptionDiscounts,
@@ -1127,6 +1295,75 @@ serve(async (req) => {
                 (err: Error) =>
                   logger.warn('Welcome email failed (non-fatal)', { error: err.message })
               );
+
+              // Founder signup notification — pings founder@elec-mate.com on every
+              // new subscription (every tier). For Mate signups it also reports
+              // the live founder slot count so the founder sees the slots fill up.
+              try {
+                const subPriceForNotify = subscription.items.data[0]?.price;
+                const amountPence = subPriceForNotify?.unit_amount || 0;
+                const currency = (subPriceForNotify?.currency || 'gbp').toUpperCase();
+                const isTrialing =
+                  subscription.status === 'trialing' ||
+                  (subscription.trial_end && subscription.trial_end * 1000 > Date.now());
+                const isFounderSignup =
+                  isFounderSubscription ||
+                  (typeof tier === 'string' && tier.startsWith('business_ai'));
+
+                // Pull the user's profile to grab their phone (Mate users have
+                // an `agent_whatsapp_number` set during signup) and to surface
+                // the slot count for Mate tier emails.
+                let customerPhone: string | null = null;
+                let founderSlotsLeft: number | null = null;
+                let founderSlotsCap: number | null = null;
+                try {
+                  const { data: profileRow } = await supabase
+                    .from('profiles')
+                    .select('agent_whatsapp_number')
+                    .eq('id', userId)
+                    .maybeSingle();
+                  customerPhone = profileRow?.agent_whatsapp_number ?? null;
+                } catch {
+                  /* non-fatal */
+                }
+                if (isFounderSignup) {
+                  try {
+                    const { data: counts } = await supabase.rpc('mate_founder_count');
+                    const row = Array.isArray(counts) ? counts[0] : counts;
+                    if (row && typeof row.slots_left === 'number') {
+                      founderSlotsLeft = row.slots_left;
+                      founderSlotsCap = row.cap;
+                    }
+                  } catch {
+                    /* non-fatal */
+                  }
+                }
+
+                sendFounderSignupNotification({
+                  customerEmail: customer.email,
+                  customerName: userName,
+                  customerPhone,
+                  tier,
+                  tierName,
+                  isTrial: !!isTrialing,
+                  isFounder: !!isFounderSignup,
+                  amountPence,
+                  currency,
+                  isYearly,
+                  subscriptionId: subscription.id,
+                  userId,
+                  founderSlotsLeft,
+                  founderSlotsCap,
+                }).catch((err: Error) =>
+                  logger.warn('Founder signup notification failed (non-fatal)', {
+                    error: err.message,
+                  })
+                );
+              } catch (notifyErr: unknown) {
+                logger.warn('Founder signup notification setup failed (non-fatal)', {
+                  error: (notifyErr as Error)?.message,
+                });
+              }
 
               // Also create in-app notification
               await supabase.from('notifications').insert({

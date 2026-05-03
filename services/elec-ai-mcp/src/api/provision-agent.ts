@@ -286,15 +286,25 @@ exec /opt/elec-ai/mcp-call "$@"
       console.log(`[provision] Agent ${user_id} already exists, continuing`);
     }
 
-    // 7. Add peer-based WhatsApp binding + allowFrom in openclaw.json
-    //    We write directly to openclaw.json because `openclaw agents bind`
-    //    creates accountId bindings (wrong — accountId = bot login, not sender).
-    //    Peer bindings match the sender's phone number (E.164 format).
+    // 7. Patch openclaw.json — peer binding, allowFrom, AND systemPromptOverride.
+    //
+    //    Three jobs in one read+write:
+    //      a) Peer binding for `phone_number → user_id` so OpenClaw routes the
+    //         user's messages to their per-user agent. We write directly
+    //         because `openclaw agents bind` creates accountId bindings
+    //         (wrong — accountId = bot login, not sender). Peer bindings
+    //         match the sender's phone number in E.164 format.
+    //      b) JID added to channels.whatsapp.allowFrom (allowlist mode).
+    //      c) systemPromptOverride copied from `main` (canonical agent) onto
+    //         the new agent's entry, so every user has the full MCP toolset
+    //         in their agent's prompt — voice, regs, business tools, the
+    //         lot. Without this, fresh agents miss out on the tool reference
+    //         and refuse to use voice notes / lookup_regulation / etc.
     try {
       const raw = await readFile(OPENCLAW_CONFIG, 'utf-8');
       const ocConfig = JSON.parse(raw);
 
-      // Add peer-based binding (skip if already exists for this agent)
+      // (a) Peer binding
       const bindings: Array<Record<string, unknown>> = ocConfig.bindings || [];
       const alreadyBound = bindings.some((b: Record<string, unknown>) => b.agentId === user_id);
       if (!alreadyBound) {
@@ -311,7 +321,7 @@ exec /opt/elec-ai/mcp-call "$@"
         console.log(`[provision] Binding for ${user_id} already exists`);
       }
 
-      // Add JID to allowFrom (dmPolicy: "allowlist")
+      // (b) allowFrom
       const allowFrom: string[] = ocConfig.channels?.whatsapp?.allowFrom || [];
       if (!allowFrom.includes(jid)) {
         allowFrom.push(jid);
@@ -321,30 +331,74 @@ exec /opt/elec-ai/mcp-call "$@"
         console.log(`[provision] ${jid} already in allowFrom`);
       }
 
+      // (c) systemPromptOverride — inherit from `main`. Source-of-truth lives
+      //     on `main` so a single edit there propagates to every newly
+      //     provisioned (or re-provisioned) user. If `main` ever loses its
+      //     prompt, fall back to the first agent in the list that has one.
+      const agentList: Array<Record<string, unknown>> = ocConfig.agents?.list ?? [];
+      const canonical =
+        (agentList.find((a) => a.id === 'main' && typeof a.systemPromptOverride === 'string')
+          ?.systemPromptOverride as string | undefined) ??
+        (agentList.find(
+          (a) =>
+            typeof a.systemPromptOverride === 'string' &&
+            (a.systemPromptOverride as string).length > 0
+        )?.systemPromptOverride as string | undefined);
+
+      if (canonical) {
+        const target = agentList.find((a) => a.id === user_id);
+        if (target) {
+          const before = (target.systemPromptOverride as string | undefined) ?? '';
+          if (before !== canonical) {
+            target.systemPromptOverride = canonical;
+            console.log(
+              `[provision] systemPromptOverride synced from main (${canonical.length} chars)`
+            );
+          } else {
+            console.log(`[provision] systemPromptOverride already up to date`);
+          }
+        } else {
+          console.warn(
+            `[provision] Agent ${user_id} not found in agents.list — cannot set systemPromptOverride`
+          );
+        }
+      } else {
+        console.warn(
+          `[provision] No source systemPromptOverride found on any existing agent — new agent will use OpenClaw default`
+        );
+      }
+
       await writeFile(OPENCLAW_CONFIG, JSON.stringify(ocConfig, null, 2), 'utf-8');
     } catch (err: unknown) {
       // Non-fatal — agent still works, just needs manual config entry
       console.error(`[provision] Failed to update openclaw.json: ${(err as Error).message}`);
     }
 
-    // 8. Fix ownership — Docker runs as root, OpenClaw gateway runs as openclaw user
+    // 8. Fix ownership — Docker runs as root, OpenClaw gateway runs as
+    //    openclaw (uid 1000). We chown only the things THIS provision wrote:
+    //    the user's workspace, agent dir, and openclaw.json. We deliberately
+    //    do NOT recursively chown plugin-runtime-deps any more — that's
+    //    OpenClaw's own bundled runtime, only needs a one-time fix at deploy
+    //    (which the initial install does). Walking it on every signup added
+    //    ~10-15s with no benefit.
     try {
-      execSync(`chown -R openclaw:openclaw ${workspaceDir}`);
+      execSync(`chown -R 1000:1000 ${workspaceDir}`);
       const agentDir = join(OPENCLAW_HOME, 'agents', user_id);
-      execSync(`chown -R openclaw:openclaw ${agentDir}`);
-      console.log(`[provision] Fixed ownership for workspace and agent dirs`);
+      execSync(`chown -R 1000:1000 ${agentDir}`);
+      execSync(`chown 1000:1000 ${OPENCLAW_CONFIG}`);
+      console.log(`[provision] Fixed ownership: workspace, agent dir, openclaw.json`);
     } catch (chownErr) {
       // Non-fatal — log but continue (dirs may still work if permissions are open)
       console.error(`[provision] chown failed: ${(chownErr as Error).message}`);
     }
 
-    // 9. Signal gateway restart by writing a marker file (host systemd watches this)
-    try {
-      await writeFile(join(OPENCLAW_HOME, '.restart-gateway'), Date.now().toString());
-      console.log(`[provision] Gateway restart marker written`);
-    } catch (restartErr) {
-      console.error(`[provision] Failed to write restart marker: ${(restartErr as Error).message}`);
-    }
+    // 9. NO restart marker. OpenClaw has a config watcher on openclaw.json
+    //    that picks up bindings + agent additions as a soft reload, without
+    //    dropping the WhatsApp socket. Writing `.restart-gateway` triggers a
+    //    full systemd restart via openclaw-gateway-reload.path, which kills
+    //    every active conversation for ~30s. Soft reload is the right tool.
+    //    Keep the marker file for manual emergencies (operator can `touch`
+    //    it on the VPS) — we just don't write it from here.
 
     // Verify workspace
     const files = await readdir(workspaceDir);

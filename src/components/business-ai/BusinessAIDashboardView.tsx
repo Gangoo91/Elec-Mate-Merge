@@ -1,30 +1,7 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  Phone,
-  Receipt,
-  FileText,
-  ListTodo,
-  ClipboardCheck,
-  BookOpen,
-  MessageSquare,
-  MessageCircle,
-  Users,
-  Zap,
-  CheckCircle2,
-  XCircle,
-  Clock,
-  CalendarClock,
-  Mail,
-  Bot,
-  ExternalLink,
-  Settings,
-  AlertTriangle,
-  BarChart3,
-  ContactRound,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useBusinessAIProfile } from './useBusinessAIProfile';
 import { useAgentActivity, AgentAction } from '@/hooks/useAgentActivity';
@@ -35,465 +12,465 @@ import { openExternalUrl } from '@/utils/open-external-url';
 import { MATE_PHONE_DISPLAY, MATE_WHATSAPP_LINK } from '@/constants/mate';
 import { downloadMateVCard } from '@/utils/mate-vcard';
 import { FounderBadge } from './FounderBanner';
+import {
+  capabilityGroups,
+  getToolMeta,
+  extractToolName,
+  estimateMinutesSaved,
+  formatMinutes,
+} from './mateCapabilities';
 
-const containerVariants = {
+// ─── Animation ────────────────────────────────────────────────────────────────
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+};
+
+const stagger = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.04, delayChildren: 0 },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.06 } },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.25, ease: 'easeOut' },
-  },
-};
+// ─── Editorial atoms ─────────────────────────────────────────────────────────
+const Y = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-elec-yellow font-semibold">{children}</span>
+);
 
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-elec-yellow">
+    {children}
+  </span>
+);
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 function maskPhone(phone: string): string {
   if (phone.length < 6) return phone;
-  // Show prefix + last 2 digits so user can recognise their number
   const clean = phone.replace(/\s/g, '');
   const prefix = clean.slice(0, 7); // e.g. +447507
-  const last2 = clean.slice(-2); // e.g. 03
-  // Format nicely: +44 7507 ••• •03
+  const last2 = clean.slice(-2);
   const p1 = prefix.slice(0, 3); // +44
   const p2 = prefix.slice(3, 7); // 7507
   return `${p1} ${p2} \u2022\u2022\u2022 \u2022${last2}`;
 }
 
-function whatsAppLink(phone: string | null): string {
-  if (!phone) return 'https://wa.me/';
-  const clean = phone.replace(/[^0-9]/g, '');
-  return `https://wa.me/${clean}`;
-}
-
-// "What to ask Mate" — grouped by context with real example prompts
-const askMateGroups = [
-  {
-    title: 'Running Your Business',
-    cards: [
-      {
-        icon: Receipt,
-        label: 'Invoicing',
-        prompts: ['Chase Parker & Sons', "Who hasn't paid?", 'Send a reminder to all overdue'],
-      },
-      {
-        icon: FileText,
-        label: 'Quoting',
-        prompts: [
-          'Draft a quote for a full rewire in Chorlton',
-          'Follow up on the Henderson quote',
-        ],
-      },
-      {
-        icon: ListTodo,
-        label: 'Tasks',
-        prompts: ["What's on today?", 'Add task: order MCBs for Friday', 'Mark the Chen EICR done'],
-      },
-      {
-        icon: BarChart3,
-        label: 'Analytics',
-        prompts: ['How much am I owed?', 'Revenue this month', 'Busiest week this year'],
-      },
-    ],
-  },
-  {
-    title: 'On Site',
-    cards: [
-      {
-        icon: BookOpen,
-        label: 'Regs & Knowledge',
-        prompts: [
-          'Max Zs for a B32 on TN-C-S?',
-          'Cable size for a 9.5kW shower?',
-          "What's Reg 411.4.4?",
-        ],
-      },
-      {
-        icon: ClipboardCheck,
-        label: 'Certs & Compliance',
-        prompts: ["File Mrs Chen's EICR", 'Any certs expiring soon?', 'Send the EIC to the client'],
-      },
-    ],
-  },
-  {
-    title: 'Your Clients',
-    cards: [
-      {
-        icon: Users,
-        label: 'Client Comms',
-        prompts: [
-          "Confirm Thursday's appointment with Walsh",
-          "Text the Henderson's I'm running 20 mins late",
-        ],
-      },
-      {
-        icon: MessageSquare,
-        label: 'Leads & Enquiries',
-        prompts: ['Any new leads today?', 'Reply to David Walsh — I can do next Tuesday'],
-      },
-    ],
-  },
-];
-
-// Map action_type to icon + colour
-function actionMeta(type: string): {
-  icon: React.ElementType;
-  color: string;
-  bg: string;
-  label: string;
-} {
-  const t = type?.toLowerCase() ?? '';
-  if (t.includes('invoice') || t.includes('payment'))
-    return { icon: Receipt, color: 'text-green-400', bg: 'bg-green-500/10', label: 'Invoice' };
-  if (t.includes('quote'))
-    return { icon: FileText, color: 'text-blue-400', bg: 'bg-blue-500/10', label: 'Quote' };
-  if (t.includes('email') || t.includes('message'))
-    return { icon: Mail, color: 'text-purple-400', bg: 'bg-purple-500/10', label: 'Message' };
-  if (t.includes('cert') || t.includes('expiry') || t.includes('renewal'))
-    return { icon: CalendarClock, color: 'text-amber-400', bg: 'bg-amber-500/10', label: 'Cert' };
-  if (t.includes('task'))
-    return { icon: ListTodo, color: 'text-amber-400', bg: 'bg-amber-500/10', label: 'Task' };
-  if (t.includes('revoke') || t.includes('provision'))
-    return { icon: Bot, color: 'text-white', bg: 'bg-white/[0.05]', label: 'System' };
-  return { icon: Zap, color: 'text-amber-400', bg: 'bg-amber-500/10', label: 'Action' };
-}
-
-function ActivityCard({ action }: { action: AgentAction }) {
-  const { icon: Icon, color, bg, label } = actionMeta(action.action_type);
-  const success = !action.outcome || action.outcome === 'success';
+// ─── Activity row — humanised, linkable ─────────────────────────────────────
+function ActivityRow({ action }: { action: AgentAction }) {
+  const toolName = extractToolName(action.description);
+  const meta = getToolMeta(toolName);
   const timeAgo = formatDistanceToNow(parseISO(action.created_at), { addSuffix: true });
+  const failed = action.outcome && action.outcome !== 'success';
+
+  const inner = (
+    <div className="grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6 py-5 sm:py-6 items-start">
+      <div className="flex flex-col items-start gap-1 pt-1 min-w-[80px] sm:min-w-[110px]">
+        <span className="text-elec-yellow text-[13px] sm:text-sm font-bold tabular-nums tracking-tight">
+          {timeAgo}
+        </span>
+        <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/70">
+          {meta.tag}
+        </span>
+      </div>
+      <div className="space-y-1 pt-1 min-w-0">
+        <p className="text-[15px] sm:text-base font-semibold tracking-[-0.01em] leading-snug text-white">
+          {meta.label}
+          {failed && <span className="ml-2 text-[11px] font-medium text-red-400">· failed</span>}
+        </p>
+        {action.customer_name && (
+          <p className="text-[13px] text-white/60 truncate">{action.customer_name}</p>
+        )}
+        {meta.route && (
+          <p className="text-[12px] text-white/40 group-hover:text-elec-yellow transition-colors">
+            View in app →
+          </p>
+        )}
+      </div>
+    </div>
+  );
+
+  const rowClass = 'border-b border-white/[0.06]';
+
+  if (meta.route) {
+    return (
+      <motion.div variants={fadeUp} className={rowClass}>
+        <Link
+          to={meta.route}
+          className="group block touch-manipulation rounded-lg -mx-2 px-2 hover:bg-white/[0.02] active:bg-white/[0.04] transition-colors"
+        >
+          {inner}
+        </Link>
+      </motion.div>
+    );
+  }
 
   return (
-    <div className="flex items-start gap-3 py-3 border-b border-white/[0.05] last:border-0">
-      <div className={`w-8 h-8 rounded-xl ${bg} flex items-center justify-center shrink-0 mt-0.5`}>
-        <Icon className={`${color}`} style={{ height: 15, width: 15 }} />
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-0.5">
-          <span className={`text-[10px] font-semibold ${color} ${bg} px-1.5 py-0.5 rounded`}>
-            {label}
-          </span>
-        </div>
-        <p className="text-sm text-white leading-snug">{action.description}</p>
-        {action.customer_name && (
-          <p className="text-xs text-white mt-0.5 truncate">{action.customer_name}</p>
-        )}
-        <div className="flex items-center gap-2 mt-1">
-          <Clock style={{ height: 10, width: 10 }} className="text-white" />
-          <span className="text-[10px] text-white">{timeAgo}</span>
-        </div>
-      </div>
-      {action.outcome && (
-        <div className="shrink-0 mt-0.5">
-          {success ? (
-            <CheckCircle2 style={{ height: 14, width: 14 }} className="text-green-400/70" />
-          ) : (
-            <XCircle style={{ height: 14, width: 14 }} className="text-red-400/70" />
-          )}
-        </div>
-      )}
-    </div>
+    <motion.div variants={fadeUp} className={rowClass}>
+      {inner}
+    </motion.div>
   );
 }
 
+// ─── Big editorial stat (no icons, no card chrome) ──────────────────────────
+type Tone = 'default' | 'red' | 'green';
+
+function Stat({
+  label,
+  value,
+  detail,
+  valueTone = 'default',
+  detailTone = 'default',
+}: {
+  label: string;
+  value: number | null;
+  detail: string | null;
+  valueTone?: Tone;
+  detailTone?: Tone;
+}) {
+  const valueClass =
+    valueTone === 'red' ? 'text-red-400' : valueTone === 'green' ? 'text-green-400' : 'text-white';
+  const detailClass =
+    detailTone === 'red'
+      ? 'text-red-400'
+      : detailTone === 'green'
+        ? 'text-green-400'
+        : 'text-elec-yellow';
+  return (
+    <motion.div variants={fadeUp} className="space-y-2">
+      <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/55">{label}</div>
+      {value === null ? (
+        <div className="h-12 w-20 bg-white/[0.05] rounded animate-pulse" />
+      ) : (
+        <div
+          className={`text-[44px] sm:text-[56px] font-bold tracking-[-0.03em] leading-none tabular-nums ${valueClass}`}
+        >
+          {value}
+        </div>
+      )}
+      {detail && <div className={`text-[13px] font-medium ${detailClass}`}>{detail}</div>}
+    </motion.div>
+  );
+}
+
+// ═════════ DASHBOARD VIEW ════════════════════════════════════════════════════
 export function BusinessAIDashboardView() {
   const { profile, whatsappNumber } = useBusinessAIProfile();
   const { actions, isLoading: activityLoading } = useAgentActivity(12);
   const { business, isLoading: dashLoading } = useDashboardData();
   const { counts: taskCounts, isLoading: tasksLoading } = useSparkTasks('all');
   const healthStatus = profile?.agent_health_status ?? 'healthy';
-  const firstName = profile?.full_name?.split(' ')[0] || 'there';
+  const rawFirst = profile?.full_name?.split(' ')[0] || 'there';
+  const firstName = rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1).toLowerCase();
 
-  // Count actions from the last 7 days
-  const weeklyActionCount = useMemo(() => {
+  // Actions in the last 7 days — used for activity count + time-saved estimate
+  const weeklyActions = useMemo(() => {
     const sevenDaysAgo = subDays(new Date(), 7);
-    return actions.filter((a) => isAfter(parseISO(a.created_at), sevenDaysAgo)).length;
+    return actions.filter((a) => isAfter(parseISO(a.created_at), sevenDaysAgo));
   }, [actions]);
+  const weeklyActionCount = weeklyActions.length;
+  const weeklyMinutesSaved = useMemo(() => estimateMinutesSaved(weeklyActions), [weeklyActions]);
 
   const statsLoading = dashLoading || tasksLoading;
+  const isOnline = healthStatus === 'healthy';
 
   return (
-    <div className="min-h-screen bg-background">
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="max-w-lg mx-auto pb-24 space-y-5"
-      >
-        {/* Back button */}
-        <motion.div variants={itemVariants} className="px-4 pt-4">
-          <Link to="/electrician">
-            <Button
-              variant="ghost"
-              className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
-            >
-              <ArrowLeft className="mr-2 h-5 w-5" />
-              Back
-            </Button>
-          </Link>
-        </motion.div>
+    <div className="min-h-screen bg-background text-white pb-[calc(env(safe-area-inset-bottom)+24px)]">
+      {/* Top nav */}
+      <div className="px-4 sm:px-6 pt-3 pb-1 max-w-6xl mx-auto">
+        <Link to="/electrician">
+          <Button
+            variant="ghost"
+            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Electrical Hub
+          </Button>
+        </Link>
+      </div>
 
-        {/* ── 1. Hero — Agent Status ── */}
-        <motion.div variants={itemVariants} className="px-4">
-          <div className="relative overflow-hidden rounded-2xl">
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/15 via-yellow-500/10 to-amber-600/5" />
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-amber-500/[0.08] blur-3xl rounded-full" />
-            <div className="relative p-5 sm:p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-xs font-medium text-green-400">
-                      {healthStatus === 'healthy' ? 'Online' : healthStatus}
-                    </span>
-                    <FounderBadge isFounder={profile?.is_founder} />
-                  </div>
-                  <h1 className="text-xl sm:text-2xl font-bold text-white">Hey {firstName}</h1>
-                  <p className="text-sm text-white mt-1">Mate's got your back today</p>
-                </div>
-                <div className="p-3 rounded-2xl bg-amber-500/10">
-                  <Zap className="h-7 w-7 text-amber-400" />
-                </div>
-              </div>
-
-              {/* Message Mate — primary CTA */}
-              <div className="space-y-2">
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-green-500/[0.08] border border-green-500/20">
-                  <div className="p-2 rounded-lg bg-green-500/10 shrink-0">
-                    <MessageCircle className="h-4 w-4 text-green-400" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs text-white font-medium">Message Mate</div>
-                    <div className="text-sm font-mono font-semibold text-white">
-                      {MATE_PHONE_DISPLAY}
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => openExternalUrl(MATE_WHATSAPP_LINK)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-green-600 text-white text-xs font-semibold touch-manipulation h-9 shrink-0"
-                  >
-                    WhatsApp
-                    <ExternalLink style={{ height: 12, width: 12 }} />
-                  </button>
-                </div>
-
-                {/* User's connected number — secondary */}
-                <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.05]">
-                  <Phone className="h-3.5 w-3.5 text-green-400 shrink-0" />
-                  <span className="text-xs text-white">Your number:</span>
-                  <span className="text-xs font-mono text-white">
-                    {whatsappNumber ? maskPhone(whatsappNumber) : 'Not connected'}
-                  </span>
-                </div>
-
-                {/* Save Mate to phone contacts */}
-                <button
-                  type="button"
-                  onClick={downloadMateVCard}
-                  className="flex items-center justify-center gap-2 w-full px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] active:scale-[0.99] text-xs text-white touch-manipulation transition-all"
-                >
-                  <ContactRound className="h-3.5 w-3.5 text-elec-yellow" />
-                  Save Mate to phone contacts
-                </button>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── 2. Live Stats Strip ── */}
-        <motion.div variants={itemVariants} className="px-4">
-          <div className="grid grid-cols-2 gap-2.5">
-            {/* Outstanding invoices */}
-            <div
-              className="rounded-xl p-3.5 border border-white/[0.06] relative overflow-hidden"
-              style={{ background: 'rgba(255,255,255,0.03)' }}
-            >
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500 rounded-l-xl" />
-              <div className="flex items-center gap-2 mb-1.5">
-                <Receipt className="text-amber-400" style={{ height: 14, width: 14 }} />
-                <span className="text-[11px] text-white">Outstanding</span>
-              </div>
-              {statsLoading ? (
-                <div className="h-7 w-16 bg-white/[0.05] rounded animate-pulse" />
-              ) : (
-                <>
-                  <div className="text-xl font-bold text-white">{business.unpaidInvoices}</div>
-                  {business.overdueValue > 0 && (
-                    <div className="text-[11px] text-amber-400 font-medium mt-0.5">
-                      £{business.overdueValue.toLocaleString()} overdue
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-
-            {/* Overdue invoices */}
-            <div
-              className="rounded-xl p-3.5 border border-white/[0.06] relative overflow-hidden"
-              style={{ background: 'rgba(255,255,255,0.03)' }}
-            >
-              <div
-                className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-xl ${business.overdueInvoices > 0 ? 'bg-red-500' : 'bg-green-500'}`}
+      {/* ═════════ HERO ═════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute -bottom-40 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-elec-yellow/[0.05] blur-[120px]" />
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
+          className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-6 sm:pt-16 pb-12 sm:pb-20"
+        >
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-2.5 mb-7 sm:mb-10">
+            <span className="relative flex h-2 w-2">
+              <span
+                className={`absolute inset-0 rounded-full ${isOnline ? 'bg-green-500 animate-ping' : 'bg-amber-500'} opacity-75`}
               />
-              <div className="flex items-center gap-2 mb-1.5">
-                <AlertTriangle
-                  className={business.overdueInvoices > 0 ? 'text-red-400' : 'text-green-400'}
-                  style={{ height: 14, width: 14 }}
-                />
-                <span className="text-[11px] text-white">Overdue</span>
-              </div>
-              {statsLoading ? (
-                <div className="h-7 w-10 bg-white/[0.05] rounded animate-pulse" />
-              ) : (
-                <div
-                  className={`text-xl font-bold ${business.overdueInvoices > 0 ? 'text-red-400' : 'text-green-400'}`}
-                >
-                  {business.overdueInvoices}
-                </div>
-              )}
-            </div>
+              <span
+                className={`relative h-2 w-2 rounded-full ${isOnline ? 'bg-green-500' : 'bg-amber-500'}`}
+              />
+            </span>
+            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-white">
+              {isOnline ? 'Live · Online' : `Status · ${healthStatus}`}
+            </span>
+            <FounderBadge isFounder={profile?.is_founder} />
+          </motion.div>
 
-            {/* Open quotes */}
-            <div
-              className="rounded-xl p-3.5 border border-white/[0.06] relative overflow-hidden"
-              style={{ background: 'rgba(255,255,255,0.03)' }}
-            >
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-l-xl" />
-              <div className="flex items-center gap-2 mb-1.5">
-                <FileText className="text-blue-400" style={{ height: 14, width: 14 }} />
-                <span className="text-[11px] text-white">Open Quotes</span>
-              </div>
-              {statsLoading ? (
-                <div className="h-7 w-10 bg-white/[0.05] rounded animate-pulse" />
-              ) : (
-                <>
-                  <div className="text-xl font-bold text-white">{business.activeQuotes}</div>
-                  {business.quoteValue > 0 && (
-                    <div className="text-[11px] text-blue-400 font-medium mt-0.5">
-                      {business.formattedQuoteValue} pipeline
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+          <motion.h1
+            variants={fadeUp}
+            className="text-[44px] sm:text-[80px] lg:text-[96px] font-bold tracking-[-0.035em] leading-[0.95] text-white"
+          >
+            Hey, {firstName}.
+            <br />
+            Mate&apos;s <span className="text-elec-yellow">got your back</span> today.
+          </motion.h1>
 
-            {/* Tasks today */}
-            <div
-              className="rounded-xl p-3.5 border border-white/[0.06] relative overflow-hidden"
-              style={{ background: 'rgba(255,255,255,0.03)' }}
+          <motion.div
+            variants={fadeUp}
+            className="mt-8 sm:mt-10 space-y-2 text-base sm:text-lg leading-relaxed"
+          >
+            <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/50">
+                Mate&apos;s on
+              </span>
+              <span className="font-mono text-base sm:text-xl text-white tracking-tight">
+                {MATE_PHONE_DISPLAY}
+              </span>
+            </p>
+            <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/50">
+                Your number
+              </span>
+              <span className="font-mono text-base sm:text-xl text-white tracking-tight">
+                {whatsappNumber ? maskPhone(whatsappNumber) : 'Not connected'}
+              </span>
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            className="mt-9 sm:mt-12 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-7"
+          >
+            <Button
+              onClick={() => openExternalUrl(MATE_WHATSAPP_LINK)}
+              className="h-14 px-8 text-base font-bold rounded-full active:scale-[0.98] touch-manipulation transition-all bg-elec-yellow text-black hover:bg-elec-yellow/90 shadow-[0_20px_60px_-20px_rgba(250,204,21,0.5)]"
             >
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500 rounded-l-xl" />
-              <div className="flex items-center gap-2 mb-1.5">
-                <ListTodo className="text-amber-400" style={{ height: 14, width: 14 }} />
-                <span className="text-[11px] text-white">Tasks Today</span>
-              </div>
-              {statsLoading ? (
-                <div className="h-7 w-10 bg-white/[0.05] rounded animate-pulse" />
-              ) : (
-                <>
-                  <div className="text-xl font-bold text-white">{taskCounts.today}</div>
-                  {taskCounts.overdue > 0 && (
-                    <div className="text-[11px] text-red-400 font-medium mt-0.5">
-                      {taskCounts.overdue} overdue
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+              Open WhatsApp
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+            <button
+              type="button"
+              onClick={downloadMateVCard}
+              className="text-sm text-white/70 hover:text-white underline underline-offset-4 decoration-white/20 hover:decoration-white/60 touch-manipulation self-start sm:self-center h-11 sm:h-auto"
+            >
+              Save Mate to phone contacts
+            </button>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* ═════════ TODAY'S NUMBERS ══════════════════════════════════ */}
+      <section className="relative border-t border-white/[0.06]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={stagger}
+          className="max-w-7xl mx-auto px-5 sm:px-8 py-14 sm:py-20"
+        >
+          <motion.div variants={fadeUp} className="mb-10 sm:mb-14">
+            <Eyebrow>Today&apos;s numbers</Eyebrow>
+            <h2 className="mt-3 text-3xl sm:text-5xl font-bold tracking-[-0.02em] leading-[1.05] text-white">
+              What&apos;s on <Y>the slate.</Y>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8">
+            <Stat
+              label="Outstanding"
+              value={statsLoading ? null : business.unpaidInvoices}
+              detail={
+                business.overdueValue > 0
+                  ? `£${business.overdueValue.toLocaleString()} overdue`
+                  : null
+              }
+            />
+            <Stat
+              label="Overdue"
+              value={statsLoading ? null : business.overdueInvoices}
+              detail={business.overdueInvoices > 0 ? 'invoices late' : 'all clear'}
+              valueTone={business.overdueInvoices > 0 ? 'red' : 'green'}
+              detailTone={business.overdueInvoices > 0 ? 'red' : 'green'}
+            />
+            <Stat
+              label="Open quotes"
+              value={statsLoading ? null : business.activeQuotes}
+              detail={business.quoteValue > 0 ? `${business.formattedQuoteValue} pipeline` : null}
+            />
+            <Stat
+              label="Tasks today"
+              value={statsLoading ? null : taskCounts.today}
+              detail={taskCounts.overdue > 0 ? `${taskCounts.overdue} overdue` : null}
+              detailTone={taskCounts.overdue > 0 ? 'red' : 'default'}
+            />
           </div>
         </motion.div>
+      </section>
 
-        {/* ── 3. Activity Feed ── */}
-        <motion.div variants={itemVariants} className="px-4 space-y-3">
-          <div className="flex items-center justify-between px-1">
-            <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
-              Recent Activity
-            </h3>
+      {/* ═════════ TIME SAVED ═══════════════════════════════════════ */}
+      {weeklyMinutesSaved > 0 && (
+        <section className="relative border-t border-white/[0.06]">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={stagger}
+            className="max-w-7xl mx-auto px-5 sm:px-8 py-12 sm:py-16"
+          >
+            <motion.div
+              variants={fadeUp}
+              className="grid gap-6 sm:gap-10 lg:grid-cols-[1fr_auto] lg:items-end"
+            >
+              <div>
+                <Eyebrow>Time saved this week</Eyebrow>
+                <h2 className="mt-3 text-[40px] sm:text-[64px] lg:text-[80px] font-bold tracking-[-0.035em] leading-[0.95] text-white tabular-nums">
+                  <span className="text-elec-yellow">{formatMinutes(weeklyMinutesSaved)}</span>
+                  <span className="text-white/40"> back on the tools.</span>
+                </h2>
+                <p className="mt-4 text-sm sm:text-base text-white/55 leading-relaxed max-w-md">
+                  Estimated against the average time it takes to do these things by hand — drafting
+                  quotes, looking up regs, sorting receipts, planning routes.
+                </p>
+              </div>
+              <div className="text-sm sm:text-base text-white/70 lg:text-right">
+                <div className="text-elec-yellow font-bold tabular-nums">{weeklyActionCount}</div>
+                <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/55">
+                  action{weeklyActionCount !== 1 ? 's' : ''} logged
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </section>
+      )}
+
+      {/* ═════════ RECENT ACTIVITY ══════════════════════════════════ */}
+      <section className="relative border-t border-white/[0.06]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={stagger}
+          className="max-w-7xl mx-auto px-5 sm:px-8 py-14 sm:py-20"
+        >
+          <motion.div
+            variants={fadeUp}
+            className="mb-8 sm:mb-12 flex flex-wrap items-end justify-between gap-3"
+          >
+            <div>
+              <Eyebrow>Recent activity</Eyebrow>
+              <h2 className="mt-3 text-3xl sm:text-5xl font-bold tracking-[-0.02em] leading-[1.05] text-white">
+                What <Y>Mate did.</Y>
+              </h2>
+              <p className="mt-3 text-sm text-white/50">Tap any row to jump to it in the app.</p>
+            </div>
             {weeklyActionCount > 0 && (
-              <span className="text-[10px] text-white">
+              <span className="text-sm text-white/55">
                 {weeklyActionCount} action{weeklyActionCount !== 1 ? 's' : ''} this week
               </span>
             )}
-          </div>
+          </motion.div>
 
-          <div className="glass-premium rounded-2xl px-4 py-1">
-            {activityLoading ? (
-              <div className="py-6 flex justify-center">
-                <div className="w-5 h-5 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin" />
-              </div>
-            ) : actions.length === 0 ? (
-              <div className="py-8 text-center space-y-3">
-                <Zap className="h-8 w-8 text-amber-400/20 mx-auto" />
-                <p className="text-sm text-white">No activity yet — Mate's ready when you are</p>
-                <button
-                  type="button"
-                  onClick={() => openExternalUrl(MATE_WHATSAPP_LINK)}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-green-600 text-white text-xs font-semibold touch-manipulation h-9"
-                >
-                  Send your first message
-                  <ExternalLink style={{ height: 12, width: 12 }} />
-                </button>
-              </div>
-            ) : (
-              actions.map((action) => <ActivityCard key={action.id} action={action} />)
-            )}
-          </div>
-        </motion.div>
-
-        {/* ── 4. What to Ask Mate ── */}
-        <motion.div variants={itemVariants} className="px-4 space-y-5">
-          <h3 className="text-xs font-semibold text-white uppercase tracking-wider px-1">
-            What to ask Mate
-          </h3>
-
-          {askMateGroups.map(({ title, cards }) => (
-            <div key={title} className="space-y-2.5">
-              <div className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider px-1">
-                {title}
-              </div>
-              <div className="space-y-2">
-                {cards.map(({ icon: Icon, label, prompts }) => (
-                  <div key={label} className="glass-premium rounded-xl p-3.5 space-y-2.5">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0">
-                        <Icon className="text-amber-400" style={{ height: 14, width: 14 }} />
-                      </div>
-                      <span className="text-sm font-semibold text-white">{label}</span>
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {prompts.map((prompt) => (
-                        <span
-                          key={prompt}
-                          className="inline-block text-[11px] text-white bg-white/[0.06] border border-white/[0.08] rounded-full px-2.5 py-1 leading-tight"
-                        >
-                          "{prompt}"
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
+          {activityLoading ? (
+            <motion.div variants={fadeUp} className="py-8 flex justify-center">
+              <div className="w-6 h-6 border-2 border-elec-yellow/30 border-t-elec-yellow rounded-full animate-spin" />
+            </motion.div>
+          ) : actions.length === 0 ? (
+            <motion.div variants={fadeUp} className="py-12 text-center space-y-6">
+              <p className="text-xl sm:text-2xl font-semibold text-white max-w-md mx-auto">
+                No activity yet. <Y>Mate&apos;s ready when you are.</Y>
+              </p>
+              <Button
+                onClick={() => openExternalUrl(MATE_WHATSAPP_LINK)}
+                className="h-12 px-7 text-base font-bold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+              >
+                Send your first message
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </motion.div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12">
+              {actions.map((action) => (
+                <ActivityRow key={action.id} action={action} />
+              ))}
             </div>
-          ))}
+          )}
         </motion.div>
+      </section>
 
-        {/* ── 5. Manage Subscription ── */}
-        <motion.div variants={itemVariants} className="px-4 pt-2">
+      {/* ═════════ WHAT TO ASK MATE ═════════════════════════════════ */}
+      <section className="relative border-t border-white/[0.06]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={stagger}
+          className="max-w-7xl mx-auto px-5 sm:px-8 py-14 sm:py-24"
+        >
+          <motion.div variants={fadeUp} className="mb-12 sm:mb-16 max-w-2xl">
+            <Eyebrow>What to ask Mate</Eyebrow>
+            <h2 className="mt-3 text-3xl sm:text-5xl font-bold tracking-[-0.02em] leading-[1.05] text-white">
+              Try <Y>saying.</Y>
+            </h2>
+            <p className="mt-5 text-base sm:text-lg text-white/70 leading-relaxed">
+              Plain English. Voice notes. Photos. Whatever&apos;s easiest with one hand on the
+              ladder.
+            </p>
+          </motion.div>
+
+          <div className="space-y-14 sm:space-y-20">
+            {capabilityGroups.map((group) => (
+              <motion.div
+                key={group.id}
+                variants={fadeUp}
+                className="grid gap-5 sm:gap-8 lg:grid-cols-[240px_1fr]"
+              >
+                <div className="lg:pt-2 space-y-2">
+                  <Eyebrow>{group.title}</Eyebrow>
+                  <p className="hidden lg:block text-[13px] text-white/55 leading-relaxed max-w-[220px]">
+                    {group.strapline}
+                  </p>
+                </div>
+                <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-3.5 sm:gap-y-4">
+                  {group.prompts.map((prompt) => (
+                    <li
+                      key={prompt.text}
+                      className="text-[17px] sm:text-xl font-semibold tracking-[-0.01em] leading-[1.3] text-white flex items-start gap-2"
+                    >
+                      {prompt.featured && (
+                        <span
+                          className="inline-block mt-2 h-1 w-3 rounded-full bg-elec-yellow shrink-0"
+                          aria-label="Featured"
+                        />
+                      )}
+                      <span className="flex-1">
+                        <span className="text-elec-yellow">&ldquo;</span>
+                        {prompt.text}
+                        <span className="text-elec-yellow">&rdquo;</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ═════════ FOOTER ═══════════════════════════════════════════ */}
+      <section className="relative border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-10 text-center">
           <Link
             to="/subscriptions"
-            className="flex items-center justify-center gap-2 py-3 text-sm text-white touch-manipulation h-11"
+            className="text-sm text-white/55 hover:text-white underline underline-offset-4 decoration-white/15 hover:decoration-white/40 touch-manipulation"
           >
-            <Settings style={{ height: 14, width: 14 }} />
             Manage subscription
           </Link>
-        </motion.div>
-      </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -1,14 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle,
-  ContactRound,
-  ExternalLink,
-  MessageCircle,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { DeepLinkActivationStep } from './DeepLinkActivationStep';
@@ -17,17 +10,17 @@ import { useBusinessAIProfile } from './useBusinessAIProfile';
 import { MATE_PHONE_DISPLAY, MATE_PHONE_RAW } from '@/constants/mate';
 import { downloadMateVCard } from '@/utils/mate-vcard';
 
-// ─── Motion ───────────────────────────────────────────────────────────────────
+// ─── Animation ────────────────────────────────────────────────────────────────
 const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' as const } },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
 };
 const stagger = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.06 } },
 };
 
-// ─── Editorial atoms (mirror admin/editorial language) ────────────────────────
+// ─── Editorial atoms ─────────────────────────────────────────────────────────
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
   <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-elec-yellow">
     {children}
@@ -35,7 +28,7 @@ const Eyebrow = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Y = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-elec-yellow">{children}</span>
+  <span className="text-elec-yellow font-semibold">{children}</span>
 );
 
 // ═════════ ONBOARDING VIEW ═══════════════════════════════════════════════════
@@ -68,121 +61,176 @@ export function BusinessAIOnboardingView() {
 
   return (
     <div className="relative min-h-screen bg-background text-white overflow-hidden">
-      {/* Subtle yellow halo to tie into the sales-page hero language */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[280px] bg-gradient-to-b from-elec-yellow/[0.04] to-transparent" />
+      {/* Top nav */}
+      <div className="px-4 sm:px-6 pt-3 pb-1 max-w-6xl mx-auto">
+        <Link to="/electrician">
+          <Button
+            variant="ghost"
+            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back
+          </Button>
+        </Link>
+      </div>
 
-      <motion.div
-        variants={stagger}
-        initial="hidden"
-        animate="visible"
-        className="relative max-w-5xl mx-auto px-5 sm:px-8 pt-4 sm:pt-6 pb-16 sm:pb-24"
-      >
-        {/* ── Back button (always visible — small, ghost) ───────────── */}
-        <motion.div variants={fadeUp}>
-          <Link to="/electrician">
-            <Button
-              variant="ghost"
-              className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
-            >
-              <ArrowLeft className="mr-2 h-5 w-5" />
-              Back
-            </Button>
-          </Link>
-        </motion.div>
-
-        {/* ── Section 1 — Hero ─────────────────────────────────────── */}
-        <motion.section
-          variants={fadeUp}
-          className="pt-6 sm:pt-12 pb-10 sm:pb-14 text-center lg:text-left"
+      {/* ═════════ HERO ═════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute -bottom-40 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-elec-yellow/[0.05] blur-[120px]" />
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
+          className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-6 sm:pt-16 pb-10 sm:pb-16 text-center lg:text-left"
         >
-          <Eyebrow>Almost there</Eyebrow>
-          <h1 className="mt-4 text-[44px] sm:text-[72px] lg:text-[88px] font-bold tracking-[-0.03em] leading-[0.95] text-white">
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-2.5 mb-7 sm:mb-10">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inset-0 rounded-full bg-elec-yellow animate-ping opacity-75" />
+              <span className="relative h-2 w-2 rounded-full bg-elec-yellow" />
+            </span>
+            <Eyebrow>Almost there · One step left</Eyebrow>
+          </motion.div>
+
+          <motion.h1
+            variants={fadeUp}
+            className="text-[44px] sm:text-[80px] lg:text-[96px] font-bold tracking-[-0.035em] leading-[0.95] text-white"
+          >
             Tap one button.
             <br />
             <Y>Mate is yours.</Y>
-          </h1>
-          <p className="mt-6 sm:mt-7 text-base sm:text-lg text-white/80 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            No SMS, no codes to type. Tap, hit send in WhatsApp, you're done in 5 seconds.
-          </p>
-        </motion.section>
+          </motion.h1>
 
-        {/* ── Section 2 — Activation card + phone mock side-by-side on lg ── */}
-        <section className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-start">
-          <motion.div variants={fadeUp}>
-            <DeepLinkActivationStep onActivated={handleActivated} />
-          </motion.div>
+          <motion.p
+            variants={fadeUp}
+            className="mt-7 sm:mt-9 text-lg sm:text-2xl text-white max-w-2xl mx-auto lg:mx-0 leading-[1.4]"
+          >
+            No SMS, no codes to type. Tap the button, hit send in WhatsApp, you&apos;re done in{' '}
+            <Y>five seconds</Y>.
+          </motion.p>
+        </motion.div>
+      </section>
 
-          {/* Phone mock — desktop only; user's own WhatsApp is the demo on mobile */}
-          <motion.div variants={fadeUp} className="hidden lg:flex justify-end pt-4">
-            <PhoneChatMock />
-          </motion.div>
-        </section>
-
-        {/* ── Section 3 — "What happens next" 3-up ───────────────────── */}
-        <motion.section
-          variants={fadeUp}
-          className="mt-16 sm:mt-24 border-t border-white/[0.06] pt-12 sm:pt-16"
+      {/* ═════════ ACTIVATION ═══════════════════════════════════════ */}
+      <section className="relative">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
+          className="max-w-6xl mx-auto px-5 sm:px-8 pb-14 sm:pb-20"
         >
-          <Eyebrow>What happens next</Eyebrow>
-          <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-[-0.02em] text-white">
-            From tap to chatting in five seconds.
-          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10 lg:gap-14 items-start">
+            <motion.div variants={fadeUp}>
+              <DeepLinkActivationStep onActivated={handleActivated} />
+            </motion.div>
+            <motion.div variants={fadeUp} className="hidden lg:flex justify-end pt-4">
+              <PhoneChatMock />
+            </motion.div>
+          </div>
+        </motion.div>
+      </section>
 
-          <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-10">
+      {/* ═════════ HOW IT WORKS — editorial numbered rows ══════════ */}
+      <section className="relative border-t border-white/[0.06]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={stagger}
+          className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-24"
+        >
+          <motion.div variants={fadeUp} className="max-w-2xl mb-10 sm:mb-16">
+            <Eyebrow>What happens next</Eyebrow>
+            <h2 className="mt-3 text-3xl sm:text-5xl font-bold tracking-[-0.02em] leading-[1.05] text-white">
+              From tap to chatting in <Y>five seconds.</Y>
+            </h2>
+          </motion.div>
+
+          <div className="divide-y divide-white/[0.06]">
             {[
               {
                 n: '01',
                 title: 'You tap',
-                body: 'WhatsApp opens with the activation code already typed.',
+                body: (
+                  <>
+                    WhatsApp opens with the activation code <Y>already typed.</Y>
+                  </>
+                ),
               },
               {
                 n: '02',
                 title: 'You hit send',
-                body: 'Mate verifies the code and sets up your account in five seconds.',
+                body: (
+                  <>
+                    Mate verifies the code and sets up your account in <Y>under five seconds</Y>.
+                  </>
+                ),
               },
               {
                 n: '03',
                 title: "You're chatting",
-                body:
-                  'Quotes, invoices, regs lookups, the lot — from WhatsApp. No app-switching.',
+                body: (
+                  <>
+                    Quotes, invoices, regs lookups — all from WhatsApp. <Y>No app-switching.</Y>
+                  </>
+                ),
               },
             ].map((step) => (
-              <div
+              <motion.div
                 key={step.n}
-                className="relative rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6 overflow-hidden"
+                variants={fadeUp}
+                className="grid grid-cols-[auto_1fr] gap-x-6 sm:gap-x-10 py-7 sm:py-10 items-start"
               >
-                <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-elec-yellow/70 via-amber-400/60 to-orange-400/60" />
-                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/40 tabular-nums">
+                <span className="text-3xl sm:text-5xl font-bold text-elec-yellow/60 tracking-tight tabular-nums">
                   {step.n}
+                </span>
+                <div className="space-y-2 pt-1">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                    {step.title}
+                  </h3>
+                  <p className="text-base text-white leading-relaxed max-w-xl">{step.body}</p>
                 </div>
-                <div className="mt-2 text-lg font-semibold text-white">{step.title}</div>
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">{step.body}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </motion.section>
+        </motion.div>
+      </section>
 
-        {/* ── Section 4 — Trust strip ──────────────────────────────── */}
-        <motion.section
-          variants={fadeUp}
-          className="mt-14 sm:mt-20 border-t border-white/[0.06] pt-8 text-center"
+      {/* ═════════ TRUST ════════════════════════════════════════════ */}
+      <section className="relative border-t border-white/[0.06]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={stagger}
+          className="max-w-6xl mx-auto px-5 sm:px-8 py-10 sm:py-14"
         >
-          <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs sm:text-sm text-white/55">
-            <li>Cancel anytime</li>
-            <li className="hidden sm:inline text-white/20">·</li>
-            <li>Your data stays in the EU</li>
-            <li className="hidden sm:inline text-white/20">·</li>
-            <li>WhatsApp end-to-end encrypted</li>
-            <li className="hidden sm:inline text-white/20">·</li>
-            <li>Real humans answer support emails</li>
-          </ul>
-        </motion.section>
-      </motion.div>
+          <motion.ul
+            variants={stagger}
+            className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-xs sm:text-sm text-white/55"
+          >
+            {[
+              'Cancel anytime',
+              'Your data stays in the EU',
+              'WhatsApp end-to-end encrypted',
+              'Real humans answer support',
+            ].map((point, i, arr) => (
+              <React.Fragment key={point}>
+                <motion.li variants={fadeUp}>{point}</motion.li>
+                {i < arr.length - 1 && (
+                  <li className="hidden sm:inline text-white/20" aria-hidden>
+                    ·
+                  </li>
+                )}
+              </React.Fragment>
+            ))}
+          </motion.ul>
+        </motion.div>
+      </section>
     </div>
   );
 }
 
-// ─── Success state ────────────────────────────────────────────────────────────
+// ═════════ SUCCESS STATE ═════════════════════════════════════════════════════
 function SuccessState({ onContinue }: { onContinue: () => void }) {
   const PROMPTS: Array<{ label: string; prompt: string }> = [
     { label: 'Morning brief', prompt: 'morning brief' },
@@ -193,12 +241,13 @@ function SuccessState({ onContinue }: { onContinue: () => void }) {
 
   return (
     <div className="relative min-h-screen bg-background text-white overflow-hidden">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[280px] bg-gradient-to-b from-green-500/[0.06] to-transparent" />
+      <div className="pointer-events-none absolute -bottom-40 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-green-500/[0.06] blur-[120px]" />
+
       <motion.div
         variants={stagger}
         initial="hidden"
         animate="visible"
-        className="relative max-w-3xl mx-auto px-5 sm:px-8 pt-12 sm:pt-20 pb-16 text-center"
+        className="relative max-w-4xl mx-auto px-5 sm:px-8 pt-12 sm:pt-24 pb-16 sm:pb-24 text-center"
       >
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
@@ -209,81 +258,81 @@ function SuccessState({ onContinue }: { onContinue: () => void }) {
           <CheckCircle className="h-14 w-14 text-green-400" />
         </motion.div>
 
+        <motion.div variants={fadeUp} className="mt-8 mb-3">
+          <Eyebrow>You&apos;re in</Eyebrow>
+        </motion.div>
+
         <motion.h1
           variants={fadeUp}
-          className="mt-7 text-[44px] sm:text-6xl font-bold tracking-[-0.03em] leading-[1] text-white"
+          className="text-[44px] sm:text-[72px] lg:text-[80px] font-bold tracking-[-0.035em] leading-[0.95] text-white"
         >
-          You're in <Y>⚡</Y>
+          Mate is <Y>live.</Y>
         </motion.h1>
-        <motion.p variants={fadeUp} className="mt-4 text-base sm:text-lg text-white/75">
-          Mate is live on <span className="font-mono text-white">{MATE_PHONE_DISPLAY}</span>
+
+        <motion.p variants={fadeUp} className="mt-6 sm:mt-7 text-lg sm:text-xl text-white/80">
+          On <span className="font-mono text-white">{MATE_PHONE_DISPLAY}</span>. Right now. Try one
+          of these.
         </motion.p>
 
-        {/* Try one of these */}
-        <motion.section variants={fadeUp} className="mt-12 sm:mt-16">
-          <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-white/50">
-            Try one of these
-          </div>
-          <div className="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {PROMPTS.map((p) => {
-              const link = `https://wa.me/${MATE_PHONE_RAW}?text=${encodeURIComponent(p.prompt)}`;
-              return (
+        {/* Prompts — typographic quoted lines, each opens WhatsApp ──── */}
+        <motion.ul
+          variants={stagger}
+          className="mt-10 sm:mt-14 max-w-xl mx-auto space-y-4 sm:space-y-5 text-left"
+        >
+          {PROMPTS.map((p) => {
+            const link = `https://wa.me/${MATE_PHONE_RAW}?text=${encodeURIComponent(p.prompt)}`;
+            return (
+              <motion.li key={p.label} variants={fadeUp}>
                 <a
-                  key={p.label}
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group rounded-2xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] active:scale-[0.98] transition-all p-4 sm:p-5 text-left touch-manipulation"
+                  className="group flex items-baseline gap-3 text-xl sm:text-3xl font-semibold tracking-[-0.015em] leading-[1.2] text-white hover:text-white touch-manipulation"
                 >
-                  <div className="text-sm sm:text-base font-semibold text-white leading-tight">
+                  <span className="text-elec-yellow">&ldquo;</span>
+                  <span className="flex-1 underline-offset-4 decoration-white/10 group-hover:underline group-hover:decoration-elec-yellow/60">
                     {p.label}
-                  </div>
-                  <div className="mt-2 inline-flex items-center gap-1 text-xs text-white/50 group-hover:text-elec-yellow transition-colors">
-                    Open WhatsApp
-                    <ArrowRight className="h-3 w-3" />
-                  </div>
+                  </span>
+                  <span className="text-elec-yellow">&rdquo;</span>
                 </a>
-              );
-            })}
-          </div>
-        </motion.section>
+              </motion.li>
+            );
+          })}
+        </motion.ul>
 
-        {/* Big CTAs */}
+        {/* Big CTAs ─────────────────────────────────────────────────── */}
         <motion.div
           variants={fadeUp}
-          className="mt-12 flex flex-col sm:flex-row gap-3 justify-center"
+          className="mt-12 sm:mt-16 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center"
         >
           <a
             href={`https://wa.me/${MATE_PHONE_RAW}?text=${encodeURIComponent('Hey Mate')}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 h-14 px-7 rounded-2xl bg-[#25D366] hover:bg-[#1ebe57] active:bg-[#1ba350] text-white font-semibold text-base shadow-[0_20px_60px_-20px_rgba(37,211,102,0.55)] touch-manipulation"
+            className="inline-flex items-center justify-center gap-2 h-14 px-8 rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-bold text-base shadow-[0_20px_60px_-20px_rgba(250,204,21,0.5)] touch-manipulation active:scale-[0.98] transition-all"
           >
-            <MessageCircle className="h-5 w-5" />
             Open WhatsApp
-            <ExternalLink className="h-4 w-4 opacity-80" />
+            <ArrowRight className="h-5 w-5" />
           </a>
           <Button
             onClick={onContinue}
-            variant="outline"
-            className="h-14 px-7 touch-manipulation bg-white/[0.03] border-white/10 hover:bg-white/[0.06] text-white rounded-2xl text-base"
+            variant="ghost"
+            className="h-14 px-7 touch-manipulation text-white hover:bg-white/[0.05] hover:text-white rounded-full text-base"
           >
             Go to dashboard
           </Button>
         </motion.div>
 
-        {/* Save Mate to contacts — small secondary affordance below the big CTAs */}
         <motion.button
           variants={fadeUp}
           type="button"
           onClick={downloadMateVCard}
-          className="mt-5 inline-flex items-center justify-center gap-2 text-sm text-white/70 hover:text-white underline-offset-2 hover:underline touch-manipulation"
+          className="mt-7 inline-flex items-center justify-center text-sm text-white/65 hover:text-white underline underline-offset-4 decoration-white/20 hover:decoration-white/60 touch-manipulation"
         >
-          <ContactRound className="h-4 w-4" />
           Save Mate to your phone contacts
         </motion.button>
 
-        <motion.p variants={fadeUp} className="mt-6 text-xs text-white/40">
+        <motion.p variants={fadeUp} className="mt-8 text-xs text-white/40">
           Auto-redirecting to your dashboard in a moment.
         </motion.p>
       </motion.div>
