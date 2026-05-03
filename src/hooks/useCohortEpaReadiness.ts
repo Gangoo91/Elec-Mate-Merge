@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { EpaJudgement } from '@/hooks/useEpaReadiness';
+import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
+import { epaJudgementPosition, DEFAULT_EPA_VERDICT_BANDS } from '@/lib/epaBands';
+import type { EpaVerdictBands } from '@/hooks/college/useCollegeSettings';
 
 /* ==========================================================================
    useCohortEpaReadiness — every active apprentice in the staff's college,
@@ -27,25 +30,25 @@ export interface CohortLearner {
   any_verdict: boolean;
 }
 
-const BAND_BOUNDS: Record<string, [number, number]> = {
-  refer: [0, 25],
-  not_yet: [25, 50],
-  almost: [50, 75],
-  ready: [75, 100],
-};
-
-function judgementPosition(j: EpaJudgement | null): number | null {
-  if (!j?.verdict) return null;
-  const [lo, hi] = BAND_BOUNDS[j.verdict] ?? [0, 100];
-  const conf = j.confidence ?? 50;
-  const t = Math.min(100, Math.max(0, conf)) / 100;
-  return Math.round(lo + (hi - lo) * t);
+/**
+ * Backwards-compat wrapper: callers that don't have access to the bands
+ * (e.g. CohortEpaPage which receives positions on rows) pass the
+ * pre-computed position. This function uses default bands — for accurate
+ * per-college positions, use `epaJudgementPosition(j, bands)` directly.
+ */
+function judgementPosition(
+  j: EpaJudgement | null,
+  bands: EpaVerdictBands = DEFAULT_EPA_VERDICT_BANDS
+): number | null {
+  return epaJudgementPosition(j, bands);
 }
 
 export function useCohortEpaReadiness(args: { collegeId: string | null }) {
   const { collegeId } = args;
   const [learners, setLearners] = useState<CohortLearner[]>([]);
   const [loading, setLoading] = useState(true);
+  const { settings } = useCollegeSettings();
+  const bands = settings.epa_verdict_bands;
 
   const load = useCallback(async () => {
     if (!collegeId) {
@@ -62,14 +65,14 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
       .eq('college_id', collegeId)
       .neq('status', 'withdrawn')
       .neq('status', 'completed');
-    const list = ((students ?? []) as Array<{
+    const list = (students ?? []) as Array<{
       id: string;
       user_id: string | null;
       name: string;
       course_id: string | null;
       cohort_id: string | null;
       status: string | null;
-    }>);
+    }>;
 
     if (list.length === 0) {
       setLearners([]);
@@ -85,7 +88,11 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
         .from('college_courses')
         .select('id, code, name')
         .in('id', courseIds);
-      for (const c of (courses ?? []) as Array<{ id: string; code: string | null; name: string | null }>) {
+      for (const c of (courses ?? []) as Array<{
+        id: string;
+        code: string | null;
+        name: string | null;
+      }>) {
         courseMap.set(c.id, { code: c.code, name: c.name });
       }
     }
@@ -98,7 +105,7 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
       .in('college_student_id', ids)
       .eq('is_current', true);
     const judgementsByStudent = new Map<string, EpaJudgement[]>();
-    for (const row of ((js ?? []) as unknown) as EpaJudgement[]) {
+    for (const row of (js ?? []) as unknown as EpaJudgement[]) {
       const arr = judgementsByStudent.get(row.college_student_id) ?? [];
       arr.push(row);
       judgementsByStudent.set(row.college_student_id, arr);
@@ -109,9 +116,11 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
       const learner = arr.find((j) => j.source === 'learner') ?? null;
       const tutor = arr.find((j) => j.source === 'tutor') ?? null;
       const ai = arr.find((j) => j.source === 'ai') ?? null;
-      const positions = [judgementPosition(learner), judgementPosition(tutor), judgementPosition(ai)].filter(
-        (p): p is number => p !== null
-      );
+      const positions = [
+        epaJudgementPosition(learner, bands),
+        epaJudgementPosition(tutor, bands),
+        epaJudgementPosition(ai, bands),
+      ].filter((p): p is number => p !== null);
       const best = positions.length ? Math.max(...positions) : null;
       const worst = positions.length ? Math.min(...positions) : null;
       const hasBlocker = arr.some((j) => (j.blockers?.length ?? 0) > 0);
@@ -119,8 +128,8 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
         id: s.id,
         name: s.name,
         user_id: s.user_id,
-        course_code: s.course_id ? courseMap.get(s.course_id)?.code ?? null : null,
-        course_name: s.course_id ? courseMap.get(s.course_id)?.name ?? null : null,
+        course_code: s.course_id ? (courseMap.get(s.course_id)?.code ?? null) : null,
+        course_name: s.course_id ? (courseMap.get(s.course_id)?.name ?? null) : null,
         cohort_id: s.cohort_id,
         status: s.status,
         learner,
@@ -135,7 +144,7 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
 
     setLearners(out);
     setLoading(false);
-  }, [collegeId]);
+  }, [collegeId, bands]);
 
   useEffect(() => {
     void load();

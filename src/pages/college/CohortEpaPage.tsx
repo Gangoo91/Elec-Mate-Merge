@@ -4,11 +4,9 @@ import { ArrowDownAZ, ArrowDown01, Filter, User2, ShieldCheck, Bot } from 'lucid
 import { cn } from '@/lib/utils';
 import { PageFrame, LoadingState } from '@/components/college/primitives';
 import { supabase } from '@/integrations/supabase/client';
-import {
-  useCohortEpaReadiness,
-  judgementPosition,
-  type CohortLearner,
-} from '@/hooks/useCohortEpaReadiness';
+import { useCohortEpaReadiness, type CohortLearner } from '@/hooks/useCohortEpaReadiness';
+import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
+import { epaJudgementPosition } from '@/lib/epaBands';
 import { EpaCalibrationCard } from '@/components/college/student360/EpaCalibrationCard';
 
 /* ==========================================================================
@@ -40,7 +38,9 @@ export default function CohortEpaPage() {
   }, []);
 
   const { learners, loading } = useCohortEpaReadiness({ collegeId });
-  const [filter, setFilter] = useState<'all' | 'ready' | 'almost' | 'not_yet' | 'no_verdict' | 'blocked'>('all');
+  const [filter, setFilter] = useState<
+    'all' | 'ready' | 'almost' | 'not_yet' | 'no_verdict' | 'blocked'
+  >('all');
   const [sort, setSort] = useState<SortKey>('readiness');
 
   const filtered = useMemo(() => {
@@ -54,10 +54,8 @@ export default function CohortEpaPage() {
       });
     }
     if (sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
-    else if (sort === 'verdicts')
-      list.sort((a, b) => verdictCount(b) - verdictCount(a));
-    else
-      list.sort((a, b) => (b.best_position ?? -1) - (a.best_position ?? -1));
+    else if (sort === 'verdicts') list.sort((a, b) => verdictCount(b) - verdictCount(a));
+    else list.sort((a, b) => (b.best_position ?? -1) - (a.best_position ?? -1));
     return list;
   }, [learners, filter, sort]);
 
@@ -93,8 +91,8 @@ export default function CohortEpaPage() {
           End-Point Assessment readiness
         </h1>
         <p className="mt-2 text-[13px] text-white/65 max-w-2xl leading-relaxed">
-          Every active apprentice's current readiness across learner / tutor / AI verdicts. Click any
-          learner for the full Student 360 EPA section.
+          Every active apprentice's current readiness across learner / tutor / AI verdicts. Click
+          any learner for the full Student 360 EPA section.
         </p>
       </div>
 
@@ -140,10 +138,16 @@ export default function CohortEpaPage() {
         <div className="ml-auto flex items-center gap-1.5 text-[11px]">
           <button
             type="button"
-            onClick={() => setSort(sort === 'readiness' ? 'name' : sort === 'name' ? 'verdicts' : 'readiness')}
+            onClick={() =>
+              setSort(sort === 'readiness' ? 'name' : sort === 'name' ? 'verdicts' : 'readiness')
+            }
             className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/85 hover:bg-white/[0.08] touch-manipulation"
           >
-            {sort === 'readiness' ? <ArrowDown01 className="h-3 w-3" /> : <ArrowDownAZ className="h-3 w-3" />}
+            {sort === 'readiness' ? (
+              <ArrowDown01 className="h-3 w-3" />
+            ) : (
+              <ArrowDownAZ className="h-3 w-3" />
+            )}
             Sort: {sort === 'readiness' ? 'Readiness' : sort === 'name' ? 'Name' : 'Verdict count'}
           </button>
         </div>
@@ -180,15 +184,19 @@ export default function CohortEpaPage() {
    ──────────────────────────────────────────────────────── */
 
 function Row({ learner: l }: { learner: CohortLearner }) {
+  const { settings } = useCollegeSettings();
+  const bands = settings.epa_verdict_bands;
   const positions = {
-    learner: judgementPosition(l.learner),
-    tutor: judgementPosition(l.tutor),
-    ai: judgementPosition(l.ai),
+    learner: epaJudgementPosition(l.learner, bands),
+    tutor: epaJudgementPosition(l.tutor, bands),
+    ai: epaJudgementPosition(l.ai, bands),
   };
   return (
     <div className="flex items-center gap-4 flex-wrap">
       <div className="min-w-0 flex-1">
-        <div className="text-[14px] font-semibold text-white tracking-tight leading-tight">{l.name}</div>
+        <div className="text-[14px] font-semibold text-white tracking-tight leading-tight">
+          {l.name}
+        </div>
         <div className="mt-0.5 text-[11px] text-white/55 tabular-nums">
           {l.course_code ?? '—'}
           {l.course_name && (
@@ -212,7 +220,12 @@ function Row({ learner: l }: { learner: CohortLearner }) {
           {(['ai', 'tutor', 'learner'] as const).map((src) => {
             const pos = positions[src];
             if (pos === null) return null;
-            const meta = src === 'ai' ? 'bg-purple-400 ring-purple-400/60' : src === 'tutor' ? 'bg-elec-yellow ring-elec-yellow/60' : 'bg-blue-500 ring-blue-400/60';
+            const meta =
+              src === 'ai'
+                ? 'bg-purple-400 ring-purple-400/60'
+                : src === 'tutor'
+                  ? 'bg-elec-yellow ring-elec-yellow/60'
+                  : 'bg-blue-500 ring-blue-400/60';
             const Icon = src === 'ai' ? Bot : src === 'tutor' ? ShieldCheck : User2;
             return (
               <div
@@ -221,7 +234,12 @@ function Row({ learner: l }: { learner: CohortLearner }) {
                 style={{ left: `${pos}%`, transform: 'translate(-50%, -50%)' }}
                 title={`${src}: ${pos}`}
               >
-                <div className={cn('h-5 w-5 rounded-full ring-2 flex items-center justify-center shadow shadow-black/30', meta)}>
+                <div
+                  className={cn(
+                    'h-5 w-5 rounded-full ring-2 flex items-center justify-center shadow shadow-black/30',
+                    meta
+                  )}
+                >
                   <Icon className="h-2.5 w-2.5 text-black" strokeWidth={2.5} />
                 </div>
               </div>

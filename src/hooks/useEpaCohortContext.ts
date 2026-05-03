@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
+import { epaJudgementPosition } from '@/lib/epaBands';
 
 /* ==========================================================================
    useEpaCohortContext — given a college_student id, returns where they sit
@@ -21,22 +23,10 @@ export interface EpaCohortContext {
   trajectory: number[];
 }
 
-const BAND_BOUNDS: Record<string, [number, number]> = {
-  refer: [0, 25],
-  not_yet: [25, 50],
-  almost: [50, 75],
-  ready: [75, 100],
-};
-
-function position(verdict: string | null | undefined, confidence: number | null | undefined): number | null {
-  if (!verdict) return null;
-  const [lo, hi] = BAND_BOUNDS[verdict] ?? [0, 100];
-  const t = Math.min(100, Math.max(0, confidence ?? 50)) / 100;
-  return Math.round(lo + (hi - lo) * t);
-}
-
 export function useEpaCohortContext(args: { collegeStudentId: string | null }): EpaCohortContext {
   const { collegeStudentId } = args;
+  const { settings } = useCollegeSettings();
+  const bands = settings.epa_verdict_bands;
   const [state, setState] = useState<EpaCohortContext>({
     loading: true,
     selfPosition: null,
@@ -48,7 +38,14 @@ export function useEpaCohortContext(args: { collegeStudentId: string | null }): 
 
   useEffect(() => {
     if (!collegeStudentId) {
-      setState({ loading: false, selfPosition: null, cohortSize: 0, rank: null, percentileLabel: null, trajectory: [] });
+      setState({
+        loading: false,
+        selfPosition: null,
+        cohortSize: 0,
+        rank: null,
+        percentileLabel: null,
+        trajectory: [],
+      });
       return;
     }
     let cancelled = false;
@@ -98,7 +95,7 @@ export function useEpaCohortContext(args: { collegeStudentId: string | null }): 
         verdict: string;
         confidence: number | null;
       }>) {
-        const p = position(j.verdict, j.confidence);
+        const p = epaJudgementPosition({ verdict: j.verdict, confidence: j.confidence }, bands);
         if (p == null) continue;
         const prev = byStudent.get(j.college_student_id);
         if (prev == null || p > prev) byStudent.set(j.college_student_id, p);
@@ -124,7 +121,7 @@ export function useEpaCohortContext(args: { collegeStudentId: string | null }): 
         confidence: number | null;
         source: string;
       }>) {
-        const p = position(j.verdict, j.confidence);
+        const p = epaJudgementPosition({ verdict: j.verdict, confidence: j.confidence }, bands);
         if (p != null) traj.push(p);
       }
 
@@ -141,7 +138,7 @@ export function useEpaCohortContext(args: { collegeStudentId: string | null }): 
     return () => {
       cancelled = true;
     };
-  }, [collegeStudentId]);
+  }, [collegeStudentId, bands]);
 
   return state;
 }

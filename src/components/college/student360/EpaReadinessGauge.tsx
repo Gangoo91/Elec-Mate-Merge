@@ -1,6 +1,8 @@
 import { cn } from '@/lib/utils';
 import { User2, ShieldCheck, Bot, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import type { EpaJudgement, EpaSource } from '@/hooks/useEpaReadiness';
+import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
+import { epaJudgementPosition } from '@/lib/epaBands';
 
 /* ==========================================================================
    EpaReadinessGauge — unified visualisation of every voice's verdict on a
@@ -16,16 +18,19 @@ import type { EpaJudgement, EpaSource } from '@/hooks/useEpaReadiness';
    Markers stack visually if they cluster.
    ========================================================================== */
 
-const BAND_BOUNDS: Record<NonNullable<EpaJudgement['verdict']>, [number, number]> = {
-  refer: [0, 25],
-  not_yet: [25, 50],
-  almost: [50, 75],
-  ready: [75, 100],
-};
-
 const BAND_LABELS = ['Refer', 'Not yet', 'Almost', 'Ready'];
 
-const VOICE_META: Record<EpaSource, { label: string; icon: React.ComponentType<{ className?: string }>; colour: string; ring: string; bg: string; border: string }> = {
+const VOICE_META: Record<
+  EpaSource,
+  {
+    label: string;
+    icon: React.ComponentType<{ className?: string }>;
+    colour: string;
+    ring: string;
+    bg: string;
+    border: string;
+  }
+> = {
   learner: {
     label: 'Learner',
     icon: User2,
@@ -69,21 +74,14 @@ const GRADE_LABEL: Record<string, string> = {
 
 interface Voice {
   source: EpaSource;
-  judgement: Pick<EpaJudgement, 'verdict' | 'predicted_grade' | 'confidence' | 'source_name_snapshot'> | null;
+  judgement: Pick<
+    EpaJudgement,
+    'verdict' | 'predicted_grade' | 'confidence' | 'source_name_snapshot'
+  > | null;
   /** Synthetic from a mock — counts visually but smaller marker */
   synthetic?: boolean;
   /** Optional override for label below */
   subtitle?: string | null;
-}
-
-function judgementToPosition(j: Voice['judgement']): number | null {
-  if (!j || !j.verdict) return null;
-  const [lo, hi] = BAND_BOUNDS[j.verdict] ?? [0, 100];
-  // Use confidence to nudge within the band.
-  // confidence 0 → band start, 50 → midpoint, 100 → band end
-  const conf = j.confidence ?? 50;
-  const t = Math.min(100, Math.max(0, conf)) / 100;
-  return Math.round(lo + (hi - lo) * t);
 }
 
 export function EpaReadinessGauge({
@@ -98,6 +96,10 @@ export function EpaReadinessGauge({
     trajectory: number[];
   };
 }) {
+  const { settings } = useCollegeSettings();
+  const bands = settings.epa_verdict_bands;
+  const judgementToPosition = (j: Voice['judgement']): number | null =>
+    epaJudgementPosition(j ?? null, bands);
   // Filter to voices we have something for
   const placed = voices
     .map((v) => ({ voice: v, position: judgementToPosition(v.judgement) }))
@@ -125,9 +127,7 @@ export function EpaReadinessGauge({
               {cohort.percentileLabel}
             </span>
           )}
-          {cohort && cohort.trajectory.length >= 2 && (
-            <Sparkline points={cohort.trajectory} />
-          )}
+          {cohort && cohort.trajectory.length >= 2 && <Sparkline points={cohort.trajectory} />}
         </div>
         <div className="text-[10px] uppercase tracking-[0.16em] text-white/45">
           {placed.length}/{voices.length} verdict{placed.length === 1 ? '' : 's'}
@@ -159,13 +159,18 @@ export function EpaReadinessGauge({
             const meta = VOICE_META[p.voice.source];
             const Icon = meta.icon;
             // Stack offset if markers within 4% of each other
-            const stack = placed.filter((q, j) => j < i && Math.abs(q.position - p.position) < 4).length;
+            const stack = placed.filter(
+              (q, j) => j < i && Math.abs(q.position - p.position) < 4
+            ).length;
             const offset = stack * 18;
             return (
               <div
                 key={p.voice.source}
                 className="absolute top-1/2 -translate-y-1/2"
-                style={{ left: `${p.position}%`, transform: `translate(-50%, calc(-50% - ${offset}px))` }}
+                style={{
+                  left: `${p.position}%`,
+                  transform: `translate(-50%, calc(-50% - ${offset}px))`,
+                }}
               >
                 <div
                   className={cn(
@@ -180,7 +185,10 @@ export function EpaReadinessGauge({
                 </div>
                 {/* Verdical line down to track */}
                 <div
-                  className={cn('absolute left-1/2 top-full -translate-x-1/2 w-px bg-white/15', stack > 0 ? 'h-3' : 'h-2')}
+                  className={cn(
+                    'absolute left-1/2 top-full -translate-x-1/2 w-px bg-white/15',
+                    stack > 0 ? 'h-3' : 'h-2'
+                  )}
                   aria-hidden
                 />
               </div>
@@ -222,11 +230,16 @@ export function EpaReadinessGauge({
                   j ? '' : 'border border-dashed border-white/[0.12]'
                 )}
               >
-                <Icon className={cn('h-3.5 w-3.5', j ? 'text-black' : 'text-white/35')} strokeWidth={2.5} />
+                <Icon
+                  className={cn('h-3.5 w-3.5', j ? 'text-black' : 'text-white/35')}
+                  strokeWidth={2.5}
+                />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className={cn('text-[12px] font-semibold tracking-tight', meta.colour)}>{meta.label}</span>
+                  <span className={cn('text-[12px] font-semibold tracking-tight', meta.colour)}>
+                    {meta.label}
+                  </span>
                   {v.synthetic && (
                     <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.06] border border-white/[0.12] text-[9px] font-semibold tracking-[0.06em] uppercase text-white/55">
                       Draft
@@ -243,7 +256,9 @@ export function EpaReadinessGauge({
                     </span>
                   )}
                 </div>
-                {v.subtitle && <div className="mt-0.5 text-[10.5px] text-white/45">{v.subtitle}</div>}
+                {v.subtitle && (
+                  <div className="mt-0.5 text-[10.5px] text-white/45">{v.subtitle}</div>
+                )}
               </div>
               {j?.confidence != null && (
                 <div className="flex items-center gap-2 flex-shrink-0">
@@ -251,7 +266,11 @@ export function EpaReadinessGauge({
                     <div
                       className={cn(
                         'h-full rounded-full',
-                        j.confidence >= 70 ? 'bg-emerald-400' : j.confidence >= 40 ? 'bg-elec-yellow' : 'bg-amber-400'
+                        j.confidence >= 70
+                          ? 'bg-emerald-400'
+                          : j.confidence >= 40
+                            ? 'bg-elec-yellow'
+                            : 'bg-amber-400'
                       )}
                       style={{ width: `${j.confidence}%` }}
                     />
@@ -259,9 +278,7 @@ export function EpaReadinessGauge({
                   <span className="text-[10.5px] text-white/65 tabular-nums">{j.confidence}%</span>
                 </div>
               )}
-              {!j && (
-                <span className="text-[10.5px] text-white/35 italic">No verdict yet</span>
-              )}
+              {!j && <span className="text-[10.5px] text-white/35 italic">No verdict yet</span>}
             </div>
           );
         })}
@@ -299,7 +316,12 @@ function Sparkline({ points }: { points: number[] }) {
       title={`Trajectory across last ${points.length} verdicts`}
     >
       <svg width={W} height={H} className="overflow-visible">
-        <path d={path} className="stroke-elec-yellow/85 fill-none" strokeWidth="1.4" strokeLinecap="round" />
+        <path
+          d={path}
+          className="stroke-elec-yellow/85 fill-none"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+        />
         {points.map((p, i) => {
           const x = PAD + i * stepX;
           const y = H - PAD - ((p - min) / (max - min)) * (H - PAD * 2);
